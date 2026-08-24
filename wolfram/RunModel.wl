@@ -42,7 +42,22 @@ matching=CheckAbort[RunT3Matching[result["LUV"],eftOrder,loopOrder],$Aborted];
 If[!AssociationQ[matching]||Lookup[matching,"Status",""]=!="Success",Print["ERROR: matching failed."];Exit[12]];
 matched=Lookup[matching,"MatchedEFT",Lookup[matching,"LoopEFT",0]];
 uv=ExpressionToLaTeX[result["LUV"]]; bsm=ExpressionToLaTeX[result["LBSM"]]; eft=ExpressionToLaTeX[matched];
-weinberg = matched =!= 0 && !FreeQ[matched, HoldPattern@Matchete`DiracProduct[Matchete`GammaCC,___], Infinity];
+
+(* Detect Weinberg robustly, then separately isolate its raw GammaCC contributions. *)
+weinbergData=ExtractWeinbergCoefficient[matched];
+weinberg=TrueQ[Lookup[weinbergData,"Present",False]];
+weinbergSector=Lookup[weinbergData,"Sector",0];
+holomorphicWeinbergSector=Lookup[weinbergData,"HolomorphicSector",0];
+weinbergCoefficient=Lookup[weinbergData,"Coefficient",Missing["PendingCanonicalisation"]];
+weinbergTerms=Lookup[weinbergData,"Terms",{}];
+holomorphicWeinbergTerms=Lookup[weinbergData,"HolomorphicTerms",{}];
+conjugateWeinbergTerms=Lookup[weinbergData,"ConjugateTerms",{}];
+weinbergSectorTeX=ExpressionToLaTeX[weinbergSector];
+holomorphicWeinbergSectorTeX=ExpressionToLaTeX[holomorphicWeinbergSector];
+weinbergCoefficientTeX=If[MissingQ[weinbergCoefficient],
+  <|"Success"->False,"LaTeX"->""|>,
+  ExpressionToLaTeX[weinbergCoefficient]
+];
 summary=<|
  "ModelClass"->model["Class"],"Alpha"->alpha,
  "Scalar1SU2"->model["Scalar1","SU2"],"Scalar1Hypercharge"->ToString@InputForm@model["Scalar1","Y"],
@@ -51,9 +66,71 @@ summary=<|
  "BuildStatus"->result["Status"],"MatchingStatus"->matching["Status"],
  "AcceptedInteractions"->result["AllowedInteractions"],"RejectedInteractions"->result["RejectedInteractions"],
  "T3IngredientsPresent"->result["T3IngredientsPresent"],"WeinbergOperatorPresent"->TrueQ[weinberg],
+ "WeinbergExtractionStatus"->Lookup[weinbergData,"Status","Unknown"],
+ "WeinbergTermCount"->Lookup[weinbergData,"TermCount",0],
+ "WeinbergHolomorphicTermCount"->Lookup[weinbergData,"HolomorphicTermCount",0],
+ "WeinbergConjugateTermCount"->Lookup[weinbergData,"ConjugateTermCount",0],
+ "WeinbergRawFile"->If[Length[weinbergTerms]>0,"c5_raw.txt",""],
+ "WeinbergRawLaTeXFile"->If[Length[weinbergTerms]>0,"c5_raw.tex",""],
+ "WeinbergCoefficientFile"->If[!MissingQ[weinbergCoefficient],"c5_coefficient.txt",""],
+ "WeinbergCoefficientLaTeXFile"->If[TrueQ[Lookup[weinbergCoefficientTeX,"Success",False]],"c5_coefficient.tex",""],
+ "WeinbergCoefficientInputForm"->If[MissingQ[weinbergCoefficient],
+    "Pending exact Matchete operator canonicalisation",
+    ToString[weinbergCoefficient,InputForm]],
+ "WeinbergCoefficientLaTeX"->Lookup[weinbergCoefficientTeX,"LaTeX",""],
+ "WeinbergSectorConversionSuccess"->TrueQ[Lookup[weinbergSectorTeX,"Success",False]],
+ "WeinbergCoefficientConversionSuccess"->TrueQ[Lookup[weinbergCoefficientTeX,"Success",False]],
  "UVConversionSuccess"->TrueQ[uv["Success"]],"BSMUVConversionSuccess"->TrueQ[bsm["Success"]],"EFTConversionSuccess"->TrueQ[eft["Success"]],
  "UVLagrangianLaTeX"->uv["LaTeX"],"BSMUVLagrangianLaTeX"->bsm["LaTeX"],"EFTLagrangianLaTeX"->eft["LaTeX"]
 |>;
+(* Detailed Weinberg diagnostics belong in files, not normal terminal output. *)
+If[Length[weinbergTerms]>0,
+  Export[
+    FileNameJoin@{outputDirectory,"c5_raw.txt"},
+    StringRiffle[
+      MapIndexed[
+        "--- Weinberg term "<>ToString[First[#2]]<>" ---\n"<>ToString[#1,InputForm]&,
+        weinbergTerms
+      ],
+      "\n\n"
+    ],
+    "Text"
+  ];
+  Export[
+    FileNameJoin@{outputDirectory,"c5_raw.tex"},
+    Lookup[weinbergSectorTeX,"LaTeX",""],
+    "Text"
+  ];
+];
+
+
+If[!MissingQ[weinbergCoefficient],
+  Export[
+    FileNameJoin@{outputDirectory,"c5_coefficient.txt"},
+    ToString[weinbergCoefficient,InputForm],
+    "Text"
+  ];
+  If[TrueQ[Lookup[weinbergCoefficientTeX,"Success",False]],
+    Export[
+      FileNameJoin@{outputDirectory,"c5_coefficient.tex"},
+      Lookup[weinbergCoefficientTeX,"LaTeX",""],
+      "Text"
+    ];
+  ];
+];
+
 Export[FileNameJoin@{outputDirectory,"comparison_summary.json"},summary,"RawJSON"];
 Print["Weinberg operator present: ",summary["WeinbergOperatorPresent"]];
+If[weinberg,
+  If[summary["WeinbergTermCount"] > 0,
+    Print["Weinberg contributions isolated: ",summary["WeinbergTermCount"]],
+    Print["Weinberg present; contribution isolation pending"]
+  ];
+  If[Lookup[weinbergData,"Status",""] === "Success",
+    Print["C5 extraction: Success (holomorphic terms: ",
+      Lookup[weinbergData,"HolomorphicTermCount",0],
+      "; HC terms: ",Lookup[weinbergData,"ConjugateTermCount",0],")"],
+    Print["C5 canonicalisation: pending"]
+  ];
+];
 Exit[0];

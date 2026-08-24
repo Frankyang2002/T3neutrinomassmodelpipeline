@@ -1,0 +1,59 @@
+Loading Matchete...
+by Javier Fuentes-Martín, Matthias König, Julie Pagès, Anders Eller Thomsen, and Felix Wilsch 
+Contributors:   Javier López Miras, and Adrián Moreno-Sánchez 
+Reference:      Hyperlink[arXiv:2212.04510, https://arxiv.org/abs/2212.04510]
+Website:        Hyperlink[https://matchete.gitlab.io, https://matchete.gitlab.io]
+Model database: Hyperlink[https://gitlab.com/matchete/model-database, https://gitlab.com/matchete/model-database]
+Repository:     Hyperlink[https://gitlab.com/matchete/matchete, https://gitlab.com/matchete/matchete]
+Matchete loaded successfully.
+Model: T3-E, alpha = 0
+Scalar1 (d,Y) = {3, 0}
+Scalar2 (d,Y) = {3, 1}
+Fermion (d,Y) = {2, 1/2}
+
+FrontEndObject::notavail: A front end is not available; certain operations require a front end.
+Checking candidate: Yukawa1_Gen
+
+CheckLagrangian::ContractedIndices: The input Lagrangian contains open indices or a mismatch of bared and not bared indices.
+  result: InputForm[$Failed]
+Checking candidate: Yukawa1_EpsGen
+  result: InputForm[True]
+Checking candidate: Yukawa2_Gen
+  result: InputForm[True]
+Checking candidate: Yukawa2_EpsGen
+
+CheckLagrangian::ContractedIndices: The input Lagrangian contains open indices or a mismatch of bared and not bared indices.
+  result: InputForm[$Failed]
+Checking candidate: Scalar1Self
+  result: InputForm[True]
+Checking candidate: Scalar2Self
+  result: InputForm[True]
+Checking candidate: HiggsPortal1
+  result: InputForm[True]
+Checking candidate: HiggsPortal2
+  result: InputForm[True]
+Checking candidate: ScalarCrossPortal
+  result: InputForm[True]
+Checking candidate: T3ScalarMix_3x3
+>> StringForm[Added new CG `1` with indices `2`, cg1, {SU2L[adj], SU2L[adj], Bar[SU2L[fund]], Bar[SU2L[fund]]}]
+  result: InputForm[True]
+Accepted interactions: {Yukawa1_EpsGen, Yukawa2_Gen, Scalar1Self, Scalar2Self, HiggsPortal1, HiggsPortal2, ScalarCrossPortal, T3ScalarMix_3x3}
+T3 ingredients present: True
+
+Running Matchete matching...
+EFT order: 5; loop order: 1
+Running Match...
+>> StringForm[Added new CG `1` with indices `2`, cg2, {SU2L[fund], SU2L[adj], SU2L[fund]}]
+
+FrontEndObject::notavail: A front end is not available; certain operations require a front end.
+
+FrontEndObject::notavail: A front end is not available; certain operations require a front end.
+
+General::stop: Further output of FrontEndObject::notavail will be suppressed during this calculation.
+Running GreensSimplify...
+Running EOMSimplify...
+>> The Lagrangian contains terms of lower power than dimension 4. Defining effective couplings and assuming these terms to be dimension 4. Use 'PrintEffectiveCouplings' and 'ReplaceEffectiveCouplings' to recover explicit expressions.
+Running EvaluateLoopFunctions...
+Running ReplaceEffectiveCouplings...
+Matching pipeline completed successfully.
+Weinberg operator present: True

@@ -2,7 +2,7 @@
 
 (*
   PhysicsLaTeX.wl
-
+  
   Convert Matchete expressions into readable physics notation before TeX export.
 
   The conversion is intentionally recursive: field, index, coupling and Dirac

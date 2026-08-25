@@ -1,5 +1,5 @@
 (* T3ModelCatalog.wl
-   Representation-level catalogue for the T3 one-loop topology.
+  Interesting T3 classes are labelled
 
    Hypercharge convention:
      Q = T3 + Y,
@@ -7,8 +7,7 @@
      Y(S2) = (alpha + 2)/2,
      Y(F)  = (alpha + 1)/2.
 
-   The historical A-E labels are retained as aliases.  Generic models are
-   constructed from the SU(2) dimensions (dS1, dS2, dF) and alpha.
+  We convert alpha to our hypercharges
 *)
 ClearAll[
   T3YukawaAllowedQ,
@@ -36,13 +35,12 @@ T3Hypercharges[alpha_Integer] := <|
   "Fermion" -> (alpha + 1)/2
 |>;
 
-(* Since L is a doublet, a Yukawa vertex L S F can only couple scalar
-   representations with dS = dF +/- 1. *)
+(* This is  exactly the same as T3 dimension allowed allowed in pipeline.py *)
+(* Positive and we know from yukawa we have the restriction dS = dF +- 1*)
 T3YukawaAllowedQ[dS_Integer?Positive, dF_Integer?Positive] :=
   Abs[dS - dF] === 1;
 
-(* The identical Higgs fields occupy the symmetric SU(2) triplet channel.
-   Hence S1 x S2^dagger must contain j=1. *)
+(* Following required for a triplet in the scalar tensor product *)
 T3ScalarMixingAllowedQ[d1_Integer?Positive, d2_Integer?Positive] := Module[
   {j1 = (d1 - 1)/2, j2 = (d2 - 1)/2},
   TrueQ[
@@ -51,6 +49,7 @@ T3ScalarMixingAllowedQ[d1_Integer?Positive, d2_Integer?Positive] := Module[
   ]
 ];
 
+(* Exactly same as pipeline.py version *)
 T3DimensionsAllowedQ[
   d1_Integer?Positive,
   d2_Integer?Positive,
@@ -61,8 +60,7 @@ T3DimensionsAllowedQ[
   T3ScalarMixingAllowedQ[d1, d2]
 ];
 
-(* Matchete flavour indices require multiplicity > 1.  The default of three
-   heavy-fermion generations preserves the existing project convention. *)
+(* We input our dimensions and we output a dictionary of our fields *)
 T3ModelFromDimensions[
   d1_Integer?Positive,
   d2_Integer?Positive,
@@ -71,7 +69,9 @@ T3ModelFromDimensions[
   multiplicity_: 3
 ] := Module[{hypercharges},
   If[!T3DimensionsAllowedQ[d1, d2, dF], Return[$Failed]];
-  If[!IntegerQ[multiplicity] || multiplicity < 2, Return[$Failed]];
+
+  (* Multiplicity being a positive integer *)
+  If[!IntegerQ[multiplicity] || multiplicity < 1, Return[$Failed]];
 
   hypercharges = T3Hypercharges[alpha];
 
@@ -110,7 +110,7 @@ T3ModelFromDimensions[
   |>
 ];
 
-(* Backwards-compatible aliases for the five historical classes. *)
+(* Used if I use something like B -1 for B class -1 alpha, for the specific classes *)
 T3ModelFromClass[class_String, alpha_Integer, multiplicity_: 3] := Module[
   {label = ToUpperCase[class], dims, model},
 

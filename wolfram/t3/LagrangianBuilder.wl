@@ -1,15 +1,11 @@
-(* LagrangianBuilder.wl
-   Generic T3 UV-Lagrangian builder for arbitrary finite-dimensional SU(2)
-   irreducible representations supported by Matchete.
+(* TLDR: 
+- Take in SU2 and U1 representations and change into Matchete fields. 
+- Create all gauge invariant interactions
+- Return UV Lagrangian
 
-   The old implementation explicitly wrote contractions for dimensions 1,2,3.
-   This version instead:
-     1. defines any required SU(2) irrep using its Dynkin label {d-1};
-     2. asks Matchete for the exact invariant tensor with InvariantTensors;
-     3. registers that tensor as a CG coefficient with DefineCG;
-     4. uses the resulting CG in the Yukawa and scalar-mixing vertices.
-
-   This keeps Matchete as the final judge of both covariance and matching.
+Note that we use invariant tensor function from group magic in matchete. 
+We can explicitly tell it the symmetric fields so that we get the tensor that we can SU2 contracts fields correctly
+It returns explicit CG tensors in a list so like HH with 2x2=3+1 would be only the CG for the symmetric part {H1,H2,H3} 
 *)
 ClearAll[
   SU2DynkinLabel, SU2RepresentationName, EnsureSU2Representation,
@@ -24,26 +20,31 @@ ClearAll[
   SelectFirstValidByGroup, T3IngredientsPresentQ, BuildT3Lagrangian
 ];
 
-(* For SU(2), the irrep of dimension d has highest-weight Dynkin label {d-1}. *)
+(* ------------------------------------------------- *)
+(* Getting our SU2 and BSM representations           *)
+(* ------------------------------------------------- *)
+
+(* For SU(2), the irrep of dimension d has highest-weight Dynkin label {d-1}*)
 SU2DynkinLabel[d_Integer?Positive] := {d - 1};
 
-(* Reuse the SM's built-in fundamental and adjoint names.  Higher irreps get
-   deterministic symbols so the same dimension is defined only once/session. *)
+(* We just get the representation name, generalised for higher dim *)
 SU2RepresentationName[1] := None;
 SU2RepresentationName[2] := fund;
 SU2RepresentationName[3] := adj;
 SU2RepresentationName[d_Integer?Positive] /; d >= 4 :=
   Symbol["T3SU2d" <> ToString[d]];
 
+(* We already know our first 3 have SU2 Reps, but we need to check it for higher reps *)
 EnsureSU2Representation[1] := True;
 EnsureSU2Representation[2] := True;
 EnsureSU2Representation[3] := True;
 EnsureSU2Representation[d_Integer?Positive] /; d >= 4 := Module[
   {rep, existing, after, status},
-  rep = SU2RepresentationName[d];
-  existing = Quiet@Check[GetRepresentations[], <||>];
-  If[AssociationQ[existing] && KeyExistsQ[existing, rep], Return[True]];
+  rep = SU2RepresentationName[d]; (* Create Representation Name *)
+  existing = Quiet@Check[GetRepresentations[], <||>]; (* Check if representation is already registered *)
+  If[AssociationQ[existing] && KeyExistsQ[existing, rep], Return[True]]; (* If registered do nothing *)
 
+  (* If not registered, we pair this representation with the dynkin label d and register *)
   status = Check[
     DefineRepresentation[
       rep,
@@ -56,18 +57,22 @@ EnsureSU2Representation[d_Integer?Positive] /; d >= 4 := Module[
   ];
   If[status === $Failed, Return[$Failed]];
 
+  (* We check if the representation is registered *)
   after = Quiet@Check[GetRepresentations[], <||>];
   If[AssociationQ[after] && KeyExistsQ[after, rep], True, $Failed]
 ];
 
-(* Generic-path BSM irreps use their own representation symbols, including
-   d=2 and d=3.  This is deliberate: InvariantTensors and DefineRepresentation
-   then use the same canonical GroupMagic basis.  The SM L and H remain in the
-   built-in SU2L[fund] representation. *)
+(* For matchete our SM fields remain normal but BSM fields obtain its own representation to make CG work, 
+we have 2 representations, one for SM doublet basis and another for BSM representation basis
+This is also true for d=2 and d=3*)
+
+
+(* Get BSMrep name *)
 BSMRepresentationName[1] := None;
 BSMRepresentationName[d_Integer?Positive] /; d >= 2 :=
   Symbol["T3BSMd" <> ToString[d]];
 
+(* We log our representation with its respective Dynkin label *)
 EnsureBSMRepresentation[1] := True;
 EnsureBSMRepresentation[d_Integer?Positive] /; d >= 2 := Module[
   {rep, before, after, defineStatus},
@@ -77,8 +82,6 @@ EnsureBSMRepresentation[d_Integer?Positive] /; d >= 2 := Module[
   before = Quiet@Check[GetRepresentations[], <||>];
   If[AssociationQ[before] && KeyExistsQ[before, rep], Return[True]];
 
-  (* Matchete's DefineRepresentation takes the already-defined gauge-group
-     name.  For the SM SU(2)_L group this is SU2L. *)
   defineStatus = Check[
     DefineRepresentation[
       rep,
@@ -107,46 +110,41 @@ EnsureBSMRepresentation[d_Integer?Positive] /; d >= 2 := Module[
   ]
 ];
 
+(* Dimension is now an index that relates our dimension to our logged dynkin labels *)
 BSMIndexType[1] := None;
 BSMIndexType[d_Integer?Positive] := Module[{ok = EnsureBSMRepresentation[d]},
   If[ok === $Failed, Return[Missing["UnsupportedSU2", d]]];
   BSMRepresentationName[d]
 ];
 
+(* Same thing, but for generic SU2, like for d=2 we have fund, for d=3 we have adj *)
 SU2IndexType[1] := None;
 SU2IndexType[d_Integer?Positive] := Module[{ok = EnsureSU2Representation[d]},
   If[ok === $Failed, Return[Missing["UnsupportedSU2", d]]];
   SU2L[SU2RepresentationName[d]]
 ];
 
-(* The five historical A-E assignments use only d<=3 and retain the exact
-   already-regression-tested Matchete contractions.  Any model containing a
-   higher irrep uses the generic canonical-BSM path. *)
+(* All our classified ABCDE graphs have 3 or less dimensions, we check if any of them are these classified ones *)
 T3LegacyModelQ[model_Association] :=
   Max[model["Scalar1", "SU2"], model["Scalar2", "SU2"], model["Fermion", "SU2"]] <= 3;
 
-(* Return the base Matchete representation/index type for a custom BSM irrep.
-   Pseudoreal Bar[...] orientation is applied centrally in
-   DefineSU2InvariantCG, where it can be kept consistent with CRep[...]. *)
+(* Return BSM representation from dynkin index *)
 SU2CGIndexRepresentation[d_Integer?Positive, objectConjugated_] := Module[{rep},
   If[d === 1, Return[None]];
   rep = BSMRepresentationName[d];
-
   (* For custom representations, DefineRepresentation registers the symbol
      rep itself (e.g. T3BSMd4) as the representation/index type. *)
   rep
 ];
 
-(* Define one exact SU(2) invariant tensor.
 
-   dims gives the representation dimension of each FIELD object appearing in
-   the interaction. objectConjugated marks whether that field object itself is
-   conjugated (Bar[...] or charge conjugated for gauge purposes).
-
-   InvariantTensors[alg,reps] returns tensors whose indices transform in the
-   conjugate representations, exactly what is needed to contract the fields.
-   Singlets carry no Matchete index and are removed before defining the CG.
+(* Given field and SU(2) rep, get invariant Clebsch Gordon tensor to contract indices into SU(2) singlet from Matchete 
+Our input is the Clebsch Gordon name, like T3Y1CG, whether fields in terms such as LFS is conjugated, so True,True,False would mean L is conj, F is conj, and S isnt
+symmetricPositions tells us if we have symmetry in term, like for HHSS^\dagger, the 2 S terms are symmetric, thus removing antisymmetric spaces
+smPositions tells us what position a field is a standard model, where we can use in built Matchete representation for them instead of BSM
 *)
+
+(*Essentially: Dimensions -> Dynkin Reps -> Invariant Tensors -> CG that can be used in Matchete*)
 DefineSU2InvariantCG[
   cgName_Symbol,
   dims_List,
@@ -156,31 +154,30 @@ DefineSU2InvariantCG[
 ] := Module[
   {keep, keptDims, keptConj, algebraReps, cgReps, tensors, symmetryAfterDrop, positionMap},
 
-  If[Length[dims] =!= Length[objectConjugated], Return[$Failed]];
-  If[!AllTrue[dims, IntegerQ[#] && Positive[#] &], Return[$Failed]];
 
-  Scan[EnsureBSMRepresentation, DeleteDuplicates[dims]];
+  If[Length[dims] =!= Length[objectConjugated], Return[$Failed]]; (* For each field we need to say if it is conjugated or not *)
+  If[!AllTrue[dims, IntegerQ[#] && Positive[#] &], Return[$Failed]]; (* Only integer positive dimensions *)
 
-  keep = Flatten@Position[dims, _?(# > 1 &)];
+  (* For each field we have, we need to make sure we have a representation for its dimension, also deleting repeated *)
+  Scan[EnsureBSMRepresentation, DeleteDuplicates[dims]]; 
+
+  (* Remove singlets as they dont have indices, create new arrays with what is left over *)
+  keep = Flatten@Position[dims, _?(# > 1 &)]; 
   keptDims = dims[[keep]];
   keptConj = objectConjugated[[keep]];
 
-  (* No non-trivial indices: the interaction is already an SU(2) singlet. *)
+  (* No CG if we have a singlet *)
   If[keptDims === {}, Return[None]];
 
-  (* Matchete distinguishes the orientation of pseudoreal SU(2) indices.
-
-     The orientation rule was verified explicitly for 2 x 4 x 3:
+  (* Matchete distinguishes the orientation of pseudoreal (half integer isospin and even dimensions) SU(2) indices.
        - a conjugated pseudoreal FIELD is represented by CRep[label] in
          InvariantTensors and by an UNBARRED representation in DefineCG;
        - an unconjugated pseudoreal FIELD uses the plain Dynkin label in
          InvariantTensors and the BARRED representation in DefineCG.
+     For odd-dimensional full integer isospin SU(2) irreps the representation is real, so no CRep/Bar distinction is required.
+    Objectconjugated/keptConj tells us if the field object is gauge-conjugated *)
 
-     These choices are complementary.  For odd-dimensional SU(2) irreps the
-     representation is real, so no CRep/Bar distinction is required.
-
-     objectConjugated therefore has a direct physics meaning here: it records
-     whether the field object appearing in the interaction is gauge-conjugated. *)
+  (* The following uses this, where unconjugated becomes {3} and conjugated will be CRep[{3}], this is what we need to do for Machete *)
   algebraReps = MapThread[
     Function[{d, conjugated},
       Module[{label = SU2DynkinLabel[d]},
@@ -193,6 +190,9 @@ DefineSU2InvariantCG[
     {keptDims, keptConj}
   ];
 
+  (* Matchete's Invariant Tensors returns tensors with indices that transform in conjugate representation 
+    So tensor index transforms opposite to the algebra field
+  *)
   cgReps = MapThread[
     Function[{originalPosition, d, conjugated},
       Module[{baseRep},
@@ -211,9 +211,11 @@ DefineSU2InvariantCG[
     {keep, keptDims, keptConj}
   ];
 
-  (* Translate symmetry positions from the original field list to the reduced
-     list after SU(2) singlets have been removed. *)
+  (* If we removes a singlet, we need to shift all our positions to fit the new positions of our arrays, like symmetry positions *)
   positionMap = AssociationThread[keep -> Range[Length[keep]]];
+
+
+  (* We want to prevent antisymmetric tensor products when we have symmetric fields, this is used later *)
   symmetryAfterDrop = Select[
     Lookup[positionMap, #, Missing["Dropped"]] & /@ symmetricPositions,
     IntegerQ
@@ -224,8 +226,7 @@ DefineSU2InvariantCG[
     ", CG reps=", InputForm[cgReps],
     ", symmetric positions=", symmetryAfterDrop];
 
-  (* Do not Quiet this during generic-representation bring-up: Matchete's
-     diagnostic message is essential if a representation/contraction fails. *)
+  (* We obtain Invariant tensors, noting that symmetry is tracked *)
   tensors = Check[
     If[symmetryAfterDrop === {},
       InvariantTensors[SU[2], algebraReps],
@@ -237,14 +238,13 @@ DefineSU2InvariantCG[
   Print["    InvariantTensors result head: ", Head[tensors],
     If[ListQ[tensors], ", count=" <> ToString[Length[tensors]], ""]];
 
+  (* If no tensors we failed *)
   If[tensors === $Failed || !ListQ[tensors] || Length[tensors] === 0,
     Print["    FAILED while generating invariant tensor for ", SymbolName[cgName]];
     Return[$Failed]
   ];
 
-  (* Every T3 invariant used here is one-dimensional once the identical-Higgs
-     symmetry is imposed.  If Matchete ever finds more than one tensor, keep
-     the first as a definite basis choice and expose the multiplicity. *)
+  (* If we have more than one invariant tensor in large representation, we just use the first basis *)
   If[Length[tensors] > 1,
     Print["WARNING: ", SymbolName[cgName], " has ", Length[tensors],
       " invariant tensors; using the first basis tensor."]
@@ -252,7 +252,7 @@ DefineSU2InvariantCG[
 
   Module[{defined},
     defined = Check[
-      DefineCG[cgName, cgReps, First[tensors]];
+      DefineCG[cgName, cgReps, First[tensors]]; (* < We get the CG coefficients from invariant tensors *)
       cgName,
       $Failed
     ];
@@ -261,10 +261,11 @@ DefineSU2InvariantCG[
   ]
 ];
 
-(* Register the three topology-defining invariant tensors for the current
-   model.  Their field order is the same order used in the interaction. *)
+(* Register the three topology-defining invariant tensors for our 3 fields in the model.  Their field order is the same order used in the interaction. *)
+(* We get invariant CG from each our interactions vertices, and define it for the model *)
 DefineT3InvariantCGs[model_Association] := Module[
   {d1, d2, dF, y1cg, y2cg, mixcg},
+  
   d1 = model["Scalar1", "SU2"];
   d2 = model["Scalar2", "SU2"];
   dF = model["Fermion", "SU2"];
@@ -293,18 +294,20 @@ DefineT3InvariantCGs[model_Association] := Module[
   <|"Yukawa1" -> y1cg, "Yukawa2" -> y2cg, "Mixing" -> mixcg|>
 ];
 
+(* We define couplings for matchete *)
 DefineT3TwoScalarCouplings[] := Module[{},
   DefineCoupling[y1, Indices -> {Flavor, NFlavor}, SelfConjugate -> False];
   DefineCoupling[y2, Indices -> {Flavor, NFlavor}, SelfConjugate -> False];
-  DefineCoupling[lambdaS1, SelfConjugate -> True];
-  DefineCoupling[lambdaS2, SelfConjugate -> True];
-  DefineCoupling[lambdaH1, SelfConjugate -> True];
-  DefineCoupling[lambdaH2, SelfConjugate -> True];
-  DefineCoupling[lambda12, SelfConjugate -> True];
-  DefineCoupling[lambdaT3, SelfConjugate -> False];
+  DefineCoupling[lambdaS1, SelfConjugate -> True]; (* (S_1^\daggerS_1)^2 *)
+  DefineCoupling[lambdaS2, SelfConjugate -> True]; (* (S_2^\daggerS_2)^2 *)
+  DefineCoupling[lambdaH1, SelfConjugate -> True]; (* (H^\daggerH)(S_1^\daggerS_1) *)
+  DefineCoupling[lambdaH2, SelfConjugate -> True]; (* (H^\daggerH)(S_2^\daggerS_2) *)
+  DefineCoupling[lambda12, SelfConjugate -> True]; (* (S_1^\daggerS_1)(S_2^\daggerS_2) *)
+  DefineCoupling[lambdaT3, SelfConjugate -> False]; (* (HH)(S_1S_2^\dagger) +h.c. *)
   True
 ];
 
+(* We convert into matchete fields *)
 DefineT3TwoScalarFields[model_Association] := Module[
   {f, s1, s2, fidx, s1idx, s2idx, findices, s1indices, s2indices, selfConj},
 
@@ -493,10 +496,10 @@ BuildT3MixingCandidatesLegacy[model_Association] := Module[
   ]
 ];
 
-(* Build the topology Yukawa with the generic Matchete-generated CG. *)
+(* Build the topology Yukawa with the generic Matchete-generated CG. Remember its yukawa *)
 BuildT3YukawaCandidates[model_Association, which_Integer] := Module[
   {s, dS, dF, y, scalarBar, useCConj, baseName, p, r, i, j, k, f, scalar, labels, cg},
-
+  (* Eg: 2x1x2 -> {i,k}, and 2x4x3 -> {i,j,k}  due to singlets getting out*)
   s = model[If[which === 1, "Scalar1", "Scalar2"]];
   dS = s["SU2"];
   dF = model["Fermion", "SU2"];
@@ -506,6 +509,7 @@ BuildT3YukawaCandidates[model_Association, which_Integer] := Module[
   baseName = "Yukawa" <> ToString[which];
   cg = If[which === 1, T3Y1CG, T3Y2CG];
 
+  (* Checks if our fermion and scalar have an SU(2) index, so not singlet *)
   f = If[dF === 1,
     If[useCConj, CConj[NewFermion[r]], NewFermion[r]],
     If[useCConj, CConj[NewFermion[j, r]], NewFermion[j, r]]
@@ -534,7 +538,7 @@ BuildT3YukawaCandidates[model_Association, which_Integer] := Module[
   }
 ];
 
-(* Essential T3 scalar vertex H H S1 S2^dagger + h.c.  The invariant tensor is
+(* Now H H S1 S2^dagger + h.c. vertex  The invariant tensor is
    generated for the exact requested representations and is symmetric in the
    two Higgs indices. *)
 BuildT3MixingCandidates[model_Association] := Module[
@@ -559,8 +563,12 @@ BuildT3MixingCandidates[model_Association] := Module[
   }
 ];
 
+(* We check with Matchete if the lagrangian with the interaction is valid *)
 ValidateT3Candidate[c_, LSM_, LFree_] := Module[{res},
   Print["Checking candidate: ", c["Name"]];
+  (* Relabel indices is to prevent dummy index clashes, 
+  like for A_i B_i + C_i D_i  are independent despite both using i 
+  We prevent reusing index labels and throughout the file*)
   res = CheckAbort[
     Check[CheckLagrangian[(LSM + LFree + c["Expression"]) // RelabelIndices], $Failed],
     $Aborted
@@ -585,9 +593,7 @@ SelectFirstValidByGroup[list_List] := Module[{seen = <||>},
   ]
 ];
 
-(* Assemble all interaction candidates without validating them.  Keeping this
-   separate from BuildT3Lagrangian makes the physics content easy to inspect:
-   two topology Yukawas, the scalar potential terms, and the T3-closing quartic. *)
+(* Assemble all interaction candidates without validating them.*)
 BuildT3InteractionCandidates[model_Association, legacyQ_] := Module[{d1, d2},
   d1 = model["Scalar1", "SU2"];
   d2 = model["Scalar2", "SU2"];
@@ -621,18 +627,22 @@ BuildT3InteractionCandidates[model_Association, legacyQ_] := Module[{d1, d2},
 ];
 
 (* A genuine T3 contribution requires both lepton-fermion-scalar Yukawas and
-   the quartic that connects S1 and S2 to the two Higgs legs. *)
+   the quartic that connects S1 and S2 to the two Higgs legs. 
+   No weinberg without these 3 elements *)
 T3IngredientsPresentQ[valid_List] := And @@ (
   Function[class,
     AnyTrue[valid, Lookup[#, "Class", ""] === class &]
   ] /@ {"Yukawa1", "Yukawa2", "T3ScalarMix"}
 );
 
+(* We do everything her  *)
 BuildT3Lagrangian[model_Association] := Module[
   {LSM, LFree, cgStatus, legacyQ, candidates, validated, valid, rejected,
    LInt, LBSM, LUV, fullValidation, ingredientsPresent},
 
   ResetAll[];
+  
+  (* We check if we use the classes or different models *)
   legacyQ = T3LegacyModelQ[model];
 
   Print["Build stage 1/4: load SM"];
@@ -654,9 +664,6 @@ BuildT3Lagrangian[model_Association] := Module[
     Print["  coupling definition result: True"]
   ];
 
-  (* Custom CGs can only be registered after LoadModel has created SU2L and
-     after the BSM representations have been defined.  The historical d<=3
-     models deliberately keep their already-regression-tested contractions. *)
   If[legacyQ,
     Print["Build stage 4/4: legacy d<=3 contractions (no custom CG setup)"];
     cgStatus = <|"Mode" -> "Legacy"|>,
@@ -666,20 +673,24 @@ BuildT3Lagrangian[model_Association] := Module[
     If[cgStatus === $Failed, Return[$Failed]]
   ];
 
+  (* Get free Lagrangian *)
   LFree = FreeLag[NewFermion, NewScalar1, NewScalar2] // RelabelIndices;
 
   candidates = BuildT3InteractionCandidates[model, legacyQ];
   candidates = Association[#, "Expression" -> RelabelIndices[#["Expression"]]] & /@ candidates;
 
+  (* We validate each interaction individually, seeing if they are compatible *)
   validated = ValidateT3Candidate[#, LSM, LFree] & /@ candidates;
   valid = SelectFirstValidByGroup @ Select[validated, TrueQ[#["Valid"]] &];
   rejected = Select[validated, !TrueQ[#["Valid"]] &];
 
+  (* Build interaction lagrangian and then the UV *)
   LInt = Total[Lookup[valid, "Expression", {}]] // Expand // RelabelIndices;
   LBSM = (LFree + LInt) // Expand // RelabelIndices;
   LUV = (LSM + LBSM) // Expand // RelabelIndices;
   fullValidation = CheckAbort[Check[CheckLagrangian[LUV], $Failed], $Aborted];
 
+  (* Check if it has all the vertices for T3 diagram *)
   ingredientsPresent = T3IngredientsPresentQ[valid];
 
   <|

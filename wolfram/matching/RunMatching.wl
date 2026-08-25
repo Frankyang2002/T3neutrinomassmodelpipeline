@@ -18,10 +18,11 @@ ClearAll[
 (* Matching pipeline                                                       *)
 (* ---------------------------------------------------------------------- *)
 
-(* Convert messages and aborts into the failure markers used by the runner. *)
+(* Wrapper to make the code deal with errors *)
 SafeStage[operation_] := CheckAbort[Check[operation, $Failed], $Aborted];
 
 (* Run ordered matching stages while retaining every intermediate result. *)
+(* We are running many functions in a row *)
 RunStages[input_, stages_List, prefix_Association : <||>] := Module[
   {current = input, results = <||>, stageName, function, key, failureStatus, value},
 
@@ -29,14 +30,18 @@ RunStages[input_, stages_List, prefix_Association : <||>] := Module[
     {stageName, function, key, failureStatus} = specification;
     Print["Running ", stageName, "..."];
 
+    (* Specification looks like {  humanReadableName,  functionToRun,  resultKey,  errorStatus}
+    Example is {"Match",  Match[#, EFTOrder -> eftOrder, LoopOrder -> loopOrder] &, "RawEFT",  "MatchFailed"}*)
     value = SafeStage[function[current]];
-    results[key] = value;
+    results[key] = value; (* We keep intermediate representations, not just leaving the last one *)
 
+    (* Detect failures *)
     If[MemberQ[{$Failed, $Aborted}, value],
       Print["ERROR: ", stageName, " failed or aborted."];
       Return[Join[<|"Status" -> failureStatus|>, prefix, results]]
     ];
 
+    (* Output to next stage *)
     current = value,
     {specification, stages}
   ];
@@ -44,6 +49,10 @@ RunStages[input_, stages_List, prefix_Association : <||>] := Module[
   Join[<|"Status" -> "Success"|>, prefix, results]
 ];
 
+(* We get actual Matchete workflow 
+
+First we match -> then we green simplify to get green basis, getting rid of redundancies coming from integration by parts and identities etc ->
+EOM simplify remove operator redundancies from EOM -> Evaluate loop functions -> replace effective couplings with our original couplings*)
 MatchingStages[eftOrder_Integer, loopOrder_Integer] := {
   {
     "Match",
@@ -67,6 +76,7 @@ MatchingStages[eftOrder_Integer, loopOrder_Integer] := {
   }
 };
 
+(* Convenient Wrapper to get EFT order and loop order *)
 RunT3Matching[LUV_, eftOrder_Integer : 5, loopOrder_Integer : 1] := Module[
   {metadata},
 
@@ -84,6 +94,7 @@ RunT3Matching[LUV_, eftOrder_Integer : 5, loopOrder_Integer : 1] := Module[
 ];
 
 (* Pure SM has no heavy field: if Match fails, canonicalise LSM directly. *)
+(* We are comparing SM and full lagrangian *)
 RunSMBaselineMatching[LSM_, eftOrder_Integer : 5, loopOrder_Integer : 1] := Module[
   {attempt, metadata, stages, result},
 
@@ -126,46 +137,86 @@ RunSMBaselineMatching[LSM_, eftOrder_Integer : 5, loopOrder_Integer : 1] := Modu
   RunStages[LSM, stages, metadata]
 ];
 
-(* Re-canonicalise full-SM because Matchete may choose different dummy indices. *)
+(* Gives us BSM contribution to EFT *)
 BuildMatchedEFTDifference[fullEFT_, smEFT_] := Module[
-  {input, stages, result},
+  {
+    input,
+    greenDifference,
+    eomDifference,
+    canonicalInput,
+    loopDifference,
+    bsmEFT
+  },
 
   input = Expand[fullEFT - smEFT];
-  stages = {
-    {
-      "GreensSimplifyDifference",
-      GreensSimplify,
-      "GreenDifference",
-      "DifferenceGreensSimplifyFailed"
-    },
-    {
-      "EOMSimplifyDifference",
-      EOMSimplify,
-      "EOMDifference",
-      "DifferenceEOMSimplifyFailed"
-    },
-    {
-      "EvaluateLoopFunctionsDifference",
-      EvaluateLoopFunctions,
-      "LoopDifference",
-      "DifferenceLoopEvaluationFailed"
-    },
-    {
-      "ReplaceEffectiveCouplingsDifference",
-      ReplaceEffectiveCouplings,
-      "BSMEFT",
-      "DifferenceEffectiveCouplingReplacementFailed"
-    }
-  };
 
   Print["\nCanonicalising the matched full-minus-SM EFT difference..."];
-  result = RunStages[input, stages];
 
-  If[Lookup[result, "Status", ""] === "Success",
-    Print["Matched EFT difference canonicalised successfully."]
+  Print["Running GreensSimplifyDifference..."];
+  greenDifference = SafeStage[GreensSimplify[input]];
+  If[MemberQ[{$Failed, $Aborted}, greenDifference],
+    Print["ERROR: GreensSimplifyDifference failed or aborted."];
+    Return[<|
+      "Status" -> "DifferenceGreensSimplifyFailed",
+      "InputDifference" -> input,
+      "GreenDifference" -> greenDifference
+    |>]
   ];
 
-  result
+  (* A difference-only EFT need not contain the complete kinetic structure
+     expected by EOMSimplify. If it rejects the difference, keep the
+     GreensSimplify result and continue with the remaining canonicalisation. *)
+  Print["Running EOMSimplifyDifference..."];
+  eomDifference = SafeStage[EOMSimplify[greenDifference]];
+
+  canonicalInput = If[
+    MemberQ[{$Failed, $Aborted}, eomDifference],
+    Print[
+      "EOMSimplifyDifference could not canonicalise the difference-only EFT; ",
+      "continuing from GreenDifference."
+    ];
+    greenDifference,
+    eomDifference
+  ];
+
+  Print["Running EvaluateLoopFunctionsDifference..."];
+  loopDifference = SafeStage[EvaluateLoopFunctions[canonicalInput]];
+  If[MemberQ[{$Failed, $Aborted}, loopDifference],
+    Print["ERROR: EvaluateLoopFunctionsDifference failed or aborted."];
+    Return[<|
+      "Status" -> "DifferenceLoopEvaluationFailed",
+      "InputDifference" -> input,
+      "GreenDifference" -> greenDifference,
+      "EOMDifference" -> eomDifference,
+      "LoopDifference" -> loopDifference
+    |>]
+  ];
+
+  Print["Running ReplaceEffectiveCouplingsDifference..."];
+  bsmEFT = SafeStage[ReplaceEffectiveCouplings[loopDifference]];
+  If[MemberQ[{$Failed, $Aborted}, bsmEFT],
+    Print["ERROR: ReplaceEffectiveCouplingsDifference failed or aborted."];
+    Return[<|
+      "Status" -> "DifferenceEffectiveCouplingReplacementFailed",
+      "InputDifference" -> input,
+      "GreenDifference" -> greenDifference,
+      "EOMDifference" -> eomDifference,
+      "LoopDifference" -> loopDifference,
+      "BSMEFT" -> bsmEFT
+    |>]
+  ];
+
+  Print["Matched EFT difference canonicalised successfully."];
+
+  <|
+    "Status" -> "Success",
+    "InputDifference" -> input,
+    "GreenDifference" -> greenDifference,
+    "EOMDifference" -> eomDifference,
+    "EOMFallbackUsed" -> MemberQ[{$Failed, $Aborted}, eomDifference],
+    "LoopDifference" -> loopDifference,
+    "BSMEFT" -> bsmEFT
+  |>
 ];
 
 

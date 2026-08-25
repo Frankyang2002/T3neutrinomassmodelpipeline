@@ -18,7 +18,7 @@ def run_command(command: list[str], cwd: Path) -> int:
     """Run one regression stage and return its process status."""
     return subprocess.run(command, cwd=cwd, text=True, check=False).returncode
 
-
+# Run smoke match
 def run_smoke_matching(verbose: bool) -> int:
     """Regenerate the five historical smoke-model outputs."""
     command = [sys.executable, str(PIPELINE_SCRIPT), "--smoke"]
@@ -26,9 +26,9 @@ def run_smoke_matching(verbose: bool) -> int:
         command.append("--verbose")
     return run_command(command, ROOT)
 
-
+# Get weinberg
 def run_c5_regression() -> int:
-    """Validate extracted C5 data, including the T3-B scotogenic limit."""
+    """Validate extracted C5 data."""
     return run_command(
         ["wolframscript", "-file", str(C5_REGRESSION_SCRIPT), str(OUTPUT_DIR)],
         WOLFRAM_DIR,

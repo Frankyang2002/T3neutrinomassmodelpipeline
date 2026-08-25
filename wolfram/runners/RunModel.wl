@@ -1,10 +1,11 @@
 (* RunModel.wl
+
    Run one T3 model from the command line, match it onto the EFT, extract C5,
    and write a compact machine-readable summary.
 
    CLI modes:
-     CLASS: output-dir EFT-order loop-order T3-class alpha
-     DIMS : output-dir EFT-order loop-order DIMS dS1 dS2 dF alpha
+     CLASS: output-dir EFT-order loop-order T3-class alpha eg: (output 5 1 B -1) < If we use the classes
+     DIMS : output-dir EFT-order loop-order DIMS dS1 dS2 dF alpha eg: (output 5 1 DIMS 3 5 4 0) < if we use non classified
 *)
 
 ClearAll["Global`*"];
@@ -15,6 +16,7 @@ scriptDirectory = DirectoryName @ ExpandFileName[$InputFileName];
 (* Command-line input                                                         *)
 (* ------------------------------------------------------------------------- *)
 
+(* m2 -> -2, p2 -> +2 etc, translation device *)
 ParseSignedCLI[s_String] := Which[
   StringMatchQ[s, "m" ~~ DigitCharacter ..], -ToExpression @ StringDrop[s, 1],
   StringMatchQ[s, "p" ~~ DigitCharacter ..],  ToExpression @ StringDrop[s, 1],
@@ -31,8 +33,8 @@ ParseCLI[args_List] := Module[
   mode = If[Length[args] >= 4, ToUpperCase @ args[[4]], "B"];
 
   If[mode === "DIMS",
-    If[Length[args] < 8, Return[$Failed]];
-    {dS1, dS2, dF} = ToExpression /@ args[[5 ;; 7]];
+    If[Length[args] < 8, Return[$Failed]]; (* Needs enough dimensions for all fields *)
+    {dS1, dS2, dF} = ToExpression /@ args[[5 ;; 7]]; 
     alpha = ParseSignedCLI @ args[[8]],
     alpha = If[Length[args] >= 5, ParseSignedCLI @ args[[5]], -1]
   ];
@@ -49,6 +51,7 @@ ParseCLI[args_List] := Module[
 (* Output helpers                                                             *)
 (* ------------------------------------------------------------------------- *)
 
+(* Recieves Weinberg Coefficient information and Writes to files *)
 ExportWeinbergArtifacts[data_Association, output_String] := Module[
   {terms, coefficient, sectorTeX, coefficientTeX},
 
@@ -89,7 +92,8 @@ ExportWeinbergArtifacts[data_Association, output_String] := Module[
   ];
 ];
 
-BuildSummary[model_, alpha_, build_, matching_, data_, uv_, bsm_, eft_] := Module[
+(* Build our outputs *)
+BuildSummary[model_, alpha_, build_, matching_, smMatching_, difference_, data_, uv_, bsm_, eft_, bsmEft_] := Module[
   {coefficient, coefficientTeX, sectorTeX, terms},
 
   coefficient = Lookup[data, "Coefficient", Missing["PendingCanonicalisation"]];
@@ -135,9 +139,17 @@ BuildSummary[model_, alpha_, build_, matching_, data_, uv_, bsm_, eft_] := Modul
     "UVConversionSuccess" -> TrueQ[uv["Success"]],
     "BSMUVConversionSuccess" -> TrueQ[bsm["Success"]],
     "EFTConversionSuccess" -> TrueQ[eft["Success"]],
+    "BSMEFTConversionSuccess" -> TrueQ[bsmEft["Success"]],
+    "SMMatchingStatus" -> Lookup[smMatching, "Status", "Unknown"],
+    "SMBaselineMode" -> Lookup[smMatching, "BaselineMode", "Unknown"],
+    "BSMDifferenceStatus" -> Lookup[difference, "Status", "Unknown"],
+    "BSMDifferenceEOMFallbackUsed" -> TrueQ @ Lookup[
+      difference, "EOMFallbackUsed", False
+    ],
     "UVLagrangianLaTeX" -> uv["LaTeX"],
     "BSMUVLagrangianLaTeX" -> bsm["LaTeX"],
-    "EFTLagrangianLaTeX" -> eft["LaTeX"]
+    "EFTLagrangianLaTeX" -> eft["LaTeX"],
+    "BSMEFTLagrangianLaTeX" -> bsmEft["LaTeX"]
   |>
 ];
 
@@ -146,6 +158,7 @@ BuildSummary[model_, alpha_, build_, matching_, data_, uv_, bsm_, eft_] := Modul
 (* Main pipeline                                                              *)
 (* ------------------------------------------------------------------------- *)
 
+(* We run parser *)
 config = ParseCLI @ Rest[$ScriptCommandLine];
 If[config === $Failed,
   Print["ERROR: DIMS mode requires dS1 dS2 dF alpha."];
@@ -162,11 +175,13 @@ matcheteLoaded = UsingFrontEnd[Needs["Matchete`"]; True];
 If[!TrueQ[matcheteLoaded], Print["ERROR: Matchete failed to load."]; Exit[6]];
 Print["Matchete loaded successfully."];
 
-Get[FileNameJoin @ {scriptDirectory, "..", "core", "PhysicsLaTeX.wl"}];
-Get[FileNameJoin @ {scriptDirectory, "..", "t3", "T3ModelCatalog.wl"}];
-Get[FileNameJoin @ {scriptDirectory, "..", "t3", "LagrangianBuilder.wl"}];
-Get[FileNameJoin @ {scriptDirectory, "..", "matching", "RunMatching.wl"}];
+(* Load our modules *)
+Get[FileNameJoin @ {scriptDirectory, "..", "core", "PhysicsLaTeX.wl"}]; (* Translator *)
+Get[FileNameJoin @ {scriptDirectory, "..", "t3", "T3ModelCatalog.wl"}]; (* Gets dimensions and representations *)
+Get[FileNameJoin @ {scriptDirectory, "..", "t3", "LagrangianBuilder.wl"}]; (* Gets Lagrangian *)
+Get[FileNameJoin @ {scriptDirectory, "..", "matching", "RunMatching.wl"}]; (* Matches *)
 
+(* Get model from SU2 dimensions *)
 model = If[
   config["Mode"] === "DIMS",
   T3ModelFromDimensions[Sequence @@ config["Dimensions"], config["Alpha"]],
@@ -180,13 +195,13 @@ If[model === $Failed,
   Exit[2]
 ];
 
+(* Print models *)
 Print["Model: ", model["Class"], ", alpha = ", config["Alpha"]];
 Print["Scalar1 (d,Y) = ", {model["Scalar1", "SU2"], model["Scalar1", "Y"]}];
 Print["Scalar2 (d,Y) = ", {model["Scalar2", "SU2"], model["Scalar2", "Y"]}];
 Print["Fermion (d,Y) = ", {model["Fermion", "SU2"], model["Fermion", "Y"]}];
 
-(* The generic builder uses Matchete group-theory routines that can require
-   front-end services. Keep that dependency scoped to model construction. *)
+(* We build Lagrangian *)
 build = CheckAbort[UsingFrontEnd[BuildT3Lagrangian[model]], $Aborted];
 If[!AssociationQ[build] || build === $Aborted || build === $Failed,
   Print["ERROR: build failed."]; Exit[10]
@@ -197,6 +212,7 @@ If[build["Status"] =!= "Success",
 Print["Accepted interactions: ", build["AllowedInteractions"]];
 Print["T3 ingredients present: ", build["T3IngredientsPresent"]];
 
+(* We match *)
 matching = CheckAbort[
   RunT3Matching[build["LUV"], config["EFTOrder"], config["LoopOrder"]],
   $Aborted
@@ -206,12 +222,55 @@ If[!AssociationQ[matching] || Lookup[matching, "Status", ""] =!= "Success",
 ];
 
 matchedEFT = Lookup[matching, "MatchedEFT", Lookup[matching, "LoopEFT", 0]];
+
+(* The builder returns LUV = LSM + LBSM, we get LSM be removing LBSM. *)
+smLagrangian = Expand[build["LUV"] - build["LBSM"]];
+
+Print["\nStarting pure-SM baseline matching..."];
+smMatching = CheckAbort[
+  RunSMBaselineMatching[
+    smLagrangian,
+    config["EFTOrder"],
+    config["LoopOrder"]
+  ],
+  $Aborted
+];
+
+If[
+  !AssociationQ[smMatching] ||
+    Lookup[smMatching, "Status", ""] =!= "Success",
+  Print["ERROR: pure-SM baseline matching failed."];
+  Exit[13]
+];
+
+(* get smEFT *)
+smMatchedEFT = Lookup[
+  smMatching,
+  "MatchedEFT",
+  Lookup[smMatching, "LoopEFT", smLagrangian]
+];
+
+(* get BSM EFT from subtraction *)
+difference = CheckAbort[
+  BuildMatchedEFTDifference[matchedEFT, smMatchedEFT],
+  $Aborted
+];
+
+If[
+  !AssociationQ[difference] ||
+    Lookup[difference, "Status", ""] =!= "Success",
+  Print["ERROR: BSM EFT difference construction failed."];
+  Exit[14]
+];
+
+bsmMatchedEFT = Lookup[difference, "BSMEFT", 0];
+
 uvTeX = ExpressionToLaTeX[build["LUV"]];
 bsmTeX = ExpressionToLaTeX[build["LBSM"]];
 eftTeX = ExpressionToLaTeX[matchedEFT];
+bsmEftTeX = ExpressionToLaTeX[bsmMatchedEFT];
 
-(* Weinberg detection and coefficient extraction are kept together so the
-   summary and exported diagnostics are derived from the same result. *)
+(* Get Weinberg Coefficient from matchedEFT *)
 weinbergData = ExtractWeinbergCoefficient[matchedEFT];
 weinbergCoefficient = Lookup[weinbergData, "Coefficient", Missing["PendingCanonicalisation"]];
 weinbergData = Join[
@@ -226,9 +285,21 @@ weinbergData = Join[
   |>
 ];
 
+
+(* Write the Weinberg files *)
 ExportWeinbergArtifacts[weinbergData, outputDirectory];
 summary = BuildSummary[
-  model, config["Alpha"], build, matching, weinbergData, uvTeX, bsmTeX, eftTeX
+  model,
+  config["Alpha"],
+  build,
+  matching,
+  smMatching,
+  difference,
+  weinbergData,
+  uvTeX,
+  bsmTeX,
+  eftTeX,
+  bsmEftTeX
 ];
 Export[FileNameJoin @ {outputDirectory, "comparison_summary.json"}, summary, "RawJSON"];
 
@@ -247,5 +318,9 @@ If[summary["WeinbergOperatorPresent"],
     Print["C5 canonicalisation: pending"]
   ];
 ];
+
+Print["Pure-SM matching status: ", summary["SMMatchingStatus"]];
+Print["BSM EFT difference status: ", summary["BSMDifferenceStatus"]];
+Print["BSM EFT conversion success: ", summary["BSMEFTConversionSuccess"]];
 
 Exit[0];

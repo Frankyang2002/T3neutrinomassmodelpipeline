@@ -1,3 +1,5 @@
+# Not looked into yet
+
 """Symbolic helpers for converting the general psi^2 phi^2 RGE to the
 scotogenic-model conventions used in the project.
 

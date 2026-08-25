@@ -10,8 +10,15 @@ Model: T3-E, alpha = 0
 Scalar1 (d,Y) = {3, 0}
 Scalar2 (d,Y) = {3, 1}
 Fermion (d,Y) = {2, 1/2}
-
-FrontEndObject::notavail: A front end is not available; certain operations require a front end.
+Build stage 1/4: load SM
+  LoadModel result: OK
+Build stage 2/4: define BSM fields
+  Defined BSM SU(2) representation T3BSMd2 with d=2, Dynkin={1}
+  Defined BSM SU(2) representation T3BSMd3 with d=3, Dynkin={2}
+  field definition result: InputForm[True]
+Build stage 3/4: define couplings
+  coupling definition result: InputForm[True]
+Build stage 4/4: legacy d<=3 contractions (no custom CG setup)
 Checking candidate: Yukawa1_Gen
 
 CheckLagrangian::ContractedIndices: The input Lagrangian contains open indices or a mismatch of bared and not bared indices.
@@ -35,7 +42,6 @@ Checking candidate: HiggsPortal2
 Checking candidate: ScalarCrossPortal
   result: InputForm[True]
 Checking candidate: T3ScalarMix_3x3
->> StringForm[Added new CG `1` with indices `2`, cg1, {SU2L[adj], SU2L[adj], Bar[SU2L[fund]], Bar[SU2L[fund]]}]
   result: InputForm[True]
 Accepted interactions: {Yukawa1_EpsGen, Yukawa2_Gen, Scalar1Self, Scalar2Self, HiggsPortal1, HiggsPortal2, ScalarCrossPortal, T3ScalarMix_3x3}
 T3 ingredients present: True
@@ -44,6 +50,8 @@ Running Matchete matching...
 EFT order: 5; loop order: 1
 Running Match...
 >> StringForm[Added new CG `1` with indices `2`, cg2, {SU2L[fund], SU2L[adj], SU2L[fund]}]
+
+FrontEndObject::notavail: A front end is not available; certain operations require a front end.
 
 FrontEndObject::notavail: A front end is not available; certain operations require a front end.
 

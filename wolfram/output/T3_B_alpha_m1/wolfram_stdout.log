@@ -10,8 +10,14 @@ Model: T3-B, alpha = -1
 Scalar1 (d,Y) = {2, -1/2}
 Scalar2 (d,Y) = {2, 1/2}
 Fermion (d,Y) = {1, 0}
-
-FrontEndObject::notavail: A front end is not available; certain operations require a front end.
+Build stage 1/4: load SM
+  LoadModel result: OK
+Build stage 2/4: define BSM fields
+  Defined BSM SU(2) representation T3BSMd2 with d=2, Dynkin={1}
+  field definition result: InputForm[True]
+Build stage 3/4: define couplings
+  coupling definition result: InputForm[True]
+Build stage 4/4: legacy d<=3 contractions (no custom CG setup)
 Checking candidate: Yukawa1_Eps
 
 CheckLagrangian::ContractedIndices: The input Lagrangian contains open indices or a mismatch of bared and not bared indices.
@@ -42,6 +48,8 @@ T3 ingredients present: True
 Running Matchete matching...
 EFT order: 5; loop order: 1
 Running Match...
+
+FrontEndObject::notavail: A front end is not available; certain operations require a front end.
 
 FrontEndObject::notavail: A front end is not available; certain operations require a front end.
 

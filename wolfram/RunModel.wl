@@ -8,13 +8,28 @@ args=Rest[$ScriptCommandLine];
 outputDirectory=If[Length[args]>=1,ExpandFileName@args[[1]],FileNameJoin@{scriptDirectory,"output","T3"}];
 eftOrder=If[Length[args]>=2,ToExpression@args[[2]],5];
 loopOrder=If[Length[args]>=3,ToExpression@args[[3]],1];
-modelClass=If[Length[args]>=4,ToUpperCase@args[[4]],"B"];
+modelMode=If[Length[args]>=4,ToUpperCase@args[[4]],"B"];
 ParseSignedCLI[s_String] := Which[
   StringMatchQ[s, "m" ~~ DigitCharacter ..], -ToExpression[StringDrop[s, 1]],
   StringMatchQ[s, "p" ~~ DigitCharacter ..],  ToExpression[StringDrop[s, 1]],
   True, ToExpression[s]
 ];
-alpha=If[Length[args]>=5,ParseSignedCLI[args[[5]]],-1];
+
+(* Two CLI modes are supported:
+     legacy:  ... CLASS alpha
+     generic: ... DIMS dS1 dS2 dF alpha
+   The legacy A-E mode is preserved for regression compatibility. *)
+If[modelMode === "DIMS",
+  If[Length[args] < 8,
+    Print["ERROR: DIMS mode requires dS1 dS2 dF alpha."];
+    Exit[2]
+  ];
+  dS1 = ToExpression@args[[5]];
+  dS2 = ToExpression@args[[6]];
+  dF  = ToExpression@args[[7]];
+  alpha = ParseSignedCLI[args[[8]]],
+  alpha = If[Length[args]>=5,ParseSignedCLI[args[[5]]],-1]
+];
 If[!DirectoryQ[outputDirectory],CreateDirectory[outputDirectory,CreateIntermediateDirectories->True]];
 Print["Loading Matchete..."];
 matcheteLoadResult = UsingFrontEnd[Needs["Matchete`"]; True];
@@ -27,13 +42,29 @@ Get[FileNameJoin@{scriptDirectory,"PhysicsLaTeX.wl"}];
 Get[FileNameJoin@{scriptDirectory,"T3ModelCatalog.wl"}];
 Get[FileNameJoin@{scriptDirectory,"LagrangianBuilder.wl"}];
 Get[FileNameJoin@{scriptDirectory,"RunMatching.wl"}];
-model=T3ModelFromClass[modelClass,alpha];
-If[model===$Failed,Print["ERROR: unknown T3 class."];Exit[2]];
+model = If[modelMode === "DIMS",
+  T3ModelFromDimensions[dS1,dS2,dF,alpha],
+  T3ModelFromClass[modelMode,alpha]
+];
+If[model===$Failed,
+  If[modelMode === "DIMS",
+    Print["ERROR: requested SU(2) dimensions do not form a T3 topology."],
+    Print["ERROR: unknown T3 class."]
+  ];
+  Exit[2]
+];
 Print["Model: ",model["Class"],", alpha = ",alpha];
 Print["Scalar1 (d,Y) = ", {model["Scalar1","SU2"],model["Scalar1","Y"]}];
 Print["Scalar2 (d,Y) = ", {model["Scalar2","SU2"],model["Scalar2","Y"]}];
 Print["Fermion (d,Y) = ", {model["Fermion","SU2"],model["Fermion","Y"]}];
-result=CheckAbort[BuildT3Lagrangian[model],$Aborted];
+(* The generic SU(2) builder calls Matchete group-theory routines such as
+   InvariantTensors/DefineCG.  In a wolframscript kernel these can indirectly
+   request front-end services.  Keep the front end scoped only to model
+   construction so the matching/output stages remain command-line friendly. *)
+result=CheckAbort[
+  UsingFrontEnd[BuildT3Lagrangian[model]],
+  $Aborted
+];
 If[!AssociationQ[result]||result===$Aborted||result===$Failed,Print["ERROR: build failed."];Exit[10]];
 If[result["Status"] =!= "Success",Print["ERROR: full UV validation failed."];Exit[11]];
 Print["Accepted interactions: ",result["AllowedInteractions"]];

@@ -20,7 +20,7 @@ The subsequent RGE evolution and conversion of the Weinberg coefficient into the
 
 ---
 
-## 1. Physics Scope
+## 0. Physics Scope
 
 The T3 topology contains three BSM multiplets:
 
@@ -82,7 +82,7 @@ $$
 
 ---
 
-## 2. UV Lagrangian
+## 1. UV Lagrangian
 
 For a valid T3 model, the builder defines the BSM fields, their gauge representations, and the interactions required by the topology.
 
@@ -148,7 +148,7 @@ The builder only reports a valid T3 construction when all three required ingredi
 
 ---
 
-## 3. EFT Matching
+## 2. EFT Matching
 
 Once the UV Lagrangian has been successfully constructed, Matchete is used to integrate out the heavy BSM fields at one loop.
 
@@ -162,27 +162,10 @@ $$
 
 The matching flow is
 
-```text
-LUV
- |
- v
-Match
- |
- v
-GreensSimplify
- |
- v
-EOMSimplify
- |
- v
-EvaluateLoopFunctions
- |
- v
-ReplaceEffectiveCouplings
- |
- v
+LUV ->Match ->GreensSimplify ->
+EOMSimplify ->EvaluateLoopFunctions ->ReplaceEffectiveCouplings ->
 Matched EFT
-```
+
 
 The same matching procedure is also applied to the Standard Model alone.
 
@@ -200,7 +183,7 @@ The result is canonicalised again after subtraction because algebraically equiva
 
 ---
 
-## 4. Weinberg Operator Extraction
+## 3. Weinberg Operator Extraction
 
 The dimension-five EFT is searched for the Weinberg operator,
 
@@ -226,33 +209,7 @@ Operator-presence detection and detailed coefficient extraction are intentionall
 
 ---
 
-## 5. Code Structure
-
-The main files for the current UV-to-EFT stage are
-
-```text
-pipeline.py
-|
-+-- wolfram/
-    |
-    +-- runners/
-    |   +-- RunModel.wl
-    |
-    +-- t3/
-    |   +-- T3ModelCatalog.wl
-    |   +-- LagrangianBuilder.wl
-    |
-    +-- matching/
-    |   +-- RunMatching.wl
-    |
-    +-- core/
-    |   +-- PhysicsLaTeX.wl
-    |
-    +-- tests/
-        +-- RegressionC5.wl
-```
-
-Supporting invariance modules provide the common $U(1)_Y$, $SU(2)_L$, and T3/$Z_2$ checks.
+## 4. Code Structure
 
 ### `pipeline.py`
 
@@ -260,7 +217,7 @@ Python command-line entry point.
 
 It can run either:
 
-- the historical T3-A--E benchmark models; or
+- the classfied T3-A--E benchmark models; or
 - an arbitrary valid representation assignment $(d_{S_1},d_{S_2},d_F)$.
 
 It also manages output directories, Wolfram subprocesses, logs, and aggregate summaries.
@@ -317,7 +274,7 @@ Converts Matchete's internal expressions into more readable physics-oriented LaT
 
 ---
 
-## 6. Running the Pipeline
+## 5. Running the Pipeline
 
 ### Historical T3 smoke test
 
@@ -365,15 +322,11 @@ $$
 
 The Python front end first checks that the requested dimensions satisfy the T3 representation conditions before invoking Matchete.
 
-### Verbose Matchete output
 
-```bash
-python pipeline.py --smoke --verbose
-```
 
 ---
 
-## 7. Output
+## 6. Output
 
 Each run receives its own directory under
 
@@ -407,7 +360,7 @@ wolfram/output/t3_model_comparison.json
 
 ---
 
-## 8. Regression Testing
+## 7. Regression Testing
 
 The UV-to-$C_5$ stage has a dedicated regression gate:
 
@@ -436,43 +389,7 @@ to ensure that the arbitrary-representation path remains functional.
 
 ---
 
-## 9. Current Status
-
-The following stage is working:
-
-```text
-SU(2) representations + hypercharge
-              |
-              v
-       T3 model catalogue
-              |
-              v
-      UV field definition
-              |
-              v
-   invariant interaction search
-              |
-              v
-       UV Lagrangian
-              |
-              v
-     one-loop Matchete match
-              |
-              v
-        BSM EFT at d <= 5
-              |
-              v
-       Weinberg operator
-              |
-              v
-             C5
-```
-
-The five historical T3 classes pass the UV construction and one-loop matching regression, and the generic representation path has been successfully exercised beyond singlets, doublets, and triplets.
-
----
-
-## 10. Not Covered Here
+## 8. Not Covered Here
 
 This README intentionally stops at the extracted Weinberg coefficient.
 

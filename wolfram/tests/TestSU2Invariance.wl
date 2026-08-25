@@ -5,7 +5,7 @@
       wolframscript -file TestSU2Invariance.wl
 *)
 
-Get[FileNameJoin[{DirectoryName@ExpandFileName[$InputFileName], "GaugeInvariance.wl"}]];
+Get[FileNameJoin[{DirectoryName[$InputFileName], "..", "core", "GaugeInvariance.wl"}]];
 
 ClearAll[AssertEqual];
 AssertEqual[label_String, actual_, expected_] := Module[{},

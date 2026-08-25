@@ -7,25 +7,63 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-W = ROOT / "wolfram"
-OUT = W / "output"
-PIPELINE = ROOT / "pipeline.py"
-WOLFRAM_REGRESSION = W / "RegressionC5.wl"
+WOLFRAM_DIR = ROOT / "wolfram"
+OUTPUT_DIR = WOLFRAM_DIR / "output"
+PIPELINE_SCRIPT = ROOT / "pipeline.py"
+C5_REGRESSION_SCRIPT = WOLFRAM_DIR / "tests" / "RegressionC5.wl"
+REPORT_FILE = OUTPUT_DIR / "t3_regression_report.json"
 
 
-def run(cmd: list[str], cwd: Path) -> int:
-    proc = subprocess.run(cmd, cwd=cwd, text=True)
-    return proc.returncode
+def run_command(command: list[str], cwd: Path) -> int:
+    """Run one regression stage and return its process status."""
+    return subprocess.run(command, cwd=cwd, text=True, check=False).returncode
+
+
+def run_smoke_matching(verbose: bool) -> int:
+    """Regenerate the five historical smoke-model outputs."""
+    command = [sys.executable, str(PIPELINE_SCRIPT), "--smoke"]
+    if verbose:
+        command.append("--verbose")
+    return run_command(command, ROOT)
+
+
+def run_c5_regression() -> int:
+    """Validate extracted C5 data, including the T3-B scotogenic limit."""
+    return run_command(
+        ["wolframscript", "-file", str(C5_REGRESSION_SCRIPT), str(OUTPUT_DIR)],
+        WOLFRAM_DIR,
+    )
+
+
+def print_report(report_path: Path) -> None:
+    report = json.loads(report_path.read_text(encoding="utf-8"))
+
+    print("\n" + "=" * 72)
+    print("FINAL T3 REGRESSION")
+    print("=" * 72)
+    print(
+        f"{report.get('Status', 'UNKNOWN')}: "
+        f"{report.get('Passed', 0)} passed, {report.get('Failed', 0)} failed"
+    )
+
+    for test in report.get("Tests", []):
+        if test.get("Pass", False):
+            continue
+        detail = test.get("Detail", "")
+        suffix = f" — {detail}" if detail and detail != '""' else ""
+        print(f"  FAIL: {test.get('Test')}{suffix}")
+
+    print(f"Report: {report_path}")
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Final regression gate for the T3 UV->matching->C5 stage."
+        description="Regression gate for T3 UV matching and C5 extraction."
     )
     parser.add_argument(
         "--no-rematch",
         action="store_true",
-        help="reuse existing wolfram/output smoke results instead of rerunning matching",
+        help="reuse existing smoke outputs instead of rerunning matching",
     )
     parser.add_argument(
         "--verbose",
@@ -34,45 +72,23 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    if not args.no_rematch:
+    if args.no_rematch:
+        print("[1/2] Reusing existing smoke outputs (--no-rematch).")
+    else:
         print("[1/2] Running five-model smoke matching...")
-        pipeline_cmd = [sys.executable, str(PIPELINE), "--smoke"]
-        if args.verbose:
-            pipeline_cmd.append("--verbose")
-        rc = run(pipeline_cmd, ROOT)
+        rc = run_smoke_matching(args.verbose)
         if rc != 0:
             print("REGRESSION FAIL: smoke matching failed.")
             return rc
-    else:
-        print("[1/2] Reusing existing smoke outputs (--no-rematch).")
 
     print("[2/2] Validating C5 outputs and T3-B scotogenic limit...")
-    rc = run(
-        ["wolframscript", "-file", str(WOLFRAM_REGRESSION), str(OUT)],
-        W,
-    )
+    rc = run_c5_regression()
 
-    report_path = OUT / "t3_regression_report.json"
-    if report_path.exists():
-        report = json.loads(report_path.read_text(encoding="utf-8"))
-        print("\n" + "=" * 72)
-        print("FINAL T3 REGRESSION")
-        print("=" * 72)
-        print(
-            f"{report.get('Status', 'UNKNOWN')}: "
-            f"{report.get('Passed', 0)} passed, {report.get('Failed', 0)} failed"
-        )
-        if report.get("Failed", 0):
-            for test in report.get("Tests", []):
-                if not test.get("Pass", False):
-                    detail = test.get("Detail", "")
-                    suffix = f" — {detail}" if detail and detail != '""' else ""
-                    print(f"  FAIL: {test.get('Test')}{suffix}")
-        print(f"Report: {report_path}")
-    else:
+    if not REPORT_FILE.exists():
         print("REGRESSION FAIL: Wolfram regression report was not produced.")
         return rc or 2
 
+    print_report(REPORT_FILE)
     return rc
 
 

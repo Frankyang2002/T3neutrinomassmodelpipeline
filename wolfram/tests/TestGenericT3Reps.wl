@@ -4,7 +4,7 @@ ClearAll[assert];
 assert[name_, cond_] := If[TrueQ[cond], Print["PASS: ", name], Print["FAIL: ", name]; Exit[1]];
 
 scriptDirectory = DirectoryName@ExpandFileName[$InputFileName];
-Get[FileNameJoin@{scriptDirectory, "T3ModelCatalog.wl"}];
+Get[FileNameJoin@{scriptDirectory, "..", "t3", "T3ModelCatalog.wl"}];
 
 assert["B = (2,2,1)", T3DimensionsAllowedQ[2,2,1]];
 assert["A = (1,3,2)", T3DimensionsAllowedQ[1,3,2]];

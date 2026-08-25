@@ -20,7 +20,8 @@ ClearAll[
   ScalarFieldValue, ScalarNorm, ScalarSelf, HiggsPortal, CrossScalarPortal,
   BuildT3YukawaCandidates, BuildT3MixingCandidates,
   BuildT3YukawaCandidatesLegacy, BuildT3MixingCandidatesLegacy,
-  ValidateT3Candidate, SelectFirstValidByGroup, BuildT3Lagrangian
+  BuildT3InteractionCandidates, ValidateT3Candidate,
+  SelectFirstValidByGroup, T3IngredientsPresentQ, BuildT3Lagrangian
 ];
 
 (* For SU(2), the irrep of dimension d has highest-weight Dynkin label {d-1}. *)
@@ -568,43 +569,95 @@ ValidateT3Candidate[c_, LSM_, LFree_] := Module[{res},
   Association[c, "Valid" -> TrueQ[res], "ValidationResult" -> res]
 ];
 
-SelectFirstValidByGroup[list_List] := Module[{seen = <||>, out = {}, g},
-  Do[
-    g = Lookup[x, "AlternativeGroup", None];
-    If[g === None || !KeyExistsQ[seen, g],
-      If[g =!= None, seen[g] = True];
-      AppendTo[out, x]
-    ],
-    {x, list}
-  ];
-  out
+(* Keep the first valid contraction in each alternative group.  Candidates
+   without a group are independent interactions and are all retained. *)
+SelectFirstValidByGroup[list_List] := Module[{seen = <||>},
+  Select[
+    list,
+    Function[candidate,
+      Module[{group = Lookup[candidate, "AlternativeGroup", None]},
+        If[group === None,
+          True,
+          If[KeyExistsQ[seen, group], False, seen[group] = True; True]
+        ]
+      ]
+    ]
+  ]
 ];
 
+(* Assemble all interaction candidates without validating them.  Keeping this
+   separate from BuildT3Lagrangian makes the physics content easy to inspect:
+   two topology Yukawas, the scalar potential terms, and the T3-closing quartic. *)
+BuildT3InteractionCandidates[model_Association, legacyQ_] := Module[{d1, d2},
+  d1 = model["Scalar1", "SU2"];
+  d2 = model["Scalar2", "SU2"];
+
+  Join[
+    If[legacyQ,
+      BuildT3YukawaCandidatesLegacy[model, 1],
+      BuildT3YukawaCandidates[model, 1]
+    ],
+    If[legacyQ,
+      BuildT3YukawaCandidatesLegacy[model, 2],
+      BuildT3YukawaCandidates[model, 2]
+    ],
+    {
+      <|"Name" -> "Scalar1Self", "Class" -> "ScalarSelf",
+        "Expression" -> ScalarSelf[1, d1, lambdaS1]|>,
+      <|"Name" -> "Scalar2Self", "Class" -> "ScalarSelf",
+        "Expression" -> ScalarSelf[2, d2, lambdaS2]|>,
+      <|"Name" -> "HiggsPortal1", "Class" -> "Portal",
+        "Expression" -> HiggsPortal[1, d1, lambdaH1]|>,
+      <|"Name" -> "HiggsPortal2", "Class" -> "Portal",
+        "Expression" -> HiggsPortal[2, d2, lambdaH2]|>,
+      <|"Name" -> "ScalarCrossPortal", "Class" -> "Portal",
+        "Expression" -> CrossScalarPortal[d1, d2]|>
+    },
+    If[legacyQ,
+      BuildT3MixingCandidatesLegacy[model],
+      BuildT3MixingCandidates[model]
+    ]
+  ]
+];
+
+(* A genuine T3 contribution requires both lepton-fermion-scalar Yukawas and
+   the quartic that connects S1 and S2 to the two Higgs legs. *)
+T3IngredientsPresentQ[valid_List] := And @@ (
+  Function[class,
+    AnyTrue[valid, Lookup[#, "Class", ""] === class &]
+  ] /@ {"Yukawa1", "Yukawa2", "T3ScalarMix"}
+);
+
 BuildT3Lagrangian[model_Association] := Module[
-  {LSM, LFree, d1, d2, cgStatus, candidates, validated, valid, rejected,
-   LInt, LBSM, LUV, full, hasY1, hasY2, hasMix},
+  {LSM, LFree, cgStatus, legacyQ, candidates, validated, valid, rejected,
+   LInt, LBSM, LUV, fullValidation, ingredientsPresent},
 
   ResetAll[];
+  legacyQ = T3LegacyModelQ[model];
+
   Print["Build stage 1/4: load SM"];
   LSM = LoadModel["SM"];
   Print["  LoadModel result: ", If[LSM === $Failed, "$Failed", "OK"]];
   If[LSM === $Failed, Return[$Failed]];
 
   Print["Build stage 2/4: define BSM fields"];
-  Module[{fieldStatus = DefineT3TwoScalarFields[model]},
-    Print["  field definition result: ", InputForm[fieldStatus]];
-    If[fieldStatus === $Failed, Return[$Failed]]
+  If[DefineT3TwoScalarFields[model] === $Failed,
+    Print["  field definition result: $Failed"];
+    Return[$Failed],
+    Print["  field definition result: True"]
   ];
 
   Print["Build stage 3/4: define couplings"];
-  Module[{couplingStatus = Check[DefineT3TwoScalarCouplings[], $Failed]},
-    Print["  coupling definition result: ", InputForm[couplingStatus]];
-    If[couplingStatus === $Failed, Return[$Failed]]
+  If[Check[DefineT3TwoScalarCouplings[], $Failed] === $Failed,
+    Print["  coupling definition result: $Failed"];
+    Return[$Failed],
+    Print["  coupling definition result: True"]
   ];
 
-  (* CGs are defined only after fields/representations and the SM SU(2) group
-     exist in the fresh Matchete session. *)
-  If[T3LegacyModelQ[model],
+  (* Custom CGs can only be registered after LoadModel has created SU2L and
+     after the BSM representations have been defined.  The historical d<=3
+     models deliberately keep their already-regression-tested contractions. *)
+  If[legacyQ,
     Print["Build stage 4/4: legacy d<=3 contractions (no custom CG setup)"];
     cgStatus = <|"Mode" -> "Legacy"|>,
     Print["Build stage 4/4: define generic SU(2) CG tensors"];
@@ -613,49 +666,24 @@ BuildT3Lagrangian[model_Association] := Module[
     If[cgStatus === $Failed, Return[$Failed]]
   ];
 
-  d1 = model["Scalar1", "SU2"];
-  d2 = model["Scalar2", "SU2"];
-
   LFree = FreeLag[NewFermion, NewScalar1, NewScalar2] // RelabelIndices;
 
-  candidates = Join[
-    If[T3LegacyModelQ[model],
-      BuildT3YukawaCandidatesLegacy[model, 1],
-      BuildT3YukawaCandidates[model, 1]
-    ],
-    If[T3LegacyModelQ[model],
-      BuildT3YukawaCandidatesLegacy[model, 2],
-      BuildT3YukawaCandidates[model, 2]
-    ],
-    {
-      <|"Name" -> "Scalar1Self", "Class" -> "ScalarSelf", "Expression" -> ScalarSelf[1, d1, lambdaS1]|>,
-      <|"Name" -> "Scalar2Self", "Class" -> "ScalarSelf", "Expression" -> ScalarSelf[2, d2, lambdaS2]|>,
-      <|"Name" -> "HiggsPortal1", "Class" -> "Portal", "Expression" -> HiggsPortal[1, d1, lambdaH1]|>,
-      <|"Name" -> "HiggsPortal2", "Class" -> "Portal", "Expression" -> HiggsPortal[2, d2, lambdaH2]|>,
-      <|"Name" -> "ScalarCrossPortal", "Class" -> "Portal", "Expression" -> CrossScalarPortal[d1, d2]|>
-    },
-    If[T3LegacyModelQ[model],
-      BuildT3MixingCandidatesLegacy[model],
-      BuildT3MixingCandidates[model]
-    ]
-  ];
-
+  candidates = BuildT3InteractionCandidates[model, legacyQ];
   candidates = Association[#, "Expression" -> RelabelIndices[#["Expression"]]] & /@ candidates;
+
   validated = ValidateT3Candidate[#, LSM, LFree] & /@ candidates;
-  valid = SelectFirstValidByGroup@Select[validated, TrueQ[#["Valid"]] &];
+  valid = SelectFirstValidByGroup @ Select[validated, TrueQ[#["Valid"]] &];
   rejected = Select[validated, !TrueQ[#["Valid"]] &];
 
   LInt = Total[Lookup[valid, "Expression", {}]] // Expand // RelabelIndices;
   LBSM = (LFree + LInt) // Expand // RelabelIndices;
   LUV = (LSM + LBSM) // Expand // RelabelIndices;
-  full = CheckAbort[Check[CheckLagrangian[LUV], $Failed], $Aborted];
+  fullValidation = CheckAbort[Check[CheckLagrangian[LUV], $Failed], $Aborted];
 
-  hasY1 = AnyTrue[valid, Lookup[#, "Class", ""] === "Yukawa1" &];
-  hasY2 = AnyTrue[valid, Lookup[#, "Class", ""] === "Yukawa2" &];
-  hasMix = AnyTrue[valid, Lookup[#, "Class", ""] === "T3ScalarMix" &];
+  ingredientsPresent = T3IngredientsPresentQ[valid];
 
   <|
-    "Status" -> If[TrueQ[full], "Success", "FullValidationFailed"],
+    "Status" -> If[TrueQ[fullValidation], "Success", "FullValidationFailed"],
     "Model" -> model,
     "LSM" -> LSM,
     "LFree" -> LFree,
@@ -663,8 +691,8 @@ BuildT3Lagrangian[model_Association] := Module[
     "LUV" -> LUV,
     "AllowedInteractions" -> Lookup[valid, "Name", {}],
     "RejectedInteractions" -> Lookup[rejected, "Name", {}],
-    "T3IngredientsPresent" -> TrueQ[hasY1 && hasY2 && hasMix],
-    "WeinbergIngredientsPresent" -> TrueQ[hasY1 && hasY2 && hasMix],
-    "FullValidation" -> full
+    "T3IngredientsPresent" -> ingredientsPresent,
+    "WeinbergIngredientsPresent" -> ingredientsPresent,
+    "FullValidation" -> fullValidation
   |>
 ];

@@ -1,9 +1,19 @@
 (*
   GaugeInvariance.wl
-  Resolves symbolic interaction templates against model field data and checks
-  U(1) hypercharge conservation and whether the SU(2) tensor product contains
-  a singlet.
+
+  Generic electroweak gauge-invariance utilities for symbolic interaction
+  templates.  This file owns the shared U(1)_Y and SU(2) machinery used by
+  the higher-level T3 invariance checks.
+
+  Conventions
+  -----------
+  - "Y" stores hypercharge in Q = T3 + Y.
+  - "Conjugated" reverses U(1) hypercharge but does not change an SU(2)
+    irrep dimension.
+  - "SU2" stores the representation dimension d = 2 j + 1.
+  - Public predicates return strict True/False; malformed input fails safely.
 *)
+
 ClearAll[
   FieldHypercharge,
   InferFieldHypercharge,
@@ -14,37 +24,40 @@ ClearAll[
   SU2ProductRepresentations,
   SU2SingletQ,
   ResolveTemplateFields,
+  GaugeInvarianceReport,
   TemplateInvarianceReport,
   TemplateInvariantQ,
   ModelFieldData,
   T3InteractionTemplates,
   AllowedInteractionReports
 ];
+
 (* ============================================================ *)
-(* U(1) hypercharge                                              *)
+(* U(1)_Y                                                       *)
 (* ============================================================ *)
+
 FieldHypercharge[field_Association] := Module[
-  {hypercharge, conjugated},
+  {hypercharge},
   hypercharge = Lookup[field, "Y", Missing["Hypercharge"]];
-  conjugated = TrueQ[Lookup[field, "Conjugated", False]];
-  If[MissingQ[hypercharge],
-    Return[$Failed]
-  ];
-  If[conjugated, -hypercharge, hypercharge]
+  If[MissingQ[hypercharge], Return[$Failed]];
+
+  If[
+    TrueQ[Lookup[field, "Conjugated", False]],
+    -hypercharge,
+    hypercharge
+  ]
 ];
+
 U1InvariantQ[fields_List] := Module[
-  {charges},
-  charges = FieldHypercharge /@ fields;
-  If[MemberQ[charges, $Failed],
-    Return[False]
-  ];
+  {charges = FieldHypercharge /@ fields},
+  If[MemberQ[charges, $Failed], Return[False]];
   TrueQ[Simplify[Total[charges] == 0]]
 ];
 
 (*
-  Determine the hypercharge of one field directly from an interaction
-  template.  Each ordinary field contributes +Y and each conjugated field
-  contributes -Y.  The target field is chosen so that the complete sum is 0.
+  Infer the hypercharge of one target field from charge conservation.
+  A conjugated occurrence contributes -Y, so the sign of the target in the
+  template must be retained when solving Sum[Y_i] = 0.
 *)
 InferFieldHypercharge[
   template_Association,
@@ -55,10 +68,8 @@ InferFieldHypercharge[
     templateName,
     references,
     targetPositions,
-    targetPosition,
     targetReference,
     targetSign,
-    otherReferences,
     otherCharges
   },
 
@@ -66,10 +77,7 @@ InferFieldHypercharge[
   references = Lookup[template, "Fields", Missing["Fields"]];
 
   If[MissingQ[references] || !ListQ[references],
-    Print[
-      "ERROR: Template ", templateName,
-      " has no valid Fields list."
-    ];
+    Print["ERROR: Template ", templateName, " has no valid Fields list."];
     Return[$Failed]
   ];
 
@@ -87,23 +95,13 @@ InferFieldHypercharge[
     Return[$Failed]
   ];
 
-  targetPosition = First[targetPositions];
-  targetReference = references[[targetPosition]];
-  targetSign = If[
-    TrueQ[Lookup[targetReference, "Conjugated", False]],
-    -1,
-    1
-  ];
+  targetReference = references[[First[targetPositions]]];
+  targetSign = If[TrueQ[Lookup[targetReference, "Conjugated", False]], -1, 1];
 
-  otherReferences = Delete[references, targetPosition];
   otherCharges = Map[
     Function[fieldReference,
-      Module[{fieldName, baseField, conjugated},
-        fieldName = Lookup[
-          fieldReference,
-          "Name",
-          Missing["FieldName"]
-        ];
+      Module[{fieldName, baseField},
+        fieldName = Lookup[fieldReference, "Name", Missing["FieldName"]];
 
         If[MissingQ[fieldName] || !KeyExistsQ[fieldData, fieldName],
           Print[
@@ -114,19 +112,13 @@ InferFieldHypercharge[
         ];
 
         baseField = fieldData[fieldName];
-        conjugated = TrueQ[
-          Lookup[fieldReference, "Conjugated", False]
-        ];
-
-        FieldHypercharge[
-          Join[
-            baseField,
-            <|"Conjugated" -> conjugated|>
-          ]
+        FieldHypercharge@Join[
+          baseField,
+          <|"Conjugated" -> TrueQ[Lookup[fieldReference, "Conjugated", False]]|>
         ]
       ]
     ],
-    otherReferences
+    Delete[references, First[targetPositions]]
   ];
 
   If[MemberQ[otherCharges, $Failed],
@@ -141,71 +133,43 @@ InferFieldHypercharge[
 ];
 
 (* ============================================================ *)
-(* SU(2) representation products                                 *)
+(* SU(2) representation products                                *)
 (* ============================================================ *)
-SU2Isospin[dimension_Integer?Positive] :=
-  (dimension - 1)/2;
-SU2Combine[
-  rep1_Integer?Positive,
-  rep2_Integer?Positive
-] := Module[
-  {j1, j2, resultingIsospins},
-  j1 = SU2Isospin[rep1];
-  j2 = SU2Isospin[rep2];
-  resultingIsospins =
-    Range[
-      Abs[j1 - j2],
-      j1 + j2,
-      1
-    ];
-  2 resultingIsospins + 1
+
+SU2Isospin[dimension_Integer?Positive] := (dimension - 1)/2;
+
+SU2Combine[rep1_Integer?Positive, rep2_Integer?Positive] := Module[
+  {j1 = SU2Isospin[rep1], j2 = SU2Isospin[rep2]},
+  2 Range[Abs[j1 - j2], j1 + j2, 1] + 1
 ];
+
 SU2ProductRepresentations[{}] := {};
-SU2ProductRepresentations[
-  {representation_Integer?Positive}
-] := {representation};
-SU2ProductRepresentations[
-  representations_List
-] /; Length[representations] >= 2 := Module[
+SU2ProductRepresentations[{representation_Integer?Positive}] := {representation};
+SU2ProductRepresentations[representations_List] /; Length[representations] >= 2 := Module[
   {previousProducts, finalRepresentation},
-  previousProducts =
-    SU2ProductRepresentations[Most[representations]];
+  previousProducts = SU2ProductRepresentations[Most[representations]];
   finalRepresentation = Last[representations];
-  DeleteDuplicates[
-    Flatten[
-      SU2Combine[#, finalRepresentation] & /@ previousProducts
-    ]
+
+  DeleteDuplicates@Flatten[
+    SU2Combine[#, finalRepresentation] & /@ previousProducts
   ]
 ];
+
 SU2SingletQ[representations_List] := Module[
-  {products},
-  If[representations === {},
-    Return[False]
-  ];
+  {},
+  If[representations === {}, Return[False]];
   If[
-    !AllTrue[
-      representations,
-      IntegerQ[#] && Positive[#] &
-    ],
+    !AllTrue[representations, IntegerQ[#] && Positive[#] &],
     Return[False]
   ];
-  products = SU2ProductRepresentations[representations];
-  MemberQ[products, 1]
+  MemberQ[SU2ProductRepresentations[representations], 1]
 ];
+
 (*
-  Infer all SU(2) representation dimensions for one target field that can
-  make an interaction template contain a singlet.
-
-  For SU(2), conjugation does not change the irrep dimension.  If the tensor
-  product of all non-target fields contains irreps {r1,r2,...}, then the
-  target may transform as any of those same irreps, because j \otimes j
-  always contains J=0.
-
-  Example: for L x Scalar x Fermion with L a doublet and Scalar dimension d,
-  the allowed Fermion dimensions are precisely those in 2 x d.  Thus
-      d=1 -> {2}
-      d=2 -> {1,3}
-      d=3 -> {2,4}.
+  Infer all target irrep dimensions that allow the complete product to contain
+  an SU(2) singlet.  SU(2) irreps are self-conjugate, so conjugation does not
+  alter the dimension.  If the non-target fields combine to irrep r, choosing
+  the target in the same irrep r permits r x r to contain the singlet.
 *)
 InferFieldSU2Representations[
   template_Association,
@@ -216,8 +180,6 @@ InferFieldSU2Representations[
     templateName,
     references,
     targetPositions,
-    targetPosition,
-    otherReferences,
     otherRepresentations
   },
 
@@ -225,10 +187,7 @@ InferFieldSU2Representations[
   references = Lookup[template, "Fields", Missing["Fields"]];
 
   If[MissingQ[references] || !ListQ[references],
-    Print[
-      "ERROR: Template ", templateName,
-      " has no valid Fields list."
-    ];
+    Print["ERROR: Template ", templateName, " has no valid Fields list."];
     Return[$Failed]
   ];
 
@@ -246,17 +205,10 @@ InferFieldSU2Representations[
     Return[$Failed]
   ];
 
-  targetPosition = First[targetPositions];
-  otherReferences = Delete[references, targetPosition];
-
   otherRepresentations = Map[
     Function[fieldReference,
-      Module[{fieldName, baseField, representation},
-        fieldName = Lookup[
-          fieldReference,
-          "Name",
-          Missing["FieldName"]
-        ];
+      Module[{fieldName, representation},
+        fieldName = Lookup[fieldReference, "Name", Missing["FieldName"]];
 
         If[MissingQ[fieldName] || !KeyExistsQ[fieldData, fieldName],
           Print[
@@ -266,17 +218,14 @@ InferFieldSU2Representations[
           Return[$Failed]
         ];
 
-        baseField = fieldData[fieldName];
         representation = Lookup[
-          baseField,
+          fieldData[fieldName],
           "SU2",
           Missing["SU2Representation"]
         ];
 
         If[
-          MissingQ[representation] ||
-          !IntegerQ[representation] ||
-          representation < 1,
+          MissingQ[representation] || !IntegerQ[representation] || representation < 1,
           Print[
             "ERROR: Invalid SU(2) representation for field ",
             fieldName, " in template ", templateName, "."
@@ -287,75 +236,52 @@ InferFieldSU2Representations[
         representation
       ]
     ],
-    otherReferences
+    Delete[references, First[targetPositions]]
   ];
 
-  If[MemberQ[otherRepresentations, $Failed],
-    Return[$Failed]
-  ];
-
+  If[MemberQ[otherRepresentations, $Failed], Return[$Failed]];
   Sort@DeleteDuplicates@SU2ProductRepresentations[otherRepresentations]
 ];
 
 (* ============================================================ *)
 (* Template resolution                                          *)
 (* ============================================================ *)
+
 ResolveTemplateFields[
   template_Association,
   fieldData_Association
 ] := Module[
   {templateName, references},
+
   templateName = Lookup[template, "Name", "<unnamed>"];
   references = Lookup[template, "Fields", Missing["Fields"]];
+
   If[MissingQ[references] || !ListQ[references],
-    Print[
-      "Template ",
-      templateName,
-      " has no valid Fields list."
-    ];
+    Print["Template ", templateName, " has no valid Fields list."];
     Return[$Failed]
   ];
+
   Map[
     Function[fieldReference,
-      Module[
-        {fieldName, baseField},
-        fieldName =
-          Lookup[
-            fieldReference,
-            "Name",
-            Missing["FieldName"]
-          ];
+      Module[{fieldName, baseField},
+        fieldName = Lookup[fieldReference, "Name", Missing["FieldName"]];
+
         If[MissingQ[fieldName],
-          Print[
-            "Template ",
-            templateName,
-            " contains a field without a Name."
-          ];
+          Print["Template ", templateName, " contains a field without a Name."];
           Return[$Failed]
         ];
+
         If[!KeyExistsQ[fieldData, fieldName],
-          Print[
-            "Unknown field ",
-            fieldName,
-            " in template ",
-            templateName,
-            "."
-          ];
+          Print["Unknown field ", fieldName, " in template ", templateName, "."];
           Return[$Failed]
         ];
+
         baseField = fieldData[fieldName];
         Join[
           baseField,
           <|
             "Name" -> fieldName,
-            "Conjugated" ->
-              TrueQ[
-                Lookup[
-                  fieldReference,
-                  "Conjugated",
-                  False
-                ]
-              ]
+            "Conjugated" -> TrueQ[Lookup[fieldReference, "Conjugated", False]]
           |>
         ]
       ]
@@ -363,32 +289,35 @@ ResolveTemplateFields[
     references
   ]
 ];
+
 (* ============================================================ *)
-(* Diagnostic report                                            *)
+(* Gauge diagnostic report                                      *)
 (* ============================================================ *)
-TemplateInvarianceReport[
+
+(*
+  GaugeInvarianceReport is the canonical electroweak report.  Keeping it
+  separate from TemplateInvarianceReport lets InvarianceChecker.wl extend the
+  report with Z2 without duplicating any U(1) or SU(2) calculation.
+*)
+GaugeInvarianceReport[
   template_Association,
   fieldData_Association
 ] := Module[
   {
     templateName,
     resolvedFields,
-    su2Representations,
     hypercharges,
     hyperchargeSum,
+    su2Representations,
     su2Products,
     u1Invariant,
     su2Invariant
   },
+
   templateName = Lookup[template, "Name", "<unnamed>"];
-  resolvedFields =
-    ResolveTemplateFields[
-      template,
-      fieldData
-    ];
-  If[
-    resolvedFields === $Failed ||
-    MemberQ[resolvedFields, $Failed],
+  resolvedFields = ResolveTemplateFields[template, fieldData];
+
+  If[resolvedFields === $Failed || MemberQ[resolvedFields, $Failed],
     Return[
       <|
         "Name" -> templateName,
@@ -401,29 +330,28 @@ TemplateInvarianceReport[
       |>
     ]
   ];
+
   hypercharges = FieldHypercharge /@ resolvedFields;
-  hyperchargeSum =
-    If[
-      MemberQ[hypercharges, $Failed],
-      Missing["NotAvailable"],
-      Simplify[Total[hypercharges]]
-    ];
-  su2Representations =
-    Lookup[
-      resolvedFields,
-      "SU2",
-      Missing["SU2Representation"]
-    ];
-  su2Products =
-    If[
-      AnyTrue[su2Representations, MissingQ],
-      {},
-      SU2ProductRepresentations[su2Representations]
-    ];
-  u1Invariant =
-    !MissingQ[hyperchargeSum] &&
-    TrueQ[Simplify[hyperchargeSum == 0]];
+  hyperchargeSum = If[
+    MemberQ[hypercharges, $Failed],
+    Missing["NotAvailable"],
+    Simplify[Total[hypercharges]]
+  ];
+
+  su2Representations = Lookup[
+    resolvedFields,
+    "SU2",
+    Missing["SU2Representation"]
+  ];
+  su2Products = If[
+    AnyTrue[su2Representations, MissingQ],
+    {},
+    SU2ProductRepresentations[su2Representations]
+  ];
+
+  u1Invariant = !MissingQ[hyperchargeSum] && TrueQ[Simplify[hyperchargeSum == 0]];
   su2Invariant = MemberQ[su2Products, 1];
+
   <|
     "Name" -> templateName,
     "ResolvedFields" -> resolvedFields,
@@ -434,64 +362,41 @@ TemplateInvarianceReport[
     "Invariant" -> (u1Invariant && su2Invariant)
   |>
 ];
-TemplateInvariantQ[
-  template_Association,
-  fieldData_Association
-] :=
-  TrueQ[
-    TemplateInvarianceReport[
-      template,
-      fieldData
-    ]["Invariant"]
-  ];
+
+(* Backward-compatible gauge-only public API. *)
+TemplateInvarianceReport[template_Association, fieldData_Association] :=
+  GaugeInvarianceReport[template, fieldData];
+
+TemplateInvariantQ[template_Association, fieldData_Association] :=
+  TrueQ[TemplateInvarianceReport[template, fieldData]["Invariant"]];
+
 (* ============================================================ *)
-(* Model-specific field data                                    *)
+(* Existing T3 model helpers                                    *)
 (* ============================================================ *)
+
 ModelFieldData[model_Association] := <|
-  "L" ->
+  "L" -> Lookup[
+    model,
+    "Lepton",
     Lookup[
       model,
-      "Lepton",
-      Lookup[
-        model,
-        "L",
-        <|
-          "Type" -> "Fermion",
-          "SU2" -> 2,
-          "Y" -> -1/2
-        |>
-      ]
-    ],
-  "H" ->
-    Lookup[
-      model,
-      "Higgs",
-      Lookup[
-        model,
-        "H",
-        <|
-          "Type" -> "ComplexScalar",
-          "SU2" -> 2,
-          "Y" -> 1/2
-        |>
-      ]
-    ],
-  "Fermion" ->
-    Lookup[
-      model,
-      "Fermion",
-      Missing["Fermion"]
-    ],
-  "Scalar" ->
-    Lookup[
-      model,
-      "Scalar",
-      Missing["Scalar"]
+      "L",
+      <|"Type" -> "Fermion", "SU2" -> 2, "Y" -> -1/2|>
     ]
+  ],
+  "H" -> Lookup[
+    model,
+    "Higgs",
+    Lookup[
+      model,
+      "H",
+      <|"Type" -> "ComplexScalar", "SU2" -> 2, "Y" -> 1/2|>
+    ]
+  ],
+  "Fermion" -> Lookup[model, "Fermion", Missing["Fermion"]],
+  "Scalar" -> Lookup[model, "Scalar", Missing["Scalar"]]
 |>;
-(* ============================================================ *)
-(* Candidate interactions                                       *)
-(* ============================================================ *)
+
 T3InteractionTemplates = {
   <|
     "Name" -> "Yukawa",
@@ -538,22 +443,16 @@ T3InteractionTemplates = {
     }
   |>
 };
+
 AllowedInteractionReports[model_Association] := Module[
   {fieldData, reports},
   fieldData = ModelFieldData[model];
-  If[
-    MissingQ[fieldData["Fermion"]] ||
-    MissingQ[fieldData["Scalar"]],
+
+  If[MissingQ[fieldData["Fermion"]] || MissingQ[fieldData["Scalar"]],
     Print["ERROR: Model must define Fermion and Scalar."];
     Return[$Failed]
   ];
-  reports =
-    TemplateInvarianceReport[
-      #,
-      fieldData
-    ] & /@ T3InteractionTemplates;
-  Select[
-    reports,
-    TrueQ[Lookup[#, "Invariant", False]] &
-  ]
+
+  reports = TemplateInvarianceReport[#, fieldData] & /@ T3InteractionTemplates;
+  Select[reports, TrueQ[Lookup[#, "Invariant", False]] &]
 ];

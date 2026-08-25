@@ -3,15 +3,11 @@
 (*
   PhysicsLaTeX.wl
 
-  Recursive display formatter for Matchete expressions.
+  Convert Matchete expressions into readable physics notation before TeX export.
 
-  The formatter:
-    - preserves distinct Lorentz, flavour and gauge indices;
-    - formats scalar and fermion fields;
-    - formats conjugation, transpose, projectors and gamma matrices;
-    - formats indexed couplings and SU(2) epsilon tensors;
-    - formats complete noncommutative fermion chains;
-    - reports any Matchete objects that remain unconverted.
+  The conversion is intentionally recursive: field, index, coupling and Dirac
+  structures are formatted independently, then the final expression is checked
+  for any Matchete objects that escaped conversion.
 *)
 
 ClearAll[
@@ -36,10 +32,7 @@ ClearAll[
   ExpressionToLaTeX
 ];
 
-(* ---------------------------------------------------------------------- *)
-(* Helpers that are deliberately based on symbol names, so the formatter  *)
-(* remains useful if Matchete changes the context in which an object lives. *)
-(* ---------------------------------------------------------------------- *)
+(* Symbol-name matching keeps the formatter independent of Matchete contexts. *)
 
 PhysicsSymbolName[s_Symbol] := SymbolName[Unevaluated[s]];
 PhysicsSymbolName[x_] := ToString[Unevaluated[x], InputForm];
@@ -96,9 +89,7 @@ PhysicsIndex[index_] := Module[
 PhysicsIndices[indices_List] := PhysicsIndex /@ indices;
 PhysicsIndices[_] := {};
 
-(* ---------------------------------------------------------------------- *)
-(* Fields and derivatives.                                                 *)
-(* ---------------------------------------------------------------------- *)
+(* Fields and derivatives. *)
 
 PhysicsFieldBase[name_] := Switch[PhysicsSymbolName[name],
   "H", H,
@@ -161,9 +152,7 @@ PhysicsBar[argument_] := Module[{headName, args, kind},
 PhysicsTranspose[argument_] :=
   Superscript[PhysicsDisplayForm[argument], T];
 
-(* ---------------------------------------------------------------------- *)
-(* Couplings and masses, including their real flavour indices.             *)
-(* ---------------------------------------------------------------------- *)
+(* Couplings and masses. *)
 
 PhysicsCouplingBase[name_] := Module[{nameString},
   nameString = PhysicsSymbolName[name];
@@ -283,9 +272,7 @@ PhysicsCoupling[coupling_] := Module[
 ];
 
 
-(* ---------------------------------------------------------------------- *)
-(* Group tensors.                                                          *)
-(* ---------------------------------------------------------------------- *)
+(* Group tensors. *)
 
 PhysicsCG[cg_] := Module[
   {arguments, tensor, indices, formatted, tensorText},
@@ -315,9 +302,7 @@ PhysicsCG[cg_] := Module[
 ];
 
 
-(* ---------------------------------------------------------------------- *)
-(* Gamma matrices, projectors and complete fermion chains.                  *)
-(* ---------------------------------------------------------------------- *)
+(* Dirac structures and complete fermion chains. *)
 
 PhysicsDiracFactor[factor_] := Module[{headName, args},
   headName = PhysicsSymbolName[Head[Unevaluated[factor]]];
@@ -352,9 +337,7 @@ PhysicsFermionChain[chain_] := Module[{factors},
   Row[PhysicsDiracFactor /@ factors, "\[ThinSpace]"]
 ];
 
-(* ---------------------------------------------------------------------- *)
-(* Gauge-field strengths.                                                  *)
-(* ---------------------------------------------------------------------- *)
+(* Gauge-field strengths. *)
 
 PhysicsFieldStrength[fieldStrength_] := Module[
   {arguments, name, lorentzIndices, gaugeIndices, lower, upper},
@@ -380,10 +363,7 @@ PhysicsFieldStrength[fieldStrength_] := Module[
   ]
 ];
 
-(* ---------------------------------------------------------------------- *)
-(* Recursive dispatcher. It converts outer structures first and then their *)
-(* contents, avoiding the partial-conversion problem of a single rule list. *)
-(* ---------------------------------------------------------------------- *)
+(* Recursive dispatcher: convert outer structures, then their contents. *)
 
 PhysicsDisplayForm[expression_] := Module[{headName, arguments},
   If[AtomQ[Unevaluated[expression]],
@@ -478,9 +458,7 @@ PhysicsDisplayForm[expression_] := Module[{headName, arguments},
   ]
 ];
 
-(* ---------------------------------------------------------------------- *)
-(* Validation. Any surviving Matchete-like object prevents PDF export.      *)
-(* ---------------------------------------------------------------------- *)
+(* Validation: surviving Matchete objects mean the conversion is incomplete. *)
 
 RemainingInternalObjects[expression_] := DeleteDuplicates@Cases[
   Unevaluated[expression],

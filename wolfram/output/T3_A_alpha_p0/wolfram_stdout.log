@@ -19,6 +19,11 @@ Build stage 2/4: define BSM fields
 Build stage 3/4: define couplings
   coupling definition result: True
 Build stage 4/4: legacy d<=3 contractions (no custom CG setup)
+  lambdaS1: raw SU(2) invariants=1, physical invariants=1
+  lambdaS2: raw SU(2) invariants=3, physical invariants=2
+  lambdaH1: raw SU(2) invariants=1, physical invariants=1
+  lambdaH2: raw SU(2) invariants=2, physical invariants=2
+  lambda12: raw SU(2) invariants=1, physical invariants=1
 Checking candidate: Yukawa1_Direct
 
 CheckLagrangian::ContractedIndices: The input Lagrangian contains open indices or a mismatch of bared and not bared indices.
@@ -31,19 +36,23 @@ Checking candidate: Yukawa2_EpsGen
 
 CheckLagrangian::ContractedIndices: The input Lagrangian contains open indices or a mismatch of bared and not bared indices.
   result: InputForm[$Failed]
-Checking candidate: Scalar1Self
+Checking candidate: Scalar1SelfInv1
   result: InputForm[True]
-Checking candidate: Scalar2Self
+Checking candidate: Scalar2SelfInv1
   result: InputForm[True]
-Checking candidate: HiggsPortal1
+Checking candidate: Scalar2SelfInv2
   result: InputForm[True]
-Checking candidate: HiggsPortal2
+Checking candidate: HiggsPortal1Inv1
   result: InputForm[True]
-Checking candidate: ScalarCrossPortal
+Checking candidate: HiggsPortal2Inv1
+  result: InputForm[True]
+Checking candidate: HiggsPortal2Inv2
+  result: InputForm[True]
+Checking candidate: ScalarCrossPortalInv1
   result: InputForm[True]
 Checking candidate: T3ScalarMix_1x3
   result: InputForm[True]
-Accepted interactions: {Yukawa1_Eps, Yukawa2_Gen, Scalar1Self, Scalar2Self, HiggsPortal1, HiggsPortal2, ScalarCrossPortal, T3ScalarMix_1x3}
+Accepted interactions: {Yukawa1_Eps, Yukawa2_Gen, Scalar1SelfInv1, Scalar2SelfInv1, Scalar2SelfInv2, HiggsPortal1Inv1, HiggsPortal2Inv1, HiggsPortal2Inv2, ScalarCrossPortalInv1, T3ScalarMix_1x3}
 T3 ingredients present: True
 
 Running Matchete matching...

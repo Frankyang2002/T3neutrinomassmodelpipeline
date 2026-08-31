@@ -18,6 +18,12 @@ $$
 
 The subsequent RGE evolution and conversion of the Weinberg coefficient into the physical neutrino-mass matrix are outside the scope of this README.
 
+## Other. Translation
+- $a_1$: $SU(2)$ weak index
+- $i_123$: SM fermion generation index
+- $r_1$: BSM fermion generation index
+
+
 ---
 
 ## 0. Physics Scope
@@ -357,6 +363,10 @@ For multi-model runs, the Python front end also writes an aggregate comparison f
 ```text
 wolfram/output/t3_model_comparison.json
 ```
+
+
+
+
 
 ---
 

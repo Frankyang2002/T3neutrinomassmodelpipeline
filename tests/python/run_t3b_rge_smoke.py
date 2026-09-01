@@ -5,10 +5,10 @@ First end-to-end T3 RGE smoke test.
 
 Inputs
 ------
-wolfram/output/T3_B_alpha_m1/rge_tensor_exchange.json
+output/T3_B_alpha_m1/rge_tensor_exchange.json
     UV representation, scalar quartics and raw Yukawa CG components.
 
-wolfram/output/T3_B_alpha_m1/c5_coefficient.txt
+output/T3_B_alpha_m1/c5_coefficient.txt
     Matched Weinberg coefficient from the existing matching pipeline.
 
 Pipeline exercised

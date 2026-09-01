@@ -137,3 +137,4 @@ Do[
   Print["generator ", A, ": nonzero residual components = ", nz],
   {A,3}
 ];
+

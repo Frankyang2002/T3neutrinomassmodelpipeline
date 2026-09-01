@@ -4,13 +4,13 @@
    potential used by the generalised T3 builder, without changing the builder.
 
    Intended location:
-     wolfram/tests/ProbeT3ScalarPotentialMultiplicity.wl
+     tests/wolfram/ProbeT3ScalarPotentialMultiplicity.wl
 
    Run from the project root with:
-     wolframscript -file wolfram/tests/ProbeT3ScalarPotentialMultiplicity.wl
+     wolframscript -file tests/wolfram/ProbeT3ScalarPotentialMultiplicity.wl
 
    Optional first argument sets the largest fermion SU(2) dimension scanned:
-     wolframscript -file wolfram/tests/ProbeT3ScalarPotentialMultiplicity.wl 9
+     wolframscript -file tests/wolfram/ProbeT3ScalarPotentialMultiplicity.wl 9
 *)
 
 ClearAll["Global`*"];
@@ -314,3 +314,4 @@ If[multipleResults === {},
     firstNames
   ];
 ];
+

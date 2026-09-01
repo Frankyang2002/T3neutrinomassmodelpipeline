@@ -4,13 +4,13 @@
    topology-defining T3 interactions without changing the model builder.
 
    Intended location:
-     wolfram/tests/ProbeT3InvariantMultiplicity.wl
+     tests/wolfram/ProbeT3InvariantMultiplicity.wl
 
    Run from the project root with:
-     wolframscript -file wolfram/tests/ProbeT3InvariantMultiplicity.wl
+     wolframscript -file tests/wolfram/ProbeT3InvariantMultiplicity.wl
 
    Optional first argument sets the largest fermion SU(2) dimension scanned:
-     wolframscript -file wolfram/tests/ProbeT3InvariantMultiplicity.wl 9
+     wolframscript -file tests/wolfram/ProbeT3InvariantMultiplicity.wl 9
 *)
 
 ClearAll["Global`*"];
@@ -210,3 +210,4 @@ If[AnyTrue[results, #["Yukawa1"] > 1 || #["Yukawa2"] > 1 &],
   Print[""];
   Print["All scanned T3 Yukawa invariant spaces had multiplicity <= 1."]
 ];
+

@@ -175,11 +175,25 @@ matcheteLoaded = UsingFrontEnd[Needs["Matchete`"]; True];
 If[!TrueQ[matcheteLoaded], Print["ERROR: Matchete failed to load."]; Exit[6]];
 Print["Matchete loaded successfully."];
 
-(* Load our modules *)
-Get[FileNameJoin @ {scriptDirectory, "..", "core", "PhysicsLaTeX.wl"}]; (* Translator *)
-Get[FileNameJoin @ {scriptDirectory, "..", "t3", "T3ModelCatalog.wl"}]; (* Gets dimensions and representations *)
-Get[FileNameJoin @ {scriptDirectory, "..", "t3", "LagrangianBuilder.wl"}]; (* Gets Lagrangian *)
-Get[FileNameJoin @ {scriptDirectory, "..", "matching", "RunMatching.wl"}]; (* Matches *)
+lagrangianDir = DirectoryName[$InputFileName];
+projectRoot = DirectoryName[lagrangianDir];
+
+physicsLaTeXFile =
+    FileNameJoin[{lagrangianDir, "PhysicsLaTeX.wl"}];
+
+modelCatalogFile =
+    FileNameJoin[{lagrangianDir, "T3ModelCatalog.wl"}];
+
+lagrangianBuilderFile =
+    FileNameJoin[{lagrangianDir, "LagrangianBuilder.wl"}];
+
+matchingFile =
+    FileNameJoin[{projectRoot, "RGE", "RunMatching.wl"}];
+
+Get[physicsLaTeXFile];
+Get[modelCatalogFile];
+Get[lagrangianBuilderFile];
+Get[matchingFile];
 
 (* Get model from SU2 dimensions *)
 model = If[

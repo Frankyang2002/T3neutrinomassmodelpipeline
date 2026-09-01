@@ -119,3 +119,4 @@ If[And @@ (zeroTensorQ /@ residuals),
   Print["DefineCG accepted converted tensor? ", status],
   Print["Skipping DefineCG: converted tensor did not pass direct invariance."]
 ];
+

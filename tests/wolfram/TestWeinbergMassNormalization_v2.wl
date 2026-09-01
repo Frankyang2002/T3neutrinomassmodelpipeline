@@ -151,3 +151,4 @@ If[rMagnitude === 1,
 
 Print[];
 Print["PASS: T3-B neutral-component normalization fixed unambiguously in magnitude."];
+

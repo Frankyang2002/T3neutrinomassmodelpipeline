@@ -22,3 +22,4 @@ assert["forbid non-adjacent scalar", !T3DimensionsAllowedQ[2,6,5]];
 
 Print["All generic T3 representation tests passed."];
 Exit[0];
+

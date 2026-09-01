@@ -17,9 +17,12 @@ from RGE.NumericalPipelineStage import run_numerical_pipeline_stage
 from RGE.NeutrinoObservables import run_neutrino_observables_stage
 
 PROJECT_ROOT = Path(__file__).resolve().parent
-WOLFRAM_DIR = PROJECT_ROOT / "wolfram"
-OUTPUT_DIR = WOLFRAM_DIR / "output"
-RUN_MODEL_SCRIPT = WOLFRAM_DIR / "runners" / "RunModel.wl"
+
+LAGRANGIAN_DIR = PROJECT_ROOT / "Lagrangian"
+RGE_DIR = PROJECT_ROOT / "RGE"
+OUTPUT_DIR = PROJECT_ROOT / "output"
+
+RUN_MODEL_SCRIPT = LAGRANGIAN_DIR / "RunModel.wl"
 
 # Weinberg 5D at 1 loop
 EFT_ORDER = 5
@@ -148,7 +151,7 @@ def run_model(
     # Launch Wolfram and capture both normal output and errors as text.
     process = subprocess.run(
         command,
-        cwd=WOLFRAM_DIR,
+        cwd=PROJECT_ROOT,
         capture_output=True,
         text=True,
         check=False,

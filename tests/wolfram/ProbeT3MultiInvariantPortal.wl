@@ -4,10 +4,10 @@
    SU(2) invariant tensors for one scalar-potential field structure.
 
    Intended location:
-     wolfram/tests/ProbeT3MultiInvariantPortal.wl
+     tests/wolfram/ProbeT3MultiInvariantPortal.wl
 
    Run from the project root with:
-     wolframscript -file wolfram/tests/ProbeT3MultiInvariantPortal.wl
+     wolframscript -file tests/wolfram/ProbeT3MultiInvariantPortal.wl
 *)
 
 ClearAll["Global`*"];
@@ -150,3 +150,4 @@ If[TrueQ[check1] && TrueQ[check2] && TrueQ[checkBoth],
   Print["Do not modify the production builder until this orientation/CG issue is resolved."];
   Exit[6]
 ];
+

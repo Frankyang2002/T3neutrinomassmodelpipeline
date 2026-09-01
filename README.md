@@ -345,7 +345,7 @@ The Python front end first checks that the requested dimensions satisfy the T3 r
 Each run receives its own directory under
 
 ```text
-wolfram/output/
+output/
 ```
 
 The pipeline writes Matchete stdout/stderr logs and a machine-readable model summary.
@@ -369,7 +369,7 @@ wolfram_stderr.log
 For multi-model runs, the Python front end also writes an aggregate comparison file,
 
 ```text
-wolfram/output/t3_model_comparison.json
+output/t3_model_comparison.json
 ```
 
 

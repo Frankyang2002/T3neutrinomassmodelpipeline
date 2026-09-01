@@ -10,6 +10,9 @@ from dataclasses import dataclass
 from fractions import Fraction
 from pathlib import Path
 
+from MatchedEFTRGE import run_matched_eft_rge
+from FlavorMatchedRGEStage import run_flavor_matched_rge
+
 PROJECT_ROOT = Path(__file__).resolve().parent
 WOLFRAM_DIR = PROJECT_ROOT / "wolfram"
 OUTPUT_DIR = WOLFRAM_DIR / "output"
@@ -1167,6 +1170,81 @@ def finish_runs(records: list[RunRecord]) -> int:
     status = print_summary(records)
 
     write_reports(records)
+
+    for record in records:
+        summary = record.summary
+
+        if summary.get("BuildStatus") != "Success":
+            continue
+
+        if summary.get("MatchingStatus") != "Success":
+            continue
+
+        if summary.get("WeinbergExtractionStatus") != "Success":
+            continue
+
+        coefficient_file = summary.get("WeinbergCoefficientFile")
+
+        if not coefficient_file:
+            continue
+
+        c5_path = record.output_dir / coefficient_file
+
+        if not c5_path.exists():
+            continue
+
+        try:
+            rge_summary = run_matched_eft_rge(
+                c5_path=c5_path,
+                output_dir=record.output_dir,
+            )
+        except Exception as exc:
+            summary["RGEStatus"] = "Failed"
+            summary["RGEError"] = str(exc)
+            status = 1
+            print(
+                f"  {record.name}: matched-EFT RGE failed: {exc}"
+            )
+            continue
+
+        summary.update(rge_summary)
+
+        try:
+            flavor_summary = run_flavor_matched_rge(
+                c5_path=c5_path,
+                output_dir=record.output_dir,
+            )
+        except Exception as exc:
+            summary["FlavorRGEStatus"] = "Failed"
+            summary["FlavorRGEError"] = str(exc)
+            status = 1
+            print(
+                f"  {record.name}: full-flavor RGE failed: {exc}"
+            )
+            continue
+
+        summary.update(flavor_summary)
+
+        print(
+            f"  {record.name}: full-flavor RGE=Success"
+            f" -> "
+            f"{record.output_dir / flavor_summary['C5FlavorBetaMatrixFile']}"
+        )
+
+        print(
+            f"  {record.name}: matched-EFT RGE=Success"
+            f" -> {record.output_dir / rge_summary['C5BetaFile']}"
+        )
+
+    aggregate = OUTPUT_DIR / "t3_model_comparison.json"
+
+    aggregate.write_text(
+        json.dumps(
+            [record.summary for record in records],
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
 
     return status
 

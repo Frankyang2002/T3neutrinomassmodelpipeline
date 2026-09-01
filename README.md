@@ -1,3 +1,10 @@
+
+Other things to do:
+
+add inverted ordering support;
+include \(\delta_{\rm CP}\) and Majorana phases;
+
+
 # Generalised T3 Neutrino-Mass Pipeline
 
 This repository currently implements the model construction and one-loop EFT matching stages for the T3 radiative neutrino-mass topology.
@@ -22,6 +29,7 @@ The subsequent RGE evolution and conversion of the Weinberg coefficient into the
 - $a_1$: $SU(2)$ weak index
 - $i_123$: SM fermion generation index
 - $r_1$: BSM fermion generation index
+
 
 
 ---

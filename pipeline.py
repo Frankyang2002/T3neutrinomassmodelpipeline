@@ -12,6 +12,9 @@ from pathlib import Path
 
 from MatchedEFTRGE import run_matched_eft_rge
 from FlavorMatchedRGEStage import run_flavor_matched_rge
+from NeutrinoMassStage import run_neutrino_mass_stage
+from NumericalPipelineStage import run_numerical_pipeline_stage
+from NeutrinoObservables import run_neutrino_observables_stage
 
 PROJECT_ROOT = Path(__file__).resolve().parent
 WOLFRAM_DIR = PROJECT_ROOT / "wolfram"
@@ -1164,7 +1167,10 @@ def print_summary(records: list[RunRecord]) -> int:
     return 0 if successful == len(records) else 1
 
 
-def finish_runs(records: list[RunRecord]) -> int:
+def finish_runs(
+    records: list[RunRecord],
+    numerical_config: Path | None = None,
+) -> int:
     """Print the scan summary and generate all Lagrangian reports."""
 
     status = print_summary(records)
@@ -1193,6 +1199,7 @@ def finish_runs(records: list[RunRecord]) -> int:
         if not c5_path.exists():
             continue
 
+        print(f"  {record.name}: starting matched-EFT RGE stage...", flush=True)
         try:
             rge_summary = run_matched_eft_rge(
                 c5_path=c5_path,
@@ -1209,6 +1216,7 @@ def finish_runs(records: list[RunRecord]) -> int:
 
         summary.update(rge_summary)
 
+        print(f"  {record.name}: starting symbolic full-flavor RGE stage...", flush=True)
         try:
             flavor_summary = run_flavor_matched_rge(
                 c5_path=c5_path,
@@ -1224,6 +1232,84 @@ def finish_runs(records: list[RunRecord]) -> int:
             continue
 
         summary.update(flavor_summary)
+
+        print(f"  {record.name}: starting symbolic neutrino mass stage...", flush=True)
+        try:
+            mass_summary = run_neutrino_mass_stage(
+                c5_path=c5_path,
+                output_dir=record.output_dir,
+            )
+        except Exception as exc:
+            summary["NeutrinoMassStatus"] = "Failed"
+            summary["NeutrinoMassError"] = str(exc)
+            status = 1
+            print(
+                f"  {record.name}: neutrino mass stage failed: {exc}"
+            )
+            continue
+
+        summary.update(mass_summary)
+
+        if numerical_config is not None:
+            print(f"  {record.name}: starting numerical RGE stage...", flush=True)
+            try:
+                numerical_summary = run_numerical_pipeline_stage(
+                    c5_path=c5_path,
+                    output_dir=record.output_dir,
+                    config_path=numerical_config,
+                )
+            except Exception as exc:
+                summary["NumericalRGEStatus"] = "Failed"
+                summary["NumericalRGEError"] = str(exc)
+                status = 1
+                print(
+                    f"  {record.name}: numerical RGE failed: {exc}"
+                )
+                continue
+
+            summary.update(numerical_summary)
+
+            print(f"  {record.name}: numerical RGE calculation finished.", flush=True)
+
+            mass_matrix_path = (
+                record.output_dir
+                / numerical_summary["NeutrinoMassMatrixLowScaleFile"]
+            )
+
+            print(f"  {record.name}: starting neutrino observables...", flush=True)
+            try:
+                observable_summary = run_neutrino_observables_stage(
+                    mass_matrix_path=mass_matrix_path,
+                    output_dir=record.output_dir,
+                )
+            except Exception as exc:
+                summary["NeutrinoObservableStatus"] = "Failed"
+                summary["NeutrinoObservableError"] = str(exc)
+                status = 1
+                print(
+                    f"  {record.name}: neutrino observables failed: {exc}"
+                )
+                continue
+
+            summary.update(observable_summary)
+
+            print(
+                f"  {record.name}: neutrino observables=Success"
+                f" -> "
+                f"{record.output_dir / observable_summary['NeutrinoObservablesFile']}"
+            )
+
+            print(
+                f"  {record.name}: numerical RGE=Success"
+                f" -> "
+                f"{record.output_dir / numerical_summary['NeutrinoMassMatrixLowScaleFile']}"
+            )
+
+        print(
+            f"  {record.name}: neutrino mass=Success"
+            f" -> "
+            f"{record.output_dir / mass_summary['NeutrinoMassMatrixFile']}"
+        )
 
         print(
             f"  {record.name}: full-flavor RGE=Success"
@@ -1287,6 +1373,16 @@ def main() -> int:
 
     # Gives alpha
     parser.add_argument(
+        "--numerical",
+        type=Path,
+        default=None,
+        help=(
+            "optional JSON parameter point for numerical "
+            "matched-EFT running"
+        ),
+    )
+
+    parser.add_argument(
         "--alpha",
         type=int,
         default=0,
@@ -1319,7 +1415,7 @@ def main() -> int:
         except ValueError as exc:
             parser.error(str(exc))
 
-        return finish_runs([record])
+        return finish_runs([record], args.numerical)
 
     # The benchmark lists still use the familiar A-E notation because
     # it is convenient for regression testing and comparison with the paper.
@@ -1347,7 +1443,7 @@ def main() -> int:
         for model_class, alpha in points
     ]
 
-    return finish_runs(records)
+    return finish_runs(records, args.numerical)
 
 
 if __name__ == "__main__":

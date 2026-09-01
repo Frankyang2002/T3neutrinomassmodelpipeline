@@ -124,13 +124,17 @@ def build_flavor_matched_c5(
                 + sp.conjugate(y2[p, r]) * sp.conjugate(y1[q, r])
             )
 
-        return sp.factor(value)
+        return value
 
-    return sp.Matrix(
-        n_lepton,
-        n_lepton,
-        entry,
-    )
+    K = sp.MutableDenseMatrix.zeros(n_lepton, n_lepton)
+
+    for p in range(n_lepton):
+        for q in range(p, n_lepton):
+            value = entry(p, q)
+            K[p, q] = value
+            K[q, p] = value
+
+    return sp.Matrix(K)
 
 
 def flavor_match_from_c5_file(

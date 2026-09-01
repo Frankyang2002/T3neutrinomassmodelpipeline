@@ -26,7 +26,7 @@ from pathlib import Path
 import numpy as np
 
 from NumericalWeinbergRGE import SMInitialConditions, evolve_weinberg
-from T3NeutrinoTarget import build_normal_ordering_target
+from T3NeutrinoTarget import build_neutrino_target
 from T3PhysicalYukawaPoint import evaluate_t3_loop_factors
 from T3YukawaFit import fit_three_heavy_balanced, reconstruct_c5
 
@@ -70,15 +70,21 @@ def run_sm_to_low_scale(config: dict) -> SMInitialConditions:
 def required_high_scale_c5(
     config: dict,
     *,
+    ordering: str = "NO",
     lightest_mass_ev: float = 0.01,
+    alpha21: float = 0.0,
+    alpha31: float = 0.0,
 ) -> tuple[np.ndarray, np.ndarray]:
     """Return (target low-scale C5, required high-scale C5)."""
 
     vev_gev = float(config.get("vev_gev", 246.22))
 
-    target = build_normal_ordering_target(
+    target = build_neutrino_target(
+        ordering=ordering,
         lightest_mass_ev=lightest_mass_ev,
         vev_gev=vev_gev,
+        alpha21=alpha21,
+        alpha31=alpha31,
     )
 
     low_sm = run_sm_to_low_scale(config)
@@ -107,13 +113,19 @@ def build_rge_corrected_config(
     c5_path: Path,
     config: dict,
     *,
+    ordering: str = "NO",
     lightest_mass_ev: float = 0.01,
+    alpha21: float = 0.0,
+    alpha31: float = 0.0,
 ) -> tuple[dict, dict]:
     """Return a config whose T3 Yukawas reproduce the low-scale target."""
 
     low_target, high_required = required_high_scale_c5(
         config,
+        ordering=ordering,
         lightest_mass_ev=lightest_mass_ev,
+        alpha21=alpha21,
+        alpha31=alpha31,
     )
 
     loop_factors = evaluate_t3_loop_factors(
@@ -133,6 +145,9 @@ def build_rge_corrected_config(
     )
 
     updated = copy.deepcopy(config)
+    updated["ordering"] = ordering.upper()
+    updated["alpha21"] = float(alpha21)
+    updated["alpha31"] = float(alpha31)
     model = updated["t3"]
 
     model["y1_real"] = fit.y1.real.tolist()
@@ -151,8 +166,10 @@ def build_rge_corrected_config(
 
     diagnostics = {
         "Status": "Success",
-        "Ordering": "NO",
+        "Ordering": ordering.upper(),
         "LightestMassEV": lightest_mass_ev,
+        "Alpha21Rad": float(alpha21),
+        "Alpha31Rad": float(alpha31),
         "MatchingScaleGeV": float(config["mu_initial_gev"]),
         "LowScaleGeV": float(config["mu_final_gev"]),
         "RequiredHighToLowC5NormRatio": scale_ratio,
@@ -177,7 +194,10 @@ def write_rge_corrected_config(
     input_config_path: Path,
     output_config_path: Path,
     *,
+    ordering: str = "NO",
     lightest_mass_ev: float = 0.01,
+    alpha21: float = 0.0,
+    alpha31: float = 0.0,
 ) -> dict:
     """Write an RGE-corrected fitted numerical configuration."""
 
@@ -191,7 +211,10 @@ def write_rge_corrected_config(
     updated, diagnostics = build_rge_corrected_config(
         c5_path,
         config,
+        ordering=ordering,
         lightest_mass_ev=lightest_mass_ev,
+        alpha21=alpha21,
+        alpha31=alpha31,
     )
 
     output_config_path.write_text(
@@ -236,9 +259,26 @@ def main() -> None:
         default=Path("t3_numerical_fitted_rge.json"),
     )
     parser.add_argument(
+        "--ordering",
+        choices=["NO", "IO"],
+        default="NO",
+    )
+    parser.add_argument(
         "--m-lightest",
         type=float,
         default=0.01,
+    )
+    parser.add_argument(
+        "--alpha21",
+        type=float,
+        default=0.0,
+        help="Majorana phase alpha21 in radians.",
+    )
+    parser.add_argument(
+        "--alpha31",
+        type=float,
+        default=0.0,
+        help="Majorana phase alpha31 in radians.",
     )
     args = parser.parse_args()
 
@@ -246,12 +286,18 @@ def main() -> None:
         args.c5,
         args.config,
         args.output,
+        ordering=args.ordering,
         lightest_mass_ev=args.m_lightest,
+        alpha21=args.alpha21,
+        alpha31=args.alpha31,
     )
 
     print("=" * 72)
     print("T3 RGE-CORRECTED YUKAWA FIT")
     print("=" * 72)
+    print("ordering =", summary["Ordering"])
+    print("alpha21 [rad] =", summary["Alpha21Rad"])
+    print("alpha31 [rad] =", summary["Alpha31Rad"])
     print(
         "required ||C5(M)|| / ||C5(low)|| =",
         summary["RequiredHighToLowC5NormRatio"],

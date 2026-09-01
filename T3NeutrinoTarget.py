@@ -8,7 +8,7 @@ from pathlib import Path
 
 import numpy as np
 
-from NeutrinoDataComparison import NUFIT6_NO
+from NeutrinoDataComparison import NUFIT6_IO, NUFIT6_NO
 
 
 EV_TO_GEV = 1.0e-9
@@ -124,6 +124,90 @@ def build_normal_ordering_target(
     )
 
 
+def build_inverted_ordering_target(
+    lightest_mass_ev: float = 0.01,
+    vev_gev: float = 246.22,
+    delta_cp: float = 0.0,
+    alpha21: float = 0.0,
+    alpha31: float = 0.0,
+) -> NeutrinoTarget:
+    """Build a low-scale inverted-ordering target from NuFIT 6.0 best fits."""
+
+    if lightest_mass_ev < 0:
+        raise ValueError("lightest_mass_ev must be non-negative")
+
+    dm21 = NUFIT6_IO["delta_m21_sq_ev2"].central
+    dm32 = NUFIT6_IO["delta_m32_sq_ev2"].central
+
+    # NuFIT uses Delta m^2_32 < 0 for inverted ordering.
+    # With m3 as the lightest state:
+    #   m2^2 = m3^2 - Delta m^2_32
+    #   m1^2 = m2^2 - Delta m^2_21.
+    m3 = lightest_mass_ev
+    m2 = math.sqrt(m3 * m3 - dm32)
+    m1 = math.sqrt(m2 * m2 - dm21)
+    masses = np.array([m1, m2, m3], dtype=float)
+
+    u = pmns_matrix(
+        NUFIT6_IO["sin2_theta12"].central,
+        NUFIT6_IO["sin2_theta23"].central,
+        NUFIT6_IO["sin2_theta13"].central,
+        delta_cp=delta_cp,
+        alpha21=alpha21,
+        alpha31=alpha31,
+    )
+
+    # Majorana Takagi convention:
+    #   U^T M_nu U = diag(m_i)
+    # therefore
+    #   M_nu = U^* diag(m_i) U^\dagger.
+    mass_matrix_ev = u.conj() @ np.diag(masses) @ u.conj().T
+
+    # The matched-operator normalization was directly checked in the
+    # T3-B Matchete output: |M_nu| = v^2 |C5|.
+    c5_matrix = mass_matrix_ev * EV_TO_GEV / (vev_gev * vev_gev)
+
+    return NeutrinoTarget(
+        masses_ev=masses,
+        pmns=u,
+        mass_matrix_ev=mass_matrix_ev,
+        c5_matrix_gev_inv=c5_matrix,
+    )
+
+
+def build_neutrino_target(
+    ordering: str = "NO",
+    lightest_mass_ev: float = 0.01,
+    vev_gev: float = 246.22,
+    delta_cp: float = 0.0,
+    alpha21: float = 0.0,
+    alpha31: float = 0.0,
+) -> NeutrinoTarget:
+    """Build either the normal- or inverted-ordering target."""
+
+    ordering = ordering.upper()
+
+    if ordering == "NO":
+        return build_normal_ordering_target(
+            lightest_mass_ev=lightest_mass_ev,
+            vev_gev=vev_gev,
+            delta_cp=delta_cp,
+            alpha21=alpha21,
+            alpha31=alpha31,
+        )
+
+    if ordering == "IO":
+        return build_inverted_ordering_target(
+            lightest_mass_ev=lightest_mass_ev,
+            vev_gev=vev_gev,
+            delta_cp=delta_cp,
+            alpha21=alpha21,
+            alpha31=alpha31,
+        )
+
+    raise ValueError("ordering must be 'NO' or 'IO'")
+
+
 def _complex_matrix_to_json(matrix: np.ndarray) -> list[list[dict[str, float]]]:
     return [
         [
@@ -134,9 +218,12 @@ def _complex_matrix_to_json(matrix: np.ndarray) -> list[list[dict[str, float]]]:
     ]
 
 
-def target_to_json(target: NeutrinoTarget) -> dict:
+def target_to_json(
+    target: NeutrinoTarget,
+    ordering: str = "NO",
+) -> dict:
     return {
-        "Ordering": "NO",
+        "Ordering": ordering.upper(),
         "MassesEV": target.masses_ev.tolist(),
         "PMNS": _complex_matrix_to_json(target.pmns),
         "MassMatrixEV": _complex_matrix_to_json(target.mass_matrix_ev),
@@ -149,10 +236,16 @@ def main() -> None:
         description="Build a NuFIT 6.0 low-scale neutrino target matrix."
     )
     parser.add_argument(
+        "--ordering",
+        choices=["NO", "IO"],
+        default="NO",
+        help="Neutrino mass ordering.",
+    )
+    parser.add_argument(
         "--m-lightest",
         type=float,
         default=0.01,
-        help="Lightest neutrino mass m1 in eV for normal ordering.",
+        help="Lightest neutrino mass in eV.",
     )
     parser.add_argument(
         "--vev",
@@ -185,7 +278,8 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    target = build_normal_ordering_target(
+    target = build_neutrino_target(
+        ordering=args.ordering,
         lightest_mass_ev=args.m_lightest,
         vev_gev=args.vev,
         delta_cp=args.delta_cp,
@@ -193,12 +287,15 @@ def main() -> None:
         alpha31=args.alpha31,
     )
     args.output.write_text(
-        json.dumps(target_to_json(target), indent=2),
+        json.dumps(
+            target_to_json(target, ordering=args.ordering),
+            indent=2,
+        ),
         encoding="utf-8",
     )
 
     print("=" * 72)
-    print("NORMAL-ORDERING NEUTRINO TARGET")
+    print(f"{args.ordering}-ORDERING NEUTRINO TARGET")
     print("=" * 72)
     print("masses [eV]:", target.masses_ev)
     print()

@@ -58,6 +58,42 @@ NUFIT6_NO = {
 }
 
 
+# NuFIT 6.0 (2024), inverted ordering, including SK + IceCube atmospheric data.
+# NuFIT quotes Delta m^2_32 for IO, rather than Delta m^2_31.
+NUFIT6_IO = {
+    "sin2_theta12": Measurement(
+        central=0.308,
+        sigma_minus=0.011,
+        sigma_plus=0.012,
+        range_3sigma=(0.275, 0.345),
+    ),
+    "sin2_theta23": Measurement(
+        central=0.550,
+        sigma_minus=0.015,
+        sigma_plus=0.012,
+        range_3sigma=(0.440, 0.584),
+    ),
+    "sin2_theta13": Measurement(
+        central=0.02231,
+        sigma_minus=0.00056,
+        sigma_plus=0.00056,
+        range_3sigma=(0.02060, 0.02409),
+    ),
+    "delta_m21_sq_ev2": Measurement(
+        central=7.49e-5,
+        sigma_minus=0.19e-5,
+        sigma_plus=0.19e-5,
+        range_3sigma=(6.92e-5, 8.05e-5),
+    ),
+    "delta_m32_sq_ev2": Measurement(
+        central=-2.484e-3,
+        sigma_minus=0.020e-3,
+        sigma_plus=0.020e-3,
+        range_3sigma=(-2.547e-3, -2.421e-3),
+    ),
+}
+
+
 def mixing_angles_from_pmns_abs(pmns_abs: np.ndarray) -> dict[str, float]:
     """Extract the three standard mixing angles from |U_PMNS|.
 
@@ -97,26 +133,38 @@ def asymmetric_pull(value: float, measurement: Measurement) -> float:
     return (value - measurement.central) / sigma
 
 
-def compare_to_nufit6_no(observables: dict[str, Any]) -> dict[str, Any]:
-    """Compare a normal-ordering observable point with NuFIT 6.0.
-
-    The input is the JSON structure written by NeutrinoObservables.py.
-    """
+def _compare_to_dataset(
+    observables: dict[str, Any],
+    *,
+    ordering: str,
+    dataset: dict[str, Measurement],
+) -> dict[str, Any]:
     pmns_abs = np.asarray(observables["PMNSAbs"], dtype=float)
     angles = mixing_angles_from_pmns_abs(pmns_abs)
+
+    atmospheric_key = (
+        "delta_m31_sq_ev2"
+        if ordering == "NO"
+        else "delta_m32_sq_ev2"
+    )
+    atmospheric_json_key = (
+        "DeltaM31SqEV2"
+        if ordering == "NO"
+        else "DeltaM32SqEV2"
+    )
 
     predicted = {
         "sin2_theta12": angles["sin2_theta12"],
         "sin2_theta23": angles["sin2_theta23"],
         "sin2_theta13": angles["sin2_theta13"],
         "delta_m21_sq_ev2": float(observables["DeltaM21SqEV2"]),
-        "delta_m31_sq_ev2": float(observables["DeltaM31SqEV2"]),
+        atmospheric_key: float(observables[atmospheric_json_key]),
     }
 
     rows: dict[str, Any] = {}
     chi2 = 0.0
 
-    for name, measurement in NUFIT6_NO.items():
+    for name, measurement in dataset.items():
         value = predicted[name]
         pull = asymmetric_pull(value, measurement)
         contribution = pull * pull
@@ -138,7 +186,7 @@ def compare_to_nufit6_no(observables: dict[str, Any]) -> dict[str, Any]:
 
     return {
         "ComparisonStatus": "Success",
-        "Ordering": "NO",
+        "Ordering": ordering,
         "Dataset": "NuFIT 6.0 (2024), SK+IceCube atmospheric included",
         "Warning": (
             "Diagnostic independent-Gaussian chi-square only; "
@@ -152,12 +200,52 @@ def compare_to_nufit6_no(observables: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def compare_to_nufit6_no(observables: dict[str, Any]) -> dict[str, Any]:
+    """Compare a normal-ordering observable point with NuFIT 6.0.
+
+    The input is the JSON structure written by NeutrinoObservables.py.
+    """
+    return _compare_to_dataset(
+        observables,
+        ordering="NO",
+        dataset=NUFIT6_NO,
+    )
+
+
+def compare_to_nufit6_io(observables: dict[str, Any]) -> dict[str, Any]:
+    """Compare an inverted-ordering observable point with NuFIT 6.0."""
+
+    return _compare_to_dataset(
+        observables,
+        ordering="IO",
+        dataset=NUFIT6_IO,
+    )
+
+
+def compare_to_nufit6(
+    observables: dict[str, Any],
+    ordering: str = "NO",
+) -> dict[str, Any]:
+    """Compare a neutrino observable point with the requested NuFIT ordering."""
+
+    ordering = ordering.upper()
+
+    if ordering == "NO":
+        return compare_to_nufit6_no(observables)
+
+    if ordering == "IO":
+        return compare_to_nufit6_io(observables)
+
+    raise ValueError("ordering must be 'NO' or 'IO'")
+
+
 def compare_file(
     observables_path: Path,
     output_path: Path | None = None,
+    ordering: str = "NO",
 ) -> dict[str, Any]:
     data = json.loads(observables_path.read_text(encoding="utf-8"))
-    result = compare_to_nufit6_no(data)
+    result = compare_to_nufit6(data, ordering=ordering)
 
     if output_path is None:
         output_path = observables_path.with_name("neutrino_data_comparison.json")
@@ -171,12 +259,18 @@ def compare_file(
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Compare neutrino observables against NuFIT 6.0 normal-ordering data."
+        description="Compare neutrino observables against NuFIT 6.0 data."
     )
     parser.add_argument(
         "observables",
         type=Path,
         help="Path to neutrino_observables.json",
+    )
+    parser.add_argument(
+        "--ordering",
+        choices=["NO", "IO"],
+        default="NO",
+        help="Neutrino mass ordering used to label and compare the observables.",
     )
     parser.add_argument(
         "--output",
@@ -186,10 +280,20 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    result = compare_file(args.observables, args.output)
+    result = compare_file(
+        args.observables,
+        args.output,
+        ordering=args.ordering,
+    )
+
+    ordering_name = (
+        "NORMAL ORDERING"
+        if args.ordering == "NO"
+        else "INVERTED ORDERING"
+    )
 
     print("=" * 72)
-    print("NEUTRINO DATA COMPARISON — NuFIT 6.0, NORMAL ORDERING")
+    print(f"NEUTRINO DATA COMPARISON — NuFIT 6.0, {ordering_name}")
     print("=" * 72)
 
     for name, row in result["Observables"].items():

@@ -10,11 +10,11 @@ from dataclasses import dataclass
 from fractions import Fraction
 from pathlib import Path
 
-from MatchedEFTRGE import run_matched_eft_rge
-from FlavorMatchedRGEStage import run_flavor_matched_rge
-from NeutrinoMassStage import run_neutrino_mass_stage
-from NumericalPipelineStage import run_numerical_pipeline_stage
-from NeutrinoObservables import run_neutrino_observables_stage
+from RGE.MatchedEFTRGE import run_matched_eft_rge
+from RGE.FlavorMatchedRGEStage import run_flavor_matched_rge
+from RGE.NeutrinoMassStage import run_neutrino_mass_stage
+from RGE.NumericalPipelineStage import run_numerical_pipeline_stage
+from RGE.NeutrinoObservables import run_neutrino_observables_stage
 
 PROJECT_ROOT = Path(__file__).resolve().parent
 WOLFRAM_DIR = PROJECT_ROOT / "wolfram"
@@ -1275,12 +1275,13 @@ def finish_runs(
                 record.output_dir
                 / numerical_summary["NeutrinoMassMatrixLowScaleFile"]
             )
-
+            ordering = numerical_config.get("ordering", "NO")
             print(f"  {record.name}: starting neutrino observables...", flush=True)
             try:
                 observable_summary = run_neutrino_observables_stage(
                     mass_matrix_path=mass_matrix_path,
                     output_dir=record.output_dir,
+                     ordering=ordering,
                 )
             except Exception as exc:
                 summary["NeutrinoObservableStatus"] = "Failed"

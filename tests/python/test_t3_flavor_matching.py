@@ -5,11 +5,11 @@ from pathlib import Path
 
 import sympy as sp
 
-from RGE.FlavorMatchedC5 import (
+from RGE.matching.FlavorMatchedC5 import (
     build_flavor_matched_c5,
     extract_t3_loop_kernel,
 )
-from RGE.MatchedEFTRGE import parse_matchete_c5
+from RGE.matching.MatchedEFTRGE import parse_matchete_c5
 
 
 def default_c5_path() -> Path:

@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import numpy as np
 
-from RGE.NeutrinoDataComparison import compare_to_nufit6
-from RGE.NeutrinoObservables import calculate_neutrino_observables
-from RGE.T3NeutrinoTarget import build_neutrino_target
+from RGE.phenomenology.NeutrinoDataComparison import compare_to_nufit6
+from RGE.phenomenology.NeutrinoObservables import calculate_neutrino_observables
+from RGE.phenomenology.T3NeutrinoTarget import build_neutrino_target
 
 
 EV_TO_GEV = 1.0e-9

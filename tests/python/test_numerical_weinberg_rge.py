@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from RGE.NumericalWeinbergRGE import (
+from RGE.running.NumericalWeinbergRGE import (
     SMInitialConditions,
     evolve_weinberg,
     neutrino_mass_matrix,

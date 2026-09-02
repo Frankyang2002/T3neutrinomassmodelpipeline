@@ -10,11 +10,12 @@ from dataclasses import dataclass
 from fractions import Fraction
 from pathlib import Path
 
-from RGE.MatchedEFTRGE import run_matched_eft_rge
-from RGE.FlavorMatchedRGEStage import run_flavor_matched_rge
-from RGE.NeutrinoMassStage import run_neutrino_mass_stage
-from RGE.NumericalPipelineStage import run_numerical_pipeline_stage
-from RGE.NeutrinoObservables import run_neutrino_observables_stage
+from RGE.matching.MatchedEFTRGE import run_matched_eft_rge
+from RGE.stages.FlavorMatchedRGEStage import run_flavor_matched_rge
+from RGE.stages.NeutrinoMassStage import run_neutrino_mass_stage
+from RGE.stages.NumericalPipelineStage import run_numerical_pipeline_stage
+from RGE.stages.RGEReportStage import write_rge_report
+from RGE.phenomenology.NeutrinoObservables import run_neutrino_observables_stage
 
 PROJECT_ROOT = Path(__file__).resolve().parent
 
@@ -161,11 +162,13 @@ def run_model(
 
     # Save Wolfram output for debugging.
     if debug_reports:
-        (output_dir / "wolfram_stdout.log").write_text(
+        debug_dir = output_dir / "debug"
+        debug_dir.mkdir(parents=True, exist_ok=True)
+        (debug_dir / "wolfram_stdout.log").write_text(
             process.stdout,
             encoding="utf-8",
         )
-        (output_dir / "wolfram_stderr.log").write_text(
+        (debug_dir / "wolfram_stderr.log").write_text(
             process.stderr,
             encoding="utf-8",
         )
@@ -1486,6 +1489,39 @@ def print_summary(records: list[RunRecord]) -> int:
     return 0 if successful == len(records) else 1
 
 
+def organise_c5_input(record: RunRecord) -> Path | None:
+    """Move the machine-readable matched coefficient into the data folder."""
+
+    summary = record.summary
+    coefficient_file = summary.get("WeinbergCoefficientFile")
+
+    if not coefficient_file:
+        return None
+
+    c5_path = record.output_dir / coefficient_file
+
+    if not c5_path.is_file():
+        return None
+
+    data_dir = record.output_dir / "data"
+    data_dir.mkdir(parents=True, exist_ok=True)
+    organised_path = data_dir / c5_path.name
+
+    if c5_path != organised_path:
+        if organised_path.exists():
+            raise FileExistsError(
+                f"Refusing to overwrite existing RGE input: {organised_path}"
+            )
+
+        c5_path.replace(organised_path)
+        c5_path = organised_path
+
+    summary["WeinbergCoefficientFile"] = (
+        c5_path.relative_to(record.output_dir).as_posix()
+    )
+    return c5_path
+
+
 def finish_runs(
     records: list[RunRecord],
     numerical_config: Path | None = None,
@@ -1493,9 +1529,20 @@ def finish_runs(
 ) -> int:
     """Print the scan summary and generate all Lagrangian reports."""
 
+    # Organise the matched coefficient before printing paths or writing the
+    # aggregate summary, so every reported filename points to its final place.
+    for record in records:
+        organise_c5_input(record)
+
     status = print_summary(records)
 
     write_reports(records, debug_reports)
+
+    for record in records:
+        coefficient_pdf = record.output_dir / "c5_coefficient.pdf"
+        record.summary["WeinbergCoefficientPDFFile"] = (
+            coefficient_pdf.name if coefficient_pdf.exists() else ""
+        )
 
     for record in records:
         summary = record.summary
@@ -1533,6 +1580,7 @@ def finish_runs(
             print(
                 f"  {record.name}: matched-EFT RGE failed: {exc}"
             )
+            write_and_compile_rge_report(record)
             continue
 
         summary.update(rge_summary)
@@ -1551,6 +1599,7 @@ def finish_runs(
             print(
                 f"  {record.name}: full-flavor RGE failed: {exc}"
             )
+            write_and_compile_rge_report(record)
             continue
 
         summary.update(flavor_summary)
@@ -1568,6 +1617,7 @@ def finish_runs(
             print(
                 f"  {record.name}: neutrino mass stage failed: {exc}"
             )
+            write_and_compile_rge_report(record)
             continue
 
         summary.update(mass_summary)
@@ -1587,6 +1637,7 @@ def finish_runs(
                 print(
                     f"  {record.name}: numerical RGE failed: {exc}"
                 )
+                write_and_compile_rge_report(record)
                 continue
 
             summary.update(numerical_summary)
@@ -1597,7 +1648,10 @@ def finish_runs(
                 record.output_dir
                 / numerical_summary["NeutrinoMassMatrixLowScaleFile"]
             )
-            ordering = numerical_config.get("ordering", "NO")
+            numerical_payload = json.loads(
+                numerical_config.read_text(encoding="utf-8")
+            )
+            ordering = numerical_payload.get("ordering", "NO")
             print(f"  {record.name}: starting neutrino observables...", flush=True)
             try:
                 observable_summary = run_neutrino_observables_stage(
@@ -1612,6 +1666,7 @@ def finish_runs(
                 print(
                     f"  {record.name}: neutrino observables failed: {exc}"
                 )
+                write_and_compile_rge_report(record)
                 continue
 
             summary.update(observable_summary)
@@ -1645,6 +1700,8 @@ def finish_runs(
             f" -> {record.output_dir / rge_summary['C5BetaFile']}"
         )
 
+        write_and_compile_rge_report(record)
+
     aggregate = OUTPUT_DIR / "t3_model_comparison.json"
 
     aggregate.write_text(
@@ -1658,6 +1715,35 @@ def finish_runs(
     return status
 
 
+def write_and_compile_rge_report(record: RunRecord) -> Path:
+    """Create and compile the concise per-model RGE report."""
+
+    report_tex = write_rge_report(
+        output_dir=record.output_dir,
+        model_heading_latex=latex_model_heading(record),
+        summary=record.summary,
+        coefficient_latex=record.summary.get(
+            "WeinbergCoefficientLaTeX",
+            "",
+        ),
+    )
+
+    record.summary["RGEReportTeXFile"] = report_tex.name
+    compile_latex_document(report_tex)
+
+    report_pdf = report_tex.with_suffix(".pdf")
+    if report_pdf.exists():
+        record.summary["RGEReportStatus"] = "Success"
+        record.summary["RGEReportPDFFile"] = report_pdf.name
+        print(f"  {record.name}: RGE report -> {report_pdf}")
+    else:
+        record.summary["RGEReportStatus"] = "TeXOnly"
+        record.summary["RGEReportPDFFile"] = ""
+        print(f"  {record.name}: RGE report source -> {report_tex}")
+
+    return report_tex
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         description=(
@@ -1668,7 +1754,7 @@ def main() -> int:
 
     mode = parser.add_mutually_exclusive_group()
 
-    # Simple quick run
+    # Simple quick run, we first fill in the details based on input arguments
     mode.add_argument(
         "--smoke",
         action="store_true",

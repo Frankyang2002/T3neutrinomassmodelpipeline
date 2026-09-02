@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from RGE.NeutrinoObservables import (
+from RGE.phenomenology.NeutrinoObservables import (
     calculate_neutrino_observables,
     takagi_factorization,
 )

@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from RGE.T3YukawaAdapter import (
+from RGE.general.T3YukawaAdapter import (
     T3WeylConvention,
     real_yukawa_tensor_from_exchange,
 )

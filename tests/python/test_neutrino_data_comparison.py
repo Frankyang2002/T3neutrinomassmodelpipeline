@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from RGE.NeutrinoDataComparison import compare_to_nufit6_no, mixing_angles_from_pmns_abs
+from RGE.phenomenology.NeutrinoDataComparison import compare_to_nufit6_no, mixing_angles_from_pmns_abs
 
 
 def pmns_abs_from_angles(theta12: float, theta23: float, theta13: float) -> np.ndarray:

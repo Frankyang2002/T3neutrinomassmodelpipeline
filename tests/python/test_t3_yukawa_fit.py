@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import numpy as np
 
-from RGE.NeutrinoDataComparison import compare_to_nufit6_no
-from RGE.T3NeutrinoTarget import build_normal_ordering_target
-from RGE.T3YukawaFit import fit_three_heavy_balanced, reconstruct_c5
+from RGE.phenomenology.NeutrinoDataComparison import compare_to_nufit6_no
+from RGE.phenomenology.T3NeutrinoTarget import build_normal_ordering_target
+from RGE.phenomenology.T3YukawaFit import fit_three_heavy_balanced, reconstruct_c5
 
 
 def takagi_observables_real_symmetric(mass_matrix_ev: np.ndarray) -> dict:

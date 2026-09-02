@@ -40,10 +40,10 @@ from pathlib import Path
 import sympy as sp
 from sympy.parsing.mathematica import parse_mathematica
 
-from RGE.GeneralWeinbergRGEGenerator import (
+from RGE.general.GeneralWeinbergRGEGenerator import (
     calculate_complete_master_rge,
 )
-from RGE.T3RGETensors import (
+from RGE.general.T3RGETensors import (
     ComplexQuarticComponent,
     ComplexScalarFactor,
     T3RGETensors,
@@ -51,11 +51,11 @@ from RGE.T3RGETensors import (
     scalar_model_from_exchange,
     wilson_component_function,
 )
-from RGE.T3YukawaAdapter import (
+from RGE.general.T3YukawaAdapter import (
     T3WeylConvention,
     real_yukawa_tensor_from_exchange,
 )
-from RGE.WeinbergWilsonAdapter import (
+from RGE.general.WeinbergWilsonAdapter import (
     build_weinberg_wilson_tensor,
     validate_weinberg_tensor_symmetry,
 )

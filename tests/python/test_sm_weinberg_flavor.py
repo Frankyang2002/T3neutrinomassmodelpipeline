@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import sympy as sp
 
-from RGE.SMEFTWeinbergFlavorRGE import (
+from RGE.running.SMEFTWeinbergFlavorRGE import (
     beta_weinberg_matrix,
     g2,
     lambdaH,

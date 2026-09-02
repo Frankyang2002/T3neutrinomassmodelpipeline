@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import sympy as sp
 
-from RGE.NeutrinoMassStage import build_neutrino_mass_matrix, v
+from RGE.stages.NeutrinoMassStage import build_neutrino_mass_matrix, v
 
 
 def main() -> int:

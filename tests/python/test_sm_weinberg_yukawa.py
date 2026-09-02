@@ -37,14 +37,14 @@ when all gauge and quartic terms are disabled.
 
 import sympy as sp
 
-from RGE.GeneralWeinbergRGEGenerator import (
+from RGE.general.GeneralWeinbergRGEGenerator import (
     ComplexScalar,
     MasterRGEInputs,
     RGEModel,
     calculate_complete_master_rge,
 )
-from RGE.T3RGETensors import FermionBasis, WeylFermion
-from RGE.WeinbergWilsonAdapter import (
+from RGE.general.T3RGETensors import FermionBasis, WeylFermion
+from RGE.general.WeinbergWilsonAdapter import (
     build_weinberg_wilson_tensor,
     validate_weinberg_tensor_symmetry,
 )

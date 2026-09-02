@@ -5,7 +5,7 @@ from pathlib import Path
 
 import sympy as sp
 
-from RGE.T3YukawaAdapter import (
+from RGE.general.T3YukawaAdapter import (
     T3WeylConvention,
     real_yukawa_tensor_from_exchange,
 )

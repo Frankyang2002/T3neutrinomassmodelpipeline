@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import sympy as sp
 
-from RGE.GeneralWeinbergRGEGenerator import RGEModel
-from RGE.T3RGETensors import FermionBasis, WeylFermion
-from RGE.WeinbergWilsonAdapter import (
+from RGE.general.GeneralWeinbergRGEGenerator import RGEModel
+from RGE.general.T3RGETensors import FermionBasis, WeylFermion
+from RGE.general.WeinbergWilsonAdapter import (
     build_weinberg_wilson_tensor,
     validate_weinberg_tensor_symmetry,
 )

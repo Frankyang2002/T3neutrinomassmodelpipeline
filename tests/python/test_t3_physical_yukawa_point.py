@@ -8,8 +8,8 @@ import numpy as np
 import sympy as sp
 
 import T3PhysicalYukawaPoint as point
-from RGE.T3NeutrinoTarget import build_normal_ordering_target
-from RGE.T3YukawaFit import reconstruct_c5
+from RGE.phenomenology.T3NeutrinoTarget import build_normal_ordering_target
+from RGE.phenomenology.T3YukawaFit import reconstruct_c5
 
 
 def main() -> None:

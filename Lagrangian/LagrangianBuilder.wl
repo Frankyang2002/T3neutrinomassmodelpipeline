@@ -3,6 +3,8 @@
 - Create all gauge invariant interactions
 - Return UV Lagrangian
 
+These are all helper functions for the run model
+
 Note that we use invariant tensor function from group magic in matchete. 
 We can explicitly tell it the symmetric fields so that we get the tensor that we can SU2 contracts fields correctly
 It returns explicit CG tensors in a list so like HH with 2x2=3+1 would be only the CG for the symmetric part {H1,H2,H3} 
@@ -12,7 +14,7 @@ ClearAll[
   BSMRepresentationName, EnsureBSMRepresentation, BSMIndexType,
   SU2IndexType, SU2CGIndexRepresentation, DefineSU2InvariantCG,
   DefineT3InvariantCGs, T3LegacyModelQ,
-  DefineT3TwoScalarFields, DefineT3TwoScalarCouplings,
+  DefineT3Fields, DefineT3Couplings,
   ScalarFieldValue, ScalarNorm, ScalarSelf, HiggsPortal, CrossScalarPortal,
   TensorVector, SwapTensorSlots, SymmetrizeTensorPairs, IndependentTensorBasis,
   PhysicalSU2InvariantBasis, DefineDynamicRealCoupling, DefineSU2InvariantFamily,
@@ -145,11 +147,12 @@ SU2CGIndexRepresentation[d_Integer?Positive, objectConjugated_] := Module[{rep},
 
 (* Given field and SU(2) rep, get invariant Clebsch Gordon tensor to contract indices into SU(2) singlet from Matchete 
 Our input is the Clebsch Gordon name, like T3Y1CG, whether fields in terms such as LFS is conjugated, so True,True,False would mean L is conj, F is conj, and S isnt
-symmetricPositions tells us if we have symmetry in term, like for HHSS^\dagger, the 2 S terms are symmetric, thus removing antisymmetric spaces
+symmetricPositions tells us if we have symmetry in term, like for HHSS, the 2 S terms are symmetric, thus removing antisymmetric spaces
 smPositions tells us what position a field is a standard model, where we can use in built Matchete representation for them instead of BSM
 *)
 
-(*Essentially: Dimensions -> Dynkin Reps -> Invariant Tensors -> CG that can be used in Matchete*)
+(*Essentially: Dimensions -> Dynkin Reps -> Invariant Tensors -> CG that can be used in Matchete
+1. We *)
 DefineSU2InvariantCG[
   cgName_Symbol,
   dims_List,
@@ -174,10 +177,13 @@ DefineSU2InvariantCG[
   (* No CG if we have a singlet *)
   If[keptDims === {}, Return[None]];
 
-  (* Matchete distinguishes the orientation of pseudoreal (half integer isospin and even dimensions) SU(2) indices.
-       - a conjugated pseudoreal FIELD is represented by CRep[label] in
+  (* Matchete distinguishes the orientation of pseudoreal SU(2) indices.
+    Note pseudoreal means that our representation is equivalent to its conjugate,
+    but its indices still need to be distringuished as the conjugate has a different CG
+    We need to use CRep to represent the conjugation of a representation
+       - a conjugated pseudoreal field is represented by CRep[label] in
          InvariantTensors and by an UNBARRED representation in DefineCG;
-       - an unconjugated pseudoreal FIELD uses the plain Dynkin label in
+       - an unconjugated pseudoreal field uses the plain Dynkin label in
          InvariantTensors and the BARRED representation in DefineCG.
      For odd-dimensional full integer isospin SU(2) irreps the representation is real, so no CRep/Bar distinction is required.
     Objectconjugated/keptConj tells us if the field object is gauge-conjugated *)
@@ -216,11 +222,13 @@ DefineSU2InvariantCG[
     {keep, keptDims, keptConj}
   ];
 
-  (* If we removes a singlet, we need to shift all our positions to fit the new positions of our arrays, like symmetry positions *)
+  (* Association thread creates a dictionary of our keep with its the integer position of everything in keep
+  so if keep = {a,b,c,d}, range,length gives {1,2,3,4}. This gives us a position map, as we map a->1, b->2 etc
+  with association thread*)
   positionMap = AssociationThread[keep -> Range[Length[keep]]];
 
 
-  (* We want to prevent antisymmetric tensor products when we have symmetric fields, this is used later *)
+  (* We want to prevent antisymmetric tensor products when we have symmetric fields *)
   symmetryAfterDrop = Select[
     Lookup[positionMap, #, Missing["Dropped"]] & /@ symmetricPositions,
     IntegerQ
@@ -266,8 +274,8 @@ DefineSU2InvariantCG[
   ]
 ];
 
-(* Register the three topology-defining invariant tensors for our 3 fields in the model.  Their field order is the same order used in the interaction. *)
-(* We get invariant CG from each our interactions vertices, and define it for the model *)
+(* Register the three topology-defining invariant tensors for our 3 fields in the model.  Their field order is the same order used in the interaction. 
+ We get invariant CG from each our interactions vertices, and define it for the model *)
 DefineT3InvariantCGs[model_Association] := Module[
   {d1, d2, dF, y1cg, y2cg, mixcg},
   
@@ -300,7 +308,7 @@ DefineT3InvariantCGs[model_Association] := Module[
 ];
 
 (* We define couplings for matchete *)
-DefineT3TwoScalarCouplings[] := Module[{},
+DefineT3Couplings[] := Module[{},
   DefineCoupling[y1, Indices -> {Flavor, NFlavor}, SelfConjugate -> False];
   DefineCoupling[y2, Indices -> {Flavor, NFlavor}, SelfConjugate -> False];
   DefineCoupling[lambdaS1, SelfConjugate -> True]; (* (S_1^\daggerS_1)^2 *)
@@ -312,8 +320,9 @@ DefineT3TwoScalarCouplings[] := Module[{},
   True
 ];
 
-(* We convert into matchete fields *)
-DefineT3TwoScalarFields[model_Association] := Module[
+(* We convert into matchete fields 
+1. We define our 2 scalar and 1 fermion fields to be used as NewFermion and NewScalar when called*)
+DefineT3Fields[model_Association] := Module[
   {f, s1, s2, fidx, s1idx, s2idx, findices, s1indices, s2indices, selfConj},
 
   f = model["Fermion"];
@@ -382,6 +391,7 @@ DefineT3TwoScalarFields[model_Association] := Module[
   True
 ];
 
+(* 1.We fill our scalar field value for our 2 scalars *)
 ScalarFieldValue[1, False, ___] := NewScalar1[];
 ScalarFieldValue[1, True,  ___] := Bar[NewScalar1[]];
 ScalarFieldValue[2, False, ___] := NewScalar2[];
@@ -868,7 +878,11 @@ BuildT3MixingCandidatesLegacy[model_Association] := Module[
   ]
 ];
 
-(* Build the topology Yukawa with the generic Matchete-generated CG. Remember its yukawa *)
+(* Build the topology Yukawa with the generic Matchete-generated CG. Remember its yukawa 
+1. We load whichever scalar is being used for yukawa here
+2. Load its dimensions, whether its conjugated or how it is contracted etc and its couplings
+3. Convert our fermion and scalar into conjugated forms dependending on which scalar we use
+4. Label indices for CG indices contraction, and give it a name*)
 BuildT3YukawaCandidates[model_Association, which_Integer] := Module[
   {s, dS, dF, y, scalarBar, useCConj, baseName, p, r, i, j, k, f, scalar, labels, cg},
   (* Eg: 2x1x2 -> {i,k}, and 2x4x3 -> {i,j,k}  due to singlets getting out*)
@@ -881,12 +895,20 @@ BuildT3YukawaCandidates[model_Association, which_Integer] := Module[
   baseName = "Yukawa" <> ToString[which];
   cg = If[which === 1, T3Y1CG, T3Y2CG];
 
-  (* Checks if our fermion and scalar have an SU(2) index, so not singlet *)
+  (* We decide on the charge conjugation based on which scalar we use, 
+  This is designated on the fact that Y(S1)=alpha/2 while Y(S2)=alpha+2/2
+  This gives us the correct contraction for our interactions 
+  We have Lbar Fc S1 and Lbar F S2dag
+  *)
+
+  (* Create new Fermion that becomes charge conjugated
+  based on scalar choice for yukawa*)
   f = If[dF === 1,
     If[useCConj, CConj[NewFermion[r]], NewFermion[r]],
     If[useCConj, CConj[NewFermion[j, r]], NewFermion[j, r]]
   ];
 
+  (* Create new scalar that becomes conjugated based on scalar choice for yukawa *)
   scalar = If[dS === 1,
     ScalarFieldValue[which, scalarBar],
     ScalarFieldValue[which, scalarBar, k]
@@ -898,6 +920,7 @@ BuildT3YukawaCandidates[model_Association, which_Integer] := Module[
     If[dS === 1, {}, {k}]
   ];
 
+  (* Plus HC adds the hermitian conjugate in, NCM is product of dirac spinors *)
   {
     <|
       "Name" -> baseName <> "_GenericCG",
@@ -912,7 +935,10 @@ BuildT3YukawaCandidates[model_Association, which_Integer] := Module[
 
 (* Now H H S1 S2^dagger + h.c. vertex  The invariant tensor is
    generated for the exact requested representations and is symmetric in the
-   two Higgs indices. *)
+   two Higgs indices. 
+   1. Create our new fields and conjugate the correct scalar
+   2. Label indices if needed
+   3. Put into CG, we name the coefficient and give it indices*)
 BuildT3MixingCandidates[model_Association] := Module[
   {d1, d2, i, j, a, b, s1, s2, labels},
 
@@ -935,12 +961,14 @@ BuildT3MixingCandidates[model_Association] := Module[
   }
 ];
 
-(* We check with Matchete if the lagrangian with the interaction is valid *)
+(* We check with Matchete if the lagrangian with the interaction is valid 
+1. use CheckLagrangian to see if Lagrangian is valid with the interaction and indices*)
 ValidateT3Candidate[c_, LSM_, LFree_] := Module[{res},
   Print["Checking candidate: ", c["Name"]];
   (* Relabel indices is to prevent dummy index clashes, 
   like for A_i B_i + C_i D_i  are independent despite both using i 
   We prevent reusing index labels and throughout the file*)
+  
   res = CheckAbort[
     Check[CheckLagrangian[(LSM + LFree + c["Expression"]) // RelabelIndices], $Failed],
     $Aborted
@@ -950,7 +978,8 @@ ValidateT3Candidate[c_, LSM_, LFree_] := Module[{res},
 ];
 
 (* Keep the first valid contraction in each alternative group.  Candidates
-   without a group are independent interactions and are all retained. *)
+   without a group are independent interactions and are all retained. 
+   1. Select first valid contraction of many valid contractions to represent these fields*)
 SelectFirstValidByGroup[list_List] := Module[{seen = <||>},
   Select[
     list,
@@ -965,7 +994,11 @@ SelectFirstValidByGroup[list_List] := Module[{seen = <||>},
   ]
 ];
 
-(* Assemble all interaction candidates without validating them.*)
+(* Assemble all interaction candidates without validating them.
+1. Register our 2 fields as they both are valid for yukawa
+2. Find all interactions vertices that come from this model, matching our field with all other fields
+3. The build functions try to contract the fields correctly and check if they are valid in the Lagrangian
+4. We add these interactions into a list as candidates for all candidates*)
 BuildT3InteractionCandidates[model_Association, legacyQ_] := Module[{d1, d2},
   d1 = model["Scalar1", "SU2"];
   d2 = model["Scalar2", "SU2"];
@@ -989,14 +1022,22 @@ BuildT3InteractionCandidates[model_Association, legacyQ_] := Module[{d1, d2},
 
 (* A genuine T3 contribution requires both lepton-fermion-scalar Yukawas and
    the quartic that connects S1 and S2 to the two Higgs legs. 
-   No weinberg without these 3 elements *)
+   No weinberg without these 3 elements 
+   1. Check if all 3 vertices exist*)
 T3IngredientsPresentQ[valid_List] := And @@ (
   Function[class,
     AnyTrue[valid, Lookup[#, "Class", ""] === class &]
   ] /@ {"Yukawa1", "Yukawa2", "T3ScalarMix"}
 );
 
-(* We do everything her  *)
+(* We do everything here  
+1. We load SM fields
+2. We Define our BSM fields
+3. We Define couplings
+4. We define our Clebsch Gordon coefficients
+5. We get our free Lagrangian
+6. We get all interactions and validate them, if they are valid, we choose the first contraction that works for that combination of fields 
+7. *)
 BuildT3Lagrangian[model_Association] := Module[
   {LSM, LFree, cgStatus, legacyQ, candidates, validated, valid, rejected,
    LInt, LBSM, LUV, fullValidation, ingredientsPresent},
@@ -1012,14 +1053,14 @@ BuildT3Lagrangian[model_Association] := Module[
   If[LSM === $Failed, Return[$Failed]];
 
   Print["Build stage 2/4: define BSM fields"];
-  If[DefineT3TwoScalarFields[model] === $Failed,
+  If[DefineT3Fields[model] === $Failed,
     Print["  field definition result: $Failed"];
     Return[$Failed],
     Print["  field definition result: True"]
   ];
 
   Print["Build stage 3/4: define couplings"];
-  If[Check[DefineT3TwoScalarCouplings[], $Failed] === $Failed,
+  If[Check[DefineT3Couplings[], $Failed] === $Failed,
     Print["  coupling definition result: $Failed"];
     Return[$Failed],
     Print["  coupling definition result: True"]

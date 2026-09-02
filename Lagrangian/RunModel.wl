@@ -6,6 +6,13 @@
    CLI modes:
      CLASS: output-dir EFT-order loop-order T3-class alpha eg: (output 5 1 B -1) < If we use the classes
      DIMS : output-dir EFT-order loop-order DIMS dS1 dS2 dF alpha eg: (output 5 1 DIMS 3 5 4 0) < if we use non classified
+
+    All this file does is
+    1. Parser Translate inputs like m and p into -2 and +2 etc
+    2. Parser Get the argument inputs of this file into a dictionary
+    3. Get our helper functions form other WL files
+    4. We check validity of model
+    5. We use BuildT3Lagrangian
 *)
 
 ClearAll["Global`*"];
@@ -199,6 +206,7 @@ Print["Matchete loaded successfully."];
 lagrangianDir = DirectoryName[$InputFileName];
 projectRoot = DirectoryName[lagrangianDir];
 
+(* Get modules and helpers from these files *)
 physicsLaTeXFile =
     FileNameJoin[{lagrangianDir, "PhysicsLaTeX.wl"}];
 
@@ -258,7 +266,7 @@ If[!AssociationQ[matching] || Lookup[matching, "Status", ""] =!= "Success",
 
 matchedEFT = Lookup[matching, "MatchedEFT", Lookup[matching, "LoopEFT", 0]];
 
-(* The builder returns LUV = LSM + LBSM, we get LSM be removing LBSM. *)
+(* The builder returns LUV = LSM + LBSM, we get LSM by removing LBSM. *)
 smLagrangian = Expand[build["LUV"] - build["LBSM"]];
 
 Print["\nStarting pure-SM baseline matching..."];

@@ -2,6 +2,9 @@
   RunMatching.wl
   Matchete UV -> EFT matching plus Weinberg-operator extraction.
   Intermediate EFTs are retained for diagnostics.
+
+  All this file does is 
+  1. We match each stage
 *)
 
 ClearAll[

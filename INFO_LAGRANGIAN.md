@@ -1,4 +1,7 @@
 
+Link to Matchete doc https://matchete.gitlab.io/docs/ref/CG.html
+
+
 # Generalised T3 Neutrino-Mass Pipeline
 
 This repository currently implements the model construction and one-loop EFT matching stages for the T3 radiative neutrino-mass topology.

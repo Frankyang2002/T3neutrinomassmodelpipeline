@@ -12,10 +12,6 @@ import numpy as np
 
 # NuFIT 6.0 (2024), normal ordering, including SK + IceCube atmospheric data.
 # Source: https://www.nu-fit.org/?q=node/294
-#
-# We use the quoted one-sigma best-fit uncertainties for a simple diagnostic
-# chi-square. This is NOT a replacement for the full correlated NuFIT
-# likelihood; it is intended as a pipeline validation / first-pass fit target.
 @dataclass(frozen=True)
 class Measurement:
     central: float

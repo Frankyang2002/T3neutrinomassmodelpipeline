@@ -127,7 +127,12 @@ def run_model(
     model_args: list[str],
     debug_reports: bool = False,
 ) -> RunRecord:
-    """Run Wolfram and read the summary produced by RunModel.wl."""
+    """What this does is 
+    1. Delete previous output directory and recreate for new results
+    2. Run Runmodel.wl with out inputs
+    3. Get its output and errors into a file
+    4. Get debug reports and summaries
+    5. Return a RunRecord object with all the data."""
 
     # Delete the previous output directory and recreate it.
     # This prevents an old successful result being mistaken for a new result
@@ -140,6 +145,7 @@ def run_model(
     #   EFT order
     #   loop order
     #   model arguments
+    # We use RunModel.wl+
     command = [
         "wolframscript",
         "-file",
@@ -222,7 +228,10 @@ def run_dimensions(
     alpha: int,
     debug_reports: bool = False,
 ) -> RunRecord:
-    """Run any valid T3 representation assignment."""
+    """All it does is 
+    1. Check if dimensions are correct, if not then return error
+    2. Identify if its an T3-A..E model and name the output folder after it
+    3. Use run_model"""
 
     # First check whether the dimensions can form the required T3
     # Yukawa and scalar interactions.
@@ -233,7 +242,7 @@ def run_dimensions(
         )
 
     # Check whether these dimensions correspond to one of the known
-    # T3-A ... T3-E models from the original classification.
+    # T3-A ... T3-E models from the original classification. (Its for output report names)
     model_class = identify_t3_class(d_s1, d_s2, d_f)
 
     if model_class is not None:
@@ -1834,6 +1843,7 @@ def main() -> int:
         except ValueError as exc:
             parser.error(str(exc))
 
+        # This gives us  our reports based on our records
         return finish_runs(
             [record],
             args.numerical,
@@ -1859,6 +1869,7 @@ def main() -> int:
         f"{len(points)} model(s)."
     )
 
+    # This line only exist if we use the special interesting, extended and smoke options where we dont input any dimensions
     # Known A-E models are converted to dimensions first and then sent
     # through exactly the same run_dimensions() path as generalised models.
     records = [
@@ -1870,6 +1881,7 @@ def main() -> int:
         for model_class, alpha in points
     ]
 
+    # This only gives us our reports created from the records
     return finish_runs(
         records,
         args.numerical,

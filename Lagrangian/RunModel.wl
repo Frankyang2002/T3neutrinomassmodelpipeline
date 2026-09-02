@@ -24,7 +24,8 @@ ParseSignedCLI[s_String] := Which[
 ];
 
 ParseCLI[args_List] := Module[
-  {output, eftOrder, loopOrder, mode, alpha, dS1, dS2, dF},
+  {output, eftOrder, loopOrder, mode, alpha, dS1, dS2, dF,
+   debugReports, debugPosition},
 
   output = If[Length[args] >= 1, ExpandFileName @ args[[1]],
     FileNameJoin @ {scriptDirectory, "output", "T3"}];
@@ -39,10 +40,15 @@ ParseCLI[args_List] := Module[
     alpha = If[Length[args] >= 5, ParseSignedCLI @ args[[5]], -1]
   ];
 
+  debugPosition = If[mode === "DIMS", 9, 6];
+  debugReports = Length[args] >= debugPosition &&
+    ToUpperCase @ args[[debugPosition]] === "DEBUG";
+
   <|
     "Output" -> output, "EFTOrder" -> eftOrder, "LoopOrder" -> loopOrder,
     "Mode" -> mode, "Alpha" -> alpha,
-    "Dimensions" -> If[mode === "DIMS", {dS1, dS2, dF}, None]
+    "Dimensions" -> If[mode === "DIMS", {dS1, dS2, dF}, None],
+    "DebugReports" -> debugReports
   |>
 ];
 
@@ -52,7 +58,7 @@ ParseCLI[args_List] := Module[
 (* ------------------------------------------------------------------------- *)
 
 (* Recieves Weinberg Coefficient information and Writes to files *)
-ExportWeinbergArtifacts[data_Association, output_String] := Module[
+ExportWeinbergArtifacts[data_Association, output_String, debugReports_] := Module[
   {terms, coefficient, sectorTeX, coefficientTeX},
 
   terms = Lookup[data, "Terms", {}];
@@ -60,7 +66,7 @@ ExportWeinbergArtifacts[data_Association, output_String] := Module[
   sectorTeX = Lookup[data, "SectorTeX", <||>];
   coefficientTeX = Lookup[data, "CoefficientTeX", <||>];
 
-  If[Length[terms] > 0,
+  If[TrueQ[debugReports] && Length[terms] > 0,
     Export[
       FileNameJoin @ {output, "c5_raw.txt"},
       StringRiffle[
@@ -82,7 +88,9 @@ ExportWeinbergArtifacts[data_Association, output_String] := Module[
       ToString[coefficient, InputForm],
       "Text"
     ];
-    If[TrueQ @ Lookup[coefficientTeX, "Success", False],
+    If[
+      TrueQ[debugReports] &&
+        TrueQ @ Lookup[coefficientTeX, "Success", False],
       Export[
         FileNameJoin @ {output, "c5_coefficient.tex"},
         Lookup[coefficientTeX, "LaTeX", ""],
@@ -93,7 +101,8 @@ ExportWeinbergArtifacts[data_Association, output_String] := Module[
 ];
 
 (* Build our outputs *)
-BuildSummary[model_, alpha_, build_, matching_, smMatching_, difference_, data_, uv_, bsm_, eft_, bsmEft_] := Module[
+BuildSummary[model_, alpha_, build_, matching_, smMatching_, difference_, data_,
+  free_, interaction_, uv_, bsm_, eft_, bsmEft_, debugReports_] := Module[
   {coefficient, coefficientTeX, sectorTeX, terms},
 
   coefficient = Lookup[data, "Coefficient", Missing["PendingCanonicalisation"]];
@@ -121,11 +130,18 @@ BuildSummary[model_, alpha_, build_, matching_, smMatching_, difference_, data_,
     "WeinbergTermCount" -> Lookup[data, "TermCount", 0],
     "WeinbergHolomorphicTermCount" -> Lookup[data, "HolomorphicTermCount", 0],
     "WeinbergConjugateTermCount" -> Lookup[data, "ConjugateTermCount", 0],
-    "WeinbergRawFile" -> If[Length[terms] > 0, "c5_raw.txt", ""],
-    "WeinbergRawLaTeXFile" -> If[Length[terms] > 0, "c5_raw.tex", ""],
+    "WeinbergRawFile" -> If[
+      TrueQ[debugReports] && Length[terms] > 0, "c5_raw.txt", ""
+    ],
+    "WeinbergRawLaTeXFile" -> If[
+      TrueQ[debugReports] && Length[terms] > 0, "c5_raw.tex", ""
+    ],
     "WeinbergCoefficientFile" -> If[!MissingQ[coefficient], "c5_coefficient.txt", ""],
     "WeinbergCoefficientLaTeXFile" -> If[
-      TrueQ @ Lookup[coefficientTeX, "Success", False], "c5_coefficient.tex", ""
+      TrueQ[debugReports] &&
+        TrueQ @ Lookup[coefficientTeX, "Success", False],
+      "c5_coefficient.tex",
+      ""
     ],
     "WeinbergCoefficientInputForm" -> If[
       MissingQ[coefficient],
@@ -133,6 +149,7 @@ BuildSummary[model_, alpha_, build_, matching_, smMatching_, difference_, data_,
       ToString[coefficient, InputForm]
     ],
     "WeinbergCoefficientLaTeX" -> Lookup[coefficientTeX, "LaTeX", ""],
+    "WeinbergSectorLaTeX" -> Lookup[sectorTeX, "LaTeX", ""],
     "WeinbergSectorConversionSuccess" -> TrueQ @ Lookup[sectorTeX, "Success", False],
     "WeinbergCoefficientConversionSuccess" -> TrueQ @ Lookup[coefficientTeX, "Success", False],
 
@@ -146,6 +163,10 @@ BuildSummary[model_, alpha_, build_, matching_, smMatching_, difference_, data_,
     "BSMDifferenceEOMFallbackUsed" -> TrueQ @ Lookup[
       difference, "EOMFallbackUsed", False
     ],
+    "FreeLagrangianConversionSuccess" -> TrueQ[free["Success"]],
+    "InteractionLagrangianConversionSuccess" -> TrueQ[interaction["Success"]],
+    "FreeLagrangianLaTeX" -> free["LaTeX"],
+    "InteractionLagrangianLaTeX" -> interaction["LaTeX"],
     "UVLagrangianLaTeX" -> uv["LaTeX"],
     "BSMUVLagrangianLaTeX" -> bsm["LaTeX"],
     "EFTLagrangianLaTeX" -> eft["LaTeX"],
@@ -188,7 +209,7 @@ lagrangianBuilderFile =
     FileNameJoin[{lagrangianDir, "LagrangianBuilder.wl"}];
 
 matchingFile =
-    FileNameJoin[{projectRoot, "RGE", "RunMatching.wl"}];
+    FileNameJoin[{lagrangianDir, "RunMatching.wl"}];
 
 Get[physicsLaTeXFile];
 Get[modelCatalogFile];
@@ -279,6 +300,8 @@ If[
 
 bsmMatchedEFT = Lookup[difference, "BSMEFT", 0];
 
+freeTeX = ExpressionToLaTeX[build["LFree"]];
+interactionTeX = ExpressionToLaTeX[build["LInt"]];
 uvTeX = ExpressionToLaTeX[build["LUV"]];
 bsmTeX = ExpressionToLaTeX[build["LBSM"]];
 eftTeX = ExpressionToLaTeX[matchedEFT];
@@ -301,7 +324,11 @@ weinbergData = Join[
 
 
 (* Write the Weinberg files *)
-ExportWeinbergArtifacts[weinbergData, outputDirectory];
+ExportWeinbergArtifacts[
+  weinbergData,
+  outputDirectory,
+  config["DebugReports"]
+];
 summary = BuildSummary[
   model,
   config["Alpha"],
@@ -310,10 +337,13 @@ summary = BuildSummary[
   smMatching,
   difference,
   weinbergData,
+  freeTeX,
+  interactionTeX,
   uvTeX,
   bsmTeX,
   eftTeX,
-  bsmEftTeX
+  bsmEftTeX,
+  config["DebugReports"]
 ];
 Export[FileNameJoin @ {outputDirectory, "comparison_summary.json"}, summary, "RawJSON"];
 

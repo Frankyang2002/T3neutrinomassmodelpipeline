@@ -14,6 +14,7 @@ def run_flavor_matched_rge(
     output_dir: Path,
     *,
     n_heavy: int = 3,
+    debug_outputs: bool = False,
 ) -> dict:
     """Construct the full flavor C5 matrix and its SMEFT beta matrix."""
 
@@ -30,6 +31,7 @@ def run_flavor_matched_rge(
     flavor_files = write_flavor_outputs(
         output_dir,
         flavor_result,
+        debug_outputs=debug_outputs,
     )
 
     K = flavor_result["K"]

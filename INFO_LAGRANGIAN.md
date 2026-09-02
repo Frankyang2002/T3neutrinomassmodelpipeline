@@ -1,10 +1,4 @@
 
-Other things to do:
-
-add inverted ordering support;
-include \(\delta_{\rm CP}\) and Majorana phases;
-
-
 # Generalised T3 Neutrino-Mass Pipeline
 
 This repository currently implements the model construction and one-loop EFT matching stages for the T3 radiative neutrino-mass topology.
@@ -27,9 +21,11 @@ The subsequent RGE evolution and conversion of the Weinberg coefficient into the
 
 ## Other. Translation
 - $a_1$: $SU(2)$ weak index
-- $i_123$: SM fermion generation index
+- $i_{123}$: SM fermion generation index
 - $r_1$: BSM fermion generation index
 
+
+Currently this document is only for Lagrangian stuff, not RGE yet
 
 
 ---
@@ -82,7 +78,7 @@ d_{S_1}=d_F\pm1,
 d_{S_2}=d_F\pm1,
 $$
 
-because each scalar must occur in
+because each scalar must occur in (due to yukawa with lepton doublets)
 
 $$
 2\otimes d_F,
@@ -105,7 +101,7 @@ Schematically,
 $$
 \mathcal L_{\rm UV}
 =
-\mathcal L_{\rm SM}
+\mathcal L_{\rm free}^{SM}
 +
 \mathcal L_{\rm free}^{\rm BSM}
 +
@@ -146,13 +142,11 @@ $$
 R_1\otimes R_2\otimes\cdots \supset \mathbf 1.
 $$
 
-The project contains a canonical gauge-invariance implementation used by the higher-level T3 checks. The T3 invariance layer additionally supports the model's $Z_2$ assignment.
+The T3 invariance layer also supports the model's $Z_2$ assignment.
 
 ### Generic Clebsch-Gordan construction
 
-For arbitrary $SU(2)$ dimensions, the builder uses Matchete invariant tensors and dynamically defined Clebsch-Gordan coefficients.
-
-The older T3-A--E contractions are retained as a legacy/reference path. They provide a regression oracle for the generic construction in the singlet, doublet, and triplet cases.
+For arbitrary $SU(2)$ dimensions, the builder uses Matchete invariant tensors and Clebsch-Gordan coefficients.
 
 The builder only reports a valid T3 construction when all three required ingredients are present:
 
@@ -193,7 +187,7 @@ $$
 \mathcal L_{\rm EFT}^{\rm SM}.
 $$
 
-The result is canonicalised again after subtraction because algebraically equivalent Matchete expressions can otherwise differ only by dummy-index naming.
+Any equivalent expressions are essentially collapsed together
 
 ---
 
@@ -205,12 +199,7 @@ $$
 \mathcal O_5 \sim LLHH.
 $$
 
-In the Matchete expression this is identified through the corresponding charge-conjugated fermion structure.
-
-The extraction code separates the holomorphic operator from its Hermitian conjugate. The coefficient $C_5$ is extracted from the holomorphic $P_L$ sector so that the Hermitian-conjugate contribution is not double counted.
-
-Conceptually,
-
+This may not show up as LLHH due to charge conjugation and chiral projectors, so we look at what is equivalent, where we may have to sum all the terms with the Weinber operator after contracting etc. This would give us something like
 $$
 \mathcal L_{\rm EFT}
 \supset
@@ -219,7 +208,8 @@ C_5\,\mathcal O_5
 C_5^\dagger\,\mathcal O_5^\dagger.
 $$
 
-Operator-presence detection and detailed coefficient extraction are intentionally separate. Therefore, if the Weinberg structure is present but the coefficient parser cannot isolate it, the pipeline reports an extraction problem rather than incorrectly reporting that the operator is absent.
+We get the h.c. versions of the same interaction, where we only count the non-conjugated version and we read the non-conjugated version's coefficient so we prevent double counting.
+
 
 ---
 
@@ -391,19 +381,22 @@ This performs two checks:
 1. reruns the five historical smoke models through the full UV construction and matching pipeline;
 2. validates the resulting $C_5$ outputs, including the T3-B scotogenic limit.
 
-Existing matching outputs can be reused with
+If we do not want to go through the matching process again and just use the Lagrangian we have in the output already, we can do
 
 ```bash
 python regression.py --no-rematch
 ```
 
-The refactored pipeline has also been tested with the generic higher-dimensional example
+We can also use higher dimensional
 
 ```bash
 python pipeline.py --dims 3 5 4 --alpha 0
 ```
 
-to ensure that the arbitrary-representation path remains functional.
+For debug reports, we have
+```bash 
+python pipeline.py --smoke --debug-reports 
+```
 
 ---
 

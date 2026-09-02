@@ -124,6 +124,7 @@ def run_model(
     d_f: int,
     output_dir: Path,
     model_args: list[str],
+    debug_reports: bool = False,
 ) -> RunRecord:
     """Run Wolfram and read the summary produced by RunModel.wl."""
 
@@ -146,6 +147,7 @@ def run_model(
         str(EFT_ORDER),
         str(LOOP_ORDER),
         *model_args,
+        *(["DEBUG"] if debug_reports else []),
     ]
 
     # Launch Wolfram and capture both normal output and errors as text.
@@ -158,14 +160,20 @@ def run_model(
     )
 
     # Save Wolfram output for debugging.
-    (output_dir / "wolfram_stdout.log").write_text(
-        process.stdout,
-        encoding="utf-8",
-    )
-    (output_dir / "wolfram_stderr.log").write_text(
-        process.stderr,
-        encoding="utf-8",
-    )
+    if debug_reports:
+        (output_dir / "wolfram_stdout.log").write_text(
+            process.stdout,
+            encoding="utf-8",
+        )
+        (output_dir / "wolfram_stderr.log").write_text(
+            process.stderr,
+            encoding="utf-8",
+        )
+    elif process.returncode != 0:
+        (output_dir / "run_error.log").write_text(
+            process.stdout + "\n" + process.stderr,
+            encoding="utf-8",
+        )
 
     # If Wolfram fails, show only the final part of its output so the
     # terminal remains readable while still giving useful debug information.
@@ -209,6 +217,7 @@ def run_dimensions(
     d_s2: int,
     d_f: int,
     alpha: int,
+    debug_reports: bool = False,
 ) -> RunRecord:
     """Run any valid T3 representation assignment."""
 
@@ -261,10 +270,15 @@ def run_dimensions(
         d_f,
         output_dir,
         model_args,
+        debug_reports,
     )
 
 
-def run_known_class(model_class: str, alpha: int) -> RunRecord:
+def run_known_class(
+    model_class: str,
+    alpha: int,
+    debug_reports: bool = False,
+) -> RunRecord:
     """Convert a known A-E benchmark into dimensions and run normally."""
 
     if model_class not in T3_CLASSES:
@@ -277,6 +291,7 @@ def run_known_class(model_class: str, alpha: int) -> RunRecord:
         d_s2,
         d_f,
         alpha,
+        debug_reports,
     )
 
 
@@ -573,6 +588,177 @@ def matrix_cell(terms: list[str], empty_value: str = "") -> str:
 
 
 # ---------------------------------------------------------------------------
+# Primary Lagrangian report
+# ---------------------------------------------------------------------------
+
+def latex_escape_text(value: object) -> str:
+    """Escape ordinary text before placing it in a LaTeX document."""
+
+    replacements = {
+        "\\": r"\textbackslash{}",
+        "&": r"\&",
+        "%": r"\%",
+        "$": r"\$",
+        "#": r"\#",
+        "_": r"\_",
+        "{": r"\{",
+        "}": r"\}",
+        "~": r"\textasciitilde{}",
+        "^": r"\textasciicircum{}",
+    }
+
+    return "".join(
+        replacements.get(character, character)
+        for character in str(value)
+    )
+
+
+def latex_status(value: object) -> str:
+    """Render one pipeline status as compact LaTeX text."""
+
+    if value is True or value == "Success":
+        return r"\textbf{Success}"
+
+    if value is False:
+        return r"\textbf{Failed}"
+
+    return latex_escape_text(value if value not in (None, "") else "Unknown")
+
+
+def append_report_expression(
+    lines: list[str],
+    title: str,
+    latex: str,
+    available: bool,
+) -> None:
+    """Append one readable expression or an explicit unavailable notice."""
+
+    lines.append(rf"\subsubsection*{{{title}}}")
+
+    if available and latex.strip():
+        lines.extend(latex_aligned_block(latex))
+    else:
+        lines.append(r"\textit{Not available for this model.}")
+
+
+def write_lagrangian_report(records: list[RunRecord]) -> Path:
+    """Create the concise human-facing Lagrangian and Weinberg report."""
+
+    output_path = OUTPUT_DIR / "lagrangian_report.tex"
+
+    lines: list[str] = [
+        r"\documentclass[10pt]{article}",
+        r"\usepackage[margin=1.7cm]{geometry}",
+        r"\usepackage{amsmath,amssymb,adjustbox,booktabs,array}",
+        r"\usepackage[T1]{fontenc}",
+        r"\allowdisplaybreaks[4]",
+        r"\setlength{\emergencystretch}{3em}",
+        r"\begin{document}",
+        r"\section*{T3 Lagrangian and Weinberg-operator report}",
+        rf"EFT order: ${EFT_ORDER}$; loop order: ${LOOP_ORDER}$.",
+    ]
+
+    if not records:
+        lines.append(r"No models were run.")
+
+    for model_number, record in enumerate(records, start=1):
+        summary = record.summary
+
+        if model_number > 1:
+            lines.append(r"\clearpage")
+
+        lines.extend(
+            [
+                rf"\subsection*{{$" + latex_model_heading(record) + r"$}",
+                r"\begin{center}",
+                r"\begin{tabular}{>{\bfseries}l l >{\bfseries}l l}",
+                r"\toprule",
+                (
+                    r"Build & "
+                    + latex_status(summary.get("BuildStatus"))
+                    + r" & Matching & "
+                    + latex_status(summary.get("MatchingStatus"))
+                    + r" \\"
+                ),
+                (
+                    r"T3 ingredients & "
+                    + latex_status(summary.get("T3IngredientsPresent"))
+                    + r" & Weinberg extraction & "
+                    + latex_status(summary.get("WeinbergExtractionStatus"))
+                    + r" \\"
+                ),
+                r"\bottomrule",
+                r"\end{tabular}",
+                r"\end{center}",
+            ]
+        )
+
+        accepted = summary.get("AcceptedInteractions", [])
+        lines.append(r"\subsubsection*{Accepted interactions}")
+
+        if accepted:
+            lines.append(
+                ", ".join(
+                    rf"\texttt{{{latex_escape_text(name)}}}"
+                    for name in accepted
+                )
+                + "."
+            )
+        else:
+            lines.append(r"\textit{No accepted interactions were reported.}")
+
+        append_report_expression(
+            lines,
+            r"BSM free Lagrangian $\mathcal{L}_{\mathrm{free}}$",
+            summary.get("FreeLagrangianLaTeX", ""),
+            summary.get("FreeLagrangianConversionSuccess") is True,
+        )
+        append_report_expression(
+            lines,
+            r"Interaction Lagrangian $\mathcal{L}_{\mathrm{int}}$",
+            summary.get("InteractionLagrangianLaTeX", ""),
+            summary.get("InteractionLagrangianConversionSuccess") is True,
+        )
+        append_report_expression(
+            lines,
+            (
+                r"BSM-induced EFT contribution "
+                r"$\Delta\mathcal{L}_{\mathrm{EFT}}$"
+            ),
+            summary.get("BSMEFTLagrangianLaTeX", ""),
+            summary.get("BSMEFTConversionSuccess") is True,
+        )
+        append_report_expression(
+            lines,
+            r"Weinberg sector",
+            summary.get("WeinbergSectorLaTeX", ""),
+            summary.get("WeinbergSectorConversionSuccess") is True,
+        )
+        append_report_expression(
+            lines,
+            r"Weinberg coefficient $C_5$",
+            summary.get("WeinbergCoefficientLaTeX", ""),
+            summary.get("WeinbergCoefficientConversionSuccess") is True,
+        )
+
+    lines.extend(
+        [
+            r"\end{document}",
+            "",
+        ]
+    )
+
+    output_path.write_text(
+        "\n".join(lines),
+        encoding="utf-8",
+    )
+
+    print(f"\nLagrangian report:\n{output_path}")
+
+    return output_path
+
+
+# ---------------------------------------------------------------------------
 # Full Lagrangian reports
 # ---------------------------------------------------------------------------
 
@@ -584,7 +770,7 @@ def write_latex_lagrangian_table(records: list[RunRecord]) -> Path:
     lines: list[str] = [
         r"\documentclass[10pt]{article}",
         r"\usepackage[margin=1.5cm]{geometry}",
-        r"\usepackage{amsmath,amssymb,microtype,adjustbox,pdflscape}",
+        r"\usepackage{amsmath,amssymb,adjustbox,pdflscape}",
         r"\usepackage[T1]{fontenc}",
         r"\allowdisplaybreaks[4]",
         r"\setlength{\emergencystretch}{3em}",
@@ -664,7 +850,7 @@ def write_bsm_lagrangian_table(records: list[RunRecord]) -> Path:
     lines: list[str] = [
         r"\documentclass[10pt]{article}",
         r"\usepackage[margin=1.5cm]{geometry}",
-        r"\usepackage{amsmath,amssymb,microtype,adjustbox,pdflscape}",
+        r"\usepackage{amsmath,amssymb,adjustbox,pdflscape}",
         r"\usepackage[T1]{fontenc}",
         r"\allowdisplaybreaks[4]",
         r"\setlength{\emergencystretch}{3em}",
@@ -999,9 +1185,7 @@ def write_bsm_matched_field_table(
         conversion_key="BSMEFTConversionSuccess",
         output_stem="bsm_matched_field_table",
         title=(
-            r"T3 matched BSM "
-            r"$\Delta\mathcal{L}_{\mathrm{EFT}}$ "
-            r"terms grouped by field content"
+            r"T3 matched BSM EFT terms by field content"
         ),
         description=(
             r"Columns are determined only from matched BSM EFT terms. "
@@ -1011,34 +1195,140 @@ def write_bsm_matched_field_table(
     )
 
 
-def compile_latex_document(tex_path: Path) -> None:
-    """Compile a generated LaTeX report using pdflatex."""
+def write_c5_coefficient_report(record: RunRecord) -> Path:
+    """Create a standalone PDF-ready document for one C5 coefficient."""
 
-    if shutil.which("pdflatex") is None:
+    output_path = record.output_dir / "c5_coefficient.tex"
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    coefficient_latex = record.summary.get(
+        "WeinbergCoefficientLaTeX",
+        "",
+    ).strip()
+
+    lines: list[str] = [
+        r"\documentclass[11pt]{article}",
+        r"\usepackage[margin=2cm]{geometry}",
+        r"\usepackage{amsmath,amssymb,adjustbox}",
+        r"\usepackage[T1]{fontenc}",
+        r"\allowdisplaybreaks[4]",
+        r"\setlength{\emergencystretch}{3em}",
+        r"\begin{document}",
+        r"\section*{Weinberg-operator coefficient}",
+        rf"\noindent ${latex_model_heading(record)}$",
+        r"\par",
+        r"\bigskip",
+    ]
+
+    if (
+        record.summary.get("WeinbergCoefficientConversionSuccess") is True
+        and coefficient_latex
+    ):
+        lines.extend(
+            latex_aligned_block(
+                r"C_5 = " + coefficient_latex
+            )
+        )
+    else:
+        lines.append(
+            r"\textit{The Weinberg coefficient is not available.}"
+        )
+
+    lines.extend(
+        [
+            r"\end{document}",
+            "",
+        ]
+    )
+
+    output_path.write_text(
+        "\n".join(lines),
+        encoding="utf-8",
+    )
+
+    print(f"\nC5 coefficient report:\n{output_path}")
+
+    return output_path
+
+
+def compile_latex_document(tex_path: Path) -> None:
+    """Compile a generated LaTeX report using latexmk or pdflatex."""
+
+    latexmk = shutil.which("latexmk")
+    pdflatex = shutil.which("pdflatex")
+
+    if latexmk is None and pdflatex is None:
         print(
-            "pdflatex was not found; the .tex file was generated "
+            "latexmk and pdflatex were not found; the .tex file was generated "
             "but not compiled."
         )
         return
 
-    result = subprocess.run(
-        [
-            "pdflatex",
-            "-interaction=nonstopmode",
-            "-halt-on-error",
-            tex_path.name,
-        ],
-        cwd=tex_path.parent,
-        capture_output=True,
-        text=True,
-        check=False,
-    )
+    outputs: list[str] = []
+    compilation_succeeded = False
 
-    if result.returncode != 0:
+    tex_path.with_suffix(".pdf").unlink(missing_ok=True)
+
+    if latexmk is not None:
+        latexmk_result = subprocess.run(
+            [
+                latexmk,
+                "-pdf",
+                "-interaction=nonstopmode",
+                "-halt-on-error",
+                tex_path.name,
+            ],
+            cwd=tex_path.parent,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        outputs.extend(
+            [
+                "--- latexmk output ---",
+                latexmk_result.stdout,
+                latexmk_result.stderr,
+            ]
+        )
+        compilation_succeeded = latexmk_result.returncode == 0
+
+        if not compilation_succeeded and pdflatex is not None:
+            print(
+                "latexmk failed; falling back to pdflatex."
+            )
+
+    if not compilation_succeeded and pdflatex is not None:
+        compilation_succeeded = True
+
+        for pass_number in (1, 2):
+            pdflatex_result = subprocess.run(
+                [
+                    pdflatex,
+                    "-interaction=nonstopmode",
+                    "-halt-on-error",
+                    tex_path.name,
+                ],
+                cwd=tex_path.parent,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            outputs.extend(
+                [
+                    f"--- pdflatex pass {pass_number} output ---",
+                    pdflatex_result.stdout,
+                    pdflatex_result.stderr,
+                ]
+            )
+
+            if pdflatex_result.returncode != 0:
+                compilation_succeeded = False
+                break
+
+    if not compilation_succeeded:
         log_path = tex_path.with_suffix(".compile.log")
 
         log_path.write_text(
-            result.stdout + "\n" + result.stderr,
+            "\n".join(outputs),
             encoding="utf-8",
         )
 
@@ -1049,11 +1339,18 @@ def compile_latex_document(tex_path: Path) -> None:
 
         return
 
+    tex_path.with_suffix(".compile.log").unlink(
+        missing_ok=True
+    )
+
     # Remove auxiliary LaTeX files.
     for suffix in (
         ".aux",
         ".log",
         ".out",
+        ".fls",
+        ".fdb_latexmk",
+        ".synctex.gz",
     ):
         tex_path.with_suffix(suffix).unlink(
             missing_ok=True
@@ -1065,20 +1362,39 @@ def compile_latex_document(tex_path: Path) -> None:
     )
 
 
-def write_reports(records: list[RunRecord]) -> None:
+def write_reports(
+    records: list[RunRecord],
+    debug_reports: bool = False,
+) -> None:
     """Generate all Lagrangian reports and term tables."""
 
-    full_tex = write_latex_lagrangian_table(records)
-    compile_latex_document(full_tex)
-
-    bsm_tex = write_bsm_lagrangian_table(records)
-    compile_latex_document(bsm_tex)
+    report_tex = write_lagrangian_report(records)
+    compile_latex_document(report_tex)
 
     uv_table_tex = write_bsm_uv_field_table(records)
     compile_latex_document(uv_table_tex)
 
     matched_table_tex = write_bsm_matched_field_table(records)
     compile_latex_document(matched_table_tex)
+
+    for record in records:
+        summary = record.summary
+
+        if (
+            summary.get("WeinbergCoefficientConversionSuccess") is not True
+            or not summary.get("WeinbergCoefficientLaTeX", "").strip()
+        ):
+            continue
+
+        coefficient_tex = write_c5_coefficient_report(record)
+        compile_latex_document(coefficient_tex)
+
+    if debug_reports:
+        full_tex = write_latex_lagrangian_table(records)
+        compile_latex_document(full_tex)
+
+        bsm_tex = write_bsm_lagrangian_table(records)
+        compile_latex_document(bsm_tex)
 
 
 def print_summary(records: list[RunRecord]) -> int:
@@ -1173,12 +1489,13 @@ def print_summary(records: list[RunRecord]) -> int:
 def finish_runs(
     records: list[RunRecord],
     numerical_config: Path | None = None,
+    debug_reports: bool = False,
 ) -> int:
     """Print the scan summary and generate all Lagrangian reports."""
 
     status = print_summary(records)
 
-    write_reports(records)
+    write_reports(records, debug_reports)
 
     for record in records:
         summary = record.summary
@@ -1207,6 +1524,7 @@ def finish_runs(
             rge_summary = run_matched_eft_rge(
                 c5_path=c5_path,
                 output_dir=record.output_dir,
+                debug_outputs=debug_reports,
             )
         except Exception as exc:
             summary["RGEStatus"] = "Failed"
@@ -1224,6 +1542,7 @@ def finish_runs(
             flavor_summary = run_flavor_matched_rge(
                 c5_path=c5_path,
                 output_dir=record.output_dir,
+                debug_outputs=debug_reports,
             )
         except Exception as exc:
             summary["FlavorRGEStatus"] = "Failed"
@@ -1396,6 +1715,15 @@ def main() -> int:
         ),
     )
 
+    parser.add_argument(
+        "--debug-reports",
+        action="store_true",
+        help=(
+            "also keep raw Wolfram logs and generate the full "
+            "UV/EFT expression reports"
+        ),
+    )
+
     args = parser.parse_args()
 
     OUTPUT_DIR.mkdir(
@@ -1415,11 +1743,16 @@ def main() -> int:
                 d_s2,
                 d_f,
                 args.alpha,
+                args.debug_reports,
             )
         except ValueError as exc:
             parser.error(str(exc))
 
-        return finish_runs([record], args.numerical)
+        return finish_runs(
+            [record],
+            args.numerical,
+            args.debug_reports,
+        )
 
     # The benchmark lists still use the familiar A-E notation because
     # it is convenient for regression testing and comparison with the paper.
@@ -1443,11 +1776,19 @@ def main() -> int:
     # Known A-E models are converted to dimensions first and then sent
     # through exactly the same run_dimensions() path as generalised models.
     records = [
-        run_known_class(model_class, alpha)
+        run_known_class(
+            model_class,
+            alpha,
+            args.debug_reports,
+        )
         for model_class, alpha in points
     ]
 
-    return finish_runs(records, args.numerical)
+    return finish_runs(
+        records,
+        args.numerical,
+        args.debug_reports,
+    )
 
 
 if __name__ == "__main__":

@@ -1059,6 +1059,7 @@ BuildT3Lagrangian[model_Association] := Module[
     "Model" -> model,
     "LSM" -> LSM,
     "LFree" -> LFree,
+    "LInt" -> LInt,
     "LBSM" -> LBSM,
     "LUV" -> LUV,
     "AllowedInteractions" -> Lookup[valid, "Name", {}],

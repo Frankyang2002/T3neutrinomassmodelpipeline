@@ -308,7 +308,12 @@ def calculate_matched_eft_rge(kappa: sp.Expr) -> dict:
     }
 
 
-def run_matched_eft_rge(c5_path: Path, output_dir: Path) -> dict:
+def run_matched_eft_rge(
+    c5_path: Path,
+    output_dir: Path,
+    *,
+    debug_outputs: bool = False,
+) -> dict:
     """Read one matched C5 coefficient, calculate its EFT beta, and save outputs."""
 
     c5_path = Path(c5_path)
@@ -333,10 +338,12 @@ def run_matched_eft_rge(c5_path: Path, output_dir: Path) -> dict:
         str(result["dot_kappa"]) + "\n",
         encoding="utf-8",
     )
-    ratio_path.write_text(
-        str(result["beta_ratio"]) + "\n",
-        encoding="utf-8",
-    )
+
+    if debug_outputs:
+        ratio_path.write_text(
+            str(result["beta_ratio"]) + "\n",
+            encoding="utf-8",
+        )
 
     summary = {
         "RGEStatus": "Success",
@@ -344,7 +351,9 @@ def run_matched_eft_rge(c5_path: Path, output_dir: Path) -> dict:
         "MatchingAssumption": "Common heavy T3 threshold",
         "C5InputFile": c5_path.name,
         "C5BetaFile": beta_path.name,
-        "C5BetaOverC5File": ratio_path.name,
+        "C5BetaOverC5File": (
+            ratio_path.name if debug_outputs else ""
+        ),
         "RGEComponent": list(result["component"]),
         "BetaOverC5": str(result["beta_ratio"]),
         "C5Beta": str(result["dot_kappa"]),

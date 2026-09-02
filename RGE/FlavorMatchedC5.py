@@ -187,6 +187,8 @@ def flavor_match_from_c5_file(
 def write_flavor_outputs(
     output_dir: Path,
     result: dict,
+    *,
+    debug_outputs: bool = False,
 ) -> dict:
     """Write the full matched C5 matrix and loop kernel."""
 
@@ -195,18 +197,23 @@ def write_flavor_outputs(
     matrix_path = output_dir / "c5_flavor_matrix.txt"
     kernel_path = output_dir / "c5_loop_kernel.txt"
 
-    matrix_path.write_text(
-        sp.sstr(result["K"]) + "\n",
-        encoding="utf-8",
-    )
-    kernel_path.write_text(
-        sp.sstr(result["kernel"]) + "\n",
-        encoding="utf-8",
-    )
+    if debug_outputs:
+        matrix_path.write_text(
+            sp.sstr(result["K"]) + "\n",
+            encoding="utf-8",
+        )
+        kernel_path.write_text(
+            sp.sstr(result["kernel"]) + "\n",
+            encoding="utf-8",
+        )
 
     return {
-        "C5FlavorMatrixFile": matrix_path.name,
-        "C5LoopKernelFile": kernel_path.name,
+        "C5FlavorMatrixFile": (
+            matrix_path.name if debug_outputs else ""
+        ),
+        "C5LoopKernelFile": (
+            kernel_path.name if debug_outputs else ""
+        ),
         "HeavyFlavorGenerations": result["y1"].cols,
         "LeptonFlavorGenerations": result["y1"].rows,
     }

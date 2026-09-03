@@ -21,6 +21,19 @@ Here, $M$ is the heavy-particle matching scale and $\mu$ is a lower scale.
 Below $M$, the heavy T3 fields have been integrated out, so the running is
 performed in the Standard Model Effective Field Theory (SMEFT).
 
+For the T3-B, $\alpha=-1$ Ma/scotogenic benchmark, an additional
+common-threshold calculation can now run the full UV theory before matching:
+
+$$
+\text{Ma model}(\Lambda)
+\longrightarrow
+\text{Ma model}(M)
+\longrightarrow
+C_5(M)
+\longrightarrow
+C_5(\mu).
+$$
+
 ---
 
 ## 0. Quick Summary
@@ -28,6 +41,8 @@ performed in the Standard Model Effective Field Theory (SMEFT).
 - `data/c5_coefficient.txt` is the main input from matching.
 - The symbolic stages run automatically after a successful match.
 - Numerical running only occurs when `--numerical CONFIG.json` is supplied.
+- `MaFullRunningComparison.py` separately compares frozen, UV-only,
+  EFT-only, and full UV-to-EFT evolution for the Ma benchmark.
 - `rge_report.pdf` is the main human-readable RGE result for each model.
 - The later stages do **not** read `c5_beta.txt`, `c5_flavor_matrix.txt`, or
   `c5_loop_kernel.txt`; these are reports, not pipeline dependencies.
@@ -150,11 +165,9 @@ $$
 
 The symbolic result is saved in `neutrino_mass_matrix.txt`.
 
-> **Convention check:** some function docstrings still say
-> $m_\nu=-(v^2/2)C_5$, while both the symbolic and numerical code actually
-> use $m_\nu=-v^2C_5$. Before a final phenomenological interpretation, the
-> normalization of the extracted Weinberg operator and this conversion must
-> be checked together.
+This normalization has been checked directly against the matched T3-B
+operator convention. The Python symbolic and numerical stages use the same
+conversion.
 
 ---
 
@@ -200,6 +213,9 @@ stage compares these quantities with the included NuFIT reference data.
 | File | Purpose |
 |---|---|
 | `NumericalWeinbergRGE.py` | Numerically evolves the SM parameters and $C_5$. |
+| `MaUVRGE.py` | Evolves the one-loop Ma-model gauge, Yukawa, Majorana-mass, scalar-quartic, and scalar-mass parameters above the threshold. |
+| `MaFullRunningComparison.py` | Matches the Ma model at a common threshold and separates UV-only, EFT-only, and combined effects. |
+| `MaPhysicalBenchmarkFit.py` | Fits $h(\Lambda)$ through the complete UV-to-EFT calculation to a selected low-energy neutrino target. |
 | `NumericalPipelineStage.py` | Reads the numerical configuration and writes the high- and low-scale matrices. |
 | `RGEReportStage.py` | Builds the concise per-model RGE report, equations, numerical matrices, and observable tables. |
 | `NeutrinoObservables.py` | Takagi-factorises $m_\nu$ and calculates observables. |
@@ -214,6 +230,7 @@ stage compares these quantities with the included NuFIT reference data.
 | File | Purpose |
 |---|---|
 | `GeneralWeinbergRGEGenerator.py` | Implements the general $\psi^2\phi^2$ master-equation terms in a real-scalar basis. |
+| `GeneralT3WeinbergRGEStage.py` | Assembles exported T3 tensors, constructs the Weinberg tensor, and checks the representation-generic one-loop beta function component by component. |
 | `T3RGETensors.py` | Constructs and validates the T3 scalar, fermion, generator, and coupling tensors. |
 | `T3YukawaAdapter.py` | Converts exported Wolfram Yukawa invariants into real-component tensors. |
 | `WeinbergWilsonAdapter.py` | Embeds $C_5$ into the general Wilson tensor and checks its symmetries. |
@@ -239,11 +256,107 @@ one-generation RGE, full-flavor RGE, and symbolic neutrino-mass stages.
 python pipeline.py --dims 3 5 4 --alpha 0 --numerical path\to\config.json
 ```
 
+### Export representation-generic RGE tensors
+
+```powershell
+python pipeline.py --dims 2 2 1 --alpha -1 --rge-tensors
+```
+
+This opt-in mode writes
+`output/<model>/data/t3_rge_tensor_exchange.json`. The exchange contains the
+exact Higgs and BSM scalar-quartic components, raw T3 Yukawa CG components,
+and representation metadata. The Weinberg Wilson tensor is intentionally
+constructed in Python in the shared real-scalar/Weyl basis rather than being
+guessed from the pretty-printed matched Lagrangian.
+
+After a successful export, the pipeline automatically runs
+`GeneralT3WeinbergRGEStage.py` and writes
+`output/<model>/data/general_t3_weinberg_rge.json`. The stage checks every
+$L,L,H,H$ component, including components that must remain zero, and records
+the common symbolic $\beta_\kappa/\kappa$ factor.
+
+Tensor export is kept opt-in because enumerating all quartic invariants becomes
+more expensive for larger representations. Exporting the tensors does not by
+itself claim that arbitrary full-theory renormalisable parameter beta
+functions have been generated.
+
 ### Include detailed diagnostics
 
 ```powershell
 python pipeline.py --dims 3 5 4 --alpha 0 --debug-reports
 ```
+
+### Full Ma UV-to-EFT comparison
+
+Place `MaUVRGE.py` and `MaFullRunningComparison.py` under `RGE/running/`, then
+run from the project root:
+
+```powershell
+python -m RGE.running.MaFullRunningComparison examples\ma_full_running_example.json --output output\ma_full_running_comparison.json
+```
+
+The calculation uses one common matching scale and reports four cases:
+
+| Case | UV running | EFT running |
+|---|---:|---:|
+| `frozen` | No | No |
+| `uv_only` | Yes | No |
+| `eft_only` | No | Yes |
+| `full` | Yes | Yes |
+
+This makes the separate effects on $C_5$, the neutrino mass matrix, the
+heavy masses, $h$, $\lambda_5$, and the other UV parameters explicit.
+
+At the common threshold, the code diagonalizes the full complex charged-lepton
+Yukawa matrix as $Y_e=U_RD_eV_L^\dagger$ and applies
+
+$$
+h\rightarrow hV_L,
+\qquad
+C_5\rightarrow V_L^TC_5V_L.
+$$
+
+The output JSON records $V_L$, the ordered electron--muon--tau Yukawa
+eigenvalues, and the diagonalization residual.
+
+The Ma parameters are connected to the generated T3-B Matchete convention by
+
+$$
+\lambda_{T3}=-\lambda_5,
+\qquad
+y_1=y_2=h^*.
+$$
+
+With this bridge, the Matchete equal-scalar loop kernel is the negative of the
+paper's $f/M$ function, and the two signs cancel in $C_5$. The completely
+degenerate result is $C_5=-\lambda_5h^Th/(32\pi^2M)$.
+
+### Fit a physical Ma benchmark
+
+```powershell
+python -m RGE.phenomenology.MaPhysicalBenchmarkFit examples\ma_full_running_example.json --output examples\ma_full_running_fitted.json --summary output\ma_full_running_fitted_fit_summary.json --comparison output\ma_full_running_fitted_comparison.json --ordering NO --m-lightest 0.001
+```
+
+The fitter varies only the high-scale scotogenic Yukawa matrix. Every objective
+evaluation performs the full Ma UV running, threshold matching, charged-lepton
+basis rotation, and SMEFT running. The summary includes the low-energy NuFIT
+comparison and a 64-point UV-trajectory check of perturbativity, boundedness
+from below, and positive inert-scalar squared masses.
+
+Because the NuFIT central values are used as the fitting target, a very small
+diagnostic chi-square demonstrates numerical reconstruction rather than a
+model prediction. The lightest mass and CP phases remain benchmark inputs.
+
+### Generate the full-running comparison report
+
+```powershell
+python -m RGE.phenomenology.MaRunningReport examples\ma_full_running_fitted.json --output-dir output\ma_running_report
+```
+
+This samples the UV and EFT solutions once each and writes machine-readable
+CSV trajectories, a four-case comparison table, the complete comparison JSON,
+and publication-ready PNG/PDF figures. The report retains the fit-target
+provenance and states the common-threshold and small-$\lambda_5$ limitations.
 
 ---
 
@@ -304,17 +417,21 @@ requires them.
 | `data/neutrino_mass_matrix_low_scale.txt` | Low-scale neutrino-mass matrix. |
 | `data/neutrino_observables.json` | Masses, splittings, mixing matrix, and numerical checks. |
 
+The standalone Ma full-running report additionally writes
+`ma_case_comparison.csv`, `ma_uv_trajectory.csv`, `ma_eft_trajectory.csv`,
+`ma_running_report.md`, and three figures in both PNG and PDF formats.
+
 ---
 
 ## 9. Present Limitations and Checks
 
 - The evolution below the matching scale is SMEFT only; threshold splitting
   between non-degenerate heavy particles is not yet implemented.
+- The Ma UV-to-EFT benchmark uses the small-$\lambda_5$ matching expression
+  and one common matching scale. It is not yet the general T3 UV runner.
 - The flavor lift assumes a diagonal heavy-fermion mass basis and common
   scalar masses.
 - The numerical SM running currently uses diagonal Yukawa matrices.
-- The $m_\nu$ normalization must be reconciled with the operator convention,
-  as noted in Section 4.
 - `GeneralRGE.wl` is not yet a complete automatic RGE calculator.
 
 For ordinary use, inspect `c5_coefficient.pdf` and `rge_report.pdf`. Open the

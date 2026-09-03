@@ -68,49 +68,7 @@ SQRT2 = sp.sqrt(2)
 
 def _parse_wolfram_exact(value) -> sp.Expr:
     """Parse the small exact-expression subset emitted by the Wolfram exporter."""
-
-    if isinstance(value, (int, float)):
-        return sp.sympify(value)
-
-    if not isinstance(value, str):
-        raise TypeError(f"Expected string/int/float, received {type(value)!r}.")
-
-    text = value.strip()
-
-    # Mathematica exact syntax used by the exporter.
-    text = text.replace("^", "**")
-
-    while "Sqrt[" in text:
-        start = text.rfind("Sqrt[")
-        depth = 0
-        close = None
-
-        for pos in range(start + 5, len(text)):
-            char = text[pos]
-
-            if char == "[":
-                depth += 1
-            elif char == "]":
-                if depth == 0:
-                    close = pos
-                    break
-                depth -= 1
-
-        if close is None:
-            raise ValueError(f"Unbalanced Sqrt expression: {value!r}")
-
-        inside = text[start + 5 : close]
-        text = text[:start] + f"sqrt({inside})" + text[close + 1 :]
-
-    # Mathematica symbols are valid SymPy symbol names for the coupling names
-    # currently exported by the T3 builder.
-    return sp.sympify(
-        text,
-        locals={
-            "I": sp.I,
-            "sqrt": sp.sqrt,
-        },
-    )
+    return parse_exact_expression(value)
 
 
 @dataclass(frozen=True)

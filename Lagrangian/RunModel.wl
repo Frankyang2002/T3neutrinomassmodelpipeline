@@ -32,7 +32,7 @@ ParseSignedCLI[s_String] := Which[
 
 ParseCLI[args_List] := Module[
   {output, eftOrder, loopOrder, mode, alpha, dS1, dS2, dF,
-   debugReports, debugPosition},
+   debugReports, exportRGETensors},
 
   output = If[Length[args] >= 1, ExpandFileName @ args[[1]],
     FileNameJoin @ {scriptDirectory, "output", "T3"}];
@@ -47,15 +47,15 @@ ParseCLI[args_List] := Module[
     alpha = If[Length[args] >= 5, ParseSignedCLI @ args[[5]], -1]
   ];
 
-  debugPosition = If[mode === "DIMS", 9, 6];
-  debugReports = Length[args] >= debugPosition &&
-    ToUpperCase @ args[[debugPosition]] === "DEBUG";
+  debugReports = MemberQ[ToUpperCase /@ args, "DEBUG"];
+  exportRGETensors = MemberQ[ToUpperCase /@ args, "RGETENSORS"];
 
   <|
     "Output" -> output, "EFTOrder" -> eftOrder, "LoopOrder" -> loopOrder,
     "Mode" -> mode, "Alpha" -> alpha,
     "Dimensions" -> If[mode === "DIMS", {dS1, dS2, dF}, None],
-    "DebugReports" -> debugReports
+    "DebugReports" -> debugReports,
+    "ExportRGETensors" -> exportRGETensors
   |>
 ];
 
@@ -219,10 +219,15 @@ lagrangianBuilderFile =
 matchingFile =
     FileNameJoin[{lagrangianDir, "RunMatching.wl"}];
 
+rgeTensorExporterFile = FileNameJoin[
+  {projectRoot, "RGE", "general", "wolfram", "T3RGETensorExport.wl"}
+];
+
 Get[physicsLaTeXFile];
 Get[modelCatalogFile];
 Get[lagrangianBuilderFile];
 Get[matchingFile];
+If[TrueQ[config["ExportRGETensors"]], Get[rgeTensorExporterFile]];
 
 (* Get model from SU2 dimensions *)
 model = If[
@@ -254,6 +259,45 @@ If[build["Status"] =!= "Success",
 ];
 Print["Accepted interactions: ", build["AllowedInteractions"]];
 Print["T3 ingredients present: ", build["T3IngredientsPresent"]];
+
+rgeTensorExportStatus = "NotRequested";
+rgeTensorExchangeFile = "";
+rgeTensorQuarticCount = 0;
+rgeTensorYukawaCount = 0;
+
+If[TrueQ[config["ExportRGETensors"]],
+  dataDirectory = FileNameJoin[{outputDirectory, "data"}];
+  If[!DirectoryQ[dataDirectory],
+    CreateDirectory[dataDirectory, CreateIntermediateDirectories -> True]
+  ];
+
+  rgeTensorExchangePath = FileNameJoin[
+    {dataDirectory, "t3_rge_tensor_exchange.json"}
+  ];
+  rgeTensorExportResult = Quiet @ Check[
+    ExportT3RGETensors[model, rgeTensorExchangePath],
+    $Failed
+  ];
+
+  If[rgeTensorExportResult === $Failed || !FileExistsQ[rgeTensorExchangePath],
+    rgeTensorExportStatus = "Failed";
+    Print["ERROR: T3 RGE tensor export failed."],
+    rgeTensorExchange = Import[rgeTensorExchangePath, "RawJSON"];
+    rgeTensorExportStatus = "Success";
+    rgeTensorExchangeFile = "data/t3_rge_tensor_exchange.json";
+    rgeTensorQuarticCount = Length @ Lookup[
+      rgeTensorExchange, "quartic_components", {}
+    ];
+    rgeTensorYukawaCount = Length @ Lookup[
+      rgeTensorExchange, "raw_yukawa_components", {}
+    ];
+    Print[
+      "T3 RGE tensor export: Success (",
+      rgeTensorQuarticCount, " quartic; ",
+      rgeTensorYukawaCount, " Yukawa components)."
+    ];
+  ];
+];
 
 (* We match *)
 matching = CheckAbort[
@@ -352,6 +396,15 @@ summary = BuildSummary[
   eftTeX,
   bsmEftTeX,
   config["DebugReports"]
+];
+summary = Join[
+  summary,
+  <|
+    "T3RGETensorExportStatus" -> rgeTensorExportStatus,
+    "T3RGETensorExchangeFile" -> rgeTensorExchangeFile,
+    "T3RGEQuarticComponentCount" -> rgeTensorQuarticCount,
+    "T3RGEYukawaComponentCount" -> rgeTensorYukawaCount
+  |>
 ];
 Export[FileNameJoin @ {outputDirectory, "comparison_summary.json"}, summary, "RawJSON"];
 

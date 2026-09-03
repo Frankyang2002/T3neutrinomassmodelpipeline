@@ -25,8 +25,11 @@ ClearAll[
   T3RGEFactor,
   T3RGEFullComponentTuple,
   T3RGEComponentEntries,
+  T3RGEIndexedCouplingNames,
+  T3RGEInvariantFamilyMetadata,
   T3RGEQuarticEntriesFromBasis,
   T3RGEHermitianQuarticEntriesFromBasis,
+  T3RGEHiggsSelfEntries,
   T3RGEScalarSelfEntries,
   T3RGEHiggsPortalEntries,
   T3RGECrossScalarEntries,
@@ -51,6 +54,51 @@ T3RGEFactor[name_String, component_Integer, conjugated_] := <|
   "component" -> component,
   "conjugated" -> TrueQ[conjugated]
 |>;
+
+
+(* Expected physical SU(2) invariant multiplicities for the T3 scalar
+   potential.  SU(2) tensor products are multiplicity-free, while identical
+   bosons restrict the self-quartic to the symmetric pair channels. *)
+T3RGEIndexedCouplingNames[base_String, count_Integer?NonNegative] :=
+  Table[base <> "Inv" <> ToString[index], {index, count}];
+
+T3RGEInvariantFamilyMetadata[model_Association] := Module[
+  {d1, d2, scalarSelf1, scalarSelf2, portal1, portal2, cross},
+
+  d1 = model["Scalar1", "SU2"];
+  d2 = model["Scalar2", "SU2"];
+  scalarSelf1 = Ceiling[d1/2];
+  scalarSelf2 = Ceiling[d2/2];
+  portal1 = Min[2, d1];
+  portal2 = Min[2, d2];
+  cross = Min[d1, d2];
+
+  {
+    <|"family" -> "HiggsSelf", "kind" -> "quartic",
+      "expected_physical_count" -> 1, "couplings" -> {"lambdaH"}|>,
+    <|"family" -> "Scalar1Self", "kind" -> "quartic",
+      "expected_physical_count" -> scalarSelf1,
+      "couplings" -> T3RGEIndexedCouplingNames["lambdaS1", scalarSelf1]|>,
+    <|"family" -> "Scalar2Self", "kind" -> "quartic",
+      "expected_physical_count" -> scalarSelf2,
+      "couplings" -> T3RGEIndexedCouplingNames["lambdaS2", scalarSelf2]|>,
+    <|"family" -> "HiggsPortal1", "kind" -> "quartic",
+      "expected_physical_count" -> portal1,
+      "couplings" -> T3RGEIndexedCouplingNames["lambdaH1", portal1]|>,
+    <|"family" -> "HiggsPortal2", "kind" -> "quartic",
+      "expected_physical_count" -> portal2,
+      "couplings" -> T3RGEIndexedCouplingNames["lambdaH2", portal2]|>,
+    <|"family" -> "ScalarCross", "kind" -> "quartic",
+      "expected_physical_count" -> cross,
+      "couplings" -> T3RGEIndexedCouplingNames["lambda12", cross]|>,
+    <|"family" -> "T3Mixing", "kind" -> "quartic",
+      "expected_physical_count" -> 1, "couplings" -> {"lambdaT3"}|>,
+    <|"family" -> "Yukawa1", "kind" -> "yukawa",
+      "expected_physical_count" -> 1, "couplings" -> {"y1"}|>,
+    <|"family" -> "Yukawa2", "kind" -> "yukawa",
+      "expected_physical_count" -> 1, "couplings" -> {"y2"}|>
+  }
+];
 
 
 (* ------------------------------------------------------------------------- *)
@@ -166,6 +214,45 @@ T3RGEHermitianQuarticEntriesFromBasis[
 (* ------------------------------------------------------------------------- *)
 (* Scalar-potential sectors                                                  *)
 (* ------------------------------------------------------------------------- *)
+
+T3RGEHiggsSelfEntries[] := Module[
+  {data, basis, keep, factors},
+
+  data = PhysicalSU2InvariantBasis[
+    {2, 2, 2, 2},
+    {True, False, True, False},
+    {{1, 3}, {2, 4}},
+    {1, 2, 3, 4},
+    False
+  ];
+
+  If[data === $Failed, Return[{}]];
+
+  basis = data["Basis"];
+  keep = data["Keep"];
+  factors = {
+    {"H", True},
+    {"H", False},
+    {"H", True},
+    {"H", False}
+  };
+
+  If[Length[basis] =!= 1,
+    Print[
+      "ERROR: expected one physical Higgs self-quartic invariant, found ",
+      Length[basis], "."
+    ];
+    Return[{}]
+  ];
+
+  (* Project convention: V contains lambdaH/2 (H^dagger H)^2. *)
+  T3RGEQuarticEntriesFromBasis[
+    First[basis],
+    keep,
+    factors,
+    Symbol["lambdaH"]/2
+  ]
+];
 
 T3RGEScalarSelfEntries[
   which_Integer,
@@ -325,6 +412,14 @@ T3RGEMixingEntries[
   basis = data["Basis"];
   keep = data["Keep"];
 
+  If[Length[basis] =!= 1,
+    Print[
+      "ERROR: T3 H H S1 S2^dagger sector has ", Length[basis],
+      " physical invariants; exactly one is required by the current topology."
+    ];
+    Return[{}]
+  ];
+
   factors = {
     {"H", False},
     {"H", False},
@@ -395,10 +490,11 @@ T3RGERawYukawaEntries[
 
   If[Length[basis] =!= 1,
     Print[
-      "WARNING: Yukawa", which,
+      "ERROR: Yukawa", which,
       " invariant multiplicity is ", Length[basis],
-      "; exporting every basis tensor."
-    ]
+      "; exactly one is required by the current T3 topology."
+    ];
+    Return[{}]
   ];
 
   Flatten[
@@ -450,7 +546,8 @@ T3RGERawYukawaEntries[
 (* ------------------------------------------------------------------------- *)
 
 T3RGEExportAssociation[model_Association] := Module[
-  {d1, d2, dF, y1, y2, yF, legacyQ, quartics, rawYukawas},
+  {d1, d2, dF, y1, y2, yF, legacyQ, quartics, mixingQuartics,
+   rawYukawa1, rawYukawa2, rawYukawas},
 
   d1 = model["Scalar1", "SU2"];
   d2 = model["Scalar2", "SU2"];
@@ -462,19 +559,29 @@ T3RGEExportAssociation[model_Association] := Module[
 
   legacyQ = T3LegacyModelQ[model];
 
+  mixingQuartics = T3RGEMixingEntries[d1, d2, legacyQ];
+  rawYukawa1 = T3RGERawYukawaEntries[model, 1, legacyQ];
+  rawYukawa2 = T3RGERawYukawaEntries[model, 2, legacyQ];
+
+  If[mixingQuartics === {} || rawYukawa1 === {} || rawYukawa2 === {},
+    Print[
+      "ERROR: topology invariant export failed; refusing to write a partial ",
+      "T3 tensor exchange."
+    ];
+    Return[$Failed]
+  ];
+
   quartics = Join[
+    T3RGEHiggsSelfEntries[],
     T3RGEScalarSelfEntries[1, d1, legacyQ],
     T3RGEScalarSelfEntries[2, d2, legacyQ],
     T3RGEHiggsPortalEntries[1, d1, legacyQ],
     T3RGEHiggsPortalEntries[2, d2, legacyQ],
     T3RGECrossScalarEntries[d1, d2, legacyQ],
-    T3RGEMixingEntries[d1, d2, legacyQ]
+    mixingQuartics
   ];
 
-  rawYukawas = Join[
-    T3RGERawYukawaEntries[model, 1, legacyQ],
-    T3RGERawYukawaEntries[model, 2, legacyQ]
-  ];
+  rawYukawas = Join[rawYukawa1, rawYukawa2];
 
   <|
     "schema_version" -> 1,
@@ -483,6 +590,8 @@ T3RGEExportAssociation[model_Association] := Module[
     "complex_scalar_convention" -> "Phi=(R+i I)/Sqrt[2]",
     "quartic_tensor_convention" ->
       "lambda_abcd = d^4 V4/(dphi_a dphi_b dphi_c dphi_d)",
+    "invariant_metadata_version" -> 1,
+    "invariant_families" -> T3RGEInvariantFamilyMetadata[model],
     "scalars" -> {
       <|
         "name" -> "H",
@@ -511,6 +620,10 @@ T3RGEExportAssociation[model_Association] := Module[
         "name" -> "F",
         "su2_dimension" -> dF,
         "hypercharge" -> T3RGEExactString[yF],
+        "multiplicity" -> Lookup[model["Fermion"], "Multiplicity", 3],
+        "self_conjugate" -> (
+          TrueQ[PossibleZeroQ[yF]] && OddQ[dF]
+        ),
         "note" -> "Conjugation depends on Yukawa orientation; see raw_yukawa_components."
       |>
     },
@@ -520,8 +633,8 @@ T3RGEExportAssociation[model_Association] := Module[
     "status" -> <|
       "quartic_component_export" -> "Ready",
       "raw_yukawa_export" -> "Ready",
-      "weyl_yukawa_mapping" -> "NeedsLegacyRegression",
-      "matched_wilson_export" -> "NotImplemented"
+      "weyl_yukawa_mapping" -> "ConstructInPython",
+      "matched_wilson_export" -> "ConstructInPython"
     |>
   |>
 ];
@@ -532,6 +645,8 @@ ExportT3RGETensors[
   outputPath_String
 ] := Module[{data, result},
   data = T3RGEExportAssociation[model];
+
+  If[data === $Failed, Return[$Failed]];
 
   result = Quiet@Check[
     Export[outputPath, data, "RawJSON"],

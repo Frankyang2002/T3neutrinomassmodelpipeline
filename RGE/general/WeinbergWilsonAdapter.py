@@ -185,7 +185,6 @@ def validate_weinberg_tensor_symmetry(
 def _self_check() -> None:
     """Regression against the legacy neutral C <-> kappa mapping."""
 
-    from GeneralWeinbergRGEGenerator_complete import RGEModel
     from RGE.general.T3RGETensors import WeylFermion, FermionBasis
 
     kappa = sp.Symbol("kappa")

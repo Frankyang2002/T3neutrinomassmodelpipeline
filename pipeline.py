@@ -16,6 +16,10 @@ from RGE.stages.NeutrinoMassStage import run_neutrino_mass_stage
 from RGE.stages.NumericalPipelineStage import run_numerical_pipeline_stage
 from RGE.stages.RGEReportStage import write_rge_report
 from RGE.phenomenology.NeutrinoObservables import run_neutrino_observables_stage
+from RGE.general.GeneralT3WeinbergRGEStage import (
+    run_general_t3_weinberg_rge_stage,
+)
+from RGE.running.RGBetaT3Running import run_rgbeta_t3
 
 PROJECT_ROOT = Path(__file__).resolve().parent
 
@@ -43,10 +47,11 @@ T3_CLASSES = {
 # Some interesting models to look into.
 # The first entry is the known T3 class and the second is alpha
 # Hypercharges are fixed by gauge invariance of the Yukawa interactions
-# and the four-scalar interaction:
-#   Y(S1) = alpha
-#   Y(F)  = alpha + 1
-#   Y(S2) = alpha + 2
+# and the four-scalar interaction.  The historical classification uses
+# doubled hypercharge labels; in our physical convention Q = T3 + Y:
+#   Y(S1) = alpha / 2
+#   Y(F)  = (alpha + 1) / 2
+#   Y(S2) = (alpha + 2) / 2
 # The A-E labels only specify the SU(2) representations.
 INTERESTING = [("A", 0), ("B", -1), ("C", -1), ("D", -2), ("E", 0)]
 
@@ -82,28 +87,27 @@ def encode_alpha(alpha: int) -> str:
 
 
 def valid_t3_dimensions(d_s1: int, d_s2: int, d_f: int) -> bool:
-    """We check if our SU2 dimensions for our fields are valid for T3"""
-    # Only positive dimensions
+    """Check whether the SU(2) dimensions are supported by the current T3 pipeline."""
+
+    # Current production scope: singlet, doublet and triplet only.
+    # Higher representations are intentionally deferred for possible future work.
+    if any(d > 3 for d in (d_s1, d_s2, d_f)):
+        return False
+
     if min(d_s1, d_s2, d_f) < 1:
         return False
 
-    # We check for yukawa interaction, knowing that it interacts with a lepton doublet. Thus we have 2⊗dF = 1/2 ⊗ jF -> (1/2+jF)+(1/2-jF)
-    # Note that we need j = 0, so when we have j1 ⊗ j2 = j1-j2 +.... j1+j2, we need j1=j2 for us to get a singlet
-    # Thus we have dS=1+dF or ds = 1-dF, which is what this part checks
+    # Each Yukawa contains a lepton doublet.  For SU(2), a scalar that can
+    # couple to L and F must therefore have dS = dF +/- 1.
     if abs(d_s1 - d_f) != 1 or abs(d_s2 - d_f) != 1:
         return False
 
-    # d=2j+1; apply the usual SU(2) angular-momentum addition rule for J=1.
+    # The identical Higgs pair is symmetric, so H x H contributes through
+    # the triplet (J=1) channel.  S1 x S2 must therefore contain J=1.
     j1 = (d_s1 - 1) / 2
     j2 = (d_s2 - 1) / 2
 
-    # Now we check for scalars with HH part, where we know that our Higgs are doublets, giving us 2x2=3+1 for higgs. Higgs are the same field so our antisymmetric singlet is not included
-    # So we only have dimension 3 for our 2 Higgs and isospin charge of J=1. 
-    # As isospin is kinda associative and commutative, we just need to match j1+j2 and HH, 
-    # This we need to check if j1 x j2 = j1-j2 + ... ,j1+j2 contains a j=1 term to match HH, where we need j1+j2 to be an integer so that it would have j=1 
     return abs(j1 - j2) <= 1 <= j1 + j2 and float(j1 + j2).is_integer()
-
-
 
 def identify_t3_class(d_s1: int, d_s2: int, d_f: int) -> str | None:
     """Return the known A-E label if these dimensions match one."""
@@ -126,6 +130,7 @@ def run_model(
     output_dir: Path,
     model_args: list[str],
     debug_reports: bool = False,
+    export_rge_tensors: bool = False,
 ) -> RunRecord:
     """What this does is 
     1. Delete previous output directory and recreate for new results
@@ -155,6 +160,7 @@ def run_model(
         str(LOOP_ORDER),
         *model_args,
         *(["DEBUG"] if debug_reports else []),
+        *(["RGETENSORS"] if export_rge_tensors else []),
     ]
 
     # Launch Wolfram and capture both normal output and errors as text.
@@ -227,6 +233,7 @@ def run_dimensions(
     d_f: int,
     alpha: int,
     debug_reports: bool = False,
+    export_rge_tensors: bool = False,
 ) -> RunRecord:
     """All it does is 
     1. Check if dimensions are correct, if not then return error
@@ -237,8 +244,9 @@ def run_dimensions(
     # Yukawa and scalar interactions.
     if not valid_t3_dimensions(d_s1, d_s2, d_f):
         raise ValueError(
-            f"({d_s1}, {d_s2}, {d_f}) is not a valid T3 SU(2) assignment: "
-            "each scalar must have dS=dF±1 and S1⊗S2 must contain the triplet."
+            f"({d_s1}, {d_s2}, {d_f}) is not supported by the current T3 pipeline. "
+            "For now only SU(2) dimensions 1, 2, and 3 are supported, and the "
+            "assignment must satisfy dS=dF±1 with S1⊗S2 containing the triplet."
         )
 
     # Check whether these dimensions correspond to one of the known
@@ -283,6 +291,7 @@ def run_dimensions(
         output_dir,
         model_args,
         debug_reports,
+        export_rge_tensors,
     )
 
 
@@ -290,6 +299,7 @@ def run_known_class(
     model_class: str,
     alpha: int,
     debug_reports: bool = False,
+    export_rge_tensors: bool = False,
 ) -> RunRecord:
     """Convert a known A-E benchmark into dimensions and run normally."""
 
@@ -304,6 +314,7 @@ def run_known_class(
         d_f,
         alpha,
         debug_reports,
+        export_rge_tensors,
     )
 
 
@@ -1409,6 +1420,51 @@ def write_reports(
         compile_latex_document(bsm_tex)
 
 
+def run_uv_rgbeta_stage(record: RunRecord) -> bool:
+    """Generate and save the one-loop renormalisable UV RGEs for one model."""
+
+    summary = record.summary
+
+    if summary.get("BuildStatus") != "Success":
+        summary["UVRGEStatus"] = "NotRun"
+        return False
+
+    data_dir = record.output_dir / "data"
+    data_dir.mkdir(parents=True, exist_ok=True)
+    output_path = data_dir / "uv_rgbeta_rge.json"
+
+    print(f"  {record.name}: starting RGBeta UV-RGE stage...", flush=True)
+
+    try:
+        result = run_rgbeta_t3(
+            record.d_s1,
+            record.d_s2,
+            record.d_f,
+            record.alpha,
+        )
+    except Exception as exc:
+        summary["UVRGEStatus"] = "Failed"
+        summary["UVRGEError"] = str(exc)
+        print(f"  {record.name}: RGBeta UV-RGE failed: {exc}")
+        return False
+
+    output_path.write_text(
+        json.dumps(result.raw, indent=2),
+        encoding="utf-8",
+    )
+
+    summary["UVRGEStatus"] = result.status
+    summary["UVRGEFile"] = output_path.relative_to(record.output_dir).as_posix()
+    summary["UVRGEBetaCount"] = len(result.betas)
+
+    print(
+        f"  {record.name}: RGBeta UV-RGE={result.status} "
+        f"({len(result.betas)} beta functions) -> {output_path}"
+    )
+
+    return result.status == "Success"
+
+
 def print_summary(records: list[RunRecord]) -> int:
     """Print the results of all completed T3 runs."""
 
@@ -1426,12 +1482,14 @@ def print_summary(records: list[RunRecord]) -> int:
 
         build_ok = summary.get("BuildStatus") == "Success"
         match_ok = summary.get("MatchingStatus") == "Success"
+        uv_rge_ok = summary.get("UVRGEStatus") == "Success"
 
-        successful += int(build_ok and match_ok)
+        successful += int(build_ok and match_ok and uv_rge_ok)
 
         print(
             f"{record.name} alpha={record.alpha}: "
             f"build={summary.get('BuildStatus')}, "
+            f"UV-RGE={summary.get('UVRGEStatus')}, "
             f"match={summary.get('MatchingStatus')}, "
             f"T3={summary.get('T3IngredientsPresent')}, "
             f"Weinberg={summary.get('WeinbergOperatorPresent')}"
@@ -1543,7 +1601,18 @@ def finish_runs(
     for record in records:
         organise_c5_input(record)
 
+    # The UV RGE is a separate symbolic stage.  Run it before the summary so
+    # its status and output file are included in both terminal and JSON reports.
+    uv_rge_failed = False
+    for record in records:
+        if record.summary.get("BuildStatus") == "Success":
+            uv_rge_failed |= not run_uv_rgbeta_stage(record)
+        else:
+            record.summary["UVRGEStatus"] = "NotRun"
+
     status = print_summary(records)
+    if uv_rge_failed:
+        status = 1
 
     write_reports(records, debug_reports)
 
@@ -1555,6 +1624,41 @@ def finish_runs(
 
     for record in records:
         summary = record.summary
+
+        if summary.get("T3RGETensorExportStatus") == "Success":
+            exchange_file = summary.get("T3RGETensorExchangeFile", "")
+            exchange_path = record.output_dir / exchange_file
+            general_rge_path = (
+                record.output_dir / "data" / "general_t3_weinberg_rge.json"
+            )
+            print(
+                f"  {record.name}: starting representation-generic RGE stage...",
+                flush=True,
+            )
+            try:
+                general_rge = run_general_t3_weinberg_rge_stage(
+                    exchange_path=exchange_path,
+                    output_path=general_rge_path,
+                )
+            except Exception as exc:
+                summary["GeneralT3RGEStatus"] = "Failed"
+                summary["GeneralT3RGEError"] = str(exc)
+                status = 1
+                print(f"  {record.name}: representation-generic RGE failed: {exc}")
+            else:
+                summary["GeneralT3RGEStatus"] = general_rge["status"]
+                summary["GeneralT3RGEFile"] = general_rge_path.relative_to(
+                    record.output_dir
+                ).as_posix()
+                summary["GeneralT3RGEBetaKappaOverKappa"] = general_rge[
+                    "beta_kappa_over_kappa"
+                ]["complete_one_generation"]["sympy"]
+                if general_rge["status"] != "Success":
+                    status = 1
+                print(
+                    f"  {record.name}: representation-generic RGE="
+                    f"{general_rge['status']} -> {general_rge_path}"
+                )
 
         if summary.get("BuildStatus") != "Success":
             continue
@@ -1819,6 +1923,15 @@ def main() -> int:
         ),
     )
 
+    parser.add_argument(
+        "--rge-tensors",
+        action="store_true",
+        help=(
+            "export the exact component tensors needed by the "
+            "representation-generic RGE engine"
+        ),
+    )
+
     args = parser.parse_args()
 
     OUTPUT_DIR.mkdir(
@@ -1839,6 +1952,7 @@ def main() -> int:
                 d_f,
                 args.alpha,
                 args.debug_reports,
+                args.rge_tensors,
             )
         except ValueError as exc:
             parser.error(str(exc))
@@ -1877,6 +1991,7 @@ def main() -> int:
             model_class,
             alpha,
             args.debug_reports,
+            args.rge_tensors,
         )
         for model_class, alpha in points
     ]

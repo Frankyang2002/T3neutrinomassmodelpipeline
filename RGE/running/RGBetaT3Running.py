@@ -1,0 +1,115 @@
+from __future__ import annotations
+
+import json
+import subprocess
+import tempfile
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Any
+
+
+@dataclass(frozen=True)
+class RGBetaT3Result:
+    """Result returned by the Wolfram RGBeta T3 runner."""
+
+    status: str
+    metadata: dict[str, Any]
+    betas: dict[str, str]
+    raw: dict[str, Any]
+
+
+def _default_runner_path() -> Path:
+    return Path(__file__).resolve().parent / "wolfram" / "RunT3RGBeta.wl"
+
+
+def _wolfram_integer_token(value: int) -> str:
+    """Encode integers so negative values are not parsed as wolframscript options."""
+    return f"m{abs(value)}" if value < 0 else str(value)
+
+
+def run_rgbeta_t3(
+    d_s1: int,
+    d_s2: int,
+    d_f: int,
+    alpha: int,
+    *,
+    runner_path: Path | None = None,
+    wolframscript: str = "wolframscript",
+) -> RGBetaT3Result:
+    """Generate one-loop renormalisable UV RGEs for a supported T3 model."""
+
+    if any(d not in {1, 2, 3} for d in (d_s1, d_s2, d_f)):
+        raise ValueError(
+            "RGBeta T3 running currently supports only SU(2) dimensions 1, 2 and 3."
+        )
+
+    runner = Path(runner_path) if runner_path is not None else _default_runner_path()
+
+    if not runner.exists():
+        raise FileNotFoundError(f"RGBeta Wolfram runner not found: {runner}")
+
+    with tempfile.TemporaryDirectory(prefix="t3_rgbeta_") as tmpdir:
+        output_path = Path(tmpdir) / "rgbeta_t3_uv_rge.json"
+
+        command = [
+            wolframscript,
+            "-file",
+            str(runner),
+            _wolfram_integer_token(d_s1),
+            _wolfram_integer_token(d_s2),
+            _wolfram_integer_token(d_f),
+            _wolfram_integer_token(alpha),
+            str(output_path),
+        ]
+
+        completed = subprocess.run(
+            command,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+
+        if not output_path.exists():
+            raise RuntimeError(
+                "RGBeta runner did not produce its JSON output.\n"
+                f"return code: {completed.returncode}\n"
+                f"stdout:\n{completed.stdout}\n"
+                f"stderr:\n{completed.stderr}"
+            )
+
+        raw_text = output_path.read_text(encoding="utf-8-sig").strip()
+
+        if not raw_text:
+            raise RuntimeError(
+                "RGBeta runner created an empty JSON output file.\n"
+                f"return code: {completed.returncode}\n"
+                f"stdout:\n{completed.stdout}\n"
+                f"stderr:\n{completed.stderr}"
+            )
+
+        try:
+            payload = json.loads(raw_text)
+        except json.JSONDecodeError as exc:
+            raise RuntimeError(
+                "RGBeta runner produced invalid JSON.\n"
+                f"JSON error: {exc}\n"
+                f"output contents:\n{raw_text}\n"
+                f"return code: {completed.returncode}\n"
+                f"stdout:\n{completed.stdout}\n"
+                f"stderr:\n{completed.stderr}"
+            ) from exc
+
+        if payload.get("status") != "Success":
+            raise RuntimeError(
+                "RGBeta T3 UV-RGE generation failed.\n"
+                f"payload: {payload}\n"
+                f"stdout:\n{completed.stdout}\n"
+                f"stderr:\n{completed.stderr}"
+            )
+
+        return RGBetaT3Result(
+            status=payload["status"],
+            metadata=dict(payload.get("metadata", {})),
+            betas=dict(payload.get("betas", {})),
+            raw=payload,
+        )

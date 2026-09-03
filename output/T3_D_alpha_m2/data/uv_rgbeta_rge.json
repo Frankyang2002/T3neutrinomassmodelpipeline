@@ -1,0 +1,35 @@
+{
+  "status": "Success",
+  "metadata": {
+    "dS1": 3,
+    "dS2": 1,
+    "dF": 2,
+    "alpha": -2,
+    "YS1": "-1",
+    "YS2": "0",
+    "YF": "-1/2",
+    "MajoranaFermion": false
+  },
+  "betas": {
+    "gY": "(59*gY^4)/3",
+    "g2": "-g2^4",
+    "g3": "-14*g3^4",
+    "yu": "(-9*g2^2*Matrix[yu][gen[$i], gen[$j]])/4 - 8*g3^2*Matrix[yu][gen[$i], gen[$j]] - (17*gY^2*Matrix[yu][gen[$i], gen[$j]])/12 + 3*Tr[yd . Trans[Bar[yd]]]*Matrix[yu][gen[$i], gen[$j]] + Tr[ye . Trans[Bar[ye]]]*Matrix[yu][gen[$i], gen[$j]] + 3*Tr[yu . Trans[Bar[yu]]]*Matrix[yu][gen[$i], gen[$j]] - (3*(Matrix[yd, Trans[Bar[yd]], yu][gen[$i], gen[$j]] - Matrix[yu, Trans[Bar[yu]], yu][gen[$i], gen[$j]]))/2",
+    "yd": "(-9*g2^2*Matrix[yd][gen[$i], gen[$j]])/4 - 8*g3^2*Matrix[yd][gen[$i], gen[$j]] - (5*gY^2*Matrix[yd][gen[$i], gen[$j]])/12 + 3*Tr[yd . Trans[Bar[yd]]]*Matrix[yd][gen[$i], gen[$j]] + Tr[ye . Trans[Bar[ye]]]*Matrix[yd][gen[$i], gen[$j]] + 3*Tr[yu . Trans[Bar[yu]]]*Matrix[yd][gen[$i], gen[$j]] + (3*(Matrix[yd, Trans[Bar[yd]], yd][gen[$i], gen[$j]] - Matrix[yu, Trans[Bar[yu]], yd][gen[$i], gen[$j]]))/2",
+    "ye": "(-9*g2^2*Matrix[ye][gen[$i], gen[$j]])/4 - (15*gY^2*Matrix[ye][gen[$i], gen[$j]])/4 + 3*Tr[yd . Trans[Bar[yd]]]*Matrix[ye][gen[$i], gen[$j]] + Tr[ye . Trans[Bar[ye]]]*Matrix[ye][gen[$i], gen[$j]] + 3*Tr[yu . Trans[Bar[yu]]]*Matrix[ye][gen[$i], gen[$j]] + (3*Matrix[y1, Trans[Bar[y1]], ye][gen[$i], gen[$j]] + 2*Matrix[y2, Trans[Bar[y2]], ye][gen[$i], gen[$j]] + 6*Matrix[ye, Trans[Bar[ye]], ye][gen[$i], gen[$j]])/4",
+    "y1": "(-9*g2^2*Matrix[y1][gen[$i], heavy[$j]])/2 - (3*gY^2*Matrix[y1][gen[$i], heavy[$j]])/2 + Tr[y1 . Trans[Bar[y1]]]*Matrix[y1][gen[$i], heavy[$j]] + (3*Matrix[y1, Trans[Bar[y1]], y1][gen[$i], heavy[$j]] + Matrix[y2, Trans[Bar[y2]], y1][gen[$i], heavy[$j]] + Matrix[ye, Trans[Bar[ye]], y1][gen[$i], heavy[$j]])/2",
+    "y2": "(-9*g2^2*Matrix[y2][gen[$i], heavy[$j]])/2 - (3*gY^2*Matrix[y2][gen[$i], heavy[$j]])/2 + 2*Tr[y2 . Trans[Bar[y2]]]*Matrix[y2][gen[$i], heavy[$j]] + (3*Matrix[y1, Trans[Bar[y1]], y2][gen[$i], heavy[$j]])/4 + Matrix[y2, Trans[Bar[y2]], y2][gen[$i], heavy[$j]] + Matrix[ye, Trans[Bar[ye]], y2][gen[$i], heavy[$j]]/2",
+    "MF": "(-9*g2^2*Matrix[MF][heavy[$i], heavy[$j]])/2 - (3*gY^2*Matrix[MF][heavy[$i], heavy[$j]])/2 + (2*Matrix[MF, Trans[Bar[y2]], y2][heavy[$i], heavy[$j]] + 3*Matrix[Trans[y1], Bar[y1], MF][heavy[$i], heavy[$j]])/4",
+    "mS1Sq": "-12*g2^2*mS1Sq - 6*gY^2*mS1Sq + 2*lambda12*mS2Sq + mS1Sq*(8*lambdaS1 + 4*lambdaS1Adj + 2*Tr[y1 . Trans[Bar[y1]]]) - 4*Tr[MF . Trans[Bar[MF]] . Trans[y1] . Bar[y1]]",
+    "mS2Sq": "6*lambda12*mS1Sq + mS2Sq*(4*lambdaS2 + 4*Tr[y2 . Trans[Bar[y2]]]) - 8*Tr[MF . Trans[Bar[y2]] . y2 . Trans[Bar[MF]]]",
+    "lambdaH": "(9*g2^4)/4 + (3*gY^4)/4 + gY^2*((3*g2^2)/2 - 3*lambdaH) - 9*g2^2*lambdaH + 12*lambdaH^2 + 6*lambdaH1^2 + 3*lambdaH1Adj^2 + 2*lambdaH2^2 + 4*lambdaT3*Bar[lambdaT3] + lambdaH*(12*Tr[yd . Trans[Bar[yd]]] + 4*Tr[ye . Trans[Bar[ye]]] + 12*Tr[yu . Trans[Bar[yu]]]) - 12*Tr[yd . Trans[Bar[yd]] . yd . Trans[Bar[yd]]] - 4*Tr[ye . Trans[Bar[ye]] . ye . Trans[Bar[ye]]] - 12*Tr[yu . Trans[Bar[yu]] . yu . Trans[Bar[yu]]]",
+    "lambdaS1": "21*g2^4 + 12*gY^4 + 2*lambda12^2 + 4*lambdaH1^2 + (3*lambdaH1Adj^2)/2 + 14*lambdaS1^2 + g2^2*(-24*lambdaS1 - 12*lambdaS1Adj) + gY^2*(12*g2^2 - 12*lambdaS1 - 6*lambdaS1Adj) + 26*lambdaS1Adj^2 + 2*lambdaS1Adj*Tr[y1 . Trans[Bar[y1]]] + lambdaS1*(14*lambdaS1Adj + 4*Tr[y1 . Trans[Bar[y1]]]) - 3*Tr[y1 . Trans[Bar[y1]] . y1 . Trans[Bar[y1]]]",
+    "lambdaS2": "6*lambda12^2 + 4*lambdaH2^2 + 10*lambdaS2^2 + 8*lambdaS2*Tr[y2 . Trans[Bar[y2]]] - 8*Tr[y2 . Trans[Bar[y2]] . y2 . Trans[Bar[y2]]]",
+    "lambdaH1": "6*g2^4 + 3*gY^4 - (33*g2^2*lambdaH1)/2 - (15*gY^2*lambdaH1)/2 + 6*lambdaH*lambdaH1 + 4*lambdaH1^2 + 6*lambdaH1Adj^2 + 2*lambda12*lambdaH2 + 8*lambdaH1*lambdaS1 + 4*lambdaT3*Bar[lambdaT3] + lambdaH1*(4*lambdaS1Adj + 2*Tr[y1 . Trans[Bar[y1]]] + 6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]]) - 2*Tr[y1 . Trans[Bar[y1]] . ye . Trans[Bar[ye]]]",
+    "lambdaH2": "6*lambda12*lambdaH1 - (9*g2^2*lambdaH2)/2 - (3*gY^2*lambdaH2)/2 + 6*lambdaH*lambdaH2 + 4*lambdaH2^2 + 4*lambdaH2*lambdaS2 + 12*lambdaT3*Bar[lambdaT3] + lambdaH2*(4*Tr[y2 . Trans[Bar[y2]]] + 6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]]) - 4*Tr[y2 . Trans[Bar[y2]] . ye . Trans[Bar[ye]]]",
+    "lambda12": "-12*g2^2*lambda12 - 6*gY^2*lambda12 + 4*lambda12^2 + 4*lambdaH1*lambdaH2 + 8*lambda12*lambdaS1 + 4*lambda12*lambdaS2 + 4*lambdaT3*Bar[lambdaT3] + lambda12*(4*lambdaS1Adj + 2*Tr[y1 . Trans[Bar[y1]]] + 4*Tr[y2 . Trans[Bar[y2]]]) - 4*Tr[y1 . Trans[Bar[y1]] . y2 . Trans[Bar[y2]]]",
+    "lambdaT3": "(-21*g2^2*lambdaT3)/2 - (9*gY^2*lambdaT3)/2 + 2*lambda12*lambdaT3 + 2*lambdaH*lambdaT3 + 4*lambdaH1*lambdaT3 + 4*lambdaH2*lambdaT3 + lambdaT3*(-4*lambdaH1Adj + Tr[y1 . Trans[Bar[y1]]] + 2*Tr[y2 . Trans[Bar[y2]]] + 6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]])",
+    "lambdaH1Adj": "gY^2*(-4*g2^2 - (15*lambdaH1Adj)/2) - (33*g2^2*lambdaH1Adj)/2 + 2*lambdaH*lambdaH1Adj + 8*lambdaH1*lambdaH1Adj + 2*lambdaH1Adj*lambdaS1 - (8*lambdaT3*Bar[lambdaT3])/3 + lambdaH1Adj*(16*lambdaS1Adj + 2*Tr[y1 . Trans[Bar[y1]]] + 6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]]) - (4*Tr[y1 . Trans[Bar[y1]] . ye . Trans[Bar[ye]]])/3",
+    "lambdaS1Adj": "(3*g2^4)/4 + (3*gY^4)/2 + lambda12^2/4 + lambdaH1^2/2 + 3*lambdaH1Adj^2 + (7*lambdaS1^2)/4 + g2^2*(-3*lambdaS1 - 24*lambdaS1Adj) + gY^2*(9*g2^2 - (3*lambdaS1)/2 - 12*lambdaS1Adj) + 22*lambdaS1Adj^2 + lambdaS1*(13*lambdaS1Adj + Tr[y1 . Trans[Bar[y1]]]/2) + 4*lambdaS1Adj*Tr[y1 . Trans[Bar[y1]]] - Tr[y1 . Trans[Bar[y1]] . y1 . Trans[Bar[y1]]]"
+  }
+}

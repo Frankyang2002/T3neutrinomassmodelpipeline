@@ -257,10 +257,14 @@ DefineSU2InvariantCG[
     Return[$Failed]
   ];
 
-  (* If we have more than one invariant tensor in large representation, we just use the first basis *)
+  (* A topology vertex is defined by one named coupling and therefore must
+     have exactly one physical invariant.  Never discard or merge additional
+     invariant tensors silently.  Scalar-potential sectors with genuine
+     multiplicity use DefineSU2InvariantFamily below instead. *)
   If[Length[tensors] > 1,
-    Print["WARNING: ", SymbolName[cgName], " has ", Length[tensors],
-      " invariant tensors; using the first basis tensor."]
+    Print["ERROR: ", SymbolName[cgName], " has ", Length[tensors],
+      " invariant tensors but this topology vertex expects exactly one."];
+    Return[$Failed]
   ];
 
   Module[{defined},

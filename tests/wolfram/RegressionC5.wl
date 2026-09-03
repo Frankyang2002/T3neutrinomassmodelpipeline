@@ -32,8 +32,13 @@ ReadSummary[dir_] := Module[{path = FileNameJoin[{outputRoot, dir, "comparison_s
   Quiet @ Check[Import[path, "RawJSON"], $Failed]
 ];
 
-ReadC5[dir_] := Module[{path = FileNameJoin[{outputRoot, dir, "c5_coefficient.txt"}], text},
+ReadC5[dir_] := Module[
+  {path = FileNameJoin[
+    {outputRoot, dir, "data", "c5_coefficient.txt"}
+  ], text},
+
   If[!FileExistsQ[path], Return[$Failed]];
+
   text = Import[path, "Text"];
   Quiet @ Check[ToExpression[text, InputForm], $Failed]
 ];

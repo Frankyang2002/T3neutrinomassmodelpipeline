@@ -32,9 +32,11 @@ the same fermion ordering and overall normalization as y_ija in Eq. (4.85).
 from dataclasses import dataclass
 import json
 from pathlib import Path
+import re
 from typing import Iterable, Mapping, Sequence
 
 import sympy as sp
+from sympy.parsing.mathematica import parse_mathematica
 
 from RGE.general.GeneralWeinbergRGEGenerator import (
     C,
@@ -51,6 +53,40 @@ from RGE.general.GeneralWeinbergRGEGenerator import (
 
 
 SQRT2 = sp.sqrt(2)
+
+
+# Mathematica sometimes writes exact fourth roots as algebraic ``Root``
+# objects instead of radicals.  For x^4 = a/b its canonical ordering is
+#
+#   1: -r,  2: r,  3: -I r,  4: I r,    r = (a/b)^(1/4).
+#
+# SymPy's Mathematica parser currently leaves these as an unevaluated
+# ``Root(Lambda(...), k, 0)`` function.  In particular, it cannot then prove
+# that roots 3 and 4 are complex conjugates.  The T3 tensor contractions rely
+# on precisely those identities, so canonicalize this exporter-generated
+# subset before parsing the rest of the expression.
+_PURE_QUARTIC_ROOT_RE = re.compile(
+    r"Root\[\s*-\s*(?P<numerator>\d+)\s*\+\s*"
+    r"(?P<denominator>\d+)\s*\*\s*#1\^4\s*&\s*,\s*"
+    r"(?P<index>[1-4])\s*,\s*0\s*\]"
+)
+
+
+def _canonicalize_wolfram_pure_quartic_roots(value: str) -> str:
+    """Rewrite the exact ``Root[-a+b #1^4&,k,0]`` subset as radicals."""
+
+    def replacement(match: re.Match[str]) -> str:
+        numerator = match.group("numerator")
+        denominator = match.group("denominator")
+        root = f"(({numerator})/({denominator}))^(1/4)"
+        return {
+            "1": f"-({root})",
+            "2": root,
+            "3": f"-I*({root})",
+            "4": f"I*({root})",
+        }[match.group("index")]
+
+    return _PURE_QUARTIC_ROOT_RE.sub(replacement, value)
 
 
 # -----------------------------------------------------------------------------
@@ -71,23 +107,14 @@ def parse_exact_expression(value) -> sp.Expr:
     if not isinstance(value, str):
         raise TypeError(f"Expected an exact-expression string, got {type(value)!r}.")
 
-    # Keep the parser intentionally small and transparent.
-    translated = (
-        value.replace("Sqrt[", "sqrt(")
-        .replace("I", "I")
-    )
-
-    # Handle the common simple Mathematica Sqrt[...] form.
-    if "Sqrt[" in value:
-        translated = value.replace("Sqrt[", "sqrt(").replace("]", ")")
-
-    return sp.sympify(
-        translated,
-        locals={
-            "I": sp.I,
-            "sqrt": sp.sqrt,
-        },
-    )
+    # The exchange uses Mathematica InputForm.  SymPy's Mathematica parser
+    # correctly preserves exact rationals, nested Sqrt[...] expressions and
+    # Conjugate[...] instead of treating them as unrelated symbol names.
+    try:
+        canonical_value = _canonicalize_wolfram_pure_quartic_roots(value)
+        return sp.sympify(parse_mathematica(canonical_value))
+    except Exception as exc:
+        raise ValueError(f"Could not parse exact Wolfram expression {value!r}.") from exc
 
 
 # -----------------------------------------------------------------------------
@@ -492,6 +519,36 @@ def quartic_component_function(
         return normalized.get(tuple(sorted((a, b, c, d))), sp.S.Zero)
 
     return quartic
+
+
+def quartic_components_from_exchange(
+    data: Mapping,
+) -> tuple[ComplexQuarticComponent, ...]:
+    """Parse exact complex-basis quartic terms from the Wolfram exchange."""
+
+    result: list[ComplexQuarticComponent] = []
+
+    for entry in data.get("quartic_components", []):
+        factors = tuple(
+            ComplexScalarFactor(
+                scalar_name=str(factor["scalar_name"]),
+                component=int(factor["component"]),
+                conjugated=bool(factor.get("conjugated", False)),
+            )
+            for factor in entry["factors"]
+        )
+
+        if len(factors) != 4:
+            raise ValueError("Every quartic exchange term must have four factors.")
+
+        result.append(
+            ComplexQuarticComponent(
+                coefficient=parse_exact_expression(entry["coefficient"]),
+                factors=factors,
+            )
+        )
+
+    return tuple(result)
 
 
 # -----------------------------------------------------------------------------

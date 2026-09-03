@@ -23,6 +23,7 @@ Eq. (4.85), and the collinear anomalous dimensions from Eqs. (A.2) and
 """
 
 from dataclasses import dataclass
+from functools import lru_cache
 from fractions import Fraction
 from typing import Callable, Iterable, Mapping
 
@@ -1055,6 +1056,7 @@ def with_collinear_anomalous_dimensions(
 ) -> MasterRGEInputs:
     """Return a copy of the master-RGE inputs with A.2 and A.3 wired in."""
 
+    @lru_cache(maxsize=None)
     def gamma_scalar(a: int, b: int) -> sp.Expr:
         return scalar_collinear_anomalous_dimension(
             model=model,
@@ -1063,6 +1065,7 @@ def with_collinear_anomalous_dimensions(
             b=b,
         )
 
+    @lru_cache(maxsize=None)
     def gamma_fermion(i: int, j: int) -> sp.Expr:
         return fermion_collinear_anomalous_dimension(
             model=model,

@@ -35,7 +35,7 @@ from typing import Mapping
 
 import sympy as sp
 
-from RGE.general.GeneralWeinbergRGEGenerator import RGEModel
+from RGE.general.RGEModel import RGEModel
 from RGE.general.T3RGETensors import FermionBasis
 
 

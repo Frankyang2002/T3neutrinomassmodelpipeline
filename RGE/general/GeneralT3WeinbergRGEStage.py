@@ -24,11 +24,9 @@ from typing import Any
 
 import sympy as sp
 
-from RGE.general.GeneralWeinbergRGEGenerator import (
-    calculate_master_rge,
-    g2,
-    with_collinear_anomalous_dimensions,
-)
+from RGE.general.AnomalousDimensions import with_collinear_anomalous_dimensions
+from RGE.general.GaugeGenerators import g2
+from RGE.general.MasterWeinbergRGE import calculate_master_rge
 from RGE.general.T3RGETensors import (
     T3RGETensors,
     load_component_exchange,

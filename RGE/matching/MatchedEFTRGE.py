@@ -5,14 +5,14 @@ from pathlib import Path
 
 import sympy as sp
 
-from RGE.general.GeneralWeinbergRGEGenerator import (
+from RGE.general.AnomalousDimensions import calculate_complete_master_rge
+from RGE.general.GaugeGenerators import g2
+from RGE.general.MasterWeinbergRGE import MasterRGEInputs
+from RGE.general.RGEModel import (
     ComplexScalar,
-    MasterRGEInputs,
     RGEModel,
-    calculate_complete_master_rge,
-    g2,
 )
-from RGE.general.T3RGETensors import FermionBasis, WeylFermion, build_gauge_sectors
+from RGE.general.T3RGETensors import FermionBasis, SparseWilsonLookup, WeylFermion, build_gauge_sectors
 from RGE.general.WeinbergWilsonAdapter import (
     build_weinberg_wilson_tensor,
     validate_weinberg_tensor_symmetry,
@@ -21,15 +21,6 @@ from RGE.general.WeinbergWilsonAdapter import (
 lambdaH = sp.Symbol("lambdaH")
 ye, yu, yd = sp.symbols("ye yu yd")
 
-
-class SparseWilsonLookup:
-    """Sparse C_ijab lookup supporting the [] interface used by Eq. (4.85)."""
-
-    def __init__(self, components):
-        self.components = components
-
-    def __getitem__(self, key):
-        return sp.sympify(self.components.get(tuple(key), sp.S.Zero))
 
 
 def _matching_square_bracket(text: str, open_index: int) -> int:

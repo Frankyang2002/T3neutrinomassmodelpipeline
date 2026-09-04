@@ -1,5 +1,35 @@
 from __future__ import annotations
 
+from RGE.general.FermionBasis import (
+    FermionBasis,
+    FermionBasisBlock,
+    WeylFermion,
+    _fermion_local_su2_generators,
+    build_gauge_sectors,
+    fermion_global_su2_generators,
+    fermion_global_u1_generator,
+)
+
+from RGE.general.T3YukawaTensors import (
+    ComplexYukawaComponent,
+    build_real_yukawa_tensor,
+    yukawa_component_function,
+)
+
+from RGE.general.T3QuarticTensors import (
+    ComplexQuarticComponent,
+    ComplexScalarFactor,
+    complex_scalar_component_expression,
+    quartic_component_function,
+    quartic_components_from_exchange,
+    quartic_polynomial_from_components,
+    quartic_tensor_from_components,
+    scalar_real_symbols,
+)
+
+
+
+
 """
 Adapter between generalized T3 model data and the tensors used by
 GeneralWeinbergRGEGenerator_complete.py.
@@ -38,17 +68,19 @@ from typing import Iterable, Mapping, Sequence
 import sympy as sp
 from sympy.parsing.mathematica import parse_mathematica
 
-from RGE.general.GeneralWeinbergRGEGenerator import (
-    C,
+from RGE.general.GaugeGenerators import (
     GaugeSector,
-    MasterRGEInputs,
-    RGEModel,
-    ComplexScalar,
     g1,
     g2,
     global_su2_generators,
     global_u1_generator,
     su2_complex_generators,
+)
+from RGE.general.MasterWeinbergRGE import MasterRGEInputs
+from RGE.general.RGECommon import C
+from RGE.general.RGEModel import (
+    ComplexScalar,
+    RGEModel,
 )
 
 
@@ -122,155 +154,18 @@ def parse_exact_expression(value) -> sp.Expr:
 # -----------------------------------------------------------------------------
 
 
-@dataclass(frozen=True)
-class WeylFermion:
-    """One left-handed Weyl multiplet used by the y_ija/C_ijab convention."""
-
-    name: str
-    su2_dimension: int
-    hypercharge: sp.Expr
-    multiplicity: int = 1
-    conjugated_representation: bool = False
-
-    def __post_init__(self) -> None:
-        if self.su2_dimension < 1:
-            raise ValueError("SU(2) representation dimension must be positive.")
-        if self.multiplicity < 1:
-            raise ValueError("Fermion multiplicity must be positive.")
 
 
-@dataclass(frozen=True)
-class FermionBasisBlock:
-    """One fermion multiplet/flavour copy inside the global Weyl basis."""
-
-    fermion: WeylFermion
-    copy: int
-    first: int
-    last: int
-
-    @property
-    def indices(self) -> range:
-        return range(self.first, self.last + 1)
 
 
-@dataclass
-class FermionBasis:
-    """Global basis and gauge generators for all left-handed Weyl fermions."""
-
-    fermions: tuple[WeylFermion, ...]
-
-    def __post_init__(self) -> None:
-        start = 1
-        blocks: list[FermionBasisBlock] = []
-
-        for fermion in self.fermions:
-            for copy in range(1, fermion.multiplicity + 1):
-                stop = start + fermion.su2_dimension - 1
-                blocks.append(
-                    FermionBasisBlock(
-                        fermion=fermion,
-                        copy=copy,
-                        first=start,
-                        last=stop,
-                    )
-                )
-                start = stop + 1
-
-        self.blocks = tuple(blocks)
-        self.dimension = start - 1
-
-    def blocks_named(self, name: str) -> tuple[FermionBasisBlock, ...]:
-        result = tuple(block for block in self.blocks if block.fermion.name == name)
-        if not result:
-            raise KeyError(f"Unknown fermion multiplet {name!r}.")
-        return result
-
-    def block(self, name: str, copy: int = 1) -> FermionBasisBlock:
-        for block in self.blocks:
-            if block.fermion.name == name and block.copy == copy:
-                return block
-        raise KeyError(f"No fermion block {name!r}, copy={copy}.")
-
-    def global_index(self, name: str, component: int, copy: int = 1) -> int:
-        block = self.block(name, copy)
-        if not 1 <= component <= block.fermion.su2_dimension:
-            raise IndexError(
-                f"{name} component must lie in "
-                f"1,...,{block.fermion.su2_dimension}."
-            )
-        return block.first + component - 1
 
 
-def _fermion_local_su2_generators(
-    fermion: WeylFermion,
-) -> tuple[sp.Matrix, sp.Matrix, sp.Matrix]:
-    """Return generators for the requested Weyl representation."""
-
-    generators = su2_complex_generators(fermion.su2_dimension)
-
-    if fermion.conjugated_representation:
-        # For the conjugate representation: T^A -> -(T^A)^*.
-        generators = tuple(-generator.conjugate() for generator in generators)
-
-    return generators
 
 
-def fermion_global_su2_generators(
-    basis: FermionBasis,
-) -> tuple[sp.Matrix, sp.Matrix, sp.Matrix]:
-    """Embed SU(2)_L generators into the full Weyl-fermion basis."""
-
-    result = [sp.zeros(basis.dimension) for _ in range(3)]
-
-    for block in basis.blocks:
-        local = _fermion_local_su2_generators(block.fermion)
-        offset = block.first - 1
-
-        for generator_number in range(3):
-            for row in range(block.fermion.su2_dimension):
-                for column in range(block.fermion.su2_dimension):
-                    result[generator_number][
-                        offset + row,
-                        offset + column,
-                    ] = local[generator_number][row, column]
-
-    return tuple(sp.simplify(generator) for generator in result)
 
 
-def fermion_global_u1_generator(basis: FermionBasis) -> sp.Matrix:
-    """Return the U(1)_Y generator in the global Weyl-fermion basis."""
-
-    result = sp.zeros(basis.dimension)
-
-    for block in basis.blocks:
-        hypercharge = sp.sympify(block.fermion.hypercharge)
-        if block.fermion.conjugated_representation:
-            hypercharge = -hypercharge
-
-        for index in block.indices:
-            result[index - 1, index - 1] = hypercharge
-
-    return result
 
 
-def build_gauge_sectors(
-    scalar_model: RGEModel,
-    fermion_basis: FermionBasis,
-) -> tuple[GaugeSector, GaugeSector]:
-    """Build the SU(2)_L and U(1)_Y sectors required by Eq. (4.85)."""
-
-    return (
-        GaugeSector(
-            coupling=g2,
-            scalar_generators=global_su2_generators(scalar_model),
-            fermion_generators=fermion_global_su2_generators(fermion_basis),
-        ),
-        GaugeSector(
-            coupling=g1,
-            scalar_generators=(global_u1_generator(scalar_model),),
-            fermion_generators=(fermion_global_u1_generator(fermion_basis),),
-        ),
-    )
 
 
 # -----------------------------------------------------------------------------
@@ -278,45 +173,8 @@ def build_gauge_sectors(
 # -----------------------------------------------------------------------------
 
 
-def scalar_real_symbols(model: RGEModel) -> tuple[sp.Symbol, ...]:
-    """Create one real symbol phi_1,...,phi_N for the global scalar basis."""
-
-    return tuple(
-        sp.Symbol(f"phi_{index}", real=True)
-        for index in range(1, model.total_real_scalar_dimension + 1)
-    )
 
 
-def complex_scalar_component_expression(
-    model: RGEModel,
-    scalar_name: str,
-    component: int,
-    conjugated: bool,
-    real_symbols: Sequence[sp.Symbol] | None = None,
-) -> sp.Expr:
-    r"""Return z_m=(R_m+i I_m)/sqrt(2), or its conjugate, in the global basis."""
-
-    block = model.block(scalar_name)
-
-    if not 1 <= component <= block.scalar.su2_dimension:
-        raise IndexError(
-            f"{scalar_name} complex component must lie in "
-            f"1,...,{block.scalar.su2_dimension}."
-        )
-
-    symbols = tuple(real_symbols or scalar_real_symbols(model))
-
-    local_r = 2 * component - 1
-    local_i = 2 * component
-    global_r = block.local_to_global(local_r)
-    global_i = block.local_to_global(local_i)
-
-    sign = -1 if conjugated else 1
-
-    return (
-        symbols[global_r - 1]
-        + sign * sp.I * symbols[global_i - 1]
-    ) / SQRT2
 
 
 # -----------------------------------------------------------------------------
@@ -324,95 +182,10 @@ def complex_scalar_component_expression(
 # -----------------------------------------------------------------------------
 
 
-@dataclass(frozen=True)
-class ComplexYukawaComponent:
-    """One component coefficient multiplying psi_i psi_j times a complex scalar."""
-
-    fermion_i: int
-    fermion_j: int
-    scalar_name: str
-    scalar_component: int
-    scalar_conjugated: bool
-    coefficient: sp.Expr
 
 
-def build_real_yukawa_tensor(
-    scalar_model: RGEModel,
-    fermion_basis: FermionBasis,
-    components: Iterable[ComplexYukawaComponent],
-    symmetrize_fermions: bool = False,
-) -> dict[tuple[int, int, int], sp.Expr]:
-    """Convert complex-scalar Yukawa components into y_ija in the real basis.
-
-    For z=(R+iI)/sqrt(2):
-      y_R = Y/sqrt(2),
-      y_I = +i Y/sqrt(2).
-
-    For z^*=(R-iI)/sqrt(2):
-      y_R = Y/sqrt(2),
-      y_I = -i Y/sqrt(2).
-
-    The function does not add any extra 1/2 or sign associated with a chosen
-    two-component-fermion Lagrangian convention.  The exported complex
-    coefficient must already match Eq. (4.85)'s y convention.
-    """
-
-    result: dict[tuple[int, int, int], sp.Expr] = {}
-
-    for item in components:
-        if not 1 <= item.fermion_i <= fermion_basis.dimension:
-            raise IndexError("fermion_i is outside the global fermion basis.")
-        if not 1 <= item.fermion_j <= fermion_basis.dimension:
-            raise IndexError("fermion_j is outside the global fermion basis.")
-
-        block = scalar_model.block(item.scalar_name)
-        if not 1 <= item.scalar_component <= block.scalar.su2_dimension:
-            raise IndexError("scalar_component is outside its SU(2) multiplet.")
-
-        local_r = 2 * item.scalar_component - 1
-        local_i = 2 * item.scalar_component
-        r = block.local_to_global(local_r)
-        im = block.local_to_global(local_i)
-
-        coefficient = sp.sympify(item.coefficient)
-        imaginary_sign = -1 if item.scalar_conjugated else 1
-
-        contributions = {
-            (item.fermion_i, item.fermion_j, r): coefficient / SQRT2,
-            (
-                item.fermion_i,
-                item.fermion_j,
-                im,
-            ): imaginary_sign * sp.I * coefficient / SQRT2,
-        }
-
-        if symmetrize_fermions and item.fermion_i != item.fermion_j:
-            contributions.update(
-                {
-                    (item.fermion_j, item.fermion_i, r): coefficient / SQRT2,
-                    (
-                        item.fermion_j,
-                        item.fermion_i,
-                        im,
-                    ): imaginary_sign * sp.I * coefficient / SQRT2,
-                }
-            )
-
-        for key, value in contributions.items():
-            result[key] = sp.simplify(result.get(key, sp.S.Zero) + value)
-
-    return result
 
 
-def yukawa_component_function(
-    components: Mapping[tuple[int, int, int], sp.Expr],
-):
-    """Return the y(i,j,a) callable expected by MasterRGEInputs."""
-
-    def y(i: int, j: int, a: int) -> sp.Expr:
-        return sp.sympify(components.get((i, j, a), sp.S.Zero))
-
-    return y
 
 
 # -----------------------------------------------------------------------------
@@ -420,135 +193,16 @@ def yukawa_component_function(
 # -----------------------------------------------------------------------------
 
 
-@dataclass(frozen=True)
-class ComplexScalarFactor:
-    """One complex scalar field appearing in a quartic component term."""
-
-    scalar_name: str
-    component: int
-    conjugated: bool = False
 
 
-@dataclass(frozen=True)
-class ComplexQuarticComponent:
-    """One component of a quartic interaction before conversion to real fields."""
-
-    coefficient: sp.Expr
-    factors: tuple[
-        ComplexScalarFactor,
-        ComplexScalarFactor,
-        ComplexScalarFactor,
-        ComplexScalarFactor,
-    ]
 
 
-def quartic_polynomial_from_components(
-    model: RGEModel,
-    components: Iterable[ComplexQuarticComponent],
-) -> tuple[sp.Expr, tuple[sp.Symbol, ...]]:
-    """Expand exported complex quartic components into real scalar fields."""
-
-    symbols = scalar_real_symbols(model)
-    polynomial = sp.S.Zero
-
-    for term in components:
-        product = sp.sympify(term.coefficient)
-
-        for factor in term.factors:
-            product *= complex_scalar_component_expression(
-                model=model,
-                scalar_name=factor.scalar_name,
-                component=factor.component,
-                conjugated=factor.conjugated,
-                real_symbols=symbols,
-            )
-
-        polynomial += product
-
-    return sp.expand(polynomial), symbols
 
 
-def quartic_tensor_from_components(
-    model: RGEModel,
-    components: Iterable[ComplexQuarticComponent],
-    simplify: bool = True,
-) -> dict[tuple[int, int, int, int], sp.Expr]:
-    r"""Return the symmetric real tensor lambda_abcd.
-
-    The tensor is defined by
-
-        lambda_abcd =
-          d^4 V_4 / (d phi_a d phi_b d phi_c d phi_d),
-
-    which is equivalent to V_4=(1/4!) lambda_abcd phi_a phi_b phi_c phi_d.
-    Only sorted index keys are stored because lambda_abcd is fully symmetric.
-    """
-
-    polynomial, symbols = quartic_polynomial_from_components(model, components)
-    n = model.total_real_scalar_dimension
-    result: dict[tuple[int, int, int, int], sp.Expr] = {}
-
-    # combinations_with_replacement avoids N^4 duplicate differentiation.
-    from itertools import combinations_with_replacement
-
-    for key in combinations_with_replacement(range(1, n + 1), 4):
-        derivative = polynomial
-
-        for index in key:
-            derivative = sp.diff(derivative, symbols[index - 1])
-
-        value = sp.simplify(derivative) if simplify else derivative
-
-        if value != 0:
-            result[key] = value
-
-    return result
 
 
-def quartic_component_function(
-    components: Mapping[tuple[int, int, int, int], sp.Expr],
-):
-    """Return lambda(a,b,c,d) for MasterRGEInputs."""
-
-    normalized = {
-        tuple(sorted(key)): sp.sympify(value)
-        for key, value in components.items()
-    }
-
-    def quartic(a: int, b: int, c: int, d: int) -> sp.Expr:
-        return normalized.get(tuple(sorted((a, b, c, d))), sp.S.Zero)
-
-    return quartic
 
 
-def quartic_components_from_exchange(
-    data: Mapping,
-) -> tuple[ComplexQuarticComponent, ...]:
-    """Parse exact complex-basis quartic terms from the Wolfram exchange."""
-
-    result: list[ComplexQuarticComponent] = []
-
-    for entry in data.get("quartic_components", []):
-        factors = tuple(
-            ComplexScalarFactor(
-                scalar_name=str(factor["scalar_name"]),
-                component=int(factor["component"]),
-                conjugated=bool(factor.get("conjugated", False)),
-            )
-            for factor in entry["factors"]
-        )
-
-        if len(factors) != 4:
-            raise ValueError("Every quartic exchange term must have four factors.")
-
-        result.append(
-            ComplexQuarticComponent(
-                coefficient=parse_exact_expression(entry["coefficient"]),
-                factors=factors,
-            )
-        )
-
-    return tuple(result)
 
 
 # -----------------------------------------------------------------------------

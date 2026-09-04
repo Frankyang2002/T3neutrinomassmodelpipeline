@@ -6,6 +6,11 @@ scriptDirectory = DirectoryName @ ExpandFileName[$InputFileName];
 args = Rest[$ScriptCommandLine];
 outputRoot = If[Length[args] >= 1, ExpandFileName @ args[[1]], FileNameJoin[{scriptDirectory, "output"}]];
 
+
+projectRoot = ExpandFileName @ FileNameJoin[{scriptDirectory, "..", ".."}];
+conventionFile = FileNameJoin[{projectRoot, "Lagrangian", "group", "T3CouplingConventions.wl"}];
+If[!FileExistsQ[conventionFile], Print["Missing coupling convention file: ", conventionFile]; Exit[2]];
+Get[conventionFile];
 matcheteLoadResult = UsingFrontEnd[Needs["Matchete`"]; True];
 If[!TrueQ[matcheteLoadResult], Print["Matchete loading failed in regression script."]; Exit[2]];
 
@@ -91,6 +96,13 @@ Do[
 {benchmark, benchmarks}];
 
 (* ------------------------------------------------------------------- *)
+(* Explicit low-dimensional convention bridge. *)
+AddResult[
+  "T3-B legacy/general lambdaT3 conversion",
+  SafeZeroQ[T3LambdaT3GeneralFromLegacyFactor[{2, 2, 1}] + Sqrt[3]/2],
+  T3LambdaT3GeneralFromLegacyFactor[{2, 2, 1}]
+];
+
 (* T3-B scotogenic calibration                                         *)
 (* ------------------------------------------------------------------- *)
 
@@ -101,7 +113,7 @@ If[c5B =!= $Failed,
   reducedB = c5B /. {
     Bar[Coupling[y1, ___]] -> yy1,
     Bar[Coupling[y2, ___]] -> yy2,
-    Coupling[lambdaT3, {}, 0] -> lam,
+    Coupling[lambdaT3, {}, 0] -> T3LambdaT3GeneralFromLegacyFactor[{2, 2, 1}] lam,
     Coupling[MF, {}, 0] -> mf,
     Coupling[MS1, {}, 0] -> ms1,
     Coupling[MS2, {}, 0] -> ms2

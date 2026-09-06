@@ -1,3 +1,5 @@
+# This is the pipeline that starts the process, and gets all the inputs
+
 from __future__ import annotations
 
 import argparse
@@ -19,9 +21,10 @@ from common.Paths import (
     PROJECT_ROOT,
     REPORT_OUTPUT_DIR,
 )
+
 from common.Records import RunRecord
 from common.T3Model import EXTENDED, INTERESTING, SMOKE
-from Lagrangian.Runner import run_dimensions, run_known_class
+from Lagrangian.Runner import validate_dimensions, obtain_class_dimensions
 from Reports.ReportGeneration import (
     report_output_dir_for,
     write_reports,
@@ -31,7 +34,6 @@ from Reports.RGEReport import write_and_compile_rge_report
 
 def run_uv_rgbeta_stage(record: RunRecord) -> bool:
     """Generate and save the one-loop renormalisable UV RGEs for one model."""
-
     summary = record.summary
 
     if summary.get("BuildStatus") != "Success":
@@ -435,8 +437,12 @@ def finish_runs(
 
     return status
 
-
+# Function:
+# 1. Get all arguments
+# 2. Start process
+# 3. Get reports
 def main() -> int:
+    # Get Arguments
     parser = argparse.ArgumentParser(
         description=(
             "Run T3 matching for known benchmark models "
@@ -444,23 +450,24 @@ def main() -> int:
         )
     )
 
+    # Mutually exclusive command arguments
     mode = parser.add_mutually_exclusive_group()
 
-    # Simple quick run, we first fill in the details based on input arguments
+    # If we use --smoke we use the 5 T3 models we know
     mode.add_argument(
         "--smoke",
         action="store_true",
         help="five T3 regression models",
     )
 
-    # More run
+    # More running (not used)
     mode.add_argument(
         "--extended",
         action="store_true",
         help="seven historical benchmark points",
     )
 
-    # Dimension input
+    # Dimension input to use a specific diagram
     mode.add_argument(
         "--dims",
         nargs=3,
@@ -468,21 +475,23 @@ def main() -> int:
         metavar=("DS1", "DS2", "DF"),
         help=(
             "run one representation assignment, "
-            "e.g. --dims 3 5 4"
+            "e.g. --dims 3 1 2"
         ),
     )
 
-    # Gives alpha
+    # We can attach a file for UV scale initial values for our couplings etc to RGE down to EFT
     parser.add_argument(
         "--numerical",
         type=Path,
         default=None,
         help=(
             "optional JSON parameter point for numerical "
-            "matched-EFT running"
+            "matched-EFT running E.g python pipeline.py --numerical examples/t3_numerical_example.json"
         ),
     )
 
+
+    # Adds the alpha hypercharge which is added onto the dims
     parser.add_argument(
         "--alpha",
         type=int,
@@ -493,6 +502,7 @@ def main() -> int:
         ),
     )
 
+    # For logging just in case
     parser.add_argument(
         "--debug-reports",
         action="store_true",
@@ -502,6 +512,8 @@ def main() -> int:
         ),
     )
 
+    # We get to observe Component index information of our objects, getting explicit RGE tensors used for representation RGE
+    # We can see the CG coefficients which are allowed for the field combination
     parser.add_argument(
         "--rge-tensors",
         action="store_true",
@@ -523,13 +535,13 @@ def main() -> int:
     )
 
 
-    # If the dimensions happen to match T3-A ... T3-E, run_dimensions()
+    # If the dimensions happen to match T3-A ... T3-E, validate_dimensions()
     # automatically recognises and labels the model appropriately.
     if args.dims:
         d_s1, d_s2, d_f = args.dims
 
         try:
-            record = run_dimensions(
+            record = validate_dimensions(
                 d_s1,
                 d_s2,
                 d_f,
@@ -568,9 +580,9 @@ def main() -> int:
 
     # This line only exist if we use the special interesting, extended and smoke options where we dont input any dimensions
     # Known A-E models are converted to dimensions first and then sent
-    # through exactly the same run_dimensions() path as generalised models.
+    # through exactly the same validate_dimensions() path as generalised models.
     records = [
-        run_known_class(
+        obtain_class_dimensions(
             model_class,
             alpha,
             args.debug_reports,

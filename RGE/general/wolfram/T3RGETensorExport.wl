@@ -4,10 +4,6 @@
   Machine-readable bridge from the generalized T3 model construction to the
   Python RGE tensor adapter.
 
-  This file is deliberately separate from LagrangianBuilder.wl.  It relies on
-  the generalized invariant-basis helpers already defined by the builder and
-  does not modify the production Lagrangian construction.
-
   Exported in this stage:
     - scalar multiplet metadata;
     - complete BSM scalar-quartic component terms in the complex basis;

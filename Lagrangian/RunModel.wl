@@ -260,11 +260,17 @@ If[build["Status"] =!= "Success",
 Print["Accepted interactions: ", build["AllowedInteractions"]];
 Print["T3 ingredients present: ", build["T3IngredientsPresent"]];
 
+
+(* All of this stuff is to help RGE tensors where we expose the indices of our terms 
+May be removed
 rgeTensorExportStatus = "NotRequested";
 rgeTensorExchangeFile = "";
 rgeTensorQuarticCount = 0;
 rgeTensorYukawaCount = 0;
 
+(* 
+1. Check for RGETensors and store things into directory
+2. Get results from ExportT3RGETensors and put in the path  *)
 If[TrueQ[config["ExportRGETensors"]],
   dataDirectory = FileNameJoin[{outputDirectory, "data"}];
   If[!DirectoryQ[dataDirectory],
@@ -274,6 +280,7 @@ If[TrueQ[config["ExportRGETensors"]],
   rgeTensorExchangePath = FileNameJoin[
     {dataDirectory, "t3_rge_tensor_exchange.json"}
   ];
+  
   rgeTensorExportResult = Quiet @ Check[
     ExportT3RGETensors[model, rgeTensorExchangePath],
     $Failed
@@ -298,8 +305,9 @@ If[TrueQ[config["ExportRGETensors"]],
     ];
   ];
 ];
+*)
 
-(* We match *)
+(* We match our Lagrangian*)
 matching = CheckAbort[
   RunT3Matching[build["LUV"], config["EFTOrder"], config["LoopOrder"]],
   $Aborted
@@ -308,11 +316,13 @@ If[!AssociationQ[matching] || Lookup[matching, "Status", ""] =!= "Success",
   Print["ERROR: matching failed."]; Exit[12]
 ];
 
+(* Get the MatchedEFT, if that fails, get loopEFT *)
 matchedEFT = Lookup[matching, "MatchedEFT", Lookup[matching, "LoopEFT", 0]];
 
-(* The builder returns LUV = LSM + LBSM, we get LSM by removing LBSM. *)
+(* We make SM Lagrangian. The builder returns LUV = LSM + LBSM, we get LSM by removing LBSM. *)
 smLagrangian = Expand[build["LUV"] - build["LBSM"]];
 
+(* We match just the SM to compare and to obtain just the BSM matched later *)
 Print["\nStarting pure-SM baseline matching..."];
 smMatching = CheckAbort[
   RunSMBaselineMatching[
@@ -352,6 +362,7 @@ If[
 
 bsmMatchedEFT = Lookup[difference, "BSMEFT", 0];
 
+(* Get latex of everything *)
 freeTeX = ExpressionToLaTeX[build["LFree"]];
 interactionTeX = ExpressionToLaTeX[build["LInt"]];
 uvTeX = ExpressionToLaTeX[build["LUV"]];

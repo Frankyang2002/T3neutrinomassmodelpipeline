@@ -330,7 +330,6 @@ $$
 The Python front end first checks that the requested dimensions satisfy the T3 representation conditions before invoking Matchete.
 
 
-
 ---
 
 ## 6. Output
@@ -403,14 +402,26 @@ python pipeline.py --smoke --debug-reports
 
 ---
 
-## 8. Not Covered Here
+## 8. Pipeline Detailed for Lagrangian
 
-This README intentionally stops at the extracted Weinberg coefficient.
+1. In pipeline.py we collect arguments and then we send our arguments in validate_dimensions (or obtain_class_dimensions which goes to validate_dimensions) in runner.py
+2. validate_dimensions checks the dimensions of the inputs and rejects invalid ones and also sets up naming for T3 models, then we go to run_model
+3. run_model deletes outputs, and uses the run_model.wl mathematica, after that it gets the reports and summaries and returns the data coming out of run_model.wl
+4. In run_model.wl we parse our inputs and arguments into the correct form and obtain helper functions from our other Lagrangian Files
+5. We use T3modelfromclass/dimensions from T3Model Catalog to generate a sort of dictionary/association which gives all the fields and its specific representaiton values and symbols
+6. Then we use BuildT3Lagrangian, which loads SM model, then defines our Beyond Standard Model fields, and then couplings and then the SU(2) Clebsch Gordon. These definition uses helper functions from T3Fields.wl and SU2Invariants.wl.
+7. In T3Fields.wl we define the couplings, fields with their indices
+8. In SU2Invariants.wl, we use DefineT3InvariantCGs which just gets the CG for each interaction in the T3 model. 
+9. We obtain SU2 CG by obtaining InvariantTensors from matchete and put these tensors into defineCG in machete and get the CGs
+10. In BuildT3Lagrangian, after obtaining everything for an interaction term, we validate each interaction term by using Matchete's CheckLagrangian. For identitcal interaction terms we just choose the first one. 
+11. Then we get the interaction Lagrangian by putting all valid terms together. Then we check the whole Lagrangian. Then we check that the interaction Lagrangian has all 3 interactions required for weinberg, and then we return the model and the lagrangians, finishing the LagrangianBuilder.wl
+12. We run our matchings at our chosen 5D 1st loop in RunMatching.wl, We match UV lagrangian and then SM only to compare to get BSM matched Lagrangian
+13. In RunMatching.wl, we have the helper functions which matches our Lagrangian for T3 and SM, and we obtain BSM EFT from it
+14. Now we try to extract the Weinberg operator using ExtractWeinbergCoefficient from RunMatching.wl. 
+15. At the end of Run model we write out weinberg models to be used by our RGE pipeline
 
-The following later stages belong to the next part of the project and are not documented here:
 
-- RGE evolution of the EFT coefficients;
-- conversion between real-scalar coefficient conventions and $\kappa$;
-- electroweak symmetry breaking;
-- construction of the neutrino-mass matrix;
-- comparison with measured neutrino masses and mixing parameters.
+## TLDR
+1. Make Lagrangian
+2. Match Lagrangian to EFT Lagrangian
+3. Get Weinberg Coefficient from EFT Lagrangian 

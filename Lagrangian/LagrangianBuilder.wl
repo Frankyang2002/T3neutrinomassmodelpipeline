@@ -17,7 +17,7 @@ ClearAll[
 ];
 
 (* SU(2) representation and topology-CG helpers. *)
-Get[FileNameJoin[{DirectoryName @ ExpandFileName[$InputFileName], "group", "SU2Invariants.wl"}]];
+Get[FileNameJoin[{DirectoryName @ ExpandFileName[$InputFileName], "SU2Invariants.wl"}]];
 
 (* We define couplings for matchete *)
 

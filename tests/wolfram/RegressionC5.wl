@@ -8,7 +8,7 @@ outputRoot = If[Length[args] >= 1, ExpandFileName @ args[[1]], FileNameJoin[{scr
 
 
 projectRoot = ExpandFileName @ FileNameJoin[{scriptDirectory, "..", ".."}];
-conventionFile = FileNameJoin[{projectRoot, "Lagrangian", "group", "T3CouplingConventions.wl"}];
+conventionFile = FileNameJoin[{projectRoot, "tests", "wolfram", "helper", "T3CouplingConventions.wl"}];
 If[!FileExistsQ[conventionFile], Print["Missing coupling convention file: ", conventionFile]; Exit[2]];
 Get[conventionFile];
 matcheteLoadResult = UsingFrontEnd[Needs["Matchete`"]; True];

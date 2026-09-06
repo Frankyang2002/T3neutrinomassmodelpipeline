@@ -24,8 +24,8 @@ ClearAll[
 (* Wrapper to make the code deal with errors *)
 SafeStage[operation_] := CheckAbort[Check[operation, $Failed], $Aborted];
 
-(* Run ordered matching stages while retaining every intermediate result. *)
-(* We are running many functions in a row *)
+(* Run ordered matching stages while retaining every intermediate result.
+ We are running many functions in a row, this a helper function for function running*)
 RunStages[input_, stages_List, prefix_Association : <||>] := Module[
   {current = input, results = <||>, stageName, function, key, failureStatus, value},
 
@@ -53,9 +53,11 @@ RunStages[input_, stages_List, prefix_Association : <||>] := Module[
 ];
 
 (* We get actual Matchete workflow 
-
-First we match -> then we green simplify to get green basis, getting rid of redundancies coming from integration by parts and identities etc ->
-EOM simplify remove operator redundancies from EOM -> Evaluate loop functions -> replace effective couplings with our original couplings*)
+1. First we match 
+2. then we green simplify to get green basis, getting rid of redundancies coming from integration by parts and identities etc 
+3. EOM simplify remove operator redundancies from EOM 
+4. Evaluate loop functions 
+5. replace effective couplings with our original couplings*)
 MatchingStages[eftOrder_Integer, loopOrder_Integer] := {
   {
     "Match",
@@ -79,7 +81,7 @@ MatchingStages[eftOrder_Integer, loopOrder_Integer] := {
   }
 };
 
-(* Convenient Wrapper to get EFT order and loop order *)
+(* Convenient Wrapper to get EFT order and loop order, just does the matching *)
 RunT3Matching[LUV_, eftOrder_Integer : 5, loopOrder_Integer : 1] := Module[
   {metadata},
 
@@ -96,8 +98,8 @@ RunT3Matching[LUV_, eftOrder_Integer : 5, loopOrder_Integer : 1] := Module[
   ]
 ];
 
-(* Pure SM has no heavy field: if Match fails, canonicalise LSM directly. *)
-(* We are comparing SM and full lagrangian *)
+(* Pure SM has no heavy field: if Match fails, canonicalise LSM directly and use standard forms for it. 
+ We are comparing SM and full lagrangian so we match Pure SM as well*)
 RunSMBaselineMatching[LSM_, eftOrder_Integer : 5, loopOrder_Integer : 1] := Module[
   {attempt, metadata, stages, result},
 
@@ -140,7 +142,7 @@ RunSMBaselineMatching[LSM_, eftOrder_Integer : 5, loopOrder_Integer : 1] := Modu
   RunStages[LSM, stages, metadata]
 ];
 
-(* Gives us BSM contribution to EFT *)
+(* Gives us BSM contribution to EFT by doing FullEFT-SMEFT=BSMEFT *)
 BuildMatchedEFTDifference[fullEFT_, smEFT_] := Module[
   {
     input,
@@ -153,8 +155,6 @@ BuildMatchedEFTDifference[fullEFT_, smEFT_] := Module[
 
   input = Expand[fullEFT - smEFT];
 
-  Print["\nCanonicalising the matched full-minus-SM EFT difference..."];
-
   Print["Running GreensSimplifyDifference..."];
   greenDifference = SafeStage[GreensSimplify[input]];
   If[MemberQ[{$Failed, $Aborted}, greenDifference],
@@ -166,9 +166,6 @@ BuildMatchedEFTDifference[fullEFT_, smEFT_] := Module[
     |>]
   ];
 
-  (* A difference-only EFT need not contain the complete kinetic structure
-     expected by EOMSimplify. If it rejects the difference, keep the
-     GreensSimplify result and continue with the remaining canonicalisation. *)
   Print["Running EOMSimplifyDifference..."];
   eomDifference = SafeStage[EOMSimplify[greenDifference]];
 
@@ -242,7 +239,6 @@ ClearAll[
   ExtractWeinbergCoefficient
 ];
 
-(* Use symbol names rather than contexts to tolerate Matchete context changes. *)
 InternalHeadName[x_] := Quiet@Check[
   SymbolName[Unevaluated[Head[x]]],
   ToString[Unevaluated[Head[x]], InputForm]
@@ -287,20 +283,23 @@ BarredMatcheteFieldQ[object_, name_String] := Module[{args, inner},
     MatcheteFieldName[Unevaluated[inner]] === name
 ];
 
-(* GammaCC is the validated presence marker for the Weinberg operator. *)
+(* GammaCC is the marker for the Weinberg operator. *)
 WeinbergLHHTermQ[term_] := !FreeQ[Unevaluated[term], GammaCC];
 
+(*
+1. We find all terms with GammaCC and thats it
+*)
 ExtractWeinbergTerms[eft_] := Module[{expanded, terms},
   expanded = Expand[eft];
 
-  (* Isolate multiplicative terms containing the GammaCC spinor chain. *)
+  (* Get Weinberg Terms based on the prefactor with Times[] with GammaCC*)
   terms = DeleteDuplicates @ Cases[
     expanded,
     term_Times /; !FreeQ[term, GammaCC],
     Infinity
   ];
 
-  (* Defensive fallback for a coefficient-free bare spinor chain. *)
+  (* If Times[] doesnt exist we look for NCM (non commutative multiplication chain) instead which should have GammaCC *)
   If[terms === {} && !FreeQ[expanded, GammaCC],
     terms = DeleteDuplicates @ Cases[
       expanded,
@@ -323,7 +322,10 @@ StripWeinbergOperatorStructure[term_] := Module[{stripped},
   Quiet@Check[Simplify[Expand[stripped]], stripped]
 ];
 
-(* Combine holomorphic prefactors into a compact C5 expression. *)
+(* 
+Combine all non conjugated term prefactors into a compact C5 expression.
+So A*LLHH + B*LLHH + C*LLHH -> A+B+C
+ *)
 CompactWeinbergCoefficient[terms_List] := Module[{pieces, combined},
   If[terms === {}, Return[Missing["NoHolomorphicTerms"]]];
 
@@ -336,6 +338,13 @@ CompactWeinbergCoefficient[terms_List] := Module[{pieces, combined},
   ]
 ];
 
+(*
+1. Check for existence of coefficient
+2. Use ExtractWeinbergTerms to get our Weinberg terms
+3. Sort our terms into holomorphic and conjugate terms
+4. We use CompactWeinbergCoefficient to get our coefficient
+5. We return a report on this
+*)
 ExtractWeinbergCoefficient[eft_] := Module[
   {
     present,
@@ -348,7 +357,7 @@ ExtractWeinbergCoefficient[eft_] := Module[
     status
   },
 
-  (* Presence and detailed isolation are separate to avoid false negatives. *)
+  (* Check if weinberg charged conjugated gamma is present in eft *)
   present = !FreeQ[eft, GammaCC];
 
   If[!TrueQ[present],
@@ -362,6 +371,7 @@ ExtractWeinbergCoefficient[eft_] := Module[
     |>]
   ];
 
+  (* Gets all Weinberg terms *)
   terms = ExtractWeinbergTerms[eft];
 
   If[terms === {},
@@ -377,7 +387,8 @@ ExtractWeinbergCoefficient[eft_] := Module[
 
   sector = Simplify[Expand[Total[terms]]];
 
-  (* C5 uses the P_L LLHH sector; keep P_R only as the Hermitian-conjugate audit. *)
+  (* C5 uses the P_L LLHH sector, we look at holomorphic terms;
+   keep P_R only as the Hermitian-conjugate audit. *)
   holomorphicTerms = Select[terms, !FreeQ[#, Proj[-1]] &];
   conjugateTerms = Select[terms, !FreeQ[#, Proj[1]] &];
 
@@ -398,6 +409,7 @@ ExtractWeinbergCoefficient[eft_] := Module[
   ];
 
   holomorphicSector = Simplify[Expand[Total[holomorphicTerms]]];
+  (* Obtain Weinberg Coefficient itself from our terms *)
   coefficient = CompactWeinbergCoefficient[holomorphicTerms];
   status = If[MissingQ[coefficient], "CoefficientPending", "Success"];
 

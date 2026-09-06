@@ -127,7 +127,7 @@ def run_model(
         output_dir=output_dir,
     )
 
-def run_dimensions(
+def validate_dimensions(
     d_s1: int,
     d_s2: int,
     d_f: int,
@@ -194,20 +194,20 @@ def run_dimensions(
         export_rge_tensors,
     )
 
-def run_known_class(
+def obtain_class_dimensions(
     model_class: str,
     alpha: int,
     debug_reports: bool = False,
     export_rge_tensors: bool = False,
 ) -> RunRecord:
-    """Convert a known A-E benchmark into dimensions and run normally."""
+    """Convert a known A-E class into dimensions and then run normally."""
 
     if model_class not in T3_CLASSES:
         raise ValueError(f"Unknown T3 model class: {model_class}")
 
     d_s1, d_s2, d_f = T3_CLASSES[model_class]
 
-    return run_dimensions(
+    return validate_dimensions(
         d_s1,
         d_s2,
         d_f,

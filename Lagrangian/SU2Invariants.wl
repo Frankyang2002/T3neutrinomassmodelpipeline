@@ -1,15 +1,11 @@
-(* SU(2) representation registration and topology invariant CG machinery.
-   Extracted from LagrangianBuilder.wl; physics behaviour is unchanged. *)
 
-(* ------------------------------------------------- *)
-(* Getting our SU2 and BSM representations           *)
-(* ------------------------------------------------- *)
+(* We get SU(2) representations *)
 
 (* For SU(2), the irrep of dimension d has highest-weight Dynkin label {d-1}*)
 SU2DynkinLabel[d_Integer?Positive] := {d - 1};
 
-(* For matchete our SM fields remain normal but BSM fields obtain its own representation to make CG work, 
-we have 2 representations, one for SM doublet basis and another for BSM representation basis
+(* For SM fields we use its normal representation names from Matchete but BSM fields obtain its own representation
+we have 2 representations, one for SM doublet basis and another for BSM representation basis so they have separate indices
 This is also true for d=2 and d=3*)
 
 
@@ -18,7 +14,7 @@ BSMRepresentationName[1] := None;
 BSMRepresentationName[d_Integer?Positive] /; d >= 2 :=
   Symbol["T3BSMd" <> ToString[d]];
 
-(* We log our representation with its respective Dynkin label *)
+(* We log our representation with its respective Dynkin label, we make sure Machete works with it *)
 EnsureBSMRepresentation[1] := True;
 EnsureBSMRepresentation[d_Integer?Positive] /; d >= 2 := Module[
   {rep, before, after, defineStatus},
@@ -57,13 +53,12 @@ EnsureBSMRepresentation[d_Integer?Positive] /; d >= 2 := Module[
 ];
 
 (* Dimension is now an index that relates our dimension to our logged dynkin labels *)
+(* So for example: 3 -> {2} -> T3BSMd3 *)
 BSMIndexType[1] := None;
 BSMIndexType[d_Integer?Positive] := Module[{ok = EnsureBSMRepresentation[d]},
   If[ok === $Failed, Return[Missing["UnsupportedSU2", d]]];
   BSMRepresentationName[d]
 ];
-
-(* Same thing, but for generic SU2, like for d=2 we have fund, for d=3 we have adj *)
 
 
 
@@ -75,7 +70,12 @@ smPositions tells us what position a field is a standard model, where we can use
 *)
 
 (*Essentially: Dimensions -> Dynkin Reps -> Invariant Tensors -> CG that can be used in Matchete
-1. We *)
+1. We ensure inputs and arguments are valid
+2. Remove singlets that have no indices, leaving other fields in keep, as we do not need the indices of singlets, no CG if all singlets
+3. Distinguish indices of conjugate pseudoreal representations with CRep 
+4. Get algebraReps and CGReps for invariantTensors and DefineCG
+5. Track positions and symmetry of fields for antisymmetric tensor spaces behaviour
+6. Enforce only one invariant tensor as an interaction term only has one coupling which contracts the fields. So we want to avoid combination of invariant tensors*)
 DefineSU2InvariantCG[
   cgName_Symbol,
   dims_List,
@@ -97,21 +97,30 @@ DefineSU2InvariantCG[
   keptDims = dims[[keep]];
   keptConj = objectConjugated[[keep]];
 
-  (* No CG if we have a singlet *)
+  (* No CG if we only have singlets *)
   If[keptDims === {}, Return[None]];
+
+
+  (* Note that algebraReps is for invariantTensors, and cgReps is for DefineCG which has opposite conjugation orientations 
+  So for conjugated: CRep[label] with invariantTensor and baseRep with DefineCG for conjugated
+  For unconjugated: [label] with invariantTensor and Bar[baseRep] for unconjugated
+  This is because tensor index transforms oppositely to contracting object, as C_i phi^i would need to transform separately
+
+  algebra reps tells us which SU2 irrep the irrep is, while cg reps tells us how the CG and fields contract
+  *)
+
 
   (* Matchete distinguishes the orientation of pseudoreal SU(2) indices.
     Note pseudoreal means that our representation is equivalent to its conjugate,
-    but its indices still need to be distringuished as the conjugate has a different CG
+    but its indices still need to be distinguished as the conjugate has a different CG
     We need to use CRep to represent the conjugation of a representation
        - a conjugated pseudoreal field is represented by CRep[label] in
          InvariantTensors and by an UNBARRED representation in DefineCG;
        - an unconjugated pseudoreal field uses the plain Dynkin label in
          InvariantTensors and the BARRED representation in DefineCG.
      For odd-dimensional full integer isospin SU(2) irreps the representation is real, so no CRep/Bar distinction is required.
-    Objectconjugated/keptConj tells us if the field object is gauge-conjugated *)
-
-  (* The following uses this, where unconjugated becomes {3} and conjugated will be CRep[{3}], this is what we need to do for Machete *)
+    Objectconjugated/keptConj tells us if the field object is gauge-conjugated 
+    The following uses this, where unconjugated becomes {3} (4d) and conjugated will be CRep[{3}], this is what we need to do for Machete *)
   algebraReps = MapThread[
     Function[{d, conjugated},
       Module[{label = SU2DynkinLabel[d]},
@@ -125,8 +134,7 @@ DefineSU2InvariantCG[
   ];
 
   (* Matchete's Invariant Tensors returns tensors with indices that transform in conjugate representation 
-    So tensor index transforms opposite to the algebra field
-  *)
+    So tensor index transforms opposite to the algebra field*)
   cgReps = MapThread[
     Function[{originalPosition, d, conjugated},
       Module[{baseRep},
@@ -145,9 +153,11 @@ DefineSU2InvariantCG[
     {keep, keptDims, keptConj}
   ];
 
+
+
   (* Association thread creates a dictionary of our keep with its the integer position of everything in keep
   so if keep = {a,b,c,d}, range,length gives {1,2,3,4}. This gives us a position map, as we map a->1, b->2 etc
-  with association thread*)
+  with association thread.*)
   positionMap = AssociationThread[keep -> Range[Length[keep]]];
 
 
@@ -180,10 +190,7 @@ DefineSU2InvariantCG[
     Return[$Failed]
   ];
 
-  (* A topology vertex is defined by one named coupling and therefore must
-     have exactly one physical invariant.  Never discard or merge additional
-     invariant tensors silently.  Scalar-potential sectors with genuine
-     multiplicity use DefineSU2InvariantFamily below instead. *)
+  (* We enforce only one tensor for only one coupling which contracts. We prevent combination of fields. *)
   If[Length[tensors] > 1,
     Print["ERROR: ", SymbolName[cgName], " has ", Length[tensors],
       " invariant tensors but this topology vertex expects exactly one."];
@@ -201,8 +208,11 @@ DefineSU2InvariantCG[
   ]
 ];
 
-(* Register the three topology-defining invariant tensors for our 3 fields in the model.  Their field order is the same order used in the interaction. 
- We get invariant CG from each our interactions vertices, and define it for the model *)
+(* Register the three invariant tensors for our 3 fields in the model.  Their field order is the same order used in the interaction. 
+ We get invariant CG from each our interactions vertices, and define it for the model 
+ 1. Get the fields from the model
+ 2. Get CG for each field for each interaction coupling
+ 3. Return dictionary of CG for each *)
 DefineT3InvariantCGs[model_Association] := Module[
   {d1, d2, dF, y1cg, y2cg, mixcg},
   

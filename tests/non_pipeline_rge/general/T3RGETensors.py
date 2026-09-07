@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from RGE.general.FermionBasis import (
+from tests.non_pipeline_rge.general.FermionBasis import (
     FermionBasis,
     FermionBasisBlock,
     WeylFermion,
@@ -10,13 +10,13 @@ from RGE.general.FermionBasis import (
     fermion_global_u1_generator,
 )
 
-from RGE.general.T3YukawaTensors import (
+from tests.non_pipeline_rge.general.T3YukawaTensors import (
     ComplexYukawaComponent,
     build_real_yukawa_tensor,
     yukawa_component_function,
 )
 
-from RGE.general.T3QuarticTensors import (
+from tests.non_pipeline_rge.general.T3QuarticTensors import (
     ComplexQuarticComponent,
     ComplexScalarFactor,
     complex_scalar_component_expression,

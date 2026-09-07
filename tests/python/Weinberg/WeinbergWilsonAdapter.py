@@ -36,7 +36,7 @@ from typing import Mapping
 import sympy as sp
 
 from RGE.general.RGEModel import RGEModel
-from RGE.general.T3RGETensors import FermionBasis
+from tests.non_pipeline_rge.general import FermionBasis
 
 
 @dataclass(frozen=True)
@@ -185,7 +185,7 @@ def validate_weinberg_tensor_symmetry(
 def _self_check() -> None:
     """Regression against the legacy neutral C <-> kappa mapping."""
 
-    from RGE.general.T3RGETensors import WeylFermion, FermionBasis
+    from tests.python.Weinberg.T3RGETensors import WeylFermion, FermionBasis
 
     kappa = sp.Symbol("kappa")
 

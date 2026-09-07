@@ -5,7 +5,7 @@ from typing import Callable
 
 import sympy as sp
 
-from RGE.general.FermionBasis import FermionBasis
+from tests.non_pipeline_rge.general import FermionBasis
 
 # Conversion between complex T3 Yukawa components and the real-scalar
 # Yukawa tensor used by the master Weinberg RGE.

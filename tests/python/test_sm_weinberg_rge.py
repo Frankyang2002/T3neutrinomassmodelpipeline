@@ -32,7 +32,7 @@ terms or generator conventions require further correction beyond A.3.
 
 import sympy as sp
 
-from RGE.general.GeneralWeinbergRGEGenerator import (
+from tests.python.GeneralWeinbergRGEGenerator import (
     ComplexScalar,
     MasterRGEInputs,
     RGEModel,
@@ -43,12 +43,12 @@ from RGE.general.GeneralWeinbergRGEGenerator import (
     g1,
     g2,
 )
-from RGE.general.T3RGETensors import (
+from tests.python.Weinberg.T3RGETensors import (
     FermionBasis,
     WeylFermion,
     build_gauge_sectors,
 )
-from RGE.general.WeinbergWilsonAdapter import (
+from tests.python.Weinberg.WeinbergWilsonAdapter import (
     build_weinberg_wilson_tensor,
     validate_weinberg_tensor_symmetry,
 )

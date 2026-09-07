@@ -52,7 +52,7 @@ from RGE.general.AnomalousDimensions import (
     with_collinear_anomalous_dimensions,
 )
 
-from RGE.general.PartialWeinbergRGE import (
+from tests.python.PartialWeinbergRGE import (
     LAMBDA,
     RGEContribution,
     _gauge_generator_contribution,

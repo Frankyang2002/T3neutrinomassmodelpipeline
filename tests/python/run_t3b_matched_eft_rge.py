@@ -32,7 +32,8 @@ from pathlib import Path
 
 import sympy as sp
 
-from RGE.general.GeneralWeinbergRGEGenerator import (
+
+from tests.python.Weinberg.GeneralWeinbergRGEGenerator import (
     ComplexScalar,
     MasterRGEInputs,
     RGEModel,
@@ -44,7 +45,7 @@ from RGE.general.T3RGETensors import (
     WeylFermion,
     build_gauge_sectors,
 )
-from RGE.general.WeinbergWilsonAdapter import (
+from tests.python.Weinberg.WeinbergWilsonAdapter import (
     build_weinberg_wilson_tensor,
     validate_weinberg_tensor_symmetry,
 )

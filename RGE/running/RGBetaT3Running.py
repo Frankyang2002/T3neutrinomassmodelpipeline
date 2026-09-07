@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-
+# Note that frozen means results cannot be modified after creation
 @dataclass(frozen=True)
 class RGBetaT3Result:
     """Result returned by the Wolfram RGBeta T3 runner."""
@@ -19,11 +19,12 @@ class RGBetaT3Result:
 
 
 def _default_runner_path() -> Path:
+    """This finds the Wolfram Runner automatically"""
     return Path(__file__).resolve().parent / "wolfram" / "RunT3RGBeta.wl"
 
 
 def _wolfram_integer_token(value: int) -> str:
-    """Encode integers so negative values are not parsed as wolframscript options."""
+    """Make negative values be -1 -> m1 instead."""
     return f"m{abs(value)}" if value < 0 else str(value)
 
 
@@ -36,21 +37,25 @@ def run_rgbeta_t3(
     runner_path: Path | None = None,
     wolframscript: str = "wolframscript",
 ) -> RGBetaT3Result:
-    """Generate one-loop renormalisable UV RGEs for a supported T3 model."""
+    """Run our renormalisable couplings and other RGEs for UV model"""
 
+    # RGBeta seems to not support higher dimensions so we restrict dimensions for RGBeta
     if any(d not in {1, 2, 3} for d in (d_s1, d_s2, d_f)):
         raise ValueError(
             "RGBeta T3 running currently supports only SU(2) dimensions 1, 2 and 3."
         )
 
+    # Note that RunT3RGBeta.wl is the real runner
     runner = Path(runner_path) if runner_path is not None else _default_runner_path()
 
     if not runner.exists():
         raise FileNotFoundError(f"RGBeta Wolfram runner not found: {runner}")
 
+    
     with tempfile.TemporaryDirectory(prefix="t3_rgbeta_") as tmpdir:
         output_path = Path(tmpdir) / "rgbeta_t3_uv_rge.json"
 
+        # We use the runner to run 
         command = [
             wolframscript,
             "-file",

@@ -26,7 +26,7 @@ def complex_scalar_component_expression(
     conjugated: bool,
     real_symbols: Sequence[sp.Symbol] | None = None,
 ) -> sp.Expr:
-    from RGE.general.T3RGETensors import SQRT2
+    from tests.python.Weinberg.T3RGETensors import SQRT2
     r"""Return z_m=(R_m+i I_m)/sqrt(2), or its conjugate, in the global basis."""
 
     block = model.block(scalar_name)
@@ -156,7 +156,7 @@ def quartic_component_function(
 def quartic_components_from_exchange(
     data: Mapping,
 ) -> tuple[ComplexQuarticComponent, ...]:
-    from RGE.general.T3RGETensors import parse_exact_expression
+    from tests.python.Weinberg.T3RGETensors import parse_exact_expression
     """Parse exact complex-basis quartic terms from the Wolfram exchange."""
 
     result: list[ComplexQuarticComponent] = []

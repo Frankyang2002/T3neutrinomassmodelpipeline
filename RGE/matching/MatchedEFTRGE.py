@@ -12,8 +12,10 @@ from RGE.general.RGEModel import (
     ComplexScalar,
     RGEModel,
 )
-from RGE.general.T3RGETensors import FermionBasis, SparseWilsonLookup, WeylFermion, build_gauge_sectors
-from RGE.general.WeinbergWilsonAdapter import (
+from tests.non_pipeline_rge.general import FermionBasis
+from tests.non_pipeline_rge.general.FermionBasis import WeylFermion, build_gauge_sectors
+from tests.non_pipeline_rge.general.T3RGETensors import SparseWilsonLookup
+from tests.python.Weinberg.WeinbergWilsonAdapter import (
     build_weinberg_wilson_tensor,
     validate_weinberg_tensor_symmetry,
 )

@@ -408,15 +408,17 @@ summary = BuildSummary[
   bsmEftTeX,
   config["DebugReports"]
 ];
-summary = Join[
-  summary,
-  <|
-    "T3RGETensorExportStatus" -> rgeTensorExportStatus,
-    "T3RGETensorExchangeFile" -> rgeTensorExchangeFile,
-    "T3RGEQuarticComponentCount" -> rgeTensorQuarticCount,
-    "T3RGEYukawaComponentCount" -> rgeTensorYukawaCount
-  |>
-];
+(*
+  summary = Join[
+    summary,
+    <|
+      "T3RGETensorExportStatus" -> rgeTensorExportStatus,
+      "T3RGETensorExchangeFile" -> rgeTensorExchangeFile,
+      "T3RGEQuarticComponentCount" -> rgeTensorQuarticCount,
+      "T3RGEYukawaComponentCount" -> rgeTensorYukawaCount
+    |>
+  ];
+*)
 Export[FileNameJoin @ {outputDirectory, "comparison_summary.json"}, summary, "RawJSON"];
 
 Print["Weinberg operator present: ", summary["WeinbergOperatorPresent"]];

@@ -47,7 +47,7 @@ from typing import Mapping
 
 import sympy as sp
 
-from RGE.general.T3RGETensors import (
+from tests.python.Weinberg.T3RGETensors import (
     ComplexYukawaComponent,
     FermionBasis,
     WeylFermion,

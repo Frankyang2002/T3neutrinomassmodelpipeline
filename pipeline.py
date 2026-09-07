@@ -11,14 +11,10 @@ from RGE.stages.FlavorMatchedRGEStage import run_flavor_matched_rge
 from RGE.stages.NeutrinoMassStage import run_neutrino_mass_stage
 from RGE.stages.NumericalPipelineStage import run_numerical_pipeline_stage
 from RGE.phenomenology.NeutrinoObservables import run_neutrino_observables_stage
-from RGE.general.GeneralT3WeinbergRGEStage import (
-    run_general_t3_weinberg_rge_stage,
-)
 from RGE.running.RGBetaT3Running import run_rgbeta_t3
 
 from common.Paths import (
     OUTPUT_DIR,
-    PROJECT_ROOT,
     REPORT_OUTPUT_DIR,
 )
 
@@ -33,7 +29,7 @@ from Reports.RGEReport import write_and_compile_rge_report
 
 
 def run_uv_rgbeta_stage(record: RunRecord) -> bool:
-    """Generate and save the one-loop renormalisable UV RGEs for one model."""
+    """We run our renormalisable couplings and other things that can be run in UV"""
     summary = record.summary
 
     if summary.get("BuildStatus") != "Success":
@@ -46,6 +42,7 @@ def run_uv_rgbeta_stage(record: RunRecord) -> bool:
 
     print(f"  {record.name}: starting RGBeta UV-RGE stage...", flush=True)
 
+    # Use run_rgbeta_t3
     try:
         result = run_rgbeta_t3(
             record.d_s1,
@@ -59,6 +56,7 @@ def run_uv_rgbeta_stage(record: RunRecord) -> bool:
         print(f"  {record.name}: RGBeta UV-RGE failed: {exc}")
         return False
 
+    # Rest of this is just output and reports
     output_path.write_text(
         json.dumps(result.raw, indent=2),
         encoding="utf-8",
@@ -199,31 +197,239 @@ def organise_c5_input(record: RunRecord) -> Path | None:
     return c5_path
 
 
+def matched_c5_path(record: RunRecord) -> Path | None:
+    """Return the organised matched C5 coefficient for the RGE stages."""
+
+    coefficient_file = record.summary.get("WeinbergCoefficientFile")
+
+    if not coefficient_file:
+        return None
+
+    c5_path = record.output_dir / coefficient_file
+
+    if not c5_path.is_file():
+        return None
+
+    return c5_path
+
+
+def run_matched_eft_rge_stage(
+    record: RunRecord,
+    debug_reports: bool = False,
+) -> bool:
+    """Run the symbolic matched-EFT Weinberg RGE for one model."""
+
+    summary = record.summary
+    c5_path = matched_c5_path(record)
+
+    if c5_path is None:
+        summary["RGEStatus"] = "NotRun"
+        return False
+
+    print(f"  {record.name}: starting matched-EFT RGE stage...", flush=True)
+
+    try:
+        rge_summary = run_matched_eft_rge(
+            c5_path=c5_path,
+            output_dir=record.output_dir,
+            debug_outputs=debug_reports,
+        )
+    except Exception as exc:
+        summary["RGEStatus"] = "Failed"
+        summary["RGEError"] = str(exc)
+        print(
+            f"  {record.name}: matched-EFT RGE failed: {exc}"
+        )
+        return False
+
+    summary.update(rge_summary)
+
+    print(
+        f"  {record.name}: matched-EFT RGE=Success"
+        f" -> {record.output_dir / rge_summary['C5BetaFile']}"
+    )
+
+    return summary.get("RGEStatus") == "Success"
+
+
+def run_flavor_rge_stage(
+    record: RunRecord,
+    debug_reports: bool = False,
+) -> bool:
+    """Run the symbolic full-flavor Weinberg RGE for one model."""
+
+    summary = record.summary
+    c5_path = matched_c5_path(record)
+
+    if c5_path is None:
+        summary["FlavorRGEStatus"] = "NotRun"
+        return False
+
+    print(
+        f"  {record.name}: starting symbolic full-flavor RGE stage...",
+        flush=True,
+    )
+
+    try:
+        flavor_summary = run_flavor_matched_rge(
+            c5_path=c5_path,
+            output_dir=record.output_dir,
+            debug_outputs=debug_reports,
+        )
+    except Exception as exc:
+        summary["FlavorRGEStatus"] = "Failed"
+        summary["FlavorRGEError"] = str(exc)
+        print(
+            f"  {record.name}: full-flavor RGE failed: {exc}"
+        )
+        return False
+
+    summary.update(flavor_summary)
+
+    print(
+        f"  {record.name}: full-flavor RGE=Success"
+        f" -> "
+        f"{record.output_dir / flavor_summary['C5FlavorBetaMatrixFile']}"
+    )
+
+    return summary.get("FlavorRGEStatus") == "Success"
+
+
+def run_symbolic_neutrino_mass_stage(record: RunRecord) -> bool:
+    """Construct the symbolic neutrino-mass matrix from the matched C5."""
+
+    summary = record.summary
+    c5_path = matched_c5_path(record)
+
+    if c5_path is None:
+        summary["NeutrinoMassStatus"] = "NotRun"
+        return False
+
+    print(
+        f"  {record.name}: starting symbolic neutrino mass stage...",
+        flush=True,
+    )
+
+    try:
+        mass_summary = run_neutrino_mass_stage(
+            c5_path=c5_path,
+            output_dir=record.output_dir,
+        )
+    except Exception as exc:
+        summary["NeutrinoMassStatus"] = "Failed"
+        summary["NeutrinoMassError"] = str(exc)
+        print(
+            f"  {record.name}: neutrino mass stage failed: {exc}"
+        )
+        return False
+
+    summary.update(mass_summary)
+
+    print(
+        f"  {record.name}: neutrino mass=Success"
+        f" -> "
+        f"{record.output_dir / mass_summary['NeutrinoMassMatrixFile']}"
+    )
+
+    return summary.get("NeutrinoMassStatus") == "Success"
+
+
+def run_numerical_rge_stage(
+    record: RunRecord,
+    numerical_config: Path,
+) -> bool:
+    """Run numerical EFT evolution and the resulting neutrino observables."""
+
+    summary = record.summary
+    c5_path = matched_c5_path(record)
+
+    if c5_path is None:
+        summary["NumericalRGEStatus"] = "NotRun"
+        return False
+
+    print(f"  {record.name}: starting numerical RGE stage...", flush=True)
+
+    try:
+        numerical_summary = run_numerical_pipeline_stage(
+            c5_path=c5_path,
+            output_dir=record.output_dir,
+            config_path=numerical_config,
+        )
+    except Exception as exc:
+        summary["NumericalRGEStatus"] = "Failed"
+        summary["NumericalRGEError"] = str(exc)
+        print(
+            f"  {record.name}: numerical RGE failed: {exc}"
+        )
+        return False
+
+    summary.update(numerical_summary)
+
+    print(
+        f"  {record.name}: numerical RGE calculation finished.",
+        flush=True,
+    )
+
+    mass_matrix_path = (
+        record.output_dir
+        / numerical_summary["NeutrinoMassMatrixLowScaleFile"]
+    )
+
+    numerical_payload = json.loads(
+        numerical_config.read_text(encoding="utf-8")
+    )
+    ordering = numerical_payload.get("ordering", "NO")
+
+    print(f"  {record.name}: starting neutrino observables...", flush=True)
+
+    try:
+        observable_summary = run_neutrino_observables_stage(
+            mass_matrix_path=mass_matrix_path,
+            output_dir=record.output_dir,
+            ordering=ordering,
+        )
+    except Exception as exc:
+        summary["NeutrinoObservableStatus"] = "Failed"
+        summary["NeutrinoObservableError"] = str(exc)
+        print(
+            f"  {record.name}: neutrino observables failed: {exc}"
+        )
+        return False
+
+    summary.update(observable_summary)
+
+    print(
+        f"  {record.name}: neutrino observables=Success"
+        f" -> "
+        f"{record.output_dir / observable_summary['NeutrinoObservablesFile']}"
+    )
+
+    print(
+        f"  {record.name}: numerical RGE=Success"
+        f" -> "
+        f"{record.output_dir / numerical_summary['NeutrinoMassMatrixLowScaleFile']}"
+    )
+
+    return (
+        summary.get("NumericalRGEStatus") == "Success"
+        and summary.get("NeutrinoObservableStatus") == "Success"
+    )
+
+
 def finish_runs(
     records: list[RunRecord],
-    numerical_config: Path | None = None,
     debug_reports: bool = False,
+    physics_failed: bool = False,
 ) -> int:
-    """Print the scan summary and generate all Lagrangian reports."""
-
-    # Organise the matched coefficient before printing paths or writing the
-    # aggregate summary, so every reported filename points to its final place.
-    for record in records:
-        organise_c5_input(record)
-
-    # The UV RGE is a separate symbolic stage.  Run it before the summary so
-    # its status and output file are included in both terminal and JSON reports.
-    uv_rge_failed = False
-    for record in records:
-        if record.summary.get("BuildStatus") == "Success":
-            uv_rge_failed |= not run_uv_rgbeta_stage(record)
-        else:
-            record.summary["UVRGEStatus"] = "NotRun"
+    """Print final summaries and generate reports after the physics pipeline."""
 
     status = print_summary(records)
-    if uv_rge_failed:
+
+    if physics_failed:
         status = 1
 
+    # Generate the Lagrangian/matching reports only after all physics stages have
+    # updated the run summaries.
     write_reports(records, debug_reports)
 
     for record in records:
@@ -232,199 +438,12 @@ def finish_runs(
             coefficient_pdf.name if coefficient_pdf.exists() else ""
         )
 
-    for record in records:
-        summary = record.summary
-
-        if summary.get("T3RGETensorExportStatus") == "Success":
-            exchange_file = summary.get("T3RGETensorExchangeFile", "")
-            exchange_path = record.output_dir / exchange_file
-            general_rge_path = (
-                record.output_dir / "data" / "general_t3_weinberg_rge.json"
-            )
-            print(
-                f"  {record.name}: starting representation-generic RGE stage...",
-                flush=True,
-            )
-            try:
-                general_rge = run_general_t3_weinberg_rge_stage(
-                    exchange_path=exchange_path,
-                    output_path=general_rge_path,
-                )
-            except Exception as exc:
-                summary["GeneralT3RGEStatus"] = "Failed"
-                summary["GeneralT3RGEError"] = str(exc)
-                status = 1
-                print(f"  {record.name}: representation-generic RGE failed: {exc}")
-            else:
-                summary["GeneralT3RGEStatus"] = general_rge["status"]
-                summary["GeneralT3RGEFile"] = general_rge_path.relative_to(
-                    record.output_dir
-                ).as_posix()
-                summary["GeneralT3RGEBetaKappaOverKappa"] = general_rge[
-                    "beta_kappa_over_kappa"
-                ]["complete_one_generation"]["sympy"]
-                if general_rge["status"] != "Success":
-                    status = 1
-                print(
-                    f"  {record.name}: representation-generic RGE="
-                    f"{general_rge['status']} -> {general_rge_path}"
-                )
-
-        if summary.get("BuildStatus") != "Success":
-            continue
-
-        if summary.get("MatchingStatus") != "Success":
-            continue
-
-        if summary.get("WeinbergExtractionStatus") != "Success":
-            continue
-
-        coefficient_file = summary.get("WeinbergCoefficientFile")
-
-        if not coefficient_file:
-            continue
-
-        c5_path = record.output_dir / coefficient_file
-
-        if not c5_path.exists():
-            continue
-
-        print(f"  {record.name}: starting matched-EFT RGE stage...", flush=True)
-        try:
-            rge_summary = run_matched_eft_rge(
-                c5_path=c5_path,
-                output_dir=record.output_dir,
-                debug_outputs=debug_reports,
-            )
-        except Exception as exc:
-            summary["RGEStatus"] = "Failed"
-            summary["RGEError"] = str(exc)
-            status = 1
-            print(
-                f"  {record.name}: matched-EFT RGE failed: {exc}"
-            )
-            write_and_compile_rge_report(record)
-            continue
-
-        summary.update(rge_summary)
-
-        print(f"  {record.name}: starting symbolic full-flavor RGE stage...", flush=True)
-        try:
-            flavor_summary = run_flavor_matched_rge(
-                c5_path=c5_path,
-                output_dir=record.output_dir,
-                debug_outputs=debug_reports,
-            )
-        except Exception as exc:
-            summary["FlavorRGEStatus"] = "Failed"
-            summary["FlavorRGEError"] = str(exc)
-            status = 1
-            print(
-                f"  {record.name}: full-flavor RGE failed: {exc}"
-            )
-            write_and_compile_rge_report(record)
-            continue
-
-        summary.update(flavor_summary)
-
-        print(f"  {record.name}: starting symbolic neutrino mass stage...", flush=True)
-        try:
-            mass_summary = run_neutrino_mass_stage(
-                c5_path=c5_path,
-                output_dir=record.output_dir,
-            )
-        except Exception as exc:
-            summary["NeutrinoMassStatus"] = "Failed"
-            summary["NeutrinoMassError"] = str(exc)
-            status = 1
-            print(
-                f"  {record.name}: neutrino mass stage failed: {exc}"
-            )
-            write_and_compile_rge_report(record)
-            continue
-
-        summary.update(mass_summary)
-
-        if numerical_config is not None:
-            print(f"  {record.name}: starting numerical RGE stage...", flush=True)
-            try:
-                numerical_summary = run_numerical_pipeline_stage(
-                    c5_path=c5_path,
-                    output_dir=record.output_dir,
-                    config_path=numerical_config,
-                )
-            except Exception as exc:
-                summary["NumericalRGEStatus"] = "Failed"
-                summary["NumericalRGEError"] = str(exc)
-                status = 1
-                print(
-                    f"  {record.name}: numerical RGE failed: {exc}"
-                )
-                write_and_compile_rge_report(record)
-                continue
-
-            summary.update(numerical_summary)
-
-            print(f"  {record.name}: numerical RGE calculation finished.", flush=True)
-
-            mass_matrix_path = (
-                record.output_dir
-                / numerical_summary["NeutrinoMassMatrixLowScaleFile"]
-            )
-            numerical_payload = json.loads(
-                numerical_config.read_text(encoding="utf-8")
-            )
-            ordering = numerical_payload.get("ordering", "NO")
-            print(f"  {record.name}: starting neutrino observables...", flush=True)
-            try:
-                observable_summary = run_neutrino_observables_stage(
-                    mass_matrix_path=mass_matrix_path,
-                    output_dir=record.output_dir,
-                     ordering=ordering,
-                )
-            except Exception as exc:
-                summary["NeutrinoObservableStatus"] = "Failed"
-                summary["NeutrinoObservableError"] = str(exc)
-                status = 1
-                print(
-                    f"  {record.name}: neutrino observables failed: {exc}"
-                )
-                write_and_compile_rge_report(record)
-                continue
-
-            summary.update(observable_summary)
-
-            print(
-                f"  {record.name}: neutrino observables=Success"
-                f" -> "
-                f"{record.output_dir / observable_summary['NeutrinoObservablesFile']}"
-            )
-
-            print(
-                f"  {record.name}: numerical RGE=Success"
-                f" -> "
-                f"{record.output_dir / numerical_summary['NeutrinoMassMatrixLowScaleFile']}"
-            )
-
-        print(
-            f"  {record.name}: neutrino mass=Success"
-            f" -> "
-            f"{record.output_dir / mass_summary['NeutrinoMassMatrixFile']}"
-        )
-
-        print(
-            f"  {record.name}: full-flavor RGE=Success"
-            f" -> "
-            f"{record.output_dir / flavor_summary['C5FlavorBetaMatrixFile']}"
-        )
-
-        print(
-            f"  {record.name}: matched-EFT RGE=Success"
-            f" -> {record.output_dir / rge_summary['C5BetaFile']}"
-        )
-
+        # The RGE report is also a final reporting step.  By this point all
+        # symbolic and optional numerical RGE stages have already run.
         write_and_compile_rge_report(record)
 
+    # Save all model summaries together so we can easily compare runs
+    # or use them for regression testing.
     aggregate = OUTPUT_DIR / "t3_model_comparison.json"
 
     aggregate.write_text(
@@ -435,7 +454,10 @@ def finish_runs(
         encoding="utf-8",
     )
 
+    print(f"Aggregate: {aggregate}")
+
     return status
+
 
 # Function:
 # 1. Get all arguments
@@ -490,7 +512,6 @@ def main() -> int:
         ),
     )
 
-
     # Adds the alpha hypercharge which is added onto the dims
     parser.add_argument(
         "--alpha",
@@ -512,17 +533,6 @@ def main() -> int:
         ),
     )
 
-    # We get to observe Component index information of our objects, getting explicit RGE tensors used for representation RGE
-    # We can see the CG coefficients which are allowed for the field combination
-    parser.add_argument(
-        "--rge-tensors",
-        action="store_true",
-        help=(
-            "export the exact component tensors needed by the "
-            "representation-generic RGE engine"
-        ),
-    )
-
     args = parser.parse_args()
 
     OUTPUT_DIR.mkdir(
@@ -533,7 +543,9 @@ def main() -> int:
         parents=True,
         exist_ok=True,
     )
-
+    # ----------------------------------------------------------------------
+    # Lagrangian and Weinberg Coefficient pipeline
+    # ----------------------------------------------------------------------
 
     # If the dimensions happen to match T3-A ... T3-E, validate_dimensions()
     # automatically recognises and labels the model appropriately.
@@ -547,55 +559,115 @@ def main() -> int:
                 d_f,
                 args.alpha,
                 args.debug_reports,
-                args.rge_tensors,
+                False,
             )
         except ValueError as exc:
             parser.error(str(exc))
 
-        # This gives us  our reports based on our records
-        return finish_runs(
-            [record],
-            args.numerical,
-            args.debug_reports,
-        )
-
-    # The benchmark lists still use the familiar A-E notation because
-    # it is convenient for regression testing and comparison with the paper.
-    if args.smoke:
-        mode_name = "smoke"
-        points = SMOKE
-
-    elif args.extended:
-        mode_name = "extended"
-        points = EXTENDED
+        records = [record]
 
     else:
-        mode_name = "interesting"
-        points = INTERESTING
+        # The benchmark lists still use the familiar A-E notation because
+        # it is convenient for regression testing and comparison with the paper.
+        if args.smoke:
+            mode_name = "smoke"
+            points = SMOKE
 
-    print(
-        f"T3 scan mode: {mode_name}; "
-        f"{len(points)} model(s)."
-    )
+        elif args.extended:
+            mode_name = "extended"
+            points = EXTENDED
 
-    # This line only exist if we use the special interesting, extended and smoke options where we dont input any dimensions
-    # Known A-E models are converted to dimensions first and then sent
-    # through exactly the same validate_dimensions() path as generalised models.
-    records = [
-        obtain_class_dimensions(
-            model_class,
-            alpha,
-            args.debug_reports,
-            args.rge_tensors,
+        else:
+            mode_name = "interesting"
+            points = INTERESTING
+
+        print(
+            f"T3 scan mode: {mode_name}; "
+            f"{len(points)} model(s)."
         )
-        for model_class, alpha in points
-    ]
 
-    # This only gives us our reports created from the records
+        # This line only exist if we use the special interesting, extended and smoke options where we dont input any dimensions
+        # Known A-E models are converted to dimensions first and then sent
+        # through exactly the same validate_dimensions() path as generalised models.
+        records = [
+            obtain_class_dimensions(
+                model_class,
+                alpha,
+                args.debug_reports,
+                False,
+            )
+            for model_class, alpha in points
+        ]
+
+    # Organise the matched coefficient before starting the RGE pipeline, so all
+    # later stages read C5 from the same final machine-readable location.
+    for record in records:
+        organise_c5_input(record)
+
+    # ----------------------------------------------------------------------
+    # RGE pipeline
+    # ----------------------------------------------------------------------
+
+    physics_failed = False
+
+    # For every model, only run the UV RGE stage if the model Lagrangian was built successfully. Also remember whether any model failed.
+    # We want UV RGE for comparison with EFT RGE
+    for record in records:
+        if record.summary.get("BuildStatus") == "Success":
+            physics_failed |= not run_uv_rgbeta_stage(record)
+        else:
+            record.summary["UVRGEStatus"] = "NotRun"
+
+    # After matching has generated the Weinberg coefficient C5, the EFT RGE pipeline starts here. 
+    # Each later stage runs only if the previous stage for that model succeeded.
+    for record in records:
+        summary = record.summary
+
+        # Check if any part works for a model, if a model fails we skip
+        if summary.get("BuildStatus") != "Success":
+            continue
+
+        if summary.get("MatchingStatus") != "Success":
+            continue
+
+        if summary.get("WeinbergExtractionStatus") != "Success":
+            continue
+
+        # We run our matching eft for RGBeta couplings and non-Weinberg RGEs
+        if not run_matched_eft_rge_stage(
+            record,
+            args.debug_reports,
+        ):
+            physics_failed = True
+            continue
+
+        # We run the Weinberg RGEs 
+        if not run_flavor_rge_stage(
+            record,
+            args.debug_reports,
+        ):
+            physics_failed = True
+            continue
+
+        # Now for mass runnning
+        if not run_symbolic_neutrino_mass_stage(record):
+            physics_failed = True
+            continue
+
+        # If we use numerical as argument and put in initial values for RGE in another file, then we can run with actual values
+        if args.numerical is not None:
+            if not run_numerical_rge_stage(
+                record,
+                args.numerical,
+            ):
+                physics_failed = True
+                continue
+
+    # Reports and final summaries happen only after the full physics pipeline.
     return finish_runs(
         records,
-        args.numerical,
         args.debug_reports,
+        physics_failed,
     )
 
 

@@ -27,15 +27,15 @@ import sympy as sp
 from RGE.general.AnomalousDimensions import with_collinear_anomalous_dimensions
 from RGE.general.GaugeGenerators import g2
 from RGE.general.MasterWeinbergRGE import calculate_master_rge
-from RGE.general.T3RGETensors import (
+from tests.python.Weinberg.T3RGETensors import (
     T3RGETensors,
     load_component_exchange,
     quartic_components_from_exchange,
     quartic_tensor_from_components,
     wilson_component_function,
 )
-from RGE.general.T3YukawaAdapter import real_yukawa_tensor_from_exchange
-from RGE.general.WeinbergWilsonAdapter import (
+from tests.python.Weinberg.T3YukawaAdapter import real_yukawa_tensor_from_exchange
+from tests.python.Weinberg.WeinbergWilsonAdapter import (
     build_weinberg_wilson_tensor,
     validate_weinberg_tensor_symmetry,
 )

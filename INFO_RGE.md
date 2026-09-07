@@ -66,7 +66,7 @@ The coefficient is saved as
 output/<model>/data/c5_coefficient.txt
 ```
 
-This file is the source of truth for the RGE, flavor, and neutrino-mass
+We use this file for RGE, flavor, and neutrino-mass
 stages. The model directory also contains `c5_coefficient.tex` and
 `c5_coefficient.pdf` for direct inspection.
 
@@ -256,30 +256,6 @@ one-generation RGE, full-flavor RGE, and symbolic neutrino-mass stages.
 python pipeline.py --dims 3 5 4 --alpha 0 --numerical path\to\config.json
 ```
 
-### Export representation-generic RGE tensors
-
-```powershell
-python pipeline.py --dims 2 2 1 --alpha -1 --rge-tensors
-```
-
-This opt-in mode writes
-`output/<model>/data/t3_rge_tensor_exchange.json`. The exchange contains the
-exact Higgs and BSM scalar-quartic components, raw T3 Yukawa CG components,
-and representation metadata. The Weinberg Wilson tensor is intentionally
-constructed in Python in the shared real-scalar/Weyl basis rather than being
-guessed from the pretty-printed matched Lagrangian.
-
-After a successful export, the pipeline automatically runs
-`GeneralT3WeinbergRGEStage.py` and writes
-`output/<model>/data/general_t3_weinberg_rge.json`. The stage checks every
-$L,L,H,H$ component, including components that must remain zero, and records
-the common symbolic $\beta_\kappa/\kappa$ factor.
-
-Tensor export is kept opt-in because enumerating all quartic invariants becomes
-more expensive for larger representations. Exporting the tensors does not by
-itself claim that arbitrary full-theory renormalisable parameter beta
-functions have been generated.
-
 ### Include detailed diagnostics
 
 ```powershell
@@ -437,3 +413,15 @@ The standalone Ma full-running report additionally writes
 For ordinary use, inspect `c5_coefficient.pdf` and `rge_report.pdf`. Open the
 files under `data/` only when the expanded expressions or numerical matrices
 are needed. Enable debug reports only when checking the intermediate algebra.
+
+---
+
+## 10. Pipeline Detailed for RGE
+
+1. After our RGE pipeline, we obtain the weinberg coefficients from c5_coefficient.txt
+
+
+## TLDR
+1. Make Lagrangian
+2. Match Lagrangian to EFT Lagrangian
+3. Get Weinberg Coefficient from EFT Lagrangian 

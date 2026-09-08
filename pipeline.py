@@ -1,5 +1,14 @@
-# This is the pipeline that starts the process, and gets all the inputs
-
+# Main script for the T3 model pipeline.
+#
+# This file:
+# 1. Reads the requested T3 representation assignment / benchmark model.
+# 2. Builds the UV model and performs EFT matching.
+# 3. Organises the matched Weinberg coefficient C5.
+# 4. Runs the UV and EFT RGE stages.
+# 5. Constructs the neutrino-mass matrix.
+# 6. Optionally performs numerical running and calculates neutrino observables.
+# 7. Generates the final reports and run summaries.
+#
 from __future__ import annotations
 
 import argparse
@@ -26,12 +35,18 @@ from Reports.ReportGeneration import (
     write_reports,
 )
 from Reports.RGEReport import write_and_compile_rge_report
+from Reports.RGEComparison import write_and_compile_rge_comparison
 
 
 def run_uv_rgbeta_stage(record: RunRecord) -> bool:
-    """We run our renormalisable couplings and other things that can be run in UV"""
+    """ Generate the one-loop beta functions for the renormalisable UV T3 model
+    using RGBeta.
+
+    This stage describes running above the heavy-particle matching threshold,
+    before the T3 fields are integrated out."""
     summary = record.summary
 
+    # Fails if we dont have an actual build for our model
     if summary.get("BuildStatus") != "Success":
         summary["UVRGEStatus"] = "NotRun"
         return False
@@ -56,7 +71,8 @@ def run_uv_rgbeta_stage(record: RunRecord) -> bool:
         print(f"  {record.name}: RGBeta UV-RGE failed: {exc}")
         return False
 
-    # Rest of this is just output and reports
+    # Pass the T3 SU(2) representation dimensions and hypercharge parameter
+    # to the RGBeta Wolfram runner, which constructs the UV model beta functions.
     output_path.write_text(
         json.dumps(result.raw, indent=2),
         encoding="utf-8",
@@ -165,8 +181,13 @@ def print_summary(records: list[RunRecord]) -> int:
 
 
 def organise_c5_input(record: RunRecord) -> Path | None:
-    """Move the machine-readable matched coefficient into the data folder."""
-
+    """
+    Put the matched Weinberg coefficient in its standard machine-readable
+    location before any EFT RGE stage starts.
+    From this point onward, c5_coefficient.txt represents C5 at the
+    matching scale M and is the main input to the EFT-side calculations.
+    """
+    
     summary = record.summary
     coefficient_file = summary.get("WeinbergCoefficientFile")
 
@@ -217,7 +238,12 @@ def run_matched_eft_rge_stage(
     record: RunRecord,
     debug_reports: bool = False,
 ) -> bool:
-    """Run the symbolic matched-EFT Weinberg RGE for one model."""
+    """
+    Evaluate the matched Weinberg coefficient using the general psi^2 phi^2
+    one-loop RGE machinery and verify that it reduces to the known
+    one-generation SMEFT Weinberg RGE. 
+    Just for testing as one generation is simple to test
+    """
 
     summary = record.summary
     c5_path = matched_c5_path(record)
@@ -338,7 +364,7 @@ def run_numerical_rge_stage(
     record: RunRecord,
     numerical_config: Path,
 ) -> bool:
-    """Run numerical EFT evolution and the resulting neutrino observables."""
+    """Run numerical EFT evolution and obtain the resulting neutrino observables."""
 
     summary = record.summary
     c5_path = matched_c5_path(record)
@@ -431,6 +457,9 @@ def finish_runs(
     # Generate the Lagrangian/matching reports only after all physics stages have
     # updated the run summaries.
     write_reports(records, debug_reports)
+
+    # Compare all successful UV one-loop beta functions coupling-by-coupling.
+    write_and_compile_rge_comparison(records)
 
     for record in records:
         coefficient_pdf = report_output_dir_for(record) / "c5_coefficient.pdf"
@@ -633,7 +662,8 @@ def main() -> int:
         if summary.get("WeinbergExtractionStatus") != "Success":
             continue
 
-        # We run our matching eft for RGBeta couplings and non-Weinberg RGEs
+        # Evaluate the matched Weinberg coefficient with the general
+        # one-generation SMEFT RGE machinery and verify the known SMEFT result.
         if not run_matched_eft_rge_stage(
             record,
             args.debug_reports,
@@ -641,7 +671,8 @@ def main() -> int:
             physics_failed = True
             continue
 
-        # We run the Weinberg RGEs 
+        # Get the matched one-generation C5 into the full 3x3 lepton-flavor
+        # matrix and calculate its symbolic SMEFT beta matrix.
         if not run_flavor_rge_stage(
             record,
             args.debug_reports,
@@ -649,12 +680,15 @@ def main() -> int:
             physics_failed = True
             continue
 
-        # Now for mass runnning
+        # Convert the matched symbolic flavor coefficient into the symbolic
+        # Majorana neutrino-mass matrix using m_nu = -v^2 C5.
         if not run_symbolic_neutrino_mass_stage(record):
             physics_failed = True
             continue
 
-        # If we use numerical as argument and put in initial values for RGE in another file, then we can run with actual values
+        # If a numerical parameter point and argument is given, evaluate C5 at the
+        # matching scale and numerically integrate the coupled one-loop SMEFT RGEs
+        # down to the requested low scale. Then calculate neutrino observables.
         if args.numerical is not None:
             if not run_numerical_rge_stage(
                 record,

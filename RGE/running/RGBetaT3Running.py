@@ -15,6 +15,8 @@ class RGBetaT3Result:
     status: str
     metadata: dict[str, Any]
     betas: dict[str, str]
+    report_betas: dict[str, str]
+    report_latex_betas: dict[str, str]
     raw: dict[str, Any]
 
 
@@ -116,5 +118,7 @@ def run_rgbeta_t3(
             status=payload["status"],
             metadata=dict(payload.get("metadata", {})),
             betas=dict(payload.get("betas", {})),
+            report_betas=dict(payload.get("report_betas", {})),
+            report_latex_betas=dict(payload.get("report_beta_latex", {})),
             raw=payload,
         )

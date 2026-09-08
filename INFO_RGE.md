@@ -1,5 +1,7 @@
 # T3 Weinberg-Coefficient RGE Pipeline
 
+Note that RGBeta only supports fundamental (2D) and adjoint (3D) representations, thus we cant use higher representations for now.
+
 This document describes the renormalisation-group (RGE) part of the T3
 neutrino-mass pipeline.
 
@@ -418,10 +420,29 @@ are needed. Enable debug reports only when checking the intermediate algebra.
 
 ## 10. Pipeline Detailed for RGE
 
-1. After our RGE pipeline, we obtain the weinberg coefficients from c5_coefficient.txt
+1. After our RGE pipeline, we obtain the weinberg coefficients from c5_coefficient.txt created by RunMatching.wl
+2. Pipeline.py runs the run_uv_rgbeta_stage() which calls run_rgbeta_t3() from RGBetaT3Running.py. We give the model parameters and get the UV thoery RGEs
+3. RGBetaT3Running.py uses runner RunT3RGBeta.wl which creates our UV model parameter beta functions and  is given as a JSON in uv_rgbeta_rge.json
+4. After UV RGE, pipeline.py runs EFT RGE with run_matched_eft_rge_stage() which gives c5_coefficient.txt to run_matched_eft_rge() in MatchedEFTRGE.py
+5. MatchedEFTRGE.py uses parse_matchete_c5() to convert Matchete coefficient into SymPy for symbolic python expressions
+6. MatchedEFTRGE.py constructs one generation SMEFT for checking implementation
+7. Matched coefficient $C_5$ becomes general Wilson tensor $C_{ijab}$ for our generic RGE. MatchedEFTRGE.py selects one component and gets the RGE from it.
+8. We have RGEModel.py for scalar representation, GaugeGenerators.py for SU(2) and U(1) generator matrix, and RGECommon.py for other indices and objects.
+9. MasterWeinbergRGE.py collates every term in the RGE together 
+10. AnomalousDimensions.py gives scalar and fermion collinear anomalous dimensions and put into the master-equation. Then we call calculate_master_rge() giving us the full one loop-equation
+11. MatchedEFTRGE.py sums all these contributions and divide by the Wilson coefficient compoennt, now we try to confirm if our one generation works $$\frac{16\pi^2\beta_{C_5}}{C_5}=-3g^2_2+2\lambda_H+6|y_u|^2+6|y_d|^2-|y_e|^2$$, and we write this to c5_beta.txt to check
+12. Now we use run_flavor_rge_stage() which calls run_flavor_matched_rge() in FlavorMatchedRGEStage.py which tries to get all 3 generation Weinberg Coeffciients
+13. With 3 generations, we use FlavorMatchedRGEStage.py to call flavor_match_from_c5_file() from FlavorMatchedC5.py. We separate our flavour dependent and flavour independent part of our Coefficient, splitting our one generation into 
+$C_5=F_{loop}y^*_1y^*_2$
+We can use $F_{loop}(Masses + ScalarCoupling)$ from our one generation coefficient and make it general for 3 generations
+14. Now in FlavorMatchedC5.py we have 3 lepton generations where we make $F_loop$ change with heavy fermion mass, giving us the symmetric flavor matrix
+$$(C_5)_{pq}=\frac{1}{2}\sum_{r}F_r[y^*_{1pr}y^*_{2pr}+y^*_{2pr}y^*_{1qr}]$$
+15. Then FlavorMatchedRGEStage.py makes our symbolic $3\times3$ SM Yukawa matrices $Y_e,Y_u,Y_d$ and we also put the $C_5$ matrix to beta_weinberg_matrix() in SMEFTWeinbergFlavorRGE.py
+16. SMEFTWeinbergFlavor.py gets the whole Weinberg RGE with all 3 flavors and FlavorMatchedRGEStage.py saves this matrix in c5_flavor_beta_matrix.txt. We have all the symbolic RGE for all flavor components
+17. pipeline.py calls run_symbolic_neutrino_mass_stage() which uses NeutrinoMassStage which uses our $C_5$  matrix to get the Majorana neutrino mass matrix with $m_\nu=-v^2C_5$
+18. If the user uses --numerical and CONFIG.json, the pipeline.py uses run_numerical_rge_stage() which gives our initial conditions to NumericalPipelineStage.py
+19. NumericalPipelineStage.py reads our T3 masses, scalar coupling, T3 Yukawa matrices and SM parameters form JSON file and gets symbolic T3 loop kernel for each heavy-fermion mass and gets a numerical complex symmetric matrix $C_5(M)$. This, with our couplings g_{Y,2,3},$\lambda$ and diagonal SM yukawa is put into SMInitialConditions object and put into evolve_weinberg() in NumericalWeinbergRGE.py
+20. NumericalWeinbergRGE.py has the actual coupled differential equations which evolves our SM gauge couplings, the diagonal Yukawa couplings and the $C_5$ matrix. We use $t=ln\mu$. Then we pack real SM parameters with the real and imaginary parts of $C_5$ into a real ODE vector where _beta() calculates one-loop derivatives, where we use solve_ivp to integrate from $ln(M)$ to $ln(\mu)$ (Uses Runge-Kutta integration method). This gives us $C_5(M)\to C_5(\mu)$ with a low-scale coefficient. 
+21. NumericalPipelineStage.py gives us our low-sclae neutrino-mass matrix $m_\nu(\mu)=-v^2C_5(\mu)$
+22. We send our low-scale neutrino mass matrix from pipeline.py to NeutrinoObservables.py and we diagonalise it to obtain our Majorana mass matrix to get $U^Tm_\nu U=diag(m_1,m_2,m_3)$. This gives us our normal or invertex ordering and gives us our squared differences, our masses and PMNS matrix, and this si saved in neutrino_observables.json. THen we get summaries
 
-
-## TLDR
-1. Make Lagrangian
-2. Match Lagrangian to EFT Lagrangian
-3. Get Weinberg Coefficient from EFT Lagrangian 

@@ -2,24 +2,12 @@ from __future__ import annotations
 
 """
 Full three-generation one-loop SMEFT RGE for the Weinberg coefficient.
-
 Convention:
     V(H) = (lambdaH / 2) (H^\dagger H)^2
-
 With this convention,
-
-    16 pi^2 beta_K =
-        (2 lambdaH - 3 g2^2 + 2 T) K
-        - 3/2 [Ye Ye^\dagger K + K (Ye Ye^\dagger)^T],
-
+    16 pi^2 beta_K = (2 lambdaH - 3 g2^2 + 2 T) K - 3/2 [Ye Ye^\dagger K + K (Ye Ye^\dagger)^T],
 where
-
-    T = Tr(
-        Ye Ye^\dagger
-        + 3 Yu Yu^\dagger
-        + 3 Yd Yd^\dagger
-    ).
-
+    T = Tr(Ye Ye^\dagger + 3 Yu Yu^\dagger + 3 Yd Yd^\dagger).
 K is a complex symmetric 3 x 3 matrix.
 """
 

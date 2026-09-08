@@ -105,11 +105,56 @@ stringBetas = Association @ KeyValueMap[
     betaAssociation
 ];
 
+(* RGBeta uses a special convention for gauge couplings:
+
+       beta_g^RGBeta = d(g^2)/d ln(mu).
+
+   For the human-facing report we instead use the conventional derivative
+
+       16 pi^2 d g/d ln(mu).
+
+   At one loop this is BetaTerm[g,1]/(2 g).  All non-gauge couplings already
+   use the ordinary derivative convention, so their one-loop report term is
+   simply BetaTerm[X,1].  The original BetaTerm output above is preserved
+   unchanged in "betas" for machine use. *)
+reportBetaAssociation = Association @ KeyValueMap[
+    Function[{name, beta},
+        name -> Switch[
+            name,
+            "gY", Cancel[beta/(2 gY)],
+            "g2", Cancel[beta/(2 g2)],
+            "g3", Cancel[beta/(2 g3)],
+            _, beta
+        ]
+    ],
+    betaAssociation
+];
+
+stringReportBetas = Association @ KeyValueMap[
+    (#1 -> ToString[InputForm[#2]]) &,
+    reportBetaAssociation
+];
+
+(* TeXForm is retained as a first-pass rendering.  RGBeta has internal heads
+   such as Matrix, Trans and Bar that TeXForm does not know how to typeset.
+   Reports/RGEComparison.py performs the final physics-aware display cleanup
+   while using these exact expressions. *)
+latexReportBetas = Association @ KeyValueMap[
+    (#1 -> ToString[TeXForm[#2]]) &,
+    reportBetaAssociation
+];
+
 
 result = <|
     "status" -> "Success",
-    "metadata" -> jsonMetadata,
-    "betas" -> stringBetas
+    "metadata" -> Append[
+        jsonMetadata,
+        "ReportBetaConvention" ->
+            "16*pi^2*dX/dln(mu); gauge BetaTerm divided by 2*g"
+    ],
+    "betas" -> stringBetas,
+    "report_betas" -> stringReportBetas,
+    "report_beta_latex" -> latexReportBetas
 |>;
 
 WriteJSON[result];

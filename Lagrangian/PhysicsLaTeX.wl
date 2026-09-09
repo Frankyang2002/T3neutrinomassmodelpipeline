@@ -22,6 +22,7 @@ ClearAll[
   PhysicsTranspose,
   PhysicsCouplingBase,
   PhysicsCoupling,
+  PhysicsCGBase,
   PhysicsCG,
   PhysicsDiracFactor,
   PhysicsFermionChain,
@@ -94,12 +95,16 @@ PhysicsIndices[_] := {};
 PhysicsFieldBase[name_] := Switch[PhysicsSymbolName[name],
   "H", H,
   "NewScalar", \[Eta],
+  "NewScalar1", Subscript[S, 1],
+  "NewScalar2", Subscript[S, 2],
   "q", q,
-  "l", \[ScriptL],
+  "l", L,
   "u", u,
   "d", d,
   "e", e,
-  "NewFermion", N,
+  "N", F,
+  "NewFermion", F,
+  "F", F,
   _, name
 ];
 
@@ -114,8 +119,39 @@ PhysicsField[field_] := Module[
   result = PhysicsFieldBase[name];
 
   formattedInternal = PhysicsIndices[internalIndices];
-  If[formattedInternal =!= {},
-    result = Subscript[result, Row[Riffle[formattedInternal, ","]]]
+
+  (* NewScalar1/NewScalar2 already have physical labels S_1/S_2.  Construct
+     their complete subscript in one operation instead of ever forming the
+     nested object Subscript[Subscript[S,1],j]. *)
+  result = Switch[
+    PhysicsSymbolName[name],
+
+    "NewScalar1",
+      If[
+        formattedInternal === {},
+        Subscript[S, 1],
+        Subscript[
+          S,
+          Row@Join[{1, ","}, Riffle[formattedInternal, ","]]
+        ]
+      ],
+
+    "NewScalar2",
+      If[
+        formattedInternal === {},
+        Subscript[S, 2],
+        Subscript[
+          S,
+          Row@Join[{2, ","}, Riffle[formattedInternal, ","]]
+        ]
+      ],
+
+    _,
+      If[
+        formattedInternal === {},
+        result,
+        Subscript[result, Row[Riffle[formattedInternal, ","]]]
+      ]
   ];
 
   formattedDerivatives = PhysicsIndices[derivativeIndices];
@@ -154,13 +190,15 @@ PhysicsTranspose[argument_] :=
 
 (* Couplings and masses. *)
 
-PhysicsCouplingBase[name_] := Module[{nameString},
+PhysicsCouplingBase[name_] := Module[
+  {nameString, match},
+
   nameString = PhysicsSymbolName[name];
 
   Which[
     nameString === "gY", Subscript[g, Y],
-    nameString === "gL", Subscript[g, L],
-    nameString === "gs", Subscript[g, s],
+    nameString === "gL" || nameString === "g2", Subscript[g, 2],
+    nameString === "gs" || nameString === "g3", Subscript[g, 3],
 
     nameString === "lambda", \[Lambda],
     nameString === "\[Lambda]", \[Lambda],
@@ -174,6 +212,48 @@ PhysicsCouplingBase[name_] := Module[{nameString},
     nameString === "lambdaH1", Subscript[\[Lambda], H1],
     nameString === "lambdaH2", Subscript[\[Lambda], H2],
     nameString === "lambda12", Subscript[\[Lambda], 12],
+
+    StringMatchQ[nameString, "lambdaH1Inv" ~~ DigitCharacter ..],
+      match = StringCases[
+        nameString,
+        "lambdaH1Inv" ~~ n : DigitCharacter .. :> n
+      ];
+      Superscript[Subscript[\[Lambda], H1], First[match]],
+
+    StringMatchQ[nameString, "lambdaH2Inv" ~~ DigitCharacter ..],
+      match = StringCases[
+        nameString,
+        "lambdaH2Inv" ~~ n : DigitCharacter .. :> n
+      ];
+      Superscript[Subscript[\[Lambda], H2], First[match]],
+
+    StringMatchQ[nameString, "lambdaS1Inv" ~~ DigitCharacter ..],
+      match = StringCases[
+        nameString,
+        "lambdaS1Inv" ~~ n : DigitCharacter .. :> n
+      ];
+      Superscript[Subscript[\[Lambda], S1], First[match]],
+
+    StringMatchQ[nameString, "lambdaS2Inv" ~~ DigitCharacter ..],
+      match = StringCases[
+        nameString,
+        "lambdaS2Inv" ~~ n : DigitCharacter .. :> n
+      ];
+      Superscript[Subscript[\[Lambda], S2], First[match]],
+
+    StringMatchQ[nameString, "lambda12Inv" ~~ DigitCharacter ..],
+      match = StringCases[
+        nameString,
+        "lambda12Inv" ~~ n : DigitCharacter .. :> n
+      ];
+      Superscript[Subscript[\[Lambda], 12], First[match]],
+
+    nameString === "lambdaH1Adj", Superscript[Subscript[\[Lambda], H1], Adj],
+    nameString === "lambdaH2Adj", Superscript[Subscript[\[Lambda], H2], Adj],
+    nameString === "lambdaS1Adj", Superscript[Subscript[\[Lambda], S1], Adj],
+    nameString === "lambdaS2Adj", Superscript[Subscript[\[Lambda], S2], Adj],
+    nameString === "lambda12Adj", Superscript[Subscript[\[Lambda], 12], Adj],
+    nameString === "lambda12Cross", Superscript[Subscript[\[Lambda], 12], Cross],
 
     nameString === "y1", Subscript[y, 1],
     nameString === "y2", Subscript[y, 2],
@@ -257,8 +337,8 @@ PhysicsCoupling[coupling_] := Module[
           base,
           (* For any other indexed coupling, avoid nesting Subscript. *)
           If[
-            Head[Unevaluated[base]] === Subscript,
-            With[{parts = List @@ Unevaluated[base]},
+            Head[base] === Subscript,
+            With[{parts = List @@ base},
               Subscript[
                 parts[[1]],
                 Row@Join[{parts[[2]], ","}, Riffle[formattedIndices, ","]]
@@ -273,6 +353,64 @@ PhysicsCoupling[coupling_] := Module[
 
 
 (* Group tensors. *)
+
+(* Human-facing names for invariant tensors.  We keep the invariant
+   label because different contractions are physically independent, but hide
+   implementation names such as T3HiggsPortal1CGInv2. *)
+PhysicsCGBase[tensor_] := Module[
+  {nameString, match},
+
+  nameString = PhysicsSymbolName[tensor];
+
+  Which[
+    nameString === "T3Y1CG",
+      Subscript[\[ScriptCapitalI], y1],
+
+    nameString === "T3Y2CG",
+      Subscript[\[ScriptCapitalI], y2],
+
+    nameString === "T3MixCG",
+      Subscript[\[ScriptCapitalI], T3],
+
+    StringMatchQ[nameString, "T3HiggsPortal1CGInv" ~~ DigitCharacter ..],
+      match = StringCases[
+        nameString,
+        "T3HiggsPortal1CGInv" ~~ n : DigitCharacter .. :> n
+      ];
+      Superscript[Subscript[\[ScriptCapitalI], H1], First[match]],
+
+    StringMatchQ[nameString, "T3HiggsPortal2CGInv" ~~ DigitCharacter ..],
+      match = StringCases[
+        nameString,
+        "T3HiggsPortal2CGInv" ~~ n : DigitCharacter .. :> n
+      ];
+      Superscript[Subscript[\[ScriptCapitalI], H2], First[match]],
+
+    StringMatchQ[nameString, "T3Scalar1SelfCGInv" ~~ DigitCharacter ..],
+      match = StringCases[
+        nameString,
+        "T3Scalar1SelfCGInv" ~~ n : DigitCharacter .. :> n
+      ];
+      Superscript[Subscript[\[ScriptCapitalI], S1], First[match]],
+
+    StringMatchQ[nameString, "T3Scalar2SelfCGInv" ~~ DigitCharacter ..],
+      match = StringCases[
+        nameString,
+        "T3Scalar2SelfCGInv" ~~ n : DigitCharacter .. :> n
+      ];
+      Superscript[Subscript[\[ScriptCapitalI], S2], First[match]],
+
+    StringMatchQ[nameString, "T3CrossScalarCGInv" ~~ DigitCharacter ..],
+      match = StringCases[
+        nameString,
+        "T3CrossScalarCGInv" ~~ n : DigitCharacter .. :> n
+      ];
+      Superscript[Subscript[\[ScriptCapitalI], 12], First[match]],
+
+    True,
+      tensor
+  ]
+];
 
 PhysicsCG[cg_] := Module[
   {arguments, tensor, indices, formatted, tensorText},
@@ -295,7 +433,7 @@ PhysicsCG[cg_] := Module[
 
     True,
       Subscript[
-        PhysicsDisplayForm[tensor],
+        PhysicsCGBase[tensor],
         Row[Riffle[formatted, ","]]
       ]
   ]
@@ -378,6 +516,15 @@ PhysicsDisplayForm[expression_] := Module[{headName, arguments},
         "muBar", OverBar[\[Mu]],
         "muBar2", Superscript[OverBar[\[Mu]], 2],
         "GammaCC", C,
+        name_ /; StringStartsQ[name, "lambda"], PhysicsCouplingBase[expression],
+        "y1", Subscript[y, 1],
+        "y2", Subscript[y, 2],
+        "Yd", Subscript[Y, d],
+        "Yu", Subscript[Y, u],
+        "Ye", Subscript[Y, e],
+        "MF", Subscript[M, F],
+        "MS1", Subscript[M, S1],
+        "MS2", Subscript[M, S2],
         _, expression
       ]
     ]

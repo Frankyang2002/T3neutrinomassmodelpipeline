@@ -209,9 +209,29 @@ def split_latex_terms(latex: str) -> list[str]:
 # NewScalar1, NewScalar2 and N. These names are translated here into the
 # physical labels S1, S2 and F used by the pipeline.
 FIELD_PATTERNS: tuple[tuple[str, tuple[str, ...]], ...] = (
-    (r"S_1", (r"\\text\{NewScalar1\}",)),
-    (r"S_2", (r"\\text\{NewScalar2\}",)),
-    (r"F", (r"N(?:_|\^)",)),
+    (
+        r"S_1",
+        (
+            r"\\text\{NewScalar1\}",
+            r"S_\{1\}",
+            r"S_1",
+        ),
+    ),
+    (
+        r"S_2",
+        (
+            r"\\text\{NewScalar2\}",
+            r"S_\{2\}",
+            r"S_2",
+        ),
+    ),
+    (
+        r"F",
+        (
+            r"N(?:_|\^)",
+            r"(?<![A-Za-z\\])F(?:_|\^)",
+        ),
+    ),
     (r"H", (r"H(?:_|\^)",)),
     (r"\ell", (r"\\ell", r"\\mathcal\{l\}", r"\\mathscr\{l\}")),
     (r"e", (r"(?<![A-Za-z\\])e(?:_|\^)",)),
@@ -379,6 +399,12 @@ def write_lagrangian_report(records: list[RunRecord]) -> Path:
         r"\begin{document}",
         r"\section*{T3 Lagrangian and Weinberg-operator report}",
         rf"EFT order: ${EFT_ORDER}$; loop order: ${LOOP_ORDER}$.",
+        (
+            r"Implementation names are translated into physics notation: "
+            r"$S_1,S_2,F$ denote the new fields and "
+            r"$\mathcal{I}^{(n)}$ denotes the $n$th independent gauge-invariant "
+            r"tensor contraction when more than one invariant exists."
+        ),
     ]
 
     if not records:

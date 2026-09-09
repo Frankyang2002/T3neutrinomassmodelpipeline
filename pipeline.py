@@ -36,6 +36,8 @@ from Reports.ReportGeneration import (
 )
 from Reports.RGEReport import write_and_compile_rge_report
 from Reports.RGEComparison import write_and_compile_rge_comparison
+from Reports.EFTRGEComparison import write_and_compile_weinberg_rge_comparison
+from Reports.EFTRenormalisableRGE import write_and_compile_eft_renormalisable_rge
 
 
 def run_uv_rgbeta_stage(record: RunRecord) -> bool:
@@ -460,6 +462,11 @@ def finish_runs(
 
     # Compare all successful UV one-loop beta functions coupling-by-coupling.
     write_and_compile_rge_comparison(records)
+
+    # Keep the EFT reporting split into the dimension-five Weinberg sector and
+    # the renormalisable SM sector that survives below the heavy threshold.
+    write_and_compile_weinberg_rge_comparison(records)
+    write_and_compile_eft_renormalisable_rge(records)
 
     for record in records:
         coefficient_pdf = report_output_dir_for(record) / "c5_coefficient.pdf"

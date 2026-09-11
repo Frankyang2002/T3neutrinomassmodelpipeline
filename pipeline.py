@@ -21,6 +21,8 @@ from RGE.stages.NeutrinoMassStage import run_neutrino_mass_stage
 from RGE.stages.NumericalPipelineStage import run_numerical_pipeline_stage
 from RGE.phenomenology.NeutrinoObservables import run_neutrino_observables_stage
 from RGE.running.RGBetaT3Running import run_rgbeta_t3
+from RGE.running.RGBetaT3Intermediate import run_rgbeta_t3_eft1
+from RGE.running.EFT1WilsonRGE import run_eft1_wilson_rge
 
 from common.Paths import (
     OUTPUT_DIR,
@@ -28,16 +30,24 @@ from common.Paths import (
 )
 
 from common.Records import RunRecord
+from common.Thresholds import (
+    build_eft_stage_records,
+    threshold_plan_label,
+    threshold_plan_to_json,
+    validate_threshold_plan,
+)
 from common.T3Model import EXTENDED, INTERESTING, SMOKE
 from Lagrangian.Runner import validate_dimensions, obtain_class_dimensions
 from Reports.ReportGeneration import (
-    report_output_dir_for,
-    write_reports,
+    compile_latex_document,
+    write_bsm_uv_field_table,
+    write_bsm_matched_field_table,
 )
-from Reports.RGEReport import write_and_compile_rge_report
-from Reports.RGEComparison import write_and_compile_rge_comparison
-from Reports.EFTRGEComparison import write_and_compile_weinberg_rge_comparison
-from Reports.EFTRenormalisableRGE import write_and_compile_eft_renormalisable_rge
+from Reports.RGEComparison import (
+    write_and_compile_eft1_rge_comparison,
+    write_and_compile_final_eft_rge_comparison,
+    write_and_compile_rge_comparison,
+)
 
 
 def run_uv_rgbeta_stage(record: RunRecord) -> bool:
@@ -90,6 +100,226 @@ def run_uv_rgbeta_stage(record: RunRecord) -> bool:
     )
 
     return result.status == "Success"
+
+
+def run_eft1_rgbeta_stage(record: RunRecord) -> bool:
+    """Generate the renormalisable one-loop RGEs in EFT1 = SM + S1 + S2.
+
+    This is the dimension-four part of the intermediate EFT after integrating
+    out F.  The higher-dimensional Wilson operators generated at the F
+    threshold are deliberately not claimed here; their running is a separate
+    stage that must be combined with these beta functions before the EFT1 PDF
+    is considered complete.
+    """
+
+    summary = record.summary
+
+    stages = summary.get("EFTStages", [])
+    has_f_first_stage = bool(
+        stages
+        and stages[0].get("IntegratedFields") == ["F"]
+        and set(stages[0].get("ActiveHeavyFields", [])) == {"S1", "S2"}
+    )
+
+    if not has_f_first_stage:
+        summary["EFT1RenormalisableRGEStatus"] = "NotApplicable"
+        return True
+
+    data_dir = record.output_dir / "data"
+    data_dir.mkdir(parents=True, exist_ok=True)
+    output_path = data_dir / "eft1_rgbeta_rge.json"
+
+    print(
+        f"  {record.name}: starting RGBeta EFT1 renormalisable RGE stage...",
+        flush=True,
+    )
+
+    try:
+        result = run_rgbeta_t3_eft1(
+            record.d_s1,
+            record.d_s2,
+            record.d_f,
+            record.alpha,
+        )
+    except Exception as exc:
+        summary["EFT1RenormalisableRGEStatus"] = "Failed"
+        summary["EFT1RenormalisableRGEError"] = str(exc)
+        print(
+            f"  {record.name}: RGBeta EFT1 renormalisable RGE failed: {exc}"
+        )
+        return False
+
+    output_path.write_text(
+        json.dumps(result.raw, indent=2),
+        encoding="utf-8",
+    )
+
+    summary["EFT1RenormalisableRGEStatus"] = result.status
+    summary["EFT1RenormalisableRGEFile"] = (
+        output_path.relative_to(record.output_dir).as_posix()
+    )
+    summary["EFT1RenormalisableRGEBetaCount"] = len(result.betas)
+
+    print(
+        f"  {record.name}: RGBeta EFT1 renormalisable RGE={result.status} "
+        f"({len(result.betas)} beta functions) -> {output_path}"
+    )
+
+    return result.status == "Success"
+
+
+def run_eft1_wilson_rge_stage(record: RunRecord) -> bool:
+    """Generate the one-loop dimension-five Wilson RGE in EFT1 = SM + S1 + S2.
+
+    This stage is applicable when the first threshold integrates out F while
+    leaving S1 and S2 active.  It combines the exact tree-level Wilson seed,
+    the exact scalar-quartic seed, and the EFT1 renormalisable model metadata
+    with the general psi^2 phi^2 master RGE.
+
+    Fixed-order bookkeeping:
+        only C^(0), the tree-generated stage-1 Wilson tensor, is evolved.
+        The one-loop matching contribution at the F threshold remains a
+        boundary term and is not inserted into this one-loop beta function.
+    """
+
+    summary = record.summary
+    stages = summary.get("EFTStages", [])
+    has_f_first_stage = bool(
+        stages
+        and stages[0].get("IntegratedFields") == ["F"]
+        and set(stages[0].get("ActiveHeavyFields", [])) == {"S1", "S2"}
+    )
+
+    if not has_f_first_stage:
+        summary["EFT1WilsonRGEStatus"] = "NotApplicable"
+        return True
+
+    data_dir = record.output_dir / "data"
+    wilson_seed_path = data_dir / "eft1_after_F_wilson_seed.json"
+    quartic_seed_path = data_dir / "eft1_after_F_scalar_quartic_seed.json"
+    rgbeta_path = data_dir / "eft1_rgbeta_rge.json"
+    output_path = data_dir / "eft1_wilson_rge.json"
+
+    required_inputs = (
+        wilson_seed_path,
+        quartic_seed_path,
+        rgbeta_path,
+    )
+    missing = [path for path in required_inputs if not path.is_file()]
+
+    if missing:
+        summary["EFT1WilsonRGEStatus"] = "Failed"
+        summary["EFT1WilsonRGEError"] = (
+            "Missing EFT1 Wilson-RGE input(s): "
+            + ", ".join(
+                path.relative_to(record.output_dir).as_posix()
+                for path in missing
+            )
+        )
+        print(
+            f"  {record.name}: EFT1 Wilson RGE failed: "
+            f"{summary['EFT1WilsonRGEError']}"
+        )
+        return False
+
+    print(
+        f"  {record.name}: starting EFT1 dimension-five Wilson RGE stage...",
+        flush=True,
+    )
+
+    try:
+        result = run_eft1_wilson_rge(
+            wilson_seed_path=wilson_seed_path,
+            quartic_seed_path=quartic_seed_path,
+            rgbeta_path=rgbeta_path,
+            output_path=output_path,
+            seed_support_only=False,
+        )
+    except Exception as exc:
+        summary["EFT1WilsonRGEStatus"] = "Failed"
+        summary["EFT1WilsonRGEError"] = str(exc)
+        print(
+            f"  {record.name}: EFT1 dimension-five Wilson RGE failed: {exc}"
+        )
+        return False
+
+    summary["EFT1WilsonRGEStatus"] = result.get("status", "Unknown")
+    summary["EFT1WilsonRGEFile"] = (
+        output_path.relative_to(record.output_dir).as_posix()
+    )
+    summary["EFT1WilsonRGEInitialComponentCount"] = result.get(
+        "initial_independent_component_count",
+        0,
+    )
+    summary["EFT1WilsonRGEBetaComponentCount"] = result.get(
+        "nonzero_beta_component_count",
+        0,
+    )
+    summary["EFT1WilsonRGEGeneratedComponentCount"] = result.get(
+        "generated_component_count",
+        0,
+    )
+
+    weinberg_validation = result.get("weinberg_subspace_validation") or {}
+    summary["EFT1WilsonRGEWeinbergSubspaceValid"] = (
+        weinberg_validation.get("matches_weinberg_subspace")
+    )
+    summary["EFT1WilsonRGEWeinbergBeta"] = (
+        weinberg_validation.get("beta_kappa_16pi2", "")
+    )
+
+    # Mirror the calculation metadata onto the actual EFT1 stage record so
+    # stage-aware reporting can consume it without rediscovering files.
+    if record.eft_stages:
+        eft1_stage = record.eft_stages[0]
+        eft1_stage.summary.update(
+            {
+                "RenormalisableRGEStatus": summary.get(
+                    "EFT1RenormalisableRGEStatus",
+                    "Unknown",
+                ),
+                "RenormalisableRGEFile": summary.get(
+                    "EFT1RenormalisableRGEFile",
+                    "",
+                ),
+                "WilsonRGEStatus": summary["EFT1WilsonRGEStatus"],
+                "WilsonRGEFile": summary["EFT1WilsonRGEFile"],
+                "WilsonRGEInitialComponentCount": summary[
+                    "EFT1WilsonRGEInitialComponentCount"
+                ],
+                "WilsonRGEBetaComponentCount": summary[
+                    "EFT1WilsonRGEBetaComponentCount"
+                ],
+                "WilsonRGEGeneratedComponentCount": summary[
+                    "EFT1WilsonRGEGeneratedComponentCount"
+                ],
+                "WeinbergSubspaceValid": summary[
+                    "EFT1WilsonRGEWeinbergSubspaceValid"
+                ],
+                "WeinbergBeta16Pi2": summary[
+                    "EFT1WilsonRGEWeinbergBeta"
+                ],
+            }
+        )
+
+    print(
+        f"  {record.name}: EFT1 Wilson RGE="
+        f"{summary['EFT1WilsonRGEStatus']} "
+        f"({summary['EFT1WilsonRGEBetaComponentCount']} nonzero beta "
+        f"components; "
+        f"{summary['EFT1WilsonRGEGeneratedComponentCount']} generated)"
+        f" -> {output_path}"
+    )
+
+    if weinberg_validation:
+        print(
+            f"  {record.name}: EFT1 Weinberg-subspace validation="
+            f"{weinberg_validation.get('matches_weinberg_subspace')} "
+            f"(16*pi^2 beta_kappa="
+            f"{weinberg_validation.get('beta_kappa_16pi2', '')})"
+        )
+
+    return summary["EFT1WilsonRGEStatus"] == "Success"
 
 def print_summary(records: list[RunRecord]) -> int:
     """Print the results of all completed T3 runs."""
@@ -456,27 +686,47 @@ def finish_runs(
     if physics_failed:
         status = 1
 
-    # Generate the Lagrangian/matching reports only after all physics stages have
-    # updated the run summaries.
-    write_reports(records, debug_reports)
+    # ------------------------------------------------------------------
+    # Human-readable comparison reports
+    # ------------------------------------------------------------------
+    #
+    # Keep the report surface deliberately small.  Calculation data remains
+    # under output/, while Reports/output/ contains only the comparison
+    # Lagrangian and RGE reports used to inspect the physics across models.
 
-    # Compare all successful UV one-loop beta functions coupling-by-coupling.
+    # Lagrangian reports:
+    #   rows    = model configurations
+    #   columns = field configurations
+    uv_lagrangian_tex = write_bsm_uv_field_table(records)
+    compile_latex_document(uv_lagrangian_tex)
+
+    # This writer emits and compiles every real sequential EFT stage.
+    write_bsm_matched_field_table(records)
+
+    # RGE report:
+    #   one table per running coupling
+    #   rows = model configurations
+    #
+    # RGEComparison will be refined next so that its columns are the
+    # individual full RGE terms rather than one combined beta-function cell.
     write_and_compile_rge_comparison(records)
+    write_and_compile_eft1_rge_comparison(records)
+    write_and_compile_final_eft_rge_comparison(records)
 
-    # Keep the EFT reporting split into the dimension-five Weinberg sector and
-    # the renormalisable SM sector that survives below the heavy threshold.
-    write_and_compile_weinberg_rge_comparison(records)
-    write_and_compile_eft_renormalisable_rge(records)
-
-    for record in records:
-        coefficient_pdf = report_output_dir_for(record) / "c5_coefficient.pdf"
-        record.summary["WeinbergCoefficientPDFFile"] = (
-            coefficient_pdf.name if coefficient_pdf.exists() else ""
-        )
-
-        # The RGE report is also a final reporting step.  By this point all
-        # symbolic and optional numerical RGE stages have already run.
-        write_and_compile_rge_report(record)
+    final_stage_label = (
+        records[0].eft_stages[-1].label
+        if records and records[0].eft_stages
+        else "EFT"
+    )
+    print(
+        "\nStage-aware reports:"
+        "\n  Lagrangian/UV"
+        "\n  Lagrangian/EFT_1_after_F"
+        f"\n  Lagrangian/{final_stage_label}"
+        "\n  RGE/UV"
+        "\n  RGE/EFT_1_after_F"
+        f"\n  RGE/{final_stage_label}"
+    )
 
     # Save all model summaries together so we can easily compare runs
     # or use them for regression testing.
@@ -559,6 +809,28 @@ def main() -> int:
         ),
     )
 
+    # Ordered heavy-particle thresholds. Repeat --threshold to create
+    # successive EFT levels; fields given in the same occurrence are
+    # integrated out together.
+    #
+    # Examples:
+    #   --threshold F --threshold S1 S2
+    #   --threshold S1 --threshold F --threshold S2
+    #   --threshold F S1 S2
+    parser.add_argument(
+        "--threshold",
+        action="append",
+        nargs="+",
+        metavar="FIELD",
+        default=None,
+        help=(
+            "ordered heavy-particle threshold group; use F, S1, S2. "
+            "Repeat the option for successive thresholds. "
+            "Fields in one group are integrated out together. "
+            "If omitted, F S1 S2 are integrated out together."
+        ),
+    )
+
     # For logging just in case
     parser.add_argument(
         "--debug-reports",
@@ -570,6 +842,16 @@ def main() -> int:
     )
 
     args = parser.parse_args()
+
+    try:
+        threshold_plan = validate_threshold_plan(args.threshold)
+    except ValueError as exc:
+        parser.error(str(exc))
+
+    print(
+        "Threshold plan: "
+        + threshold_plan_label(threshold_plan)
+    )
 
     OUTPUT_DIR.mkdir(
         parents=True,
@@ -596,6 +878,7 @@ def main() -> int:
                 args.alpha,
                 args.debug_reports,
                 False,
+                threshold_plan,
             )
         except ValueError as exc:
             parser.error(str(exc))
@@ -631,9 +914,28 @@ def main() -> int:
                 alpha,
                 args.debug_reports,
                 False,
+                threshold_plan,
             )
             for model_class, alpha in points
         ]
+
+    # Attach Python-side stage records using the same threshold plan.  The
+    # Wolfram summary now contains the actual sequentially matched EFT-stage
+    # Lagrangians; do not overwrite those physics results here.
+    for record in records:
+        record.eft_stages = build_eft_stage_records(
+            threshold_plan,
+            record.output_dir,
+        )
+
+        record.summary.setdefault(
+            "ThresholdPlan",
+            threshold_plan_to_json(threshold_plan),
+        )
+        record.summary.setdefault(
+            "ThresholdPlanLabel",
+            threshold_plan_label(threshold_plan),
+        )
 
     # Organise the matched coefficient before starting the RGE pipeline, so all
     # later stages read C5 from the same final machine-readable location.
@@ -653,6 +955,19 @@ def main() -> int:
             physics_failed |= not run_uv_rgbeta_stage(record)
         else:
             record.summary["UVRGEStatus"] = "NotRun"
+
+    # If F is the first threshold, generate the dimension-four running in the
+    # genuine intermediate EFT SM + S1 + S2.  This is intentionally separate
+    # from the higher-dimensional Wilson-coefficient running.
+    for record in records:
+        if record.summary.get("BuildStatus") == "Success":
+            eft1_renormalisable_ok = run_eft1_rgbeta_stage(record)
+            physics_failed |= not eft1_renormalisable_ok
+
+            # The higher-dimensional EFT1 RGE needs the RGBeta metadata written
+            # by the preceding stage, so only run it when that stage succeeded.
+            if eft1_renormalisable_ok:
+                physics_failed |= not run_eft1_wilson_rge_stage(record)
 
     # After matching has generated the Weinberg coefficient C5, the EFT RGE pipeline starts here. 
     # Each later stage runs only if the previous stage for that model succeeded.

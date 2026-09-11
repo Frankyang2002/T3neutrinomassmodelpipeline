@@ -30,9 +30,30 @@ ParseSignedCLI[s_String] := Which[
   True, ToExpression[s]
 ];
 
+
+ParseThresholdPlanCLI[args_List] := Module[{token, payload, groups},
+  token = SelectFirst[
+    args,
+    StringStartsQ[ToUpperCase[#], "THRESHOLDS="] &,
+    Missing["NotFound"]
+  ];
+
+  If[MissingQ[token],
+    Return[{{"F", "S1", "S2"}}]
+  ];
+
+  payload = StringDrop[token, StringLength["THRESHOLDS="]];
+  groups = StringSplit[payload, ";"];
+
+  Select[
+    StringSplit[#, ","] & /@ groups,
+    Length[#] > 0 &
+  ]
+];
+
 ParseCLI[args_List] := Module[
   {output, eftOrder, loopOrder, mode, alpha, dS1, dS2, dF,
-   debugReports, exportRGETensors},
+   debugReports, exportRGETensors, thresholdPlan},
 
   output = If[Length[args] >= 1, ExpandFileName @ args[[1]],
     FileNameJoin @ {scriptDirectory, "output", "T3"}];
@@ -49,13 +70,15 @@ ParseCLI[args_List] := Module[
 
   debugReports = MemberQ[ToUpperCase /@ args, "DEBUG"];
   exportRGETensors = MemberQ[ToUpperCase /@ args, "RGETENSORS"];
+  thresholdPlan = ParseThresholdPlanCLI[args];
 
   <|
     "Output" -> output, "EFTOrder" -> eftOrder, "LoopOrder" -> loopOrder,
     "Mode" -> mode, "Alpha" -> alpha,
     "Dimensions" -> If[mode === "DIMS", {dS1, dS2, dF}, None],
     "DebugReports" -> debugReports,
-    "ExportRGETensors" -> exportRGETensors
+    "ExportRGETensors" -> exportRGETensors,
+    "ThresholdPlan" -> thresholdPlan
   |>
 ];
 
@@ -249,6 +272,24 @@ Print["Scalar1 (d,Y) = ", {model["Scalar1", "SU2"], model["Scalar1", "Y"]}];
 Print["Scalar2 (d,Y) = ", {model["Scalar2", "SU2"], model["Scalar2", "Y"]}];
 Print["Fermion (d,Y) = ", {model["Fermion", "SU2"], model["Fermion", "Y"]}];
 
+(* Configure the UV model so only the first requested threshold group is
+   marked Heavy. The other T3 fields remain dynamical Light fields. *)
+If[SetT3HeavyFields[First[config["ThresholdPlan"]]] === $Failed,
+  Print["ERROR: invalid first threshold group."];
+  Exit[9]
+];
+Print["Threshold plan: ", config["ThresholdPlan"]];
+Print["Threshold group count: ", Length[config["ThresholdPlan"]]];
+
+Export[
+  FileNameJoin @ {outputDirectory, "threshold_plan_debug.json"},
+  <|
+    "ParsedThresholdPlan" -> config["ThresholdPlan"],
+    "ParsedThresholdCount" -> Length[config["ThresholdPlan"]]
+  |>,
+  "RawJSON"
+];
+
 (* We build Lagrangian *)
 build = CheckAbort[UsingFrontEnd[BuildT3Lagrangian[model]], $Aborted];
 If[!AssociationQ[build] || build === $Aborted || build === $Failed,
@@ -309,11 +350,42 @@ If[TrueQ[config["ExportRGETensors"]],
 
 (* We match our Lagrangian*)
 matching = CheckAbort[
-  RunT3Matching[build["LUV"], config["EFTOrder"], config["LoopOrder"]],
+  RunSequentialT3Matching[
+    build["LUV"],
+    model,
+    config["ThresholdPlan"],
+    config["EFTOrder"],
+    config["LoopOrder"],
+    outputDirectory,
+    ToString[model["Class"]]
+  ],
   $Aborted
 ];
 If[!AssociationQ[matching] || Lookup[matching, "Status", ""] =!= "Success",
   Print["ERROR: matching failed."]; Exit[12]
+];
+
+Print[
+  "Sequential matching completed with ",
+  Length @ Lookup[matching, "Stages", {}],
+  " stage(s)."
+];
+
+Export[
+  FileNameJoin @ {outputDirectory, "sequential_matching_debug.json"},
+  <|
+    "Status" -> Lookup[matching, "Status", "Unknown"],
+    "RequestedThresholdCount" -> Length[config["ThresholdPlan"]],
+    "MatchedStageCount" -> Length @ Lookup[matching, "Stages", {}],
+    "StageLabels" -> Map[
+      Function[stage,
+        "EFT_" <> ToString[stage["Level"]] <> "_after_" <>
+          StringRiffle[stage["IntegratedFields"], "_"]
+      ],
+      Lookup[matching, "Stages", {}]
+    ]
+  |>,
+  "RawJSON"
 ];
 
 (* Get the MatchedEFT, if that fails, get loopEFT *)
@@ -345,6 +417,42 @@ smMatchedEFT = Lookup[
   smMatching,
   "MatchedEFT",
   Lookup[smMatching, "LoopEFT", smLagrangian]
+];
+
+
+(* Build compact, JSON-safe descriptions of every real sequential EFT stage.
+   For comparison tables we subtract the pure-SM baseline directly from each
+   already-canonical stage Lagrangian. *)
+sequentialStageData = Map[
+  Function[stage,
+    Module[
+      {level, integrated, active, stageLag, stageBSM, stageTeX, stageBSMTeX, label},
+
+      level = stage["Level"];
+      integrated = stage["IntegratedFields"];
+      active = stage["ActiveHeavyFields"];
+      stageLag = stage["Lagrangian"];
+      stageBSM = Expand[stageLag - smMatchedEFT];
+
+      label = "EFT_" <> ToString[level] <> "_after_" <>
+        StringRiffle[integrated, "_"];
+
+      stageTeX = ExpressionToLaTeX[stageLag];
+      stageBSMTeX = ExpressionToLaTeX[stageBSM];
+
+      <|
+        "Level" -> level,
+        "Label" -> label,
+        "IntegratedFields" -> integrated,
+        "ActiveHeavyFields" -> active,
+        "EFTConversionSuccess" -> TrueQ[stageTeX["Success"]],
+        "BSMEFTConversionSuccess" -> TrueQ[stageBSMTeX["Success"]],
+        "EFTLagrangianLaTeX" -> stageTeX["LaTeX"],
+        "BSMEFTLagrangianLaTeX" -> stageBSMTeX["LaTeX"]
+      |>
+    ]
+  ],
+  Lookup[matching, "Stages", {}]
 ];
 
 (* get BSM EFT from subtraction *)
@@ -419,6 +527,25 @@ summary = BuildSummary[
     |>
   ];
 *)
+If[
+  Length[sequentialStageData] =!= Length[config["ThresholdPlan"]],
+  Print[
+    "ERROR: stage-report export count mismatch: ",
+    Length[sequentialStageData],
+    " vs ",
+    Length[config["ThresholdPlan"]]
+  ];
+];
+
+summary = Join[
+  summary,
+  <|
+    "ThresholdPlan" -> config["ThresholdPlan"],
+    "SequentialMatchingStatus" -> Lookup[matching, "Status", "Unknown"],
+    "EFTStages" -> sequentialStageData
+  |>
+];
+
 Export[FileNameJoin @ {outputDirectory, "comparison_summary.json"}, summary, "RawJSON"];
 
 Print["Weinberg operator present: ", summary["WeinbergOperatorPresent"]];

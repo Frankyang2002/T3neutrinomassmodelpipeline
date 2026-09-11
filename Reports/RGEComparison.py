@@ -1,5 +1,9 @@
 from __future__ import annotations
 
+import re
+
+import sympy as sp
+
 """Across-model comparison report for the UV one-loop T3 RGEs from RGBeta."""
 
 import json
@@ -8,6 +12,7 @@ from typing import Any
 
 from common.Paths import REPORT_OUTPUT_DIR
 from common.Records import RunRecord
+from Reports.StageReports import final_eft_stage_label, rge_report_path
 from Reports.ReportGeneration import (
     compile_latex_document,
     latex_escape_text,
@@ -134,6 +139,62 @@ def _load_uv_payload(record: RunRecord) -> dict[str, Any] | None:
         return None
 
     return payload
+
+
+
+def _load_json_payload_from_summary(
+    record: RunRecord,
+    summary_key: str,
+    *,
+    require_success_key: str | None = None,
+) -> dict[str, Any] | None:
+    """Load one JSON payload referenced by a record summary field."""
+
+    if require_success_key is not None:
+        if record.summary.get(require_success_key) != "Success":
+            return None
+
+    relative_path = record.summary.get(summary_key)
+    if not relative_path:
+        return None
+
+    path = record.output_dir / str(relative_path)
+    if not path.is_file():
+        return None
+
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8-sig"))
+    except (OSError, json.JSONDecodeError):
+        return None
+
+    if payload.get("status") != "Success":
+        return None
+
+    return payload
+
+
+def _load_eft1_renormalisable_payload(
+    record: RunRecord,
+) -> dict[str, Any] | None:
+    """Read the saved RGBeta payload for EFT1 = SM + S1 + S2."""
+
+    return _load_json_payload_from_summary(
+        record,
+        "EFT1RenormalisableRGEFile",
+        require_success_key="EFT1RenormalisableRGEStatus",
+    )
+
+
+def _load_eft1_wilson_payload(
+    record: RunRecord,
+) -> dict[str, Any] | None:
+    """Read the component-level dimension-five Wilson RGE payload."""
+
+    return _load_json_payload_from_summary(
+        record,
+        "EFT1WilsonRGEFile",
+        require_success_key="EFT1WilsonRGEStatus",
+    )
 
 
 def _coupling_symbol(name: str) -> str:
@@ -357,10 +418,102 @@ def _beta_cell(latex: str | None, raw: str | None) -> str:
     return r"---"
 
 
-def write_rge_comparison(records: list[RunRecord]) -> Path:
-    """Create the across-model UV one-loop RGE comparison report."""
+def _comparison_term_signature(term: str) -> str:
+    """Return a coefficient-insensitive key used to align RGE terms across models.
 
-    output_path = REPORT_OUTPUT_DIR / "rge_comparison.tex"
+    The *cell* always keeps the complete original term.  This key is used only
+    to decide which terms belong in the same comparison column.
+    """
+
+    text = term.strip()
+    text = re.sub(r"^[+-]\s*", "", text)
+    text = text.replace(r"\left", "").replace(r"\right", "")
+    text = re.sub(r"\s+", "", text)
+
+    # Ignore representation-dependent numerical prefactors while retaining the
+    # symbolic tensor/matrix structure.  Powers/subscripts such as g_2^2 remain.
+    text = re.sub(
+        r"\\frac\{[-+]?\d+\}\{[-+]?\d+\}",
+        r"\\mathsf{c}",
+        text,
+    )
+    text = re.sub(
+        r"\\sqrt\{\d+\}",
+        r"\\mathsf{c}",
+        text,
+    )
+
+    # Replace ordinary multiplicative integers, but avoid numbers that are
+    # explicitly part of a subscript or superscript.
+    text = re.sub(
+        r"(?<![_^])(?<![_^]\{)(?<![A-Za-z])\d+(?![A-Za-z])",
+        "c",
+        text,
+    )
+
+    return text
+
+
+def _coupling_term_rows(
+    rows: list[tuple[RunRecord, dict[str, Any]]],
+    coupling: str,
+) -> tuple[
+    list[str],
+    dict[int, dict[str, list[str]]],
+    dict[str, str],
+]:
+    """Collect and align the complete additive terms of one beta function."""
+
+    ordered_signatures: list[str] = []
+    model_terms: dict[int, dict[str, list[str]]] = {}
+    representative: dict[str, str] = {}
+
+    for row_index, (_record, payload) in enumerate(rows):
+        latex_betas = payload.get("report_beta_latex", {}) or {}
+        latex = latex_betas.get(coupling)
+
+        if not latex or not str(latex).strip():
+            model_terms[row_index] = {}
+            continue
+
+        cleaned = _normalise_rgbeta_latex(str(latex))
+        terms = split_latex_terms(cleaned) or [cleaned]
+
+        grouped: dict[str, list[str]] = {}
+
+        for term in terms:
+            signature = _comparison_term_signature(term)
+
+            if signature not in representative:
+                representative[signature] = term
+
+            if signature not in ordered_signatures:
+                ordered_signatures.append(signature)
+
+            grouped.setdefault(signature, []).append(term)
+
+        model_terms[row_index] = grouped
+
+    return ordered_signatures, model_terms, representative
+
+
+def _rge_term_cell(terms: list[str] | None) -> str:
+    """Render the complete model-specific RGE term(s) in one comparison cell."""
+
+    if not terms:
+        return r"---"
+
+    return matrix_cell(terms, empty_value=r"---")
+
+def write_rge_comparison(records: list[RunRecord]) -> Path:
+    """Create the across-model UV RGE comparison report.
+
+    There is one section per running coupling.  Within that section, rows are
+    model configurations and columns are aligned additive RGE terms.  Cells
+    contain the complete term, including its model-dependent coefficient.
+    """
+
+    output_path = rge_report_path("UV")
 
     rows: list[tuple[RunRecord, dict[str, Any]]] = []
     coupling_names: set[str] = set()
@@ -375,13 +528,12 @@ def write_rge_comparison(records: list[RunRecord]) -> Path:
 
         raw_betas = payload.get("betas", {})
         latex_betas = payload.get("report_beta_latex", {})
+        report_betas = payload.get("report_betas", {})
 
         if not isinstance(raw_betas, dict):
             raw_betas = {}
         if not isinstance(latex_betas, dict):
             latex_betas = {}
-
-        report_betas = payload.get("report_betas", {})
         if not isinstance(report_betas, dict):
             report_betas = {}
 
@@ -390,58 +542,29 @@ def write_rge_comparison(records: list[RunRecord]) -> Path:
         rows.append((record, payload))
 
     lines: list[str] = [
-        r"\documentclass{article}",
-        r"\usepackage[margin=0.8cm]{geometry}",
+        r"\documentclass[8pt]{article}",
+        r"\usepackage[margin=0.65cm]{geometry}",
         r"\usepackage{amsmath,amssymb,adjustbox,pdflscape,longtable,array,booktabs}",
         r"\usepackage[T1]{fontenc}",
         r"\setlength{\tabcolsep}{2pt}",
         r"\renewcommand{\arraystretch}{1.2}",
         r"\begin{document}",
         r"\begin{landscape}",
-        r"\section*{T3 UV one-loop RGE comparison}",
+        r"\section*{T3 UV one-loop RGE term comparison}",
         (
-            r"Each table is written in the conventional form "
+            r"Each running coupling has its own table. Rows are model configurations "
+            r"and columns are additive structures in the beta function. Every populated "
+            r"cell contains the complete model-specific term, including its numerical "
+            r"coefficient. A dash means that the term is absent for that configuration."
+        ),
+        r"\medskip",
+        (
+            r"All equations use "
             r"$16\pi^2\,\mu\,dX/d\mu=\beta_X^{(1)}$. "
-            r"A dash means that the coupling is not registered for that representation assignment."
+            r"Gauge-coupling results use the same RGBeta $g^2\rightarrow g$ conversion "
+            r"as in the previous report."
         ),
-        r"\medskip",
-        r"\subsection*{Conventions and the RGBeta gauge-coupling conversion}",
-        (
-            r"For ordinary couplings the report uses the quantity returned by RGBeta directly. "
-            r"For gauge couplings, RGBeta uses $g^2$ as its running variable, so its one-loop output is proportional to "
-            r"$d(g^2)/d\ln\mu$. By the chain rule,"
-        ),
-        r"\[\frac{d(g^2)}{d\ln\mu}=2g\frac{dg}{d\ln\mu}=2g\,\mu\frac{dg}{d\mu}.\]",
-        (
-            r"Therefore, to present the gauge RGE in the same convention as every other table, "
-            r"$16\pi^2\,\mu\,dg/d\mu=\beta_g^{(1)}$, the RGBeta gauge result is divided by $2g$. "
-            r"This is only a change of running variable; no physics or loop factor is being altered."
-        ),
-        r"\medskip",
-        r"\subsection*{Notation}",
-        r"$S_1$ and $S_2$ denote the two BSM scalar multiplets and $F$ the BSM fermion multiplet. "
-        r"The columns $d_X$ give the $SU(2)_L$ representation dimensions and $Y_X$ the hypercharges. "
-        r"A dagger denotes Hermitian conjugation, $T$ transpose, $*$ complex conjugation, and $\operatorname{Tr}$ a trace over flavour indices.",
-        r"\medskip",
-        r"\subsection*{Coupling glossary}",
-        r"The interaction terms below are schematic: gauge-index contractions and conjugations are fixed by each model's quantum numbers. "
-        r"For representation-dependent quartics, labels such as Adj and Cross distinguish independent $SU(2)_L$ invariant contractions.",
-        r"\begin{longtable}{@{}p{0.11\linewidth}p{0.17\linewidth}p{0.37\linewidth}p{0.29\linewidth}@{}}",
-        r"\toprule",
-        r"Symbol & Meaning & Schematic Lagrangian term & Notes \\",
-        r"\midrule",
-        r"\endfirsthead",
-        r"\toprule",
-        r"Symbol & Meaning & Schematic Lagrangian term & Notes \\",
-        r"\midrule",
-        r"\endhead",
     ]
-
-    for symbol, meaning, lagrangian_term, notes in GLOSSARY_ROWS:
-        lines.append(f"{symbol} & {meaning} & {lagrangian_term} & {notes} " + r"\\")
-        lines.append(r"\midrule")
-
-    lines.extend([r"\bottomrule", r"\end{longtable}", r"\clearpage"])
 
     if not rows:
         lines.append(r"No successful UV RGBeta results are available.")
@@ -454,41 +577,863 @@ def write_rge_comparison(records: list[RunRecord]) -> Path:
                 lines.append(r"\clearpage")
 
             symbol = _coupling_symbol(coupling)
+
+            signatures, model_terms, representative = _coupling_term_rows(
+                rows,
+                coupling,
+            )
+
             lines.extend(
                 [
                     rf"\section*{{$\beta_{{{symbol}}}^{{(1)}}$}}",
                     rf"\[16\pi^2\,\mu\frac{{d {symbol}}}{{d\mu}}="
                     rf"\beta_{{{symbol}}}^{{(1)}}\]",
-                    r"\tiny",
-                    r"\begin{longtable}{@{}llcccccc >{\raggedright\arraybackslash}p{0.54\linewidth}@{}}",
+                ]
+            )
+
+            if not signatures:
+                lines.append(
+                    r"\textit{No LaTeX beta-function terms were available for this coupling.}"
+                )
+                continue
+
+            # Large RGEs can contain many additive terms. Split the term columns
+            # across multiple tables while preserving the same model rows.
+            term_chunk_size = 3
+            signature_chunks = [
+                signatures[index:index + term_chunk_size]
+                for index in range(0, len(signatures), term_chunk_size)
+            ]
+
+            for chunk_number, signature_chunk in enumerate(
+                signature_chunks,
+                start=1,
+            ):
+                if chunk_number > 1:
+                    lines.append(r"\clearpage")
+
+                if len(signature_chunks) > 1:
+                    lines.append(
+                        rf"\subsection*{{Terms {chunk_number} of "
+                        rf"{len(signature_chunks)}}}"
+                    )
+
+                # Show what each term column represents.  This is only a column
+                # label/representative; the table cells below retain each model's
+                # complete term.
+                lines.append(r"\begin{center}")
+                lines.append(
+                    r"\begin{tabular}{@{}c >{\raggedright\arraybackslash}p{0.82\linewidth}@{}}"
+                )
+                lines.append(r"\toprule")
+                lines.append(r"Column & Representative term structure \\")
+                lines.append(r"\midrule")
+
+                for local_index, signature in enumerate(signature_chunk, start=1):
+                    representative_term = representative[signature]
+                    lines.append(
+                        rf"T{local_index} & "
+                        + r"\(\displaystyle "
+                        + representative_term
+                        + r"\) \\"
+                    )
+                    lines.append(r"\midrule")
+
+                lines.extend(
+                    [
+                        r"\bottomrule",
+                        r"\end{tabular}",
+                        r"\end{center}",
+                        r"\smallskip",
+                    ]
+                )
+
+                widths = " ".join(
+                    r">{\raggedright\arraybackslash}p{0.21\linewidth}"
+                    for _ in signature_chunk
+                )
+
+                column_spec = (
+                    r"@{}llcccccc "
+                    + widths
+                    + r"@{}"
+                )
+
+                term_headers = [
+                    rf"T{index}"
+                    for index in range(1, len(signature_chunk) + 1)
+                ]
+
+                header = [
+                    r"Model",
+                    r"$\alpha$",
+                    r"$d_{S_1}$",
+                    r"$Y_{S_1}$",
+                    r"$d_{S_2}$",
+                    r"$Y_{S_2}$",
+                    r"$d_F$",
+                    r"$Y_F$",
+                    *term_headers,
+                ]
+
+                lines.extend(
+                    [
+                        r"\tiny",
+                        rf"\begin{{longtable}}{{{column_spec}}}",
+                        r"\toprule",
+                        " & ".join(header) + r" \\",
+                        r"\midrule",
+                        r"\endfirsthead",
+                        r"\toprule",
+                        " & ".join(header) + r" \\",
+                        r"\midrule",
+                        r"\endhead",
+                    ]
+                )
+
+                for row_index, (record, payload) in enumerate(rows):
+                    d_s1, y_s1, d_s2, y_s2, d_f, y_f = record_quantum_numbers(record)
+                    grouped = model_terms.get(row_index, {})
+
+                    cells = [
+                        latex_escape_text(record.name),
+                        rf"${record.alpha}$",
+                        rf"${d_s1}$",
+                        rf"${latex_fraction(y_s1)}$",
+                        rf"${d_s2}$",
+                        rf"${latex_fraction(y_s2)}$",
+                        rf"${d_f}$",
+                        rf"${latex_fraction(y_f)}$",
+                        *[
+                            _rge_term_cell(grouped.get(signature))
+                            for signature in signature_chunk
+                        ],
+                    ]
+
+                    lines.append(" & ".join(cells) + r" \\")
+                    lines.append(r"\midrule")
+
+                lines.extend(
+                    [
+                        r"\bottomrule",
+                        r"\end{longtable}",
+                    ]
+                )
+
+    lines.extend(
+        [
+            r"\end{landscape}",
+            r"\end{document}",
+            "",
+        ]
+    )
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text("\n".join(lines), encoding="utf-8")
+    print(f"\nUV RGE term-comparison report:\n{output_path}")
+    return output_path
+
+def write_and_compile_rge_comparison(records: list[RunRecord]) -> Path:
+    """Write and compile the across-model UV RGE comparison report."""
+
+    report_tex = write_rge_comparison(records)
+    compile_latex_document(report_tex)
+    return report_tex
+
+
+
+def _renormalisable_rows_from_loader(
+    records: list[RunRecord],
+    loader,
+) -> tuple[list[tuple[RunRecord, dict[str, Any]]], set[str]]:
+    """Collect successful RGBeta rows and coupling names for one EFT stage."""
+
+    rows: list[tuple[RunRecord, dict[str, Any]]] = []
+    coupling_names: set[str] = set()
+
+    for record in records:
+        payload = loader(record)
+        if payload is None:
+            continue
+
+        raw_betas = payload.get("betas", {})
+        latex_betas = payload.get("report_beta_latex", {})
+        report_betas = payload.get("report_betas", {})
+
+        if not isinstance(raw_betas, dict):
+            raw_betas = {}
+        if not isinstance(latex_betas, dict):
+            latex_betas = {}
+        if not isinstance(report_betas, dict):
+            report_betas = {}
+
+        coupling_names.update(str(name) for name in report_betas or raw_betas)
+        coupling_names.update(str(name) for name in latex_betas)
+        rows.append((record, payload))
+
+    return rows, coupling_names
+
+
+def _sympify_report_expression(raw: str) -> sp.Expr | None:
+    """Parse one saved SymPy expression from the Wilson-RGE JSON."""
+
+    try:
+        return sp.expand(
+            sp.sympify(
+                str(raw),
+                locals={
+                    "conjugate": sp.conjugate,
+                    "sqrt": sp.sqrt,
+                    "I": sp.I,
+                },
+            )
+        )
+    except (TypeError, ValueError, SyntaxError, sp.SympifyError):
+        return None
+
+
+def _wilson_component_sort_key(component: str) -> tuple[int, ...]:
+    try:
+        return tuple(int(piece) for piece in component.split(","))
+    except ValueError:
+        return (10**9,)
+
+
+def _wilson_component_symbol(component: str) -> str:
+    pieces = component.split(",")
+    if len(pieces) != 4:
+        return r"C_{\mathrm{" + latex_escape_text(component) + r"}}"
+    i, j, a, b = pieces
+    return rf"C_{{{i}{j}{a}{b}}}"
+
+
+def _eft1_wilson_component_rows(
+    records: list[RunRecord],
+    component: str,
+) -> tuple[
+    list[str],
+    dict[int, dict[str, list[str]]],
+    dict[str, str],
+]:
+    """Align additive terms of one Wilson beta component across models."""
+
+    signature_order: list[str] = []
+    model_terms: dict[int, dict[str, list[str]]] = {}
+    representative: dict[str, str] = {}
+
+    for row_index, record in enumerate(records):
+        payload = _load_eft1_wilson_payload(record)
+        if payload is None:
+            model_terms[row_index] = {}
+            continue
+
+        beta_entry = (payload.get("betas", {}) or {}).get(component)
+        if not isinstance(beta_entry, dict):
+            model_terms[row_index] = {}
+            continue
+
+        expression = _sympify_report_expression(beta_entry.get("total", ""))
+        if expression is None:
+            model_terms[row_index] = {}
+            continue
+
+        grouped: dict[str, list[str]] = {}
+        for term in sp.Add.make_args(sp.expand(expression)):
+            signature = _sympy_term_signature(term)
+            latex_term = sp.latex(term)
+            grouped.setdefault(signature, []).append(latex_term)
+
+            if signature not in representative:
+                representative[signature] = sp.latex(
+                    sp.expand(term.as_coeff_Mul()[1])
+                )
+                signature_order.append(signature)
+
+        model_terms[row_index] = grouped
+
+    return signature_order, model_terms, representative
+
+
+def write_eft1_rge_comparison(records: list[RunRecord]) -> Path:
+    """Create the complete intermediate-EFT RGE report after integrating out F.
+
+    The report contains both:
+      1. the renormalisable RGBeta running of SM + S1 + S2; and
+      2. the one-loop running/mixing of the tree-generated dimension-five
+         psi^2 phi^2 Wilson tensor.
+
+    The Wilson section is component-level because the current master-RGE
+    calculation is stored in the real scalar basis C_{ijab}.
+    """
+
+    stage_label = "EFT_1_after_F"
+    output_path = rge_report_path(stage_label)
+
+    ren_rows, coupling_names = _renormalisable_rows_from_loader(
+        records,
+        _load_eft1_renormalisable_payload,
+    )
+
+    wilson_records = [
+        record
+        for record in records
+        if _load_eft1_wilson_payload(record) is not None
+    ]
+
+    wilson_components: set[str] = set()
+    for record in wilson_records:
+        payload = _load_eft1_wilson_payload(record)
+        if payload is None:
+            continue
+        betas = payload.get("betas", {}) or {}
+        if isinstance(betas, dict):
+            wilson_components.update(str(name) for name in betas)
+
+    lines: list[str] = [
+        r"\documentclass[8pt]{article}",
+        r"\usepackage[margin=0.65cm]{geometry}",
+        r"\usepackage{amsmath,amssymb,adjustbox,pdflscape,longtable,array,booktabs}",
+        r"\usepackage[T1]{fontenc}",
+        r"\setlength{\tabcolsep}{2pt}",
+        r"\renewcommand{\arraystretch}{1.2}",
+        r"\begin{document}",
+        r"\begin{landscape}",
+        r"\section*{T3 intermediate-EFT one-loop RGE term comparison: EFT\_1 after $F$}",
+        (
+            r"This stage has active field content SM+$S_1+S_2$. "
+            r"The report combines the renormalisable RGBeta running with the "
+            r"dimension-five $\psi^2\phi^2$ Wilson-coefficient running generated "
+            r"after integrating out $F$."
+        ),
+        r"\medskip",
+        (
+            r"Throughout, $16\pi^2\,\mu\,dX/d\mu=\beta_X^{(1)}$. "
+            r"For the Wilson sector only the tree-generated stage-1 coefficient "
+            r"$C^{(0)}$ is inserted into the one-loop anomalous dimension; the "
+            r"one-loop threshold piece is retained as a boundary term and is not "
+            r"run again at this order."
+        ),
+        r"\section*{Renormalisable EFT1 couplings}",
+    ]
+
+    if not ren_rows:
+        lines.append(
+            r"\textit{No successful renormalisable EFT1 RGBeta results are available.}"
+        )
+    else:
+        for coupling_number, coupling in enumerate(
+            _ordered_couplings(coupling_names),
+            start=1,
+        ):
+            if coupling_number > 1:
+                lines.append(r"\clearpage")
+
+            symbol = _coupling_symbol(coupling)
+            signatures, model_terms, representative = _coupling_term_rows(
+                ren_rows,
+                coupling,
+            )
+
+            lines.extend(
+                [
+                    rf"\section*{{$\beta_{{{symbol}}}^{{(1)}}$}}",
+                    rf"\[16\pi^2\,\mu\frac{{d {symbol}}}{{d\mu}}="
+                    rf"\beta_{{{symbol}}}^{{(1)}}\]",
+                ]
+            )
+
+            if not signatures:
+                lines.append(
+                    r"\textit{No LaTeX beta-function terms were available for this coupling.}"
+                )
+                continue
+
+            term_chunk_size = 3
+            signature_chunks = [
+                signatures[index:index + term_chunk_size]
+                for index in range(0, len(signatures), term_chunk_size)
+            ]
+
+            for chunk_number, signature_chunk in enumerate(
+                signature_chunks,
+                start=1,
+            ):
+                if chunk_number > 1:
+                    lines.append(r"\clearpage")
+
+                if len(signature_chunks) > 1:
+                    lines.append(
+                        rf"\subsection*{{Terms {chunk_number} of "
+                        rf"{len(signature_chunks)}}}"
+                    )
+
+                lines.extend(
+                    [
+                        r"\begin{center}",
+                        r"\begin{tabular}{@{}c >{\raggedright\arraybackslash}p{0.82\linewidth}@{}}",
+                        r"\toprule",
+                        r"Column & Representative term structure \\",
+                        r"\midrule",
+                    ]
+                )
+                for local_index, signature in enumerate(signature_chunk, start=1):
+                    lines.append(
+                        rf"T{local_index} & "
+                        + r"\(\displaystyle "
+                        + representative[signature]
+                        + r"\) \\"
+                    )
+                    lines.append(r"\midrule")
+
+                lines.extend(
+                    [
+                        r"\bottomrule",
+                        r"\end{tabular}",
+                        r"\end{center}",
+                        r"\smallskip",
+                    ]
+                )
+
+                widths = " ".join(
+                    r">{\raggedright\arraybackslash}p{0.21\linewidth}"
+                    for _ in signature_chunk
+                )
+                column_spec = r"@{}llcccccc " + widths + r"@{}"
+                headers = [
+                    r"Model",
+                    r"$\alpha$",
+                    r"$d_{S_1}$",
+                    r"$Y_{S_1}$",
+                    r"$d_{S_2}$",
+                    r"$Y_{S_2}$",
+                    r"$d_F$",
+                    r"$Y_F$",
+                    *[
+                        rf"T{index}"
+                        for index in range(1, len(signature_chunk) + 1)
+                    ],
+                ]
+
+                lines.extend(
+                    [
+                        r"\tiny",
+                        rf"\begin{{longtable}}{{{column_spec}}}",
+                        r"\toprule",
+                        " & ".join(headers) + r" \\",
+                        r"\midrule",
+                        r"\endfirsthead",
+                        r"\toprule",
+                        " & ".join(headers) + r" \\",
+                        r"\midrule",
+                        r"\endhead",
+                    ]
+                )
+
+                for row_index, (record, _payload) in enumerate(ren_rows):
+                    d_s1, y_s1, d_s2, y_s2, d_f, y_f = record_quantum_numbers(
+                        record
+                    )
+                    grouped = model_terms.get(row_index, {})
+                    cells = [
+                        latex_escape_text(record.name),
+                        rf"${record.alpha}$",
+                        rf"${d_s1}$",
+                        rf"${latex_fraction(y_s1)}$",
+                        rf"${d_s2}$",
+                        rf"${latex_fraction(y_s2)}$",
+                        rf"${d_f}$",
+                        rf"${latex_fraction(y_f)}$",
+                        *[
+                            _rge_term_cell(grouped.get(signature))
+                            for signature in signature_chunk
+                        ],
+                    ]
+                    lines.append(" & ".join(cells) + r" \\")
+                    lines.append(r"\midrule")
+
+                lines.extend([r"\bottomrule", r"\end{longtable}"])
+
+    lines.extend(
+        [
+            r"\clearpage",
+            r"\section*{Dimension-five $\psi^2\phi^2$ Wilson coefficients}",
+            (
+                r"The Wilson tensor is reported in the real-scalar component basis "
+                r"$C_{ijab}$. Each component with a nonzero one-loop beta function "
+                r"has its own table. Components absent at the matching boundary but "
+                r"generated by operator mixing are included automatically."
+            ),
+        ]
+    )
+
+    if not wilson_records:
+        lines.append(
+            r"\textit{No successful EFT1 Wilson-RGE results are available.}"
+        )
+    else:
+        ordered_components = sorted(
+            wilson_components,
+            key=_wilson_component_sort_key,
+        )
+
+        for component_number, component in enumerate(
+            ordered_components,
+            start=1,
+        ):
+            if component_number > 1:
+                lines.append(r"\clearpage")
+
+            symbol = _wilson_component_symbol(component)
+            signatures, model_terms, representative = _eft1_wilson_component_rows(
+                wilson_records,
+                component,
+            )
+
+            lines.extend(
+                [
+                    rf"\section*{{$\beta_{{{symbol}}}^{{(1)}}$}}",
+                    rf"\[16\pi^2\,\mu\frac{{d {symbol}}}{{d\mu}}="
+                    rf"\beta_{{{symbol}}}^{{(1)}}\]",
+                ]
+            )
+
+            if not signatures:
+                lines.append(
+                    r"\textit{No nonzero beta-function terms for this component.}"
+                )
+                continue
+
+            term_chunk_size = 3
+            chunks = [
+                signatures[index:index + term_chunk_size]
+                for index in range(0, len(signatures), term_chunk_size)
+            ]
+
+            for chunk_number, signature_chunk in enumerate(chunks, start=1):
+                if chunk_number > 1:
+                    lines.append(r"\clearpage")
+
+                if len(chunks) > 1:
+                    lines.append(
+                        rf"\subsection*{{Terms {chunk_number} of {len(chunks)}}}"
+                    )
+
+                lines.extend(
+                    [
+                        r"\begin{center}",
+                        r"\begin{tabular}{@{}c >{\raggedright\arraybackslash}p{0.82\linewidth}@{}}",
+                        r"\toprule",
+                        r"Column & Representative term structure \\",
+                        r"\midrule",
+                    ]
+                )
+                for local_index, signature in enumerate(signature_chunk, start=1):
+                    lines.append(
+                        rf"T{local_index} & "
+                        + r"\(\displaystyle "
+                        + representative[signature]
+                        + r"\) \\"
+                    )
+                    lines.append(r"\midrule")
+
+                lines.extend(
+                    [
+                        r"\bottomrule",
+                        r"\end{tabular}",
+                        r"\end{center}",
+                        r"\smallskip",
+                    ]
+                )
+
+                widths = " ".join(
+                    r">{\raggedright\arraybackslash}p{0.21\linewidth}"
+                    for _ in signature_chunk
+                )
+                column_spec = r"@{}llcccccc " + widths + r"@{}"
+                headers = [
+                    r"Model",
+                    r"$\alpha$",
+                    r"$d_{S_1}$",
+                    r"$Y_{S_1}$",
+                    r"$d_{S_2}$",
+                    r"$Y_{S_2}$",
+                    r"$d_F$",
+                    r"$Y_F$",
+                    *[
+                        rf"T{index}"
+                        for index in range(1, len(signature_chunk) + 1)
+                    ],
+                ]
+
+                lines.extend(
+                    [
+                        r"\tiny",
+                        rf"\begin{{longtable}}{{{column_spec}}}",
+                        r"\toprule",
+                        " & ".join(headers) + r" \\",
+                        r"\midrule",
+                        r"\endfirsthead",
+                        r"\toprule",
+                        " & ".join(headers) + r" \\",
+                        r"\midrule",
+                        r"\endhead",
+                    ]
+                )
+
+                for row_index, record in enumerate(wilson_records):
+                    d_s1, y_s1, d_s2, y_s2, d_f, y_f = record_quantum_numbers(
+                        record
+                    )
+                    grouped = model_terms.get(row_index, {})
+                    cells = [
+                        latex_escape_text(record.name),
+                        rf"${record.alpha}$",
+                        rf"${d_s1}$",
+                        rf"${latex_fraction(y_s1)}$",
+                        rf"${d_s2}$",
+                        rf"${latex_fraction(y_s2)}$",
+                        rf"${d_f}$",
+                        rf"${latex_fraction(y_f)}$",
+                        *[
+                            _rge_term_cell(grouped.get(signature))
+                            for signature in signature_chunk
+                        ],
+                    ]
+                    lines.append(" & ".join(cells) + r" \\")
+                    lines.append(r"\midrule")
+
+                lines.extend([r"\bottomrule", r"\end{longtable}"])
+
+    lines.extend(
+        [
+            r"\end{landscape}",
+            r"\end{document}",
+            "",
+        ]
+    )
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text("\n".join(lines), encoding="utf-8")
+    print(f"\nIntermediate-EFT RGE term-comparison report:\n{output_path}")
+    return output_path
+
+
+def write_and_compile_eft1_rge_comparison(
+    records: list[RunRecord],
+) -> Path:
+    """Write and compile the complete EFT1 RGE comparison report."""
+
+    report_tex = write_eft1_rge_comparison(records)
+    compile_latex_document(report_tex)
+    return report_tex
+
+
+def _parse_beta_ratio(summary: dict[str, Any]) -> sp.Expr | None:
+    """Parse the saved matched-EFT beta/C5 expression."""
+
+    raw = summary.get("BetaOverC5")
+    if not raw:
+        return None
+
+    try:
+        return sp.expand(
+            sp.sympify(
+                str(raw),
+                locals={
+                    "conjugate": sp.conjugate,
+                },
+            )
+        )
+    except (TypeError, ValueError, SyntaxError, sp.SympifyError):
+        return None
+
+
+def _sympy_term_signature(term: sp.Expr) -> str:
+    """Coefficient-insensitive structural key for one additive SymPy term."""
+
+    _, structure = sp.sympify(term).as_coeff_Mul()
+    return sp.srepr(structure)
+
+
+def _final_eft_term_rows(
+    records: list[RunRecord],
+) -> tuple[
+    list[str],
+    dict[int, dict[str, list[str]]],
+    dict[str, str],
+]:
+    """Align additive terms of the final SMEFT C5 beta across models."""
+
+    signature_order: list[str] = []
+    model_terms: dict[int, dict[str, list[str]]] = {}
+    representative: dict[str, str] = {}
+
+    c5 = sp.Symbol("C_5")
+
+    for row_index, record in enumerate(records):
+        ratio = _parse_beta_ratio(record.summary)
+        if ratio is None:
+            continue
+
+        grouped: dict[str, list[str]] = {}
+
+        for term in sp.Add.make_args(sp.expand(ratio)):
+            signature = _sympy_term_signature(term)
+
+            # The report is written as beta_C5, not beta_C5/C5, so every
+            # populated cell contains the complete additive RGE term.
+            latex_term = sp.latex(sp.expand(c5 * term))
+
+            grouped.setdefault(signature, []).append(latex_term)
+
+            if signature not in representative:
+                representative[signature] = sp.latex(
+                    sp.expand(c5 * term.as_coeff_Mul()[1])
+                )
+                signature_order.append(signature)
+
+        model_terms[row_index] = grouped
+
+    return signature_order, model_terms, representative
+
+
+def write_final_eft_rge_comparison(records: list[RunRecord]) -> Path:
+    """Create the across-model final-EFT Weinberg RGE comparison report."""
+
+    stage_label = final_eft_stage_label(records)
+    output_path = rge_report_path(stage_label)
+
+    successful_records = [
+        record
+        for record in records
+        if record.summary.get("RGEStatus") == "Success"
+        and _parse_beta_ratio(record.summary) is not None
+    ]
+
+    signatures, model_terms, representative = _final_eft_term_rows(
+        successful_records
+    )
+
+    lines: list[str] = [
+        r"\documentclass[8pt]{article}",
+        r"\usepackage[margin=0.65cm]{geometry}",
+        r"\usepackage{amsmath,amssymb,adjustbox,pdflscape,longtable,array,booktabs}",
+        r"\usepackage[T1]{fontenc}",
+        r"\setlength{\tabcolsep}{2pt}",
+        r"\renewcommand{\arraystretch}{1.2}",
+        r"\begin{document}",
+        r"\begin{landscape}",
+        rf"\section*{{T3 final-EFT one-loop RGE term comparison: {latex_escape_text(stage_label)}}}",
+        (
+            r"All T3 particles have been integrated out at this stage. "
+            r"The active theory is the SM plus the dimension-five Weinberg operator. "
+            r"Rows are the UV model configurations that produced the matched coefficient, "
+            r"while columns align the additive structures in its one-loop beta function. "
+            r"Each populated cell contains the complete term, including its coefficient "
+            r"and the factor $C_5$."
+        ),
+        r"\medskip",
+        (
+            r"We use "
+            r"$16\pi^2\,\mu\,dC_5/d\mu=\beta_{C_5}^{(1)}$."
+        ),
+        r"\section*{$\beta_{C_5}^{(1)}$}",
+        r"\[16\pi^2\,\mu\frac{dC_5}{d\mu}=\beta_{C_5}^{(1)}\]",
+    ]
+
+    if not successful_records:
+        lines.append(
+            r"\textit{No successful matched-EFT RGE results are available.}"
+        )
+    elif not signatures:
+        lines.append(
+            r"\textit{No additive beta-function terms could be parsed.}"
+        )
+    else:
+        term_chunk_size = 3
+        chunks = [
+            signatures[index:index + term_chunk_size]
+            for index in range(0, len(signatures), term_chunk_size)
+        ]
+
+        for chunk_number, signature_chunk in enumerate(chunks, start=1):
+            if chunk_number > 1:
+                lines.append(r"\clearpage")
+
+            if len(chunks) > 1:
+                lines.append(
+                    rf"\subsection*{{Terms {chunk_number} of {len(chunks)}}}"
+                )
+
+            lines.extend(
+                [
+                    r"\begin{center}",
+                    r"\begin{tabular}{@{}c >{\raggedright\arraybackslash}p{0.82\linewidth}@{}}",
                     r"\toprule",
-                    (
-                        r"Model & $\alpha$ & $d_{S_1}$ & $Y_{S_1}$ & "
-                        r"$d_{S_2}$ & $Y_{S_2}$ & $d_F$ & $Y_F$ & "
-                        rf"$\beta_{{{symbol}}}^{{(1)}}$ \\" 
-                    ),
+                    r"Column & Representative term structure \\",
+                    r"\midrule",
+                ]
+            )
+
+            for local_index, signature in enumerate(signature_chunk, start=1):
+                lines.append(
+                    rf"T{local_index} & "
+                    + r"\(\displaystyle "
+                    + representative[signature]
+                    + r"\) \\"
+                )
+                lines.append(r"\midrule")
+
+            lines.extend(
+                [
+                    r"\bottomrule",
+                    r"\end{tabular}",
+                    r"\end{center}",
+                    r"\smallskip",
+                ]
+            )
+
+            widths = " ".join(
+                r">{\raggedright\arraybackslash}p{0.21\linewidth}"
+                for _ in signature_chunk
+            )
+            column_spec = r"@{}llcccccc " + widths + r"@{}"
+
+            headers = [
+                r"Model",
+                r"$\alpha$",
+                r"$d_{S_1}$",
+                r"$Y_{S_1}$",
+                r"$d_{S_2}$",
+                r"$Y_{S_2}$",
+                r"$d_F$",
+                r"$Y_F$",
+                *[
+                    rf"T{index}"
+                    for index in range(1, len(signature_chunk) + 1)
+                ],
+            ]
+
+            lines.extend(
+                [
+                    r"\tiny",
+                    rf"\begin{{longtable}}{{{column_spec}}}",
+                    r"\toprule",
+                    " & ".join(headers) + r" \\",
                     r"\midrule",
                     r"\endfirsthead",
                     r"\toprule",
-                    (
-                        r"Model & $\alpha$ & $d_{S_1}$ & $Y_{S_1}$ & "
-                        r"$d_{S_2}$ & $Y_{S_2}$ & $d_F$ & $Y_F$ & "
-                        rf"$\beta_{{{symbol}}}^{{(1)}}$ \\" 
-                    ),
+                    " & ".join(headers) + r" \\",
                     r"\midrule",
                     r"\endhead",
                 ]
             )
 
-            for record, payload in rows:
-                raw_betas = payload.get("betas", {}) or {}
-                latex_betas = payload.get("report_beta_latex", {}) or {}
-                d_s1, y_s1, d_s2, y_s2, d_f, y_f = record_quantum_numbers(record)
-
-                cell = _beta_cell(
-                    latex_betas.get(coupling),
-                    raw_betas.get(coupling),
+            for row_index, record in enumerate(successful_records):
+                d_s1, y_s1, d_s2, y_s2, d_f, y_f = record_quantum_numbers(
+                    record
                 )
+                grouped = model_terms.get(row_index, {})
 
                 cells = [
                     latex_escape_text(record.name),
@@ -499,8 +1444,12 @@ def write_rge_comparison(records: list[RunRecord]) -> Path:
                     rf"${latex_fraction(y_s2)}$",
                     rf"${d_f}$",
                     rf"${latex_fraction(y_f)}$",
-                    cell,
+                    *[
+                        _rge_term_cell(grouped.get(signature))
+                        for signature in signature_chunk
+                    ],
                 ]
+
                 lines.append(" & ".join(cells) + r" \\")
                 lines.append(r"\midrule")
 
@@ -521,13 +1470,15 @@ def write_rge_comparison(records: list[RunRecord]) -> Path:
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text("\n".join(lines), encoding="utf-8")
-    print(f"\nUV RGE comparison report:\n{output_path}")
+    print(f"\nFinal-EFT RGE term-comparison report:\n{output_path}")
     return output_path
 
 
-def write_and_compile_rge_comparison(records: list[RunRecord]) -> Path:
-    """Write and compile the across-model UV RGE comparison report."""
+def write_and_compile_final_eft_rge_comparison(
+    records: list[RunRecord],
+) -> Path:
+    """Write and compile the final-EFT Weinberg RGE comparison report."""
 
-    report_tex = write_rge_comparison(records)
+    report_tex = write_final_eft_rge_comparison(records)
     compile_latex_document(report_tex)
     return report_tex

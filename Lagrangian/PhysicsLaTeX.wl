@@ -413,7 +413,10 @@ PhysicsCGBase[tensor_] := Module[
 ];
 
 PhysicsCG[cg_] := Module[
-  {arguments, tensor, indices, formatted, tensorText},
+  {
+    arguments, tensor, indices, formatted, tensorText,
+    base, baseParts, inner, innerParts, combinedSubscript
+  },
 
   arguments = List @@ Unevaluated[cg];
   If[Length[arguments] < 2, Return[cg]];
@@ -432,9 +435,52 @@ PhysicsCG[cg_] := Module[
       Subscript[\[Epsilon], Row[formatted]],
 
     True,
-      Subscript[
-        PhysicsCGBase[tensor],
-        Row[Riffle[formatted, ","]]
+      base = PhysicsCGBase[tensor];
+
+      (* PhysicsCGBase intentionally gives invariant tensors a descriptive
+         label such as I_y1, I_y2, I_T3, I_H1^n, ... .  Adding the component
+         indices with another Subscript used to produce nested objects such as
+
+             Subscript[Subscript[I, y1], a]
+
+         which TeXForm renders as I_{y1}_{a} and pdflatex rejects with
+         "Double subscript".
+
+         Merge the descriptive label and component indices into one subscript:
+             I_{y1,a}
+         while preserving any invariant-multiplicity superscript. *)
+
+      Which[
+        Head[base] === Subscript,
+          baseParts = List @@ base;
+          combinedSubscript = Row@Join[
+            {baseParts[[2]]},
+            If[formatted === {}, {}, Join[{","}, Riffle[formatted, ","]]]
+          ];
+          Subscript[baseParts[[1]], combinedSubscript],
+
+        Head[base] === Superscript &&
+          Head[First[List @@ base]] === Subscript,
+          baseParts = List @@ base;
+          inner = baseParts[[1]];
+          innerParts = List @@ inner;
+          combinedSubscript = Row@Join[
+            {innerParts[[2]]},
+            If[formatted === {}, {}, Join[{","}, Riffle[formatted, ","]]]
+          ];
+          Superscript[
+            Subscript[innerParts[[1]], combinedSubscript],
+            baseParts[[2]]
+          ],
+
+        formatted === {},
+          base,
+
+        True,
+          Subscript[
+            base,
+            Row[Riffle[formatted, ","]]
+          ]
       ]
   ]
 ];
@@ -655,15 +701,16 @@ ExpressionToLaTeX[expression_] := Module[
 
   remaining = RemainingInternalObjects[formatted];
 
-  If[
-    remaining =!= {},
-    Return[<|
-      "Success" -> False,
-      "LaTeX" -> "",
-      "Remaining" -> ToString[Short[remaining, 20], InputForm]
-    |>]
-  ];
+  (* Do not discard the whole expression merely because a small number of
+     Matchete wrapper objects survive the pretty-printer.  The report layer
+     only needs a readable/best-effort LaTeX representation in order to group
+     and compare terms by field content.  Previously this early return changed
+     every such expression into an empty string, which made the UV/EFT
+     Lagrangian comparison tables completely empty.
 
+     We still record the surviving internal objects in "Remaining" so failed
+     conversions remain diagnosable, but we allow TeXForm to render the
+     partially converted expression. *)
   latex = Quiet@Check[
     ToString[TeXForm[formatted]],
     ""
@@ -692,6 +739,13 @@ ExpressionToLaTeX[expression_] := Module[
   <|
     "Success" -> StringQ[latex] && StringLength[latex] > 0,
     "LaTeX" -> latex,
-    "Remaining" -> If[latex === "", "TeXForm failed.", ""]
+    "Remaining" -> Which[
+      latex === "",
+        "TeXForm failed.",
+      remaining =!= {},
+        ToString[Short[remaining, 20], InputForm],
+      True,
+        ""
+    ]
   |>
 ];

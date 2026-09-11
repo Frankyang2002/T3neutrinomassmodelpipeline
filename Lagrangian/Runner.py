@@ -32,6 +32,7 @@ def run_model(
     model_args: list[str],
     debug_reports: bool = False,
     export_rge_tensors: bool = False,
+    threshold_plan: tuple[tuple[str, ...], ...] | None = None,
 ) -> RunRecord:
     """What this does is 
     1. Delete previous output directory and recreate for new results
@@ -52,6 +53,11 @@ def run_model(
     #   loop order
     #   model arguments
     # We use RunModel.wl+
+    threshold_plan = threshold_plan or (("F", "S1", "S2"),)
+    threshold_token = "THRESHOLDS=" + ";".join(
+        ",".join(group) for group in threshold_plan
+    )
+
     command = [
         "wolframscript",
         "-file",
@@ -60,18 +66,61 @@ def run_model(
         str(EFT_ORDER),
         str(LOOP_ORDER),
         *model_args,
+        threshold_token,
         *(["DEBUG"] if debug_reports else []),
         *(["RGETENSORS"] if export_rge_tensors else []),
     ]
 
-    # Launch Wolfram and capture both normal output and errors as text.
-    process = subprocess.run(
+    # Launch Wolfram and stream its output live.
+    #
+    # Sequential matching can take substantially longer than the old single
+    # common-threshold Match.  Using subprocess.run(..., capture_output=True)
+    # hid every Wolfram message until the entire model finished, which made a
+    # long stage-2 Match look like Python had frozen at "Running T3-B".
+    #
+    # We merge stderr into stdout, print each line immediately, and also retain
+    # the complete transcript for the existing debug/error logs.
+    process_handle = subprocess.Popen(
         command,
         cwd=PROJECT_ROOT,
-        capture_output=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
         text=True,
-        check=False,
+        bufsize=1,
     )
+
+    output_lines: list[str] = []
+
+    assert process_handle.stdout is not None
+
+    try:
+        for line in process_handle.stdout:
+            output_lines.append(line)
+            print(line, end="", flush=True)
+    except KeyboardInterrupt:
+        # Make Ctrl+C stop wolframscript as well instead of leaving an orphan
+        # Mathematica kernel running in the background.
+        process_handle.terminate()
+        try:
+            process_handle.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            process_handle.kill()
+            process_handle.wait()
+        raise
+    finally:
+        process_handle.stdout.close()
+
+    return_code = process_handle.wait()
+    wolfram_output = "".join(output_lines)
+
+    # Small compatibility object for the rest of this function.
+    class _ProcessResult:
+        pass
+
+    process = _ProcessResult()
+    process.returncode = return_code
+    process.stdout = wolfram_output
+    process.stderr = ""
 
     # Save Wolfram output for debugging.
     if debug_reports:
@@ -91,17 +140,8 @@ def run_model(
             encoding="utf-8",
         )
 
-    # If Wolfram fails, show only the final part of its output so the
-    # terminal remains readable while still giving useful debug information.
-    if process.returncode != 0:
-        if process.stdout:
-            print("\n".join(process.stdout.splitlines()[-40:]))
-
-        if process.stderr:
-            print(
-                "\n".join(process.stderr.splitlines()[-20:]),
-                file=sys.stderr,
-            )
+    # Wolfram output has already been streamed live above.  On failure the
+    # complete transcript is still saved to run_error.log / debug logs.
 
     # Read the summary produced by the Wolfram side.
     summary_path = output_dir / "comparison_summary.json"
@@ -114,6 +154,42 @@ def run_model(
             "MatchingStatus": "NotRun",
         }
     )
+
+    # Sequential matching must never silently degrade to the historical
+    # common-threshold result.  Surface the actual Wolfram stage count here.
+    requested_stage_count = len(threshold_plan)
+    wolfram_stages = summary.get("EFTStages", [])
+    sequential_status = summary.get("SequentialMatchingStatus", "Missing")
+
+    print(
+        f"  {name}: sequential matching={sequential_status}; "
+        f"EFT stages={len(wolfram_stages)}/{requested_stage_count}",
+        flush=True,
+    )
+
+    if requested_stage_count > 1 and len(wolfram_stages) != requested_stage_count:
+        debug_dir = output_dir / "debug"
+        debug_dir.mkdir(parents=True, exist_ok=True)
+
+        (debug_dir / "wolfram_stdout.log").write_text(
+            process.stdout,
+            encoding="utf-8",
+        )
+        (debug_dir / "wolfram_stderr.log").write_text(
+            process.stderr,
+            encoding="utf-8",
+        )
+
+        print(
+            f"ERROR: {name} requested {requested_stage_count} threshold stages "
+            f"but Wolfram exported {len(wolfram_stages)}. "
+            f"See {debug_dir / 'wolfram_stdout.log'}",
+            flush=True,
+        )
+
+        # Keep the summary for inspection, but mark the run as invalid so
+        # reports cannot silently omit the requested EFT levels.
+        summary["MatchingStatus"] = "SequentialStageExportFailed"
 
     # Put everything associated with this run into one object.
     return RunRecord(
@@ -134,6 +210,7 @@ def validate_dimensions(
     alpha: int,
     debug_reports: bool = False,
     export_rge_tensors: bool = False,
+    threshold_plan: tuple[tuple[str, ...], ...] | None = None,
 ) -> RunRecord:
     """All it does is 
     1. Check if dimensions are correct, if not then return error
@@ -192,6 +269,7 @@ def validate_dimensions(
         model_args,
         debug_reports,
         export_rge_tensors,
+        threshold_plan,
     )
 
 def obtain_class_dimensions(
@@ -199,6 +277,7 @@ def obtain_class_dimensions(
     alpha: int,
     debug_reports: bool = False,
     export_rge_tensors: bool = False,
+    threshold_plan: tuple[tuple[str, ...], ...] | None = None,
 ) -> RunRecord:
     """Convert a known A-E class into dimensions and then run normally."""
 
@@ -214,5 +293,6 @@ def obtain_class_dimensions(
         alpha,
         debug_reports,
         export_rge_tensors,
+        threshold_plan,
     )
 

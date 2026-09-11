@@ -28,6 +28,7 @@ ClearAll[
     T3RGBetaAddSM,
     T3RGBetaAddHeavyFermion,
     T3RGBetaAddT3Yukawas,
+    T3RGBetaAddScalarMasses,
     T3RGBetaAddMasses,
     T3RGBetaPairInvariant,
     T3RGBetaAddBasicQuartics,
@@ -36,7 +37,9 @@ ClearAll[
     T3RGBetaAddMixingQuartic,
     T3RGBetaPortalAdjInvariant,
     T3RGBetaAddRGClosedQuartics,
-    T3RGBetaOneLoopBetas
+    T3RGBetaBuildEFT1,
+    T3RGBetaOneLoopBetas,
+    T3RGBetaEFT1OneLoopBetas
 ];
 
 
@@ -224,13 +227,11 @@ T3RGBetaAddT3Yukawas[
 ];
 
 
-T3RGBetaAddMasses[
+T3RGBetaAddScalarMasses[
     dS1_Integer,
-    dS2_Integer,
-    dF_Integer,
-    yF_
+    dS2_Integer
 ] := Module[
-    {scalarInvariant1, scalarInvariant2, fermionInvariant},
+    {scalarInvariant1, scalarInvariant2},
 
     scalarInvariant1 = If[
         dS1 === 1,
@@ -255,6 +256,18 @@ T3RGBetaAddMasses[
         {Bar @ S2, S2},
         GroupInvariant -> scalarInvariant2
     ];
+];
+
+
+T3RGBetaAddMasses[
+    dS1_Integer,
+    dS2_Integer,
+    dF_Integer,
+    yF_
+] := Module[
+    {fermionInvariant},
+
+    T3RGBetaAddScalarMasses[dS1, dS2];
 
     If[yF === 0,
         fermionInvariant = If[
@@ -665,6 +678,163 @@ T3RGBetaBuild[
         "YF" -> yF,
         "MajoranaFermion" -> (yF === 0)
     |>
+];
+
+
+(* ---------------------------------------------------------------------- *)
+(* Intermediate EFT after integrating out F                              *)
+(* ---------------------------------------------------------------------- *)
+
+T3RGBetaBuildEFT1[
+    dS1_Integer,
+    dS2_Integer,
+    dF_Integer,
+    alpha_Integer
+] := Module[
+    {yS1, yS2},
+
+    If[
+        !And @@ (T3RGBetaSupportedDimensionQ /@ {dS1, dS2, dF}),
+        Return[$Failed]
+    ];
+
+    yS1 = alpha/2;
+    yS2 = (alpha + 2)/2;
+
+    ResetModel[];
+
+    (* Active renormalisable theory between the two thresholds:
+         SM + S1 + S2.
+       The fermion F, its Yukawas y1/y2, and MF are absent because F has
+       already been integrated out.  Higher-dimensional operators generated
+       by the F threshold are handled by the separate EFT1 Wilson-coefficient
+       RGE stage; RGBeta here supplies the renormalisable running only. *)
+    T3RGBetaAddSM[];
+
+    AddScalar[
+        S1,
+        GaugeRep -> T3RGBetaGaugeRep[dS1, yS1]
+    ];
+
+    AddScalar[
+        S2,
+        GaugeRep -> T3RGBetaGaugeRep[dS2, yS2]
+    ];
+
+    T3RGBetaAddScalarMasses[dS1, dS2];
+    T3RGBetaAddBasicQuartics[dS1, dS2];
+    T3RGBetaAddMixingQuartic[dS1, dS2];
+    T3RGBetaAddRGClosedQuartics[dS1, dS2, dF, alpha];
+
+    T3RGBetaLastEFT1Build = <|
+        "dS1" -> dS1,
+        "dS2" -> dS2,
+        "dF" -> dF,
+        "alpha" -> alpha
+    |>;
+
+    <|
+        "dS1" -> dS1,
+        "dS2" -> dS2,
+        "dF" -> dF,
+        "alpha" -> alpha,
+        "YS1" -> yS1,
+        "YS2" -> yS2,
+        "IntegratedField" -> "F",
+        "ActiveBSMFields" -> {"S1", "S2"}
+    |>
+];
+
+
+T3RGBetaEFT1OneLoopBetas[] := Module[
+    {result, meta, dS1, dS2, alpha},
+
+    meta = T3RGBetaLastEFT1Build;
+    dS1 = meta["dS1"];
+    dS2 = meta["dS2"];
+    alpha = meta["alpha"];
+
+    result = <|
+        "gY" -> Quiet[BetaTerm[gY, 1]],
+        "g2" -> Quiet[BetaTerm[g2, 1]],
+        "g3" -> Quiet[BetaTerm[g3, 1]],
+        "yu" -> Quiet[BetaTerm[yu, 1]],
+        "yd" -> Quiet[BetaTerm[yd, 1]],
+        "ye" -> Quiet[BetaTerm[ye, 1]],
+        "mS1Sq" -> Quiet[BetaTerm[mS1Sq, 1]],
+        "mS2Sq" -> Quiet[BetaTerm[mS2Sq, 1]],
+        "lambdaH" -> Quiet[BetaTerm[lambdaH, 1]],
+        "lambdaS1" -> Quiet[BetaTerm[lambdaS1, 1]],
+        "lambdaS2" -> Quiet[BetaTerm[lambdaS2, 1]],
+        "lambdaH1" -> Quiet[BetaTerm[lambdaH1, 1]],
+        "lambdaH2" -> Quiet[BetaTerm[lambdaH2, 1]],
+        "lambda12" -> Quiet[BetaTerm[lambda12, 1]],
+        "lambdaT3" -> Quiet[BetaTerm[lambdaT3, 1]]
+    |>;
+
+    If[dS1 > 1,
+        AssociateTo[
+            result,
+            "lambdaH1Adj" -> Quiet[BetaTerm[lambdaH1Adj, 1]]
+        ];
+    ];
+
+    If[dS2 > 1,
+        AssociateTo[
+            result,
+            "lambdaH2Adj" -> Quiet[BetaTerm[lambdaH2Adj, 1]]
+        ];
+    ];
+
+    If[dS1 == 3,
+        AssociateTo[
+            result,
+            "lambdaS1Adj" -> Quiet[BetaTerm[lambdaS1Adj, 1]]
+        ];
+    ];
+
+    If[dS2 == 3,
+        AssociateTo[
+            result,
+            "lambdaS2Adj" -> Quiet[BetaTerm[lambdaS2Adj, 1]]
+        ];
+    ];
+
+    If[dS1 > 1 && dS2 > 1,
+        AssociateTo[
+            result,
+            "lambda12Adj" -> Quiet[BetaTerm[lambda12Adj, 1]]
+        ];
+    ];
+
+    If[dS1 == 3 && dS2 == 3,
+        AssociateTo[
+            result,
+            "lambda12Cross" -> Quiet[BetaTerm[lambda12Cross, 1]]
+        ];
+    ];
+
+    If[dS1 == 2 && dS2 == 2 && alpha == -1,
+        AssociateTo[
+            result,
+            <|
+                "lambdaHHdagS2S2" ->
+                    Quiet[BetaTerm[lambdaHHdagS2S2, 1]],
+                "lambdaHHdagS1barS1bar" ->
+                    Quiet[BetaTerm[lambdaHHdagS1barS1bar, 1]],
+                "lambdaS1bar2S2bar2" ->
+                    Quiet[BetaTerm[lambdaS1bar2S2bar2, 1]],
+                "lambdaS1barS2S2bar2" ->
+                    Quiet[BetaTerm[lambdaS1barS2S2bar2, 1]],
+                "lambdaS1S1bar2S2bar" ->
+                    Quiet[BetaTerm[lambdaS1S1bar2S2bar, 1]],
+                "lambdaHHdagS1barS2barCross" ->
+                    Quiet[BetaTerm[lambdaHHdagS1barS2barCross, 1]]
+            |>
+        ];
+    ];
+
+    result
 ];
 
 

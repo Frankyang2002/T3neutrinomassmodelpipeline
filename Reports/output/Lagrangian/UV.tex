@@ -1,0 +1,105 @@
+\documentclass[8pt]{article}
+\usepackage[margin=0.8cm]{geometry}
+\usepackage{amsmath,amssymb,adjustbox,pdflscape,longtable,array,booktabs}
+\usepackage[T1]{fontenc}
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{1.25}
+\begin{document}
+\begin{landscape}
+\section*{T3 UV Lagrangian terms grouped by field content}
+EFT order: $5$; loop order: $1$. 
+Rows are model configurations and columns are field configurations. The BSM-only UV expression is preferred; the full UV Lagrangian is used as a fallback when the BSM-only conversion is unavailable.
+\tiny
+\subsection*{Field combinations 1 of 4}
+\begin{longtable}{@{}cccccccc >{\raggedright\arraybackslash}p{0.18\linewidth} >{\raggedright\arraybackslash}p{0.18\linewidth} >{\raggedright\arraybackslash}p{0.18\linewidth} >{\raggedright\arraybackslash}p{0.18\linewidth}@{}}
+\toprule
+Model & $\alpha$ & $d_{S_1}$ & $Y_{S_1}$ & $d_{S_2}$ & $Y_{S_2}$ & $d_F$ & $Y_F$ & $D$ & $F$ & $H$ & $S_1$ \\
+\midrule
+\endfirsthead
+\toprule
+Model & $\alpha$ & $d_{S_1}$ & $Y_{S_1}$ & $d_{S_2}$ & $Y_{S_2}$ & $d_F$ & $Y_F$ & $D$ & $F$ & $H$ & $S_1$ \\
+\midrule
+\endhead
+T3-B & $-1$ & $2$ & $-\frac{1}{2}$ & $2$ & $\frac{1}{2}$ & $1$ & $0$ & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} +D_{\mu _1}\left(S_{1,j_1}\right){}^{\dagger } D_{\mu _1}\left(S_{1,j_1}\right) \\ +D_{\mu _1}\left(S_{2,j_1}\right){}^{\dagger } D_{\mu _1}\left(S_{2,j_1}\right)\end{gathered}$} & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} -\frac{1}{2} F_{r_1}{}^T\, C\, F_{r_1} M_F \\ +\overline{L_{a_1,i_1}}\, P_R\, F_{r_1} S_{1,j_1} y_{1,i_1,r_1} \mathcal{I}_{\text{y1},a_1,j_1} \\ +\overline{y_{2,i_1,r_1}} F_{r_1}{}^T\, C\, P_L\, L_{a_1,i_1} S_{2,j_1} \text{Bar}(\text{T3Y2CG})_{a_1,j_1} \\ +\overline{y_{1,i_1,r_1}} F_{r_1}{}^T\, C\, P_L\, L_{a_1,i_1} \text{Bar}(\text{T3Y1CG})_{a_1,j_1} S_{1,j_1}{}^{\dagger } \\ +\overline{L_{a_1,i_1}}\, P_R\, F_{r_1} y_{2,i_1,r_1} \mathcal{I}_{\text{y2},a_1,j_1} S_{2,j_1}{}^{\dagger }\end{gathered}$} & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} +\overline{\lambda _{\text{T3}}} S_{2,j_2} \text{Bar}(\text{T3MixCG})_{a_1,a_2,j_1,j_2} H_{a_1}{}^{\dagger } H_{a_2}{}^{\dagger } S_{1,j_1}{}^{\dagger } \\ +H_{a_1} H_{a_2} S_{1,j_2} \mathcal{I}_{\text{T3},a_1,a_2,j_2,j_1} \lambda _{\text{T3}} S_{2,j_1}{}^{\dagger } \\ +H_{a_2} S_{1,j_2} H_{a_1}{}^{\dagger } S_{1,j_1}{}^{\dagger } \mathcal{I}_{\text{H1},a_1,a_2,j_1,j_2}{}^1 \lambda _{\text{H1}}{}^1 \\ +H_{a_2} S_{1,j_2} H_{a_1}{}^{\dagger } S_{1,j_1}{}^{\dagger } \mathcal{I}_{\text{H1},a_1,a_2,j_1,j_2}{}^2 \lambda _{\text{H1}}{}^2 \\ +H_{a_2} S_{2,j_2} H_{a_1}{}^{\dagger } S_{2,j_1}{}^{\dagger } \mathcal{I}_{\text{H2},a_1,a_2,j_1,j_2}{}^1 \lambda _{\text{H2}}{}^1 \\ +H_{a_2} S_{2,j_2} H_{a_1}{}^{\dagger } S_{2,j_1}{}^{\dagger } \mathcal{I}_{\text{H2},a_1,a_2,j_1,j_2}{}^2 \lambda _{\text{H2}}{}^2\end{gathered}$} &  \\
+\midrule
+T3-C & $-1$ & $2$ & $-\frac{1}{2}$ & $2$ & $\frac{1}{2}$ & $3$ & $0$ & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} +D_{\mu _1}\left(S_{1,j_1}\right){}^{\dagger } D_{\mu _1}\left(S_{1,j_1}\right) \\ +D_{\mu _1}\left(S_{2,j_1}\right){}^{\dagger } D_{\mu _1}\left(S_{2,j_1}\right)\end{gathered}$} & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} -\frac{1}{2} F_{j_1,r_1}{}^T\, C\, F_{j_1,r_1} M_F \\ +\overline{L_{a_1,i_1}}\, P_R\, F_{j_1,r_1} S_{1,j_1} y_{1,i_1,r_1} \mathcal{I}_{\text{y1},a_1,j_1,j_1} \\ +\overline{y_{2,i_1,r_1}} F_{j_1,r_1}{}^T\, C\, P_L\, L_{a_1,i_1} S_{2,j_1} \text{Bar}(\text{T3Y2CG})_{a_1,j_1,j_1} \\ +\overline{y_{1,i_1,r_1}} F_{j_1,r_1}{}^T\, C\, P_L\, L_{a_1,i_1} \text{Bar}(\text{T3Y1CG})_{a_1,j_1,j_1} S_{1,j_1}{}^{\dagger } \\ +\overline{L_{a_1,i_1}}\, P_R\, F_{j_1,r_1} y_{2,i_1,r_1} \mathcal{I}_{\text{y2},a_1,j_1,j_1} S_{2,j_1}{}^{\dagger }\end{gathered}$} & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} +\overline{\lambda _{\text{T3}}} S_{2,j_2} \text{Bar}(\text{T3MixCG})_{a_1,a_2,j_1,j_2} H_{a_1}{}^{\dagger } H_{a_2}{}^{\dagger } S_{1,j_1}{}^{\dagger } \\ +H_{a_1} H_{a_2} S_{1,j_2} \mathcal{I}_{\text{T3},a_1,a_2,j_2,j_1} \lambda _{\text{T3}} S_{2,j_1}{}^{\dagger } \\ +H_{a_2} S_{1,j_2} H_{a_1}{}^{\dagger } S_{1,j_1}{}^{\dagger } \mathcal{I}_{\text{H1},a_1,a_2,j_1,j_2}{}^1 \lambda _{\text{H1}}{}^1 \\ +H_{a_2} S_{1,j_2} H_{a_1}{}^{\dagger } S_{1,j_1}{}^{\dagger } \mathcal{I}_{\text{H1},a_1,a_2,j_1,j_2}{}^2 \lambda _{\text{H1}}{}^2 \\ +H_{a_2} S_{2,j_2} H_{a_1}{}^{\dagger } S_{2,j_1}{}^{\dagger } \mathcal{I}_{\text{H2},a_1,a_2,j_1,j_2}{}^1 \lambda _{\text{H2}}{}^1 \\ +H_{a_2} S_{2,j_2} H_{a_1}{}^{\dagger } S_{2,j_1}{}^{\dagger } \mathcal{I}_{\text{H2},a_1,a_2,j_1,j_2}{}^2 \lambda _{\text{H2}}{}^2\end{gathered}$} &  \\
+\midrule
+T3-A & $0$ & $1$ & $0$ & $3$ & $1$ & $2$ & $\frac{1}{2}$ & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} +D_{\mu _1}\left(S_{2,j_1}\right){}^{\dagger } D_{\mu _1}\left(S_{2,j_1}\right)\end{gathered}$} & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} -\overline{F_{j_1,r_1}}\, F_{j_1,r_1} M_F \\ +\overline{y_{2,i_1,r_1}} \overline{F_{j_1,r_1}}\, P_L\, L_{a_1,i_1} S_{2,j_1} \text{Bar}(\text{T3Y2CG})_{a_1,j_1,j_1} \\ +\overline{L_{a_1,i_1}}\, P_R\, F_{j_1,r_1} y_{2,i_1,r_1} \mathcal{I}_{\text{y2},a_1,j_1,j_1} S_{2,j_1}{}^{\dagger }\end{gathered}$} & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} +\frac{1}{2} H_{a_2} S_{2,j_2} H_{a_1}{}^{\dagger } S_{2,j_1}{}^{\dagger } \mathcal{I}_{\text{H2},a_1,a_2,j_1,j_2}{}^1 \lambda _{\text{H2}}{}^1 \\ +\frac{1}{2} H_{a_2} S_{2,j_2} H_{a_1}{}^{\dagger } S_{2,j_1}{}^{\dagger } \mathcal{I}_{\text{H2},a_1,a_2,j_2,j_1}{}^1 \lambda _{\text{H2}}{}^1 \\ +\frac{1}{2} H_{a_2} S_{2,j_2} H_{a_1}{}^{\dagger } S_{2,j_1}{}^{\dagger } \mathcal{I}_{\text{H2},a_1,a_2,j_1,j_2}{}^2 \lambda _{\text{H2}}{}^2 \\ +\frac{1}{2} H_{a_2} S_{2,j_2} H_{a_1}{}^{\dagger } S_{2,j_1}{}^{\dagger } \mathcal{I}_{\text{H2},a_1,a_2,j_2,j_1}{}^2 \lambda _{\text{H2}}{}^2\end{gathered}$} & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} -S_1 S_1{}^{\dagger } M_{\text{S1}}^2 \\ +S_1 S_{2,j_2} S_1{}^{\dagger } S_{2,j_1}{}^{\dagger } \mathcal{I}_{12,j_1,j_2}{}^1 \lambda _{12}{}^1 \\ +\frac{1}{2} S_1^2 \left(S_1{}^{\dagger }\right){}^2 \lambda _{\text{S1}}{}^1\end{gathered}$} \\
+\midrule
+T3-D & $-2$ & $3$ & $-1$ & $1$ & $0$ & $2$ & $-\frac{1}{2}$ & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} +D_{\mu _1}\left(S_{1,j_1}\right){}^{\dagger } D_{\mu _1}\left(S_{1,j_1}\right)\end{gathered}$} & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} -\overline{F_{j_1,r_1}}\, F_{j_1,r_1} M_F \\ +\overline{L_{a_1,i_1}}\, C\, P_R\, \overline{F_{j_1,r_1}}{}^T S_{1,j_1} y_{1,i_1,r_1} \mathcal{I}_{\text{y1},a_1,j_1,j_1} \\ +\overline{y_{1,i_1,r_1}} L_{a_1,i_1}{}^T\, C\, P_L\, F_{j_1,r_1} \text{Bar}(\text{T3Y1CG})_{a_1,j_1,j_1} S_{1,j_1}{}^{\dagger }\end{gathered}$} & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} +\frac{1}{2} H_{a_2} S_{1,j_2} H_{a_1}{}^{\dagger } S_{1,j_1}{}^{\dagger } \mathcal{I}_{\text{H1},a_1,a_2,j_1,j_2}{}^1 \lambda _{\text{H1}}{}^1 \\ +\frac{1}{2} H_{a_2} S_{1,j_2} H_{a_1}{}^{\dagger } S_{1,j_1}{}^{\dagger } \mathcal{I}_{\text{H1},a_1,a_2,j_2,j_1}{}^1 \lambda _{\text{H1}}{}^1 \\ +\frac{1}{2} H_{a_2} S_{1,j_2} H_{a_1}{}^{\dagger } S_{1,j_1}{}^{\dagger } \mathcal{I}_{\text{H1},a_1,a_2,j_1,j_2}{}^2 \lambda _{\text{H1}}{}^2 \\ +\frac{1}{2} H_{a_2} S_{1,j_2} H_{a_1}{}^{\dagger } S_{1,j_1}{}^{\dagger } \mathcal{I}_{\text{H1},a_1,a_2,j_2,j_1}{}^2 \lambda _{\text{H1}}{}^2\end{gathered}$} &  \\
+\midrule
+T3-E & $0$ & $3$ & $0$ & $3$ & $1$ & $2$ & $\frac{1}{2}$ & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} +D_{\mu _1}\left(S_{1,j_1}\right){}^{\dagger } D_{\mu _1}\left(S_{1,j_1}\right) \\ +D_{\mu _1}\left(S_{2,j_1}\right){}^{\dagger } D_{\mu _1}\left(S_{2,j_1}\right)\end{gathered}$} & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} -\overline{F_{j_1,r_1}}\, F_{j_1,r_1} M_F \\ +\overline{L_{a_1,i_1}}\, C\, P_R\, \overline{F_{j_1,r_1}}{}^T S_{1,j_1} y_{1,i_1,r_1} \mathcal{I}_{\text{y1},a_1,j_1,j_1} \\ +\overline{y_{2,i_1,r_1}} \overline{F_{j_1,r_1}}\, P_L\, L_{a_1,i_1} S_{2,j_1} \text{Bar}(\text{T3Y2CG})_{a_1,j_1,j_1} \\ +\overline{y_{1,i_1,r_1}} L_{a_1,i_1}{}^T\, C\, P_L\, F_{j_1,r_1} \text{Bar}(\text{T3Y1CG})_{a_1,j_1,j_1} S_{1,j_1}{}^{\dagger } \\ +\overline{L_{a_1,i_1}}\, P_R\, F_{j_1,r_1} y_{2,i_1,r_1} \mathcal{I}_{\text{y2},a_1,j_1,j_1} S_{2,j_1}{}^{\dagger }\end{gathered}$} & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} +\overline{\lambda _{\text{T3}}} S_{2,j_2} \text{Bar}(\text{T3MixCG})_{a_1,a_2,j_1,j_2} H_{a_1}{}^{\dagger } H_{a_2}{}^{\dagger } S_{1,j_1}{}^{\dagger } \\ +H_{a_1} H_{a_2} S_{1,j_2} \mathcal{I}_{\text{T3},a_1,a_2,j_2,j_1} \lambda _{\text{T3}} S_{2,j_1}{}^{\dagger } \\ +\frac{1}{2} H_{a_2} S_{1,j_2} H_{a_1}{}^{\dagger } S_{1,j_1}{}^{\dagger } \mathcal{I}_{\text{H1},a_1,a_2,j_1,j_2}{}^1 \lambda _{\text{H1}}{}^1 \\ +\frac{1}{2} H_{a_2} S_{1,j_2} H_{a_1}{}^{\dagger } S_{1,j_1}{}^{\dagger } \mathcal{I}_{\text{H1},a_1,a_2,j_2,j_1}{}^1 \lambda _{\text{H1}}{}^1 \\ +\frac{1}{2} H_{a_2} S_{1,j_2} H_{a_1}{}^{\dagger } S_{1,j_1}{}^{\dagger } \mathcal{I}_{\text{H1},a_1,a_2,j_1,j_2}{}^2 \lambda _{\text{H1}}{}^2 \\ +\frac{1}{2} H_{a_2} S_{1,j_2} H_{a_1}{}^{\dagger } S_{1,j_1}{}^{\dagger } \mathcal{I}_{\text{H1},a_1,a_2,j_2,j_1}{}^2 \lambda _{\text{H1}}{}^2 \\ +\frac{1}{2} H_{a_2} S_{2,j_2} H_{a_1}{}^{\dagger } S_{2,j_1}{}^{\dagger } \mathcal{I}_{\text{H2},a_1,a_2,j_1,j_2}{}^1 \lambda _{\text{H2}}{}^1 \\ +\frac{1}{2} H_{a_2} S_{2,j_2} H_{a_1}{}^{\dagger } S_{2,j_1}{}^{\dagger } \mathcal{I}_{\text{H2},a_1,a_2,j_2,j_1}{}^1 \lambda _{\text{H2}}{}^1 \\ +\frac{1}{2} H_{a_2} S_{2,j_2} H_{a_1}{}^{\dagger } S_{2,j_1}{}^{\dagger } \mathcal{I}_{\text{H2},a_1,a_2,j_1,j_2}{}^2 \lambda _{\text{H2}}{}^2 \\ +\frac{1}{2} H_{a_2} S_{2,j_2} H_{a_1}{}^{\dagger } S_{2,j_1}{}^{\dagger } \mathcal{I}_{\text{H2},a_1,a_2,j_2,j_1}{}^2 \lambda _{\text{H2}}{}^2\end{gathered}$} &  \\
+\midrule
+\bottomrule
+\end{longtable}
+\clearpage
+\subsection*{Field combinations 2 of 4}
+\begin{longtable}{@{}cccccccc >{\raggedright\arraybackslash}p{0.18\linewidth} >{\raggedright\arraybackslash}p{0.18\linewidth} >{\raggedright\arraybackslash}p{0.18\linewidth} >{\raggedright\arraybackslash}p{0.18\linewidth}@{}}
+\toprule
+Model & $\alpha$ & $d_{S_1}$ & $Y_{S_1}$ & $d_{S_2}$ & $Y_{S_2}$ & $d_F$ & $Y_F$ & $S_2$ & $\text{constant}$ & $F\,D$ & $S_1\,D$ \\
+\midrule
+\endfirsthead
+\toprule
+Model & $\alpha$ & $d_{S_1}$ & $Y_{S_1}$ & $d_{S_2}$ & $Y_{S_2}$ & $d_F$ & $Y_F$ & $S_2$ & $\text{constant}$ & $F\,D$ & $S_1\,D$ \\
+\midrule
+\endhead
+T3-B & $-1$ & $2$ & $-\frac{1}{2}$ & $2$ & $\frac{1}{2}$ & $1$ & $0$ &  & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} -S_{1,j_1} S_{1,j_1}{}^{\dagger } M_{\text{S1}}^2 \\ -M_{\text{S2}}^2 S_{2,j_1} S_{2,j_1}{}^{\dagger } \\ +S_{1,j_3} S_{2,j_4} S_{1,j_1}{}^{\dagger } S_{2,j_2}{}^{\dagger } \mathcal{I}_{12,j_1,j_3,j_2,j_4}{}^1 \lambda _{12}{}^1 \\ +S_{1,j_3} S_{2,j_4} S_{1,j_1}{}^{\dagger } S_{2,j_2}{}^{\dagger } \mathcal{I}_{12,j_1,j_3,j_2,j_4}{}^2 \lambda _{12}{}^2 \\ +\frac{1}{2} S_{1,j_3} S_{1,j_4} S_{1,j_1}{}^{\dagger } S_{1,j_2}{}^{\dagger } \mathcal{I}_{\text{S1},j_1,j_3,j_2,j_4}{}^1 \lambda _{\text{S1}}{}^1 \\ +\frac{1}{2} S_{2,j_3} S_{2,j_4} S_{2,j_1}{}^{\dagger } S_{2,j_2}{}^{\dagger } \mathcal{I}_{\text{S2},j_1,j_3,j_2,j_4}{}^1 \lambda _{\text{S2}}{}^1\end{gathered}$} & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} +\frac{1}{2} i F_{r_1}{}^T\, C\, \gamma ^{\mu _1}\, D_{\mu _1}\left(F_{r_1}\right)\end{gathered}$} &  \\
+\midrule
+T3-C & $-1$ & $2$ & $-\frac{1}{2}$ & $2$ & $\frac{1}{2}$ & $3$ & $0$ &  & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} -S_{1,j_1} S_{1,j_1}{}^{\dagger } M_{\text{S1}}^2 \\ -M_{\text{S2}}^2 S_{2,j_1} S_{2,j_1}{}^{\dagger } \\ +S_{1,j_3} S_{2,j_4} S_{1,j_1}{}^{\dagger } S_{2,j_2}{}^{\dagger } \mathcal{I}_{12,j_1,j_3,j_2,j_4}{}^1 \lambda _{12}{}^1 \\ +S_{1,j_3} S_{2,j_4} S_{1,j_1}{}^{\dagger } S_{2,j_2}{}^{\dagger } \mathcal{I}_{12,j_1,j_3,j_2,j_4}{}^2 \lambda _{12}{}^2 \\ +\frac{1}{2} S_{1,j_3} S_{1,j_4} S_{1,j_1}{}^{\dagger } S_{1,j_2}{}^{\dagger } \mathcal{I}_{\text{S1},j_1,j_3,j_2,j_4}{}^1 \lambda _{\text{S1}}{}^1 \\ +\frac{1}{2} S_{2,j_3} S_{2,j_4} S_{2,j_1}{}^{\dagger } S_{2,j_2}{}^{\dagger } \mathcal{I}_{\text{S2},j_1,j_3,j_2,j_4}{}^1 \lambda _{\text{S2}}{}^1\end{gathered}$} & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} +\frac{1}{2} i F_{j_1,r_1}{}^T\, C\, \gamma ^{\mu _1}\, D_{\mu _1}\left(F_{j_1,r_1}\right)\end{gathered}$} &  \\
+\midrule
+T3-A & $0$ & $1$ & $0$ & $3$ & $1$ & $2$ & $\frac{1}{2}$ &  & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} -M_{\text{S2}}^2 S_{2,j_1} S_{2,j_1}{}^{\dagger } \\ +\frac{1}{2} S_{2,j_3} S_{2,j_4} S_{2,j_1}{}^{\dagger } S_{2,j_2}{}^{\dagger } \mathcal{I}_{\text{S2},j_1,j_3,j_2,j_4}{}^1 \lambda _{\text{S2}}{}^1 \\ +\frac{1}{2} S_{2,j_3} S_{2,j_4} S_{2,j_1}{}^{\dagger } S_{2,j_2}{}^{\dagger } \mathcal{I}_{\text{S2},j_1,j_3,j_2,j_4}{}^2 \lambda _{\text{S2}}{}^2\end{gathered}$} & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} +i \overline{F_{j_1,r_1}}\, \gamma ^{\mu _1}\, D_{\mu _1}\left(F_{j_1,r_1}\right)\end{gathered}$} & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} +D_{\mu _1}\left(S_1\right){}^{\dagger } D_{\mu _1}\left(S_1\right)\end{gathered}$} \\
+\midrule
+T3-D & $-2$ & $3$ & $-1$ & $1$ & $0$ & $2$ & $-\frac{1}{2}$ & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} -M_{\text{S2}}^2 S_2 S_2{}^{\dagger } \\ +S_2 S_{1,j_2} S_2{}^{\dagger } S_{1,j_1}{}^{\dagger } \mathcal{I}_{12,j_1,j_2}{}^1 \lambda _{12}{}^1 \\ +\frac{1}{2} S_2^2 \left(S_2{}^{\dagger }\right){}^2 \lambda _{\text{S2}}{}^1\end{gathered}$} & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} -S_{1,j_1} S_{1,j_1}{}^{\dagger } M_{\text{S1}}^2 \\ +\frac{1}{2} S_{1,j_3} S_{1,j_4} S_{1,j_1}{}^{\dagger } S_{1,j_2}{}^{\dagger } \mathcal{I}_{\text{S1},j_1,j_3,j_2,j_4}{}^1 \lambda _{\text{S1}}{}^1 \\ +\frac{1}{2} S_{1,j_3} S_{1,j_4} S_{1,j_1}{}^{\dagger } S_{1,j_2}{}^{\dagger } \mathcal{I}_{\text{S1},j_1,j_3,j_2,j_4}{}^2 \lambda _{\text{S1}}{}^2\end{gathered}$} & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} +i \overline{F_{j_1,r_1}}\, \gamma ^{\mu _1}\, D_{\mu _1}\left(F_{j_1,r_1}\right)\end{gathered}$} &  \\
+\midrule
+T3-E & $0$ & $3$ & $0$ & $3$ & $1$ & $2$ & $\frac{1}{2}$ &  & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} -S_{1,j_1} S_{1,j_1}{}^{\dagger } M_{\text{S1}}^2 \\ -M_{\text{S2}}^2 S_{2,j_1} S_{2,j_1}{}^{\dagger } \\ +S_{1,j_3} S_{2,j_4} S_{1,j_1}{}^{\dagger } S_{2,j_2}{}^{\dagger } \mathcal{I}_{12,j_1,j_3,j_2,j_4}{}^1 \lambda _{12}{}^1 \\ +S_{1,j_3} S_{2,j_4} S_{1,j_1}{}^{\dagger } S_{2,j_2}{}^{\dagger } \mathcal{I}_{12,j_1,j_3,j_2,j_4}{}^2 \lambda _{12}{}^2 \\ +S_{1,j_3} S_{2,j_4} S_{1,j_1}{}^{\dagger } S_{2,j_2}{}^{\dagger } \mathcal{I}_{12,j_1,j_3,j_2,j_4}{}^3 \lambda _{12}{}^3 \\ +\frac{1}{2} S_{1,j_3} S_{1,j_4} S_{1,j_1}{}^{\dagger } S_{1,j_2}{}^{\dagger } \mathcal{I}_{\text{S1},j_1,j_3,j_2,j_4}{}^1 \lambda _{\text{S1}}{}^1 \\ +\frac{1}{2} S_{1,j_3} S_{1,j_4} S_{1,j_1}{}^{\dagger } S_{1,j_2}{}^{\dagger } \mathcal{I}_{\text{S1},j_1,j_3,j_2,j_4}{}^2 \lambda _{\text{S1}}{}^2 \\ +\frac{1}{2} S_{2,j_3} S_{2,j_4} S_{2,j_1}{}^{\dagger } S_{2,j_2}{}^{\dagger } \mathcal{I}_{\text{S2},j_1,j_3,j_2,j_4}{}^1 \lambda _{\text{S2}}{}^1 \\ +\frac{1}{2} S_{2,j_3} S_{2,j_4} S_{2,j_1}{}^{\dagger } S_{2,j_2}{}^{\dagger } \mathcal{I}_{\text{S2},j_1,j_3,j_2,j_4}{}^2 \lambda _{\text{S2}}{}^2\end{gathered}$} & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} +i \overline{F_{j_1,r_1}}\, \gamma ^{\mu _1}\, D_{\mu _1}\left(F_{j_1,r_1}\right)\end{gathered}$} &  \\
+\midrule
+\bottomrule
+\end{longtable}
+\clearpage
+\subsection*{Field combinations 3 of 4}
+\begin{longtable}{@{}cccccccc >{\raggedright\arraybackslash}p{0.18\linewidth} >{\raggedright\arraybackslash}p{0.18\linewidth} >{\raggedright\arraybackslash}p{0.18\linewidth} >{\raggedright\arraybackslash}p{0.18\linewidth}@{}}
+\toprule
+Model & $\alpha$ & $d_{S_1}$ & $Y_{S_1}$ & $d_{S_2}$ & $Y_{S_2}$ & $d_F$ & $Y_F$ & $S_1\,F$ & $S_1\,H$ & $S_2\,D$ & $S_2\,F$ \\
+\midrule
+\endfirsthead
+\toprule
+Model & $\alpha$ & $d_{S_1}$ & $Y_{S_1}$ & $d_{S_2}$ & $Y_{S_2}$ & $d_F$ & $Y_F$ & $S_1\,F$ & $S_1\,H$ & $S_2\,D$ & $S_2\,F$ \\
+\midrule
+\endhead
+T3-B & $-1$ & $2$ & $-\frac{1}{2}$ & $2$ & $\frac{1}{2}$ & $1$ & $0$ &  &  &  &  \\
+\midrule
+T3-C & $-1$ & $2$ & $-\frac{1}{2}$ & $2$ & $\frac{1}{2}$ & $3$ & $0$ &  &  &  &  \\
+\midrule
+T3-A & $0$ & $1$ & $0$ & $3$ & $1$ & $2$ & $\frac{1}{2}$ & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} +\overline{L_{a_1,i_1}}\, C\, P_R\, \overline{F_{j_1,r_1}}{}^T S_1 y_{1,i_1,r_1} \mathcal{I}_{\text{y1},a_1,j_1} \\ +\overline{y_{1,i_1,r_1}} L_{a_1,i_1}{}^T\, C\, P_L\, F_{j_1,r_1} \text{Bar}(\text{T3Y1CG})_{a_1,j_1} S_1{}^{\dagger }\end{gathered}$} & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} +\overline{\lambda _{\text{T3}}} S_{2,j_1} \text{Bar}(\text{T3MixCG})_{a_1,a_2,j_1} H_{a_1}{}^{\dagger } H_{a_2}{}^{\dagger } S_1{}^{\dagger } \\ +H_{a_1} H_{a_2} S_1 \mathcal{I}_{\text{T3},a_1,a_2,j_1} \lambda _{\text{T3}} S_{2,j_1}{}^{\dagger } \\ +H_{a_2} S_1 H_{a_1}{}^{\dagger } S_1{}^{\dagger } \mathcal{I}_{\text{H1},a_1,a_2}{}^1 \lambda _{\text{H1}}{}^1\end{gathered}$} &  &  \\
+\midrule
+T3-D & $-2$ & $3$ & $-1$ & $1$ & $0$ & $2$ & $-\frac{1}{2}$ &  &  & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} +D_{\mu _1}\left(S_2\right){}^{\dagger } D_{\mu _1}\left(S_2\right)\end{gathered}$} & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} +\overline{y_{2,i_1,r_1}} \overline{F_{j_1,r_1}}\, P_L\, L_{a_1,i_1} S_2 \text{Bar}(\text{T3Y2CG})_{a_1,j_1} \\ +\overline{L_{a_1,i_1}}\, P_R\, F_{j_1,r_1} y_{2,i_1,r_1} \mathcal{I}_{\text{y2},a_1,j_1} S_2{}^{\dagger }\end{gathered}$} \\
+\midrule
+T3-E & $0$ & $3$ & $0$ & $3$ & $1$ & $2$ & $\frac{1}{2}$ &  &  &  &  \\
+\midrule
+\bottomrule
+\end{longtable}
+\clearpage
+\subsection*{Field combinations 4 of 4}
+\begin{longtable}{@{}cccccccc >{\raggedright\arraybackslash}p{0.18\linewidth}@{}}
+\toprule
+Model & $\alpha$ & $d_{S_1}$ & $Y_{S_1}$ & $d_{S_2}$ & $Y_{S_2}$ & $d_F$ & $Y_F$ & $S_2\,H$ \\
+\midrule
+\endfirsthead
+\toprule
+Model & $\alpha$ & $d_{S_1}$ & $Y_{S_1}$ & $d_{S_2}$ & $Y_{S_2}$ & $d_F$ & $Y_F$ & $S_2\,H$ \\
+\midrule
+\endhead
+T3-B & $-1$ & $2$ & $-\frac{1}{2}$ & $2$ & $\frac{1}{2}$ & $1$ & $0$ &  \\
+\midrule
+T3-C & $-1$ & $2$ & $-\frac{1}{2}$ & $2$ & $\frac{1}{2}$ & $3$ & $0$ &  \\
+\midrule
+T3-A & $0$ & $1$ & $0$ & $3$ & $1$ & $2$ & $\frac{1}{2}$ &  \\
+\midrule
+T3-D & $-2$ & $3$ & $-1$ & $1$ & $0$ & $2$ & $-\frac{1}{2}$ & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} +H_{a_1} H_{a_2} S_{1,j_1} \mathcal{I}_{\text{T3},a_1,a_2,j_1} \lambda _{\text{T3}} S_2{}^{\dagger } \\ +\overline{\lambda _{\text{T3}}} S_2 \text{Bar}(\text{T3MixCG})_{a_1,a_2,j_1} H_{a_1}{}^{\dagger } H_{a_2}{}^{\dagger } S_{1,j_1}{}^{\dagger } \\ +H_{a_2} S_2 H_{a_1}{}^{\dagger } S_2{}^{\dagger } \mathcal{I}_{\text{H2},a_1,a_2}{}^1 \lambda _{\text{H2}}{}^1\end{gathered}$} \\
+\midrule
+T3-E & $0$ & $3$ & $0$ & $3$ & $1$ & $2$ & $\frac{1}{2}$ &  \\
+\midrule
+\bottomrule
+\end{longtable}
+\end{landscape}
+\end{document}

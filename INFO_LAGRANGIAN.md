@@ -400,6 +400,11 @@ For debug reports, we have
 python pipeline.py --smoke --debug-reports 
 ```
 
+We can also put EFT thresholds
+```bash
+python pipeline.py --smoke --threshold F --threshold S1 S2
+```
+
 ---
 
 ## 8. Pipeline Detailed for Lagrangian

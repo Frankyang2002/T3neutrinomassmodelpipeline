@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import os
+
 import re
 import shutil
 import subprocess
@@ -9,6 +11,10 @@ from pathlib import Path
 
 from common.Paths import EFT_ORDER, LOOP_ORDER, REPORT_OUTPUT_DIR
 from common.Records import RunRecord
+from Reports.StageReports import (
+    final_eft_stage_label,
+    lagrangian_report_path,
+)
 
 
 def report_output_dir_for(record: RunRecord) -> Path:
@@ -703,15 +709,25 @@ def write_bsm_field_table(
     records: list[RunRecord],
     *,
     summary_key: str,
-    conversion_key: str,
-    output_stem: str,
+    output_path: Path,
     title: str,
     description: str,
     empty_value: str = "",
+    fallback_summary_key: str | None = None,
+    require_matching: bool = True,
 ) -> Path:
-    """Create a table grouping terms according to their field content."""
+    """Create a comparison table grouping Lagrangian terms by field content.
 
-    output_path = REPORT_OUTPUT_DIR / f"{output_stem}.tex"
+    The preferred source is ``summary_key`` (normally the BSM-only expression).
+    If that expression is unavailable, ``fallback_summary_key`` is used so that
+    report generation does not silently become empty merely because one optional
+    conversion flag or BSM subtraction failed.
+
+    UV reports only require a successful build. EFT reports additionally require
+    successful matching.
+    """
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
 
     rows = []
     signatures: set[tuple[str, ...]] = set()
@@ -719,16 +735,21 @@ def write_bsm_field_table(
     for record in records:
         summary = record.summary
 
-        if (
-            summary.get("BuildStatus") != "Success"
-            or summary.get("MatchingStatus") != "Success"
-            or summary.get(conversion_key) is not True
-        ):
+        if summary.get("BuildStatus") != "Success":
             continue
 
-        grouped = grouped_lagrangian_terms(
-            summary.get(summary_key, "")
-        )
+        if require_matching and summary.get("MatchingStatus") != "Success":
+            continue
+
+        latex = str(summary.get(summary_key, "") or "").strip()
+
+        if not latex and fallback_summary_key:
+            latex = str(summary.get(fallback_summary_key, "") or "").strip()
+
+        if not latex:
+            continue
+
+        grouped = grouped_lagrangian_terms(latex)
 
         if not grouped:
             continue
@@ -773,11 +794,11 @@ def write_bsm_field_table(
 
     if not rows or not ordered_signatures:
         lines.append(
-            r"No fully converted results are available for this sector."
+            r"No Lagrangian expressions were available for this sector."
         )
-
     else:
-        # Limit the number of field-content columns on each page.
+        # Keep only a few field-content columns on each page so the expressions
+        # remain readable rather than being compressed into an unusable table.
         chunk_size = 4
 
         chunks = [
@@ -850,7 +871,7 @@ def write_bsm_field_table(
                 ) = quantum_numbers
 
                 cells = [
-                    record.name,
+                    latex_escape_text(record.name),
                     rf"${record.alpha}$",
                     rf"${d_s1}$",
                     rf"${latex_fraction(y_s1)}$",
@@ -867,11 +888,7 @@ def write_bsm_field_table(
                     ],
                 ]
 
-                lines.append(
-                    " & ".join(cells)
-                    + r" \\"
-                )
-
+                lines.append(" & ".join(cells) + r" \\")
                 lines.append(r"\midrule")
 
             lines.extend(
@@ -892,56 +909,142 @@ def write_bsm_field_table(
         ]
     )
 
+    output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(
         "\n".join(lines),
         encoding="utf-8",
     )
 
-    print(f"\nBSM field-combination table:\n{output_path}")
+    print(f"\nLagrangian comparison table:\n{output_path}")
 
     return output_path
-
 
 def write_bsm_uv_field_table(
     records: list[RunRecord],
     empty_value: str = "",
 ) -> Path:
-    """Create the BSM UV table using UV-only field-combination columns."""
+    """Create the UV Lagrangian comparison table by field content."""
 
     return write_bsm_field_table(
         records,
         summary_key="BSMUVLagrangianLaTeX",
-        conversion_key="BSMUVConversionSuccess",
-        output_stem="bsm_uv_field_table",
-        title="T3 BSM UV terms grouped by field content",
+        fallback_summary_key="UVLagrangianLaTeX",
+        require_matching=False,
+        output_path=lagrangian_report_path("UV"),
+        title="T3 UV Lagrangian terms grouped by field content",
         description=(
-            r"Columns are determined only from BSM UV terms. "
-            r"Empty cells denote no UV term with that field combination."
+            r"Rows are model configurations and columns are field configurations. "
+            r"The BSM-only UV expression is preferred; the full UV Lagrangian is "
+            r"used as a fallback when the BSM-only conversion is unavailable."
         ),
         empty_value=empty_value,
     )
-
 
 def write_bsm_matched_field_table(
     records: list[RunRecord],
     empty_value: str = "",
 ) -> Path:
-    """Create the matched BSM table using matched-only field columns."""
+    """Create one Lagrangian comparison report for every matched EFT stage."""
 
-    return write_bsm_field_table(
-        records,
-        summary_key="BSMEFTLagrangianLaTeX",
-        conversion_key="BSMEFTConversionSuccess",
-        output_stem="bsm_matched_field_table",
-        title=(
-            r"T3 matched BSM EFT terms by field content"
-        ),
-        description=(
-            r"Columns are determined only from matched BSM EFT terms. "
-            r"Empty cells denote no matched term with that field combination."
-        ),
-        empty_value=empty_value,
-    )
+    stage_labels: list[str] = []
+
+    for record in records:
+        for stage in record.summary.get("EFTStages", []):
+            label = str(stage.get("Label", "")).strip()
+            if label and label not in stage_labels:
+                stage_labels.append(label)
+
+    if not stage_labels:
+        # Historical fallback for old summaries.
+        stage_labels = [final_eft_stage_label(records)]
+
+    last_path = lagrangian_report_path(stage_labels[-1])
+
+    for stage_label in stage_labels:
+        stage_records: list[RunRecord] = []
+
+        for record in records:
+            stage_payload = next(
+                (
+                    stage
+                    for stage in record.summary.get("EFTStages", [])
+                    if stage.get("Label") == stage_label
+                ),
+                None,
+            )
+
+            if stage_payload is None:
+                continue
+
+            stage_summary = dict(record.summary)
+            stage_summary["BSMEFTLagrangianLaTeX"] = stage_payload.get(
+                "BSMEFTLagrangianLaTeX",
+                "",
+            )
+            stage_summary["EFTLagrangianLaTeX"] = stage_payload.get(
+                "EFTLagrangianLaTeX",
+                "",
+            )
+            stage_summary["MatchingStatus"] = (
+                "Success"
+                if record.summary.get("SequentialMatchingStatus") == "Success"
+                else record.summary.get("MatchingStatus", "Unknown")
+            )
+
+            stage_records.append(
+                RunRecord(
+                    name=record.name,
+                    alpha=record.alpha,
+                    d_s1=record.d_s1,
+                    d_s2=record.d_s2,
+                    d_f=record.d_f,
+                    return_code=record.return_code,
+                    summary=stage_summary,
+                    output_dir=record.output_dir,
+                    eft_stages=record.eft_stages,
+                )
+            )
+
+        if not stage_records:
+            continue
+
+        stage_info = next(
+            (
+                stage
+                for stage in stage_records[0].summary.get("EFTStages", [])
+                if stage.get("Label") == stage_label
+            ),
+            {},
+        )
+        active = stage_info.get("ActiveHeavyFields", [])
+        integrated = stage_info.get("IntegratedFields", [])
+
+        description = (
+            r"Rows are model configurations and columns are field configurations. "
+            + "This stage integrates out "
+            + ", ".join(integrated)
+            + ". Remaining active T3 fields: "
+            + (", ".join(active) if active else "none")
+            + "."
+        )
+
+        last_path = write_bsm_field_table(
+            stage_records,
+            summary_key="BSMEFTLagrangianLaTeX",
+            fallback_summary_key="EFTLagrangianLaTeX",
+            require_matching=True,
+            output_path=lagrangian_report_path(stage_label),
+            title=(
+                "T3 matched EFT Lagrangian terms: "
+                + stage_label.replace("_", r"\_")
+            ),
+            description=description,
+            empty_value=empty_value,
+        )
+
+        compile_latex_document(last_path)
+
+    return last_path
 
 
 def write_c5_coefficient_report(record: RunRecord) -> Path:
@@ -1004,6 +1107,12 @@ def compile_latex_document(tex_path: Path) -> None:
 
     latexmk = shutil.which("latexmk")
     pdflatex = shutil.which("pdflatex")
+
+    # MiKTeX's latexmk wrapper requires Perl.  On Windows, if Perl is not
+    # installed, calling latexmk only produces a noisy failure before we fall
+    # back to pdflatex anyway.  Skip latexmk in that situation.
+    if os.name == "nt" and shutil.which("perl") is None:
+        latexmk = None
 
     if latexmk is None and pdflatex is None:
         print(

@@ -600,29 +600,154 @@ def _find_lepton_dummies(term: str) -> tuple[str, str]:
     return labels[0], labels[1]
 
 
-def _term_prefactor(term: dict) -> sp.Expr:
+def _term_scalar_expression(term: dict) -> str:
+    """Reduce a Matchete Wilson term to its exact scalar prefactor.
+
+    Fields, CG calls and spinor chains are replaced by 1.  Yukawa couplings,
+    MF, signs and all numerical factors remain.  Therefore factors such as
+    1/Sqrt[3] and Sqrt[2/3] are preserved automatically.
+    """
+
     text = term["TermInputForm"]
-    n1 = text.count("Coupling[y1,")
-    n2 = text.count("Coupling[y2,")
-    if n1 + n2 != 2:
+    out: list[str] = []
+    pos = 0
+
+    while pos < len(text):
+        if text.startswith("Bar[Coupling[", pos):
+            bar_open = pos + len("Bar")
+            bar_close = _matching_bracket(text, bar_open)
+            inner = text[bar_open + 1 : bar_close]
+
+            if inner.startswith("Coupling[y1,"):
+                out.append("yb1")
+            elif inner.startswith("Coupling[y2,"):
+                out.append("yb2")
+            else:
+                raise ValueError(
+                    f"Unsupported barred coupling in Wilson term {term['Index']}: "
+                    f"{inner[:80]}"
+                )
+
+            pos = bar_close + 1
+            continue
+
+        if text.startswith("Coupling[", pos):
+            open_index = pos + len("Coupling")
+            close_index = _matching_bracket(text, open_index)
+            inner = text[open_index + 1 : close_index]
+            args = _split_top_level(inner)
+            name = args[0].strip() if args else ""
+
+            if name in {"y1", "y2", "MF"}:
+                out.append(name)
+            else:
+                raise ValueError(
+                    f"Unsupported coupling {name!r} in Wilson term {term['Index']}."
+                )
+
+            pos = close_index + 1
+            continue
+
+        if text.startswith("CG[", pos):
+            open_index = pos + len("CG")
+            close_index = _matching_bracket(text, open_index)
+            out.append("1")
+            pos = close_index + 1
+            continue
+
+        if text.startswith("Bar[Field[", pos):
+            bar_open = pos + len("Bar")
+            bar_close = _matching_bracket(text, bar_open)
+            out.append("1")
+            pos = bar_close + 1
+            continue
+
+        if text.startswith("Field[", pos):
+            open_index = pos + len("Field")
+            close_index = _matching_bracket(text, open_index)
+            out.append("1")
+            pos = close_index + 1
+            continue
+
+        if text.startswith("NCM[", pos):
+            open_index = pos + len("NCM")
+            close_index = _matching_bracket(text, open_index)
+            out.append("1")
+            pos = close_index + 1
+            continue
+
+        out.append(text[pos])
+        pos += 1
+
+    return "".join(out)
+
+
+def _term_prefactor(term: dict) -> sp.Expr:
+    scalar_text = _term_scalar_expression(term)
+
+    cleaned = scalar_text.strip()
+    sqrt_pattern = re.compile(r"Sqrt\[([^\[\]]+)\]")
+    while sqrt_pattern.search(cleaned):
+        cleaned = sqrt_pattern.sub(r"sqrt(\1)", cleaned)
+    cleaned = cleaned.replace("^", "**")
+
+    y1, y2 = sp.symbols("y1 y2")
+    yb1, yb2 = sp.symbols("yb1 yb2")
+    mf = sp.Symbol("MF", nonzero=True)
+
+    raw = sp.simplify(
+        sp.sympify(
+            cleaned,
+            locals={
+                "sqrt": sp.sqrt,
+                "I": sp.I,
+                "y1": y1,
+                "y2": y2,
+                "yb1": yb1,
+                "yb2": yb2,
+                "MF": mf,
+            },
+        )
+    )
+
+    # Cheap structural regressions before replacing barred Yukawa placeholders.
+    powers = raw.as_powers_dict()
+    yukawa_power = sum(
+        int(powers.get(symbol, 0))
+        for symbol in (y1, y2, yb1, yb2)
+    )
+    if yukawa_power != 2:
         raise ValueError(
-            f"Expected two T3 Yukawa couplings in Wilson term {term['Index']}."
+            f"Expected two Yukawa factors in Wilson term {term['Index']}, "
+            f"reconstructed scalar expression={raw}."
         )
 
-    y1, y2, mf = sp.symbols("y1 y2 MF")
-    prefactor = y1**n1 * y2**n2 / mf
+    if powers.get(mf, 0) != -1:
+        raise ValueError(
+            f"Expected exactly one inverse MF in Wilson term {term['Index']}, "
+            f"reconstructed scalar expression={raw}."
+        )
 
-    if term["Chirality"] == "PL":
-        prefactor = sp.conjugate(y1)**n1 * sp.conjugate(y2)**n2 / mf
+    result = raw.xreplace(
+        {
+            yb1: sp.conjugate(y1),
+            yb2: sp.conjugate(y2),
+        }
+    )
+    return sp.simplify(result)
 
-    # Matchete writes the identical-yukawa contractions with 1/(2 MF).
-    if re.search(r"/\(2\*Coupling\[MF,", text):
-        prefactor /= 2
 
-    if text.lstrip().startswith("-"):
-        prefactor = -prefactor
+def prefactor_scaling_regression(
+    term: dict,
+    scale: sp.Expr = sp.Integer(7),
+) -> bool:
+    """Cheap check that an overall term rescaling survives parsing exactly."""
 
-    return sp.simplify(prefactor)
+    scaled = dict(term)
+    scaled["TermInputForm"] = f"({sp.sstr(scale)})*({term['TermInputForm']})"
+    lhs = sp.simplify(_term_prefactor(scaled))
+    rhs = sp.simplify(scale * _term_prefactor(term))
+    return sp.simplify(lhs - rhs) == 0
 
 
 def _cg_value(

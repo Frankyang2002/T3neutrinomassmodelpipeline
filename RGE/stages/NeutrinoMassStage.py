@@ -6,6 +6,10 @@ from pathlib import Path
 import sympy as sp
 
 from RGE.matching.FlavorMatchedC5 import flavor_match_from_c5_file
+from RGE.matching.FinalWeinbergAdapter import (
+    is_final_weinberg_json,
+    load_final_weinberg_flavor_matrix,
+)
 
 
 v = sp.Symbol("v")
@@ -34,12 +38,22 @@ def run_neutrino_mass_stage(
     data_dir = output_dir / "data"
     data_dir.mkdir(parents=True, exist_ok=True)
 
-    flavor_result = flavor_match_from_c5_file(
-        c5_path,
-        n_lepton=3,
-        n_heavy=n_heavy,
-        split_heavy_masses=True,
-    )
+    if is_final_weinberg_json(c5_path):
+        flavor_result = load_final_weinberg_flavor_matrix(
+            c5_path,
+            n_lepton=3,
+            n_heavy=n_heavy,
+            split_heavy_masses=True,
+        )
+        c5_input_kind = "final_weinberg_json"
+    else:
+        flavor_result = flavor_match_from_c5_file(
+            c5_path,
+            n_lepton=3,
+            n_heavy=n_heavy,
+            split_heavy_masses=True,
+        )
+        c5_input_kind = "legacy_scalar_c5"
 
     c5_matrix = flavor_result["K"]
     mass_matrix = build_neutrino_mass_matrix(c5_matrix)
@@ -60,6 +74,10 @@ def run_neutrino_mass_stage(
     summary = {
         "NeutrinoMassStatus": "Success",
         "NeutrinoMassConvention": "m_nu = -v^2 C5",
+        "C5InputKind": c5_input_kind,
+        "C5InputFile": c5_path.relative_to(output_dir).as_posix()
+        if c5_path.is_relative_to(output_dir)
+        else str(c5_path),
         "NeutrinoMassMatrixFile": mass_path.relative_to(output_dir).as_posix(),
         "NeutrinoMassMatrixSymmetric": True,
     }

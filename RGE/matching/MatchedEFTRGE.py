@@ -321,9 +321,36 @@ def run_matched_eft_rge(
     if debug_outputs:
         debug_dir.mkdir(parents=True, exist_ok=True)
 
-    kappa = parse_matchete_c5(
-        c5_path.read_text(encoding="utf-8")
+    # The hierarchical pipeline supplies the physical full-flavor JSON.  The
+    # purpose of this stage is only the universal one-generation SMEFT RGE
+    # benchmark, so reduce that physical coefficient to a 1x1 flavor problem.
+    # Import locally to avoid the module-level cycle: FinalWeinbergAdapter uses
+    # parse_matchete_c5 from this module for the hard threshold expression.
+    from RGE.matching.FinalWeinbergAdapter import (
+        is_final_weinberg_json,
+        load_final_weinberg_flavor_matrix,
     )
+
+    if is_final_weinberg_json(c5_path):
+        adapted = load_final_weinberg_flavor_matrix(
+            c5_path,
+            n_lepton=1,
+            n_heavy=1,
+            split_heavy_masses=False,
+        )
+        kappa = sp.simplify(adapted["K"][0, 0])
+        c5_input_kind = "final_weinberg_json_one_generation_reduction"
+        matching_assumption = (
+            "Hierarchical physical Majorana C5 reduced to one generation "
+            "for the universal SMEFT RGE benchmark"
+        )
+    else:
+        kappa = parse_matchete_c5(
+            c5_path.read_text(encoding="utf-8")
+        )
+        c5_input_kind = "legacy_scalar_c5"
+        matching_assumption = "Common heavy T3 threshold"
+
     result = calculate_matched_eft_rge(kappa)
 
     if sp.simplify(result["difference"]) != 0:
@@ -350,7 +377,8 @@ def run_matched_eft_rge(
     summary = {
         "RGEStatus": "Success",
         "TheoryBelowThreshold": "SMEFT",
-        "MatchingAssumption": "Common heavy T3 threshold",
+        "MatchingAssumption": matching_assumption,
+        "C5InputKind": c5_input_kind,
         "C5InputFile": _output_relative_path(c5_path, output_dir),
         "C5BetaFile": _output_relative_path(beta_path, output_dir),
         "C5BetaOverC5File": (

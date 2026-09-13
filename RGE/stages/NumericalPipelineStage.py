@@ -8,6 +8,10 @@ import sympy as sp
 
 from RGE.matching.FlavorMatchedC5 import extract_t3_loop_kernel
 from RGE.matching.MatchedEFTRGE import parse_matchete_c5
+from RGE.matching.FinalWeinbergAdapter import (
+    is_final_weinberg_json,
+    load_final_weinberg_flavor_matrix,
+)
 from RGE.running.NumericalWeinbergRGE import (
     SMInitialConditions,
     evolve_weinberg,
@@ -91,6 +95,71 @@ def _sympy_substitutions_from_config(config: dict) -> dict:
             substitutions[sp.conjugate(symbol2)] = np.conjugate(y2[p, r])
 
     return substitutions
+
+
+
+def _hierarchical_scale_substitutions(config: dict) -> dict[sp.Expr, float]:
+    """Numerical values for the grouped F -> (S1,S2) threshold symbols."""
+    model = config["t3"]
+
+    if "MS" in model:
+        ms_value = float(model["MS"])
+    else:
+        ms1 = float(model["MS1"])
+        ms2 = float(model["MS2"])
+
+        if not np.isclose(ms1, ms2):
+            raise ValueError(
+                "Hierarchical final C5 uses the grouped scalar threshold MS. "
+                "Provide t3.MS explicitly, or use equal MS1 and MS2."
+            )
+
+        ms_value = ms1
+
+    return {
+        sp.Symbol("MS"): ms_value,
+    }
+
+
+def evaluate_final_weinberg_json(
+    c5_path: Path,
+    config: dict,
+) -> np.ndarray:
+    """Evaluate the physical Majorana C5 matrix stored in the final JSON."""
+    model = config["t3"]
+    heavy_masses = model["MF"]
+
+    symbolic = load_final_weinberg_flavor_matrix(
+        c5_path,
+        n_lepton=3,
+        n_heavy=len(heavy_masses),
+        split_heavy_masses=True,
+    )
+    K_symbolic = symbolic["K"]
+
+    substitutions = _sympy_substitutions_from_config(config)
+    substitutions.update(_hierarchical_scale_substitutions(config))
+
+    K_numeric = np.empty((3, 3), dtype=complex)
+
+    for p in range(3):
+        for q in range(3):
+            value = sp.N(K_symbolic[p, q].subs(substitutions), 18)
+
+            if value.free_symbols:
+                raise ValueError(
+                    "Unresolved symbols remain in hierarchical C5 entry "
+                    f"({p},{q}): {sorted(map(str, value.free_symbols))}"
+                )
+
+            K_numeric[p, q] = complex(value)
+
+    if not np.allclose(K_numeric, K_numeric.T):
+        raise RuntimeError(
+            "Numerically evaluated final Weinberg matrix is not symmetric."
+        )
+
+    return K_numeric
 
 
 def evaluate_symbolic_c5(
@@ -190,10 +259,18 @@ def run_numerical_pipeline_stage(
         config_path.read_text(encoding="utf-8")
     )
 
-    K_initial = evaluate_symbolic_c5(
-        c5_path,
-        config,
-    )
+    if is_final_weinberg_json(c5_path):
+        K_initial = evaluate_final_weinberg_json(
+            c5_path,
+            config,
+        )
+        c5_input_kind = "final_weinberg_json"
+    else:
+        K_initial = evaluate_symbolic_c5(
+            c5_path,
+            config,
+        )
+        c5_input_kind = "legacy_scalar_c5"
 
     sm = config["sm"]
 
@@ -250,6 +327,10 @@ def run_numerical_pipeline_stage(
     summary = {
         "NumericalRGEStatus": "Success",
         "NumericalRGEConfig": str(config_path),
+        "C5InputKind": c5_input_kind,
+        "C5InputFile": c5_path.relative_to(output_dir).as_posix()
+        if c5_path.is_relative_to(output_dir)
+        else str(c5_path),
         "NumericalMatchingScaleGeV": result.mu_initial,
         "NumericalLowScaleGeV": result.mu_final,
         "NumericalSolverEvaluations": result.nfev,

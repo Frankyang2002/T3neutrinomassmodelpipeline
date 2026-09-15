@@ -211,6 +211,7 @@ def validate_dimensions(
     debug_reports: bool = False,
     export_rge_tensors: bool = False,
     threshold_plan: tuple[tuple[str, ...], ...] | None = None,
+    output_root: Path | None = None,
 ) -> RunRecord:
     """All it does is 
     1. Check if dimensions are correct, if not then return error
@@ -228,18 +229,20 @@ def validate_dimensions(
 
     # Check whether these dimensions correspond to one of the known
     # T3-A ... T3-E models from the original classification. (Its for output report names)
+    output_root = output_root or OUTPUT_DIR
+
     model_class = identify_t3_class(d_s1, d_s2, d_f)
 
     if model_class is not None:
         # Known model: keep its familiar A-E name.
         name = f"T3-{model_class}"
-        output_dir = OUTPUT_DIR / (
+        output_dir = output_root / (
             f"T3_{model_class}_alpha_{encode_alpha(alpha)}"
         )
     else:
         # New/generalised representation: identify it directly by dimensions.
         name = f"T3-d{d_s1}-d{d_s2}-F{d_f}"
-        output_dir = OUTPUT_DIR / (
+        output_dir = output_root / (
             f"T3_d{d_s1}_d{d_s2}_F{d_f}_alpha_{encode_alpha(alpha)}"
         )
 
@@ -278,6 +281,7 @@ def obtain_class_dimensions(
     debug_reports: bool = False,
     export_rge_tensors: bool = False,
     threshold_plan: tuple[tuple[str, ...], ...] | None = None,
+    output_root: Path | None = None,
 ) -> RunRecord:
     """Convert a known A-E class into dimensions and then run normally."""
 
@@ -294,5 +298,6 @@ def obtain_class_dimensions(
         debug_reports,
         export_rge_tensors,
         threshold_plan,
+        output_root,
     )
 

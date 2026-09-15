@@ -1,0 +1,108 @@
+{
+  "status": "Success",
+  "scheme": "fixed_order_one_loop_MSbar_hierarchical",
+  "formula": "C5_final[p,q](MS) = C5_hard_MSbar[p,q](MF) + hbar*DeltaC5_run_direct^(1)[p,q](MF->MS)",
+  "bookkeeping": {
+    "threshold_expression_already_contains_hbar": true,
+    "direct_running_expression_already_contains_hbar": false,
+    "direct_running_requires_hbar": true,
+    "direct_running_object_order": "one_loop_order_one_coefficient"
+  },
+  "threshold_contribution_raw": {
+    "source": "C:\\Users\\yangf\\OneDrive\\Desktop\\honours phys code\\Code\\output\\hypercharge\\T3_B_alpha_p1\\data\\c5_threshold_with_eft1_running.txt",
+    "expression": "(2*((Sqrt[3]*hbar*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0])/Coupling[MF, {}, 0] + (Sqrt[3]*hbar*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0])/(\\[Epsilon]*Coupling[MF, {}, 0]) + (Sqrt[3]*hbar*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0]*Log[\\[Mu]bar2/Coupling[MF, {}, 0]^2])/Coupling[MF, {}, 0]))/3",
+    "contains_uv_pole": true,
+    "role": "unrenormalized Matchete hard-region diagnostic",
+    "flavor_status": "explicit_full_flavor_matchete",
+    "external_flavor_indices": [
+      "d$$1",
+      "d$$2"
+    ],
+    "internal_nflavor_indices": [
+      "d$$1"
+    ],
+    "normalised_full_flavor_expression": "(2*((sqrt(3)*hbar*conjugate(y1[p,r])*conjugate(y2[q,r])*lambdaT3)/MF + (sqrt(3)*hbar*conjugate(y1[p,r])*conjugate(y2[q,r])*lambdaT3)/(\\[Epsilon]*MF) + (sqrt(3)*hbar*conjugate(y1[p,r])*conjugate(y2[q,r])*lambdaT3*log(\\[Mu)bar2/MF^2])/MF))/3"
+  },
+  "renormalized_hard_threshold": {
+    "status": "Success",
+    "scheme": "MSbar",
+    "matching_scale": "MF",
+    "expression": "(2*((Sqrt[3]*hbar*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0])/Coupling[MF, {}, 0] + (Sqrt[3]*hbar*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0]*0)/Coupling[MF, {}, 0]))/3",
+    "pole_terms_removed": 1,
+    "matching_logs_set_to_zero": 1,
+    "contains_uv_pole_after_subtraction": false,
+    "reason": null,
+    "source": "C:\\Users\\yangf\\OneDrive\\Desktop\\honours phys code\\Code\\output\\hypercharge\\T3_B_alpha_p1\\data\\c5_threshold_with_eft1_running.txt",
+    "full_flavor_symbol": "C5HardMSbarAtMF[p,q]",
+    "flavor_status": "explicit_full_flavor_matchete"
+  },
+  "physical_majorana_hard_threshold": {
+    "status": "Success",
+    "symmetrization": "1/2*(C[p,q] + C[q,p])",
+    "expression": "(1/2)*(((2*((Sqrt[3]*hbar*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0])/Coupling[MF, {}, 0] + (Sqrt[3]*hbar*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0]*0)/Coupling[MF, {}, 0]))/3) + ((2*((Sqrt[3]*hbar*Bar[Coupling[y1, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0])/Coupling[MF, {}, 0] + (Sqrt[3]*hbar*Bar[Coupling[y1, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0]*0)/Coupling[MF, {}, 0]))/3))",
+    "ordered_expression": "(2*((Sqrt[3]*hbar*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0])/Coupling[MF, {}, 0] + (Sqrt[3]*hbar*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0]*0)/Coupling[MF, {}, 0]))/3",
+    "swapped_expression": "(2*((Sqrt[3]*hbar*Bar[Coupling[y1, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0])/Coupling[MF, {}, 0] + (Sqrt[3]*hbar*Bar[Coupling[y1, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0]*0)/Coupling[MF, {}, 0]))/3",
+    "external_flavor_indices": [
+      "d$$1",
+      "d$$2"
+    ],
+    "one_generation_normalization_preserved": true,
+    "reason": null,
+    "source": "C:\\Users\\yangf\\OneDrive\\Desktop\\honours phys code\\Code\\output\\hypercharge\\T3_B_alpha_p1\\data\\c5_threshold_with_eft1_running.txt",
+    "flavor_status": "explicit_full_flavor_symmetric"
+  },
+  "direct_running_contribution": {
+    "source": "C:\\Users\\yangf\\OneDrive\\Desktop\\honours phys code\\Code\\output\\hypercharge\\T3_B_alpha_p1\\data\\eft1_wilson_flavor_at_S_threshold.json",
+    "source_location": "running_corrections.Weinberg.running_tensor_text",
+    "raw_expression": "(4*sqrt(3)*lambdaT3*log(MS/MF)/3)*C12[p,q]",
+    "expression": "(4*sqrt(3)*lambdaT3*log(MS/MF)/3)*((Sum_r (conjugate(y1[p,r]) conjugate(y2[q,r]) + conjugate(y2[p,r]) conjugate(y1[q,r])))/(2*MF))",
+    "boundary_tensor_replacements": {
+      "C12": "(Sum_r (conjugate(y1[p,r]) conjugate(y2[q,r]) + conjugate(y2[p,r]) conjugate(y1[q,r])))/(2*MF)"
+    },
+    "flavor_status": "explicit_full_flavor",
+    "full_flavor_symbol": "DeltaC5RunDirect1[p,q]",
+    "manifestly_symmetric_under_pq": true
+  },
+  "combined": {
+    "full_flavor_expression": "C5HardMSbarAtMF[p,q] + hbar*DeltaC5RunDirect1[p,q]",
+    "ordered_expression": "((2*((Sqrt[3]*hbar*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0])/Coupling[MF, {}, 0] + (Sqrt[3]*hbar*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0]*0)/Coupling[MF, {}, 0]))/3) + hbar*((4*sqrt(3)*lambdaT3*log(MS/MF)/3)*((Sum_r (conjugate(y1[p,r]) conjugate(y2[q,r]) + conjugate(y2[p,r]) conjugate(y1[q,r])))/(2*MF)))",
+    "physical_majorana_expression": "((1/2)*(((2*((Sqrt[3]*hbar*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0])/Coupling[MF, {}, 0] + (Sqrt[3]*hbar*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0]*0)/Coupling[MF, {}, 0]))/3) + ((2*((Sqrt[3]*hbar*Bar[Coupling[y1, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0])/Coupling[MF, {}, 0] + (Sqrt[3]*hbar*Bar[Coupling[y1, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0]*0)/Coupling[MF, {}, 0]))/3))) + hbar*((4*sqrt(3)*lambdaT3*log(MS/MF)/3)*((Sum_r (conjugate(y1[p,r]) conjugate(y2[q,r]) + conjugate(y2[p,r]) conjugate(y1[q,r])))/(2*MF)))",
+    "structurally_full_flavor": true,
+    "ready_for_ordered_full_flavor_numerics": true,
+    "ready_for_full_flavor_numerics": true,
+    "ready_for_physical_majorana_numerics": true,
+    "physical_majorana_reason": null,
+    "reason": null
+  },
+  "diagnostics": {
+    "threshold_has_uv_pole": true,
+    "raw_threshold_preserved": true,
+    "pole_rge_consistency_source": "C:\\Users\\yangf\\OneDrive\\Desktop\\honours phys code\\Code\\output\\hypercharge\\T3_B_alpha_p1\\data\\c5_pole_rge_consistency.json",
+    "pole_rge_consistency_validated": true,
+    "pole_rge_consistency_reason": "Validated: direct running log coefficient = 2 x hard pole residue",
+    "pole_rge_consistency_payload": {
+      "Status": "Success",
+      "HardPoleResidueInputForm": "(2*hbar*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0])/(Sqrt[3]*Coupling[MF, {}, 0])",
+      "DirectRunningLogCoefficientInputForm": "(2*hbar*Bar[Coupling[y1, {Index[EFT1FlavorQ, Flavor], Index[nfl$51, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[EFT1FlavorP, Flavor], Index[nfl$51, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0])/(Sqrt[3]*Coupling[MF, {}, 0]) + (2*hbar*Bar[Coupling[y1, {Index[EFT1FlavorP, Flavor], Index[nfl$51, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[EFT1FlavorQ, Flavor], Index[nfl$51, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0])/(Sqrt[3]*Coupling[MF, {}, 0])",
+      "HardPoleResidueOneGenerationInputForm": "(2*hbar*Bar[Coupling[y1, {Index[T3Flavor1, Flavor], Index[T3NFlavor1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[T3Flavor1, Flavor], Index[T3NFlavor1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0])/(Sqrt[3]*Coupling[MF, {}, 0])",
+      "DirectRunningLogCoefficientOneGenerationInputForm": "(4*hbar*Bar[Coupling[y1, {Index[T3Flavor1, Flavor], Index[T3NFlavor1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[T3Flavor1, Flavor], Index[T3NFlavor1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0])/(Sqrt[3]*Coupling[MF, {}, 0])",
+      "DirectLogToPoleRatioOneGenerationInputForm": "2",
+      "DirectLogEqualsTwicePoleResidueOneGeneration": true,
+      "ConsistencyConvention": "strict_one_generation_direct_vs_hard",
+      "ConsistencyValidated": true,
+      "ConsistencyReason": "Validated: direct running log coefficient = 2 x hard pole residue"
+    },
+    "renormalized_hard_threshold_constructed": true,
+    "physical_majorana_hard_constructed": true,
+    "direct_running_manifestly_symmetric": true,
+    "direct_running_requires_hbar": true,
+    "c12_boundary_expanded": true,
+    "c12_symmetry_convention_resolved": true
+  },
+  "checks": {
+    "equal_scale_running_vanishes": true,
+    "one_generation_reduction_matches": true,
+    "log_ratio": "log(MS/MF)"
+  },
+  "one_generation_combined_expression": "((1/2)*(((2*((Sqrt[3]*hbar*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0])/Coupling[MF, {}, 0] + (Sqrt[3]*hbar*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0]*0)/Coupling[MF, {}, 0]))/3) + ((2*((Sqrt[3]*hbar*Bar[Coupling[y1, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0])/Coupling[MF, {}, 0] + (Sqrt[3]*hbar*Bar[Coupling[y1, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0]*0)/Coupling[MF, {}, 0]))/3))) + hbar*((4*sqrt(3)*lambdaT3*log(MS/MF)/3)*((Sum_r (conjugate(y1[p,r]) conjugate(y2[q,r]) + conjugate(y2[p,r]) conjugate(y1[q,r])))/(2*MF)))"
+}

@@ -93,6 +93,12 @@ $$
 S_1\otimes S_2^\dagger \supset \mathbf 3.
 $$
 
+With our current restriction of representations of dimension 3 or less, giving us either combinations of scalar dimensions
+
+(F,S1,S2),(2,1,3),(1,2,2),(3,2,2),(2,3,1),(2,3,3)
+
+These are the results
+
 ---
 
 ## 1. UV Lagrangian
@@ -403,7 +409,9 @@ python pipeline.py --smoke --debug-reports
 We can also put EFT thresholds
 ```bash
 python pipeline.py --smoke --threshold F --threshold S1 S2
+python pipeline.py --full --threshold F --threshold S1 S2 --debug-reports
 ```
+
 
 ---
 

@@ -28,6 +28,138 @@ def report_output_dir_for(record: RunRecord) -> Path:
 # LaTeX/report helpers
 # ---------------------------------------------------------------------------
 
+
+def normalise_physics_latex(latex: str) -> str:
+    """Clean implementation/Matchete notation for human-facing reports.
+
+    This is deliberately a presentation-only pass: it does not alter the
+    underlying matching output.  It maps Matchete/internal symbol names to the
+    notation used in the report and keeps physically meaningful conjugation
+    explicit.
+    """
+    if not latex:
+        return latex
+
+    text = latex
+
+    # Renormalisation scale. Mathematica/TeXForm can render the symbol mubar2
+    # as the particularly ugly ``\\text{$\\mu $bar2}``.
+    text = text.replace(r"\text{$\mu $bar2}", r"\bar{\mu}^{2}")
+    text = text.replace(r"\text{mubar2}", r"\bar{\mu}^{2}")
+    text = text.replace(r"\mathrm{mubar2}", r"\bar{\mu}^{2}")
+
+    # Matchete coefficients generated for the scalar bilinears after the first
+    # threshold.  Name them by the operator they multiply rather than exposing
+    # the internal CNewScalar12/CNewScalar22 symbols.  Do this before replacing
+    # the field names so we do not accidentally modify the coefficient name.
+    text = text.replace(r"\text{CNewScalar12}", r"C_{S_1^\dagger S_1}")
+    text = text.replace(r"\text{CNewScalar22}", r"C_{S_2^\dagger S_2}")
+    text = re.sub(
+        r"(?<![A-Za-z0-9])CNewScalar12(?![A-Za-z0-9])",
+        lambda _match: r"C_{S_1^\dagger S_1}",
+        text,
+    )
+    text = re.sub(
+        r"(?<![A-Za-z0-9])CNewScalar22(?![A-Za-z0-9])",
+        lambda _match: r"C_{S_2^\dagger S_2}",
+        text,
+    )
+
+    # Generic heavy-field implementation names.
+    text = text.replace(r"\text{NewScalar1}", r"S_1")
+    text = text.replace(r"\text{NewScalar2}", r"S_2")
+    text = re.sub(
+        r"(?<![A-Za-z0-9])NewScalar1(?![A-Za-z0-9])",
+        r"S_1",
+        text,
+    )
+    text = re.sub(
+        r"(?<![A-Za-z0-9])NewScalar2(?![A-Za-z0-9])",
+        r"S_2",
+        text,
+    )
+
+    # T3 Clebsch--Gordan / invariant tensors.  Bar[...] is not discarded: it
+    # denotes the complex-conjugate invariant tensor.  Render it as a star.
+    cg_map = {
+        "T3Y1CG": r"\mathcal{I}_{y_1}",
+        "T3Y2CG": r"\mathcal{I}_{y_2}",
+        "T3MixCG": r"\mathcal{I}_{T3}",
+    }
+    for raw_name, pretty in cg_map.items():
+        text = text.replace(
+            r"\text{Bar}(\text{" + raw_name + "})",
+            "{" + pretty + r"}^{*}",
+        )
+        text = text.replace(r"\text{" + raw_name + "}", pretty)
+
+    # The SU(2) epsilon tensor is real in the convention used here, so the
+    # conjugated Matchete form does not need a visible bar.
+    text = text.replace(
+        r"\text{Bar}(\text{eps}(\text{SU2L}))",
+        r"\epsilon",
+    )
+    text = text.replace(r"\text{eps}(\text{SU2L})", r"\epsilon")
+
+    # Some tensors have already been partially prettified by the Wolfram
+    # exporter.  Remove remaining \text{} wrappers from their labels.
+    invariant_label_map = {
+        "y1": "y_1",
+        "y2": "y_2",
+        "T3": "T3",
+        "H1": "H1",
+        "H2": "H2",
+        "S1": "S_1",
+        "S2": "S_2",
+    }
+    for raw_label, pretty_label in invariant_label_map.items():
+        text = text.replace(
+            r"\mathcal{I}_{\text{" + raw_label + "},",
+            r"\mathcal{I}_{" + pretty_label + ",",
+        )
+        text = text.replace(
+            r"\mathcal{I}_{\text{" + raw_label + "}}",
+            r"\mathcal{I}_{" + pretty_label + "}",
+        )
+
+    # Scalar masses.
+    text = text.replace(r"M_{\text{S1}}", r"M_{S_1}")
+    text = text.replace(r"M_{\text{S2}}", r"M_{S_2}")
+
+    # Scalar couplings.  The trailing integer labels independent invariant
+    # contractions, so display it as (n), not as an algebraic power.
+    def _lambda_text_repl(match: re.Match[str]) -> str:
+        label = match.group(1)
+        invariant = match.group(2)
+        label_map = {"S1": "S_1", "S2": "S_2"}
+        pretty = label_map.get(label, label)
+        result = rf"\lambda_{{{pretty}}}"
+        if invariant is not None:
+            result += rf"^{{({invariant})}}"
+        return result
+
+    text = re.sub(
+        r"\\lambda\s*_\{\\text\{([^}]+)\}\}(?:\{\}\^(\d+))?",
+        _lambda_text_repl,
+        text,
+    )
+
+    def _lambda_plain_repl(match: re.Match[str]) -> str:
+        label = match.group(1)
+        invariant = match.group(2)
+        result = rf"\lambda_{{{label}}}"
+        if invariant is not None:
+            result += rf"^{{({invariant})}}"
+        return result
+
+    text = re.sub(
+        r"\\lambda\s*_\{(12)\}(?:\{\}\^(\d+))?",
+        _lambda_plain_repl,
+        text,
+    )
+
+    return text
+
 def summary_fraction(summary: dict, key: str) -> Fraction | None:
     """Read an exact number such as -1/2 from the Wolfram summary."""
 
@@ -219,16 +351,16 @@ FIELD_PATTERNS: tuple[tuple[str, tuple[str, ...]], ...] = (
         r"S_1",
         (
             r"\\text\{NewScalar1\}",
-            r"S_\{1\}",
-            r"S_1",
+            r"S_\{1(?:,[^}]*)?\}",
+            r"S_1(?![A-Za-z0-9])",
         ),
     ),
     (
         r"S_2",
         (
             r"\\text\{NewScalar2\}",
-            r"S_\{2\}",
-            r"S_2",
+            r"S_\{2(?:,[^}]*)?\}",
+            r"S_2(?![A-Za-z0-9])",
         ),
     ),
     (
@@ -238,8 +370,16 @@ FIELD_PATTERNS: tuple[tuple[str, tuple[str, ...]], ...] = (
             r"(?<![A-Za-z\\])F(?:_|\^)",
         ),
     ),
-    (r"H", (r"H(?:_|\^)",)),
-    (r"\ell", (r"\\ell", r"\\mathcal\{l\}", r"\\mathscr\{l\}")),
+    (r"H", (r"(?<![A-Za-z\\])H(?:_|\^)",)),
+    (
+        r"\ell",
+        (
+            r"\\ell",
+            r"\\mathcal\{l\}",
+            r"\\mathscr\{l\}",
+            r"(?<![A-Za-z\\])L(?:_|\^)",
+        ),
+    ),
     (r"e", (r"(?<![A-Za-z\\])e(?:_|\^)",)),
     (r"q", (r"(?<![A-Za-z\\])q(?:_|\^)",)),
     (r"u", (r"(?<![A-Za-z\\])u(?:_|\^)",)),
@@ -304,6 +444,7 @@ def grouped_lagrangian_terms(
 ) -> dict[tuple[str, ...], list[str]]:
     """Group additive Lagrangian terms by field content."""
 
+    latex = normalise_physics_latex(latex)
     grouped: dict[tuple[str, ...], list[str]] = {}
 
     for term in split_latex_terms(latex):
@@ -318,6 +459,38 @@ def field_signature_label(signature: tuple[str, ...]) -> str:
     """Render a field combination as a LaTeX table heading."""
 
     return "$" + r"\,".join(signature) + "$"
+
+
+FIELD_SIGNATURE_ORDER = {
+    r"H": 0,
+    r"S_1": 1,
+    r"S_2": 2,
+    r"F": 3,
+    r"\ell": 4,
+    r"e": 5,
+    r"q": 6,
+    r"u": 7,
+    r"d": 8,
+    r"B_{\mu\nu}": 9,
+    r"W_{\mu\nu}": 10,
+    r"G_{\mu\nu}": 11,
+    r"D": 12,
+    r"\text{constant}": 99,
+}
+
+
+def field_signature_sort_key(signature: tuple[str, ...]) -> tuple:
+    """Sort columns by physical field content; the synthetic constant bucket is last."""
+    if signature == (r"\text{constant}",):
+        return (99, 99, ())
+    physical_fields = tuple(field for field in signature if field != r"D")
+    ranks = tuple(FIELD_SIGNATURE_ORDER.get(field, 50) for field in physical_fields)
+    return (len(physical_fields), ranks, int(r"D" in signature), signature)
+
+
+def _term_chunks(terms: list[str], max_terms: int = 3) -> list[list[str]]:
+    """Split long cells into continuation rows so longtable can page-break."""
+    return [terms[i:i + max_terms] for i in range(0, len(terms), max_terms)]
 
 
 def matrix_cell(terms: list[str], empty_value: str = "") -> str:
@@ -705,6 +878,18 @@ def write_bsm_lagrangian_table(records: list[RunRecord]) -> Path:
 # Lagrangian term tables
 # ---------------------------------------------------------------------------
 
+def _study_lagrangian_report_path(stage_label: str, report_root: Path | None = None) -> Path:
+    """Return the Lagrangian report path, optionally rooted in one study directory.
+
+    ``pipeline.finish_runs`` passes ``report_root`` for study-aware output such as
+    ``Reports/output/single`` or ``Reports/output/full/hypercharge``.  Keep the
+    historical StageReports helper as the fallback for callers that do not pass
+    a study root.
+    """
+    if report_root is None:
+        return lagrangian_report_path(stage_label)
+    return Path(report_root) / "Lagrangian" / f"{stage_label}.tex"
+
 def write_bsm_field_table(
     records: list[RunRecord],
     *,
@@ -768,10 +953,7 @@ def write_bsm_field_table(
 
     ordered_signatures = sorted(
         signatures,
-        key=lambda signature: (
-            len(signature),
-            signature,
-        ),
+        key=field_signature_sort_key,
     )
 
     lines: list[str] = [
@@ -799,7 +981,7 @@ def write_bsm_field_table(
     else:
         # Keep only a few field-content columns on each page so the expressions
         # remain readable rather than being compressed into an unusable table.
-        chunk_size = 4
+        chunk_size = 3
 
         chunks = [
             ordered_signatures[index:index + chunk_size]
@@ -821,7 +1003,7 @@ def write_bsm_field_table(
                 )
 
             widths = " ".join(
-                r">{\raggedright\arraybackslash}p{0.18\linewidth}"
+                r">{\raggedright\arraybackslash}p{0.21\linewidth}"
                 for _ in signature_chunk
             )
 
@@ -870,25 +1052,43 @@ def write_bsm_field_table(
                     y_f,
                 ) = quantum_numbers
 
-                cells = [
-                    latex_escape_text(record.name),
-                    rf"${record.alpha}$",
-                    rf"${d_s1}$",
-                    rf"${latex_fraction(y_s1)}$",
-                    rf"${d_s2}$",
-                    rf"${latex_fraction(y_s2)}$",
-                    rf"${d_f}$",
-                    rf"${latex_fraction(y_f)}$",
-                    *[
-                        matrix_cell(
-                            grouped.get(signature, []),
-                            empty_value,
-                        )
-                        for signature in signature_chunk
-                    ],
-                ]
+                per_signature_chunks = {
+                    signature: _term_chunks(grouped.get(signature, []))
+                    for signature in signature_chunk
+                }
+                continuation_rows = max(
+                    [len(parts) for parts in per_signature_chunks.values()] + [1]
+                )
 
-                lines.append(" & ".join(cells) + r" \\")
+                for continuation_index in range(continuation_rows):
+                    if continuation_index == 0:
+                        metadata_cells = [
+                            latex_escape_text(record.name),
+                            rf"${record.alpha}$",
+                            rf"${d_s1}$",
+                            rf"${latex_fraction(y_s1)}$",
+                            rf"${d_s2}$",
+                            rf"${latex_fraction(y_s2)}$",
+                            rf"${d_f}$",
+                            rf"${latex_fraction(y_f)}$",
+                        ]
+                    else:
+                        metadata_cells = [r"\textit{cont.}", "", "", "", "", "", "", ""]
+
+                    expression_cells = []
+                    for signature in signature_chunk:
+                        parts = per_signature_chunks[signature]
+                        if continuation_index < len(parts):
+                            expression_cells.append(
+                                matrix_cell(parts[continuation_index], empty_value)
+                            )
+                        else:
+                            expression_cells.append(empty_value)
+
+                    lines.append(
+                        " & ".join(metadata_cells + expression_cells) + r" \\"
+                    )
+
                 lines.append(r"\midrule")
 
             lines.extend(
@@ -922,6 +1122,8 @@ def write_bsm_field_table(
 def write_bsm_uv_field_table(
     records: list[RunRecord],
     empty_value: str = "",
+    *,
+    report_root: Path | None = None,
 ) -> Path:
     """Create the UV Lagrangian comparison table by field content."""
 
@@ -930,7 +1132,7 @@ def write_bsm_uv_field_table(
         summary_key="BSMUVLagrangianLaTeX",
         fallback_summary_key="UVLagrangianLaTeX",
         require_matching=False,
-        output_path=lagrangian_report_path("UV"),
+        output_path=_study_lagrangian_report_path("UV", report_root),
         title="T3 UV Lagrangian terms grouped by field content",
         description=(
             r"Rows are model configurations and columns are field configurations. "
@@ -943,6 +1145,8 @@ def write_bsm_uv_field_table(
 def write_bsm_matched_field_table(
     records: list[RunRecord],
     empty_value: str = "",
+    *,
+    report_root: Path | None = None,
 ) -> Path:
     """Create one Lagrangian comparison report for every matched EFT stage."""
 
@@ -958,7 +1162,7 @@ def write_bsm_matched_field_table(
         # Historical fallback for old summaries.
         stage_labels = [final_eft_stage_label(records)]
 
-    last_path = lagrangian_report_path(stage_labels[-1])
+    last_path = _study_lagrangian_report_path(stage_labels[-1], report_root)
 
     for stage_label in stage_labels:
         stage_records: list[RunRecord] = []
@@ -1033,7 +1237,7 @@ def write_bsm_matched_field_table(
             summary_key="BSMEFTLagrangianLaTeX",
             fallback_summary_key="EFTLagrangianLaTeX",
             require_matching=True,
-            output_path=lagrangian_report_path(stage_label),
+            output_path=_study_lagrangian_report_path(stage_label, report_root),
             title=(
                 "T3 matched EFT Lagrangian terms: "
                 + stage_label.replace("_", r"\_")

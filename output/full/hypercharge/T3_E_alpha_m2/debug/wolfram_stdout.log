@@ -1,0 +1,194 @@
+Loading Matchete...
+by Javier Fuentes-Martín, Matthias König, Julie Pagès, Anders Eller Thomsen, and Felix Wilsch 
+Contributors:   Javier López Miras, and Adrián Moreno-Sánchez 
+Reference:      Hyperlink[arXiv:2212.04510, https://arxiv.org/abs/2212.04510]
+Website:        Hyperlink[https://matchete.gitlab.io, https://matchete.gitlab.io]
+Model database: Hyperlink[https://gitlab.com/matchete/model-database, https://gitlab.com/matchete/model-database]
+Repository:     Hyperlink[https://gitlab.com/matchete/matchete, https://gitlab.com/matchete/matchete]
+Matchete loaded successfully.
+Model: T3-d3-d3-F2, alpha = -2
+Scalar1 (d,Y) = {3, -1}
+Scalar2 (d,Y) = {3, 0}
+Fermion (d,Y) = {2, -1/2}
+Threshold plan: {{F}, {S1, S2}}
+Threshold group count: 2
+Build stage 1/4: load SM
+  LoadModel result: OK
+Build stage 2/4: define BSM fields
+  Defined BSM SU(2) representation T3BSMd2 with d=2, Dynkin={1}
+  Defined BSM SU(2) representation T3BSMd3 with d=3, Dynkin={2}
+  field definition result: True
+Build stage 3/4: define couplings
+  coupling definition result: True
+Build stage 4/4: define SU(2) CG tensors
+  CG T3Y1CG: dims={2, 2, 3}, oriented algebra reps=InputForm[{CRep[{1}], CRep[{1}], {2}}], CG reps=InputForm[{SU2L[fund], T3BSMd2, T3BSMd3}], symmetric positions={}
+    InvariantTensors result head: List, count=1
+    DefineCG result: InputForm[T3Y1CG]
+  CG T3Y2CG: dims={2, 2, 3}, oriented algebra reps=InputForm[{CRep[{1}], {1}, {2}}], CG reps=InputForm[{SU2L[fund], Bar[T3BSMd2], T3BSMd3}], symmetric positions={}
+    InvariantTensors result head: List, count=1
+    DefineCG result: InputForm[T3Y2CG]
+  CG T3MixCG: dims={2, 2, 3, 3}, oriented algebra reps=InputForm[{{1}, {1}, {2}, {2}}], CG reps=InputForm[{Bar[SU2L[fund]], Bar[SU2L[fund]], T3BSMd3, T3BSMd3}], symmetric positions={1, 2}
+    InvariantTensors result head: List, count=1
+    DefineCG result: InputForm[T3MixCG]
+  CG definition result: InputForm[<|Yukawa1 -> T3Y1CG, Yukawa2 -> T3Y2CG, Mixing -> T3MixCG|>]
+  lambdaS1: raw SU(2) invariants=3, physical invariants=2
+  lambdaS2: raw SU(2) invariants=3, physical invariants=2
+  lambdaH1: raw SU(2) invariants=2, physical invariants=2
+  lambdaH2: raw SU(2) invariants=2, physical invariants=2
+  lambda12: raw SU(2) invariants=3, physical invariants=3
+Checking candidate: Yukawa1_GenericCG
+  result: InputForm[True]
+Checking candidate: Yukawa2_GenericCG
+  result: InputForm[True]
+Checking candidate: Scalar1SelfInv1
+  result: InputForm[True]
+Checking candidate: Scalar1SelfInv2
+  result: InputForm[True]
+Checking candidate: Scalar2SelfInv1
+  result: InputForm[True]
+Checking candidate: Scalar2SelfInv2
+  result: InputForm[True]
+Checking candidate: HiggsPortal1Inv1
+  result: InputForm[True]
+Checking candidate: HiggsPortal1Inv2
+  result: InputForm[True]
+Checking candidate: HiggsPortal2Inv1
+  result: InputForm[True]
+Checking candidate: HiggsPortal2Inv2
+  result: InputForm[True]
+Checking candidate: ScalarCrossPortalInv1
+  result: InputForm[True]
+Checking candidate: ScalarCrossPortalInv2
+  result: InputForm[True]
+Checking candidate: ScalarCrossPortalInv3
+  result: InputForm[True]
+Checking candidate: T3ScalarMix_GenericCG
+  result: InputForm[True]
+Accepted interactions: {Yukawa1_GenericCG, Yukawa2_GenericCG, Scalar1SelfInv1, Scalar1SelfInv2, Scalar2SelfInv1, Scalar2SelfInv2, HiggsPortal1Inv1, HiggsPortal1Inv2, HiggsPortal2Inv1, HiggsPortal2Inv2, ScalarCrossPortalInv1, ScalarCrossPortalInv2, ScalarCrossPortalInv3, T3ScalarMix_GenericCG}
+T3 ingredients present: True
+
+=== Threshold stage 1: integrating F ===
+
+  [A] Tree matching of the tree-level EFT
+
+Running Matchete matching...
+EFT order: 5; loop order: 0
+Running Match...
+
+FrontEndObject::notavail: A front end is not available; certain operations require a front end.
+  Match result head: Times
+Running GreensSimplify...
+  GreensSimplify result head: Plus
+Running EOMSimplify...
+
+FrontEndObject::notavail: A front end is not available; certain operations require a front end.
+
+FrontEndObject::notavail: A front end is not available; certain operations require a front end.
+
+General::stop: Further output of FrontEndObject::notavail will be suppressed during this calculation.
+  EOMSimplify result head: Plus
+Running EvaluateLoopFunctions...
+  EvaluateLoopFunctions result head: Plus
+Running ReplaceEffectiveCouplings...
+  ReplaceEffectiveCouplings result head: Plus
+Matching pipeline completed successfully.
+
+  [B] One-loop matching of the tree-level EFT
+
+Running Matchete matching...
+EFT order: 5; loop order: 1
+Running Match...
+  Match result head: Times
+Running GreensSimplify...
+  GreensSimplify result head: Plus
+Running EOMSimplify...
+>> The Lagrangian contains terms of lower power than dimension 4. Defining effective couplings and assuming these terms to be dimension 4. Use 'PrintEffectiveCouplings' and 'ReplaceEffectiveCouplings' to recover explicit expressions.
+  EOMSimplify result head: Plus
+Running EvaluateLoopFunctions...
+  EvaluateLoopFunctions result head: Plus
+Running ReplaceEffectiveCouplings...
+  ReplaceEffectiveCouplings result head: Plus
+Matching pipeline completed successfully.
+  Perturbative-stage diagnostics: C:\Users\yangf\OneDrive\Desktop\honours phys code\Code\output\full\hypercharge\T3_E_alpha_m2\debug\perturbative_stage_1.json
+  Intermediate EFT Wilson seed: 4 tree-level psi^2 phi^2 term(s), 2 CG definition(s) -> C:\Users\yangf\OneDrive\Desktop\honours phys code\Code\output\full\hypercharge\T3_E_alpha_m2\data\eft1_after_F_wilson_seed.json
+  Intermediate EFT scalar-quartic seed: 16 tree-level scalar quartic term(s), 10 CG definition(s) -> C:\Users\yangf\OneDrive\Desktop\honours phys code\Code\output\full\hypercharge\T3_E_alpha_m2\data\eft1_after_F_scalar_quartic_seed.json
+  Intermediate EFT RGE export: C:\Users\yangf\OneDrive\Desktop\honours phys code\Code\output\full\hypercharge\T3_E_alpha_m2\data\eft1_after_F_rge_export.json
+  Carrying separate tree and one-loop EFT pieces to threshold stage 2.
+
+=== Threshold stage 2: integrating S1, S2 ===
+  Exporting canonical transition EFTs without expanding effective couplings.
+  Exported fresh-kernel CG registry: 12 definition(s).
+
+  Launching fresh Wolfram kernel for threshold stage 2 (S1, S2)...
+  Fresh-kernel CLI payload count (after -file script): 14
+[fresh kernel] Loading Matchete...
+[fresh kernel] Active T3 fields: {S1, S2}; Heavy now: {S1, S2}
+[fresh kernel] Reconstructing scalar-potential invariant registry...
+[fresh kernel] Scalar-potential registry reconstructed: 11 invariant candidate(s).
+[fresh kernel] Restoring serialized intermediate-EFT CG registry...
+[fresh kernel] Restored 0 previously missing CG definition(s).
+[fresh kernel] Reconstructing inherited effective-coupling metadata...
+[fresh kernel] Effective scalar couplings restored for: {S1, S2}
+[fresh kernel] Rehydrating canonical transition EFTs under fresh registry...
+[fresh kernel] Transition rehydration complete. Tree bytes: 61248; full O(hbar) bytes: 337928
+[fresh kernel] Stage-1 inherited O(hbar) transition contains UV pole: False; pole-term count: 0
+[fresh kernel] Stage-1 inherited O(hbar) after EvaluateLoopFunctions contains UV pole: False; pole-term count: 0
+[fresh kernel] ReplaceEffectiveCouplings before [C]: success=True; full transition pole=False; O(hbar) pole=False; pole-term count=0
+[fresh kernel] Diagnosing transition kinetic sectors...
+[fresh kernel] O(hbar) gauge-kinetic differences: InputForm[<|U1Y(BB) -> True, SU2L(WW) -> True, SU3c(GG) -> False|>]
+[fresh kernel] O(hbar) S1 two-derivative differences: InputForm[{False}]
+[fresh kernel] O(hbar) S2 two-derivative differences: InputForm[{False}]
+[fresh kernel] Gauge-coupling threshold shift present: True
+[fresh kernel] Absorbing O(hbar) gauge-kinetic threshold correction into low-energy gauge couplings before [C].
+[fresh kernel] [A] Tree matching L^(0)...
+Running Matchete matching...
+EFT order: 5; loop order: 0
+Running Match...
+WARNING: The field NewScalar1 was defined as heavy, but in the given Lagrangian it is light.
+WARNING: The field NewScalar2 was defined as heavy, but in the given Lagrangian it is light.
+  Match result head: Times
+Matching pipeline completed successfully.
+[fresh kernel] [B] One-loop matching L^(0)...
+EFT order: 5; loop order: 1
+[fresh kernel] [B] expected-topology sanity check:
+[fresh kernel] [C] Tree propagation of inherited/running O(hbar) EFT...
+[fresh kernel] Explicit hbar restored after effective-coupling expansion.
+[fresh kernel] Inherited one-loop terms: 18
+[fresh kernel] Direct Weinberg definition available: False
+[fresh kernel] Authoritative resumed threshold C5 exported: C:\Users\yangf\OneDrive\Desktop\honours phys code\Code\output\full\hypercharge\T3_E_alpha_m2\debug\fresh_kernel_stage_2\c5_threshold_with_eft1_running.txt
+[fresh kernel] Direct EFT1 Weinberg running coefficient exported: C:\Users\yangf\OneDrive\Desktop\honours phys code\Code\output\full\hypercharge\T3_E_alpha_m2\debug\fresh_kernel_stage_2\c5_direct_eft1_running.txt
+[fresh kernel] C5 pole/RGE consistency:
+[fresh kernel] C5 provenance diagnostics:
+[fresh kernel] C5 provenance JSON exported: C:\Users\yangf\OneDrive\Desktop\honours phys code\Code\output\full\hypercharge\T3_E_alpha_m2\debug\fresh_kernel_stage_2\c5_stage2_provenance.json
+[fresh kernel] Threshold stage completed successfully.
+  [fresh kernel] Suppressed 71 verbose line(s); full child output is saved to stdout.log.
+Sequential matching completed with 2 stage(s).
+
+Starting pure-SM baseline matching...
+
+Running Matchete matching...
+EFT order: 5; loop order: 1
+Running Match...
+  Match result head: Times
+Running GreensSimplify...
+  GreensSimplify result head: Plus
+Running EOMSimplify...
+  EOMSimplify result head: Plus
+Running EvaluateLoopFunctions...
+  EvaluateLoopFunctions result head: Plus
+Running ReplaceEffectiveCouplings...
+  ReplaceEffectiveCouplings result head: Plus
+Matching pipeline completed successfully.
+Running GreensSimplifyDifference...
+Running EOMSimplifyDifference...
+
+EOMSimplify::InvalidLagrangian: The Lagrangian contains no valid kinetic terms for the occuring Kinetic terms and thus cannot be simplified.
+Running EvaluateLoopFunctionsDifference...
+Running ReplaceEffectiveCouplingsDifference...
+Matched EFT difference canonicalised successfully.
+Weinberg operator present: True
+Weinberg contributions isolated: 6
+C5 extraction: Success (holomorphic terms: 3; HC terms: 3)
+Pure-SM matching status: Success
+BSM EFT difference status: Success
+BSM EFT conversion success: True

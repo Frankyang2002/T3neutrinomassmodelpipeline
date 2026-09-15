@@ -13,6 +13,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import subprocess
+import sys
+import time
 from pathlib import Path
 
 from RGE.matching.MatchedEFTRGE import run_matched_eft_rge
@@ -63,6 +66,170 @@ from Reports.RGEComparison import (
 
 PROJECT_ROOT = Path(__file__).resolve().parent
 RUN_THRESHOLD_STAGE_SCRIPT = PROJECT_ROOT / "Lagrangian" / "RunThresholdStage.wl"
+
+
+# ---------------------------------------------------------------------------
+# Comparison-study definitions
+# ---------------------------------------------------------------------------
+# smoke: regression check on the five historical benchmark points
+# dimensions: compare the five SU(2) assignments at fixed alpha = 0
+# hypercharge: scan alpha while keeping each SU(2) assignment fixed
+DIMENSION_COMPARISON = tuple(
+    (model_class, 0)
+    for model_class in ("A", "B", "C", "D", "E")
+)
+
+HYPERCHARGE_ALPHAS = (-2, -1, 0, 1, 2)
+HYPERCHARGE_COMPARISON = tuple(
+    (model_class, alpha)
+    for model_class in ("A", "B", "C", "D", "E")
+    for alpha in HYPERCHARGE_ALPHAS
+)
+
+
+def _forward_common_cli_args(args: argparse.Namespace) -> list[str]:
+    """Return options that each child study of --full should inherit."""
+
+    forwarded: list[str] = []
+
+    if args.debug_reports:
+        forwarded.append("--debug-reports")
+
+    if args.numerical is not None:
+        forwarded.extend(["--numerical", str(args.numerical)])
+
+    if args.threshold:
+        for group in args.threshold:
+            forwarded.append("--threshold")
+            forwarded.extend(group)
+
+    if args.threshold_scale:
+        for scale in args.threshold_scale:
+            forwarded.extend(["--threshold-scale", str(scale)])
+
+    return forwarded
+
+
+def run_full_study(args: argparse.Namespace) -> int:
+    """Run every comparison study sequentially and write a master summary.
+
+    --full is intentionally only an orchestrator: each child invocation goes
+    through the ordinary pipeline, so there is one implementation of the
+    physics stages and report generation.
+    """
+
+    full_output_dir = OUTPUT_DIR / "full"
+    full_report_dir = REPORT_OUTPUT_DIR / "full"
+    full_output_dir.mkdir(parents=True, exist_ok=True)
+    full_report_dir.mkdir(parents=True, exist_ok=True)
+
+    studies = (
+        ("smoke", "--smoke"),
+        ("hypercharge", "--hypercharge-comparison"),
+        ("dimensions", "--dimension-comparison"),
+    )
+
+    forwarded = _forward_common_cli_args(args)
+    started = time.time()
+    study_results: list[dict[str, object]] = []
+    overall_status = 0
+
+    print("=" * 72)
+    print("FULL T3 STUDY")
+    print("=" * 72)
+    print(f"Raw output root: {full_output_dir}")
+    print(f"Report root: {full_report_dir}")
+
+    for study_name, mode_flag in studies:
+        print("\n" + "=" * 72)
+        print(f"FULL STUDY: {study_name}")
+        print("=" * 72)
+
+        command = [
+            sys.executable,
+            str(Path(__file__).resolve()),
+            mode_flag,
+            "--study",
+            f"full/{study_name}",
+            *forwarded,
+        ]
+
+        study_started = time.time()
+        completed = subprocess.run(command, cwd=PROJECT_ROOT)
+        elapsed = time.time() - study_started
+        status = int(completed.returncode)
+        overall_status = max(overall_status, status)
+
+        child_output_dir = full_output_dir / study_name
+        child_report_dir = full_report_dir / study_name
+        aggregate = child_output_dir / "t3_model_comparison.json"
+
+        successful_models = None
+        total_models = None
+        if aggregate.is_file():
+            try:
+                payload = json.loads(aggregate.read_text(encoding="utf-8"))
+                if isinstance(payload, list):
+                    total_models = len(payload)
+                    successful_models = sum(
+                        1
+                        for item in payload
+                        if isinstance(item, dict)
+                        and item.get("BuildStatus") == "Success"
+                        and item.get("MatchingStatus") == "Success"
+                    )
+            except (OSError, json.JSONDecodeError):
+                pass
+
+        study_results.append(
+            {
+                "Study": study_name,
+                "ModeFlag": mode_flag,
+                "Status": "Success" if status == 0 else "Failed",
+                "ReturnCode": status,
+                "RuntimeSeconds": elapsed,
+                "SuccessfulModels": successful_models,
+                "TotalModels": total_models,
+                "OutputDirectory": str(child_output_dir),
+                "ReportDirectory": str(child_report_dir),
+                "AggregateFile": str(aggregate) if aggregate.is_file() else None,
+            }
+        )
+
+    total_elapsed = time.time() - started
+    master_summary = {
+        "Status": "Success" if overall_status == 0 else "Failed",
+        "RuntimeSeconds": total_elapsed,
+        "Studies": study_results,
+        "OutputRoot": str(full_output_dir),
+        "ReportRoot": str(full_report_dir),
+    }
+
+    summary_path = full_output_dir / "full_run_summary.json"
+    summary_path.write_text(
+        json.dumps(master_summary, indent=2),
+        encoding="utf-8",
+    )
+
+    print("\n" + "=" * 72)
+    print("FULL STUDY SUMMARY")
+    print("=" * 72)
+    for item in study_results:
+        model_text = ""
+        if item["TotalModels"] is not None:
+            model_text = (
+                f"; models={item['SuccessfulModels']}/{item['TotalModels']}"
+            )
+        print(
+            f"{item['Study']}: {item['Status']} "
+            f"({item['RuntimeSeconds']:.1f}s{model_text})"
+        )
+
+    print(f"Total runtime: {total_elapsed:.1f}s")
+    print(f"Master summary: {summary_path}")
+    print(f"Reports: {full_report_dir}")
+
+    return overall_status
 
 
 def run_uv_rgbeta_stage(record: RunRecord) -> bool:
@@ -752,7 +919,7 @@ def run_eft1_full_flavor_threshold_bridge(
     return True
 
 
-def print_summary(records: list[RunRecord]) -> int:
+def print_summary(records: list[RunRecord], aggregate_dir: Path | None = None) -> int:
     """Print the results of all completed T3 runs."""
 
     print(
@@ -822,7 +989,8 @@ def print_summary(records: list[RunRecord]) -> int:
 
     # Save all model summaries together so we can easily compare runs
     # or use them for regression testing.
-    aggregate = OUTPUT_DIR / "t3_model_comparison.json"
+    aggregate_dir = aggregate_dir or OUTPUT_DIR
+    aggregate = aggregate_dir / "t3_model_comparison.json"
 
     aggregate.write_text(
         json.dumps(
@@ -1109,10 +1277,16 @@ def finish_runs(
     records: list[RunRecord],
     debug_reports: bool = False,
     physics_failed: bool = False,
+    *,
+    study_output_dir: Path | None = None,
+    study_report_dir: Path | None = None,
 ) -> int:
     """Print final summaries and generate reports after the physics pipeline."""
 
-    status = print_summary(records)
+    study_output_dir = study_output_dir or OUTPUT_DIR
+    study_report_dir = study_report_dir or REPORT_OUTPUT_DIR
+
+    status = print_summary(records, study_output_dir)
 
     if physics_failed:
         status = 1
@@ -1128,11 +1302,11 @@ def finish_runs(
     # Lagrangian reports:
     #   rows    = model configurations
     #   columns = field configurations
-    uv_lagrangian_tex = write_bsm_uv_field_table(records)
+    uv_lagrangian_tex = write_bsm_uv_field_table(records, report_root=study_report_dir)
     compile_latex_document(uv_lagrangian_tex)
 
     # This writer emits and compiles every real sequential EFT stage.
-    write_bsm_matched_field_table(records)
+    write_bsm_matched_field_table(records, report_root=study_report_dir)
 
     # RGE report:
     #   one table per running coupling
@@ -1140,9 +1314,9 @@ def finish_runs(
     #
     # RGEComparison will be refined next so that its columns are the
     # individual full RGE terms rather than one combined beta-function cell.
-    write_and_compile_rge_comparison(records)
-    write_and_compile_eft1_rge_comparison(records)
-    write_and_compile_final_eft_rge_comparison(records)
+    write_and_compile_rge_comparison(records, report_root=study_report_dir)
+    write_and_compile_eft1_rge_comparison(records, report_root=study_report_dir)
+    write_and_compile_final_eft_rge_comparison(records, report_root=study_report_dir)
 
     final_stage_label = (
         records[0].eft_stages[-1].label
@@ -1158,20 +1332,6 @@ def finish_runs(
         "\n  RGE/EFT_1_after_F"
         f"\n  RGE/{final_stage_label}"
     )
-
-    # Save all model summaries together so we can easily compare runs
-    # or use them for regression testing.
-    aggregate = OUTPUT_DIR / "t3_model_comparison.json"
-
-    aggregate.write_text(
-        json.dumps(
-            [record.summary for record in records],
-            indent=2,
-        ),
-        encoding="utf-8",
-    )
-
-    print(f"Aggregate: {aggregate}")
 
     return status
 
@@ -1206,6 +1366,33 @@ def main() -> int:
         help="seven historical benchmark points",
     )
 
+    mode.add_argument(
+        "--hypercharge-comparison",
+        action="store_true",
+        help=(
+            "scan alpha=-2,-1,0,1,2 for every T3-A...E SU(2) assignment "
+            "to isolate hypercharge dependence"
+        ),
+    )
+
+    mode.add_argument(
+        "--dimension-comparison",
+        action="store_true",
+        help=(
+            "compare T3-A...E at fixed alpha=0 to isolate SU(2) "
+            "representation dependence"
+        ),
+    )
+
+    mode.add_argument(
+        "--full",
+        action="store_true",
+        help=(
+            "run smoke, hypercharge comparison, and dimension comparison "
+            "sequentially under output/full and Reports/output/full"
+        ),
+    )
+
     # Dimension input to use a specific diagram
     mode.add_argument(
         "--dims",
@@ -1215,6 +1402,18 @@ def main() -> int:
         help=(
             "run one representation assignment, "
             "e.g. --dims 3 1 2"
+        ),
+    )
+
+
+    parser.add_argument(
+        "--study",
+        type=str,
+        default=None,
+        help=(
+            "output/report study folder. Defaults to smoke, extended, "
+            "interesting, or single depending on the selected run mode; "
+            "examples: hypercharge, dimensions"
         ),
     )
 
@@ -1286,6 +1485,11 @@ def main() -> int:
 
     args = parser.parse_args()
 
+    # --full is a pure orchestration mode. It launches the ordinary study
+    # modes as child processes, each with its own nested output/report root.
+    if args.full:
+        return run_full_study(args)
+
     try:
         threshold_plan = validate_threshold_plan(args.threshold)
     except ValueError as exc:
@@ -1304,19 +1508,37 @@ def main() -> int:
             for group in threshold_plan
         ]
 
+    if args.study:
+        # Keep '/' so --full can intentionally create nested study roots such
+        # as full/hypercharge. Spaces are still normalised for CLI convenience.
+        study_name = args.study.strip().replace(" ", "_")
+    elif args.smoke:
+        study_name = "smoke"
+    elif args.hypercharge_comparison:
+        study_name = "hypercharge"
+    elif args.dimension_comparison:
+        study_name = "dimensions"
+    elif args.extended:
+        study_name = "extended"
+    elif args.dims:
+        study_name = "single"
+    else:
+        study_name = "interesting"
+
+    study_output_dir = OUTPUT_DIR / study_name
+    study_report_dir = REPORT_OUTPUT_DIR / study_name
+
     print(
         "Threshold plan: "
         + threshold_plan_label(threshold_plan)
     )
 
-    OUTPUT_DIR.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
-    REPORT_OUTPUT_DIR.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
+    study_output_dir.mkdir(parents=True, exist_ok=True)
+    study_report_dir.mkdir(parents=True, exist_ok=True)
+
+    print(f"Study: {study_name}")
+    print(f"Raw output: {study_output_dir}")
+    print(f"Reports: {study_report_dir}")
     # ----------------------------------------------------------------------
     # Lagrangian and Weinberg Coefficient pipeline
     # ----------------------------------------------------------------------
@@ -1335,6 +1557,7 @@ def main() -> int:
                 args.debug_reports,
                 False,
                 threshold_plan,
+                study_output_dir,
             )
         except ValueError as exc:
             parser.error(str(exc))
@@ -1347,6 +1570,14 @@ def main() -> int:
         if args.smoke:
             mode_name = "smoke"
             points = SMOKE
+
+        elif args.hypercharge_comparison:
+            mode_name = "hypercharge comparison"
+            points = HYPERCHARGE_COMPARISON
+
+        elif args.dimension_comparison:
+            mode_name = "dimension comparison"
+            points = DIMENSION_COMPARISON
 
         elif args.extended:
             mode_name = "extended"
@@ -1371,6 +1602,7 @@ def main() -> int:
                 args.debug_reports,
                 False,
                 threshold_plan,
+                study_output_dir,
             )
             for model_class, alpha in points
         ]
@@ -1513,6 +1745,8 @@ def main() -> int:
         records,
         args.debug_reports,
         physics_failed,
+        study_output_dir=study_output_dir,
+        study_report_dir=study_report_dir,
     )
 
 

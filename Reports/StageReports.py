@@ -22,13 +22,15 @@ def final_eft_stage_label(records: list[RunRecord]) -> str:
     return "EFT"
 
 
-def lagrangian_report_path(stage_label: str) -> Path:
+def lagrangian_report_path(stage_label: str, report_root: Path | None = None) -> Path:
     """Return the .tex path for one stage-aware Lagrangian report."""
 
-    return REPORT_OUTPUT_DIR / "Lagrangian" / f"{stage_label}.tex"
+    root = report_root or REPORT_OUTPUT_DIR
+    return root / "Lagrangian" / f"{stage_label}.tex"
 
 
-def rge_report_path(stage_label: str) -> Path:
+def rge_report_path(stage_label: str, report_root: Path | None = None) -> Path:
     """Return the .tex path for one stage-aware RGE report."""
 
-    return REPORT_OUTPUT_DIR / "RGE" / f"{stage_label}.tex"
+    root = report_root or REPORT_OUTPUT_DIR
+    return root / "RGE" / f"{stage_label}.tex"

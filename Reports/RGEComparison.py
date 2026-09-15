@@ -505,7 +505,11 @@ def _rge_term_cell(terms: list[str] | None) -> str:
 
     return matrix_cell(terms, empty_value=r"---")
 
-def write_rge_comparison(records: list[RunRecord]) -> Path:
+def write_rge_comparison(
+    records: list[RunRecord],
+    *,
+    report_root: Path | None = None,
+) -> Path:
     """Create the across-model UV RGE comparison report.
 
     There is one section per running coupling.  Within that section, rows are
@@ -513,7 +517,7 @@ def write_rge_comparison(records: list[RunRecord]) -> Path:
     contain the complete term, including its model-dependent coefficient.
     """
 
-    output_path = rge_report_path("UV")
+    output_path = rge_report_path("UV", report_root=report_root)
 
     rows: list[tuple[RunRecord, dict[str, Any]]] = []
     coupling_names: set[str] = set()
@@ -733,10 +737,14 @@ def write_rge_comparison(records: list[RunRecord]) -> Path:
     print(f"\nUV RGE term-comparison report:\n{output_path}")
     return output_path
 
-def write_and_compile_rge_comparison(records: list[RunRecord]) -> Path:
+def write_and_compile_rge_comparison(
+    records: list[RunRecord],
+    *,
+    report_root: Path | None = None,
+) -> Path:
     """Write and compile the across-model UV RGE comparison report."""
 
-    report_tex = write_rge_comparison(records)
+    report_tex = write_rge_comparison(records, report_root=report_root)
     compile_latex_document(report_tex)
     return report_tex
 
@@ -854,7 +862,11 @@ def _eft1_wilson_component_rows(
     return signature_order, model_terms, representative
 
 
-def write_eft1_rge_comparison(records: list[RunRecord]) -> Path:
+def write_eft1_rge_comparison(
+    records: list[RunRecord],
+    *,
+    report_root: Path | None = None,
+) -> Path:
     """Create the complete intermediate-EFT RGE report after integrating out F.
 
     The report contains both:
@@ -867,7 +879,7 @@ def write_eft1_rge_comparison(records: list[RunRecord]) -> Path:
     """
 
     stage_label = "EFT_1_after_F"
-    output_path = rge_report_path(stage_label)
+    output_path = rge_report_path(stage_label, report_root=report_root)
 
     ren_rows, coupling_names = _renormalisable_rows_from_loader(
         records,
@@ -1220,10 +1232,12 @@ def write_eft1_rge_comparison(records: list[RunRecord]) -> Path:
 
 def write_and_compile_eft1_rge_comparison(
     records: list[RunRecord],
+    *,
+    report_root: Path | None = None,
 ) -> Path:
     """Write and compile the complete EFT1 RGE comparison report."""
 
-    report_tex = write_eft1_rge_comparison(records)
+    report_tex = write_eft1_rge_comparison(records, report_root=report_root)
     compile_latex_document(report_tex)
     return report_tex
 
@@ -1297,11 +1311,15 @@ def _final_eft_term_rows(
     return signature_order, model_terms, representative
 
 
-def write_final_eft_rge_comparison(records: list[RunRecord]) -> Path:
+def write_final_eft_rge_comparison(
+    records: list[RunRecord],
+    *,
+    report_root: Path | None = None,
+) -> Path:
     """Create the across-model final-EFT Weinberg RGE comparison report."""
 
     stage_label = final_eft_stage_label(records)
-    output_path = rge_report_path(stage_label)
+    output_path = rge_report_path(stage_label, report_root=report_root)
 
     successful_records = [
         record
@@ -1476,9 +1494,11 @@ def write_final_eft_rge_comparison(records: list[RunRecord]) -> Path:
 
 def write_and_compile_final_eft_rge_comparison(
     records: list[RunRecord],
+    *,
+    report_root: Path | None = None,
 ) -> Path:
     """Write and compile the final-EFT Weinberg RGE comparison report."""
 
-    report_tex = write_final_eft_rge_comparison(records)
+    report_tex = write_final_eft_rge_comparison(records, report_root=report_root)
     compile_latex_document(report_tex)
     return report_tex

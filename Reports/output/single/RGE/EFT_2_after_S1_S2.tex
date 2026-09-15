@@ -1,0 +1,75 @@
+\documentclass[8pt]{article}
+\usepackage[margin=0.65cm]{geometry}
+\usepackage{amsmath,amssymb,adjustbox,pdflscape,longtable,array,booktabs}
+\usepackage[T1]{fontenc}
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{1.2}
+\begin{document}
+\begin{landscape}
+\section*{T3 final-EFT one-loop RGE term comparison: EFT\_2\_after\_S1\_S2}
+All T3 particles have been integrated out at this stage. The active theory is the SM plus the dimension-five Weinberg operator. Rows are the UV model configurations that produced the matched coefficient, while columns align the additive structures in its one-loop beta function. Each populated cell contains the complete term, including its coefficient and the factor $C_5$.
+\medskip
+We use $16\pi^2\,\mu\,dC_5/d\mu=\beta_{C_5}^{(1)}$.
+\section*{$\beta_{C_5}^{(1)}$}
+\[16\pi^2\,\mu\frac{dC_5}{d\mu}=\beta_{C_5}^{(1)}\]
+\subsection*{Terms 1 of 2}
+\begin{center}
+\begin{tabular}{@{}c >{\raggedright\arraybackslash}p{0.82\linewidth}@{}}
+\toprule
+Column & Representative term structure \\
+\midrule
+T1 & \(\displaystyle C_{5} g_{2}^{2}\) \\
+\midrule
+T2 & \(\displaystyle C_{5} lambdaH\) \\
+\midrule
+T3 & \(\displaystyle C_{5} ye \overline{ye}\) \\
+\midrule
+\bottomrule
+\end{tabular}
+\end{center}
+\smallskip
+\tiny
+\begin{longtable}{@{}llcccccc >{\raggedright\arraybackslash}p{0.21\linewidth} >{\raggedright\arraybackslash}p{0.21\linewidth} >{\raggedright\arraybackslash}p{0.21\linewidth}@{}}
+\toprule
+Model & $\alpha$ & $d_{S_1}$ & $Y_{S_1}$ & $d_{S_2}$ & $Y_{S_2}$ & $d_F$ & $Y_F$ & T1 & T2 & T3 \\
+\midrule
+\endfirsthead
+\toprule
+Model & $\alpha$ & $d_{S_1}$ & $Y_{S_1}$ & $d_{S_2}$ & $Y_{S_2}$ & $d_F$ & $Y_F$ & T1 & T2 & T3 \\
+\midrule
+\endhead
+T3-B & $-1$ & $2$ & $-\frac{1}{2}$ & $2$ & $\frac{1}{2}$ & $1$ & $0$ & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} - 3 C_{5} g_{2}^{2}\end{gathered}$} & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} 2 C_{5} lambdaH\end{gathered}$} & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} - C_{5} ye \overline{ye}\end{gathered}$} \\
+\midrule
+\bottomrule
+\end{longtable}
+\clearpage
+\subsection*{Terms 2 of 2}
+\begin{center}
+\begin{tabular}{@{}c >{\raggedright\arraybackslash}p{0.82\linewidth}@{}}
+\toprule
+Column & Representative term structure \\
+\midrule
+T1 & \(\displaystyle C_{5} yd \overline{yd}\) \\
+\midrule
+T2 & \(\displaystyle C_{5} yu \overline{yu}\) \\
+\midrule
+\bottomrule
+\end{tabular}
+\end{center}
+\smallskip
+\tiny
+\begin{longtable}{@{}llcccccc >{\raggedright\arraybackslash}p{0.21\linewidth} >{\raggedright\arraybackslash}p{0.21\linewidth}@{}}
+\toprule
+Model & $\alpha$ & $d_{S_1}$ & $Y_{S_1}$ & $d_{S_2}$ & $Y_{S_2}$ & $d_F$ & $Y_F$ & T1 & T2 \\
+\midrule
+\endfirsthead
+\toprule
+Model & $\alpha$ & $d_{S_1}$ & $Y_{S_1}$ & $d_{S_2}$ & $Y_{S_2}$ & $d_F$ & $Y_F$ & T1 & T2 \\
+\midrule
+\endhead
+T3-B & $-1$ & $2$ & $-\frac{1}{2}$ & $2$ & $\frac{1}{2}$ & $1$ & $0$ & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} 6 C_{5} yd \overline{yd}\end{gathered}$} & \scriptsize\adjustbox{max width=\linewidth}{$\begin{gathered} 6 C_{5} yu \overline{yu}\end{gathered}$} \\
+\midrule
+\bottomrule
+\end{longtable}
+\end{landscape}
+\end{document}

@@ -10,9 +10,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 
 OUTPUT_DIR = ROOT / "output"
+SMOKE_OUTPUT_DIR = OUTPUT_DIR / "smoke"
 PIPELINE_SCRIPT = ROOT / "pipeline.py"
 C5_REGRESSION_SCRIPT = ROOT / "tests" / "wolfram" / "RegressionC5.wl"
-REPORT_FILE = OUTPUT_DIR / "t3_regression_report.json"
+REPORT_FILE = SMOKE_OUTPUT_DIR / "t3_regression_report.json"
 
 
 def run_command(command: list[str], cwd: Path) -> int:
@@ -52,7 +53,7 @@ def run_c5_regression() -> int:
             "wolframscript",
             "-file",
             str(C5_REGRESSION_SCRIPT),
-            str(OUTPUT_DIR),
+            str(SMOKE_OUTPUT_DIR),
         ],
         ROOT,
     )

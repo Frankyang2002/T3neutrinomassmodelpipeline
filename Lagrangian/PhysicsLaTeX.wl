@@ -27,6 +27,7 @@ ClearAll[
   PhysicsDiracFactor,
   PhysicsFermionChain,
   PhysicsFieldStrength,
+  PhysicsT3LoopI,
   PhysicsDisplayForm,
   RemainingInternalObjects,
   FullyConvertedQ,
@@ -549,6 +550,17 @@ PhysicsFieldStrength[fieldStrength_] := Module[
 
 (* Recursive dispatcher: convert outer structures, then their contents. *)
 
+
+(* Compact display form for the finite T3 three-mass loop function. *)
+PhysicsT3LoopI[arguments_List] := Module[{shown},
+  shown = PhysicsDisplayForm /@ arguments;
+  If[
+    Length[shown] === 3,
+    Subscript[I, 3][Sequence @@ shown],
+    T3LoopI @@ shown
+  ]
+];
+
 PhysicsDisplayForm[expression_] := Module[{headName, arguments},
   If[AtomQ[Unevaluated[expression]],
     Return[
@@ -633,6 +645,9 @@ PhysicsDisplayForm[expression_] := Module[{headName, arguments},
 
     "FieldStrength",
       PhysicsFieldStrength[expression],
+
+    "T3LoopI",
+      PhysicsT3LoopI[arguments],
 
     "Log",
       Log[PhysicsDisplayForm[arguments[[1]]]],

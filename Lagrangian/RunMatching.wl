@@ -1470,6 +1470,9 @@ ClearAll[
   ExtractWeinbergTerms,
   StripWeinbergOperatorStructure,
   CompactWeinbergCoefficient,
+  T3ThreeMassLoopExpanded,
+  CanonicalWeinbergCoefficient,
+  WeinbergOperatorConvention,
   ExtractWeinbergCoefficient
 ];
 
@@ -1572,6 +1575,61 @@ CompactWeinbergCoefficient[terms_List] := Module[{pieces, combined},
   ]
 ];
 
+
+(*
+  Standard finite three-propagator mass function for the common-threshold
+  T3 one-loop diagram.  The arguments are squared masses.  This helper is
+  deliberately kept separate from the raw Matchete coefficient: it is only
+  used to recognise and present the result compactly.
+*)
+T3ThreeMassLoopExpanded[a_, b_, c_] :=
+  (a*b*Log[a/b] - a*c*Log[a/c] - b*c*Log[a/b] + b*c*Log[a/c]) /
+  ((a - b)*(a - c)*(b - c));
+
+(*
+  We report the Weinberg operator in the symmetric convention
+
+    L_EFT ⊃ (1/2) C5^(ij) O_ij + h.c.,
+    O_ij = (L_i^T C eps H) (H^T eps L_j),
+
+  with C5^(ij) = C5^(ji).  Matchete's ordered coefficient A5 is therefore
+  converted at the reporting level through C5^(ij) = A5^(ij) + A5^(ji).
+  The exact Matchete expression is
+  retained as "Coefficient".  "CanonicalCoefficient" is display metadata:
+  whenever the coefficient contains the standard finite T3 three-mass loop
+  function, replace only that mass function by T3LoopI[MF^2,MS1^2,MS2^2].
+*)
+WeinbergOperatorConvention[] :=
+  "L_EFT superset (1/2) C5^(ij) O_ij + h.c., with O_ij = (L_i^T C eps H)(H^T eps L_j) and symmetric C5; the ordered Matchete coefficient A5 is mapped by C5^(ij) = A5^(ij) + A5^(ji).";
+
+CanonicalWeinbergCoefficient[coefficient_] := Module[
+  {mf, ms1, ms2, loopExpanded, ratio, check},
+
+  If[MissingQ[coefficient] || coefficient === 0, Return[coefficient]];
+
+  mf = Coupling[MF, {}, 0];
+  ms1 = Coupling[MS1, {}, 0];
+  ms2 = Coupling[MS2, {}, 0];
+  loopExpanded = T3ThreeMassLoopExpanded[mf^2, ms1^2, ms2^2];
+
+  ratio = Quiet@Check[
+    FactorTerms[Cancel[Together[coefficient/loopExpanded]]],
+    $Failed
+  ];
+
+  If[ratio === $Failed, Return[coefficient]];
+
+  check = Quiet@Check[
+    Simplify[Together[coefficient - ratio*loopExpanded]],
+    $Failed
+  ];
+
+  If[TrueQ[check === 0],
+    ratio*T3LoopI[mf^2, ms1^2, ms2^2],
+    coefficient
+  ]
+];
+
 (*
 1. Check for existence of coefficient
 2. Use ExtractWeinbergTerms to get our Weinberg terms
@@ -1588,6 +1646,7 @@ ExtractWeinbergCoefficient[eft_] := Module[
     sector,
     holomorphicSector,
     coefficient,
+    canonicalCoefficient,
     status
   },
 
@@ -1645,6 +1704,7 @@ ExtractWeinbergCoefficient[eft_] := Module[
   holomorphicSector = Simplify[Expand[Total[holomorphicTerms]]];
   (* Obtain Weinberg Coefficient itself from our terms *)
   coefficient = CompactWeinbergCoefficient[holomorphicTerms];
+  canonicalCoefficient = CanonicalWeinbergCoefficient[coefficient];
   status = If[MissingQ[coefficient], "CoefficientPending", "Success"];
 
   <|
@@ -1658,6 +1718,8 @@ ExtractWeinbergCoefficient[eft_] := Module[
     "ConjugateTerms" -> conjugateTerms,
     "Sector" -> sector,
     "HolomorphicSector" -> holomorphicSector,
-    "Coefficient" -> coefficient
+    "Coefficient" -> coefficient,
+    "CanonicalCoefficient" -> canonicalCoefficient,
+    "OperatorConvention" -> WeinbergOperatorConvention[]
   |>
 ];

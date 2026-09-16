@@ -12,6 +12,7 @@ from pathlib import Path
 from common.Paths import EFT_ORDER, LOOP_ORDER, REPORT_OUTPUT_DIR
 from common.Records import RunRecord
 from Reports.StageReports import (
+    c5_report_path,
     final_eft_stage_label,
     lagrangian_report_path,
 )
@@ -1251,46 +1252,171 @@ def write_bsm_matched_field_table(
     return last_path
 
 
-def write_c5_coefficient_report(record: RunRecord) -> Path:
-    """Create a standalone PDF-ready document for one C5 coefficient."""
+def _c5_display_indices(latex: str) -> str:
+    """Rename Matchete's generated free/dummy labels for human-facing C5 output."""
+    text = str(latex)
+    replacements = {
+        "i_1": "i",
+        "i_2": "j",
+        "r_1": "r",
+    }
+    for raw, pretty in replacements.items():
+        text = text.replace(raw, pretty)
+    return text
 
-    output_path = report_output_dir_for(record) / "c5_coefficient.tex"
+
+def _swap_c5_flavour_indices(latex: str) -> str:
+    r"""Return the same ordered coefficient with only flavour labels i <-> j.
+
+    Do not replace bare letters globally: that would corrupt LaTeX commands such
+    as ``\right`` and ``\overline``.  Here the free flavour labels occur only as
+    comma-delimited indices inside the displayed Yukawa subscripts.
+    """
+    text = _c5_display_indices(latex)
+
+    # Swap only index tokens, using a temporary placeholder.
+    text = re.sub(r"(?<=,)i(?=[,}])", "__C5_I__", text)
+    text = re.sub(r"(?<=,)j(?=[,}])", "i", text)
+    text = text.replace("__C5_I__", "j")
+
+    return text
+
+
+def write_c5_coefficient_report(
+    records: list[RunRecord],
+    *,
+    report_root: Path | None = None,
+) -> Path:
+    """Create a compact study-level C5 comparison table.
+
+    The report deliberately contains only the ordered coefficient extracted
+    from Matchete and the corresponding symmetric physical Wilson coefficient.
+    """
+
+    output_path = c5_report_path(report_root=report_root)
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    coefficient_latex = record.summary.get(
-        "WeinbergCoefficientLaTeX",
-        "",
-    ).strip()
+
+    rows: list[tuple[RunRecord, str]] = []
+
+    for record in records:
+        summary = record.summary
+
+        coefficient_latex = str(
+            summary.get("WeinbergCanonicalCoefficientLaTeX")
+            or summary.get("CanonicalCoefficientLaTeX")
+            or summary.get("WeinbergCoefficientLaTeX")
+            or ""
+        ).strip()
+
+        # Presentation-only consistency: use uppercase I_3 in the report.
+        coefficient_latex = coefficient_latex.replace(
+            r"i_3\left(",
+            r"I_3\left(",
+        )
+        coefficient_latex = _c5_display_indices(coefficient_latex)
+
+        coefficient_ok = (
+            summary.get("WeinbergCanonicalCoefficientConversionSuccess") is True
+            or summary.get("CanonicalCoefficientConversionSuccess") is True
+            or summary.get("WeinbergCoefficientConversionSuccess") is True
+        )
+
+        if coefficient_ok and coefficient_latex:
+            rows.append((record, coefficient_latex))
 
     lines: list[str] = [
-        r"\documentclass[11pt]{article}",
-        r"\usepackage[margin=2cm]{geometry}",
-        r"\usepackage{amsmath,amssymb,adjustbox}",
+        r"\documentclass[8pt]{article}",
+        r"\usepackage[margin=0.7cm]{geometry}",
+        r"\usepackage{amsmath,amssymb,adjustbox,longtable,array,booktabs,pdflscape}",
         r"\usepackage[T1]{fontenc}",
-        r"\allowdisplaybreaks[4]",
-        r"\setlength{\emergencystretch}{3em}",
+        r"\setlength{\tabcolsep}{4pt}",
+        r"\renewcommand{\arraystretch}{1.35}",
         r"\begin{document}",
-        r"\section*{Weinberg-operator coefficient}",
-        rf"\noindent ${latex_model_heading(record)}$",
-        r"\par",
-        r"\bigskip",
+        r"\begin{landscape}",
+        r"\section*{T3 Weinberg-operator coefficient comparison}",
     ]
 
-    if (
-        record.summary.get("WeinbergCoefficientConversionSuccess") is True
-        and coefficient_latex
-    ):
-        lines.extend(
-            latex_aligned_block(
-                r"C_5 = " + coefficient_latex
-            )
+    if not rows:
+        lines.append(
+            r"\textit{No successfully converted Weinberg coefficient was available.}"
         )
     else:
-        lines.append(
-            r"\textit{The Weinberg coefficient is not available.}"
+        lines.extend(
+            [
+                r"\scriptsize",
+                r"\begin{longtable}{@{}l "
+                r">{\raggedright\arraybackslash}p{0.42\linewidth} "
+                r">{\raggedright\arraybackslash}p{0.42\linewidth}@{}}",
+                r"\toprule",
+                (
+                    r"Model & Ordered coefficient extracted from Matchete "
+                    r"& Symmetric physical Wilson coefficient \\"
+                ),
+                r"\midrule",
+                r"\endfirsthead",
+                r"\toprule",
+                (
+                    r"Model & Ordered coefficient extracted from Matchete "
+                    r"& Symmetric physical Wilson coefficient \\"
+                ),
+                r"\midrule",
+                r"\endhead",
+            ]
+        )
+
+        for record, coefficient_latex in rows:
+            ordered_cell = (
+                r"\(\displaystyle A_5^{ij}="
+                + coefficient_latex
+                + r"\)"
+            )
+            # Factor out the common mass/loop/coupling prefactor so the
+            # symmetric coefficient is compact and easy to compare across models.
+            ordered_flavour = (
+                r"\overline{y_{1,i,r}} \overline{y_{2,j,r}}"
+            )
+            swapped_flavour = (
+                r"\overline{y_{1,j,r}} \overline{y_{2,i,r}}"
+            )
+
+            common_prefactor = coefficient_latex.replace(
+                ordered_flavour,
+                "",
+                1,
+            ).strip()
+
+            symmetric_cell = (
+                r"\(\displaystyle C_5^{ij}="
+                + common_prefactor
+                + r"\left("
+                + ordered_flavour
+                + r"+"
+                + swapped_flavour
+                + r"\right)\)"
+            )
+
+            lines.append(
+                " & ".join(
+                    [
+                        latex_escape_text(record.name),
+                        ordered_cell,
+                        symmetric_cell,
+                    ]
+                )
+                + r" \\"
+            )
+            lines.append(r"\midrule")
+
+        lines.extend(
+            [
+                r"\bottomrule",
+                r"\end{longtable}",
+            ]
         )
 
     lines.extend(
         [
+            r"\end{landscape}",
             r"\end{document}",
             "",
         ]
@@ -1302,9 +1428,7 @@ def write_c5_coefficient_report(record: RunRecord) -> Path:
     )
 
     print(f"\nC5 coefficient report:\n{output_path}")
-
     return output_path
-
 
 def compile_latex_document(tex_path: Path) -> None:
     """Compile a generated LaTeX report using latexmk or pdflatex."""
@@ -1427,29 +1551,31 @@ def compile_latex_document(tex_path: Path) -> None:
 def write_reports(
     records: list[RunRecord],
     debug_reports: bool = False,
+    *,
+    report_root: Path | None = None,
 ) -> None:
     """Generate all Lagrangian reports and term tables."""
 
     report_tex = write_lagrangian_report(records)
     compile_latex_document(report_tex)
 
-    uv_table_tex = write_bsm_uv_field_table(records)
+    uv_table_tex = write_bsm_uv_field_table(
+        records,
+        report_root=report_root,
+    )
     compile_latex_document(uv_table_tex)
 
-    matched_table_tex = write_bsm_matched_field_table(records)
+    matched_table_tex = write_bsm_matched_field_table(
+        records,
+        report_root=report_root,
+    )
     compile_latex_document(matched_table_tex)
 
-    for record in records:
-        summary = record.summary
-
-        if (
-            summary.get("WeinbergCoefficientConversionSuccess") is not True
-            or not summary.get("WeinbergCoefficientLaTeX", "").strip()
-        ):
-            continue
-
-        coefficient_tex = write_c5_coefficient_report(record)
-        compile_latex_document(coefficient_tex)
+    coefficient_tex = write_c5_coefficient_report(
+        records,
+        report_root=report_root,
+    )
+    compile_latex_document(coefficient_tex)
 
     if debug_reports:
         full_tex = write_latex_lagrangian_table(records)

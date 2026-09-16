@@ -20,9 +20,9 @@ def build_neutrino_mass_matrix(
     *,
     vev: sp.Expr = v,
 ) -> sp.Matrix:
-    """Return m_nu = -v^2 C5 in the convention currently used by the code."""
+    """Return m_nu = -(v^2/2) C5 for H^0 = (v+h)/sqrt(2)."""
 
-    return (-vev**2 * c5_matrix)
+    return (-sp.Rational(1, 2) * vev**2 * c5_matrix)
 
 
 def run_neutrino_mass_stage(
@@ -73,7 +73,7 @@ def run_neutrino_mass_stage(
 
     summary = {
         "NeutrinoMassStatus": "Success",
-        "NeutrinoMassConvention": "m_nu = -v^2 C5",
+        "NeutrinoMassConvention": "m_nu = -(v^2/2) C5",
         "C5InputKind": c5_input_kind,
         "C5InputFile": c5_path.relative_to(output_dir).as_posix()
         if c5_path.is_relative_to(output_dir)

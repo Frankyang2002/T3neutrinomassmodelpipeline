@@ -34,3 +34,10 @@ def rge_report_path(stage_label: str, report_root: Path | None = None) -> Path:
 
     root = report_root or REPORT_OUTPUT_DIR
     return root / "RGE" / f"{stage_label}.tex"
+
+
+def c5_report_path(report_root: Path | None = None) -> Path:
+    """Return the study-aware .tex path for the standalone C5 report."""
+
+    root = report_root or REPORT_OUTPUT_DIR
+    return root / "Lagrangian" / "C5.tex"

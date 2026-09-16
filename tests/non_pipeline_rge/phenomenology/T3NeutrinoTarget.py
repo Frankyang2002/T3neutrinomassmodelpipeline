@@ -8,7 +8,7 @@ from pathlib import Path
 
 import numpy as np
 
-from RGE.phenomenology.NeutrinoDataComparison import NUFIT6_IO, NUFIT6_NO
+from NeutrinoDataComparison import NUFIT6_IO, NUFIT6_NO
 
 
 EV_TO_GEV = 1.0e-9
@@ -112,9 +112,13 @@ def build_normal_ordering_target(
     #   M_nu = U^* diag(m_i) U^\dagger.
     mass_matrix_ev = u.conj() @ np.diag(masses) @ u.conj().T
 
-    # The matched-operator normalization was directly checked in the
-    # T3-B Matchete output: |M_nu| = v^2 |C5|.
-    c5_matrix = mass_matrix_ev * EV_TO_GEV / (vev_gev * vev_gev)
+    # Project Weinberg convention:
+    #   L_EFT contains (1/2) C5 O + h.c.
+    #   M_nu = -(v^2/2) C5
+    # therefore C5 = -2 M_nu / v^2.
+    c5_matrix = (
+        -2.0 * mass_matrix_ev * EV_TO_GEV / (vev_gev * vev_gev)
+    )
 
     return NeutrinoTarget(
         masses_ev=masses,
@@ -163,9 +167,13 @@ def build_inverted_ordering_target(
     #   M_nu = U^* diag(m_i) U^\dagger.
     mass_matrix_ev = u.conj() @ np.diag(masses) @ u.conj().T
 
-    # The matched-operator normalization was directly checked in the
-    # T3-B Matchete output: |M_nu| = v^2 |C5|.
-    c5_matrix = mass_matrix_ev * EV_TO_GEV / (vev_gev * vev_gev)
+    # Project Weinberg convention:
+    #   L_EFT contains (1/2) C5 O + h.c.
+    #   M_nu = -(v^2/2) C5
+    # therefore C5 = -2 M_nu / v^2.
+    c5_matrix = (
+        -2.0 * mass_matrix_ev * EV_TO_GEV / (vev_gev * vev_gev)
+    )
 
     return NeutrinoTarget(
         masses_ev=masses,

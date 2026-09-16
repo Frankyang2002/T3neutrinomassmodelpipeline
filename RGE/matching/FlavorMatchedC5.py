@@ -14,12 +14,14 @@ For three lepton flavors and n heavy-fermion generations, the symmetric
 Weinberg matrix is then
 
     K_pq =
-        1/2 sum_r F_loop(MF -> MF_r)
+        sum_r F_loop(MF -> MF_r)
         [ conjugate(y1_pr) conjugate(y2_qr)
         + conjugate(y2_pr) conjugate(y1_qr) ].
 
-The factor 1/2 is fixed by requiring the one-generation reduction to reproduce
-the original Matchete coefficient exactly.
+Matchete supplies one ordered flavor coefficient A_pq. In the project convention
+L_EFT contains (1/2) C5_pq O_pq + h.c., so the physical symmetric coefficient is
+C5_pq = A_pq + A_qp. The one-generation physical C5 is therefore twice the
+ordered Matchete coefficient.
 
 Assumptions
 -----------
@@ -119,7 +121,7 @@ def build_flavor_matched_c5(
                     heavy_masses[r],
                 )
 
-            value += sp.Rational(1, 2) * kernel_r * (
+            value += kernel_r * (
                 sp.conjugate(y1[p, r]) * sp.conjugate(y2[q, r])
                 + sp.conjugate(y2[p, r]) * sp.conjugate(y1[q, r])
             )

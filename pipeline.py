@@ -56,6 +56,7 @@ from Reports.ReportGeneration import (
     compile_latex_document,
     write_bsm_uv_field_table,
     write_bsm_matched_field_table,
+    write_c5_coefficient_report,
 )
 from Reports.RGEComparison import (
     write_and_compile_eft1_rge_comparison,
@@ -1308,6 +1309,14 @@ def finish_runs(
     # This writer emits and compiles every real sequential EFT stage.
     write_bsm_matched_field_table(records, report_root=study_report_dir)
 
+    # Standalone study-level Weinberg-coefficient report, kept alongside the
+    # UV/EFT Lagrangian reports.
+    c5_tex = write_c5_coefficient_report(
+        records,
+        report_root=study_report_dir,
+    )
+    compile_latex_document(c5_tex)
+
     # RGE report:
     #   one table per running coupling
     #   rows = model configurations
@@ -1328,6 +1337,7 @@ def finish_runs(
         "\n  Lagrangian/UV"
         "\n  Lagrangian/EFT_1_after_F"
         f"\n  Lagrangian/{final_stage_label}"
+        "\n  Lagrangian/C5"
         "\n  RGE/UV"
         "\n  RGE/EFT_1_after_F"
         f"\n  RGE/{final_stage_label}"

@@ -8,7 +8,7 @@ from typing import Sequence
 
 import numpy as np
 
-from RGE.phenomenology.T3NeutrinoTarget import build_normal_ordering_target
+from T3NeutrinoTarget import build_normal_ordering_target
 
 
 @dataclass(frozen=True)
@@ -29,9 +29,12 @@ def reconstruct_c5(
     """Reconstruct the flavor-lifted T3 C5 matrix.
 
     Convention:
-        C5_pq = 1/2 sum_r F_r [
+        C5_pq = sum_r F_r [
             y1_pr^* y2_qr^* + y2_pr^* y1_qr^*
         ].
+
+    Here F_r is the ordered Matchete one-loop kernel. The project convention
+    L_EFT contains (1/2) C5 O + h.c., so C5 = A + A^T.
     """
     y1 = np.asarray(y1, dtype=complex)
     y2 = np.asarray(y2, dtype=complex)
@@ -48,7 +51,7 @@ def reconstruct_c5(
     b = y2.conj()
     d = np.diag(f)
 
-    return 0.5 * (a @ d @ b.T + b @ d @ a.T)
+    return a @ d @ b.T + b @ d @ a.T
 
 
 def fit_three_heavy_balanced(
@@ -60,11 +63,11 @@ def fit_three_heavy_balanced(
 
     We use A = y1^* = s I and choose B = y2^* symmetric. Then
 
-        C5_ij = s/2 (F_i + F_j) B_ij,
+        C5_ij = s (F_i + F_j) B_ij,
 
     so
 
-        B_ij = 2 C5_ij / [s (F_i + F_j)].
+        B_ij = C5_ij / [s (F_i + F_j)].
 
     The real positive scale s is chosen to balance the largest entries of y1
     and y2. This is a constructive T3 analogue of using neutrino data as the
@@ -91,7 +94,7 @@ def fit_three_heavy_balanced(
                 raise ValueError(
                     f"Loop-factor denominator F[{i}] + F[{j}] is singular"
                 )
-            b0[i, j] = 2.0 * k[i, j] / denominator
+            b0[i, j] = k[i, j] / denominator
 
     # With s=1, max|y1|=1 and max|y2|=max|B0|.
     # Rescaling y1 -> s y1, y2 -> y2/s leaves C5 unchanged.
@@ -204,7 +207,7 @@ def main() -> None:
             "normal ordering",
             "delta_CP = 0",
             "Majorana phases = 0",
-            "|M_nu| = v^2 |C5| normalization",
+            "M_nu = -(v^2/2) C5 normalization",
         ],
     }
     args.output.write_text(json.dumps(payload, indent=2), encoding="utf-8")

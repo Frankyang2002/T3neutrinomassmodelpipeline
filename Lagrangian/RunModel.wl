@@ -89,12 +89,55 @@ ParseCLI[args_List] := Module[
 
 (* Recieves Weinberg Coefficient information and Writes to files *)
 ExportWeinbergArtifacts[data_Association, output_String, debugReports_] := Module[
-  {terms, coefficient, sectorTeX, coefficientTeX},
+  {
+    terms,
+    holomorphicTerms,
+    conjugateTerms,
+    coefficient,
+    sectorTeX,
+    coefficientTeX
+  },
 
   terms = Lookup[data, "Terms", {}];
+  holomorphicTerms = Lookup[data, "HolomorphicTerms", {}];
+  conjugateTerms = Lookup[data, "ConjugateTerms", {}];
   coefficient = Lookup[data, "Coefficient", Missing["PendingCanonicalisation"]];
   sectorTeX = Lookup[data, "SectorTeX", <||>];
   coefficientTeX = Lookup[data, "CoefficientTeX", <||>];
+
+  (* Always keep the isolated Weinberg terms as audit artifacts.  These are
+     much easier to inspect than the full matched EFT and are needed to check
+     flavor symmetrisation explicitly. *)
+  If[Length[holomorphicTerms] > 0,
+    Export[
+      FileNameJoin @ {output, "weinberg_holomorphic_terms.txt"},
+      StringRiffle[
+        MapIndexed[
+          "--- Holomorphic Weinberg term " <> ToString[First[#2]] <> " ---\n" <>
+            ToString[#1, InputForm] &,
+          holomorphicTerms
+        ],
+        "\n\n"
+      ],
+      "Text"
+    ];
+  ];
+
+  If[Length[conjugateTerms] > 0,
+    Export[
+      FileNameJoin @ {output, "weinberg_conjugate_terms.txt"},
+      StringRiffle[
+        MapIndexed[
+          "--- Hermitian-conjugate Weinberg term " <>
+            ToString[First[#2]] <> " ---\n" <>
+            ToString[#1, InputForm] &,
+          conjugateTerms
+        ],
+        "\n\n"
+      ],
+      "Text"
+    ];
+  ];
 
   If[TrueQ[debugReports] && Length[terms] > 0,
     Export[
@@ -133,10 +176,17 @@ ExportWeinbergArtifacts[data_Association, output_String, debugReports_] := Modul
 (* Build our outputs *)
 BuildSummary[model_, alpha_, build_, matching_, smMatching_, difference_, data_,
   free_, interaction_, uv_, bsm_, eft_, bsmEft_, debugReports_] := Module[
-  {coefficient, coefficientTeX, sectorTeX, terms},
+  {coefficient, canonicalCoefficient, coefficientTeX, canonicalCoefficientTeX, loopFunctionTeX, sectorTeX, terms},
 
   coefficient = Lookup[data, "Coefficient", Missing["PendingCanonicalisation"]];
+  canonicalCoefficient = Lookup[
+    data,
+    "CanonicalCoefficient",
+    Missing["PendingCanonicalisation"]
+  ];
   coefficientTeX = Lookup[data, "CoefficientTeX", <||>];
+  canonicalCoefficientTeX = Lookup[data, "CanonicalCoefficientTeX", <||>];
+  loopFunctionTeX = Lookup[data, "LoopFunctionTeX", <||>];
   sectorTeX = Lookup[data, "SectorTeX", <||>];
   terms = Lookup[data, "Terms", {}];
 
@@ -160,6 +210,16 @@ BuildSummary[model_, alpha_, build_, matching_, smMatching_, difference_, data_,
     "WeinbergTermCount" -> Lookup[data, "TermCount", 0],
     "WeinbergHolomorphicTermCount" -> Lookup[data, "HolomorphicTermCount", 0],
     "WeinbergConjugateTermCount" -> Lookup[data, "ConjugateTermCount", 0],
+    "WeinbergHolomorphicTermsFile" -> If[
+      Length @ Lookup[data, "HolomorphicTerms", {}] > 0,
+      "weinberg_holomorphic_terms.txt",
+      ""
+    ],
+    "WeinbergConjugateTermsFile" -> If[
+      Length @ Lookup[data, "ConjugateTerms", {}] > 0,
+      "weinberg_conjugate_terms.txt",
+      ""
+    ],
     "WeinbergRawFile" -> If[
       TrueQ[debugReports] && Length[terms] > 0, "c5_raw.txt", ""
     ],
@@ -179,6 +239,28 @@ BuildSummary[model_, alpha_, build_, matching_, smMatching_, difference_, data_,
       ToString[coefficient, InputForm]
     ],
     "WeinbergCoefficientLaTeX" -> Lookup[coefficientTeX, "LaTeX", ""],
+    "WeinbergCanonicalCoefficientInputForm" -> If[
+      MissingQ[canonicalCoefficient],
+      "",
+      ToString[canonicalCoefficient, InputForm]
+    ],
+    "WeinbergCanonicalCoefficientLaTeX" -> Lookup[
+      canonicalCoefficientTeX,
+      "LaTeX",
+      ""
+    ],
+    "WeinbergCanonicalCoefficientConversionSuccess" -> TrueQ @ Lookup[
+      canonicalCoefficientTeX,
+      "Success",
+      False
+    ],
+    "WeinbergLoopFunctionLaTeX" -> Lookup[loopFunctionTeX, "LaTeX", ""],
+    "WeinbergLoopFunctionConversionSuccess" -> TrueQ @ Lookup[
+      loopFunctionTeX,
+      "Success",
+      False
+    ],
+    "WeinbergOperatorConvention" -> Lookup[data, "OperatorConvention", ""],
     "WeinbergSectorLaTeX" -> Lookup[sectorTeX, "LaTeX", ""],
     "WeinbergSectorConversionSuccess" -> TrueQ @ Lookup[sectorTeX, "Success", False],
     "WeinbergCoefficientConversionSuccess" -> TrueQ @ Lookup[coefficientTeX, "Success", False],
@@ -480,7 +562,17 @@ bsmEftTeX = ExpressionToLaTeX[bsmMatchedEFT];
 
 (* Get Weinberg Coefficient from matchedEFT *)
 weinbergData = ExtractWeinbergCoefficient[matchedEFT];
-weinbergCoefficient = Lookup[weinbergData, "Coefficient", Missing["PendingCanonicalisation"]];
+weinbergCoefficient = Lookup[
+  weinbergData,
+  "Coefficient",
+  Missing["PendingCanonicalisation"]
+];
+weinbergCanonicalCoefficient = Lookup[
+  weinbergData,
+  "CanonicalCoefficient",
+  Missing["PendingCanonicalisation"]
+];
+
 weinbergData = Join[
   weinbergData,
   <|
@@ -489,6 +581,18 @@ weinbergData = Join[
       MissingQ[weinbergCoefficient],
       <|"Success" -> False, "LaTeX" -> ""|>,
       ExpressionToLaTeX[weinbergCoefficient]
+    ],
+    "CanonicalCoefficientTeX" -> If[
+      MissingQ[weinbergCanonicalCoefficient],
+      <|"Success" -> False, "LaTeX" -> ""|>,
+      ExpressionToLaTeX[weinbergCanonicalCoefficient]
+    ],
+    "LoopFunctionTeX" -> ExpressionToLaTeX[
+      T3LoopI[
+        Coupling[MF, {}, 0]^2,
+        Coupling[MS1, {}, 0]^2,
+        Coupling[MS2, {}, 0]^2
+      ]
     ]
   |>
 ];

@@ -388,9 +388,9 @@ def _build_physical_majorana_hard(
     Matchete returns an ordered p,q representative.  The Weinberg coefficient
     is symmetric in its two lepton-flavor indices, so construct
 
-        C_phys[p,q] = 1/2 (C_ordered[p,q] + C_ordered[q,p]).
+        C_phys[p,q] = C_ordered[p,q] + C_ordered[q,p].
 
-    This preserves the one-generation normalization exactly.
+    In one generation the physical coefficient is twice the ordered Matchete coefficient.
     """
     if not isinstance(renormalized_hard_expr, str):
         return {
@@ -421,18 +421,16 @@ def _build_physical_majorana_hard(
             "reason": "Could not construct a distinct p<->q swapped hard term",
         }
 
-    symmetric = (
-        f"(1/2)*(({renormalized_hard_expr}) + ({swapped}))"
-    )
+    symmetric = f"(({renormalized_hard_expr}) + ({swapped}))"
 
     return {
         "status": "Success",
-        "symmetrization": "1/2*(C[p,q] + C[q,p])",
+        "symmetrization": "C[p,q] + C[q,p]",
         "expression": symmetric,
         "ordered_expression": renormalized_hard_expr,
         "swapped_expression": swapped,
         "external_flavor_indices": [p_index, q_index],
-        "one_generation_normalization_preserved": True,
+        "one_generation_ordered_to_physical_factor": 2,
         "reason": None,
     }
 
@@ -677,6 +675,11 @@ def build_final_weinberg_coefficient(
     direct_running_symmetric = _direct_running_is_manifestly_symmetric(
         direct_expr
     )
+    # The direct-running object was built in the previous averaged convention.
+    # Convert it only at the final physical-C5 boundary.
+    physical_direct_expr = (
+        f"2*({direct_expr})" if direct_running_symmetric else None
+    )
 
     threshold_flavor_status = (
         "explicit_full_flavor_matchete"
@@ -699,8 +702,8 @@ def build_final_weinberg_coefficient(
         else None
     )
     actual_combined_physical = (
-        f"({physical_hard_expr}) + hbar*({direct_expr})"
-        if physical_hard_ok and direct_running_symmetric
+        f"({physical_hard_expr}) + hbar*({physical_direct_expr})"
+        if physical_hard_ok and physical_direct_expr is not None
         else None
     )
 
@@ -767,6 +770,8 @@ def build_final_weinberg_coefficient(
             "source_location": direct_source,
             "raw_expression": direct_expr_raw,
             "expression": direct_expr,
+            "physical_majorana_expression": physical_direct_expr,
+            "physical_majorana_conversion_factor": 2,
             "boundary_tensor_replacements": boundary_replacements,
             "flavor_status": direct_flavor_status,
             "full_flavor_symbol": formal_direct,
@@ -870,8 +875,8 @@ def build_final_weinberg_coefficient(
     # A one-generation expression is still useful and is unambiguous: in one
     # generation the p,q structure collapses to the scalar coefficient.
     result["one_generation_combined_expression"] = (
-        f"({physical_hard_expr}) + hbar*({direct_expr})"
-        if physical_hard_ok and direct_running_symmetric
+        f"({physical_hard_expr}) + hbar*({physical_direct_expr})"
+        if physical_hard_ok and physical_direct_expr is not None
         else None
     )
 

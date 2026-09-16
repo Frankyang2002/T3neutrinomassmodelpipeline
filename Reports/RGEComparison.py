@@ -505,6 +505,15 @@ def _rge_term_cell(terms: list[str] | None) -> str:
 
     return matrix_cell(terms, empty_value=r"---")
 
+
+def _search_name_line(name: str) -> str:
+    """Render the raw pipeline identifier as searchable plain text in the PDF."""
+    return (
+        r"\noindent\textbf{Search name: }"
+        r"\texttt{" + latex_escape_text(str(name)) + r"}\par\smallskip"
+    )
+
+
 def write_rge_comparison(
     records: list[RunRecord],
     *,
@@ -590,6 +599,7 @@ def write_rge_comparison(
             lines.extend(
                 [
                     rf"\section*{{$\beta_{{{symbol}}}^{{(1)}}$}}",
+                    _search_name_line(coupling),
                     rf"\[16\pi^2\,\mu\frac{{d {symbol}}}{{d\mu}}="
                     rf"\beta_{{{symbol}}}^{{(1)}}\]",
                 ]
@@ -615,6 +625,7 @@ def write_rge_comparison(
             ):
                 if chunk_number > 1:
                     lines.append(r"\clearpage")
+                    lines.append(_search_name_line(coupling))
 
                 if len(signature_chunks) > 1:
                     lines.append(
@@ -949,6 +960,7 @@ def write_eft1_rge_comparison(
             lines.extend(
                 [
                     rf"\section*{{$\beta_{{{symbol}}}^{{(1)}}$}}",
+                    _search_name_line(coupling),
                     rf"\[16\pi^2\,\mu\frac{{d {symbol}}}{{d\mu}}="
                     rf"\beta_{{{symbol}}}^{{(1)}}\]",
                 ]
@@ -972,6 +984,7 @@ def write_eft1_rge_comparison(
             ):
                 if chunk_number > 1:
                     lines.append(r"\clearpage")
+                    lines.append(_search_name_line(coupling))
 
                 if len(signature_chunks) > 1:
                     lines.append(
@@ -1104,6 +1117,7 @@ def write_eft1_rge_comparison(
             lines.extend(
                 [
                     rf"\section*{{$\beta_{{{symbol}}}^{{(1)}}$}}",
+                    _search_name_line(component),
                     rf"\[16\pi^2\,\mu\frac{{d {symbol}}}{{d\mu}}="
                     rf"\beta_{{{symbol}}}^{{(1)}}\]",
                 ]
@@ -1124,6 +1138,7 @@ def write_eft1_rge_comparison(
             for chunk_number, signature_chunk in enumerate(chunks, start=1):
                 if chunk_number > 1:
                     lines.append(r"\clearpage")
+                    lines.append(_search_name_line(component))
 
                 if len(chunks) > 1:
                     lines.append(
@@ -1230,12 +1245,51 @@ def write_eft1_rge_comparison(
     return output_path
 
 
+def _eft1_rge_report_applicable(records: list[RunRecord]) -> bool:
+    """Return True only when an actual EFT_1-after-F stage exists."""
+
+    for record in records:
+        stages = record.summary.get("EFTStages", []) or []
+        if not stages:
+            continue
+
+        first_stage = stages[0]
+        if (
+            first_stage.get("IntegratedFields") == ["F"]
+            and set(first_stage.get("ActiveHeavyFields", []) or []) == {"S1", "S2"}
+        ):
+            return True
+
+    return False
+
+
 def write_and_compile_eft1_rge_comparison(
     records: list[RunRecord],
     *,
     report_root: Path | None = None,
-) -> Path:
-    """Write and compile the complete EFT1 RGE comparison report."""
+) -> Path | None:
+    """Write EFT1 RGE report only when the intermediate EFT really exists."""
+
+    if not _eft1_rge_report_applicable(records):
+        stale_tex = rge_report_path("EFT_1_after_F", report_root=report_root)
+        stale_paths = [
+            stale_tex,
+            stale_tex.with_suffix(".pdf"),
+            stale_tex.with_suffix(".aux"),
+            stale_tex.with_suffix(".log"),
+            stale_tex.with_suffix(".out"),
+        ]
+        for stale_path in stale_paths:
+            try:
+                stale_path.unlink()
+            except FileNotFoundError:
+                pass
+
+        print(
+            "\nIntermediate-EFT RGE report skipped: "
+            "no EFT_1-after-F stage exists for this study."
+        )
+        return None
 
     report_tex = write_eft1_rge_comparison(records, report_root=report_root)
     compile_latex_document(report_tex)
@@ -1269,6 +1323,51 @@ def _sympy_term_signature(term: sp.Expr) -> str:
     return sp.srepr(structure)
 
 
+def _normalise_final_eft_latex(latex: str) -> str:
+    """Convert raw SymPy names in the final C5 RGE to report notation.
+
+    This is presentation-only.  The saved BetaOverC5 expression remains
+    untouched and authoritative.
+    """
+
+    text = str(latex)
+
+    # Conjugated Yukawa symbols first, before replacing the bare names.
+    conjugate_map = {
+        r"\overline{ye}": r"Y_e^\dagger",
+        r"\overline{yd}": r"Y_d^\dagger",
+        r"\overline{yu}": r"Y_u^\dagger",
+        r"\overline{y1}": r"y_1^\dagger",
+        r"\overline{y2}": r"y_2^\dagger",
+    }
+    for raw, pretty in conjugate_map.items():
+        text = text.replace(raw, pretty)
+
+    symbol_map = {
+        "lambdaH": r"\lambda_H",
+        "lambdaT3": r"\lambda_{T3}",
+        "gY": r"g_Y",
+        "g2": r"g_2",
+        "g3": r"g_3",
+        "ye": r"Y_e",
+        "yd": r"Y_d",
+        "yu": r"Y_u",
+        "y1": r"y_1",
+        "y2": r"y_2",
+    }
+
+    for raw in sorted(symbol_map, key=len, reverse=True):
+        pretty = symbol_map[raw]
+        # SymPy emits these as ordinary identifier text rather than \text{...}.
+        text = re.sub(
+            rf"(?<![A-Za-z0-9]){re.escape(raw)}(?![A-Za-z0-9])",
+            lambda _match, p=pretty: p,
+            text,
+        )
+
+    return text
+
+
 def _final_eft_term_rows(
     records: list[RunRecord],
 ) -> tuple[
@@ -1296,13 +1395,15 @@ def _final_eft_term_rows(
 
             # The report is written as beta_C5, not beta_C5/C5, so every
             # populated cell contains the complete additive RGE term.
-            latex_term = sp.latex(sp.expand(c5 * term))
+            latex_term = _normalise_final_eft_latex(
+                sp.latex(sp.expand(c5 * term))
+            )
 
             grouped.setdefault(signature, []).append(latex_term)
 
             if signature not in representative:
-                representative[signature] = sp.latex(
-                    sp.expand(c5 * term.as_coeff_Mul()[1])
+                representative[signature] = _normalise_final_eft_latex(
+                    sp.latex(sp.expand(c5 * term.as_coeff_Mul()[1]))
                 )
                 signature_order.append(signature)
 
@@ -1356,6 +1457,7 @@ def write_final_eft_rge_comparison(
             r"$16\pi^2\,\mu\,dC_5/d\mu=\beta_{C_5}^{(1)}$."
         ),
         r"\section*{$\beta_{C_5}^{(1)}$}",
+        _search_name_line("C5"),
         r"\[16\pi^2\,\mu\frac{dC_5}{d\mu}=\beta_{C_5}^{(1)}\]",
     ]
 
@@ -1377,6 +1479,7 @@ def write_final_eft_rge_comparison(
         for chunk_number, signature_chunk in enumerate(chunks, start=1):
             if chunk_number > 1:
                 lines.append(r"\clearpage")
+                lines.append(_search_name_line("C5"))
 
             if len(chunks) > 1:
                 lines.append(

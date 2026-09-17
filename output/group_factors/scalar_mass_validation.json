@@ -1,0 +1,2945 @@
+{
+  "status": "Success",
+  "physical_formulas": {
+    "mSi_Tr_yi": "2 G_Si",
+    "heavy_mass_yukawa_trace_vectorlike": "-4 G_Si",
+    "heavy_mass_yukawa_trace_self_conjugate": "-16 G_Si",
+    "self_conjugate_branch": "alpha=-1 and dF odd",
+    "lambdaSi_mSi": "2(dSi+1)",
+    "lambdaSiAdj_mSi_triplet": "2 C2(Si)=4",
+    "g2_sq_mSi": "-6 C2(Si)",
+    "gY_sq_mSi": "-6 Yi^2",
+    "lambda12_other_mass": "2 d_other",
+    "T3E_cross_other_mass": "4"
+  },
+  "branch_diagnostics": [
+    {
+      "model": "A",
+      "alpha": -1,
+      "dF": 2,
+      "beta": "mS1Sq",
+      "structure": "Tr_MF_y1",
+      "physical_expected": "-8",
+      "rgbeta_neutral_branch": "-32",
+      "residual": "-24",
+      "reason": "RGBeta uses its YF=0 neutral/self-conjugate branch for even dF=2, while the current physical Matchete T3 model keeps this pseudoreal representation non-self-conjugate."
+    },
+    {
+      "model": "A",
+      "alpha": -1,
+      "dF": 2,
+      "beta": "mS2Sq",
+      "structure": "Tr_MF_y2",
+      "physical_expected": "-4",
+      "rgbeta_neutral_branch": "-16",
+      "residual": "-12",
+      "reason": "RGBeta uses its YF=0 neutral/self-conjugate branch for even dF=2, while the current physical Matchete T3 model keeps this pseudoreal representation non-self-conjugate."
+    },
+    {
+      "model": "D",
+      "alpha": -1,
+      "dF": 2,
+      "beta": "mS1Sq",
+      "structure": "Tr_MF_y1",
+      "physical_expected": "-4",
+      "rgbeta_neutral_branch": "-16",
+      "residual": "-12",
+      "reason": "RGBeta uses its YF=0 neutral/self-conjugate branch for even dF=2, while the current physical Matchete T3 model keeps this pseudoreal representation non-self-conjugate."
+    },
+    {
+      "model": "D",
+      "alpha": -1,
+      "dF": 2,
+      "beta": "mS2Sq",
+      "structure": "Tr_MF_y2",
+      "physical_expected": "-8",
+      "rgbeta_neutral_branch": "-32",
+      "residual": "-24",
+      "reason": "RGBeta uses its YF=0 neutral/self-conjugate branch for even dF=2, while the current physical Matchete T3 model keeps this pseudoreal representation non-self-conjugate."
+    },
+    {
+      "model": "E",
+      "alpha": -1,
+      "dF": 2,
+      "beta": "mS1Sq",
+      "structure": "Tr_MF_y1",
+      "physical_expected": "-4",
+      "rgbeta_neutral_branch": "-16",
+      "residual": "-12",
+      "reason": "RGBeta uses its YF=0 neutral/self-conjugate branch for even dF=2, while the current physical Matchete T3 model keeps this pseudoreal representation non-self-conjugate."
+    },
+    {
+      "model": "E",
+      "alpha": -1,
+      "dF": 2,
+      "beta": "mS2Sq",
+      "structure": "Tr_MF_y2",
+      "physical_expected": "-4",
+      "rgbeta_neutral_branch": "-16",
+      "residual": "-12",
+      "reason": "RGBeta uses its YF=0 neutral/self-conjugate branch for even dF=2, while the current physical Matchete T3 model keeps this pseudoreal representation non-self-conjugate."
+    }
+  ],
+  "checks": [
+    {
+      "model": "A",
+      "alpha": -1,
+      "dF": 2,
+      "physical_self_conjugate_F": false,
+      "beta": "mS1Sq",
+      "source": "output\\full\\hypercharge\\T3_A_alpha_m1\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS1Sq*Tr_y1": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y1": {
+          "expected": "-8",
+          "rgbeta": "-32",
+          "residual": "-24",
+          "match": null,
+          "status": "ExcludedBranchMismatch"
+        },
+        "lambdaS1*mS1Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS1Sq": {
+          "expected": "0",
+          "rgbeta": "0",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS1Sq": {
+          "expected": "-3/2",
+          "rgbeta": "-3/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS2Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "A",
+      "alpha": -1,
+      "dF": 2,
+      "physical_self_conjugate_F": false,
+      "beta": "mS2Sq",
+      "source": "output\\full\\hypercharge\\T3_A_alpha_m1\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS2Sq*Tr_y2": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y2": {
+          "expected": "-4",
+          "rgbeta": "-16",
+          "residual": "-12",
+          "match": null,
+          "status": "ExcludedBranchMismatch"
+        },
+        "lambdaS2*mS2Sq": {
+          "expected": "8",
+          "rgbeta": "8",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS2Sq": {
+          "expected": "-12",
+          "rgbeta": "-12",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS2Sq": {
+          "expected": "-3/2",
+          "rgbeta": "-3/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS1Sq": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS2Adj*mS2Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "A",
+      "alpha": -2,
+      "dF": 2,
+      "physical_self_conjugate_F": false,
+      "beta": "mS1Sq",
+      "source": "output\\full\\hypercharge\\T3_A_alpha_m2\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS1Sq*Tr_y1": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y1": {
+          "expected": "-8",
+          "rgbeta": "-8",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS1*mS1Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS1Sq": {
+          "expected": "0",
+          "rgbeta": "0",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS1Sq": {
+          "expected": "-6",
+          "rgbeta": "-6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS2Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "A",
+      "alpha": -2,
+      "dF": 2,
+      "physical_self_conjugate_F": false,
+      "beta": "mS2Sq",
+      "source": "output\\full\\hypercharge\\T3_A_alpha_m2\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS2Sq*Tr_y2": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y2": {
+          "expected": "-4",
+          "rgbeta": "-4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS2*mS2Sq": {
+          "expected": "8",
+          "rgbeta": "8",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS2Sq": {
+          "expected": "-12",
+          "rgbeta": "-12",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS2Sq": {
+          "expected": "0",
+          "rgbeta": "0",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS1Sq": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS2Adj*mS2Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "A",
+      "alpha": 0,
+      "dF": 2,
+      "physical_self_conjugate_F": false,
+      "beta": "mS1Sq",
+      "source": "output\\full\\hypercharge\\T3_A_alpha_p0\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS1Sq*Tr_y1": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y1": {
+          "expected": "-8",
+          "rgbeta": "-8",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS1*mS1Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS1Sq": {
+          "expected": "0",
+          "rgbeta": "0",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS1Sq": {
+          "expected": "0",
+          "rgbeta": "0",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS2Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "A",
+      "alpha": 0,
+      "dF": 2,
+      "physical_self_conjugate_F": false,
+      "beta": "mS2Sq",
+      "source": "output\\full\\hypercharge\\T3_A_alpha_p0\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS2Sq*Tr_y2": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y2": {
+          "expected": "-4",
+          "rgbeta": "-4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS2*mS2Sq": {
+          "expected": "8",
+          "rgbeta": "8",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS2Sq": {
+          "expected": "-12",
+          "rgbeta": "-12",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS2Sq": {
+          "expected": "-6",
+          "rgbeta": "-6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS1Sq": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS2Adj*mS2Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "A",
+      "alpha": 1,
+      "dF": 2,
+      "physical_self_conjugate_F": false,
+      "beta": "mS1Sq",
+      "source": "output\\full\\hypercharge\\T3_A_alpha_p1\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS1Sq*Tr_y1": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y1": {
+          "expected": "-8",
+          "rgbeta": "-8",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS1*mS1Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS1Sq": {
+          "expected": "0",
+          "rgbeta": "0",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS1Sq": {
+          "expected": "-3/2",
+          "rgbeta": "-3/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS2Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "A",
+      "alpha": 1,
+      "dF": 2,
+      "physical_self_conjugate_F": false,
+      "beta": "mS2Sq",
+      "source": "output\\full\\hypercharge\\T3_A_alpha_p1\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS2Sq*Tr_y2": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y2": {
+          "expected": "-4",
+          "rgbeta": "-4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS2*mS2Sq": {
+          "expected": "8",
+          "rgbeta": "8",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS2Sq": {
+          "expected": "-12",
+          "rgbeta": "-12",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS2Sq": {
+          "expected": "-27/2",
+          "rgbeta": "-27/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS1Sq": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS2Adj*mS2Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "A",
+      "alpha": 2,
+      "dF": 2,
+      "physical_self_conjugate_F": false,
+      "beta": "mS1Sq",
+      "source": "output\\full\\hypercharge\\T3_A_alpha_p2\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS1Sq*Tr_y1": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y1": {
+          "expected": "-8",
+          "rgbeta": "-8",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS1*mS1Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS1Sq": {
+          "expected": "0",
+          "rgbeta": "0",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS1Sq": {
+          "expected": "-6",
+          "rgbeta": "-6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS2Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "A",
+      "alpha": 2,
+      "dF": 2,
+      "physical_self_conjugate_F": false,
+      "beta": "mS2Sq",
+      "source": "output\\full\\hypercharge\\T3_A_alpha_p2\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS2Sq*Tr_y2": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y2": {
+          "expected": "-4",
+          "rgbeta": "-4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS2*mS2Sq": {
+          "expected": "8",
+          "rgbeta": "8",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS2Sq": {
+          "expected": "-12",
+          "rgbeta": "-12",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS2Sq": {
+          "expected": "-24",
+          "rgbeta": "-24",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS1Sq": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS2Adj*mS2Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "B",
+      "alpha": -1,
+      "dF": 1,
+      "physical_self_conjugate_F": true,
+      "beta": "mS1Sq",
+      "source": "output\\full\\hypercharge\\T3_B_alpha_m1\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS1Sq*Tr_y1": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y1": {
+          "expected": "-16",
+          "rgbeta": "-16",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS1*mS1Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS1Sq": {
+          "expected": "-9/2",
+          "rgbeta": "-9/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS1Sq": {
+          "expected": "-3/2",
+          "rgbeta": "-3/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS2Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "B",
+      "alpha": -1,
+      "dF": 1,
+      "physical_self_conjugate_F": true,
+      "beta": "mS2Sq",
+      "source": "output\\full\\hypercharge\\T3_B_alpha_m1\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS2Sq*Tr_y2": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y2": {
+          "expected": "-16",
+          "rgbeta": "-16",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS2*mS2Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS2Sq": {
+          "expected": "-9/2",
+          "rgbeta": "-9/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS2Sq": {
+          "expected": "-3/2",
+          "rgbeta": "-3/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS1Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "B",
+      "alpha": -2,
+      "dF": 1,
+      "physical_self_conjugate_F": false,
+      "beta": "mS1Sq",
+      "source": "output\\full\\hypercharge\\T3_B_alpha_m2\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS1Sq*Tr_y1": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y1": {
+          "expected": "-4",
+          "rgbeta": "-4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS1*mS1Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS1Sq": {
+          "expected": "-9/2",
+          "rgbeta": "-9/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS1Sq": {
+          "expected": "-6",
+          "rgbeta": "-6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS2Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "B",
+      "alpha": -2,
+      "dF": 1,
+      "physical_self_conjugate_F": false,
+      "beta": "mS2Sq",
+      "source": "output\\full\\hypercharge\\T3_B_alpha_m2\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS2Sq*Tr_y2": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y2": {
+          "expected": "-4",
+          "rgbeta": "-4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS2*mS2Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS2Sq": {
+          "expected": "-9/2",
+          "rgbeta": "-9/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS2Sq": {
+          "expected": "0",
+          "rgbeta": "0",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS1Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "B",
+      "alpha": 0,
+      "dF": 1,
+      "physical_self_conjugate_F": false,
+      "beta": "mS1Sq",
+      "source": "output\\full\\hypercharge\\T3_B_alpha_p0\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS1Sq*Tr_y1": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y1": {
+          "expected": "-4",
+          "rgbeta": "-4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS1*mS1Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS1Sq": {
+          "expected": "-9/2",
+          "rgbeta": "-9/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS1Sq": {
+          "expected": "0",
+          "rgbeta": "0",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS2Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "B",
+      "alpha": 0,
+      "dF": 1,
+      "physical_self_conjugate_F": false,
+      "beta": "mS2Sq",
+      "source": "output\\full\\hypercharge\\T3_B_alpha_p0\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS2Sq*Tr_y2": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y2": {
+          "expected": "-4",
+          "rgbeta": "-4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS2*mS2Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS2Sq": {
+          "expected": "-9/2",
+          "rgbeta": "-9/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS2Sq": {
+          "expected": "-6",
+          "rgbeta": "-6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS1Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "B",
+      "alpha": 1,
+      "dF": 1,
+      "physical_self_conjugate_F": false,
+      "beta": "mS1Sq",
+      "source": "output\\full\\hypercharge\\T3_B_alpha_p1\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS1Sq*Tr_y1": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y1": {
+          "expected": "-4",
+          "rgbeta": "-4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS1*mS1Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS1Sq": {
+          "expected": "-9/2",
+          "rgbeta": "-9/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS1Sq": {
+          "expected": "-3/2",
+          "rgbeta": "-3/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS2Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "B",
+      "alpha": 1,
+      "dF": 1,
+      "physical_self_conjugate_F": false,
+      "beta": "mS2Sq",
+      "source": "output\\full\\hypercharge\\T3_B_alpha_p1\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS2Sq*Tr_y2": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y2": {
+          "expected": "-4",
+          "rgbeta": "-4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS2*mS2Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS2Sq": {
+          "expected": "-9/2",
+          "rgbeta": "-9/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS2Sq": {
+          "expected": "-27/2",
+          "rgbeta": "-27/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS1Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "B",
+      "alpha": 2,
+      "dF": 1,
+      "physical_self_conjugate_F": false,
+      "beta": "mS1Sq",
+      "source": "output\\full\\hypercharge\\T3_B_alpha_p2\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS1Sq*Tr_y1": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y1": {
+          "expected": "-4",
+          "rgbeta": "-4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS1*mS1Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS1Sq": {
+          "expected": "-9/2",
+          "rgbeta": "-9/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS1Sq": {
+          "expected": "-6",
+          "rgbeta": "-6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS2Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "B",
+      "alpha": 2,
+      "dF": 1,
+      "physical_self_conjugate_F": false,
+      "beta": "mS2Sq",
+      "source": "output\\full\\hypercharge\\T3_B_alpha_p2\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS2Sq*Tr_y2": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y2": {
+          "expected": "-4",
+          "rgbeta": "-4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS2*mS2Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS2Sq": {
+          "expected": "-9/2",
+          "rgbeta": "-9/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS2Sq": {
+          "expected": "-24",
+          "rgbeta": "-24",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS1Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "C",
+      "alpha": -1,
+      "dF": 3,
+      "physical_self_conjugate_F": true,
+      "beta": "mS1Sq",
+      "source": "output\\full\\hypercharge\\T3_C_alpha_m1\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS1Sq*Tr_y1": {
+          "expected": "3",
+          "rgbeta": "3",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y1": {
+          "expected": "-24",
+          "rgbeta": "-24",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS1*mS1Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS1Sq": {
+          "expected": "-9/2",
+          "rgbeta": "-9/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS1Sq": {
+          "expected": "-3/2",
+          "rgbeta": "-3/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS2Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "C",
+      "alpha": -1,
+      "dF": 3,
+      "physical_self_conjugate_F": true,
+      "beta": "mS2Sq",
+      "source": "output\\full\\hypercharge\\T3_C_alpha_m1\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS2Sq*Tr_y2": {
+          "expected": "3",
+          "rgbeta": "3",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y2": {
+          "expected": "-24",
+          "rgbeta": "-24",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS2*mS2Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS2Sq": {
+          "expected": "-9/2",
+          "rgbeta": "-9/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS2Sq": {
+          "expected": "-3/2",
+          "rgbeta": "-3/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS1Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "C",
+      "alpha": -2,
+      "dF": 3,
+      "physical_self_conjugate_F": false,
+      "beta": "mS1Sq",
+      "source": "output\\full\\hypercharge\\T3_C_alpha_m2\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS1Sq*Tr_y1": {
+          "expected": "3",
+          "rgbeta": "3",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y1": {
+          "expected": "-6",
+          "rgbeta": "-6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS1*mS1Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS1Sq": {
+          "expected": "-9/2",
+          "rgbeta": "-9/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS1Sq": {
+          "expected": "-6",
+          "rgbeta": "-6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS2Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "C",
+      "alpha": -2,
+      "dF": 3,
+      "physical_self_conjugate_F": false,
+      "beta": "mS2Sq",
+      "source": "output\\full\\hypercharge\\T3_C_alpha_m2\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS2Sq*Tr_y2": {
+          "expected": "3",
+          "rgbeta": "3",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y2": {
+          "expected": "-6",
+          "rgbeta": "-6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS2*mS2Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS2Sq": {
+          "expected": "-9/2",
+          "rgbeta": "-9/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS2Sq": {
+          "expected": "0",
+          "rgbeta": "0",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS1Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "C",
+      "alpha": 0,
+      "dF": 3,
+      "physical_self_conjugate_F": false,
+      "beta": "mS1Sq",
+      "source": "output\\full\\hypercharge\\T3_C_alpha_p0\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS1Sq*Tr_y1": {
+          "expected": "3",
+          "rgbeta": "3",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y1": {
+          "expected": "-6",
+          "rgbeta": "-6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS1*mS1Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS1Sq": {
+          "expected": "-9/2",
+          "rgbeta": "-9/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS1Sq": {
+          "expected": "0",
+          "rgbeta": "0",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS2Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "C",
+      "alpha": 0,
+      "dF": 3,
+      "physical_self_conjugate_F": false,
+      "beta": "mS2Sq",
+      "source": "output\\full\\hypercharge\\T3_C_alpha_p0\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS2Sq*Tr_y2": {
+          "expected": "3",
+          "rgbeta": "3",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y2": {
+          "expected": "-6",
+          "rgbeta": "-6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS2*mS2Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS2Sq": {
+          "expected": "-9/2",
+          "rgbeta": "-9/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS2Sq": {
+          "expected": "-6",
+          "rgbeta": "-6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS1Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "C",
+      "alpha": 1,
+      "dF": 3,
+      "physical_self_conjugate_F": false,
+      "beta": "mS1Sq",
+      "source": "output\\full\\hypercharge\\T3_C_alpha_p1\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS1Sq*Tr_y1": {
+          "expected": "3",
+          "rgbeta": "3",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y1": {
+          "expected": "-6",
+          "rgbeta": "-6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS1*mS1Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS1Sq": {
+          "expected": "-9/2",
+          "rgbeta": "-9/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS1Sq": {
+          "expected": "-3/2",
+          "rgbeta": "-3/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS2Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "C",
+      "alpha": 1,
+      "dF": 3,
+      "physical_self_conjugate_F": false,
+      "beta": "mS2Sq",
+      "source": "output\\full\\hypercharge\\T3_C_alpha_p1\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS2Sq*Tr_y2": {
+          "expected": "3",
+          "rgbeta": "3",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y2": {
+          "expected": "-6",
+          "rgbeta": "-6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS2*mS2Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS2Sq": {
+          "expected": "-9/2",
+          "rgbeta": "-9/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS2Sq": {
+          "expected": "-27/2",
+          "rgbeta": "-27/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS1Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "C",
+      "alpha": 2,
+      "dF": 3,
+      "physical_self_conjugate_F": false,
+      "beta": "mS1Sq",
+      "source": "output\\full\\hypercharge\\T3_C_alpha_p2\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS1Sq*Tr_y1": {
+          "expected": "3",
+          "rgbeta": "3",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y1": {
+          "expected": "-6",
+          "rgbeta": "-6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS1*mS1Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS1Sq": {
+          "expected": "-9/2",
+          "rgbeta": "-9/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS1Sq": {
+          "expected": "-6",
+          "rgbeta": "-6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS2Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "C",
+      "alpha": 2,
+      "dF": 3,
+      "physical_self_conjugate_F": false,
+      "beta": "mS2Sq",
+      "source": "output\\full\\hypercharge\\T3_C_alpha_p2\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS2Sq*Tr_y2": {
+          "expected": "3",
+          "rgbeta": "3",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y2": {
+          "expected": "-6",
+          "rgbeta": "-6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS2*mS2Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS2Sq": {
+          "expected": "-9/2",
+          "rgbeta": "-9/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS2Sq": {
+          "expected": "-24",
+          "rgbeta": "-24",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS1Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "D",
+      "alpha": -1,
+      "dF": 2,
+      "physical_self_conjugate_F": false,
+      "beta": "mS1Sq",
+      "source": "output\\full\\hypercharge\\T3_D_alpha_m1\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS1Sq*Tr_y1": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y1": {
+          "expected": "-4",
+          "rgbeta": "-16",
+          "residual": "-12",
+          "match": null,
+          "status": "ExcludedBranchMismatch"
+        },
+        "lambdaS1*mS1Sq": {
+          "expected": "8",
+          "rgbeta": "8",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS1Sq": {
+          "expected": "-12",
+          "rgbeta": "-12",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS1Sq": {
+          "expected": "-3/2",
+          "rgbeta": "-3/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS2Sq": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS1Adj*mS1Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "D",
+      "alpha": -1,
+      "dF": 2,
+      "physical_self_conjugate_F": false,
+      "beta": "mS2Sq",
+      "source": "output\\full\\hypercharge\\T3_D_alpha_m1\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS2Sq*Tr_y2": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y2": {
+          "expected": "-8",
+          "rgbeta": "-32",
+          "residual": "-24",
+          "match": null,
+          "status": "ExcludedBranchMismatch"
+        },
+        "lambdaS2*mS2Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS2Sq": {
+          "expected": "0",
+          "rgbeta": "0",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS2Sq": {
+          "expected": "-3/2",
+          "rgbeta": "-3/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS1Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "D",
+      "alpha": -2,
+      "dF": 2,
+      "physical_self_conjugate_F": false,
+      "beta": "mS1Sq",
+      "source": "output\\full\\hypercharge\\T3_D_alpha_m2\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS1Sq*Tr_y1": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y1": {
+          "expected": "-4",
+          "rgbeta": "-4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS1*mS1Sq": {
+          "expected": "8",
+          "rgbeta": "8",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS1Sq": {
+          "expected": "-12",
+          "rgbeta": "-12",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS1Sq": {
+          "expected": "-6",
+          "rgbeta": "-6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS2Sq": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS1Adj*mS1Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "D",
+      "alpha": -2,
+      "dF": 2,
+      "physical_self_conjugate_F": false,
+      "beta": "mS2Sq",
+      "source": "output\\full\\hypercharge\\T3_D_alpha_m2\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS2Sq*Tr_y2": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y2": {
+          "expected": "-8",
+          "rgbeta": "-8",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS2*mS2Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS2Sq": {
+          "expected": "0",
+          "rgbeta": "0",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS2Sq": {
+          "expected": "0",
+          "rgbeta": "0",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS1Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "D",
+      "alpha": 0,
+      "dF": 2,
+      "physical_self_conjugate_F": false,
+      "beta": "mS1Sq",
+      "source": "output\\full\\hypercharge\\T3_D_alpha_p0\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS1Sq*Tr_y1": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y1": {
+          "expected": "-4",
+          "rgbeta": "-4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS1*mS1Sq": {
+          "expected": "8",
+          "rgbeta": "8",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS1Sq": {
+          "expected": "-12",
+          "rgbeta": "-12",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS1Sq": {
+          "expected": "0",
+          "rgbeta": "0",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS2Sq": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS1Adj*mS1Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "D",
+      "alpha": 0,
+      "dF": 2,
+      "physical_self_conjugate_F": false,
+      "beta": "mS2Sq",
+      "source": "output\\full\\hypercharge\\T3_D_alpha_p0\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS2Sq*Tr_y2": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y2": {
+          "expected": "-8",
+          "rgbeta": "-8",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS2*mS2Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS2Sq": {
+          "expected": "0",
+          "rgbeta": "0",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS2Sq": {
+          "expected": "-6",
+          "rgbeta": "-6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS1Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "D",
+      "alpha": 1,
+      "dF": 2,
+      "physical_self_conjugate_F": false,
+      "beta": "mS1Sq",
+      "source": "output\\full\\hypercharge\\T3_D_alpha_p1\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS1Sq*Tr_y1": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y1": {
+          "expected": "-4",
+          "rgbeta": "-4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS1*mS1Sq": {
+          "expected": "8",
+          "rgbeta": "8",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS1Sq": {
+          "expected": "-12",
+          "rgbeta": "-12",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS1Sq": {
+          "expected": "-3/2",
+          "rgbeta": "-3/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS2Sq": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS1Adj*mS1Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "D",
+      "alpha": 1,
+      "dF": 2,
+      "physical_self_conjugate_F": false,
+      "beta": "mS2Sq",
+      "source": "output\\full\\hypercharge\\T3_D_alpha_p1\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS2Sq*Tr_y2": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y2": {
+          "expected": "-8",
+          "rgbeta": "-8",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS2*mS2Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS2Sq": {
+          "expected": "0",
+          "rgbeta": "0",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS2Sq": {
+          "expected": "-27/2",
+          "rgbeta": "-27/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS1Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "D",
+      "alpha": 2,
+      "dF": 2,
+      "physical_self_conjugate_F": false,
+      "beta": "mS1Sq",
+      "source": "output\\full\\hypercharge\\T3_D_alpha_p2\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS1Sq*Tr_y1": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y1": {
+          "expected": "-4",
+          "rgbeta": "-4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS1*mS1Sq": {
+          "expected": "8",
+          "rgbeta": "8",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS1Sq": {
+          "expected": "-12",
+          "rgbeta": "-12",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS1Sq": {
+          "expected": "-6",
+          "rgbeta": "-6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS2Sq": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS1Adj*mS1Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "D",
+      "alpha": 2,
+      "dF": 2,
+      "physical_self_conjugate_F": false,
+      "beta": "mS2Sq",
+      "source": "output\\full\\hypercharge\\T3_D_alpha_p2\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS2Sq*Tr_y2": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y2": {
+          "expected": "-8",
+          "rgbeta": "-8",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS2*mS2Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS2Sq": {
+          "expected": "0",
+          "rgbeta": "0",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS2Sq": {
+          "expected": "-24",
+          "rgbeta": "-24",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS1Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "E",
+      "alpha": -1,
+      "dF": 2,
+      "physical_self_conjugate_F": false,
+      "beta": "mS1Sq",
+      "source": "output\\full\\hypercharge\\T3_E_alpha_m1\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS1Sq*Tr_y1": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y1": {
+          "expected": "-4",
+          "rgbeta": "-16",
+          "residual": "-12",
+          "match": null,
+          "status": "ExcludedBranchMismatch"
+        },
+        "lambdaS1*mS1Sq": {
+          "expected": "8",
+          "rgbeta": "8",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS1Sq": {
+          "expected": "-12",
+          "rgbeta": "-12",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS1Sq": {
+          "expected": "-3/2",
+          "rgbeta": "-3/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS2Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS1Adj*mS1Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12Cross*mS2Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "E",
+      "alpha": -1,
+      "dF": 2,
+      "physical_self_conjugate_F": false,
+      "beta": "mS2Sq",
+      "source": "output\\full\\hypercharge\\T3_E_alpha_m1\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS2Sq*Tr_y2": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y2": {
+          "expected": "-4",
+          "rgbeta": "-16",
+          "residual": "-12",
+          "match": null,
+          "status": "ExcludedBranchMismatch"
+        },
+        "lambdaS2*mS2Sq": {
+          "expected": "8",
+          "rgbeta": "8",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS2Sq": {
+          "expected": "-12",
+          "rgbeta": "-12",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS2Sq": {
+          "expected": "-3/2",
+          "rgbeta": "-3/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS1Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS2Adj*mS2Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12Cross*mS1Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "E",
+      "alpha": -2,
+      "dF": 2,
+      "physical_self_conjugate_F": false,
+      "beta": "mS1Sq",
+      "source": "output\\full\\hypercharge\\T3_E_alpha_m2\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS1Sq*Tr_y1": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y1": {
+          "expected": "-4",
+          "rgbeta": "-4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS1*mS1Sq": {
+          "expected": "8",
+          "rgbeta": "8",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS1Sq": {
+          "expected": "-12",
+          "rgbeta": "-12",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS1Sq": {
+          "expected": "-6",
+          "rgbeta": "-6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS2Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS1Adj*mS1Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12Cross*mS2Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "E",
+      "alpha": -2,
+      "dF": 2,
+      "physical_self_conjugate_F": false,
+      "beta": "mS2Sq",
+      "source": "output\\full\\hypercharge\\T3_E_alpha_m2\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS2Sq*Tr_y2": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y2": {
+          "expected": "-4",
+          "rgbeta": "-4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS2*mS2Sq": {
+          "expected": "8",
+          "rgbeta": "8",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS2Sq": {
+          "expected": "-12",
+          "rgbeta": "-12",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS2Sq": {
+          "expected": "0",
+          "rgbeta": "0",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS1Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS2Adj*mS2Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12Cross*mS1Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "E",
+      "alpha": 0,
+      "dF": 2,
+      "physical_self_conjugate_F": false,
+      "beta": "mS1Sq",
+      "source": "output\\full\\hypercharge\\T3_E_alpha_p0\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS1Sq*Tr_y1": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y1": {
+          "expected": "-4",
+          "rgbeta": "-4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS1*mS1Sq": {
+          "expected": "8",
+          "rgbeta": "8",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS1Sq": {
+          "expected": "-12",
+          "rgbeta": "-12",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS1Sq": {
+          "expected": "0",
+          "rgbeta": "0",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS2Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS1Adj*mS1Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12Cross*mS2Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "E",
+      "alpha": 0,
+      "dF": 2,
+      "physical_self_conjugate_F": false,
+      "beta": "mS2Sq",
+      "source": "output\\full\\hypercharge\\T3_E_alpha_p0\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS2Sq*Tr_y2": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y2": {
+          "expected": "-4",
+          "rgbeta": "-4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS2*mS2Sq": {
+          "expected": "8",
+          "rgbeta": "8",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS2Sq": {
+          "expected": "-12",
+          "rgbeta": "-12",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS2Sq": {
+          "expected": "-6",
+          "rgbeta": "-6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS1Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS2Adj*mS2Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12Cross*mS1Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "E",
+      "alpha": 1,
+      "dF": 2,
+      "physical_self_conjugate_F": false,
+      "beta": "mS1Sq",
+      "source": "output\\full\\hypercharge\\T3_E_alpha_p1\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS1Sq*Tr_y1": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y1": {
+          "expected": "-4",
+          "rgbeta": "-4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS1*mS1Sq": {
+          "expected": "8",
+          "rgbeta": "8",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS1Sq": {
+          "expected": "-12",
+          "rgbeta": "-12",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS1Sq": {
+          "expected": "-3/2",
+          "rgbeta": "-3/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS2Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS1Adj*mS1Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12Cross*mS2Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "E",
+      "alpha": 1,
+      "dF": 2,
+      "physical_self_conjugate_F": false,
+      "beta": "mS2Sq",
+      "source": "output\\full\\hypercharge\\T3_E_alpha_p1\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS2Sq*Tr_y2": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y2": {
+          "expected": "-4",
+          "rgbeta": "-4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS2*mS2Sq": {
+          "expected": "8",
+          "rgbeta": "8",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS2Sq": {
+          "expected": "-12",
+          "rgbeta": "-12",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS2Sq": {
+          "expected": "-27/2",
+          "rgbeta": "-27/2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS1Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS2Adj*mS2Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12Cross*mS1Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "E",
+      "alpha": 2,
+      "dF": 2,
+      "physical_self_conjugate_F": false,
+      "beta": "mS1Sq",
+      "source": "output\\full\\hypercharge\\T3_E_alpha_p2\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS1Sq*Tr_y1": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y1": {
+          "expected": "-4",
+          "rgbeta": "-4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS1*mS1Sq": {
+          "expected": "8",
+          "rgbeta": "8",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS1Sq": {
+          "expected": "-12",
+          "rgbeta": "-12",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS1Sq": {
+          "expected": "-6",
+          "rgbeta": "-6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS2Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS1Adj*mS1Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12Cross*mS2Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    },
+    {
+      "model": "E",
+      "alpha": 2,
+      "dF": 2,
+      "physical_self_conjugate_F": false,
+      "beta": "mS2Sq",
+      "source": "output\\full\\hypercharge\\T3_E_alpha_p2\\data\\uv_rgbeta_rge.json",
+      "checks": {
+        "mS2Sq*Tr_y2": {
+          "expected": "2",
+          "rgbeta": "2",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "Tr_MF_y2": {
+          "expected": "-4",
+          "rgbeta": "-4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS2*mS2Sq": {
+          "expected": "8",
+          "rgbeta": "8",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "g2_sq*mS2Sq": {
+          "expected": "-12",
+          "rgbeta": "-12",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "gY_sq*mS2Sq": {
+          "expected": "-24",
+          "rgbeta": "-24",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12*mS1Sq": {
+          "expected": "6",
+          "rgbeta": "6",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambdaS2Adj*mS2Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        },
+        "lambda12Cross*mS1Sq": {
+          "expected": "4",
+          "rgbeta": "4",
+          "residual": "0",
+          "match": true,
+          "status": "Validated"
+        }
+      },
+      "match": true
+    }
+  ]
+}

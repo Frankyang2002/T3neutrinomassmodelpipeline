@@ -51,7 +51,7 @@ from common.Thresholds import (
     validate_threshold_plan,
 )
 from common.T3Model import EXTENDED, INTERESTING, SMOKE
-from Lagrangian.Runner import validate_dimensions, obtain_class_dimensions
+from Lagrangian.Runner import validate_dimensions, validate_shared_dimensions, obtain_class_dimensions
 from Reports.ReportGeneration import (
     compile_latex_document,
     write_bsm_uv_field_table,
@@ -262,6 +262,7 @@ def run_uv_rgbeta_stage(record: RunRecord) -> bool:
             record.d_s2,
             record.d_f,
             record.alpha,
+            shared_scalar=record.shared_scalar,
         )
     except Exception as exc:
         summary["UVRGEStatus"] = "Failed"
@@ -304,7 +305,8 @@ def run_eft1_rgbeta_stage(record: RunRecord) -> bool:
     has_f_first_stage = bool(
         stages
         and stages[0].get("IntegratedFields") == ["F"]
-        and set(stages[0].get("ActiveHeavyFields", [])) == {"S1", "S2"}
+        and set(stages[0].get("ActiveHeavyFields", []))
+        == ({"S"} if record.shared_scalar else {"S1", "S2"})
     )
 
     if not has_f_first_stage:
@@ -326,6 +328,7 @@ def run_eft1_rgbeta_stage(record: RunRecord) -> bool:
             record.d_s2,
             record.d_f,
             record.alpha,
+            shared_scalar=record.shared_scalar,
         )
     except Exception as exc:
         summary["EFT1RenormalisableRGEStatus"] = "Failed"
@@ -373,7 +376,8 @@ def run_eft1_wilson_rge_stage(record: RunRecord) -> bool:
     has_f_first_stage = bool(
         stages
         and stages[0].get("IntegratedFields") == ["F"]
-        and set(stages[0].get("ActiveHeavyFields", [])) == {"S1", "S2"}
+        and set(stages[0].get("ActiveHeavyFields", []))
+        == ({"S"} if record.shared_scalar else {"S1", "S2"})
     )
 
     if not has_f_first_stage:
@@ -514,6 +518,8 @@ def _default_threshold_scale(group: list[str]) -> str:
     fields = set(group)
     if fields == {"F"}:
         return "MF"
+    if fields == {"S"}:
+        return "MS"
     if fields == {"S1", "S2"}:
         return "MS"
     if fields == {"S1"}:
@@ -661,13 +667,14 @@ def run_eft1_wilson_transport_stage(
 
 
 def _is_f_then_s1_s2_plan(record: RunRecord) -> bool:
-    """Return True for the sequential F -> (S1,S2) hierarchy."""
+    """Return True for the sequential F -> scalar hierarchy."""
     stages = record.summary.get("EFTStages", [])
+    scalar_fields = {"S"} if record.shared_scalar else {"S1", "S2"}
     return bool(
         len(stages) >= 2
         and stages[0].get("IntegratedFields") == ["F"]
-        and set(stages[0].get("ActiveHeavyFields", [])) == {"S1", "S2"}
-        and set(stages[1].get("IntegratedFields", [])) == {"S1", "S2"}
+        and set(stages[0].get("ActiveHeavyFields", [])) == scalar_fields
+        and set(stages[1].get("IntegratedFields", [])) == scalar_fields
     )
 
 
@@ -762,6 +769,7 @@ def run_eft1_full_flavor_threshold_bridge(
             d_s2=record.d_s2,
             d_f=record.d_f,
             alpha=record.alpha,
+            shared_scalar=record.shared_scalar,
             validation_mode=debug_reports,
         )
         if resume.get("status") != "Success":
@@ -1423,12 +1431,13 @@ def main() -> int:
     # Dimension input to use a specific diagram
     mode.add_argument(
         "--dims",
-        nargs=3,
+        nargs="+",
         type=int,
-        metavar=("DS1", "DS2", "DF"),
+        metavar="D",
         help=(
-            "run one representation assignment, "
-            "e.g. --dims 3 1 2"
+            "three numbers DS1 DS2 DF give the ordinary T3 model; "
+            "two numbers DS DF give one physical shared scalar, e.g. "
+            "--dims 2 1 for the scotogenic singlet-fermion model"
         ),
     )
 
@@ -1459,10 +1468,10 @@ def main() -> int:
     parser.add_argument(
         "--alpha",
         type=int,
-        default=0,
+        default=None,
         help=(
-            "T3 hypercharge parameter for --dims mode "
-            "(default: 0)"
+            "hypercharge parameter for three-number --dims mode (default 0). "
+            "Two-number shared-scalar mode fixes alpha=-1."
         ),
     )
 
@@ -1481,7 +1490,7 @@ def main() -> int:
         metavar="FIELD",
         default=None,
         help=(
-            "ordered heavy-particle threshold group; use F, S1, S2. "
+            "ordered threshold group; ordinary mode uses F,S1,S2 and shared-scalar mode uses F,S. "
             "Repeat the option for successive thresholds. "
             "Fields in one group are integrated out together. "
             "If omitted, F S1 S2 are integrated out together."
@@ -1517,8 +1526,23 @@ def main() -> int:
     if args.full:
         return run_full_study(args)
 
+    shared_scalar_mode = False
+    if args.dims is not None:
+        if len(args.dims) not in (2, 3):
+            parser.error("--dims requires either DS DF or DS1 DS2 DF.")
+        shared_scalar_mode = len(args.dims) == 2
+
+    if shared_scalar_mode:
+        if args.alpha is not None and args.alpha != -1:
+            parser.error("Two-number shared-scalar mode requires alpha=-1.")
+        args.alpha = -1
+    elif args.alpha is None:
+        args.alpha = 0
+
     try:
-        threshold_plan = validate_threshold_plan(args.threshold)
+        threshold_plan = validate_threshold_plan(
+            args.threshold, shared_scalar=shared_scalar_mode
+        )
     except ValueError as exc:
         parser.error(str(exc))
 
@@ -1573,19 +1597,22 @@ def main() -> int:
     # If the dimensions happen to match T3-A ... T3-E, validate_dimensions()
     # automatically recognises and labels the model appropriately.
     if args.dims:
-        d_s1, d_s2, d_f = args.dims
-
         try:
-            record = validate_dimensions(
-                d_s1,
-                d_s2,
-                d_f,
-                args.alpha,
-                args.debug_reports,
-                False,
-                threshold_plan,
-                study_output_dir,
-            )
+            if shared_scalar_mode:
+                d_s, d_f = args.dims
+                record = validate_shared_dimensions(
+                    d_s, d_f,
+                    debug_reports=args.debug_reports,
+                    export_rge_tensors=False,
+                    threshold_plan=threshold_plan,
+                    output_root=study_output_dir,
+                )
+            else:
+                d_s1, d_s2, d_f = args.dims
+                record = validate_dimensions(
+                    d_s1, d_s2, d_f, args.alpha, args.debug_reports, False,
+                    threshold_plan, study_output_dir,
+                )
         except ValueError as exc:
             parser.error(str(exc))
 
@@ -1641,6 +1668,7 @@ def main() -> int:
         record.eft_stages = build_eft_stage_records(
             threshold_plan,
             record.output_dir,
+            shared_scalar=record.shared_scalar,
         )
 
         record.summary.setdefault(
@@ -1693,7 +1721,8 @@ def main() -> int:
                     eft1_wilson_ok
                     and len(threshold_plan) >= 2
                     and threshold_plan[0] == ("F",)
-                    and set(threshold_plan[1]) == {"S1", "S2"}
+                    and set(threshold_plan[1])
+                    == ({"S"} if record.shared_scalar else {"S1", "S2"})
                 ):
                     # Keep the one-generation component transport as a compact
                     # regression/diagnostic, then run the authoritative

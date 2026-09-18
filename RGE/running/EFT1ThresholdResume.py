@@ -184,6 +184,7 @@ def rerun_threshold2_with_running(
     loop_order: int = 1,
     continuation: Threshold2Continuation | None = None,
     result_path: Path | None = None,
+    shared_scalar: bool = False,
     validation_mode: bool = False,
 ) -> dict:
     output_dir = Path(output_dir).resolve()
@@ -326,6 +327,7 @@ def rerun_threshold2_with_running(
         "direct_weinberg_carried_separately": direct_weinberg_marker,
         "direct_weinberg_equal_scale_vanishes": equal_scale_marker,
         "validation_mode": bool(validation_mode),
+        "shared_scalar": bool(shared_scalar),
         "continuation": {
             "tree": str(continuation.tree),
             "loop": str(continuation.loop),
@@ -354,8 +356,8 @@ def main() -> int:
     )
     parser.add_argument("output_dir", type=Path)
     parser.add_argument("running_insertion", type=Path)
-    parser.add_argument("--dims", nargs=3, type=int, required=True, metavar=("S1", "S2", "F"))
-    parser.add_argument("--alpha", type=int, required=True)
+    parser.add_argument("--dims", nargs="+", type=int, required=True, metavar="D")
+    parser.add_argument("--alpha", type=int, default=None)
     parser.add_argument(
         "--script",
         type=Path,
@@ -403,17 +405,27 @@ def main() -> int:
     else:
         continuation = None
 
+    if len(args.dims) == 2:
+        d_s1, d_f = args.dims
+        d_s2 = d_s1
+        alpha = -1 if args.alpha is None else args.alpha
+        if alpha != -1:
+            parser.error("Two-number shared-scalar mode requires alpha=-1.")
+        shared_scalar = True
+    elif len(args.dims) == 3:
+        d_s1, d_s2, d_f = args.dims
+        alpha = 0 if args.alpha is None else args.alpha
+        shared_scalar = False
+    else:
+        parser.error("--dims requires DS DF or DS1 DS2 DF.")
+
     result = rerun_threshold2_with_running(
         output_dir=args.output_dir,
         running_insertion=args.running_insertion,
         run_threshold_script=args.script,
-        d_s1=args.dims[0],
-        d_s2=args.dims[1],
-        d_f=args.dims[2],
-        alpha=args.alpha,
-        eft_order=args.eft_order,
-        loop_order=args.loop_order,
-        continuation=continuation,
+        d_s1=d_s1, d_s2=d_s2, d_f=d_f, alpha=alpha,
+        eft_order=args.eft_order, loop_order=args.loop_order,
+        continuation=continuation, shared_scalar=shared_scalar,
         validation_mode=args.validation,
     )
 

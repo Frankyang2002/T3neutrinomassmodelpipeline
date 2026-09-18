@@ -83,6 +83,7 @@ def _run_key(record: RunRecord) -> str:
     """
     return (
         f"{record.name}|"
+        f"shared={int(record.shared_scalar)}|"
         f"dS1={record.d_s1}|dS2={record.d_s2}|dF={record.d_f}|"
         f"alpha={record.alpha}"
     )
@@ -120,6 +121,10 @@ def _union_keys(per_run: Mapping[str, Mapping[str, object]]) -> list[str]:
 
 _TOKEN_TEX = {
     "lambdaH": r"\lambda_1",
+    "lambdaS": r"\lambda_2",
+    "lambda3": r"\lambda_3",
+    "lambda4": r"\lambda_4",
+    "lambda5": r"\lambda_5",
     "lambdaS1": r"\lambda_{S_1}^{(1)}",
     "lambdaS2": r"\lambda_{S_2}^{(1)}",
     "lambdaH1": r"\lambda_{HS_1}^{(1)}",
@@ -132,6 +137,7 @@ _TOKEN_TEX = {
     "lambda12Cross": r"\lambda_{12}^{(\times)}",
     "lambdaS1Adj": r"\lambda_{S_1}^{(A)}",
     "lambdaS2Adj": r"\lambda_{S_2}^{(A)}",
+    "mSSq": r"m_S^{2}",
     "mS1Sq": r"m_1^{2}",
     "mS2Sq": r"m_2^{2}",
     "g2_sq": r"g_2^2",
@@ -191,6 +197,12 @@ def _beta_name_tex(name: str) -> str:
         "y1": r"\beta_{y_1}",
         "y2": r"\beta_{y_2}",
         "MF": r"\beta_{M_F}",
+        "h": r"\beta_h",
+        "mSSq": r"\beta_{m_S^{2}}",
+        "lambdaS": r"\beta_{\lambda_2}",
+        "lambda3": r"\beta_{\lambda_3}",
+        "lambda4": r"\beta_{\lambda_4}",
+        "lambda5": r"\beta_{\lambda_5}",
         "mS1Sq": r"\beta_{m_1^{2}}",
         "mS2Sq": r"\beta_{m_2^{2}}",
         "lambdaH": r"\beta_{\lambda_1}",
@@ -748,10 +760,10 @@ def _trace_factor(structure: str) -> tuple[str | None, str]:
     trace_body = value[open_index + 1:close_index]
     remainder = value[close_index + 1:].strip()
     species = None
-    for candidate in ("Y_d", "Y_e", "Y_u", "y_1", "y_2"):
+    for candidate in ("Y_d", "Y_e", "Y_u", "y_1", "y_2", "h"):
         if candidate in trace_body:
             others = [
-                item for item in ("Y_d", "Y_e", "Y_u", "y_1", "y_2")
+                item for item in ("Y_d", "Y_e", "Y_u", "y_1", "y_2", "h")
                 if item != candidate and item in trace_body
             ]
             if not others:
@@ -802,6 +814,8 @@ def _compact_saved_trace_terms(
             structure = r"T_{\nu}^{(1)}" + (r"\," + remainder if remainder else "")
         elif species == "y_2":
             structure = r"T_{\nu}^{(2)}" + (r"\," + remainder if remainder else "")
+        elif species == "h":
+            structure = r"T_\nu" + (r"\," + remainder if remainder else "")
         else:
             trace_symbol = {
                 "Y_d": r"\operatorname{Tr}(Y_d^\dagger Y_d)",
@@ -867,6 +881,14 @@ def _saved_rge_beta_sections(
         "ye": r"Y_e",
         "y1": r"y_1",
         "y2": r"y_2",
+        "h": r"h",
+        "MF": r"M_F",
+        "mSSq": r"m_S^2",
+        "lambdaH": r"\lambda_1",
+        "lambdaS": r"\lambda_2",
+        "lambda3": r"\lambda_3",
+        "lambda4": r"\lambda_4",
+        "lambda5": r"\lambda_5",
     }
 
     lines = [rf"\section*{{{title}}}"]
@@ -1166,7 +1188,8 @@ def _stage_is_f_first_eft1(
     """Return True for the analytically supported SM+S1+S2 EFT after F."""
     return (
         set(_stage_integrated_fields(record, stage_label)) == {"F"}
-        and set(_stage_active_fields(record, stage_label)) == {"S1", "S2"}
+        and set(_stage_active_fields(record, stage_label))
+        == ({"S"} if record.shared_scalar else {"S1", "S2"})
     )
 
 
@@ -1185,6 +1208,35 @@ def _stage_content_table(
     """Show the threshold action and surviving heavy-field content."""
     if not records:
         return []
+
+    shared = all(record.shared_scalar for record in records)
+    if shared:
+        lines = [
+            r"\section*{Stage field content}",
+            r"\begin{longtable}{@{}lcc p{0.24\linewidth}p{0.24\linewidth}@{}}",
+            r"\toprule",
+            r"run & $S$ & $F$ & integrated at this stage & active after matching \\",
+            r"\midrule",
+        ]
+        for record in records:
+            y_s = sp.Rational(1, 2)
+            y_f = sp.Rational(0)
+            integrated = _stage_integrated_fields(record, stage_label)
+            active = _stage_active_fields(record, stage_label)
+            lines.append(
+                " & ".join(
+                    [
+                        latex_escape_text(record.name),
+                        rf"$({record.d_s1},{_tex_expr(y_s)})$",
+                        rf"$({record.d_f},{_tex_expr(y_f)})$",
+                        latex_escape_text(", ".join(integrated) if integrated else "none"),
+                        latex_escape_text(", ".join(active) if active else "none"),
+                    ]
+                )
+                + r" \\"
+            )
+        lines.extend([r"\bottomrule", r"\end{longtable}"])
+        return lines
 
     lines = [
         r"\section*{Stage field content}",
@@ -1331,6 +1383,40 @@ def _smeft_c5_group_factor_table(records: Sequence[RunRecord]) -> list[str]:
         _SPECIAL_STRUCTURE_TEX.update(previous)
 
 
+def _write_gf_f_first_stage_shared(
+    records: list[RunRecord],
+    *,
+    stage_label: str,
+    report_root: Path,
+) -> Path:
+    path = group_factor_report_path(stage_label, report_root=report_root)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    lines = _document_header(
+        "Scotogenic/shared-scalar group factors: " + stage_label.replace("_", r"\_"),
+        r"Active theory: $\mathrm{SM}+S+C_{LLSS}$. The heavy fermion is absent.",
+    )
+    lines.extend(_shared_scalar_notation_key())
+    lines.extend(_stage_content_table(records, stage_label))
+    lines.extend(_saved_rge_beta_sections(
+        records,
+        loader=load_eft1_renormalisable_rge_payload,
+        couplings=("gY", "g2", "g3", "yu", "yd", "ye", "mSSq",
+                   "lambdaH", "lambdaS", "lambda3", "lambda4", "lambda5"),
+        title="Renormalisable one-loop beta functions in this EFT",
+    ))
+    lines.extend(_direct_weinberg_comparison(records))
+    lines.extend([
+        r"\section*{Matching-basis note}",
+        r"The Matchete threshold calculation still uses the two formal T3 scalar "
+        r"legs internally.  In this report they are identified with one physical "
+        r"field through $S_1=i\sigma_2S^*$ and $S_2=S$; raw formal-basis "
+        r"$y_1/y_2$ component samples are therefore not displayed.",
+    ])
+    lines.extend([r"\end{document}", ""])
+    path.write_text("\n".join(lines), encoding="utf-8")
+    return path
+
+
 def _write_gf_f_first_stage(
     records: list[RunRecord],
     *,
@@ -1338,6 +1424,10 @@ def _write_gf_f_first_stage(
     report_root: Path,
 ) -> Path:
     """Write the full analytically supported F-first intermediate-EFT report."""
+    if records and all(record.shared_scalar for record in records):
+        return _write_gf_f_first_stage_shared(
+            records, stage_label=stage_label, report_root=report_root
+        )
     path = group_factor_report_path(stage_label, report_root=report_root)
     path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -1417,15 +1507,26 @@ def _write_gf_fully_decoupled_stage(
     )
     lines.extend(_smeft_notation_key())
     lines.extend(_stage_content_table(records, stage_label))
-    lines.extend(
-        [
-            r"\section*{Decoupling statement}",
-            r"All dependence on the original $S_1$, $S_2$ and $F$ "
-            r"representations is contained in the matched boundary value "
-            r"$C_5(\mu_{\mathrm{th}})$.  The one-loop running below the final "
-            r"threshold is common to all T3 classes.",
-        ]
-    )
+    if records and all(record.shared_scalar for record in records):
+        lines.extend(
+            [
+                r"\section*{Decoupling statement}",
+                r"All dependence on the heavy scalar $S$ and fermion $F$ is "
+                r"contained in the matched boundary value "
+                r"$C_5(\mu_{\mathrm{th}})$.  Below the final threshold the "
+                r"one-loop Weinberg-operator running is the universal SMEFT result.",
+            ]
+        )
+    else:
+        lines.extend(
+            [
+                r"\section*{Decoupling statement}",
+                r"All dependence on the original $S_1$, $S_2$ and $F$ "
+                r"representations is contained in the matched boundary value "
+                r"$C_5(\mu_{\mathrm{th}})$.  The one-loop running below the final "
+                r"threshold is common to all T3 classes.",
+            ]
+        )
     lines.extend(_smeft_c5_group_factor_table(records))
     lines.extend(
         [
@@ -1544,8 +1645,62 @@ def write_gf_stage(
     )
 
 
+def _shared_scalar_notation_key() -> list[str]:
+    return [
+        r"\section*{Notation key}",
+        r"\begin{longtable}{@{}p{0.21\linewidth}p{0.71\linewidth}@{}}",
+        r"\toprule",
+        r"symbol & interaction / definition \\",
+        r"\midrule",
+        r"$S$ & physical inert scalar doublet, $S\sim(2,+1/2)$ \\",
+        r"$\widetilde S$ & $i\sigma_2S^*$; formal matching leg $S_1=\widetilde S$, while $S_2=S$ \\",
+        r"$F$ & neutral singlet or triplet Majorana fermion \\",
+        r"$h$ & $LFS+\mathrm{h.c.}$ \\",
+        r"$M_F$ & heavy-fermion Majorana mass \\",
+        r"$T_\nu$ & $\operatorname{Tr}(h^\dagger h)$ \\",
+        r"$m_S^2$ & $m_S^2 S^\dagger S$ \\",
+        r"$\lambda_1$ & $\frac12\lambda_1(H^\dagger H)^2$ \\",
+        r"$\lambda_2$ & $\frac12\lambda_2(S^\dagger S)^2$ \\",
+        r"$\lambda_3$ & $\lambda_3(H^\dagger H)(S^\dagger S)$ \\",
+        r"$\lambda_4$ & $\lambda_4(H^\dagger S)(S^\dagger H)$ \\",
+        r"$\lambda_5$ & $\frac12\lambda_5[(H^\dagger S)^2+\mathrm{h.c.}]$ \\",
+        r"\bottomrule",
+        r"\end{longtable}",
+    ]
+
+
+def _write_gf_uv_shared(records: list[RunRecord], *, report_root: Path) -> Path:
+    path = group_factor_report_path("UV", report_root=report_root)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    lines = _document_header(
+        "Scotogenic/shared-scalar group factors: UV",
+        (
+            r"Active theory: $\mathrm{SM}+S+F$.  The formal T3 legs are "
+            r"identified as $S_1=i\sigma_2S^*$ and $S_2=S$, so the physical "
+            r"scalar is counted once in loops."
+        ),
+    )
+    lines.extend(_shared_scalar_notation_key())
+    lines.extend(_saved_rge_beta_sections(
+        records,
+        loader=load_uv_rge_payload,
+        couplings=("gY", "g2", "g3", "yu", "yd", "ye", "h", "MF", "mSSq",
+                   "lambdaH", "lambdaS", "lambda3", "lambda4", "lambda5"),
+        title="One-loop beta functions in the physical one-scalar theory",
+    ))
+    lines.extend([
+        r"\section*{Formal matching bridge}",
+        r"Matchete keeps the validated two-leg T3 topology, but those legs are two descriptions of the same physical scalar in this branch.",
+        r"\end{document}", "",
+    ])
+    path.write_text("\n".join(lines), encoding="utf-8")
+    return path
+
+
 def write_gf_uv(records: list[RunRecord], *, report_root: Path) -> Path:
     valid = _valid_records(records)
+    if valid and all(record.shared_scalar for record in valid):
+        return _write_gf_uv_shared(valid, report_root=report_root)
     path = group_factor_report_path("UV", report_root=report_root)
     path.parent.mkdir(parents=True, exist_ok=True)
 

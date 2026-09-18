@@ -11,22 +11,24 @@
 ClearAll["Global`*"];
 Needs["RGBeta`"];
 
-If[Length[$ScriptCommandLine] < 6,
-    Print[
-        "Usage: wolframscript -file RunT3EFT1RGBeta.wl ",
-        "dS1 dS2 dF alpha output.json (negative integers use mN, e.g. m1)"
-    ];
-    Exit[2];
+sharedMode = (
+    Length[$ScriptCommandLine] >= 2 &&
+    ToUpperCase[$ScriptCommandLine[[2]]] === "SHARED"
+);
+
+If[sharedMode,
+    If[Length[$ScriptCommandLine] < 5,
+        Print["Usage: ... SHARED dS dF output.json"];
+        Exit[2];
+    ],
+    If[Length[$ScriptCommandLine] < 6,
+        Print["Usage: ... dS1 dS2 dF alpha output.json"];
+        Exit[2];
+    ]
 ];
 
 scriptDir = DirectoryName[$InputFileName];
-
-Get[
-    FileNameJoin[{
-        scriptDir,
-        "T3RGBetaModel.wl"
-    }]
-];
+Get[FileNameJoin[{scriptDir, "T3RGBetaModel.wl"}]];
 
 ParseIntegerToken[token_String] := If[
     StringStartsQ[token, "m"],
@@ -34,11 +36,17 @@ ParseIntegerToken[token_String] := If[
     ToExpression[token]
 ];
 
-dS1 = ParseIntegerToken[$ScriptCommandLine[[2]]];
-dS2 = ParseIntegerToken[$ScriptCommandLine[[3]]];
-dF = ParseIntegerToken[$ScriptCommandLine[[4]]];
-alpha = ParseIntegerToken[$ScriptCommandLine[[5]]];
-outputPath = $ScriptCommandLine[[6]];
+If[sharedMode,
+    dS = ParseIntegerToken[$ScriptCommandLine[[3]]];
+    dF = ParseIntegerToken[$ScriptCommandLine[[4]]];
+    dS1 = dS; dS2 = dS; alpha = -1;
+    outputPath = $ScriptCommandLine[[5]],
+    dS1 = ParseIntegerToken[$ScriptCommandLine[[2]]];
+    dS2 = ParseIntegerToken[$ScriptCommandLine[[3]]];
+    dF = ParseIntegerToken[$ScriptCommandLine[[4]]];
+    alpha = ParseIntegerToken[$ScriptCommandLine[[5]]];
+    outputPath = $ScriptCommandLine[[6]]
+];
 
 
 WriteJSON[payload_Association] := Module[{json},
@@ -52,7 +60,7 @@ WriteJSON[payload_Association] := Module[{json},
 
 
 build = CheckAbort[
-    Quiet[T3RGBetaBuildEFT1[dS1, dS2, dF, alpha]],
+    Quiet[If[sharedMode, T3RGBetaBuildSharedEFT1[dS1, dF], T3RGBetaBuildEFT1[dS1, dS2, dF, alpha]]],
     $Aborted
 ];
 
@@ -72,19 +80,22 @@ If[!AssociationQ[build],
 (* JSON cannot encode exact Mathematica Rational objects.  Preserve the
    project's exact hypercharge convention as InputForm strings. *)
 jsonMetadata = <|
+    "SharedScalar" -> sharedMode,
+    "dS" -> If[sharedMode, dS1, Null],
     "dS1" -> dS1,
     "dS2" -> dS2,
     "dF" -> dF,
     "alpha" -> alpha,
-    "YS1" -> ToString[InputForm[build["YS1"]]],
-    "YS2" -> ToString[InputForm[build["YS2"]]],
+    "YS1" -> ToString[InputForm[If[sharedMode, -build["YS"], build["YS1"]]]],
+    "YS2" -> ToString[InputForm[If[sharedMode, build["YS"], build["YS2"]]]],
+    "YS" -> ToString[InputForm[If[sharedMode, build["YS"], Null]]],
     "IntegratedField" -> "F",
-    "ActiveBSMFields" -> {"S1", "S2"}
+    "ActiveBSMFields" -> If[sharedMode, {"S"}, {"S1", "S2"}]
 |>;
 
 
 betaAssociation = CheckAbort[
-    Quiet[T3RGBetaEFT1OneLoopBetas[]],
+    Quiet[If[sharedMode, T3RGBetaSharedEFT1OneLoopBetas[], T3RGBetaEFT1OneLoopBetas[]]],
     $Aborted
 ];
 

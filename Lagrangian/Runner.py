@@ -14,10 +14,13 @@ from common.Paths import (
     RUN_MODEL_SCRIPT,
 )
 from common.Records import RunRecord
+from common.Thresholds import threshold_plan_for_wolfram
 from common.T3Model import (
     T3_CLASSES,
     encode_alpha,
     identify_t3_class,
+    shared_scalar_formal_dimensions,
+    valid_shared_scalar_dimensions,
     valid_t3_dimensions,
 )
 
@@ -33,6 +36,7 @@ def run_model(
     debug_reports: bool = False,
     export_rge_tensors: bool = False,
     threshold_plan: tuple[tuple[str, ...], ...] | None = None,
+    shared_scalar: bool = False,
 ) -> RunRecord:
     """What this does is 
     1. Delete previous output directory and recreate for new results
@@ -53,9 +57,14 @@ def run_model(
     #   loop order
     #   model arguments
     # We use RunModel.wl+
-    threshold_plan = threshold_plan or (("F", "S1", "S2"),)
+    threshold_plan = threshold_plan or (
+        (("F", "S"),) if shared_scalar else (("F", "S1", "S2"),)
+    )
+    wolfram_threshold_plan = threshold_plan_for_wolfram(
+        threshold_plan, shared_scalar=shared_scalar
+    )
     threshold_token = "THRESHOLDS=" + ";".join(
-        ",".join(group) for group in threshold_plan
+        ",".join(group) for group in wolfram_threshold_plan
     )
 
     command = [
@@ -155,6 +164,24 @@ def run_model(
         }
     )
 
+    if shared_scalar:
+        summary["SharedScalar"] = True
+        summary["PhysicalScalarField"] = "S"
+        summary["FormalScalarIdentification"] = "S1=C*S*, S2=S"
+        summary["PhysicalDimensions"] = {"dS": d_s1, "dF": d_f}
+        for stage in summary.get("EFTStages", []):
+            integrated = list(stage.get("IntegratedFields", []))
+            active = list(stage.get("ActiveHeavyFields", []))
+            if "S1" in integrated and "S2" in integrated:
+                integrated = [x for x in integrated if x not in {"S1", "S2"}] + ["S"]
+            if "S1" in active and "S2" in active:
+                active = [x for x in active if x not in {"S1", "S2"}] + ["S"]
+            stage["IntegratedFields"] = integrated
+            stage["ActiveHeavyFields"] = active
+            for key in ("Label", "label"):
+                if key in stage:
+                    stage[key] = str(stage[key]).replace("S1_S2", "S")
+
     # Sequential matching must never silently degrade to the historical
     # common-threshold result.  Surface the actual Wolfram stage count here.
     requested_stage_count = len(threshold_plan)
@@ -201,6 +228,7 @@ def run_model(
         return_code=process.returncode,
         summary=summary,
         output_dir=output_dir,
+        shared_scalar=shared_scalar,
     )
 
 def validate_dimensions(
@@ -274,6 +302,35 @@ def validate_dimensions(
         export_rge_tensors,
         threshold_plan,
     )
+
+def validate_shared_dimensions(
+    d_s: int,
+    d_f: int,
+    *,
+    debug_reports: bool = False,
+    export_rge_tensors: bool = False,
+    threshold_plan: tuple[tuple[str, ...], ...] | None = None,
+    output_root: Path | None = None,
+) -> RunRecord:
+    """Run the one-physical-scalar scotogenic branch."""
+    if not valid_shared_scalar_dimensions(d_s, d_f):
+        raise ValueError(
+            f"({d_s}, {d_f}) is not supported by shared-scalar mode. "
+            "Current production support is dS=2 with dF=1 or 3."
+        )
+    d_s1, d_s2, d_f = shared_scalar_formal_dimensions(d_s, d_f)
+    alpha = -1
+    output_root = output_root or OUTPUT_DIR
+    fermion_label = "N" if d_f == 1 else f"F{d_f}"
+    name = f"Scotogenic-dS{d_s}-{fermion_label}"
+    output_dir = output_root / f"Scotogenic_dS{d_s}_F{d_f}"
+    model_args = ["DIMS", str(d_s1), str(d_s2), str(d_f), encode_alpha(alpha)]
+    print(f"Running {name}, shared scalar dims=({d_s}, {d_f}), alpha=-1 ...", flush=True)
+    return run_model(
+        name, alpha, d_s1, d_s2, d_f, output_dir, model_args,
+        debug_reports, export_rge_tensors, threshold_plan, shared_scalar=True,
+    )
+
 
 def obtain_class_dimensions(
     model_class: str,

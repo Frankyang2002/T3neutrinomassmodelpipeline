@@ -36,10 +36,16 @@ PREFERRED_COUPLING_ORDER = (
     "ye",
     "y1",
     "y2",
+    "h",
     "MF",
     "mS1Sq",
     "mS2Sq",
+    "mSSq",
     "lambdaH",
+    "lambdaS",
+    "lambda3",
+    "lambda4",
+    "lambda5",
     "lambdaS1",
     "lambdaS2",
     "lambdaH1",
@@ -94,10 +100,16 @@ COUPLING_LATEX = {
     "ye": r"Y_e",
     "y1": r"y_1",
     "y2": r"y_2",
+    "h": r"h",
     "MF": r"M_F",
+    "mSSq": r"m_S^2",
     "mS1Sq": r"m_1^2",
     "mS2Sq": r"m_2^2",
     "lambdaH": r"\lambda_1",
+    "lambdaS": r"\lambda_2",
+    "lambda3": r"\lambda_3",
+    "lambda4": r"\lambda_4",
+    "lambda5": r"\lambda_5",
     "lambdaS1": r"\lambda_{S_1}^{(1)}",
     "lambdaS2": r"\lambda_{S_2}^{(1)}",
     "lambdaH1": r"\lambda_{HS_1}^{(1)}",
@@ -379,10 +391,16 @@ def _normalise_rgbeta_latex(latex: str) -> str:
         "ye": r"Y_e",
         "y1": r"y_1",
         "y2": r"y_2",
+        "h": r"h",
         "MF": r"M_F",
+        "mSSq": r"m_S^2",
         "mS1Sq": r"m_1^2",
         "mS2Sq": r"m_2^2",
         "lambdaH": r"\lambda_1",
+        "lambdaS": r"\lambda_2",
+        "lambda3": r"\lambda_3",
+        "lambda4": r"\lambda_4",
+        "lambda5": r"\lambda_5",
         "lambdaS1": r"\lambda_{S_1}^{(1)}",
         "lambdaS2": r"\lambda_{S_2}^{(1)}",
         "lambdaH1": r"\lambda_{HS_1}^{(1)}",
@@ -412,6 +430,11 @@ def _normalise_rgbeta_latex(latex: str) -> str:
         # \lambda_{H1}^{\rm Adj}^2 and aborts with "Double superscript".
         replacement = "{" + symbol_map[name] + "}"
         text = text.replace(r"\text{" + name + "}", replacement)
+        text = re.sub(
+            rf"(?<![A-Za-z0-9_]){re.escape(name)}(?![A-Za-z0-9_])",
+            lambda _match, replacement=replacement: replacement,
+            text,
+        )
 
     text = _clean_index(text)
     text = _trace_shorthand_latex(text)
@@ -436,6 +459,8 @@ def _trace_shorthand_latex(latex: str) -> str:
         r"\operatorname{Tr}\!\left({y_2}\,\left({y_2}\right)^{\dagger}\right)": r"T_{\nu}^{(2)}",
         r"\operatorname{Tr}\!\left(y_1\,\left(y_1\right)^{\dagger}\right)": r"T_{\nu}^{(1)}",
         r"\operatorname{Tr}\!\left(y_2\,\left(y_2\right)^{\dagger}\right)": r"T_{\nu}^{(2)}",
+        r"\operatorname{Tr}\!\left({h}\,\left({h}\right)^{\dagger}\right)": r"T_\nu",
+        r"\operatorname{Tr}\!\left(h\,\left(h\right)^{\dagger}\right)": r"T_\nu",
     }
     for raw, short in patterns.items():
         text = text.replace(raw, short)

@@ -39,7 +39,11 @@ ClearAll[
     T3RGBetaAddRGClosedQuartics,
     T3RGBetaBuildEFT1,
     T3RGBetaOneLoopBetas,
-    T3RGBetaEFT1OneLoopBetas
+    T3RGBetaEFT1OneLoopBetas,
+    T3RGBetaBuildShared,
+    T3RGBetaBuildSharedEFT1,
+    T3RGBetaSharedOneLoopBetas,
+    T3RGBetaSharedEFT1OneLoopBetas
 ];
 
 
@@ -931,3 +935,130 @@ T3RGBetaOneLoopBetas[] := Module[
 
     result
 ];
+
+(* ---------------------------------------------------------------------- *)
+(* One-physical-scalar scotogenic branch                                  *)
+(* ---------------------------------------------------------------------- *)
+
+T3RGBetaAddSharedScalarMass[dS_Integer] := Module[{inv},
+    inv = If[dS === 1, (1 &), (del[T3RGBetaRep[dS], #1, #2] &)];
+    AddScalarMass[mSSq, {Bar @ S, S}, GroupInvariant -> inv];
+];
+
+T3RGBetaAddSharedYukawa[dS_Integer, dF_Integer] := Module[{inv},
+    inv = T3RGBetaYukawaInvariant[dS, dF];
+    AddYukawa[
+        h, {S, l, F},
+        GroupInvariant -> inv,
+        CouplingIndices -> ({gen[#2], heavy[#3]} &),
+        Chirality -> Right
+    ];
+];
+
+T3RGBetaAddSharedQuartics[] := Module[{},
+    SetReal[lambdaH, lambdaS, lambda3, lambda4, lambda5];
+
+    AddQuartic[
+        lambdaH, {Bar @ H, H, Bar @ H, H},
+        GroupInvariant -> (
+            del[SU2L @ fund, #1, #2] * del[SU2L @ fund, #3, #4] / 2 &
+        )
+    ];
+    AddQuartic[
+        lambdaS, {Bar @ S, S, Bar @ S, S},
+        GroupInvariant -> (
+            del[SU2L @ fund, #1, #2] * del[SU2L @ fund, #3, #4] / 2 &
+        )
+    ];
+    AddQuartic[
+        lambda3, {Bar @ H, H, Bar @ S, S},
+        GroupInvariant -> (
+            del[SU2L @ fund, #1, #2] * del[SU2L @ fund, #3, #4] &
+        )
+    ];
+    AddQuartic[
+        lambda4, {Bar @ H, S, Bar @ S, H},
+        GroupInvariant -> (
+            del[SU2L @ fund, #1, #2] * del[SU2L @ fund, #3, #4] &
+        )
+    ];
+    AddQuartic[
+        lambda5, {Bar @ H, S, Bar @ H, S},
+        GroupInvariant -> (
+            del[SU2L @ fund, #1, #2] * del[SU2L @ fund, #3, #4] / 2 &
+        ),
+        SelfConjugate -> False
+    ];
+];
+
+T3RGBetaBuildShared[dS_Integer, dF_Integer] := Module[{},
+    If[dS =!= 2 || !MemberQ[{1, 3}, dF], Return[$Failed]];
+    ResetModel[];
+    T3RGBetaAddSM[];
+    T3RGBetaAddHeavyFermion[dF, 0];
+    AddScalar[S, GaugeRep -> {U1Y[1/2], SU2L[fund]}];
+    T3RGBetaAddSharedYukawa[dS, dF];
+    T3RGBetaAddSharedScalarMass[dS];
+    AddFermionMass[
+        MF, {F, F},
+        GroupInvariant -> If[dF === 1, (1 &), (del[T3RGBetaRep[dF], #1, #2] &)],
+        MassIndices -> ({heavy[#1], heavy[#2]} &),
+        Chirality -> Right
+    ];
+    T3RGBetaAddSharedQuartics[];
+    T3RGBetaLastSharedBuild = <|"dS" -> dS, "dF" -> dF|>;
+    <|
+        "SharedScalar" -> True,
+        "dS" -> dS, "dF" -> dF, "alpha" -> -1,
+        "YS" -> 1/2, "YF" -> 0, "MajoranaFermion" -> True
+    |>
+];
+
+T3RGBetaBuildSharedEFT1[dS_Integer, dF_Integer] := Module[{},
+    If[dS =!= 2 || !MemberQ[{1, 3}, dF], Return[$Failed]];
+    ResetModel[];
+    T3RGBetaAddSM[];
+    AddScalar[S, GaugeRep -> {U1Y[1/2], SU2L[fund]}];
+    T3RGBetaAddSharedScalarMass[dS];
+    T3RGBetaAddSharedQuartics[];
+    T3RGBetaLastSharedEFT1Build = <|"dS" -> dS, "dF" -> dF|>;
+    <|
+        "SharedScalar" -> True,
+        "dS" -> dS, "dF" -> dF, "alpha" -> -1,
+        "YS" -> 1/2, "IntegratedField" -> "F",
+        "ActiveBSMFields" -> {"S"}
+    |>
+];
+
+T3RGBetaSharedOneLoopBetas[] := <|
+    "gY" -> Quiet[BetaTerm[gY, 1]],
+    "g2" -> Quiet[BetaTerm[g2, 1]],
+    "g3" -> Quiet[BetaTerm[g3, 1]],
+    "yu" -> Quiet[BetaTerm[yu, 1]],
+    "yd" -> Quiet[BetaTerm[yd, 1]],
+    "ye" -> Quiet[BetaTerm[ye, 1]],
+    "h" -> Quiet[BetaTerm[h, 1]],
+    "MF" -> Quiet[BetaTerm[MF, 1]],
+    "mSSq" -> Quiet[BetaTerm[mSSq, 1]],
+    "lambdaH" -> Quiet[BetaTerm[lambdaH, 1]],
+    "lambdaS" -> Quiet[BetaTerm[lambdaS, 1]],
+    "lambda3" -> Quiet[BetaTerm[lambda3, 1]],
+    "lambda4" -> Quiet[BetaTerm[lambda4, 1]],
+    "lambda5" -> Quiet[BetaTerm[lambda5, 1]]
+|>;
+
+T3RGBetaSharedEFT1OneLoopBetas[] := <|
+    "gY" -> Quiet[BetaTerm[gY, 1]],
+    "g2" -> Quiet[BetaTerm[g2, 1]],
+    "g3" -> Quiet[BetaTerm[g3, 1]],
+    "yu" -> Quiet[BetaTerm[yu, 1]],
+    "yd" -> Quiet[BetaTerm[yd, 1]],
+    "ye" -> Quiet[BetaTerm[ye, 1]],
+    "mSSq" -> Quiet[BetaTerm[mSSq, 1]],
+    "lambdaH" -> Quiet[BetaTerm[lambdaH, 1]],
+    "lambdaS" -> Quiet[BetaTerm[lambdaS, 1]],
+    "lambda3" -> Quiet[BetaTerm[lambda3, 1]],
+    "lambda4" -> Quiet[BetaTerm[lambda4, 1]],
+    "lambda5" -> Quiet[BetaTerm[lambda5, 1]]
+|>;
+

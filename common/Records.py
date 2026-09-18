@@ -6,12 +6,6 @@ from pathlib import Path
 
 @dataclass
 class EFTStageRecord:
-    """One theory level in an ordered heavy-particle decoupling plan.
-
-    level = 0 is the UV theory.  Levels >= 1 are EFTs after the corresponding
-    threshold group has been integrated out.
-    """
-
     level: int
     integrated_fields: tuple[str, ...]
     active_heavy_fields: tuple[str, ...]
@@ -20,7 +14,6 @@ class EFTStageRecord:
     summary: dict = field(default_factory=dict)
 
 
-# For each completed model run we have this object.
 @dataclass
 class RunRecord:
     name: str
@@ -32,3 +25,8 @@ class RunRecord:
     summary: dict
     output_dir: Path
     eft_stages: list[EFTStageRecord] = field(default_factory=list)
+    shared_scalar: bool = False
+
+    @property
+    def d_s(self) -> int | None:
+        return self.d_s1 if self.shared_scalar else None

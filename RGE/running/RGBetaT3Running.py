@@ -36,6 +36,7 @@ def run_rgbeta_t3(
     d_f: int,
     alpha: int,
     *,
+    shared_scalar: bool = False,
     runner_path: Path | None = None,
     wolframscript: str = "wolframscript",
 ) -> RGBetaT3Result:
@@ -58,16 +59,31 @@ def run_rgbeta_t3(
         output_path = Path(tmpdir) / "rgbeta_t3_uv_rge.json"
 
         # We use the runner to run 
-        command = [
-            wolframscript,
-            "-file",
-            str(runner),
-            _wolfram_integer_token(d_s1),
-            _wolfram_integer_token(d_s2),
-            _wolfram_integer_token(d_f),
-            _wolfram_integer_token(alpha),
-            str(output_path),
-        ]
+        if shared_scalar:
+            if alpha != -1 or d_s1 != d_s2:
+                raise ValueError(
+                    "Shared-scalar RGBeta mode requires alpha=-1 and dS1=dS2."
+                )
+            command = [
+                wolframscript,
+                "-file",
+                str(runner),
+                "SHARED",
+                _wolfram_integer_token(d_s1),
+                _wolfram_integer_token(d_f),
+                str(output_path),
+            ]
+        else:
+            command = [
+                wolframscript,
+                "-file",
+                str(runner),
+                _wolfram_integer_token(d_s1),
+                _wolfram_integer_token(d_s2),
+                _wolfram_integer_token(d_f),
+                _wolfram_integer_token(alpha),
+                str(output_path),
+            ]
 
         completed = subprocess.run(
             command,

@@ -37,10 +37,16 @@ PAPER_SYMBOL_LATEX: dict[str, str] = {
     "ye": r"Y_e",
     "y1": r"y_1",
     "y2": r"y_2",
+    "h": r"h",
     "MF": r"M_F",
+    "mSSq": r"m_S^2",
     "mS1Sq": r"m_1^2",
     "mS2Sq": r"m_2^2",
     "lambdaH": r"\lambda_1",
+    "lambdaS": r"\lambda_2",
+    "lambda3": r"\lambda_3",
+    "lambda4": r"\lambda_4",
+    "lambda5": r"\lambda_5",
     "lambdaS1": r"\lambda_{S_1}^{(1)}",
     "lambdaS2": r"\lambda_{S_2}^{(1)}",
     "lambdaH1": r"\lambda_{HS_1}^{(1)}",
@@ -359,6 +365,14 @@ def latex_model_heading(record: RunRecord) -> str:
     """Create the representation heading used in generated reports."""
 
     d_s1, y_s1, d_s2, y_s2, d_f, y_f = record_quantum_numbers(record)
+
+    if record.shared_scalar:
+        return (
+            rf"{record.name}:\quad "
+            rf"S=({d_s2},{latex_fraction(y_s2)}),\quad "
+            rf"\widetilde S=({d_s1},{latex_fraction(y_s1)}),\quad "
+            rf"F=({d_f},{latex_fraction(y_f)})"
+        )
 
     return (
         rf"{record.name},\ \alpha={record.alpha}:\quad "

@@ -57,11 +57,12 @@ class CGCall:
 
 @dataclass(frozen=True)
 class ScalarLayout:
-    """Global real-scalar offsets matching RGEModel.t3(include_higgs=True)."""
+    """Global real-scalar offsets for ordinary or shared-scalar T3 EFT1."""
 
     d_s1: int
     d_s2: int
     include_higgs: bool = True
+    shared_scalar: bool = False
 
     @property
     def s1_first(self) -> int:
@@ -69,6 +70,8 @@ class ScalarLayout:
 
     @property
     def s2_first(self) -> int:
+        if self.shared_scalar:
+            return self.s1_first
         return self.s1_first + 2 * self.d_s1
 
     def global_real_index(
@@ -790,21 +793,45 @@ def _cg_value(
     return sp.conjugate(value) if call.conjugated else value
 
 
+def _shared_scalar_component_map(
+    leg: ScalarLeg,
+    component: int,
+    dimension: int,
+) -> tuple[int, bool, sp.Expr]:
+    """Map formal S1/S2 legs to one physical scalar S.
+
+    S1_a = C_ab S_b^*, S2_a = S_a with the standard SU(2)
+    charge-conjugation metric in descending-m ordering.
+    """
+    if leg.name == "S2":
+        return component, leg.conjugated, sp.S.One
+    if leg.name != "S1":
+        raise KeyError(f"Unknown shared-scalar formal leg {leg.name!r}.")
+    physical_component = dimension + 1 - component
+    phase = sp.Integer(-1) ** (component - 1)
+    return physical_component, (not leg.conjugated), phase
+
+
 def _scalar_real_expansion(
     leg: ScalarLeg,
     component: int,
     layout: ScalarLayout,
 ) -> tuple[tuple[int, sp.Expr], tuple[int, sp.Expr]]:
     root2 = sp.sqrt(2)
-    r = layout.global_real_index(
-        leg.name, component, imaginary=False
+    physical_component = component
+    conjugated = leg.conjugated
+    phase = sp.S.One
+    if layout.shared_scalar:
+        physical_component, conjugated, phase = _shared_scalar_component_map(
+            leg, component, layout.d_s1
+        )
+    r = layout.global_real_index(leg.name, physical_component, imaginary=False)
+    im = layout.global_real_index(leg.name, physical_component, imaginary=True)
+    imag_factor = -sp.I / root2 if conjugated else sp.I / root2
+    return (
+        (r, sp.simplify(phase / root2)),
+        (im, sp.simplify(phase * imag_factor)),
     )
-    im = layout.global_real_index(
-        leg.name, component, imaginary=True
-    )
-    # phi = (R + i I)/sqrt(2), phi* = (R - i I)/sqrt(2)
-    imag_factor = -sp.I / root2 if leg.conjugated else sp.I / root2
-    return ((r, 1 / root2), (im, imag_factor))
 
 
 def build_eft1_wilson_tensor(
@@ -816,6 +843,7 @@ def build_eft1_wilson_tensor(
     lepton_indices: tuple[int, int] = (1, 2),
     include_higgs: bool = True,
     project_operator_symmetry: bool = False,
+    shared_scalar: bool = False,
 ) -> SparseWilsonTensor:
     """Convert exported tree Wilson terms to the real-scalar C_ijab basis.
 
@@ -837,6 +865,7 @@ def build_eft1_wilson_tensor(
         d_s1=int(d_s1),
         d_s2=int(d_s2),
         include_higgs=include_higgs,
+        shared_scalar=bool(shared_scalar),
     )
     scalar_dims = {"S1": int(d_s1), "S2": int(d_s2)}
 
@@ -936,6 +965,7 @@ def load_and_build_eft1_wilson_tensor(
         chirality=chirality,
         lepton_indices=lepton_indices,
         project_operator_symmetry=project_operator_symmetry,
+        shared_scalar=bool(meta.get("SharedScalar", False)),
     )
 
 

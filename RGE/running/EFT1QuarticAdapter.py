@@ -60,6 +60,7 @@ class CGCall:
 class ScalarLayout:
     d_s1: int
     d_s2: int
+    shared_scalar: bool = False
 
     @property
     def dimensions(self) -> dict[str, int]:
@@ -83,7 +84,7 @@ class ScalarLayout:
             first = 5
             dimension = self.d_s1
         elif field_name == "NewScalar2":
-            first = 5 + 2 * self.d_s1
+            first = 5 if self.shared_scalar else 5 + 2 * self.d_s1
             dimension = self.d_s2
         else:
             raise KeyError(f"Unknown scalar field {field_name!r}.")
@@ -520,31 +521,39 @@ def _cg_value(
     return sp.conjugate(value) if call.conjugated else value
 
 
+def _shared_scalar_component_map(
+    leg: ScalarLeg,
+    component: int,
+    dimension: int,
+) -> tuple[int, bool, sp.Expr]:
+    if leg.name == "NewScalar2":
+        return component, leg.conjugated, sp.S.One
+    if leg.name != "NewScalar1":
+        return component, leg.conjugated, sp.S.One
+    physical_component = dimension + 1 - component
+    phase = sp.Integer(-1) ** (component - 1)
+    return physical_component, (not leg.conjugated), phase
+
+
 def _real_expansion(
     leg: ScalarLeg,
     component: int,
     layout: ScalarLayout,
 ) -> tuple[tuple[int, sp.Expr], tuple[int, sp.Expr]]:
     root2 = sp.sqrt(2)
-
-    real_index = layout.global_real_index(
-        leg.name,
-        component,
-        imaginary=False,
-    )
-    imag_index = layout.global_real_index(
-        leg.name,
-        component,
-        imaginary=True,
-    )
-
-    imag_factor = (
-        -sp.I / root2 if leg.conjugated else sp.I / root2
-    )
-
+    physical_component = component
+    conjugated = leg.conjugated
+    phase = sp.S.One
+    if layout.shared_scalar and leg.name in {"NewScalar1", "NewScalar2"}:
+        physical_component, conjugated, phase = _shared_scalar_component_map(
+            leg, component, layout.d_s1
+        )
+    real_index = layout.global_real_index(leg.name, physical_component, imaginary=False)
+    imag_index = layout.global_real_index(leg.name, physical_component, imaginary=True)
+    imag_factor = -sp.I / root2 if conjugated else sp.I / root2
     return (
-        (real_index, 1 / root2),
-        (imag_index, imag_factor),
+        (real_index, sp.simplify(phase / root2)),
+        (imag_index, sp.simplify(phase * imag_factor)),
     )
 
 
@@ -553,11 +562,14 @@ def build_eft1_quartic_tensor(
     *,
     d_s1: int,
     d_s2: int,
+    shared_scalar: bool = False,
 ) -> SparseQuarticTensor:
     """Build lambda_abcd from the exact Matchete scalar-quartic seed."""
 
     registry = _load_cg_registry(seed)
-    layout = ScalarLayout(d_s1=int(d_s1), d_s2=int(d_s2))
+    layout = ScalarLayout(
+        d_s1=int(d_s1), d_s2=int(d_s2), shared_scalar=bool(shared_scalar)
+    )
     dimensions = layout.dimensions
 
     # Polynomial coefficient of each sorted real-field monomial in V4.
@@ -676,6 +688,7 @@ def load_and_build_eft1_quartic_tensor(
         seed,
         d_s1=int(metadata["dS1"]),
         d_s2=int(metadata["dS2"]),
+        shared_scalar=bool(metadata.get("SharedScalar", False)),
     )
 
 

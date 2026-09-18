@@ -117,14 +117,16 @@ def build_eft1_rge_context(
     d_s2 = int(metadata["dS2"])
     y_s1 = _parse_rational(metadata["YS1"])
     y_s2 = _parse_rational(metadata["YS2"])
+    shared_scalar = bool(metadata.get("SharedScalar", False))
 
-    scalar_model = RGEModel.t3(
-        d_s1=d_s1,
-        y_s1=y_s1,
-        d_s2=d_s2,
-        y_s2=y_s2,
-        include_higgs=True,
-    )
+    if shared_scalar:
+        scalar_model = RGEModel.t3_shared(
+            d_s=d_s2, y_s=y_s2, include_higgs=True
+        )
+    else:
+        scalar_model = RGEModel.t3(
+            d_s1=d_s1, y_s1=y_s1, d_s2=d_s2, y_s2=y_s2, include_higgs=True
+        )
 
     # Reuse the validated one-generation SM Weyl basis.  F is absent in EFT1;
     # S1 and S2 are scalars, so the active fermion basis is exactly the SM one.
@@ -392,7 +394,11 @@ def run_eft1_wilson_rge(
 
     payload = {
         "status": "Success",
-        "theory": "SM + S1 + S2 + tree-generated dimension-5 psi2phi2",
+        "theory": (
+            "SM + S + tree-generated dimension-5 psi2phi2"
+            if bool(context.metadata.get("SharedScalar", False))
+            else "SM + S1 + S2 + tree-generated dimension-5 psi2phi2"
+        ),
         "loop_order": 1,
         "fixed_order_input": "tree-level EFT1 Wilson coefficients only",
         "scan_mode": (
@@ -401,10 +407,13 @@ def run_eft1_wilson_rge(
             else "L/eC one-loop closure"
         ),
         "metadata": {
+            "SharedScalar": bool(context.metadata.get("SharedScalar", False)),
+            "dS": context.metadata.get("dS"),
             "dS1": int(context.metadata["dS1"]),
             "dS2": int(context.metadata["dS2"]),
             "YS1": context.metadata["YS1"],
             "YS2": context.metadata["YS2"],
+            "YS": context.metadata.get("YS"),
             "real_scalar_dimension": (
                 context.model.total_real_scalar_dimension
             ),

@@ -114,3 +114,30 @@ class RGEModel:
         )
 
         return cls(tuple(scalars))
+
+    @classmethod
+    def t3_shared(
+        cls,
+        d_s: int,
+        y_s=sp.Rational(1, 2),
+        include_higgs: bool = True,
+    ) -> "RGEModel":
+        """Construct the physical one-scalar scotogenic-style scalar sector."""
+        scalars: list[ComplexScalar] = []
+        if include_higgs:
+            scalars.append(
+                ComplexScalar(
+                    name="H",
+                    su2_dimension=2,
+                    hypercharge=sp.Rational(1, 2),
+                )
+            )
+        scalars.append(
+            ComplexScalar(
+                name="S",
+                su2_dimension=int(d_s),
+                hypercharge=sp.Rational(y_s),
+            )
+        )
+        return cls(tuple(scalars))
+

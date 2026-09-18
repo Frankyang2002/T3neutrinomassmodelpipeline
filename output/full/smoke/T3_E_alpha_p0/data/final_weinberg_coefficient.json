@@ -38,15 +38,15 @@
   },
   "physical_majorana_hard_threshold": {
     "status": "Success",
-    "symmetrization": "1/2*(C[p,q] + C[q,p])",
-    "expression": "(1/2)*(((-2*((Sqrt[6]*hbar*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0])/Coupling[MF, {}, 0] + (Sqrt[6]*hbar*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0]*0)/Coupling[MF, {}, 0]))/3) + ((-2*((Sqrt[6]*hbar*Bar[Coupling[y1, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0])/Coupling[MF, {}, 0] + (Sqrt[6]*hbar*Bar[Coupling[y1, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0]*0)/Coupling[MF, {}, 0]))/3))",
+    "symmetrization": "C[p,q] + C[q,p]",
+    "expression": "(((-2*((Sqrt[6]*hbar*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0])/Coupling[MF, {}, 0] + (Sqrt[6]*hbar*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0]*0)/Coupling[MF, {}, 0]))/3) + ((-2*((Sqrt[6]*hbar*Bar[Coupling[y1, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0])/Coupling[MF, {}, 0] + (Sqrt[6]*hbar*Bar[Coupling[y1, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0]*0)/Coupling[MF, {}, 0]))/3))",
     "ordered_expression": "(-2*((Sqrt[6]*hbar*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0])/Coupling[MF, {}, 0] + (Sqrt[6]*hbar*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0]*0)/Coupling[MF, {}, 0]))/3",
     "swapped_expression": "(-2*((Sqrt[6]*hbar*Bar[Coupling[y1, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0])/Coupling[MF, {}, 0] + (Sqrt[6]*hbar*Bar[Coupling[y1, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0]*0)/Coupling[MF, {}, 0]))/3",
     "external_flavor_indices": [
       "d$$1",
       "d$$2"
     ],
-    "one_generation_normalization_preserved": true,
+    "one_generation_ordered_to_physical_factor": 2,
     "reason": null,
     "source": "C:\\Users\\yangf\\OneDrive\\Desktop\\honours phys code\\Code\\output\\full\\smoke\\T3_E_alpha_p0\\data\\c5_threshold_with_eft1_running.txt",
     "flavor_status": "explicit_full_flavor_symmetric"
@@ -56,6 +56,8 @@
     "source_location": "running_corrections.Weinberg.running_tensor_text",
     "raw_expression": "(-4*sqrt(6)*lambdaT3*log(MS/MF)/3)*C12[p,q]",
     "expression": "(-4*sqrt(6)*lambdaT3*log(MS/MF)/3)*((Sum_r (conjugate(y1[p,r]) conjugate(y2[q,r]) + conjugate(y2[p,r]) conjugate(y1[q,r])))/(2*MF))",
+    "physical_majorana_expression": "2*((-4*sqrt(6)*lambdaT3*log(MS/MF)/3)*((Sum_r (conjugate(y1[p,r]) conjugate(y2[q,r]) + conjugate(y2[p,r]) conjugate(y1[q,r])))/(2*MF)))",
+    "physical_majorana_conversion_factor": 2,
     "boundary_tensor_replacements": {
       "C12": "(Sum_r (conjugate(y1[p,r]) conjugate(y2[q,r]) + conjugate(y2[p,r]) conjugate(y1[q,r])))/(2*MF)"
     },
@@ -66,7 +68,7 @@
   "combined": {
     "full_flavor_expression": "C5HardMSbarAtMF[p,q] + hbar*DeltaC5RunDirect1[p,q]",
     "ordered_expression": "((-2*((Sqrt[6]*hbar*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0])/Coupling[MF, {}, 0] + (Sqrt[6]*hbar*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0]*0)/Coupling[MF, {}, 0]))/3) + hbar*((-4*sqrt(6)*lambdaT3*log(MS/MF)/3)*((Sum_r (conjugate(y1[p,r]) conjugate(y2[q,r]) + conjugate(y2[p,r]) conjugate(y1[q,r])))/(2*MF)))",
-    "physical_majorana_expression": "((1/2)*(((-2*((Sqrt[6]*hbar*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0])/Coupling[MF, {}, 0] + (Sqrt[6]*hbar*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0]*0)/Coupling[MF, {}, 0]))/3) + ((-2*((Sqrt[6]*hbar*Bar[Coupling[y1, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0])/Coupling[MF, {}, 0] + (Sqrt[6]*hbar*Bar[Coupling[y1, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0]*0)/Coupling[MF, {}, 0]))/3))) + hbar*((-4*sqrt(6)*lambdaT3*log(MS/MF)/3)*((Sum_r (conjugate(y1[p,r]) conjugate(y2[q,r]) + conjugate(y2[p,r]) conjugate(y1[q,r])))/(2*MF)))",
+    "physical_majorana_expression": "((((-2*((Sqrt[6]*hbar*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0])/Coupling[MF, {}, 0] + (Sqrt[6]*hbar*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0]*0)/Coupling[MF, {}, 0]))/3) + ((-2*((Sqrt[6]*hbar*Bar[Coupling[y1, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0])/Coupling[MF, {}, 0] + (Sqrt[6]*hbar*Bar[Coupling[y1, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0]*0)/Coupling[MF, {}, 0]))/3))) + hbar*(2*((-4*sqrt(6)*lambdaT3*log(MS/MF)/3)*((Sum_r (conjugate(y1[p,r]) conjugate(y2[q,r]) + conjugate(y2[p,r]) conjugate(y1[q,r])))/(2*MF))))",
     "structurally_full_flavor": true,
     "ready_for_ordered_full_flavor_numerics": true,
     "ready_for_full_flavor_numerics": true,
@@ -104,5 +106,5 @@
     "one_generation_reduction_matches": true,
     "log_ratio": "log(MS/MF)"
   },
-  "one_generation_combined_expression": "((1/2)*(((-2*((Sqrt[6]*hbar*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0])/Coupling[MF, {}, 0] + (Sqrt[6]*hbar*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0]*0)/Coupling[MF, {}, 0]))/3) + ((-2*((Sqrt[6]*hbar*Bar[Coupling[y1, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0])/Coupling[MF, {}, 0] + (Sqrt[6]*hbar*Bar[Coupling[y1, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0]*0)/Coupling[MF, {}, 0]))/3))) + hbar*((-4*sqrt(6)*lambdaT3*log(MS/MF)/3)*((Sum_r (conjugate(y1[p,r]) conjugate(y2[q,r]) + conjugate(y2[p,r]) conjugate(y1[q,r])))/(2*MF)))"
+  "one_generation_combined_expression": "((((-2*((Sqrt[6]*hbar*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0])/Coupling[MF, {}, 0] + (Sqrt[6]*hbar*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0]*0)/Coupling[MF, {}, 0]))/3) + ((-2*((Sqrt[6]*hbar*Bar[Coupling[y1, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0])/Coupling[MF, {}, 0] + (Sqrt[6]*hbar*Bar[Coupling[y1, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Coupling[lambdaT3, {}, 0]*0)/Coupling[MF, {}, 0]))/3))) + hbar*(2*((-4*sqrt(6)*lambdaT3*log(MS/MF)/3)*((Sum_r (conjugate(y1[p,r]) conjugate(y2[q,r]) + conjugate(y2[p,r]) conjugate(y1[q,r])))/(2*MF))))"
 }

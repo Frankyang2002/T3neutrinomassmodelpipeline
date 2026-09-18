@@ -9,7 +9,12 @@ The current pipeline still performs threshold 2 too early.  However, the
 stage-1 run already leaves the exact fresh-kernel continuation payload on
 disk.  This helper reuses that payload and launches RunThresholdStage.wl a
 second time with the full-flavor running insertion as its optional 15th
-argument.
+argument and a validation-mode token as its optional 16th argument.
+
+Ordinary result runs use validation_mode=False.  The authoritative [A]/[B]/[C]
+physics is still performed, but provenance-only Matchete re-matches are
+skipped.  Final/debug runs use validation_mode=True to restore those expensive
+cross-checks.
 
 Physics ordering of THIS re-run is therefore
 
@@ -179,6 +184,7 @@ def rerun_threshold2_with_running(
     loop_order: int = 1,
     continuation: Threshold2Continuation | None = None,
     result_path: Path | None = None,
+    validation_mode: bool = False,
 ) -> dict:
     output_dir = Path(output_dir).resolve()
     running_insertion = Path(running_insertion).resolve()
@@ -223,6 +229,7 @@ def rerun_threshold2_with_running(
         str(continuation.transition_full),
         str(continuation.cg_registry),
         str(running_insertion),
+        "validation" if validation_mode else "results",
     ]
 
     # Stream Wolfram output live. The old capture_output=True implementation
@@ -318,6 +325,7 @@ def rerun_threshold2_with_running(
         "running_inserted_in_C_only": c_marker,
         "direct_weinberg_carried_separately": direct_weinberg_marker,
         "direct_weinberg_equal_scale_vanishes": equal_scale_marker,
+        "validation_mode": bool(validation_mode),
         "continuation": {
             "tree": str(continuation.tree),
             "loop": str(continuation.loop),
@@ -355,6 +363,14 @@ def main() -> int:
     )
     parser.add_argument("--eft-order", type=int, default=5)
     parser.add_argument("--loop-order", type=int, default=1)
+    parser.add_argument(
+        "--validation",
+        action="store_true",
+        help=(
+            "enable expensive threshold-2 provenance/consistency re-matches; "
+            "ordinary result runs leave this disabled"
+        ),
+    )
 
     # Optional explicit continuation paths if auto-discovery is ambiguous.
     parser.add_argument("--tree", type=Path)
@@ -398,6 +414,7 @@ def main() -> int:
         eft_order=args.eft_order,
         loop_order=args.loop_order,
         continuation=continuation,
+        validation_mode=args.validation,
     )
 
     print(json.dumps(result, indent=2))

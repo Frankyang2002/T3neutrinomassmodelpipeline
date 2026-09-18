@@ -63,6 +63,9 @@ from Reports.RGEComparison import (
     write_and_compile_final_eft_rge_comparison,
     write_and_compile_rge_comparison,
 )
+from Reports.GroupFactorReports import (
+    write_and_compile_stage_group_factor_reports,
+)
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent
@@ -673,6 +676,7 @@ def run_eft1_full_flavor_threshold_bridge(
     *,
     mu_high: str,
     mu_low: str,
+    debug_reports: bool = False,
 ) -> bool:
     """Build the authoritative fixed-one-loop hierarchical C5.
 
@@ -758,6 +762,7 @@ def run_eft1_full_flavor_threshold_bridge(
             d_s2=record.d_s2,
             d_f=record.d_f,
             alpha=record.alpha,
+            validation_mode=debug_reports,
         )
         if resume.get("status") != "Success":
             raise RuntimeError(
@@ -862,6 +867,10 @@ def run_eft1_full_flavor_threshold_bridge(
             "EFT1HeavySelfRunningIncludedInAuthoritativeC5": False,
             "EFT1DirectWeinbergOnlyAtOneLoop": True,
             "EFT1ThresholdResumeStatus": resume.get("status"),
+            "EFT1ThresholdResumeValidationMode": resume.get(
+                "validation_mode",
+                False,
+            ),
             "EFT1ThresholdResumeResultFile": str(
                 Path(resume["result_path"]).resolve()
             ),
@@ -1327,6 +1336,12 @@ def finish_runs(
     write_and_compile_eft1_rge_comparison(records, report_root=study_report_dir)
     write_and_compile_final_eft_rge_comparison(records, report_root=study_report_dir)
 
+    # Stage-aware analytic group-factor reports.
+    write_and_compile_stage_group_factor_reports(
+        records,
+        report_root=study_report_dir,
+    )
+
     final_stage_label = (
         records[0].eft_stages[-1].label
         if records and records[0].eft_stages
@@ -1341,6 +1356,8 @@ def finish_runs(
         "\n  RGE/UV"
         "\n  RGE/EFT_1_after_F"
         f"\n  RGE/{final_stage_label}"
+        "\n  GroupFactors/GF_UV"
+        "\n  GroupFactors/GF_EFT_1_after_F"
     )
 
     return status
@@ -1693,6 +1710,7 @@ def main() -> int:
                             record,
                             mu_high=threshold_scales[0],
                             mu_low=threshold_scales[1],
+                            debug_reports=args.debug_reports,
                         )
 
     # After matching has generated the Weinberg coefficient C5, the EFT RGE pipeline starts here. 

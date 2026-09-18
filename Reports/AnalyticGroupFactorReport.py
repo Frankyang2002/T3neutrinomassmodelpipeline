@@ -27,6 +27,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from common.Paths import REPORT_OUTPUT_DIR
 from common.T3Model import T3_CLASSES
+from Reports.ReportGeneration import paper_notation_key_lines
 
 from RGE.group_factors.ScalarMassGroupFactors import (
     scalar_mass_group_factors,
@@ -141,6 +142,7 @@ def document() -> str:
         r"\setlength{\parskip}{0.6em}",
         r"\begin{document}",
         r"\section*{T3 analytic one-loop group factors}",
+        *paper_notation_key_lines(),
         (
             r"This report presents the validated analytic representation-dependent "
             r"group factors used by the T3 RGE pipeline.  Model dimensions are "
@@ -170,7 +172,7 @@ G_{S_1}\operatorname{Tr}(y_1y_1^\dagger)y_1
 &+\frac12G_{L_2}y_2y_2^\dagger y_1
 +\frac12Y_eY_e^\dagger y_1\\
 &-3g_2^2[C_2(L)+C_2(F)]y_1
--3g_Y^2[Y_L^2+Y_F^2]y_1 .
+-3g_1^2[Y_L^2+Y_F^2]y_1 .
 \end{aligned}
 \]""",
         r"""\[
@@ -181,7 +183,7 @@ G_{S_2}\operatorname{Tr}(y_2y_2^\dagger)y_2
 &+\frac12G_{L_1}y_1y_1^\dagger y_2
 +\frac12Y_eY_e^\dagger y_2\\
 &-3g_2^2[C_2(L)+C_2(F)]y_2
--3g_Y^2[Y_L^2+Y_F^2]y_2\\
+-3g_1^2[Y_L^2+Y_F^2]y_2\\
 &+\delta_{\rm SC}\left[
 G_{S_2}\operatorname{Tr}(y_2y_1^\dagger)y_1
 +\frac12G_{F_2}y_2y_1^\dagger y_1
@@ -197,18 +199,18 @@ G_{S_2}\operatorname{Tr}(y_2y_1^\dagger)y_1
 \frac12G_{F_1}(y_1^Ty_1^*)M_F
 +\frac12G_{F_2}M_F(y_2^\dagger y_2)
 -6g_2^2C_2(F)M_F
--6g_Y^2Y_F^2M_F .
+-6g_1^2Y_F^2M_F .
 \]""",
         r"\subsection*{Heavy scalar masses}",
         r"""\[
 \begin{aligned}
-16\pi^2\beta_{m_{S_1}^2}={}&
-2G_{S_1}m_{S_1}^2\operatorname{Tr}(y_1y_1^\dagger)
+16\pi^2\beta_{m_1^2}={}&
+2G_{S_1}m_1^2\operatorname{Tr}(y_1y_1^\dagger)
 +\Xi_F\,G_{S_1}\operatorname{Tr}(M_FM_F^\dagger y_1^Ty_1^*)\\
-&+2(d_{S_1}+1)\lambda_{S_1}m_{S_1}^2
--6C_2(S_1)g_2^2m_{S_1}^2
--6Y_{S_1}^2g_Y^2m_{S_1}^2\\
-&+2d_{S_2}\lambda_{12}m_{S_2}^2+\cdots ,
+&+2(d_{S_1}+1)\lambda_{S_1}^{(1)}m_1^2
+-6C_2(S_1)g_2^2m_1^2
+-6Y_{S_1}^2g_1^2m_1^2\\
+&+2d_{S_2}\lambda_{12}^{(1)}m_2^2+\cdots ,
 \end{aligned}
 \]""",
         r"with $\Xi_F=-4$ on the vector-like branch and $\Xi_F=-16$ on the "
@@ -216,7 +218,7 @@ G_{S_2}\operatorname{Tr}(y_2y_1^\dagger)y_1
         r"$1\leftrightarrow2$.",
         r"\subsection*{Direct Weinberg mixing}",
         r"""\[
-16\pi^2\beta_\kappa=R_W\,\lambda_{T3}\,C_{12},
+16\pi^2\beta_\kappa=R_W\,\lambda_5\,C_{12},
 \]""",
         r"""\[
 R_W=

@@ -1,0 +1,267 @@
+\documentclass[9pt]{article}
+\usepackage[a4paper,margin=1.15cm]{geometry}
+\usepackage{amsmath,amssymb,booktabs,longtable,array}
+\usepackage[T1]{fontenc}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\tabcolsep}{3.5pt}
+\renewcommand{\arraystretch}{1.16}
+\begin{document}
+\section*{T3 group factors: EFT\_1\_after\_F}
+Active theory: $\mathrm{SM}+S_1+S_2+C_{LLS_1S_2}$.  The fermion $F$ is absent, so $y_1$, $y_2$ and $M_F$ are not running EFT couplings.
+\[j=\frac{d-1}{2},\qquad C_2(d)=\frac{d^2-1}{4},\qquad T(d)=\frac{d(d^2-1)}{12}.\]
+In every comparison table, $\mathcal{S}$ denotes the RGE structure multiplying the displayed group factor in $16\pi^2\beta$.
+\section*{Notation key}
+\begin{longtable}{@{}p{0.23\linewidth}p{0.69\linewidth}@{}}
+\toprule
+symbol & interaction / definition \\
+\midrule
+$g_1,g_2,g_3$ & SM gauge interactions \\
+$Y_u,Y_d,Y_e$ & SM Yukawa interactions \\
+$y_1$ & $LFS_1+\mathrm{h.c.}$ \\
+$y_2$ & $LFS_2+\mathrm{h.c.}$ \\
+$M_F$ & $-\bar FM_FF$ \\
+$T$ & $\operatorname{Tr}(Y_e^\dagger Y_e+3Y_u^\dagger Y_u+3Y_d^\dagger Y_d)$ \\
+$T_\nu^{(1)}$ & $\operatorname{Tr}(y_1^\dagger y_1)$ \\
+$T_\nu^{(2)}$ & $\operatorname{Tr}(y_2^\dagger y_2)$ \\
+$T_\nu$ & $T_\nu^{(1)}+T_\nu^{(2)}$ \\
+$m_1^2,m_2^2$ & $m_1^2S_1^\dagger S_1,\ m_2^2S_2^\dagger S_2$ \\
+$\lambda_1$ & $\frac12\lambda_1(H^\dagger H)^2$ \\
+$\lambda_{S_i}^{(1)}$ & $\frac12\lambda_{S_i}^{(1)}(S_i^\dagger S_i)^2$ \\
+$\lambda_{HS_i}^{(1)}$ & $(H^\dagger H)(S_i^\dagger S_i)$ \\
+$\lambda_{HS_i}^{(A)}$ & $(H^\dagger T^AH)(S_i^\dagger T^AS_i)$ \\
+$\lambda_5$ & $HHS_1S_2^\dagger+\mathrm{h.c.}$ \\
+$\lambda_{12}^{(1)}$ & $(S_1^\dagger S_1)(S_2^\dagger S_2)$ \\
+$\lambda_{12}^{(A)}$ & $(S_1^\dagger T^AS_1)(S_2^\dagger T^AS_2)$ \\
+$\lambda_{12}^{(\times)}$ & crossed independent $S_1$--$S_2$ contraction \\
+\bottomrule
+\end{longtable}
+\section*{Stage field content}
+\begin{longtable}{@{}lccc p{0.20\linewidth}p{0.20\linewidth}@{}}
+\toprule
+run & $S_1$ & $S_2$ & $F$ & integrated at this stage & active after matching \\
+\midrule
+T3-B & $(2,- \frac{1}{2})$ & $(2,\frac{1}{2})$ & $(1,0)$ & F & S1, S2 \\
+\bottomrule
+\end{longtable}
+\subsection*{Field representations}
+\begin{longtable}{@{}lccc@{}}
+\toprule
+run & $S_1$ & $S_2$ & $\alpha$ \\
+\midrule
+$\mathrm{T3-B}$ & $(2,- \frac{1}{2})$ & $(2,\frac{1}{2})$ & $-1$ \\
+\bottomrule
+\end{longtable}
+\section*{Gauge and Yukawa beta functions in this EFT}
+\subsection*{$ \beta_{g_1}^{(1)} $}
+\begin{longtable}{@{}p{0.38\linewidth}c@{}}
+\toprule
+$\mathcal{S}$ & $ \mathrm{T3-B}\;(\alpha=-1) $ \\
+\midrule
+$ g_1^3 $ & $ \frac{43}{6} $ \\
+\bottomrule
+\end{longtable}
+\subsection*{$ \beta_{g_2}^{(1)} $}
+\begin{longtable}{@{}p{0.38\linewidth}c@{}}
+\toprule
+$\mathcal{S}$ & $ \mathrm{T3-B}\;(\alpha=-1) $ \\
+\midrule
+$ g_2^3 $ & $ - \frac{17}{6} $ \\
+\bottomrule
+\end{longtable}
+\subsection*{$ \beta_{g_3}^{(1)} $}
+\begin{longtable}{@{}p{0.38\linewidth}c@{}}
+\toprule
+$\mathcal{S}$ & $ \mathrm{T3-B}\;(\alpha=-1) $ \\
+\midrule
+$ g_3^3 $ & $ -7 $ \\
+\bottomrule
+\end{longtable}
+\subsection*{$ \beta_{Y_u}^{(1)} $}
+\begin{longtable}{@{}p{0.38\linewidth}c@{}}
+\toprule
+$\mathcal{S}$ & $ \mathrm{T3-B}\;(\alpha=-1) $ \\
+\midrule
+$ (Y_d (Y_d)^{\dagger} Y_u)_{ij} $ & $ - \frac{3}{2} $ \\
+$ (Y_u (Y_u)^{\dagger} Y_u)_{ij} $ & $ \frac{3}{2} $ \\
+$ g_2^2 (Y_u)_{ij} $ & $ - \frac{9}{4} $ \\
+$ g_3^2 (Y_u)_{ij} $ & $ -8 $ \\
+$ g_1^2 (Y_u)_{ij} $ & $ - \frac{17}{12} $ \\
+$ T (Y_u)_{ij} $ & $ 1 $ \\
+\bottomrule
+\end{longtable}
+\subsection*{$ \beta_{Y_d}^{(1)} $}
+\begin{longtable}{@{}p{0.38\linewidth}c@{}}
+\toprule
+$\mathcal{S}$ & $ \mathrm{T3-B}\;(\alpha=-1) $ \\
+\midrule
+$ (Y_d (Y_d)^{\dagger} Y_d)_{ij} $ & $ \frac{3}{2} $ \\
+$ (Y_u (Y_u)^{\dagger} Y_d)_{ij} $ & $ - \frac{3}{2} $ \\
+$ g_2^2 (Y_d)_{ij} $ & $ - \frac{9}{4} $ \\
+$ g_3^2 (Y_d)_{ij} $ & $ -8 $ \\
+$ g_1^2 (Y_d)_{ij} $ & $ - \frac{5}{12} $ \\
+$ T (Y_d)_{ij} $ & $ 1 $ \\
+\bottomrule
+\end{longtable}
+\subsection*{$ \beta_{Y_e}^{(1)} $}
+\begin{longtable}{@{}p{0.38\linewidth}c@{}}
+\toprule
+$\mathcal{S}$ & $ \mathrm{T3-B}\;(\alpha=-1) $ \\
+\midrule
+$ (Y_e (Y_e)^{\dagger} Y_e)_{ij} $ & $ \frac{3}{2} $ \\
+$ g_2^2 (Y_e)_{ij} $ & $ - \frac{9}{4} $ \\
+$ g_1^2 (Y_e)_{ij} $ & $ - \frac{15}{4} $ \\
+$ T (Y_e)_{ij} $ & $ 1 $ \\
+\bottomrule
+\end{longtable}
+\subsection*{$ \beta_{m_1^{2}} $}
+\begin{longtable}{@{}p{0.31\linewidth}c@{}}
+\toprule
+$\mathcal{S}$ & $ \mathrm{T3-B}\;(\alpha=-1) $ \\
+\midrule
+$ \lambda_{S_1}^{(1)}\,m_1^{2} $ & $ 6 $ \\
+$ g_2^2\,m_1^{2} $ & $ - \frac{9}{2} $ \\
+$ g_1^2\,m_1^{2} $ & $ - \frac{3}{2} $ \\
+$ \lambda_{12}^{(1)}\,m_2^{2} $ & $ 4 $ \\
+\bottomrule
+\end{longtable}
+\subsection*{$ \beta_{m_2^{2}} $}
+\begin{longtable}{@{}p{0.31\linewidth}c@{}}
+\toprule
+$\mathcal{S}$ & $ \mathrm{T3-B}\;(\alpha=-1) $ \\
+\midrule
+$ \lambda_{S_2}^{(1)}\,m_2^{2} $ & $ 6 $ \\
+$ g_2^2\,m_2^{2} $ & $ - \frac{9}{2} $ \\
+$ g_1^2\,m_2^{2} $ & $ - \frac{3}{2} $ \\
+$ \lambda_{12}^{(1)}\,m_1^{2} $ & $ 4 $ \\
+\bottomrule
+\end{longtable}
+\subsection*{$ \beta_{\lambda_{HS_1}^{(1)}} $}
+\begin{longtable}{@{}p{0.31\linewidth}c@{}}
+\toprule
+$\mathcal{S}$ & $ \mathrm{T3-B}\;(\alpha=-1) $ \\
+\midrule
+$ |\lambda_5|^2 $ & $ 6 $ \\
+$ g_2^2\,\lambda_{HS_1}^{(1)} $ & $ -9 $ \\
+$ g_1^2\,\lambda_{HS_1}^{(1)} $ & $ -3 $ \\
+$ \lambda_1\,\lambda_{HS_1}^{(1)} $ & $ 6 $ \\
+$ \left(\lambda_{HS_1}^{(1)}\right)^2 $ & $ 4 $ \\
+$ \lambda_{HS_1}^{(1)}\,\lambda_{S_1}^{(1)} $ & $ 6 $ \\
+$ \lambda_{12}^{(1)}\,\lambda_{HS_2}^{(1)} $ & $ 4 $ \\
+$ g_2^4 $ & $ \frac{9}{4} $ \\
+$ g_1^4 $ & $ \frac{3}{4} $ \\
+$ \left(\lambda_{HS_1}^{(A)}\right)^2 $ & $ \frac{3}{4} $ \\
+$ \lambda_{HS_1}^{(1)}\,T $ & $ 2 $ \\
+\bottomrule
+\end{longtable}
+\subsection*{$ \beta_{\lambda_{HS_2}^{(1)}} $}
+\begin{longtable}{@{}p{0.31\linewidth}c@{}}
+\toprule
+$\mathcal{S}$ & $ \mathrm{T3-B}\;(\alpha=-1) $ \\
+\midrule
+$ |\lambda_5|^2 $ & $ 6 $ \\
+$ g_2^2\,\lambda_{HS_2}^{(1)} $ & $ -9 $ \\
+$ g_1^2\,\lambda_{HS_2}^{(1)} $ & $ -3 $ \\
+$ \lambda_1\,\lambda_{HS_2}^{(1)} $ & $ 6 $ \\
+$ \left(\lambda_{HS_2}^{(1)}\right)^2 $ & $ 4 $ \\
+$ \lambda_{HS_2}^{(1)}\,\lambda_{S_2}^{(1)} $ & $ 6 $ \\
+$ \lambda_{12}^{(1)}\,\lambda_{HS_1}^{(1)} $ & $ 4 $ \\
+$ g_2^4 $ & $ \frac{9}{4} $ \\
+$ g_1^4 $ & $ \frac{3}{4} $ \\
+$ \left(\lambda_{HS_2}^{(A)}\right)^2 $ & $ \frac{3}{4} $ \\
+$ \lambda_{HS_2}^{(1)}\,T $ & $ 2 $ \\
+\bottomrule
+\end{longtable}
+\subsection*{$ \beta_{\lambda_{12}^{(1)}} $}
+\begin{longtable}{@{}p{0.31\linewidth}c@{}}
+\toprule
+$\mathcal{S}$ & $ \mathrm{T3-B}\;(\alpha=-1) $ \\
+\midrule
+$ |\lambda_5|^2 $ & $ 3 $ \\
+$ g_2^2\,\lambda_{12}^{(1)} $ & $ -9 $ \\
+$ g_1^2\,\lambda_{12}^{(1)} $ & $ -3 $ \\
+$ \left(\lambda_{12}^{(1)}\right)^2 $ & $ 4 $ \\
+$ \lambda_{12}^{(1)}\,\lambda_{S_1}^{(1)} $ & $ 6 $ \\
+$ \lambda_{12}^{(1)}\,\lambda_{S_2}^{(1)} $ & $ 6 $ \\
+$ \lambda_{HS_1}^{(1)}\,\lambda_{HS_2}^{(1)} $ & $ 4 $ \\
+$ g_2^4 $ & $ \frac{9}{4} $ \\
+$ g_1^4 $ & $ \frac{3}{4} $ \\
+$ \left(\lambda_{12}^{(A)}\right)^2 $ & $ \frac{3}{4} $ \\
+\bottomrule
+\end{longtable}
+\subsection*{$ \beta_{\lambda_5} $}
+\begin{longtable}{@{}p{0.31\linewidth}c@{}}
+\toprule
+$\mathcal{S}$ & $ \mathrm{T3-B}\;(\alpha=-1) $ \\
+\midrule
+$ \lambda_5\,\lambda_1 $ & $ 2 $ \\
+$ \lambda_5\,\lambda_{HS_1}^{(1)} $ & $ 4 $ \\
+$ \lambda_5\,\lambda_{HS_2}^{(1)} $ & $ 4 $ \\
+$ \lambda_5\,\lambda_{12}^{(1)} $ & $ 2 $ \\
+$ g_2^2\,\lambda_5 $ & $ -9 $ \\
+$ g_1^2\,\lambda_5 $ & $ -3 $ \\
+$ \lambda_5\,\lambda_{HS_1}^{(A)} $ & $ -2 $ \\
+$ \lambda_5\,\lambda_{HS_2}^{(A)} $ & $ 2 $ \\
+$ \lambda_5\,\lambda_{12}^{(A)} $ & $ - \frac{1}{2} $ \\
+$ \lambda_5\,T $ & $ 2 $ \\
+\bottomrule
+\end{longtable}
+\section*{Additional scalar-coupling beta functions}
+\subsection*{$ \beta_{\lambda_{HS_1}^{(A)}} $}
+\begin{longtable}{@{}p{0.31\linewidth}c@{}}
+\toprule
+$\mathcal{S}$ & $ \mathrm{T3-B}\;(\alpha=-1) $ \\
+\midrule
+$ g_1^2g_2^2 $ & $ -6 $ \\
+\bottomrule
+\end{longtable}
+\subsection*{$ \beta_{\lambda_{HS_2}^{(A)}} $}
+\begin{longtable}{@{}p{0.31\linewidth}c@{}}
+\toprule
+$\mathcal{S}$ & $ \mathrm{T3-B}\;(\alpha=-1) $ \\
+\midrule
+$ g_1^2g_2^2 $ & $ 6 $ \\
+\bottomrule
+\end{longtable}
+\subsection*{$ \beta_{\lambda_{12}^{(A)}} $}
+\begin{longtable}{@{}p{0.31\linewidth}c@{}}
+\toprule
+$\mathcal{S}$ & $ \mathrm{T3-B}\;(\alpha=-1) $ \\
+\midrule
+$ g_1^2g_2^2 $ & $ -6 $ \\
+\bottomrule
+\end{longtable}
+\subsection*{Direct Weinberg mixing}
+The active EFT1 scalar interaction produces
+\[16\pi^2\,\beta_{C_5}\supset R_W\,\lambda_5\,C_{LLS_1S_2}.\]
+\begin{longtable}{@{}lc@{}}
+\toprule
+$\mathcal{S}$ & $ \mathrm{T3-B}\;(\alpha=-1) $ \\
+\midrule
+$R_W$ & $ \frac{4 \sqrt{3}}{3} $ \\
+\bottomrule
+\end{longtable}
+The displayed $R_W$ values use the validated Wigner--$6j$ reduction and inherited tensor convention.  The overall tensor-level normalization/phase has not yet been independently derived from first principles.
+\section*{F-threshold matching tensor samples}
+The component bases have representation-dependent dimensions, so the raw tensor entries are not placed in the cross-run beta-function tables.
+\subsection*{$ \mathrm{T3-B}\;(\alpha=-1) $}
+\textit{96 non-zero real-basis tensor components reconstructed; showing the first 10.}
+\begin{longtable}{@{}ll@{}}
+\toprule
+$C_{ijab}$ & matched coefficient \\
+\midrule
+$C_{1155}$ & $ \frac{\overline{y_{1}}^{2}}{4 M_F} $ \\
+$C_{1156}$ & $ - \frac{i \overline{y_{1}}^{2}}{4 M_F} $ \\
+$C_{11511}$ & $ \frac{\overline{y_{1}} \overline{y_{2}}}{4 M_F} $ \\
+$C_{11512}$ & $ \frac{i \overline{y_{1}} \overline{y_{2}}}{4 M_F} $ \\
+$C_{1165}$ & $ - \frac{i \overline{y_{1}}^{2}}{4 M_F} $ \\
+$C_{1166}$ & $ - \frac{\overline{y_{1}}^{2}}{4 M_F} $ \\
+$C_{11611}$ & $ - \frac{i \overline{y_{1}} \overline{y_{2}}}{4 M_F} $ \\
+$C_{11612}$ & $ \frac{\overline{y_{1}} \overline{y_{2}}}{4 M_F} $ \\
+$C_{11115}$ & $ \frac{\overline{y_{1}} \overline{y_{2}}}{4 M_F} $ \\
+$C_{11116}$ & $ - \frac{i \overline{y_{1}} \overline{y_{2}}}{4 M_F} $ \\
+\bottomrule
+\end{longtable}
+\section*{Next threshold}
+Further matching depends on the next field or fields selected by the threshold plan.  Once all T3 fields are removed, their representation dependence is carried by the matched $C_5$ boundary condition and the subsequent SMEFT running is universal.
+\end{document}

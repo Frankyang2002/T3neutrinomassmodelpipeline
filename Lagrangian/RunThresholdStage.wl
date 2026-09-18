@@ -6,12 +6,17 @@
      result.wxf EFTOrder LoopOrder dS1 dS2 dF alpha
      active-fields-csv heavy-fields-csv input-tree.wxf input-loop.wxf
      transition-tree.wxf transition-full.wxf cg-registry.wxf
-     [eft1-running-insertion.wl]
+     [eft1-running-insertion.wl] [validation-mode]
 
-   The optional final argument is the full-flavor EFT1 leading-log insertion
+   The optional 15th argument is the full-flavor EFT1 leading-log insertion
    produced by EFT1WilsonFlavorMatcheteExporter.py.  It is consumed ONLY by
    fixed-order tree propagation [C], never by the new one-loop threshold
    matching [B].
+
+   The optional 16th argument controls expensive validation-only re-matches.
+   Use "validation" for a final/debug validation run.  Any other value (or an
+   omitted argument) gives the normal results mode, which performs the
+   authoritative [A]/[B]/[C] calculation but skips provenance-only re-matches.
 
    The previous EFT is imported only after the SM, representations, fields,
    couplings, and CG tensors have been freshly registered for THIS threshold.
@@ -59,6 +64,20 @@ runningInsertionPath = If[
   Length[args] >= 15 && StringLength[args[[15]]] > 0,
   ExpandFileName @ args[[15]],
   None
+];
+
+validationMode = If[
+  Length[args] >= 16,
+  MemberQ[
+    {"validation", "validate", "debug", "true", "1"},
+    ToLowerCase @ StringTrim @ args[[16]]
+  ],
+  False
+];
+
+Print[
+  "[fresh kernel] Threshold mode: ",
+  If[validationMode, "validation", "results"]
 ];
 
 Print["[fresh kernel] Loading Matchete..."];
@@ -371,184 +390,203 @@ Print[
   ByteCount[transitionFull]
 ];
 
-(* Upstream pole provenance.  Inspect the inherited stage-1 O(hbar)
-   transition before threshold-2 matching.  This answers whether stage 2 is
-   generating a UV pole or merely propagating one already present in EFT1. *)
-ClearAll[InheritedHasUVPole];
+(* Upstream pole/effective-coupling provenance is validation-only.  These
+   diagnostics do not enter the authoritative threshold result. *)
+stage1InheritedLoopHasUVPole = False;
+stage1InheritedPoleTerms = {};
+stage1InheritedPolePath = Missing["NotRun"];
+stage1InheritedLoopEvaluated = $Failed;
+stage1InheritedEvaluatedHasUVPole = False;
+stage1InheritedEvaluatedPoleTerms = {};
+stage1InheritedEvaluatedPolePath = Missing["NotRun"];
+stage1TransitionExpandedEffective = $Failed;
+stage1TransitionExpandedEffectiveHasUVPole = False;
+stage1ExpandedEffectiveLoop = $Failed;
+stage1ExpandedEffectiveLoopHasUVPole = False;
+stage1ExpandedEffectivePoleTerms = {};
+stage1ExpandedEffectivePolePath = Missing["NotRun"];
 
-InheritedHasUVPole[expr_] := Module[{s = ToString[InputForm[expr]]},
-  Or[
-    StringContainsQ[s, "\\[Epsilon]"],
-    StringContainsQ[s, "\\[CurlyEpsilon]"],
-    StringContainsQ[s, "ϵ"],
-    StringContainsQ[s, "ε"],
-    StringContainsQ[s, "1/Epsilon"],
-    StringContainsQ[s, "1/CurlyEpsilon"],
-    StringContainsQ[s, "Power[Epsilon, -1]"],
-    StringContainsQ[s, "Power[CurlyEpsilon, -1]"]
-  ]
-];
+If[validationMode,
+  (* Upstream pole provenance.  Inspect the inherited stage-1 O(hbar)
+     transition before threshold-2 matching.  This answers whether stage 2 is
+     generating a UV pole or merely propagating one already present in EFT1. *)
+  ClearAll[InheritedHasUVPole];
 
-stage1InheritedLoopRaw = Expand[
-  hbar Coefficient[
-    Expand[transitionFull - transitionTree],
-    hbar,
-    1
-  ]
-];
+  InheritedHasUVPole[expr_] := Module[{s = ToString[InputForm[expr]]},
+    Or[
+      StringContainsQ[s, "\\[Epsilon]"],
+      StringContainsQ[s, "\\[CurlyEpsilon]"],
+      StringContainsQ[s, "ϵ"],
+      StringContainsQ[s, "ε"],
+      StringContainsQ[s, "1/Epsilon"],
+      StringContainsQ[s, "1/CurlyEpsilon"],
+      StringContainsQ[s, "Power[Epsilon, -1]"],
+      StringContainsQ[s, "Power[CurlyEpsilon, -1]"]
+    ]
+  ];
 
-stage1InheritedLoopHasUVPole =
-  InheritedHasUVPole[stage1InheritedLoopRaw];
-
-stage1InheritedLoopTerms = If[
-  Head[Expand[stage1InheritedLoopRaw]] === Plus,
-  List @@ Expand[stage1InheritedLoopRaw],
-  {Expand[stage1InheritedLoopRaw]}
-];
-
-stage1InheritedPoleTerms = Select[
-  stage1InheritedLoopTerms,
-  InheritedHasUVPole
-];
-
-stage1InheritedPolePath = FileNameJoin[
-  {DirectoryName[resultPath], "stage1_inherited_uv_pole_terms.txt"}
-];
-
-Export[
-  stage1InheritedPolePath,
-  ToString[InputForm[stage1InheritedPoleTerms]],
-  "String"
-];
-
-Print[
-  "[fresh kernel] Stage-1 inherited O(hbar) transition contains UV pole: ",
-  stage1InheritedLoopHasUVPole,
-  "; pole-term count: ",
-  Length[stage1InheritedPoleTerms]
-];
-
-(* A raw inherited loop expression may still contain unevaluated Matchete
-   loop functions.  Evaluate those functions BEFORE threshold-2 matching to
-   distinguish:
-     (i) a UV pole already encoded in the stage-1 one-loop EFT, from
-     (ii) a pole introduced only by threshold-2 tree matching/canonicalisation.
-*)
-stage1InheritedLoopEvaluated = Quiet @ Check[
-  EvaluateLoopFunctions[stage1InheritedLoopRaw],
-  $Failed
-];
-
-stage1InheritedEvaluatedHasUVPole = If[
-  stage1InheritedLoopEvaluated === $Failed,
-  False,
-  InheritedHasUVPole[stage1InheritedLoopEvaluated]
-];
-
-stage1InheritedEvaluatedTerms = If[
-  stage1InheritedLoopEvaluated === $Failed,
-  {},
-  If[
-    Head[Expand[stage1InheritedLoopEvaluated]] === Plus,
-    List @@ Expand[stage1InheritedLoopEvaluated],
-    {Expand[stage1InheritedLoopEvaluated]}
-  ]
-];
-
-stage1InheritedEvaluatedPoleTerms = Select[
-  stage1InheritedEvaluatedTerms,
-  InheritedHasUVPole
-];
-
-stage1InheritedEvaluatedPolePath = FileNameJoin[
-  {
-    DirectoryName[resultPath],
-    "stage1_inherited_evaluated_uv_pole_terms.txt"
-  }
-];
-
-Export[
-  stage1InheritedEvaluatedPolePath,
-  ToString[InputForm[stage1InheritedEvaluatedPoleTerms]],
-  "String"
-];
-
-Print[
-  "[fresh kernel] Stage-1 inherited O(hbar) after EvaluateLoopFunctions ",
-  "contains UV pole: ",
-  stage1InheritedEvaluatedHasUVPole,
-  "; pole-term count: ",
-  Length[stage1InheritedEvaluatedPoleTerms]
-];
-
-(* Effective-coupling provenance.
-   The inherited transition itself is finite, but RunT3Matching's RawEFT
-   already contains the pole.  Test whether expanding reconstructed Matchete
-   effective couplings BEFORE Match exposes that pole. *)
-stage1TransitionExpandedEffective = Quiet @ Check[
-  ReplaceEffectiveCouplings[transitionFullCanonical],
-  $Failed
-];
-
-stage1TransitionExpandedEffectiveHasUVPole = If[
-  stage1TransitionExpandedEffective === $Failed,
-  False,
-  InheritedHasUVPole[stage1TransitionExpandedEffective]
-];
-
-stage1ExpandedEffectiveLoop = If[
-  stage1TransitionExpandedEffective === $Failed,
-  $Failed,
-  Expand[
+  stage1InheritedLoopRaw = Expand[
     hbar Coefficient[
-      Expand[stage1TransitionExpandedEffective - transitionTree],
+      Expand[transitionFull - transitionTree],
       hbar,
       1
     ]
-  ]
-];
+  ];
 
-stage1ExpandedEffectiveLoopHasUVPole = If[
-  stage1ExpandedEffectiveLoop === $Failed,
-  False,
-  InheritedHasUVPole[stage1ExpandedEffectiveLoop]
-];
+  stage1InheritedLoopHasUVPole =
+    InheritedHasUVPole[stage1InheritedLoopRaw];
 
-stage1ExpandedEffectivePoleTerms = If[
-  stage1ExpandedEffectiveLoop === $Failed,
-  {},
-  Select[
-    If[
-      Head[Expand[stage1ExpandedEffectiveLoop]] === Plus,
-      List @@ Expand[stage1ExpandedEffectiveLoop],
-      {Expand[stage1ExpandedEffectiveLoop]}
-    ],
+  stage1InheritedLoopTerms = If[
+    Head[Expand[stage1InheritedLoopRaw]] === Plus,
+    List @@ Expand[stage1InheritedLoopRaw],
+    {Expand[stage1InheritedLoopRaw]}
+  ];
+
+  stage1InheritedPoleTerms = Select[
+    stage1InheritedLoopTerms,
     InheritedHasUVPole
-  ]
-];
+  ];
 
-stage1ExpandedEffectivePolePath = FileNameJoin[
-  {
-    DirectoryName[resultPath],
-    "stage1_effective_coupling_expanded_uv_pole_terms.txt"
-  }
-];
+  stage1InheritedPolePath = FileNameJoin[
+    {DirectoryName[resultPath], "stage1_inherited_uv_pole_terms.txt"}
+  ];
 
-Export[
-  stage1ExpandedEffectivePolePath,
-  ToString[InputForm[stage1ExpandedEffectivePoleTerms]],
-  "String"
-];
+  Export[
+    stage1InheritedPolePath,
+    ToString[InputForm[stage1InheritedPoleTerms]],
+    "String"
+  ];
 
-Print[
-  "[fresh kernel] ReplaceEffectiveCouplings before [C]: success=",
-  !TrueQ[stage1TransitionExpandedEffective === $Failed],
-  "; full transition pole=",
-  stage1TransitionExpandedEffectiveHasUVPole,
-  "; O(hbar) pole=",
-  stage1ExpandedEffectiveLoopHasUVPole,
-  "; pole-term count=",
-  Length[stage1ExpandedEffectivePoleTerms]
+  Print[
+    "[fresh kernel] Stage-1 inherited O(hbar) transition contains UV pole: ",
+    stage1InheritedLoopHasUVPole,
+    "; pole-term count: ",
+    Length[stage1InheritedPoleTerms]
+  ];
+
+  (* A raw inherited loop expression may still contain unevaluated Matchete
+     loop functions.  Evaluate those functions BEFORE threshold-2 matching to
+     distinguish:
+       (i) a UV pole already encoded in the stage-1 one-loop EFT, from
+       (ii) a pole introduced only by threshold-2 tree matching/canonicalisation.
+  *)
+  stage1InheritedLoopEvaluated = Quiet @ Check[
+    EvaluateLoopFunctions[stage1InheritedLoopRaw],
+    $Failed
+  ];
+
+  stage1InheritedEvaluatedHasUVPole = If[
+    stage1InheritedLoopEvaluated === $Failed,
+    False,
+    InheritedHasUVPole[stage1InheritedLoopEvaluated]
+  ];
+
+  stage1InheritedEvaluatedTerms = If[
+    stage1InheritedLoopEvaluated === $Failed,
+    {},
+    If[
+      Head[Expand[stage1InheritedLoopEvaluated]] === Plus,
+      List @@ Expand[stage1InheritedLoopEvaluated],
+      {Expand[stage1InheritedLoopEvaluated]}
+    ]
+  ];
+
+  stage1InheritedEvaluatedPoleTerms = Select[
+    stage1InheritedEvaluatedTerms,
+    InheritedHasUVPole
+  ];
+
+  stage1InheritedEvaluatedPolePath = FileNameJoin[
+    {
+      DirectoryName[resultPath],
+      "stage1_inherited_evaluated_uv_pole_terms.txt"
+    }
+  ];
+
+  Export[
+    stage1InheritedEvaluatedPolePath,
+    ToString[InputForm[stage1InheritedEvaluatedPoleTerms]],
+    "String"
+  ];
+
+  Print[
+    "[fresh kernel] Stage-1 inherited O(hbar) after EvaluateLoopFunctions ",
+    "contains UV pole: ",
+    stage1InheritedEvaluatedHasUVPole,
+    "; pole-term count: ",
+    Length[stage1InheritedEvaluatedPoleTerms]
+  ];
+
+  (* Effective-coupling provenance.
+     The inherited transition itself is finite, but RunT3Matching's RawEFT
+     already contains the pole.  Test whether expanding reconstructed Matchete
+     effective couplings BEFORE Match exposes that pole. *)
+  stage1TransitionExpandedEffective = Quiet @ Check[
+    ReplaceEffectiveCouplings[transitionFullCanonical],
+    $Failed
+  ];
+
+  stage1TransitionExpandedEffectiveHasUVPole = If[
+    stage1TransitionExpandedEffective === $Failed,
+    False,
+    InheritedHasUVPole[stage1TransitionExpandedEffective]
+  ];
+
+  stage1ExpandedEffectiveLoop = If[
+    stage1TransitionExpandedEffective === $Failed,
+    $Failed,
+    Expand[
+      hbar Coefficient[
+        Expand[stage1TransitionExpandedEffective - transitionTree],
+        hbar,
+        1
+      ]
+    ]
+  ];
+
+  stage1ExpandedEffectiveLoopHasUVPole = If[
+    stage1ExpandedEffectiveLoop === $Failed,
+    False,
+    InheritedHasUVPole[stage1ExpandedEffectiveLoop]
+  ];
+
+  stage1ExpandedEffectivePoleTerms = If[
+    stage1ExpandedEffectiveLoop === $Failed,
+    {},
+    Select[
+      If[
+        Head[Expand[stage1ExpandedEffectiveLoop]] === Plus,
+        List @@ Expand[stage1ExpandedEffectiveLoop],
+        {Expand[stage1ExpandedEffectiveLoop]}
+      ],
+      InheritedHasUVPole
+    ]
+  ];
+
+  stage1ExpandedEffectivePolePath = FileNameJoin[
+    {
+      DirectoryName[resultPath],
+      "stage1_effective_coupling_expanded_uv_pole_terms.txt"
+    }
+  ];
+
+  Export[
+    stage1ExpandedEffectivePolePath,
+    ToString[InputForm[stage1ExpandedEffectivePoleTerms]],
+    "String"
+  ];
+
+  Print[
+    "[fresh kernel] ReplaceEffectiveCouplings before [C]: success=",
+    !TrueQ[stage1TransitionExpandedEffective === $Failed],
+    "; full transition pole=",
+    stage1TransitionExpandedEffectiveHasUVPole,
+    "; O(hbar) pole=",
+    stage1ExpandedEffectiveLoopHasUVPole,
+    "; pole-term count=",
+    Length[stage1ExpandedEffectivePoleTerms]
+  ];
+
 ];
 
 (* Diagnose which quadratic kinetic sector changes at O(hbar).  This is
@@ -841,79 +879,82 @@ If[loopOrder >= 1,
   localLoopCorrection =
     Expand[fullFromTreeExplicit - treeExplicit];
 
-  (* [B] sanity diagnostic.
-     After integrating out F first, the tree EFT should already contain the
-     LL S1 S2 operator generated by fermion exchange, while lambdaT3 is also
-     present.  Their scalar one-loop matching is the expected T3 source of
-     the Weinberg operator.  Record whether these ingredients are actually
-     present in the stage-2 tree input and whether [B] generates C5. *)
-  bTreeInputText = ToString[InputForm[transitionTree]];
-  bRawText = ToString[
-    InputForm[Lookup[oneLoopResult, "RawEFT", 0]]
+  If[validationMode,
+      (* [B] sanity diagnostic.
+         After integrating out F first, the tree EFT should already contain the
+         LL S1 S2 operator generated by fermion exchange, while lambdaT3 is also
+         present.  Their scalar one-loop matching is the expected T3 source of
+         the Weinberg operator.  Record whether these ingredients are actually
+         present in the stage-2 tree input and whether [B] generates C5. *)
+      bTreeInputText = ToString[InputForm[transitionTree]];
+      bRawText = ToString[
+        InputForm[Lookup[oneLoopResult, "RawEFT", 0]]
+      ];
+
+      bTreeIngredientDiagnostic = <|
+        "HasY1" -> StringContainsQ[bTreeInputText, "y1"],
+        "HasY2" -> StringContainsQ[bTreeInputText, "y2"],
+        "HasLambdaT3" -> StringContainsQ[bTreeInputText, "lambdaT3"],
+        "HasS1" -> Or[
+          StringContainsQ[bTreeInputText, "NewScalar1"],
+          StringContainsQ[bTreeInputText, "S1"]
+        ],
+        "HasS2" -> Or[
+          StringContainsQ[bTreeInputText, "NewScalar2"],
+          StringContainsQ[bTreeInputText, "S2"]
+        ]
+      |>;
+
+      bRawIngredientDiagnostic = <|
+        "HasY1" -> StringContainsQ[bRawText, "y1"],
+        "HasY2" -> StringContainsQ[bRawText, "y2"],
+        "HasLambdaT3" -> StringContainsQ[bRawText, "lambdaT3"]
+      |>;
+
+      bC5Diagnostic = C5PieceDiagnostic[
+        "B_one_loop_raw",
+        Lookup[oneLoopResult, "RawEFT", 0]
+      ];
+
+      Print["[fresh kernel] [B] expected-topology sanity check:"];
+      Print[
+        "  tree input: y1=",
+        Lookup[bTreeIngredientDiagnostic, "HasY1", False],
+        ", y2=",
+        Lookup[bTreeIngredientDiagnostic, "HasY2", False],
+        ", lambdaT3=",
+        Lookup[bTreeIngredientDiagnostic, "HasLambdaT3", False],
+        ", S1=",
+        Lookup[bTreeIngredientDiagnostic, "HasS1", False],
+        ", S2=",
+        Lookup[bTreeIngredientDiagnostic, "HasS2", False]
+      ];
+      Print[
+        "  [B] RawEFT: y1=",
+        Lookup[bRawIngredientDiagnostic, "HasY1", False],
+        ", y2=",
+        Lookup[bRawIngredientDiagnostic, "HasY2", False],
+        ", lambdaT3=",
+        Lookup[bRawIngredientDiagnostic, "HasLambdaT3", False],
+        "; Weinberg present=",
+        Lookup[bC5Diagnostic, "WeinbergPresent", False]
+      ];
+
+      bSanityPath = FileNameJoin[
+        {DirectoryName[resultPath], "stage2_B_sanity.json"}
+      ];
+
+      Export[
+        bSanityPath,
+        <|
+          "TreeInput" -> bTreeIngredientDiagnostic,
+          "BRawEFT" -> bRawIngredientDiagnostic,
+          "BC5" -> bC5Diagnostic
+        |>,
+        "JSON"
+      ];
   ];
 
-  bTreeIngredientDiagnostic = <|
-    "HasY1" -> StringContainsQ[bTreeInputText, "y1"],
-    "HasY2" -> StringContainsQ[bTreeInputText, "y2"],
-    "HasLambdaT3" -> StringContainsQ[bTreeInputText, "lambdaT3"],
-    "HasS1" -> Or[
-      StringContainsQ[bTreeInputText, "NewScalar1"],
-      StringContainsQ[bTreeInputText, "S1"]
-    ],
-    "HasS2" -> Or[
-      StringContainsQ[bTreeInputText, "NewScalar2"],
-      StringContainsQ[bTreeInputText, "S2"]
-    ]
-  |>;
-
-  bRawIngredientDiagnostic = <|
-    "HasY1" -> StringContainsQ[bRawText, "y1"],
-    "HasY2" -> StringContainsQ[bRawText, "y2"],
-    "HasLambdaT3" -> StringContainsQ[bRawText, "lambdaT3"]
-  |>;
-
-  bC5Diagnostic = C5PieceDiagnostic[
-    "B_one_loop_raw",
-    Lookup[oneLoopResult, "RawEFT", 0]
-  ];
-
-  Print["[fresh kernel] [B] expected-topology sanity check:"];
-  Print[
-    "  tree input: y1=",
-    Lookup[bTreeIngredientDiagnostic, "HasY1", False],
-    ", y2=",
-    Lookup[bTreeIngredientDiagnostic, "HasY2", False],
-    ", lambdaT3=",
-    Lookup[bTreeIngredientDiagnostic, "HasLambdaT3", False],
-    ", S1=",
-    Lookup[bTreeIngredientDiagnostic, "HasS1", False],
-    ", S2=",
-    Lookup[bTreeIngredientDiagnostic, "HasS2", False]
-  ];
-  Print[
-    "  [B] RawEFT: y1=",
-    Lookup[bRawIngredientDiagnostic, "HasY1", False],
-    ", y2=",
-    Lookup[bRawIngredientDiagnostic, "HasY2", False],
-    ", lambdaT3=",
-    Lookup[bRawIngredientDiagnostic, "HasLambdaT3", False],
-    "; Weinberg present=",
-    Lookup[bC5Diagnostic, "WeinbergPresent", False]
-  ];
-
-  bSanityPath = FileNameJoin[
-    {DirectoryName[resultPath], "stage2_B_sanity.json"}
-  ];
-
-  Export[
-    bSanityPath,
-    <|
-      "TreeInput" -> bTreeIngredientDiagnostic,
-      "BRawEFT" -> bRawIngredientDiagnostic,
-      "BC5" -> bC5Diagnostic
-    |>,
-    "JSON"
-  ];
 ];
 
 (* C. Inherited one-loop contribution M^(0)[L^(1)].
@@ -1004,223 +1045,237 @@ If[
   ];
 ];
 
-(* For provenance only, split [C] into:
-     [C_inherited] = M2^(0)[L1_threshold^(1)]
-     [C_running]   = M2^(0)[L1_run^(1)]
-
-   The authoritative [C] above is still the actual result used downstream.
-   When a running insertion is present, perform one extra tree match with the
-   inherited transition alone and obtain the running piece by subtraction.
-   This keeps the diagnostic aligned with the exact same Matchete
-   canonicalisation path used by the authoritative combined [C]. *)
+(* Provenance-only decomposition of [C].
+   In normal results mode no extra Matchete match is performed. *)
 inheritedThresholdLoopCorrection = inheritedLoopCorrection;
 runningHeavyLoopCorrection = 0;
+c5InheritedPipelineDiagnostics = <|"Status" -> "NotRun"|>;
+c5InheritedPipelinePath = Missing["NotRun"];
+inheritedExpandedRawDiagnostic = <|
+  "ExtractionStatus" -> "NotRun",
+  "WeinbergPresent" -> False,
+  "ContainsUVPole" -> False,
+  "CoefficientTermCount" -> 0,
+  "CoefficientInputForm" -> "0"
+|>;
 
-If[eft1WilsonRunningLoaded,
+If[validationMode,
+  (* For provenance only, split [C] into:
+       [C_inherited] = M2^(0)[L1_threshold^(1)]
+       [C_running]   = M2^(0)[L1_run^(1)]
 
-  Print[
-    "[fresh kernel] Provenance diagnostic: isolating inherited [C] from ",
-    "running [C]..."
-  ];
-
-  inheritedOnlyResult = RunT3Matching[
-    transitionFullCanonical,
-    eftOrder,
-    0
-  ];
-
-  If[
-    !AssociationQ[inheritedOnlyResult] ||
-      Lookup[inheritedOnlyResult, "Status", ""] =!= "Success",
-    Print[
-      "ERROR: provenance diagnostic failed while matching inherited-only [C]."
-    ];
-    Exit[22]
-  ];
-
-  (* Stage-by-stage provenance inside RunT3Matching.
-     RunMatching.wl retains every intermediate representation under:
-       RawEFT, GreenEFT, EOMEFT, LoopEFT, MatchedEFT.
-     Inspect each one before CompactExplicitEFT changes anything further. *)
-  c5InheritedPipelineDiagnostics = Association @ Map[
-    Function[key,
-      key -> If[
-        KeyExistsQ[inheritedOnlyResult, key],
-        C5PieceDiagnostic[
-          "C_inherited_" <> key,
-          inheritedOnlyResult[key]
-        ],
-        <|
-          "Label" -> ("C_inherited_" <> key),
-          "ExtractionStatus" -> "Missing",
-          "WeinbergPresent" -> False,
-          "ContainsHbar" -> False,
-          "ContainsUVPole" -> False,
-          "CoefficientTermCount" -> 0,
-          "CoefficientInputForm" -> "0"
-        |>
-      ]
-    ],
-    {"RawEFT", "GreenEFT", "EOMEFT", "LoopEFT", "MatchedEFT"}
-  ];
-
-  Print["[fresh kernel] [C inherited] stage-by-stage C5 provenance:"];
-  Do[
-    diag = c5InheritedPipelineDiagnostics[key];
-    Print[
-      "  ", key,
-      ": present=", Lookup[diag, "WeinbergPresent", False],
-      "; pole=", Lookup[diag, "ContainsUVPole", False],
-      "; hbar=", Lookup[diag, "ContainsHbar", False],
-      "; terms=", Lookup[diag, "CoefficientTermCount", 0]
-    ];
-    If[
-      TrueQ[Lookup[diag, "WeinbergPresent", False]],
-      Print[
-        "    coefficient=",
-        Lookup[diag, "CoefficientInputForm", "0"]
-      ]
-    ],
-    {key, {"RawEFT", "GreenEFT", "EOMEFT", "LoopEFT", "MatchedEFT"}}
-  ];
-
-  c5InheritedPipelinePath = FileNameJoin[
-    {
-      DirectoryName[resultPath],
-      "c5_stage2_C_inherited_pipeline.json"
-    }
-  ];
-
-  Export[
-    c5InheritedPipelinePath,
-    c5InheritedPipelineDiagnostics,
-    "JSON"
-  ];
-
-  inheritedOnlyExplicit = CompactExplicitEFT[inheritedOnlyResult];
-
-  If[inheritedOnlyExplicit === $Failed,
-    Print[
-      "ERROR: provenance diagnostic failed to construct inherited-only EFT."
-    ];
-    Exit[23]
-  ];
-
-  If[FreeQ[inheritedOnlyExplicit, hbar],
-    Print[
-      "ERROR: provenance inherited-only result contains no explicit hbar; ",
-      "cannot isolate [C] pieces safely."
-    ];
-    Exit[24]
-  ];
-
-  inheritedThresholdLoopCorrection = Expand[
-    hbar Coefficient[
-      Expand[inheritedOnlyExplicit - treeExplicit],
-      hbar,
-      1
-    ]
-  ];
-
-  runningHeavyLoopCorrection = Expand[
-    inheritedLoopCorrection - inheritedThresholdLoopCorrection
-  ];
-
-  Print[
-    "[fresh kernel] Provenance split complete: inherited [C] terms=",
-    Lookup[
-      ExpressionDiagnostics[inheritedThresholdLoopCorrection],
-      "TermCount",
-      "?"
-    ],
-    "; running [C] terms=",
-    Lookup[
-      ExpressionDiagnostics[runningHeavyLoopCorrection],
-      "TermCount",
-      "?"
-    ]
-  ];
-
-  (* Additional diagnostic:
-     match an input in which effective couplings have already been expanded.
-     If the RawEFT still contains the same 1/epsilon term, then the pole is
-     generated by Match itself from the explicit finite inherited EFT rather
-     than by hidden effective-coupling definitions. *)
-  If[
-    stage1TransitionExpandedEffective =!= $Failed,
+     The authoritative [C] above is still the actual result used downstream.
+     When a running insertion is present, perform one extra tree match with the
+     inherited transition alone and obtain the running piece by subtraction.
+     This keeps the diagnostic aligned with the exact same Matchete
+     canonicalisation path used by the authoritative combined [C]. *)
+  If[eft1WilsonRunningLoaded,
 
     Print[
-      "[fresh kernel] Provenance diagnostic: matching inherited [C] with ",
-      "effective couplings pre-expanded..."
+      "[fresh kernel] Provenance diagnostic: isolating inherited [C] from ",
+      "running [C]..."
     ];
 
-    inheritedExpandedInputResult = RunT3Matching[
-      stage1TransitionExpandedEffective,
+    inheritedOnlyResult = RunT3Matching[
+      transitionFullCanonical,
       eftOrder,
       0
     ];
 
     If[
-      AssociationQ[inheritedExpandedInputResult] &&
-        Lookup[inheritedExpandedInputResult, "Status", ""] === "Success",
-
-      inheritedExpandedRawDiagnostic = C5PieceDiagnostic[
-        "C_inherited_expanded_input_RawEFT",
-        Lookup[inheritedExpandedInputResult, "RawEFT", 0]
-      ];
-
+      !AssociationQ[inheritedOnlyResult] ||
+        Lookup[inheritedOnlyResult, "Status", ""] =!= "Success",
       Print[
-        "[fresh kernel] Expanded-input RawEFT C5: present=",
-        Lookup[
-          inheritedExpandedRawDiagnostic,
-          "WeinbergPresent",
-          False
-        ],
-        "; pole=",
-        Lookup[
-          inheritedExpandedRawDiagnostic,
-          "ContainsUVPole",
-          False
-        ],
-        "; terms=",
-        Lookup[
-          inheritedExpandedRawDiagnostic,
-          "CoefficientTermCount",
-          0
+        "ERROR: provenance diagnostic failed while matching inherited-only [C]."
+      ];
+      Exit[22]
+    ];
+
+    (* Stage-by-stage provenance inside RunT3Matching.
+       RunMatching.wl retains every intermediate representation under:
+         RawEFT, GreenEFT, EOMEFT, LoopEFT, MatchedEFT.
+       Inspect each one before CompactExplicitEFT changes anything further. *)
+    c5InheritedPipelineDiagnostics = Association @ Map[
+      Function[key,
+        key -> If[
+          KeyExistsQ[inheritedOnlyResult, key],
+          C5PieceDiagnostic[
+            "C_inherited_" <> key,
+            inheritedOnlyResult[key]
+          ],
+          <|
+            "Label" -> ("C_inherited_" <> key),
+            "ExtractionStatus" -> "Missing",
+            "WeinbergPresent" -> False,
+            "ContainsHbar" -> False,
+            "ContainsUVPole" -> False,
+            "CoefficientTermCount" -> 0,
+            "CoefficientInputForm" -> "0"
+          |>
         ]
+      ],
+      {"RawEFT", "GreenEFT", "EOMEFT", "LoopEFT", "MatchedEFT"}
+    ];
+
+    Print["[fresh kernel] [C inherited] stage-by-stage C5 provenance:"];
+    Do[
+      diag = c5InheritedPipelineDiagnostics[key];
+      Print[
+        "  ", key,
+        ": present=", Lookup[diag, "WeinbergPresent", False],
+        "; pole=", Lookup[diag, "ContainsUVPole", False],
+        "; hbar=", Lookup[diag, "ContainsHbar", False],
+        "; terms=", Lookup[diag, "CoefficientTermCount", 0]
       ];
+      If[
+        TrueQ[Lookup[diag, "WeinbergPresent", False]],
+        Print[
+          "    coefficient=",
+          Lookup[diag, "CoefficientInputForm", "0"]
+        ]
+      ],
+      {key, {"RawEFT", "GreenEFT", "EOMEFT", "LoopEFT", "MatchedEFT"}}
+    ];
+
+    c5InheritedPipelinePath = FileNameJoin[
+      {
+        DirectoryName[resultPath],
+        "c5_stage2_C_inherited_pipeline.json"
+      }
+    ];
+
+    Export[
+      c5InheritedPipelinePath,
+      c5InheritedPipelineDiagnostics,
+      "JSON"
+    ];
+
+    inheritedOnlyExplicit = CompactExplicitEFT[inheritedOnlyResult];
+
+    If[inheritedOnlyExplicit === $Failed,
+      Print[
+        "ERROR: provenance diagnostic failed to construct inherited-only EFT."
+      ];
+      Exit[23]
+    ];
+
+    If[FreeQ[inheritedOnlyExplicit, hbar],
+      Print[
+        "ERROR: provenance inherited-only result contains no explicit hbar; ",
+        "cannot isolate [C] pieces safely."
+      ];
+      Exit[24]
+    ];
+
+    inheritedThresholdLoopCorrection = Expand[
+      hbar Coefficient[
+        Expand[inheritedOnlyExplicit - treeExplicit],
+        hbar,
+        1
+      ]
+    ];
+
+    runningHeavyLoopCorrection = Expand[
+      inheritedLoopCorrection - inheritedThresholdLoopCorrection
+    ];
+
+    Print[
+      "[fresh kernel] Provenance split complete: inherited [C] terms=",
+      Lookup[
+        ExpressionDiagnostics[inheritedThresholdLoopCorrection],
+        "TermCount",
+        "?"
+      ],
+      "; running [C] terms=",
+      Lookup[
+        ExpressionDiagnostics[runningHeavyLoopCorrection],
+        "TermCount",
+        "?"
+      ]
+    ];
+
+    (* Additional diagnostic:
+       match an input in which effective couplings have already been expanded.
+       If the RawEFT still contains the same 1/epsilon term, then the pole is
+       generated by Match itself from the explicit finite inherited EFT rather
+       than by hidden effective-coupling definitions. *)
+    If[
+      stage1TransitionExpandedEffective =!= $Failed,
 
       Print[
-        "    coefficient=",
-        Lookup[
-          inheritedExpandedRawDiagnostic,
-          "CoefficientInputForm",
-          "0"
+        "[fresh kernel] Provenance diagnostic: matching inherited [C] with ",
+        "effective couplings pre-expanded..."
+      ];
+
+      inheritedExpandedInputResult = RunT3Matching[
+        stage1TransitionExpandedEffective,
+        eftOrder,
+        0
+      ];
+
+      If[
+        AssociationQ[inheritedExpandedInputResult] &&
+          Lookup[inheritedExpandedInputResult, "Status", ""] === "Success",
+
+        inheritedExpandedRawDiagnostic = C5PieceDiagnostic[
+          "C_inherited_expanded_input_RawEFT",
+          Lookup[inheritedExpandedInputResult, "RawEFT", 0]
+        ];
+
+        Print[
+          "[fresh kernel] Expanded-input RawEFT C5: present=",
+          Lookup[
+            inheritedExpandedRawDiagnostic,
+            "WeinbergPresent",
+            False
+          ],
+          "; pole=",
+          Lookup[
+            inheritedExpandedRawDiagnostic,
+            "ContainsUVPole",
+            False
+          ],
+          "; terms=",
+          Lookup[
+            inheritedExpandedRawDiagnostic,
+            "CoefficientTermCount",
+            0
+          ]
+        ];
+
+        Print[
+          "    coefficient=",
+          Lookup[
+            inheritedExpandedRawDiagnostic,
+            "CoefficientInputForm",
+            "0"
+          ]
+        ],
+
+        inheritedExpandedRawDiagnostic = <|
+          "ExtractionStatus" -> "MatchFailed",
+          "WeinbergPresent" -> False,
+          "ContainsUVPole" -> False,
+          "CoefficientTermCount" -> 0,
+          "CoefficientInputForm" -> "0"
+        |>;
+
+        Print[
+          "[fresh kernel] Expanded-input inherited [C] match failed; ",
+          "diagnostic inconclusive."
         ]
       ],
 
       inheritedExpandedRawDiagnostic = <|
-        "ExtractionStatus" -> "MatchFailed",
+        "ExtractionStatus" -> "ExpansionFailed",
         "WeinbergPresent" -> False,
         "ContainsUVPole" -> False,
         "CoefficientTermCount" -> 0,
         "CoefficientInputForm" -> "0"
-      |>;
-
-      Print[
-        "[fresh kernel] Expanded-input inherited [C] match failed; ",
-        "diagnostic inconclusive."
-      ]
-    ],
-
-    inheritedExpandedRawDiagnostic = <|
-      "ExtractionStatus" -> "ExpansionFailed",
-      "WeinbergPresent" -> False,
-      "ContainsUVPole" -> False,
-      "CoefficientTermCount" -> 0,
-      "CoefficientInputForm" -> "0"
-    |>
+      |>
+    ];
   ];
+
 ];
 
 (* D. Pure-SM Weinberg component generated directly by EFT1 running.
@@ -1481,149 +1536,163 @@ Print[
   c5PoleRGEPath
 ];
 
-(* Export perturbative-source C5 diagnostics.  These files answer the
-   renormalisation question without changing the final result:
-
-     A              : tree threshold matching
-     B_one_loop     : new one-loop threshold matching
-     C_inherited    : tree propagation of inherited stage-1 O(hbar)
-     C_running      : tree propagation of EFT1 leading-log heavy running
-
-   The direct pure-SM Weinberg running term is already exported separately
-   above because it bypasses threshold-2 matching. *)
-c5ProvenanceDir = DirectoryName[resultPath];
-
-c5Stage2APath = FileNameJoin[
-  {c5ProvenanceDir, "c5_stage2_A.txt"}
-];
-c5Stage2BPath = FileNameJoin[
-  {c5ProvenanceDir, "c5_stage2_B_one_loop.txt"}
-];
-c5Stage2CInheritedPath = FileNameJoin[
-  {c5ProvenanceDir, "c5_stage2_C_inherited.txt"}
-];
-c5Stage2CRunningPath = FileNameJoin[
-  {c5ProvenanceDir, "c5_stage2_C_running.txt"}
-];
-c5Stage2ProvenancePath = FileNameJoin[
-  {c5ProvenanceDir, "c5_stage2_provenance.json"}
-];
-
-c5Stage2ADiagnostic =
-  C5PieceDiagnostic["A_tree", treeExplicit];
-
-c5Stage2BDiagnostic =
-  C5PieceDiagnostic["B_one_loop", localLoopCorrection];
-
-c5Stage2CInheritedDiagnostic =
-  C5PieceDiagnostic[
-    "C_inherited",
-    inheritedThresholdLoopCorrection
-  ];
-
-c5Stage2CRunningDiagnostic =
-  C5PieceDiagnostic[
-    "C_running",
-    runningHeavyLoopCorrection
-  ];
-
-ExportC5Piece[c5Stage2APath, c5Stage2ADiagnostic];
-ExportC5Piece[c5Stage2BPath, c5Stage2BDiagnostic];
-ExportC5Piece[
-  c5Stage2CInheritedPath,
-  c5Stage2CInheritedDiagnostic
-];
-ExportC5Piece[
-  c5Stage2CRunningPath,
-  c5Stage2CRunningDiagnostic
-];
-
+(* Detailed perturbative-source exports are validation-only. *)
 c5Stage2Provenance = <|
-  "Status" -> "Success",
-  "Stage1InheritedTransition" -> <|
-    "ContainsUVPole" -> stage1InheritedLoopHasUVPole,
-    "PoleTermCount" -> Length[stage1InheritedPoleTerms],
-    "PoleTermsPath" -> stage1InheritedPolePath,
-    "EvaluateLoopFunctionsSucceeded" ->
-      !TrueQ[stage1InheritedLoopEvaluated === $Failed],
-    "ContainsUVPoleAfterEvaluateLoopFunctions" ->
-      stage1InheritedEvaluatedHasUVPole,
-    "EvaluatedPoleTermCount" ->
-      Length[stage1InheritedEvaluatedPoleTerms],
-    "EvaluatedPoleTermsPath" ->
-      stage1InheritedEvaluatedPolePath,
-    "ReplaceEffectiveCouplingsBeforeC" -> <|
-      "Succeeded" ->
-        !TrueQ[stage1TransitionExpandedEffective === $Failed],
-      "FullTransitionContainsUVPole" ->
-        stage1TransitionExpandedEffectiveHasUVPole,
-      "LoopPieceContainsUVPole" ->
-        stage1ExpandedEffectiveLoopHasUVPole,
-      "PoleTermCount" ->
-        Length[stage1ExpandedEffectivePoleTerms],
-      "PoleTermsPath" ->
-        stage1ExpandedEffectivePolePath
-    |>
-  |>,
-  "A" -> c5Stage2ADiagnostic,
-  "B" -> c5Stage2BDiagnostic,
-  "CInherited" -> c5Stage2CInheritedDiagnostic,
-  "CRunning" -> c5Stage2CRunningDiagnostic,
-  "DirectWeinbergRunning" -> <|
-    "Present" -> !TrueQ[eft1WilsonRunningDirectWeinberg === 0],
-    "ContainsHbar" -> !FreeQ[eft1WilsonRunningDirectWeinberg, hbar],
-    "ContainsUVPole" -> C5HasUVPole[
-      eft1WilsonRunningDirectWeinberg
-    ],
-    "CoefficientTermCount" -> C5TermCount[
-      eft1WilsonRunningDirectWeinberg
-    ],
-    "CoefficientInputForm" ->
-      ToString[InputForm[eft1WilsonRunningDirectWeinberg]]
-  |>,
-  "AuthoritativeThresholdC5" -> <|
-    "ContainsHbar" -> !FreeQ[authoritativeThresholdC5, hbar],
-    "ContainsUVPole" -> C5HasUVPole[authoritativeThresholdC5],
-    "CoefficientTermCount" -> C5TermCount[
-      authoritativeThresholdC5
-    ],
-    "CoefficientInputForm" ->
-      ToString[InputForm[authoritativeThresholdC5]]
-  |>
+  "Status" -> "NotRun",
+  "Reason" -> "validation mode disabled"
 |>;
+c5Stage2ProvenancePath = Missing["NotRun"];
+c5Stage2APath = Missing["NotRun"];
+c5Stage2BPath = Missing["NotRun"];
+c5Stage2CInheritedPath = Missing["NotRun"];
+c5Stage2CRunningPath = Missing["NotRun"];
 
-Export[c5Stage2ProvenancePath, c5Stage2Provenance, "JSON"];
+If[validationMode,
+  (* Export perturbative-source C5 diagnostics.  These files answer the
+     renormalisation question without changing the final result:
 
-Print["[fresh kernel] C5 provenance diagnostics:"];
-Print[
-  "  [A] present=", Lookup[c5Stage2ADiagnostic, "WeinbergPresent", False],
-  "; pole=", Lookup[c5Stage2ADiagnostic, "ContainsUVPole", False],
-  "; terms=", Lookup[c5Stage2ADiagnostic, "CoefficientTermCount", 0]
-];
-Print[
-  "  [B] present=", Lookup[c5Stage2BDiagnostic, "WeinbergPresent", False],
-  "; pole=", Lookup[c5Stage2BDiagnostic, "ContainsUVPole", False],
-  "; terms=", Lookup[c5Stage2BDiagnostic, "CoefficientTermCount", 0]
-];
-Print[
-  "  [C inherited] present=",
-  Lookup[c5Stage2CInheritedDiagnostic, "WeinbergPresent", False],
-  "; pole=",
-  Lookup[c5Stage2CInheritedDiagnostic, "ContainsUVPole", False],
-  "; terms=",
-  Lookup[c5Stage2CInheritedDiagnostic, "CoefficientTermCount", 0]
-];
-Print[
-  "  [C running] present=",
-  Lookup[c5Stage2CRunningDiagnostic, "WeinbergPresent", False],
-  "; pole=",
-  Lookup[c5Stage2CRunningDiagnostic, "ContainsUVPole", False],
-  "; terms=",
-  Lookup[c5Stage2CRunningDiagnostic, "CoefficientTermCount", 0]
-];
-Print[
-  "[fresh kernel] C5 provenance JSON exported: ",
-  c5Stage2ProvenancePath
+       A              : tree threshold matching
+       B_one_loop     : new one-loop threshold matching
+       C_inherited    : tree propagation of inherited stage-1 O(hbar)
+       C_running      : tree propagation of EFT1 leading-log heavy running
+
+     The direct pure-SM Weinberg running term is already exported separately
+     above because it bypasses threshold-2 matching. *)
+  c5ProvenanceDir = DirectoryName[resultPath];
+
+  c5Stage2APath = FileNameJoin[
+    {c5ProvenanceDir, "c5_stage2_A.txt"}
+  ];
+  c5Stage2BPath = FileNameJoin[
+    {c5ProvenanceDir, "c5_stage2_B_one_loop.txt"}
+  ];
+  c5Stage2CInheritedPath = FileNameJoin[
+    {c5ProvenanceDir, "c5_stage2_C_inherited.txt"}
+  ];
+  c5Stage2CRunningPath = FileNameJoin[
+    {c5ProvenanceDir, "c5_stage2_C_running.txt"}
+  ];
+  c5Stage2ProvenancePath = FileNameJoin[
+    {c5ProvenanceDir, "c5_stage2_provenance.json"}
+  ];
+
+  c5Stage2ADiagnostic =
+    C5PieceDiagnostic["A_tree", treeExplicit];
+
+  c5Stage2BDiagnostic =
+    C5PieceDiagnostic["B_one_loop", localLoopCorrection];
+
+  c5Stage2CInheritedDiagnostic =
+    C5PieceDiagnostic[
+      "C_inherited",
+      inheritedThresholdLoopCorrection
+    ];
+
+  c5Stage2CRunningDiagnostic =
+    C5PieceDiagnostic[
+      "C_running",
+      runningHeavyLoopCorrection
+    ];
+
+  ExportC5Piece[c5Stage2APath, c5Stage2ADiagnostic];
+  ExportC5Piece[c5Stage2BPath, c5Stage2BDiagnostic];
+  ExportC5Piece[
+    c5Stage2CInheritedPath,
+    c5Stage2CInheritedDiagnostic
+  ];
+  ExportC5Piece[
+    c5Stage2CRunningPath,
+    c5Stage2CRunningDiagnostic
+  ];
+
+  c5Stage2Provenance = <|
+    "Status" -> "Success",
+    "Stage1InheritedTransition" -> <|
+      "ContainsUVPole" -> stage1InheritedLoopHasUVPole,
+      "PoleTermCount" -> Length[stage1InheritedPoleTerms],
+      "PoleTermsPath" -> stage1InheritedPolePath,
+      "EvaluateLoopFunctionsSucceeded" ->
+        !TrueQ[stage1InheritedLoopEvaluated === $Failed],
+      "ContainsUVPoleAfterEvaluateLoopFunctions" ->
+        stage1InheritedEvaluatedHasUVPole,
+      "EvaluatedPoleTermCount" ->
+        Length[stage1InheritedEvaluatedPoleTerms],
+      "EvaluatedPoleTermsPath" ->
+        stage1InheritedEvaluatedPolePath,
+      "ReplaceEffectiveCouplingsBeforeC" -> <|
+        "Succeeded" ->
+          !TrueQ[stage1TransitionExpandedEffective === $Failed],
+        "FullTransitionContainsUVPole" ->
+          stage1TransitionExpandedEffectiveHasUVPole,
+        "LoopPieceContainsUVPole" ->
+          stage1ExpandedEffectiveLoopHasUVPole,
+        "PoleTermCount" ->
+          Length[stage1ExpandedEffectivePoleTerms],
+        "PoleTermsPath" ->
+          stage1ExpandedEffectivePolePath
+      |>
+    |>,
+    "A" -> c5Stage2ADiagnostic,
+    "B" -> c5Stage2BDiagnostic,
+    "CInherited" -> c5Stage2CInheritedDiagnostic,
+    "CRunning" -> c5Stage2CRunningDiagnostic,
+    "DirectWeinbergRunning" -> <|
+      "Present" -> !TrueQ[eft1WilsonRunningDirectWeinberg === 0],
+      "ContainsHbar" -> !FreeQ[eft1WilsonRunningDirectWeinberg, hbar],
+      "ContainsUVPole" -> C5HasUVPole[
+        eft1WilsonRunningDirectWeinberg
+      ],
+      "CoefficientTermCount" -> C5TermCount[
+        eft1WilsonRunningDirectWeinberg
+      ],
+      "CoefficientInputForm" ->
+        ToString[InputForm[eft1WilsonRunningDirectWeinberg]]
+    |>,
+    "AuthoritativeThresholdC5" -> <|
+      "ContainsHbar" -> !FreeQ[authoritativeThresholdC5, hbar],
+      "ContainsUVPole" -> C5HasUVPole[authoritativeThresholdC5],
+      "CoefficientTermCount" -> C5TermCount[
+        authoritativeThresholdC5
+      ],
+      "CoefficientInputForm" ->
+        ToString[InputForm[authoritativeThresholdC5]]
+    |>
+  |>;
+
+  Export[c5Stage2ProvenancePath, c5Stage2Provenance, "JSON"];
+
+  Print["[fresh kernel] C5 provenance diagnostics:"];
+  Print[
+    "  [A] present=", Lookup[c5Stage2ADiagnostic, "WeinbergPresent", False],
+    "; pole=", Lookup[c5Stage2ADiagnostic, "ContainsUVPole", False],
+    "; terms=", Lookup[c5Stage2ADiagnostic, "CoefficientTermCount", 0]
+  ];
+  Print[
+    "  [B] present=", Lookup[c5Stage2BDiagnostic, "WeinbergPresent", False],
+    "; pole=", Lookup[c5Stage2BDiagnostic, "ContainsUVPole", False],
+    "; terms=", Lookup[c5Stage2BDiagnostic, "CoefficientTermCount", 0]
+  ];
+  Print[
+    "  [C inherited] present=",
+    Lookup[c5Stage2CInheritedDiagnostic, "WeinbergPresent", False],
+    "; pole=",
+    Lookup[c5Stage2CInheritedDiagnostic, "ContainsUVPole", False],
+    "; terms=",
+    Lookup[c5Stage2CInheritedDiagnostic, "CoefficientTermCount", 0]
+  ];
+  Print[
+    "  [C running] present=",
+    Lookup[c5Stage2CRunningDiagnostic, "WeinbergPresent", False],
+    "; pole=",
+    Lookup[c5Stage2CRunningDiagnostic, "ContainsUVPole", False],
+    "; terms=",
+    Lookup[c5Stage2CRunningDiagnostic, "CoefficientTermCount", 0]
+  ];
+  Print[
+    "[fresh kernel] C5 provenance JSON exported: ",
+    c5Stage2ProvenancePath
+  ];
+
 ];
 
 nextReport = SafeStage[EvaluateLoopFunctions[nextCompact]];
@@ -1696,6 +1765,7 @@ result = <|
   "CompactLagrangian" -> nextCompact,
   "Lagrangian" -> nextReport,
   "FreshKernel" -> True,
+  "ValidationMode" -> validationMode,
   "ActiveFieldsAtStart" -> activeFields,
   "HeavyFieldsAtStage" -> heavyFields
 |>;

@@ -18,6 +18,8 @@ from Reports.ReportGeneration import (
     latex_escape_text,
     latex_fraction,
     matrix_cell,
+    paper_notation_key_lines,
+    paper_symbol_latex,
     record_quantum_numbers,
     split_latex_terms,
 )
@@ -84,7 +86,7 @@ GLOSSARY_ROWS = (
 
 
 COUPLING_LATEX = {
-    "gY": r"g_Y",
+    "gY": r"g_1",
     "g2": r"g_2",
     "g3": r"g_3",
     "yu": r"Y_u",
@@ -93,29 +95,27 @@ COUPLING_LATEX = {
     "y1": r"y_1",
     "y2": r"y_2",
     "MF": r"M_F",
-    "mS1Sq": r"m_{S_1}^2",
-    "mS2Sq": r"m_{S_2}^2",
-    "lambdaH": r"\lambda_H",
-    "lambdaS1": r"\lambda_{S_1}",
-    "lambdaS2": r"\lambda_{S_2}",
-    "lambdaH1": r"\lambda_{H1}",
-    "lambdaH2": r"\lambda_{H2}",
-    "lambda12": r"\lambda_{12}",
-    "lambdaT3": r"\lambda_{T3}",
-    "lambdaH1Adj": r"\lambda_{H1}^{\rm Adj}",
-    "lambdaH2Adj": r"\lambda_{H2}^{\rm Adj}",
-    "lambdaS1Adj": r"\lambda_{S_1}^{\rm Adj}",
-    "lambdaS2Adj": r"\lambda_{S_2}^{\rm Adj}",
-    "lambda12Adj": r"\lambda_{12}^{\rm Adj}",
-    "lambda12Cross": r"\lambda_{12}^{\rm Cross}",
-    "lambdaHHdagS2S2": r"\lambda_{H^\dagger H^\dagger S_2 S_2}",
-    "lambdaHHdagS1barS1bar": r"\lambda_{H^\dagger H^\dagger S_1^\dagger S_1^\dagger}",
-    "lambdaS1bar2S2bar2": r"\lambda_{S_1^{\dagger 2}S_2^{\dagger 2}}",
-    "lambdaS1barS2S2bar2": r"\lambda_{S_1^\dagger S_2 S_2^{\dagger 2}}",
-    "lambdaS1S1bar2S2bar": r"\lambda_{S_1 S_1^{\dagger 2}S_2^\dagger}",
-    "lambdaHHdagS1barS2barCross": (
-        r"\lambda_{H H^\dagger S_1^\dagger S_2^\dagger}^{\rm Cross}"
-    ),
+    "mS1Sq": r"m_1^2",
+    "mS2Sq": r"m_2^2",
+    "lambdaH": r"\lambda_1",
+    "lambdaS1": r"\lambda_{S_1}^{(1)}",
+    "lambdaS2": r"\lambda_{S_2}^{(1)}",
+    "lambdaH1": r"\lambda_{HS_1}^{(1)}",
+    "lambdaH2": r"\lambda_{HS_2}^{(1)}",
+    "lambda12": r"\lambda_{12}^{(1)}",
+    "lambdaT3": r"\lambda_5",
+    "lambdaH1Adj": r"\lambda_{HS_1}^{(A)}",
+    "lambdaH2Adj": r"\lambda_{HS_2}^{(A)}",
+    "lambdaS1Adj": r"\lambda_{S_1}^{(A)}",
+    "lambdaS2Adj": r"\lambda_{S_2}^{(A)}",
+    "lambda12Adj": r"\lambda_{12}^{(A)}",
+    "lambda12Cross": r"\lambda_{12}^{(\times)}",
+    "lambdaHHdagS2S2": r"\lambda_8",
+    "lambdaHHdagS1barS1bar": r"\lambda_7",
+    "lambdaS1bar2S2bar2": r"\lambda_9",
+    "lambdaS1barS2S2bar2": r"\lambda_{10}",
+    "lambdaS1S1bar2S2bar": r"\lambda_{11}",
+    "lambdaHHdagS1barS2barCross": r"\lambda_{12}",
 }
 
 
@@ -198,7 +198,22 @@ def _load_eft1_wilson_payload(
 
 
 def _coupling_symbol(name: str) -> str:
+    shared = paper_symbol_latex(name)
+    if shared != name:
+        return shared
     return COUPLING_LATEX.get(name, r"\mathrm{" + latex_escape_text(name) + "}")
+
+
+def load_uv_rge_payload(record: RunRecord) -> dict[str, Any] | None:
+    """Public report-layer accessor for one saved UV RGBeta payload."""
+    return _load_uv_payload(record)
+
+
+def load_eft1_renormalisable_rge_payload(
+    record: RunRecord,
+) -> dict[str, Any] | None:
+    """Public report-layer accessor for the saved EFT1 renormalisable RGBeta payload."""
+    return _load_eft1_renormalisable_payload(record)
 
 
 def _ordered_couplings(names: set[str]) -> list[str]:
@@ -356,7 +371,7 @@ def _normalise_rgbeta_latex(latex: str) -> str:
     # RGBeta symbols are ordinary Mathematica symbols, so TeXForm otherwise
     # emits them as \text{symbol}.  Map the physics names explicitly.
     symbol_map = {
-        "gY": r"g_Y",
+        "gY": r"g_1",
         "g2": r"g_2",
         "g3": r"g_3",
         "yu": r"Y_u",
@@ -365,26 +380,26 @@ def _normalise_rgbeta_latex(latex: str) -> str:
         "y1": r"y_1",
         "y2": r"y_2",
         "MF": r"M_F",
-        "mS1Sq": r"m_{S_1}^2",
-        "mS2Sq": r"m_{S_2}^2",
-        "lambdaH": r"\lambda_H",
-        "lambdaS1": r"\lambda_{S_1}",
-        "lambdaS2": r"\lambda_{S_2}",
-        "lambdaH1": r"\lambda_{H1}",
-        "lambdaH2": r"\lambda_{H2}",
-        "lambda12": r"\lambda_{12}",
-        "lambdaT3": r"\lambda_{T3}",
-        "lambdaH1Adj": r"\lambda_{H1}^{\rm Adj}",
-        "lambdaH2Adj": r"\lambda_{H2}^{\rm Adj}",
-        "lambdaS1Adj": r"\lambda_{S_1}^{\rm Adj}",
-        "lambdaS2Adj": r"\lambda_{S_2}^{\rm Adj}",
-        "lambda12Adj": r"\lambda_{12}^{\rm Adj}",
-        "lambda12Cross": r"\lambda_{12}^{\rm Cross}",
-        "lambdaHHdagS2S2": r"\lambda_{H^\dagger H^\dagger S_2 S_2}",
-        "lambdaHHdagS1barS1bar": r"\lambda_{H^\dagger H^\dagger S_1^\dagger S_1^\dagger}",
-        "lambdaS1bar2S2bar2": r"\lambda_{S_1^{\dagger 2}S_2^{\dagger 2}}",
-        "lambdaS1barS2S2bar2": r"\lambda_{S_1^\dagger S_2 S_2^{\dagger 2}}",
-        "lambdaS1S1bar2S2bar": r"\lambda_{S_1 S_1^{\dagger 2}S_2^\dagger}",
+        "mS1Sq": r"m_1^2",
+        "mS2Sq": r"m_2^2",
+        "lambdaH": r"\lambda_1",
+        "lambdaS1": r"\lambda_{S_1}^{(1)}",
+        "lambdaS2": r"\lambda_{S_2}^{(1)}",
+        "lambdaH1": r"\lambda_{HS_1}^{(1)}",
+        "lambdaH2": r"\lambda_{HS_2}^{(1)}",
+        "lambda12": r"\lambda_{12}^{(1)}",
+        "lambdaT3": r"\lambda_5",
+        "lambdaH1Adj": r"\lambda_{HS_1}^{(A)}",
+        "lambdaH2Adj": r"\lambda_{HS_2}^{(A)}",
+        "lambdaS1Adj": r"\lambda_{S_1}^{(A)}",
+        "lambdaS2Adj": r"\lambda_{S_2}^{(A)}",
+        "lambda12Adj": r"\lambda_{12}^{(A)}",
+        "lambda12Cross": r"\lambda_{12}^{(\times)}",
+        "lambdaHHdagS2S2": r"\lambda_8",
+        "lambdaHHdagS1barS1bar": r"\lambda_7",
+        "lambdaS1bar2S2bar2": r"\lambda_9",
+        "lambdaS1barS2S2bar2": r"\lambda_{10}",
+        "lambdaS1S1bar2S2bar": r"\lambda_{11}",
         "lambdaHHdagS1barS2barCross": r"\lambda_{H H^\dagger S_1^\dagger S_2^\dagger}^{\rm Cross}",
     }
 
@@ -399,6 +414,31 @@ def _normalise_rgbeta_latex(latex: str) -> str:
         text = text.replace(r"\text{" + name + "}", replacement)
 
     text = _clean_index(text)
+    text = _trace_shorthand_latex(text)
+    return text
+
+
+def normalise_rgbeta_latex(latex: str) -> str:
+    """Public report-layer wrapper for RGBeta LaTeX normalization."""
+    return _normalise_rgbeta_latex(latex)
+
+
+def _trace_shorthand_latex(latex: str) -> str:
+    """Use the report's T_nu^(1,2) names for simple neutrino-sector traces.
+
+    The SM T combination is factored in the GroupFactors comparison tables,
+    where individual additive coefficients are available.  Here we only
+    replace exact single heavy-Yukawa traces without changing algebra.
+    """
+    text = latex
+    patterns = {
+        r"\operatorname{Tr}\!\left({y_1}\,\left({y_1}\right)^{\dagger}\right)": r"T_{\nu}^{(1)}",
+        r"\operatorname{Tr}\!\left({y_2}\,\left({y_2}\right)^{\dagger}\right)": r"T_{\nu}^{(2)}",
+        r"\operatorname{Tr}\!\left(y_1\,\left(y_1\right)^{\dagger}\right)": r"T_{\nu}^{(1)}",
+        r"\operatorname{Tr}\!\left(y_2\,\left(y_2\right)^{\dagger}\right)": r"T_{\nu}^{(2)}",
+    }
+    for raw, short in patterns.items():
+        text = text.replace(raw, short)
     return text
 
 
@@ -507,11 +547,9 @@ def _rge_term_cell(terms: list[str] | None) -> str:
 
 
 def _search_name_line(name: str) -> str:
-    """Render the raw pipeline identifier as searchable plain text in the PDF."""
-    return (
-        r"\noindent\textbf{Search name: }"
-        r"\texttt{" + latex_escape_text(str(name)) + r"}\par\smallskip"
-    )
+    """Render only the human-facing quantity symbol."""
+    symbol = _coupling_symbol(str(name)) if name != "C5" else r"C_5"
+    return rf"\noindent\textbf{{Quantity: }}${symbol}$\par\smallskip"
 
 
 def write_rge_comparison(
@@ -564,6 +602,7 @@ def write_rge_comparison(
         r"\begin{document}",
         r"\begin{landscape}",
         r"\section*{T3 UV one-loop RGE term comparison}",
+        *paper_notation_key_lines(),
         (
             r"Each running coupling has its own table. Rows are model configurations "
             r"and columns are additive structures in the beta function. Every populated "
@@ -936,6 +975,7 @@ def write_eft1_rge_comparison(
             r"one-loop threshold piece is retained as a boundary term and is not "
             r"run again at this order."
         ),
+        *paper_notation_key_lines(),
         r"\section*{Renormalisable EFT1 couplings}",
     ]
 
@@ -1344,9 +1384,9 @@ def _normalise_final_eft_latex(latex: str) -> str:
         text = text.replace(raw, pretty)
 
     symbol_map = {
-        "lambdaH": r"\lambda_H",
-        "lambdaT3": r"\lambda_{T3}",
-        "gY": r"g_Y",
+        "lambdaH": r"\lambda_1",
+        "lambdaT3": r"\lambda_5",
+        "gY": r"g_1",
         "g2": r"g_2",
         "g3": r"g_3",
         "ye": r"Y_e",
@@ -1456,6 +1496,7 @@ def write_final_eft_rge_comparison(
             r"We use "
             r"$16\pi^2\,\mu\,dC_5/d\mu=\beta_{C_5}^{(1)}$."
         ),
+        *paper_notation_key_lines(),
         r"\section*{$\beta_{C_5}^{(1)}$}",
         _search_name_line("C5"),
         r"\[16\pi^2\,\mu\frac{dC_5}{d\mu}=\beta_{C_5}^{(1)}\]",

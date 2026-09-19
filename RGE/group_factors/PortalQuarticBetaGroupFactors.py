@@ -25,13 +25,13 @@ from fractions import Fraction
 import argparse
 import json
 
+from RGE.group_factors.RepresentationFactors import (
+    su2_quadratic_casimir_from_dimension,
+)
+
 
 def _txt(x: Fraction) -> str:
     return str(x.numerator) if x.denominator == 1 else f"{x.numerator}/{x.denominator}"
-
-
-def _c2(d: int) -> Fraction:
-    return Fraction(d * d - 1, 4)
 
 
 def _validate(d1: int, d2: int, dF: int) -> None:
@@ -96,8 +96,8 @@ def portal_quartic_beta_group_factors(
     d1, d2, dF, alpha = map(int, (dS1, dS2, dF, alpha))
     _validate(d1, d2, dF)
 
-    C1 = _c2(d1)
-    C2 = _c2(d2)
+    C1 = su2_quadratic_casimir_from_dimension(d1)
+    C2 = su2_quadratic_casimir_from_dimension(d2)
     CH = Fraction(3, 4)
 
     YH = Fraction(1, 2)

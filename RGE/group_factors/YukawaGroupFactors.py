@@ -51,7 +51,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from RGE.running.EFT1QuarticAdapter import _load_cg_registry
+from RGE.running.MatcheteCG import load_cg_registry
 
 
 @dataclass(frozen=True)
@@ -174,7 +174,7 @@ def yukawa_scalar_group_factor(
     dF = int(meta["dF"])
     dS = int(meta[scalar_key])
 
-    registry = _load_cg_registry(seed)
+    registry = load_cg_registry(seed)
     if cg_name not in registry:
         available = ", ".join(sorted(registry)) or "(none)"
         raise KeyError(

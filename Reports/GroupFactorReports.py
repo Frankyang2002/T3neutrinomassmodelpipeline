@@ -32,10 +32,14 @@ import sympy as sp
 
 from common.Records import RunRecord
 from Reports.StageReports import group_factor_report_path
+from Reports.Notation import (
+    beta_symbol_latex,
+    paper_notation_key_lines,
+    paper_symbol_latex,
+)
 from Reports.ReportGeneration import (
     compile_latex_document,
     latex_escape_text,
-    paper_notation_key_lines,
     split_latex_terms,
 )
 from RGE.group_factors.DirectWeinbergGroupFactors import direct_weinberg_group_factor
@@ -120,23 +124,7 @@ def _union_keys(per_run: Mapping[str, Mapping[str, object]]) -> list[str]:
 
 
 _TOKEN_TEX = {
-    "lambdaH": r"\lambda_1",
-    "lambdaS": r"\lambda_2",
-    "lambda3": r"\lambda_3",
-    "lambda4": r"\lambda_4",
-    "lambda5": r"\lambda_5",
-    "lambdaS1": r"\lambda_{S_1}^{(1)}",
-    "lambdaS2": r"\lambda_{S_2}^{(1)}",
-    "lambdaH1": r"\lambda_{HS_1}^{(1)}",
-    "lambdaH2": r"\lambda_{HS_2}^{(1)}",
-    "lambdaH1Adj": r"\lambda_{HS_1}^{(A)}",
-    "lambdaH2Adj": r"\lambda_{HS_2}^{(A)}",
-    "lambdaT3": r"\lambda_5",
-    "lambda12": r"\lambda_{12}^{(1)}",
-    "lambda12Adj": r"\lambda_{12}^{(A)}",
-    "lambda12Cross": r"\lambda_{12}^{(\times)}",
-    "lambdaS1Adj": r"\lambda_{S_1}^{(A)}",
-    "lambdaS2Adj": r"\lambda_{S_2}^{(A)}",
+    # Keep these exact spellings local for byte-for-byte report compatibility.
     "mSSq": r"m_S^{2}",
     "mS1Sq": r"m_1^{2}",
     "mS2Sq": r"m_2^{2}",
@@ -167,6 +155,18 @@ _SPECIAL_STRUCTURE_TEX = {
 }
 
 
+def _simple_token_tex(token: str) -> str:
+    """Render one simple coupling/token without duplicating report notation."""
+    if token in _TOKEN_TEX:
+        return _TOKEN_TEX[token]
+
+    symbol = paper_symbol_latex(token)
+    if symbol != token:
+        return symbol
+
+    return rf"\mathrm{{{latex_escape_text(token)}}}"
+
+
 def _structure_tex(key: str) -> str:
     """Convert implementation structure names into mathematical LaTeX."""
     if key in _SPECIAL_STRUCTURE_TEX:
@@ -174,6 +174,10 @@ def _structure_tex(key: str) -> str:
 
     if key in _TOKEN_TEX:
         return _TOKEN_TEX[key]
+
+    symbol = paper_symbol_latex(key)
+    if symbol != key:
+        return symbol
 
     # Generated non-singlet sectors use ``beta_x:term``.
     if ":" in key:
@@ -188,39 +192,13 @@ def _structure_tex(key: str) -> str:
             base = piece[:-3]
             rendered.append(rf"\left({_structure_tex(base)}\right)^2")
         else:
-            rendered.append(_TOKEN_TEX.get(piece, rf"\mathrm{{{latex_escape_text(piece)}}}"))
+            rendered.append(_simple_token_tex(piece))
     return r"\,".join(rendered)
 
 
 def _beta_name_tex(name: str) -> str:
-    mapping = {
-        "y1": r"\beta_{y_1}",
-        "y2": r"\beta_{y_2}",
-        "MF": r"\beta_{M_F}",
-        "h": r"\beta_h",
-        "mSSq": r"\beta_{m_S^{2}}",
-        "lambdaS": r"\beta_{\lambda_2}",
-        "lambda3": r"\beta_{\lambda_3}",
-        "lambda4": r"\beta_{\lambda_4}",
-        "lambda5": r"\beta_{\lambda_5}",
-        "mS1Sq": r"\beta_{m_1^{2}}",
-        "mS2Sq": r"\beta_{m_2^{2}}",
-        "lambdaH": r"\beta_{\lambda_1}",
-        "lambdaS1": r"\beta_{\lambda_{S_1}^{(1)}}",
-        "lambdaS2": r"\beta_{\lambda_{S_2}^{(1)}}",
-        "lambdaH1": r"\beta_{\lambda_{HS_1}^{(1)}}",
-        "lambdaH2": r"\beta_{\lambda_{HS_2}^{(1)}}",
-        "lambdaH1Adj": r"\beta_{\lambda_{HS_1}^{(A)}}",
-        "lambdaH2Adj": r"\beta_{\lambda_{HS_2}^{(A)}}",
-        "lambdaT3": r"\beta_{\lambda_5}",
-        "lambda12": r"\beta_{\lambda_{12}^{(1)}}",
-        "lambda12Adj": r"\beta_{\lambda_{12}^{(A)}}",
-        "lambda12Cross": r"\beta_{\lambda_{12}^{(\times)}}",
-        "lambdaS1Adj": r"\beta_{\lambda_{S_1}^{(A)}}",
-        "lambdaS2Adj": r"\beta_{\lambda_{S_2}^{(A)}}",
-    }
-    return mapping.get(name, rf"\beta_{{\mathrm{{{latex_escape_text(name)}}}}}")
-
+    """Return the shared human-facing beta-function label."""
+    return beta_symbol_latex(name)
 
 def _as_rational(value: object) -> sp.Rational | None:
     """Return an exact rational when a group-factor value is numeric."""
@@ -872,25 +850,6 @@ def _saved_rge_beta_sections(
     title: str,
 ) -> list[str]:
     """Render gauge/Yukawa RGBeta results in the same comparison-table format."""
-    symbol_map = {
-        "gY": r"g_1",
-        "g2": r"g_2",
-        "g3": r"g_3",
-        "yu": r"Y_u",
-        "yd": r"Y_d",
-        "ye": r"Y_e",
-        "y1": r"y_1",
-        "y2": r"y_2",
-        "h": r"h",
-        "MF": r"M_F",
-        "mSSq": r"m_S^2",
-        "lambdaH": r"\lambda_1",
-        "lambdaS": r"\lambda_2",
-        "lambda3": r"\lambda_3",
-        "lambda4": r"\lambda_4",
-        "lambda5": r"\lambda_5",
-    }
-
     lines = [rf"\section*{{{title}}}"]
 
     for coupling in couplings:
@@ -920,7 +879,7 @@ def _saved_rge_beta_sections(
         if not have_any:
             continue
 
-        symbol = symbol_map[coupling]
+        symbol = paper_symbol_latex(coupling)
         lines.extend(
             _saved_rge_term_table(
                 rf"\beta_{{{symbol}}}^{{(1)}}",

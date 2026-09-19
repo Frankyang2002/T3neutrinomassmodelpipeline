@@ -25,6 +25,10 @@ import argparse
 from dataclasses import asdict, dataclass
 import json
 
+from RGE.group_factors.RepresentationFactors import (
+    su2_quadratic_casimir_from_dimension,
+)
+
 
 @dataclass(frozen=True)
 class FermionMassGroupFactors:
@@ -68,7 +72,7 @@ def fermion_mass_group_factors(
     GF1 = Fraction(max(dF, dS1), dF)
     GF2 = Fraction(max(dF, dS2), dF)
 
-    C2F = Fraction(dF * dF - 1, 4)
+    C2F = su2_quadratic_casimir_from_dimension(dF)
     YF = Fraction(alpha + 1, 2)
 
     su2 = -6 * C2F

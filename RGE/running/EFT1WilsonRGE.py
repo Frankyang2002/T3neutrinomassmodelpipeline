@@ -47,17 +47,17 @@ import sympy as sp
 from RGE.general.AnomalousDimensions import calculate_complete_master_rge
 from RGE.general.MasterWeinbergRGE import MasterRGEInputs
 from RGE.general.RGEModel import RGEModel
-from RGE.matching.MatchedEFTRGE import build_sm_eft, build_sm_yukawa
+from RGE.general.FermionBasis import build_gauge_sectors
+from RGE.general.WilsonTensors import SparseWilsonLookup
+from RGE.matching.SMEFTBasis import build_sm_eft, build_sm_yukawa
+from RGE.matching.WeinbergWilsonAdapter import (
+    build_weinberg_wilson_tensor,
+)
 from RGE.running.EFT1QuarticAdapter import (
     load_and_build_eft1_quartic_tensor,
 )
 from RGE.running.EFT1WilsonAdapter import (
     load_and_build_eft1_wilson_tensor,
-)
-from tests.non_pipeline_rge.general.FermionBasis import build_gauge_sectors
-from tests.non_pipeline_rge.general.T3RGETensors import SparseWilsonLookup
-from tests.python.Weinberg.WeinbergWilsonAdapter import (
-    build_weinberg_wilson_tensor,
 )
 
 

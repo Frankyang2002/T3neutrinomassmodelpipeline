@@ -28,22 +28,14 @@ from fractions import Fraction
 import argparse
 import json
 
+from RGE.group_factors.YukawaLegFactors import (
+    canonical_yukawa_leg_factors,
+    su2_quadratic_casimir_from_dimension,
+)
+
 
 def _txt(x: Fraction) -> str:
     return str(x.numerator) if x.denominator == 1 else f"{x.numerator}/{x.denominator}"
-
-
-def _c2(d: int) -> Fraction:
-    return Fraction(d * d - 1, 4)
-
-
-def _leg_factors(dS: int, dF: int):
-    dgt = max(dS, dF)
-    return {
-        "GS": Fraction(dgt, dS),
-        "GL": Fraction(dgt, 2),
-        "GF": Fraction(dgt, dF),
-    }
 
 
 def physical_self_conjugate_f(dF: int, alpha: int) -> bool:
@@ -78,26 +70,26 @@ def yukawa2_beta_group_factors(
     d1, d2, dF, alpha = map(int, (dS1, dS2, dF, alpha))
     _validate(d1, d2, dF)
 
-    f1 = _leg_factors(d1, dF)
-    f2 = _leg_factors(d2, dF)
+    f1 = canonical_yukawa_leg_factors(dF, d1)
+    f2 = canonical_yukawa_leg_factors(dF, d2)
 
     YL = Fraction(-1, 2)
     YF = Fraction(alpha + 1, 2)
     C2L = Fraction(3, 4)
-    C2F = _c2(dF)
+    C2F = su2_quadratic_casimir_from_dimension(dF)
 
     base = {
-        "Tr_y2*y2": _txt(f2["GS"]),
-        "y2_y2dag_y2": _txt(Fraction(1, 2) * (f2["GL"] + f2["GF"])),
-        "y1_y1dag_y2": _txt(Fraction(1, 2) * f1["GL"]),
+        "Tr_y2*y2": _txt(f2.G_scalar),
+        "y2_y2dag_y2": _txt(Fraction(1, 2) * (f2.G_lepton + f2.G_heavy)),
+        "y1_y1dag_y2": _txt(Fraction(1, 2) * f1.G_lepton),
         "Ye_Yedag_y2": "1/2",
     }
 
     self_conj = {}
     if physical_self_conjugate_f(dF, alpha):
         self_conj = {
-            "Tr_y2_y1dag*y1": _txt(f2["GS"]),
-            "y2_y1dag_y1": _txt(Fraction(1, 2) * f2["GF"]),
+            "Tr_y2_y1dag*y1": _txt(f2.G_scalar),
+            "y2_y1dag_y1": _txt(Fraction(1, 2) * f2.G_heavy),
         }
 
     gauge = {

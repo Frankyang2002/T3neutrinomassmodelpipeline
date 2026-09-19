@@ -32,6 +32,10 @@ from dataclasses import asdict, dataclass
 from fractions import Fraction
 import json
 
+from RGE.group_factors.RepresentationFactors import (
+    su2_quadratic_casimir_from_dimension,
+)
+
 
 @dataclass(frozen=True)
 class MixingQuarticGroupFactors:
@@ -84,11 +88,6 @@ def _txt(value: Fraction) -> str:
     )
 
 
-def _c2(dimension: int) -> Fraction:
-    """Quadratic Casimir for the SU(2) irrep of dimension d."""
-    return Fraction(dimension * dimension - 1, 4)
-
-
 def _validate_t3_dimensions(dS1: int, dS2: int, dF: int) -> None:
     if min(dS1, dS2, dF) < 1:
         raise ValueError("SU(2) representation dimensions must be positive.")
@@ -110,8 +109,8 @@ def mixing_quartic_group_factors(
     GS2 = Fraction(max(dF, dS2), dS2)
 
     C2H = Fraction(3, 4)
-    C2S1 = _c2(dS1)
-    C2S2 = _c2(dS2)
+    C2S1 = su2_quadratic_casimir_from_dimension(dS1)
+    C2S2 = su2_quadratic_casimir_from_dimension(dS2)
 
     YH = Fraction(1, 2)
     YS1 = Fraction(alpha, 2)

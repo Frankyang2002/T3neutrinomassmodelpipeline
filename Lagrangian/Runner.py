@@ -14,7 +14,10 @@ from common.Paths import (
     RUN_MODEL_SCRIPT,
 )
 from common.Records import RunRecord
-from common.Thresholds import threshold_plan_for_wolfram
+from common.Thresholds import (
+    default_threshold_plan,
+    threshold_plan_for_wolfram,
+)
 from common.T3Model import (
     T3_CLASSES,
     encode_alpha,
@@ -23,6 +26,64 @@ from common.T3Model import (
     valid_shared_scalar_dimensions,
     valid_t3_dimensions,
 )
+
+
+def _physicalize_shared_scalar_summary(
+    summary: dict,
+    *,
+    d_s: int,
+    d_f: int,
+) -> dict:
+    """Return a shared-scalar summary expressed in physical field language.
+
+    Wolfram matching always works with the formal T3 roles S1 and S2. For the
+    shared-scalar branch those two roles represent one physical scalar S, so
+    Python-facing metadata must collapse simultaneous S1/S2 occurrences back
+    to S.
+
+    Only summary metadata is rewritten here. Matching expressions and files
+    produced by Wolfram are untouched.
+    """
+    physical_summary = dict(summary)
+    physical_summary["SharedScalar"] = True
+    physical_summary["PhysicalScalarField"] = "S"
+    physical_summary["FormalScalarIdentification"] = "S1=C*S*, S2=S"
+    physical_summary["PhysicalDimensions"] = {"dS": d_s, "dF": d_f}
+
+    physical_stages: list[dict] = []
+
+    for raw_stage in summary.get("EFTStages", []):
+        stage = dict(raw_stage)
+        integrated = list(stage.get("IntegratedFields", []))
+        active = list(stage.get("ActiveHeavyFields", []))
+
+        if "S1" in integrated and "S2" in integrated:
+            integrated = [
+                field
+                for field in integrated
+                if field not in {"S1", "S2"}
+            ] + ["S"]
+
+        if "S1" in active and "S2" in active:
+            active = [
+                field
+                for field in active
+                if field not in {"S1", "S2"}
+            ] + ["S"]
+
+        stage["IntegratedFields"] = integrated
+        stage["ActiveHeavyFields"] = active
+
+        for key in ("Label", "label"):
+            if key in stage:
+                stage[key] = str(stage[key]).replace("S1_S2", "S")
+
+        physical_stages.append(stage)
+
+    if "EFTStages" in summary:
+        physical_summary["EFTStages"] = physical_stages
+
+    return physical_summary
 
 
 def run_model(
@@ -57,8 +118,8 @@ def run_model(
     #   loop order
     #   model arguments
     # We use RunModel.wl+
-    threshold_plan = threshold_plan or (
-        (("F", "S"),) if shared_scalar else (("F", "S1", "S2"),)
+    threshold_plan = threshold_plan or default_threshold_plan(
+        shared_scalar=shared_scalar
     )
     wolfram_threshold_plan = threshold_plan_for_wolfram(
         threshold_plan, shared_scalar=shared_scalar
@@ -165,22 +226,11 @@ def run_model(
     )
 
     if shared_scalar:
-        summary["SharedScalar"] = True
-        summary["PhysicalScalarField"] = "S"
-        summary["FormalScalarIdentification"] = "S1=C*S*, S2=S"
-        summary["PhysicalDimensions"] = {"dS": d_s1, "dF": d_f}
-        for stage in summary.get("EFTStages", []):
-            integrated = list(stage.get("IntegratedFields", []))
-            active = list(stage.get("ActiveHeavyFields", []))
-            if "S1" in integrated and "S2" in integrated:
-                integrated = [x for x in integrated if x not in {"S1", "S2"}] + ["S"]
-            if "S1" in active and "S2" in active:
-                active = [x for x in active if x not in {"S1", "S2"}] + ["S"]
-            stage["IntegratedFields"] = integrated
-            stage["ActiveHeavyFields"] = active
-            for key in ("Label", "label"):
-                if key in stage:
-                    stage[key] = str(stage[key]).replace("S1_S2", "S")
+        summary = _physicalize_shared_scalar_summary(
+            summary,
+            d_s=d_s1,
+            d_f=d_f,
+        )
 
     # Sequential matching must never silently degrade to the historical
     # common-threshold result.  Surface the actual Wolfram stage count here.
@@ -230,6 +280,7 @@ def run_model(
         output_dir=output_dir,
         shared_scalar=shared_scalar,
     )
+
 
 def validate_dimensions(
     d_s1: int,
@@ -303,6 +354,7 @@ def validate_dimensions(
         threshold_plan,
     )
 
+
 def validate_shared_dimensions(
     d_s: int,
     d_f: int,
@@ -357,4 +409,3 @@ def obtain_class_dimensions(
         threshold_plan,
         output_root,
     )
-

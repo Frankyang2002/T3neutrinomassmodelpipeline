@@ -25,9 +25,9 @@ from fractions import Fraction
 import argparse
 import json
 
-
-def c2(d: int) -> Fraction:
-    return Fraction(d * d - 1, 4)
+from RGE.group_factors.RepresentationFactors import (
+    su2_quadratic_casimir_from_dimension,
+)
 
 
 def _txt(x: Fraction) -> str:
@@ -107,8 +107,8 @@ def portal_quartic_backbone(
 
     GS1 = Fraction(max(dF, dS1), dS1)
     GS2 = Fraction(max(dF, dS2), dS2)
-    C1 = c2(dS1)
-    C2 = c2(dS2)
+    C1 = su2_quadratic_casimir_from_dimension(dS1)
+    C2 = su2_quadratic_casimir_from_dimension(dS2)
     CH = Fraction(3, 4)
     YH = Fraction(1, 2)
     Y1 = Fraction(alpha, 2)

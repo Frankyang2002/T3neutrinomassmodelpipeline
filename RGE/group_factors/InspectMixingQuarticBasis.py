@@ -20,10 +20,7 @@ couplings is attempted.
 """
 
 import argparse
-from collections import Counter
-from itertools import combinations_with_replacement
 import json
-from math import factorial
 from pathlib import Path
 import re
 import sys
@@ -35,10 +32,13 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from RGE.running.EFT1QuarticAdapter import (
-    SparseQuarticTensor,
-    load_and_build_eft1_quartic_tensor,
+from RGE.group_factors.MixingQuarticTensorAlgebra import (
+    basis_tensor,
+    build_cross_tensor,
+    project_onto_direction,
+    scalar_dimension,
 )
+from RGE.running.EFT1QuarticAdapter import load_and_build_eft1_quartic_tensor
 
 
 def _text(x: sp.Expr) -> str:
@@ -68,96 +68,6 @@ def _coupling_name(term: str) -> str:
     return body.split(",", 1)[0].strip()
 
 
-def _basis_tensor(
-    full: SparseQuarticTensor,
-    coupling_name: str,
-    *,
-    identify_conjugate: bool = True,
-) -> SparseQuarticTensor:
-    symbol = sp.Symbol(coupling_name)
-    conjugate = sp.conjugate(symbol)
-    entries = {}
-
-    for key, raw in full.nonzero_items():
-        expr = sp.expand(raw)
-        if identify_conjugate:
-            expr = sp.expand(expr.xreplace({conjugate: symbol}))
-        coefficient = sp.simplify(expr.coeff(symbol))
-        if coefficient != 0:
-            entries[key] = coefficient
-
-    return SparseQuarticTensor(entries)
-
-
-def _dimension(full: SparseQuarticTensor) -> int:
-    return max((max(key) for key in full.entries), default=0)
-
-
-def _weight(key: tuple[int, int, int, int]) -> int:
-    counts = Counter(key)
-    value = factorial(4)
-    for n in counts.values():
-        value //= factorial(n)
-    return value
-
-
-def _inner(a: SparseQuarticTensor, b: SparseQuarticTensor) -> sp.Expr:
-    total = sp.S.Zero
-    for key in set(a.entries) | set(b.entries):
-        total += _weight(key) * sp.conjugate(a[key]) * b[key]
-    return sp.simplify(total)
-
-
-def _cross_component(
-    t: SparseQuarticTensor,
-    x: SparseQuarticTensor,
-    a: int, b: int, c: int, d: int,
-    n: int,
-) -> sp.Expr:
-    total = sp.S.Zero
-    for (p, q), (r, s) in (
-        ((a, b), (c, d)),
-        ((a, c), (b, d)),
-        ((a, d), (b, c)),
-    ):
-        for e in range(1, n + 1):
-            for f in range(1, n + 1):
-                total += (
-                    t[p, q, e, f] * x[e, f, r, s]
-                    + x[p, q, e, f] * t[e, f, r, s]
-                )
-    return sp.simplify(total)
-
-
-def _cross_tensor(
-    t: SparseQuarticTensor,
-    x: SparseQuarticTensor,
-    n: int,
-) -> SparseQuarticTensor:
-    entries = {}
-    for key in combinations_with_replacement(range(1, n + 1), 4):
-        value = _cross_component(t, x, *key, n)
-        if value != 0:
-            entries[key] = value
-    return SparseQuarticTensor(entries)
-
-
-def _project(
-    generated: SparseQuarticTensor,
-    target: SparseQuarticTensor,
-) -> tuple[sp.Expr, int]:
-    norm = sp.simplify(_inner(target, target))
-    if norm == 0:
-        raise ValueError("lambdaT3 tensor has zero norm")
-
-    coeff = sp.simplify(_inner(target, generated) / norm)
-    residual_count = 0
-    for key in set(generated.entries) | set(target.entries):
-        if sp.simplify(generated[key] - coeff * target[key]) != 0:
-            residual_count += 1
-    return coeff, residual_count
-
-
 def inspect(seed_path: Path, rgbeta_path: Path) -> dict:
     seed = json.loads(seed_path.read_text(encoding="utf-8"))
     names = sorted({
@@ -166,9 +76,9 @@ def inspect(seed_path: Path, rgbeta_path: Path) -> dict:
     })
 
     full = load_and_build_eft1_quartic_tensor(seed_path, rgbeta_path)
-    n = _dimension(full)
+    n = scalar_dimension(full)
 
-    t3 = _basis_tensor(full, "lambdaT3", identify_conjugate=False)
+    t3 = basis_tensor(full, "lambdaT3", identify_conjugate=False)
     if not t3.entries:
         raise ValueError("No holomorphic lambdaT3 tensor found")
 
@@ -177,12 +87,13 @@ def inspect(seed_path: Path, rgbeta_path: Path) -> dict:
         if name == "lambdaT3":
             continue
 
-        direction = _basis_tensor(full, name, identify_conjugate=True)
+        direction = basis_tensor(full, name, identify_conjugate=True)
         if not direction.entries:
             continue
 
-        generated = _cross_tensor(t3, direction, n)
-        coeff, residual_count = _project(generated, t3)
+        generated = build_cross_tensor(t3, direction, n)
+        coeff, residual, _ = project_onto_direction(generated, t3)
+        residual_count = len(residual.entries)
 
         rows.append({
             "coupling": name,

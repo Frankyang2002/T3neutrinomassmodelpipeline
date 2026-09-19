@@ -56,6 +56,7 @@ from RGE.group_factors.YukawaGroupFactors import (
     y1_scalar_wavefunction_group_factor,
     y2_scalar_wavefunction_group_factor,
 )
+from RGE.group_factors.YukawaLegFactors import canonical_yukawa_leg_factors
 
 
 @dataclass(frozen=True)
@@ -84,29 +85,17 @@ class Y1BetaGroupFactors:
     y2_closed_form_residual: str
 
 
-def _leg_factors(dF: int, dS: int) -> YukawaLegFactors:
-    dF = int(dF)
-    dS = int(dS)
-
-    if abs(dS - dF) != 1:
-        raise ValueError(
-            f"T3 Yukawa requires dS=dF+/-1, got dF={dF}, dS={dS}."
-        )
-
-    d_larger = max(dF, dS)
-    Gs = sp.Rational(d_larger, dS)
-    Gl = sp.Rational(d_larger, 2)
-    Gf = sp.Rational(d_larger, dF)
-    self_coeff = sp.simplify((Gl + Gf) / 2)
+def _serialised_leg_factors(dF: int, dS: int) -> YukawaLegFactors:
+    factors = canonical_yukawa_leg_factors(dF, dS)
 
     return YukawaLegFactors(
-        dF=dF,
-        dS=dS,
-        d_larger=d_larger,
-        G_scalar=str(Gs),
-        G_lepton=str(Gl),
-        G_heavy=str(Gf),
-        self_coefficient=str(self_coeff),
+        dF=factors.dF,
+        dS=factors.dS,
+        d_larger=factors.d_larger,
+        G_scalar=str(factors.G_scalar),
+        G_lepton=str(factors.G_lepton),
+        G_heavy=str(factors.G_heavy),
+        self_coefficient=str(factors.self_coefficient),
     )
 
 
@@ -118,8 +107,8 @@ def y1_beta_group_factors(uv_registry: Path) -> Y1BetaGroupFactors:
     dS1 = int(meta["dS1"])
     dS2 = int(meta["dS2"])
 
-    y1 = _leg_factors(dF, dS1)
-    y2 = _leg_factors(dF, dS2)
+    y1 = _serialised_leg_factors(dF, dS1)
+    y2 = _serialised_leg_factors(dF, dS2)
 
     exact_y1 = y1_scalar_wavefunction_group_factor(uv_registry)
     exact_y2 = y2_scalar_wavefunction_group_factor(uv_registry)

@@ -32,7 +32,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from Reports.RGEComparison import _normalise_rgbeta_latex
+from Reports.RGEComparison import normalise_rgbeta_latex
 from Reports.ReportGeneration import split_latex_terms
 
 
@@ -165,7 +165,7 @@ def _extract_from_latex(payload: dict[str, Any], yukawa: str, gauge: str) -> Fra
     if not raw:
         raise KeyError(f"Missing report_beta_latex[{yukawa!r}]")
 
-    cleaned = _normalise_rgbeta_latex(str(raw))
+    cleaned = normalise_rgbeta_latex(str(raw))
     terms = split_latex_terms(cleaned) or [cleaned]
 
     candidates = [

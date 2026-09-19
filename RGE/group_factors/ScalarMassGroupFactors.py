@@ -36,13 +36,13 @@ from fractions import Fraction
 import argparse
 import json
 
+from RGE.group_factors.RepresentationFactors import (
+    su2_quadratic_casimir_from_dimension,
+)
+
 
 def _txt(x: Fraction) -> str:
     return str(x.numerator) if x.denominator == 1 else f"{x.numerator}/{x.denominator}"
-
-
-def _c2(d: int) -> Fraction:
-    return Fraction(d * d - 1, 4)
 
 
 def _validate(d1: int, d2: int, dF: int) -> None:
@@ -101,8 +101,8 @@ def scalar_mass_group_factors(
             "SU(2) F as self-conjugate."
         )
 
-    C1 = _c2(d1)
-    C2 = _c2(d2)
+    C1 = su2_quadratic_casimir_from_dimension(d1)
+    C2 = su2_quadratic_casimir_from_dimension(d2)
     Y1 = Fraction(alpha, 2)
     Y2 = Fraction(alpha + 2, 2)
     GS1 = Fraction(max(dF, d1), d1)

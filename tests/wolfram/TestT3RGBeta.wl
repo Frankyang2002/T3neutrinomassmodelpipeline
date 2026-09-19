@@ -11,8 +11,8 @@ scriptDirectory = DirectoryName @ ExpandFileName[$InputFileName];
 projectRoot = ExpandFileName @ FileNameJoin[{scriptDirectory, "..", ".."}];
 modelFile = FileNameJoin[{projectRoot, "RGE", "running", "wolfram", "T3RGBetaModel.wl"}];
 
-Fail[msg_] := (Print["FAIL: ", msg]; Exit[1]);
-If[!FileExistsQ[modelFile], Fail["T3RGBetaModel.wl not found at " <> modelFile]];
+TestFail[msg_] := (Print["FAIL: ", msg]; Exit[1]);
+If[!FileExistsQ[modelFile], TestFail["T3RGBetaModel.wl not found at " <> modelFile]];
 Get[modelFile];
 
 models = {
@@ -104,6 +104,6 @@ Do[
 ,
 {model, models}];
 
-If[!TrueQ[allPassed], Fail["one or more T3 RGBeta regressions failed"]];
+If[!TrueQ[allPassed], TestFail["one or more T3 RGBeta regressions failed"]];
 Print["\nALL T3 RGBETA TESTS PASSED"];
 Exit[0];

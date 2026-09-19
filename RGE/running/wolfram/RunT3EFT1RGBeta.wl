@@ -11,61 +11,34 @@
 ClearAll["Global`*"];
 Needs["RGBeta`"];
 
-sharedMode = (
-    Length[$ScriptCommandLine] >= 2 &&
-    ToUpperCase[$ScriptCommandLine[[2]]] === "SHARED"
-);
-
-If[sharedMode,
-    If[Length[$ScriptCommandLine] < 5,
-        Print["Usage: ... SHARED dS dF output.json"];
-        Exit[2];
-    ],
-    If[Length[$ScriptCommandLine] < 6,
-        Print["Usage: ... dS1 dS2 dF alpha output.json"];
-        Exit[2];
-    ]
-];
-
 scriptDir = DirectoryName[$InputFileName];
+Get[FileNameJoin[{scriptDir, "T3RGBetaRunnerCommon.wl"}]];
 Get[FileNameJoin[{scriptDir, "T3RGBetaModel.wl"}]];
 
-ParseIntegerToken[token_String] := If[
-    StringStartsQ[token, "m"],
-    -ToExpression[StringDrop[token, 1]],
-    ToExpression[token]
-];
+config = T3RGBetaParseRunnerArguments[];
 
-If[sharedMode,
-    dS = ParseIntegerToken[$ScriptCommandLine[[3]]];
-    dF = ParseIntegerToken[$ScriptCommandLine[[4]]];
-    dS1 = dS; dS2 = dS; alpha = -1;
-    outputPath = $ScriptCommandLine[[5]],
-    dS1 = ParseIntegerToken[$ScriptCommandLine[[2]]];
-    dS2 = ParseIntegerToken[$ScriptCommandLine[[3]]];
-    dF = ParseIntegerToken[$ScriptCommandLine[[4]]];
-    alpha = ParseIntegerToken[$ScriptCommandLine[[5]]];
-    outputPath = $ScriptCommandLine[[6]]
-];
-
-
-WriteJSON[payload_Association] := Module[{json},
-    json = ExportString[payload, "RawJSON"];
-    If[!StringQ[json],
-        Print["JSON serialization failed."];
-        Exit[1];
-    ];
-    Export[outputPath, json, "Text"];
-];
+sharedMode = config["SharedMode"];
+dS1 = config["dS1"];
+dS2 = config["dS2"];
+dF = config["dF"];
+alpha = config["alpha"];
+outputPath = config["OutputPath"];
 
 
 build = CheckAbort[
-    Quiet[If[sharedMode, T3RGBetaBuildSharedEFT1[dS1, dF], T3RGBetaBuildEFT1[dS1, dS2, dF, alpha]]],
+    Quiet[
+        If[
+            sharedMode,
+            T3RGBetaBuildSharedEFT1[dS1, dF],
+            T3RGBetaBuildEFT1[dS1, dS2, dF, alpha]
+        ]
+    ],
     $Aborted
 ];
 
 If[!AssociationQ[build],
-    WriteJSON[
+    T3RGBetaWriteJSON[
+        outputPath,
         <|
             "status" -> "Failed",
             "stage" -> "Build",
@@ -79,28 +52,29 @@ If[!AssociationQ[build],
 
 (* JSON cannot encode exact Mathematica Rational objects.  Preserve the
    project's exact hypercharge convention as InputForm strings. *)
-jsonMetadata = <|
-    "SharedScalar" -> sharedMode,
-    "dS" -> If[sharedMode, dS1, Null],
-    "dS1" -> dS1,
-    "dS2" -> dS2,
-    "dF" -> dF,
-    "alpha" -> alpha,
-    "YS1" -> ToString[InputForm[If[sharedMode, -build["YS"], build["YS1"]]]],
-    "YS2" -> ToString[InputForm[If[sharedMode, build["YS"], build["YS2"]]]],
-    "YS" -> ToString[InputForm[If[sharedMode, build["YS"], Null]]],
-    "IntegratedField" -> "F",
-    "ActiveBSMFields" -> If[sharedMode, {"S"}, {"S1", "S2"}]
-|>;
+jsonMetadata = Join[
+    T3RGBetaCommonMetadata[config, build],
+    <|
+        "IntegratedField" -> "F",
+        "ActiveBSMFields" -> If[sharedMode, {"S"}, {"S1", "S2"}]
+    |>
+];
 
 
 betaAssociation = CheckAbort[
-    Quiet[If[sharedMode, T3RGBetaSharedEFT1OneLoopBetas[], T3RGBetaEFT1OneLoopBetas[]]],
+    Quiet[
+        If[
+            sharedMode,
+            T3RGBetaSharedEFT1OneLoopBetas[],
+            T3RGBetaEFT1OneLoopBetas[]
+        ]
+    ],
     $Aborted
 ];
 
 If[betaAssociation === $Aborted || !AssociationQ[betaAssociation],
-    WriteJSON[
+    T3RGBetaWriteJSON[
+        outputPath,
         <|
             "status" -> "Failed",
             "stage" -> "BetaGeneration",
@@ -111,10 +85,7 @@ If[betaAssociation === $Aborted || !AssociationQ[betaAssociation],
 ];
 
 
-stringBetas = Association @ KeyValueMap[
-    (#1 -> ToString[InputForm[#2]]) &,
-    betaAssociation
-];
+stringBetas = T3RGBetaSerializeAssociation[betaAssociation];
 
 (* RGBeta uses a special convention for gauge couplings:
 
@@ -128,32 +99,15 @@ stringBetas = Association @ KeyValueMap[
    use the ordinary derivative convention, so their one-loop report term is
    simply BetaTerm[X,1].  The original BetaTerm output above is preserved
    unchanged in "betas" for machine use. *)
-reportBetaAssociation = Association @ KeyValueMap[
-    Function[{name, beta},
-        name -> Switch[
-            name,
-            "gY", Cancel[beta/(2 gY)],
-            "g2", Cancel[beta/(2 g2)],
-            "g3", Cancel[beta/(2 g3)],
-            _, beta
-        ]
-    ],
-    betaAssociation
-];
+reportBetaAssociation = T3RGBetaConventionalReportBetas[betaAssociation];
 
-stringReportBetas = Association @ KeyValueMap[
-    (#1 -> ToString[InputForm[#2]]) &,
-    reportBetaAssociation
-];
+stringReportBetas = T3RGBetaSerializeAssociation[reportBetaAssociation];
 
 (* TeXForm is retained as a first-pass rendering.  RGBeta has internal heads
    such as Matrix, Trans and Bar that TeXForm does not know how to typeset.
    Reports/RGEComparison.py performs the final physics-aware display cleanup
    while using these exact expressions. *)
-latexReportBetas = Association @ KeyValueMap[
-    (#1 -> ToString[TeXForm[#2]]) &,
-    reportBetaAssociation
-];
+latexReportBetas = T3RGBetaLaTeXAssociation[reportBetaAssociation];
 
 
 result = <|
@@ -168,7 +122,7 @@ result = <|
     "report_beta_latex" -> latexReportBetas
 |>;
 
-WriteJSON[result];
+T3RGBetaWriteJSON[outputPath, result];
 
 Print["RGBeta T3 EFT1 renormalisable RGE export: SUCCESS"];
 Print["Output: ", outputPath];

@@ -57,12 +57,12 @@ from RGE.running.EFT1WilsonRGE import (
     build_eft1_rge_context,
     closure_output_components,
 )
-from RGE.matching.MatchedEFTRGE import build_sm_eft
-from RGE.running.EFT1WilsonAdapter import SparseWilsonTensor
-from RGE.running.EFT1WilsonFlavorSeed import run_flavor_seed_export
-from tests.python.Weinberg.WeinbergWilsonAdapter import (
+from RGE.matching.SMEFTBasis import build_sm_eft
+from RGE.matching.WeinbergWilsonAdapter import (
     build_weinberg_wilson_tensor,
 )
+from RGE.running.EFT1WilsonAdapter import SparseWilsonTensor
+from RGE.running.EFT1WilsonFlavorSeed import run_flavor_seed_export
 
 
 YE = sp.Symbol("ye")

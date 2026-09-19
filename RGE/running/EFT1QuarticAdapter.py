@@ -29,9 +29,21 @@ from itertools import product
 import json
 from math import factorial
 from pathlib import Path
-import re
 
 import sympy as sp
+
+from RGE.running.MatcheteCG import CGTensor, load_cg_registry
+
+from RGE.running.MatcheteParsing import (
+    matching_brace as _matching_brace,
+    matching_bracket as _matching_bracket,
+    parse_index as _parse_index,
+    parse_mathematica_scalar as _parse_mathematica_scalar,
+    parse_reps as _parse_reps,
+    parse_sparse_array as _parse_sparse_array,
+    split_top_level as _split_top_level,
+    strip_bar as _strip_bar,
+)
 
 
 @dataclass(frozen=True)
@@ -40,13 +52,6 @@ class ScalarLeg:
     dummy: str | None
     rep: str | None
     conjugated: bool
-
-
-@dataclass(frozen=True)
-class CGTensor:
-    name: str
-    reps: tuple[str, ...]
-    tensor: sp.MutableDenseNDimArray
 
 
 @dataclass(frozen=True)
@@ -117,193 +122,6 @@ class SparseQuarticTensor:
 
     def nonzero_items(self):
         return self.entries.items()
-
-
-def _matching_bracket(
-    text: str,
-    open_index: int,
-    left: str = "[",
-    right: str = "]",
-) -> int:
-    if text[open_index] != left:
-        raise ValueError(f"Expected {left!r} at index {open_index}.")
-    depth = 0
-    for pos in range(open_index, len(text)):
-        if text[pos] == left:
-            depth += 1
-        elif text[pos] == right:
-            depth -= 1
-            if depth == 0:
-                return pos
-    raise ValueError(f"Unbalanced {left}{right} brackets.")
-
-
-def _matching_brace(text: str, open_index: int) -> int:
-    return _matching_bracket(text, open_index, "{", "}")
-
-
-def _split_top_level(text: str, separator: str = ",") -> list[str]:
-    result: list[str] = []
-    start = 0
-    square = curly = paren = 0
-    for pos, char in enumerate(text):
-        if char == "[":
-            square += 1
-        elif char == "]":
-            square -= 1
-        elif char == "{":
-            curly += 1
-        elif char == "}":
-            curly -= 1
-        elif char == "(":
-            paren += 1
-        elif char == ")":
-            paren -= 1
-        elif (
-            char == separator
-            and square == 0
-            and curly == 0
-            and paren == 0
-        ):
-            result.append(text[start:pos].strip())
-            start = pos + 1
-    result.append(text[start:].strip())
-    return result
-
-
-def _strip_bar(text: str) -> tuple[str, bool]:
-    stripped = text.strip()
-    if stripped.startswith("Bar[") and stripped.endswith("]"):
-        if _matching_bracket(stripped, 3) == len(stripped) - 1:
-            return stripped[4:-1].strip(), True
-    return stripped, False
-
-
-def _parse_index(text: str) -> tuple[str, str]:
-    inner, _ = _strip_bar(text)
-    if not inner.startswith("Index["):
-        raise ValueError(f"Expected Index[...] but got {text!r}.")
-    close_index = _matching_bracket(inner, 5)
-    args = _split_top_level(inner[6:close_index])
-    if len(args) != 2:
-        raise ValueError(f"Unexpected index expression {text!r}.")
-    rep, _ = _strip_bar(args[1])
-    return args[0].strip(), rep.strip()
-
-
-def _parse_reps(text: str) -> tuple[str, ...]:
-    stripped = text.strip()
-    if not (stripped.startswith("{") and stripped.endswith("}")):
-        raise ValueError(f"Unexpected representation list {text!r}.")
-    reps: list[str] = []
-    for item in _split_top_level(stripped[1:-1]):
-        rep, _ = _strip_bar(item)
-        reps.append(rep)
-    return tuple(reps)
-
-
-def _parse_mathematica_scalar(text: str) -> sp.Expr:
-    cleaned = text.strip().replace("^", "**")
-    sqrt_pattern = re.compile(r"Sqrt\[([^\[\]]+)\]")
-    while sqrt_pattern.search(cleaned):
-        cleaned = sqrt_pattern.sub(r"sqrt(\1)", cleaned)
-
-    return sp.simplify(
-        sp.sympify(
-            cleaned,
-            locals={"sqrt": sp.sqrt, "I": sp.I},
-        )
-    )
-
-
-def _parse_sparse_array(text: str) -> sp.MutableDenseNDimArray:
-    """Parse Matchete's arbitrary-rank CSR-style SparseArray InputForm."""
-
-    s = text.strip()
-    prefix = "SparseArray[Automatic,"
-    if not s.startswith(prefix):
-        raise ValueError(f"Unsupported CG tensor representation: {s[:100]}")
-
-    dim_open = s.find("{", len(prefix))
-    dim_close = _matching_brace(s, dim_open)
-    dims = tuple(
-        int(piece.strip())
-        for piece in _split_top_level(s[dim_open + 1 : dim_close])
-    )
-
-    payload_start = s.find("{1, {{", dim_close)
-    if payload_start < 0:
-        raise ValueError("SparseArray CSR payload was not found.")
-
-    row_start = payload_start + len("{1, {")
-    row_end = _matching_brace(s, row_start)
-    row_ptr = [
-        int(piece.strip())
-        for piece in _split_top_level(s[row_start + 1 : row_end])
-        if piece.strip()
-    ]
-
-    coord_start = s.find("{", row_end + 1)
-    coord_end = _matching_brace(s, coord_start)
-    coord_text = s[coord_start + 1 : coord_end].strip()
-
-    coordinates: list[tuple[int, ...]] = []
-    pos = 0
-    while pos < len(coord_text):
-        while pos < len(coord_text) and coord_text[pos] in " ,\t\r\n":
-            pos += 1
-        if pos >= len(coord_text):
-            break
-        close = _matching_brace(coord_text, pos)
-        coordinates.append(
-            tuple(
-                int(piece.strip())
-                for piece in _split_top_level(coord_text[pos + 1 : close])
-            )
-        )
-        pos = close + 1
-
-    inner_pair_start = row_start - 1
-    inner_pair_end = _matching_brace(s, inner_pair_start)
-    values_start = s.find("{", inner_pair_end + 1)
-    values_end = _matching_brace(s, values_start)
-    values_text = s[values_start + 1 : values_end].strip()
-    values = (
-        []
-        if not values_text
-        else [
-            _parse_mathematica_scalar(piece)
-            for piece in _split_top_level(values_text)
-        ]
-    )
-
-    if len(row_ptr) != dims[0] + 1:
-        raise ValueError("SparseArray row-pointer length is inconsistent.")
-    if len(coordinates) != len(values):
-        raise ValueError("SparseArray coordinate/value lengths do not agree.")
-
-    tensor = sp.MutableDenseNDimArray.zeros(*dims)
-
-    for first in range(dims[0]):
-        for pointer in range(row_ptr[first], row_ptr[first + 1]):
-            tail = coordinates[pointer]
-            if len(tail) != len(dims) - 1:
-                raise ValueError("SparseArray coordinate rank mismatch.")
-            index = (first,) + tuple(component - 1 for component in tail)
-            tensor[index] = values[pointer]
-
-    return tensor
-
-
-def _load_cg_registry(seed: dict) -> dict[str, CGTensor]:
-    result: dict[str, CGTensor] = {}
-    for item in seed.get("CGRegistry", []):
-        result[item["Name"]] = CGTensor(
-            name=item["Name"],
-            reps=_parse_reps(item["RepsInputForm"]),
-            tensor=_parse_sparse_array(item["TensorInputForm"]),
-        )
-    return result
 
 
 def _find_scalar_legs(term: str) -> tuple[ScalarLeg, ...]:
@@ -566,7 +384,7 @@ def build_eft1_quartic_tensor(
 ) -> SparseQuarticTensor:
     """Build lambda_abcd from the exact Matchete scalar-quartic seed."""
 
-    registry = _load_cg_registry(seed)
+    registry = load_cg_registry(seed)
     layout = ScalarLayout(
         d_s1=int(d_s1), d_s2=int(d_s2), shared_scalar=bool(shared_scalar)
     )

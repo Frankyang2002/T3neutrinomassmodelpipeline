@@ -289,6 +289,22 @@ def run_uv_rgbeta_stage(record: RunRecord) -> bool:
     return result.status == "Success"
 
 
+def _physical_scalar_fields(record: RunRecord) -> set[str]:
+    """Return the physical scalar fields active after integrating out F."""
+    return {"S"} if record.shared_scalar else {"S1", "S2"}
+
+
+def _has_f_first_eft_stage(record: RunRecord) -> bool:
+    """Return whether the first matched EFT is obtained by integrating out F."""
+    stages = record.summary.get("EFTStages", [])
+    return bool(
+        stages
+        and stages[0].get("IntegratedFields") == ["F"]
+        and set(stages[0].get("ActiveHeavyFields", []))
+        == _physical_scalar_fields(record)
+    )
+
+
 def run_eft1_rgbeta_stage(record: RunRecord) -> bool:
     """Generate the renormalisable one-loop RGEs in EFT1 = SM + S1 + S2.
 
@@ -301,15 +317,7 @@ def run_eft1_rgbeta_stage(record: RunRecord) -> bool:
 
     summary = record.summary
 
-    stages = summary.get("EFTStages", [])
-    has_f_first_stage = bool(
-        stages
-        and stages[0].get("IntegratedFields") == ["F"]
-        and set(stages[0].get("ActiveHeavyFields", []))
-        == ({"S"} if record.shared_scalar else {"S1", "S2"})
-    )
-
-    if not has_f_first_stage:
+    if not _has_f_first_eft_stage(record):
         summary["EFT1RenormalisableRGEStatus"] = "NotApplicable"
         return True
 
@@ -372,15 +380,7 @@ def run_eft1_wilson_rge_stage(record: RunRecord) -> bool:
     """
 
     summary = record.summary
-    stages = summary.get("EFTStages", [])
-    has_f_first_stage = bool(
-        stages
-        and stages[0].get("IntegratedFields") == ["F"]
-        and set(stages[0].get("ActiveHeavyFields", []))
-        == ({"S"} if record.shared_scalar else {"S1", "S2"})
-    )
-
-    if not has_f_first_stage:
+    if not _has_f_first_eft_stage(record):
         summary["EFT1WilsonRGEStatus"] = "NotApplicable"
         return True
 
@@ -461,7 +461,7 @@ def run_eft1_wilson_rge_stage(record: RunRecord) -> bool:
     # Mirror the calculation metadata onto the actual EFT1 stage record so
     # stage-aware reporting can consume it without rediscovering files.
     if record.eft_stages:
-        eft1_stage = record.eft_stages[0]
+        eft1_stage = record.first_eft_stage
         eft1_stage.summary.update(
             {
                 "RenormalisableRGEStatus": summary.get(
@@ -627,7 +627,7 @@ def run_eft1_wilson_transport_stage(
     )
 
     if record.eft_stages:
-        record.eft_stages[0].summary.update(
+        record.first_eft_stage.summary.update(
             {
                 "WilsonTransportStatus": summary[
                     "EFT1WilsonTransportStatus"
@@ -667,14 +667,26 @@ def run_eft1_wilson_transport_stage(
 
 
 def _is_f_then_s1_s2_plan(record: RunRecord) -> bool:
-    """Return True for the sequential F -> scalar hierarchy."""
+    """Return whether recorded EFT stages realize the F -> scalar hierarchy."""
     stages = record.summary.get("EFTStages", [])
-    scalar_fields = {"S"} if record.shared_scalar else {"S1", "S2"}
+    scalar_fields = _physical_scalar_fields(record)
     return bool(
-        len(stages) >= 2
-        and stages[0].get("IntegratedFields") == ["F"]
-        and set(stages[0].get("ActiveHeavyFields", [])) == scalar_fields
+        _has_f_first_eft_stage(record)
+        and len(stages) >= 2
         and set(stages[1].get("IntegratedFields", [])) == scalar_fields
+    )
+
+
+def _is_f_then_scalar_threshold_plan(
+    threshold_plan,
+    record: RunRecord,
+) -> bool:
+    """Return whether the requested physical threshold plan is F -> scalar(s)."""
+    scalar_fields = _physical_scalar_fields(record)
+    return bool(
+        len(threshold_plan) >= 2
+        and tuple(threshold_plan[0]) == ("F",)
+        and set(threshold_plan[1]) == scalar_fields
     )
 
 
@@ -1719,10 +1731,10 @@ def main() -> int:
 
                 if (
                     eft1_wilson_ok
-                    and len(threshold_plan) >= 2
-                    and threshold_plan[0] == ("F",)
-                    and set(threshold_plan[1])
-                    == ({"S"} if record.shared_scalar else {"S1", "S2"})
+                    and _is_f_then_scalar_threshold_plan(
+                        threshold_plan,
+                        record,
+                    )
                 ):
                     # Keep the one-generation component transport as a compact
                     # regression/diagnostic, then run the authoritative

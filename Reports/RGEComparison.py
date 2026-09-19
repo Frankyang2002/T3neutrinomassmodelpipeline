@@ -13,13 +13,16 @@ from typing import Any
 from common.Paths import REPORT_OUTPUT_DIR
 from common.Records import RunRecord
 from Reports.StageReports import final_eft_stage_label, rge_report_path
+from Reports.Notation import (
+    paper_notation_key_lines,
+    paper_symbol_latex,
+    rgbeta_symbol_latex,
+)
 from Reports.ReportGeneration import (
     compile_latex_document,
     latex_escape_text,
     latex_fraction,
     matrix_cell,
-    paper_notation_key_lines,
-    paper_symbol_latex,
     record_quantum_numbers,
     split_latex_terms,
 )
@@ -90,45 +93,6 @@ GLOSSARY_ROWS = (
     (r"$\lambda_{H H^\dagger S_1^\dagger S_2^\dagger}^{\rm Cross}$", r"special crossed Higgs--scalar quartic", r"A crossed invariant with field content $H,H^\dagger,S_1^\dagger,S_2^\dagger$.", r"Exact $SU(2)$ tensor contraction depends on the representation assignment."),
 )
 
-
-COUPLING_LATEX = {
-    "gY": r"g_1",
-    "g2": r"g_2",
-    "g3": r"g_3",
-    "yu": r"Y_u",
-    "yd": r"Y_d",
-    "ye": r"Y_e",
-    "y1": r"y_1",
-    "y2": r"y_2",
-    "h": r"h",
-    "MF": r"M_F",
-    "mSSq": r"m_S^2",
-    "mS1Sq": r"m_1^2",
-    "mS2Sq": r"m_2^2",
-    "lambdaH": r"\lambda_1",
-    "lambdaS": r"\lambda_2",
-    "lambda3": r"\lambda_3",
-    "lambda4": r"\lambda_4",
-    "lambda5": r"\lambda_5",
-    "lambdaS1": r"\lambda_{S_1}^{(1)}",
-    "lambdaS2": r"\lambda_{S_2}^{(1)}",
-    "lambdaH1": r"\lambda_{HS_1}^{(1)}",
-    "lambdaH2": r"\lambda_{HS_2}^{(1)}",
-    "lambda12": r"\lambda_{12}^{(1)}",
-    "lambdaT3": r"\lambda_5",
-    "lambdaH1Adj": r"\lambda_{HS_1}^{(A)}",
-    "lambdaH2Adj": r"\lambda_{HS_2}^{(A)}",
-    "lambdaS1Adj": r"\lambda_{S_1}^{(A)}",
-    "lambdaS2Adj": r"\lambda_{S_2}^{(A)}",
-    "lambda12Adj": r"\lambda_{12}^{(A)}",
-    "lambda12Cross": r"\lambda_{12}^{(\times)}",
-    "lambdaHHdagS2S2": r"\lambda_8",
-    "lambdaHHdagS1barS1bar": r"\lambda_7",
-    "lambdaS1bar2S2bar2": r"\lambda_9",
-    "lambdaS1barS2S2bar2": r"\lambda_{10}",
-    "lambdaS1S1bar2S2bar": r"\lambda_{11}",
-    "lambdaHHdagS1barS2barCross": r"\lambda_{12}",
-}
 
 
 def _load_uv_payload(record: RunRecord) -> dict[str, Any] | None:
@@ -210,10 +174,12 @@ def _load_eft1_wilson_payload(
 
 
 def _coupling_symbol(name: str) -> str:
+    """Return the shared report symbol, with a safe fallback for unknown names."""
     shared = paper_symbol_latex(name)
     if shared != name:
         return shared
-    return COUPLING_LATEX.get(name, r"\mathrm{" + latex_escape_text(name) + "}")
+
+    return r"\mathrm{" + latex_escape_text(name) + "}"
 
 
 def load_uv_rge_payload(record: RunRecord) -> dict[str, Any] | None:
@@ -382,53 +348,53 @@ def _normalise_rgbeta_latex(latex: str) -> str:
 
     # RGBeta symbols are ordinary Mathematica symbols, so TeXForm otherwise
     # emits them as \text{symbol}.  Map the physics names explicitly.
-    symbol_map = {
-        "gY": r"g_1",
-        "g2": r"g_2",
-        "g3": r"g_3",
-        "yu": r"Y_u",
-        "yd": r"Y_d",
-        "ye": r"Y_e",
-        "y1": r"y_1",
-        "y2": r"y_2",
-        "h": r"h",
-        "MF": r"M_F",
-        "mSSq": r"m_S^2",
-        "mS1Sq": r"m_1^2",
-        "mS2Sq": r"m_2^2",
-        "lambdaH": r"\lambda_1",
-        "lambdaS": r"\lambda_2",
-        "lambda3": r"\lambda_3",
-        "lambda4": r"\lambda_4",
-        "lambda5": r"\lambda_5",
-        "lambdaS1": r"\lambda_{S_1}^{(1)}",
-        "lambdaS2": r"\lambda_{S_2}^{(1)}",
-        "lambdaH1": r"\lambda_{HS_1}^{(1)}",
-        "lambdaH2": r"\lambda_{HS_2}^{(1)}",
-        "lambda12": r"\lambda_{12}^{(1)}",
-        "lambdaT3": r"\lambda_5",
-        "lambdaH1Adj": r"\lambda_{HS_1}^{(A)}",
-        "lambdaH2Adj": r"\lambda_{HS_2}^{(A)}",
-        "lambdaS1Adj": r"\lambda_{S_1}^{(A)}",
-        "lambdaS2Adj": r"\lambda_{S_2}^{(A)}",
-        "lambda12Adj": r"\lambda_{12}^{(A)}",
-        "lambda12Cross": r"\lambda_{12}^{(\times)}",
-        "lambdaHHdagS2S2": r"\lambda_8",
-        "lambdaHHdagS1barS1bar": r"\lambda_7",
-        "lambdaS1bar2S2bar2": r"\lambda_9",
-        "lambdaS1barS2S2bar2": r"\lambda_{10}",
-        "lambdaS1S1bar2S2bar": r"\lambda_{11}",
-        "lambdaHHdagS1barS2barCross": r"\lambda_{H H^\dagger S_1^\dagger S_2^\dagger}^{\rm Cross}",
-    }
+    symbol_names = (
+        "gY",
+        "g2",
+        "g3",
+        "yu",
+        "yd",
+        "ye",
+        "y1",
+        "y2",
+        "h",
+        "MF",
+        "mSSq",
+        "mS1Sq",
+        "mS2Sq",
+        "lambdaH",
+        "lambdaS",
+        "lambda3",
+        "lambda4",
+        "lambda5",
+        "lambdaS1",
+        "lambdaS2",
+        "lambdaH1",
+        "lambdaH2",
+        "lambda12",
+        "lambdaT3",
+        "lambdaH1Adj",
+        "lambdaH2Adj",
+        "lambdaS1Adj",
+        "lambdaS2Adj",
+        "lambda12Adj",
+        "lambda12Cross",
+        "lambdaHHdagS2S2",
+        "lambdaHHdagS1barS1bar",
+        "lambdaS1bar2S2bar2",
+        "lambdaS1barS2S2bar2",
+        "lambdaS1S1bar2S2bar",
+        "lambdaHHdagS1barS2barCross",
+    )
 
     # Long names must be replaced before shorter names such as lambdaH.
-    for name in sorted(symbol_map, key=len, reverse=True):
+    for name in sorted(symbol_names, key=len, reverse=True):
         # Treat every replacement as one TeX atom.  This is important for
         # couplings that already carry a superscript in their display name,
         # e.g. lambdaH1Adj -> \lambda_{H1}^{\rm Adj}.  RGBeta may then
         # raise that coupling to a power; without grouping, TeX sees
         # \lambda_{H1}^{\rm Adj}^2 and aborts with "Double superscript".
-        replacement = "{" + symbol_map[name] + "}"
+        replacement = "{" + rgbeta_symbol_latex(name) + "}"
         text = text.replace(r"\text{" + name + "}", replacement)
         text = re.sub(
             rf"(?<![A-Za-z0-9_]){re.escape(name)}(?![A-Za-z0-9_])",

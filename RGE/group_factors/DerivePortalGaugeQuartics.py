@@ -33,13 +33,22 @@ No RGBeta coefficients are used as inputs.
 """
 
 import argparse
-from collections import Counter
 from itertools import combinations_with_replacement
-from math import factorial
 from pathlib import Path
+import sys
 import json
 
 import sympy as sp
+
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from RGE.group_factors.QuarticTensorAlgebra import (
+    restrict_sector,
+    tensor_from_polynomial,
+    tensor_inner,
+)
 
 
 MODEL_DIMS = {
@@ -120,57 +129,11 @@ def bilinear(zb, z, T):
     ))
 
 
-def tensor_from_polynomial(expr, variables):
-    poly = sp.Poly(sp.expand(expr), *variables)
-    out = {}
-    for powers, coefficient in poly.terms():
-        if sum(powers) != 4:
-            continue
-        key = []
-        mult = 1
-        for i, power in enumerate(powers):
-            key.extend([i] * power)
-            mult *= factorial(power)
-        value = sp.simplify(coefficient * mult)
-        if value != 0:
-            out[tuple(sorted(key))] = value
-    return out
-
-
-def ordered_weight(key):
-    counts = Counter(key)
-    value = factorial(4)
-    for n in counts.values():
-        value //= factorial(n)
-    return value
-
-
-def inner(A, B):
-    return sp.simplify(sum(
-        ordered_weight(k) * sp.conjugate(A.get(k, 0)) * B.get(k, 0)
-        for k in set(A) | set(B)
-    ))
-
-
-def restrict_sector(tensor, groups, required):
-    out = {}
-    for key, value in tensor.items():
-        counts = {name: 0 for name in groups}
-        for idx in key:
-            for name, indices in groups.items():
-                if idx in indices:
-                    counts[name] += 1
-                    break
-        if counts == required:
-            out[key] = value
-    return out
-
-
 def decompose(generated, basis):
     names = list(basis)
     tensors = [basis[name] for name in names]
-    gram = sp.Matrix([[inner(A, B) for B in tensors] for A in tensors])
-    rhs = sp.Matrix([inner(A, generated) for A in tensors])
+    gram = sp.Matrix([[tensor_inner(A, B) for B in tensors] for A in tensors])
+    rhs = sp.Matrix([tensor_inner(A, generated) for A in tensors])
     coeffs = gram.LUsolve(rhs)
 
     residual = {}

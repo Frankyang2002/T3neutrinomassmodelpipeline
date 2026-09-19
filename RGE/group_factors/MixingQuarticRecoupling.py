@@ -41,12 +41,8 @@ tensors.
 """
 
 import argparse
-from collections import Counter
 from dataclasses import dataclass, asdict
-from fractions import Fraction
-from itertools import combinations_with_replacement
 import json
-from math import factorial
 from pathlib import Path
 import sys
 from typing import Iterable
@@ -58,6 +54,13 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
+from RGE.group_factors.MixingQuarticTensorAlgebra import (
+    basis_tensor,
+    build_cross_tensor,
+    project_onto_direction,
+    scalar_dimension,
+    tensor_inner_product,
+)
 from RGE.running.EFT1QuarticAdapter import (
     SparseQuarticTensor,
     load_and_build_eft1_quartic_tensor,
@@ -89,131 +92,6 @@ def _text(expr: sp.Expr) -> str:
     return sp.sstr(sp.factor(sp.simplify(expr)))
 
 
-def _multiplicity_weight(key: tuple[int, int, int, int]) -> int:
-    """Number of ordered index tuples represented by one sorted key."""
-    counts = Counter(key)
-    weight = factorial(4)
-    for count in counts.values():
-        weight //= factorial(count)
-    return weight
-
-
-def _basis_tensor(
-    full: SparseQuarticTensor,
-    coupling_name: str,
-    *,
-    identify_conjugate: bool,
-) -> SparseQuarticTensor:
-    """Coefficient tensor of one coupling in the full quartic tensor."""
-    symbol = sp.Symbol(coupling_name)
-    conjugate = sp.conjugate(symbol)
-
-    entries: dict[tuple[int, int, int, int], sp.Expr] = {}
-    for key, raw in full.nonzero_items():
-        expr = sp.expand(raw)
-        if identify_conjugate:
-            expr = sp.expand(expr.xreplace({conjugate: symbol}))
-        coefficient = sp.simplify(expr.coeff(symbol))
-        if coefficient != 0:
-            entries[key] = coefficient
-
-    return SparseQuarticTensor(entries)
-
-
-def _scalar_dimension(full: SparseQuarticTensor) -> int:
-    return max((max(key) for key in full.entries), default=0)
-
-
-def _cross_component(
-    t3: SparseQuarticTensor,
-    other: SparseQuarticTensor,
-    a: int,
-    b: int,
-    c: int,
-    d: int,
-    scalar_dimension: int,
-) -> sp.Expr:
-    """Coefficient of lambdaT3*X in beta_abcd from pure scalar quartics."""
-    total = sp.S.Zero
-
-    pairings = (
-        ((a, b), (c, d)),
-        ((a, c), (b, d)),
-        ((a, d), (b, c)),
-    )
-
-    for (p, q), (r, s) in pairings:
-        for e in range(1, scalar_dimension + 1):
-            for f in range(1, scalar_dimension + 1):
-                total += (
-                    t3[p, q, e, f] * other[e, f, r, s]
-                    + other[p, q, e, f] * t3[e, f, r, s]
-                )
-
-    return sp.simplify(total)
-
-
-def _build_cross_tensor(
-    t3: SparseQuarticTensor,
-    other: SparseQuarticTensor,
-    scalar_dimension: int,
-) -> SparseQuarticTensor:
-    entries: dict[tuple[int, int, int, int], sp.Expr] = {}
-
-    # The largest T3 model here has 16 real scalars, hence C(19,4)=3876 sorted
-    # output components.  Scanning the complete symmetric output space gives a
-    # genuine closure/residual check rather than checking only T3 support.
-    for key in combinations_with_replacement(
-        range(1, scalar_dimension + 1),
-        4,
-    ):
-        value = _cross_component(
-            t3,
-            other,
-            *key,
-            scalar_dimension,
-        )
-        if value != 0:
-            entries[key] = value
-
-    return SparseQuarticTensor(entries)
-
-
-def _inner_product(
-    left: SparseQuarticTensor,
-    right: SparseQuarticTensor,
-) -> sp.Expr:
-    """Hermitian tensor inner product summed over all ordered a,b,c,d."""
-    keys = set(left.entries) | set(right.entries)
-    total = sp.S.Zero
-    for key in keys:
-        total += (
-            _multiplicity_weight(key)
-            * sp.conjugate(left[key])
-            * right[key]
-        )
-    return sp.simplify(total)
-
-
-def _project(
-    generated: SparseQuarticTensor,
-    t3: SparseQuarticTensor,
-) -> tuple[sp.Expr, SparseQuarticTensor, sp.Expr]:
-    norm = sp.simplify(_inner_product(t3, t3))
-    if norm == 0:
-        raise ValueError("lambdaT3 tensor has zero norm.")
-
-    coefficient = sp.simplify(_inner_product(t3, generated) / norm)
-
-    residual_entries: dict[tuple[int, int, int, int], sp.Expr] = {}
-    for key in set(generated.entries) | set(t3.entries):
-        residual = sp.simplify(generated[key] - coefficient * t3[key])
-        if residual != 0:
-            residual_entries[key] = residual
-
-    return coefficient, SparseQuarticTensor(residual_entries), norm
-
-
 def _max_residual_text(residual: SparseQuarticTensor) -> str:
     if not residual.entries:
         return "0"
@@ -234,10 +112,10 @@ def recoupling_for_seed(
         quartic_seed_path,
         rgbeta_path,
     )
-    scalar_dimension = _scalar_dimension(full)
+    scalar_dimension_value = scalar_dimension(full)
 
     # lambdaT3 is complex.  Keep only its holomorphic tensor direction.
-    t3 = _basis_tensor(
+    t3 = basis_tensor(
         full,
         "lambdaT3",
         identify_conjugate=False,
@@ -250,7 +128,7 @@ def recoupling_for_seed(
     results: list[ProjectionResult] = []
 
     for coupling_name in targets:
-        other = _basis_tensor(
+        other = basis_tensor(
             full,
             coupling_name,
             identify_conjugate=True,
@@ -264,7 +142,7 @@ def recoupling_for_seed(
                     t3_nonzero_components=len(t3.entries),
                     generated_nonzero_components=0,
                     projection_coefficient=None,
-                    norm_t3=_text(_inner_product(t3, t3)),
+                    norm_t3=_text(tensor_inner_product(t3, t3)),
                     max_residual="0",
                     residual_nonzero_components=0,
                     proportional_to_t3=True,
@@ -272,12 +150,15 @@ def recoupling_for_seed(
             )
             continue
 
-        generated = _build_cross_tensor(
+        generated = build_cross_tensor(
             t3,
             other,
-            scalar_dimension,
+            scalar_dimension_value,
         )
-        coefficient, residual, norm = _project(generated, t3)
+        coefficient, residual, norm = project_onto_direction(
+            generated,
+            t3,
+        )
 
         results.append(
             ProjectionResult(
@@ -301,7 +182,7 @@ def recoupling_for_seed(
         ),
         "quartic_seed": str(quartic_seed_path),
         "rgbeta_file": str(rgbeta_path),
-        "scalar_dimension": scalar_dimension,
+        "scalar_dimension": scalar_dimension_value,
         "convention": (
             "V4=lambda_abcd phi_a phi_b phi_c phi_d/4!; "
             "beta_lambda|scalar^2 has the three pair-contraction channels"

@@ -39,13 +39,24 @@ For distinct couplings X,Y both orderings contribute.
 """
 
 import argparse
-from collections import Counter
 from itertools import combinations_with_replacement
-from math import factorial
 from pathlib import Path
+import sys
 import json
 
 import sympy as sp
+
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from RGE.group_factors.QuarticTensorAlgebra import (
+    pair_maps,
+    restrict_sector,
+    sparse_dot,
+    tensor_from_polynomial,
+    tensor_inner,
+)
 
 
 def su2_generators(d: int):
@@ -101,70 +112,6 @@ def bilinear(zb, z, M):
     ))
 
 
-def tensor_from_polynomial(expr, variables):
-    poly = sp.Poly(sp.expand(expr), *variables)
-    entries = {}
-    for powers, coefficient in poly.terms():
-        if sum(powers) != 4:
-            continue
-
-        key = []
-        multiplicity = 1
-        for i, power in enumerate(powers):
-            key.extend([i] * power)
-            multiplicity *= factorial(power)
-
-        value = sp.simplify(coefficient * multiplicity)
-        if value != 0:
-            entries[tuple(sorted(key))] = value
-
-    return entries
-
-
-def tget(tensor, a, b, c, d):
-    return tensor.get(tuple(sorted((a, b, c, d))), sp.S.Zero)
-
-
-def ordered_weight(key):
-    counts = Counter(key)
-    result = factorial(4)
-    for n in counts.values():
-        result //= factorial(n)
-    return result
-
-
-def inner(A, B):
-    return sp.simplify(sum(
-        ordered_weight(key)
-        * sp.conjugate(A.get(key, 0))
-        * B.get(key, 0)
-        for key in set(A) | set(B)
-    ))
-
-
-def pair_maps(tensor, n):
-    out = {}
-    for a in range(n):
-        for b in range(a, n):
-            vec = {}
-            for e in range(n):
-                for f in range(n):
-                    value = tget(tensor, a, b, e, f)
-                    if value != 0:
-                        vec[(e, f)] = value
-            out[(a, b)] = vec
-    return out
-
-
-def sparse_dot(left, right):
-    if len(left) > len(right):
-        left, right = right, left
-    return sp.simplify(sum(
-        value * right.get(key, 0)
-        for key, value in left.items()
-    ))
-
-
 def scalar_cross_tensor(A, B, n, same=False):
     pa = pair_maps(A, n)
     pb = pa if same else pair_maps(B, n)
@@ -200,29 +147,15 @@ def scalar_cross_tensor(A, B, n, same=False):
     return out
 
 
-def restrict_sector(tensor, groups, required):
-    out = {}
-    for key, value in tensor.items():
-        counts = {name: 0 for name in groups}
-        for idx in key:
-            for name, indices in groups.items():
-                if idx in indices:
-                    counts[name] += 1
-                    break
-        if counts == required:
-            out[key] = value
-    return out
-
-
 def decompose(generated, basis):
     names = list(basis)
     tensors = [basis[name] for name in names]
 
     gram = sp.Matrix([
-        [inner(A, B) for B in tensors]
+        [tensor_inner(A, B) for B in tensors]
         for A in tensors
     ])
-    rhs = sp.Matrix([inner(A, generated) for A in tensors])
+    rhs = sp.Matrix([tensor_inner(A, generated) for A in tensors])
     coefficients = gram.LUsolve(rhs)
 
     residual = {}

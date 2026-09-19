@@ -38,9 +38,16 @@ import json
 from math import factorial
 from pathlib import Path
 import re
+import sys
 
 import sympy as sp
 from sympy.physics.wigner import clebsch_gordan
+
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from RGE.running.MatcheteParsing import matching_bracket
 
 
 TARGETS = ("lambdaH1Adj", "lambdaH2Adj", "lambda12Adj")
@@ -284,30 +291,6 @@ def canonical_recouplings(d1: int, d2: int):
     return rows
 
 
-def _split_top_level_terms(text: str):
-    terms = []
-    start = 0
-    paren = bracket = brace = 0
-    for i, ch in enumerate(text):
-        if ch == "(":
-            paren += 1
-        elif ch == ")":
-            paren -= 1
-        elif ch == "[":
-            bracket += 1
-        elif ch == "]":
-            bracket -= 1
-        elif ch == "{":
-            brace += 1
-        elif ch == "}":
-            brace -= 1
-        elif ch in "+-" and i > start and paren == bracket == brace == 0:
-            terms.append(text[start:i].strip())
-            start = i
-    terms.append(text[start:].strip())
-    return [t for t in terms if t]
-
-
 def _replace_balanced_calls(text: str, head: str, replacement: str = "0") -> str:
     """Replace head[...] calls, including nested brackets, by a scalar token."""
     needle = head + "["
@@ -315,20 +298,17 @@ def _replace_balanced_calls(text: str, head: str, replacement: str = "0") -> str
         start = text.find(needle)
         if start < 0:
             break
+
         open_index = start + len(head)
-        depth = 0
-        close_index = None
-        for i in range(open_index, len(text)):
-            if text[i] == "[":
-                depth += 1
-            elif text[i] == "]":
-                depth -= 1
-                if depth == 0:
-                    close_index = i
-                    break
-        if close_index is None:
-            raise ValueError(f"Unbalanced {head}[...] call in RGBeta expression.")
+        try:
+            close_index = matching_bracket(text, open_index)
+        except ValueError as exc:
+            raise ValueError(
+                f"Unbalanced {head}[...] call in RGBeta expression."
+            ) from exc
+
         text = text[:start] + replacement + text[close_index + 1:]
+
     return text
 
 

@@ -12,7 +12,14 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from RGE.general.GaugeGenerators import su2_complex_generators
-from RGE.running.EFT1QuarticAdapter import SparseQuarticTensor, load_and_build_eft1_quartic_tensor
+from RGE.group_factors.MixingQuarticTensorAlgebra import (
+    basis_tensor,
+    tensor_inner_product,
+)
+from RGE.running.EFT1QuarticAdapter import (
+    SparseQuarticTensor,
+    load_and_build_eft1_quartic_tensor,
+)
 
 @dataclass(frozen=True)
 class FieldBlock:
@@ -30,23 +37,6 @@ def _blocks(d1, d2):
         "S1": FieldBlock("S1", d1, 5),
         "S2": FieldBlock("S2", d2, 5 + 2*d1),
     }
-
-def _weight(key):
-    c = Counter(key); w = factorial(4)
-    for n in c.values(): w //= factorial(n)
-    return w
-
-def _inner(a,b):
-    return sp.simplify(sum(_weight(k)*sp.conjugate(a[k])*b[k] for k in set(a.entries)|set(b.entries)))
-
-def _basis_tensor(full, name, identify_conjugate=True):
-    s = sp.Symbol(name); cs = sp.conjugate(s); entries={}
-    for k,raw in full.nonzero_items():
-        e = sp.expand(raw)
-        if identify_conjugate: e = sp.expand(e.xreplace({cs:s}))
-        c = sp.simplify(e.coeff(s))
-        if c != 0: entries[k]=c
-    return SparseQuarticTensor(entries)
 
 def _bilinear(left, matrix, right=None):
     if right is None: right = left
@@ -123,8 +113,8 @@ def _sector_names(seed,prefix):
     return sorted(names,key=order)
 
 def _coordinates(target,basis):
-    G=sp.Matrix([[_inner(x,y) for y in basis] for x in basis])
-    rhs=sp.Matrix([_inner(x,target) for x in basis])
+    G=sp.Matrix([[tensor_inner_product(x, y) for y in basis] for x in basis])
+    rhs=sp.Matrix([tensor_inner_product(x, target) for x in basis])
     if G.det()==0: raise ValueError("Matchete basis linearly dependent")
     coeff=[sp.simplify(x) for x in G.inv()*rhs]
     residual=0
@@ -137,7 +127,7 @@ def _coordinates(target,basis):
 
 def _rank(ts):
     if not ts: return 0
-    return int(sp.Matrix([[_inner(a,b) for b in ts] for a in ts]).rank())
+    return int(sp.Matrix([[tensor_inner_product(a, b) for b in ts] for a in ts]).rank())
 
 def _physical_sector(sector, blocks):
     if sector=="H1": a,b=blocks["H"],blocks["S1"]
@@ -164,7 +154,7 @@ def build_basis_map(seed_path: Path, rgbeta_path: Path):
             "sectors":{}}
     for sector,prefix in (("H1","lambdaH1"),("H2","lambdaH2"),("12","lambda12")):
         mnames=_sector_names(seed,prefix)
-        mbasis=[_basis_tensor(full,n,True) for n in mnames]
+        mbasis=[basis_tensor(full, n, identify_conjugate=True) for n in mnames]
         plabels,pbasis,note=_physical_sector(sector,blocks)
         kept=[(l,t) for l,t in zip(plabels,pbasis,strict=True) if t.entries]
         plabels=[x[0] for x in kept]; pbasis=[x[1] for x in kept]

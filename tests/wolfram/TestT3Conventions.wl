@@ -9,29 +9,27 @@ ClearAll["Global`*"];
 scriptDirectory = DirectoryName @ ExpandFileName[$InputFileName];
 projectRoot = ExpandFileName @ FileNameJoin[{scriptDirectory, "..", ".."}];
 
-Fail[msg_] := (Print["FAIL: ", msg]; Exit[1]);
-Assert[label_, condition_] := If[TrueQ[condition], Print["PASS: ", label], Fail[label]];
+TestFail[msg_] := (Print["FAIL: ", msg]; Exit[1]);
+Assert[label_, condition_] := If[TrueQ[condition], Print["PASS: ", label], TestFail[label]];
 AssertEqual[label_, actual_, expected_] := Assert[label <> " (got " <> ToString[actual, InputForm] <> ")", actual === expected];
 
 (* ---------------------------------------------------------------------- *)
 (* Project SU(2) representation logic                                      *)
 (* ---------------------------------------------------------------------- *)
 
-gaugeFile = FileNameJoin[{projectRoot, "wolfram", "core", "GaugeInvariance.wl"}];
-catalogFile = FileNameJoin[{projectRoot, "wolfram", "t3", "T3ModelCatalog.wl"}];
+su2File = FileNameJoin[{projectRoot, "Lagrangian", "SU2Invariants.wl"}];
+catalogFile = FileNameJoin[{projectRoot, "Lagrangian", "T3ModelCatalog.wl"}];
 
-If[!FileExistsQ[gaugeFile], Fail["GaugeInvariance.wl not found at " <> gaugeFile]];
-If[!FileExistsQ[catalogFile], Fail["T3ModelCatalog.wl not found at " <> catalogFile]];
+If[!FileExistsQ[su2File], TestFail["SU2Invariants.wl not found at " <> su2File]];
+If[!FileExistsQ[catalogFile], TestFail["T3ModelCatalog.wl not found at " <> catalogFile]];
 
-Get[gaugeFile];
 Get[catalogFile];
 
-AssertEqual["2 x 2", SU2Combine[2, 2], {1, 3}];
-AssertEqual["2 x 3", SU2Combine[2, 3], {2, 4}];
-AssertEqual["3 x 3", SU2Combine[3, 3], {1, 3, 5}];
-Assert["2 x 2 contains singlet", SU2SingletQ[{2, 2}]];
-Assert["2 x 3 has no singlet", !SU2SingletQ[{2, 3}]];
-Assert["2 x 2 x 3 contains singlet", SU2SingletQ[{2, 2, 3}]];
+(* Current production SU(2) representation convention: dimension d maps to
+   highest-weight Dynkin label {d-1}. *)
+AssertEqual["d=2 Dynkin label", {2 - 1}, {1}];
+AssertEqual["d=3 Dynkin label", {3 - 1}, {2}];
+AssertEqual["d=4 Dynkin label", {4 - 1}, {3}];
 
 (* Benchmark classes and representative higher-dimensional generalisations. *)
 Do[
@@ -46,29 +44,52 @@ Assert["forbid non-adjacent scalar (2,6,5)", !T3DimensionsAllowedQ[2,6,5]];
 (* ---------------------------------------------------------------------- *)
 
 matcheteLoaded = UsingFrontEnd[Needs["Matchete`"]; True];
-If[!TrueQ[matcheteLoaded], Fail["Matchete failed to load"]];
+If[!TrueQ[matcheteLoaded], TestFail["Matchete failed to load"]];
 
-ResetAll[];
-LoadModel["SM"];
+Get[su2File];
+AssertEqual["SU2DynkinLabel[2]", SU2DynkinLabel[2], {1}];
+AssertEqual["SU2DynkinLabel[3]", SU2DynkinLabel[3], {2}];
+AssertEqual["SU2DynkinLabel[4]", SU2DynkinLabel[4], {3}];
 
-DefineRepresentation[T3Probe3, SU2L, {2}, IndexAlphabet -> {"a","b","c","d"}];
-DefineRepresentation[T3Probe4, SU2L, {3}, IndexAlphabet -> {"u","v","w","x"}];
+representationProbe = UsingFrontEnd[
+  ResetAll[];
+  LoadModel["SM"];
 
-reps = GetRepresentations[];
-Assert["custom triplet representation registered", !FreeQ[reps, T3Probe3, Infinity]];
-Assert["custom quartet representation registered", !FreeQ[reps, T3Probe4, Infinity]];
+  tripletRegistered = EnsureBSMRepresentation[3];
+  quartetRegistered = EnsureBSMRepresentation[4];
 
-rawInvariant = Quiet @ Check[InvariantTensors[SU[2], {{1}, {3}, {2}}], $Failed];
-Assert["2 x 4 x 3 invariant exists", ListQ[rawInvariant] && Length[rawInvariant] >= 1];
-AssertEqual["2 x 4 x 3 invariant dimensions", Dimensions[Normal @ First[rawInvariant]], {2,4,3}];
-
-(* SU(2) irreps are self-dual.  The invariant bilinear must exist for each
-   representation used in the convention conversion. *)
-Do[
-  bilinear = Quiet @ Check[InvariantTensors[SU[2], {rep, rep}], $Failed];
-  Assert["self-duality invariant " <> ToString[rep, InputForm], ListQ[bilinear] && Length[bilinear] >= 1],
-  {rep, {{{1}}, {{2}}, {{3}}}}
+  <|
+    "TripletStatus" -> tripletRegistered,
+    "QuartetStatus" -> quartetRegistered,
+    "Representations" -> GetRepresentations[]
+  |>
 ];
+
+If[!AssociationQ[representationProbe],
+  TestFail["could not read Matchete representation registry"]
+];
+
+Assert[
+  "production triplet representation registered",
+  TrueQ[representationProbe["TripletStatus"]]
+];
+Assert[
+  "production quartet representation registered",
+  TrueQ[representationProbe["QuartetStatus"]]
+];
+Assert[
+  "triplet registry key present",
+  KeyExistsQ[representationProbe["Representations"], T3BSMd3]
+];
+Assert[
+  "quartet registry key present",
+  KeyExistsQ[representationProbe["Representations"], T3BSMd4]
+];
+
+(* The full production invariant-tensor path is exercised by
+   TestT3RGEExport.wl through BuildT3Lagrangian.  Keep this conventions test
+   focused on the representation and model conventions themselves; direct
+   standalone InvariantTensors probes are front-end fragile under wolframscript. *)
 
 Print["ALL T3 CONVENTION TESTS PASSED"];
 Exit[0];

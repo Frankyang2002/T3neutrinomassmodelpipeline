@@ -48,7 +48,10 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from RGE.group_factors.YukawaBetaGroupFactors import _leg_factors
+from RGE.group_factors.YukawaLegFactors import (
+    canonical_yukawa_leg_factors,
+    su2_quadratic_casimir_from_dimension,
+)
 
 
 @dataclass(frozen=True)
@@ -75,12 +78,6 @@ class T3YukawaBetaGroupFactors:
     y2: YukawaBetaCoefficients
 
 
-def _c2_from_dimension(d: int) -> sp.Expr:
-    d = int(d)
-    j = sp.Rational(d - 1, 2)
-    return sp.simplify(j * (j + 1))
-
-
 def complete_yukawa_group_factors(
     *,
     dS1: int,
@@ -90,19 +87,20 @@ def complete_yukawa_group_factors(
 ) -> T3YukawaBetaGroupFactors:
     dS1, dS2, dF, alpha = map(int, (dS1, dS2, dF, alpha))
 
-    y1legs = _leg_factors(dF, dS1)
-    y2legs = _leg_factors(dF, dS2)
+    y1legs = canonical_yukawa_leg_factors(dF, dS1)
+    y2legs = canonical_yukawa_leg_factors(dF, dS2)
 
-    GL1 = sp.Rational(max(dF, dS1), 2)
-    GF1 = sp.Rational(max(dF, dS1), dF)
-    GS1 = sp.Rational(max(dF, dS1), dS1)
+    GL1 = sp.Rational(y1legs.G_lepton.numerator, y1legs.G_lepton.denominator)
+    GF1 = sp.Rational(y1legs.G_heavy.numerator, y1legs.G_heavy.denominator)
+    GS1 = sp.Rational(y1legs.G_scalar.numerator, y1legs.G_scalar.denominator)
 
-    GL2 = sp.Rational(max(dF, dS2), 2)
-    GF2 = sp.Rational(max(dF, dS2), dF)
-    GS2 = sp.Rational(max(dF, dS2), dS2)
+    GL2 = sp.Rational(y2legs.G_lepton.numerator, y2legs.G_lepton.denominator)
+    GF2 = sp.Rational(y2legs.G_heavy.numerator, y2legs.G_heavy.denominator)
+    GS2 = sp.Rational(y2legs.G_scalar.numerator, y2legs.G_scalar.denominator)
 
     C2L = sp.Rational(3, 4)
-    C2F = _c2_from_dimension(dF)
+    c2f = su2_quadratic_casimir_from_dimension(dF)
+    C2F = sp.Rational(c2f.numerator, c2f.denominator)
 
     YL = -sp.Rational(1, 2)
     YF = sp.Rational(alpha + 1, 2)

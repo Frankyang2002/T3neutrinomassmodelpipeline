@@ -17,6 +17,47 @@ WEINBERG_KEYS = (
 )
 
 
+# ---------------------------------------------------------------------------
+# Pole/RGE consistency payload normalization
+# Consolidated from the former standalone helper module.
+# ---------------------------------------------------------------------------
+
+def normalize_pole_rge_consistency(path: Path) -> dict[str, Any]:
+    path = Path(path)
+    payload = json.loads(path.read_text(encoding="utf-8"))
+
+    if payload.get("Status") != "Success":
+        raise ValueError("Pole/RGE diagnostic itself is not successful.")
+
+    validated = bool(
+        payload.get("DirectLogEqualsTwicePoleResidueOneGeneration", False)
+    )
+
+    payload["ConsistencyConvention"] = "strict_one_generation_direct_vs_hard"
+    payload["ConsistencyValidated"] = validated
+    payload["ConsistencyReason"] = (
+        "Validated: direct running log coefficient = 2 x hard pole residue"
+        if validated
+        else
+        "Failed strict regression: direct running log coefficient != "
+        "2 x hard pole residue. No normalization fallback was applied."
+    )
+
+    # Remove fields left by the temporary orientation-resolved workaround so
+    # old cached JSON cannot make a failed strict comparison look successful.
+    for key in (
+        "OriginalDirectLogEqualsTwicePoleResidueOneGeneration",
+        "DirectFlavorOrientationCount",
+        "HardPoleFlavorOrientationCount",
+        "FlavorOrientationMultiplicity",
+        "OrientationResolvedDirectLogToPoleRatio",
+        "OrientationResolvedDirectLogEqualsTwicePoleResidue",
+    ):
+        payload.pop(key, None)
+
+    path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    return payload
+
 def _read_text(path: Path) -> str:
     text = path.read_text(encoding="utf-8").strip()
     if not text:

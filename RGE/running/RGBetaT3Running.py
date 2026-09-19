@@ -7,10 +7,10 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-# Note that frozen means results cannot be modified after creation
+
 @dataclass(frozen=True)
 class RGBetaT3Result:
-    """Result returned by the Wolfram RGBeta T3 runner."""
+    """Result returned by the Wolfram RGBeta UV T3 runner."""
 
     status: str
     metadata: dict[str, Any]
@@ -20,45 +20,50 @@ class RGBetaT3Result:
     raw: dict[str, Any]
 
 
-def _default_runner_path() -> Path:
-    """This finds the Wolfram Runner automatically"""
-    return Path(__file__).resolve().parent / "wolfram" / "RunT3RGBeta.wl"
+@dataclass(frozen=True)
+class RGBetaT3IntermediateResult:
+    """Result returned by the Wolfram RGBeta intermediate-EFT runner."""
+
+    status: str
+    metadata: dict[str, Any]
+    betas: dict[str, str]
+    report_betas: dict[str, str]
+    report_latex_betas: dict[str, str]
+    raw: dict[str, Any]
 
 
 def _wolfram_integer_token(value: int) -> str:
-    """Make negative values be -1 -> m1 instead."""
+    """Encode a signed integer in the token form expected by the Wolfram runners."""
     return f"m{abs(value)}" if value < 0 else str(value)
 
 
-def run_rgbeta_t3(
+def _run_rgbeta(
     d_s1: int,
     d_s2: int,
     d_f: int,
     alpha: int,
     *,
-    shared_scalar: bool = False,
-    runner_path: Path | None = None,
-    wolframscript: str = "wolframscript",
-) -> RGBetaT3Result:
-    """Run our renormalisable couplings and other RGEs for UV model"""
+    shared_scalar: bool,
+    runner_path: Path,
+    output_name: str,
+    failure_message: str,
+    result_type: type[RGBetaT3Result] | type[RGBetaT3IntermediateResult],
+    wolframscript: str,
+):
+    """Run one of the UV/EFT1 RGBeta Wolfram front ends and parse its JSON output."""
 
-    # RGBeta seems to not support higher dimensions so we restrict dimensions for RGBeta
     if any(d not in {1, 2, 3} for d in (d_s1, d_s2, d_f)):
         raise ValueError(
             "RGBeta T3 running currently supports only SU(2) dimensions 1, 2 and 3."
         )
 
-    # Note that RunT3RGBeta.wl is the real runner
-    runner = Path(runner_path) if runner_path is not None else _default_runner_path()
-
+    runner = Path(runner_path)
     if not runner.exists():
         raise FileNotFoundError(f"RGBeta Wolfram runner not found: {runner}")
 
-    
     with tempfile.TemporaryDirectory(prefix="t3_rgbeta_") as tmpdir:
-        output_path = Path(tmpdir) / "rgbeta_t3_uv_rge.json"
+        output_path = Path(tmpdir) / output_name
 
-        # We use the runner to run 
         if shared_scalar:
             if alpha != -1 or d_s1 != d_s2:
                 raise ValueError(
@@ -101,7 +106,6 @@ def run_rgbeta_t3(
             )
 
         raw_text = output_path.read_text(encoding="utf-8-sig").strip()
-
         if not raw_text:
             raise RuntimeError(
                 "RGBeta runner created an empty JSON output file.\n"
@@ -124,13 +128,13 @@ def run_rgbeta_t3(
 
         if payload.get("status") != "Success":
             raise RuntimeError(
-                "RGBeta T3 UV-RGE generation failed.\n"
+                failure_message + "\n"
                 f"payload: {payload}\n"
                 f"stdout:\n{completed.stdout}\n"
                 f"stderr:\n{completed.stderr}"
             )
 
-        return RGBetaT3Result(
+        return result_type(
             status=payload["status"],
             metadata=dict(payload.get("metadata", {})),
             betas=dict(payload.get("betas", {})),
@@ -138,3 +142,67 @@ def run_rgbeta_t3(
             report_latex_betas=dict(payload.get("report_beta_latex", {})),
             raw=payload,
         )
+
+
+def run_rgbeta_t3(
+    d_s1: int,
+    d_s2: int,
+    d_f: int,
+    alpha: int,
+    *,
+    shared_scalar: bool = False,
+    runner_path: Path | None = None,
+    wolframscript: str = "wolframscript",
+) -> RGBetaT3Result:
+    """Run the one-loop renormalisable RGEs for the UV T3 model."""
+
+    runner = (
+        Path(runner_path)
+        if runner_path is not None
+        else Path(__file__).resolve().parent / "wolfram" / "RunT3RGBeta.wl"
+    )
+
+    return _run_rgbeta(
+        d_s1,
+        d_s2,
+        d_f,
+        alpha,
+        shared_scalar=shared_scalar,
+        runner_path=runner,
+        output_name="rgbeta_t3_uv_rge.json",
+        failure_message="RGBeta T3 UV-RGE generation failed.",
+        result_type=RGBetaT3Result,
+        wolframscript=wolframscript,
+    )
+
+
+def run_rgbeta_t3_eft1(
+    d_s1: int,
+    d_s2: int,
+    d_f: int,
+    alpha: int,
+    *,
+    shared_scalar: bool = False,
+    runner_path: Path | None = None,
+    wolframscript: str = "wolframscript",
+) -> RGBetaT3IntermediateResult:
+    """Run the renormalisable RGEs in EFT1 after the heavy fermion is removed."""
+
+    runner = (
+        Path(runner_path)
+        if runner_path is not None
+        else Path(__file__).resolve().parent / "wolfram" / "RunT3EFT1RGBeta.wl"
+    )
+
+    return _run_rgbeta(
+        d_s1,
+        d_s2,
+        d_f,
+        alpha,
+        shared_scalar=shared_scalar,
+        runner_path=runner,
+        output_name="rgbeta_t3_eft1_rge.json",
+        failure_message="RGBeta T3 EFT1 renormalisable RGE generation failed.",
+        result_type=RGBetaT3IntermediateResult,
+        wolframscript=wolframscript,
+    )

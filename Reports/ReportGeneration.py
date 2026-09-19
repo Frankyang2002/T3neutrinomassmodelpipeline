@@ -10,8 +10,16 @@ from fractions import Fraction
 from pathlib import Path
 from typing import Iterable
 
-from common.Paths import EFT_ORDER, LOOP_ORDER, REPORT_OUTPUT_DIR
 from common.Records import RunRecord
+
+
+# Human-readable reports are kept separate from machine-readable pipeline output.
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+REPORT_OUTPUT_DIR = PROJECT_ROOT / "Reports" / "output"
+
+# These are presentation metadata matching the RunModel invocation convention.
+EFT_ORDER = 5
+LOOP_ORDER = 1
 
 
 

@@ -17,7 +17,7 @@ checks consolidated from ``RGE/running/C12FlavorSymmetryValidation.py``:
 Optional Wilson-adapter mode
 ----------------------------
 If a Matchete EFT1 Wilson-seed JSON is supplied, also check that
-``EFT1WilsonAdapter.build_eft1_wilson_tensor`` preserves an arbitrary outer
+``EFT1TensorAdapters.build_eft1_wilson_tensor`` preserves an arbitrary outer
 numerical prefactor in every PL tree Wilson term.  This is the former
 ``tests/check_wilson_prefactor_preservation.py`` regression, consolidated here
 without changing the adapter or any physics convention.
@@ -36,8 +36,8 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from RGE.matching.FlavorMatchedC5 import build_flavor_matched_c5
-from RGE.running.EFT1WilsonAdapter import build_eft1_wilson_tensor
-from RGE.stages.NeutrinoMassStage import build_neutrino_mass_matrix
+from RGE.running.EFT1TensorAdapters import build_eft1_wilson_tensor
+from RGE.stages.FlavorMatchedRGEStage import build_neutrino_mass_matrix
 
 
 def canonical_items(tensor) -> dict[tuple[int, ...], sp.Expr]:
@@ -203,13 +203,17 @@ def check_c12_flavor_symmetry() -> bool:
 
     ordered = _ordered_c12_kernel(y1, y2, masses)
 
-    # build_flavor_matched_c5 with kernel=1 and explicit heavy masses produces
-    # the physical symmetric sum K + K^T.  The mixed C12 convention itself is
-    # 1/2(K + K^T), so compare after the explicit factor of 1/2.
+    # build_flavor_matched_c5 substitutes MF -> M_r inside the supplied
+    # kernel for each heavy generation.  Therefore use the explicit 1/MF
+    # kernel here so the result is the physical symmetric sum K + K^T.
+    # The mixed C12 convention itself is 1/2(K + K^T), so compare after the
+    # explicit factor of 1/2.
+    MF = sp.Symbol("MF")
     physical_c5 = build_flavor_matched_c5(
-        sp.Integer(1),
+        1 / MF,
         y1,
         y2,
+        fermion_mass_symbol=MF,
         heavy_masses=masses,
     )
     mixed_c12 = sp.Rational(1, 2) * physical_c5

@@ -48,16 +48,14 @@ from RGE.general.AnomalousDimensions import calculate_complete_master_rge
 from RGE.general.MasterWeinbergRGE import MasterRGEInputs
 from RGE.general.RGEModel import RGEModel
 from RGE.general.FermionBasis import build_gauge_sectors
-from RGE.general.WilsonTensors import SparseWilsonLookup
 from RGE.matching.WeinbergWilsonAdapter import (
+    SparseWilsonLookup,
     build_sm_eft,
     build_sm_yukawa,
     build_weinberg_wilson_tensor,
 )
-from RGE.running.EFT1QuarticAdapter import (
+from RGE.running.EFT1TensorAdapters import (
     load_and_build_eft1_quartic_tensor,
-)
-from RGE.running.EFT1WilsonAdapter import (
     load_and_build_eft1_wilson_tensor,
 )
 

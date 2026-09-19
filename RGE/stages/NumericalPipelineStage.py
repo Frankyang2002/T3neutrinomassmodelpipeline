@@ -6,13 +6,13 @@ from pathlib import Path
 import numpy as np
 import sympy as sp
 
-from RGE.matching.FlavorMatchedC5 import extract_t3_loop_kernel
-from RGE.matching.MatchedEFTRGE import parse_matchete_c5
-from RGE.matching.FinalWeinbergAdapter import (
+from RGE.matching.FlavorMatchedC5 import (
+    extract_t3_loop_kernel,
     is_final_weinberg_json,
     load_final_weinberg_flavor_matrix,
 )
-from RGE.running.NumericalWeinbergRGE import (
+from RGE.matching.MatchedEFTRGE import parse_matchete_c5
+from RGE.running.WeinbergRunning import (
     SMInitialConditions,
     evolve_weinberg,
     neutrino_mass_matrix,

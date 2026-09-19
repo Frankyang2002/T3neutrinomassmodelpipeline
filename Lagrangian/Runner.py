@@ -6,13 +6,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-from common.Paths import (
-    EFT_ORDER,
-    LOOP_ORDER,
-    OUTPUT_DIR,
-    PROJECT_ROOT,
-    RUN_MODEL_SCRIPT,
-)
 from common.Records import RunRecord
 from common.Thresholds import (
     default_threshold_plan,
@@ -26,6 +19,16 @@ from common.T3Model import (
     valid_shared_scalar_dimensions,
     valid_t3_dimensions,
 )
+
+
+# Repository paths and matching order used by the Wolfram model runner.
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+OUTPUT_DIR = PROJECT_ROOT / "output"
+RUN_MODEL_SCRIPT = PROJECT_ROOT / "Lagrangian" / "RunModel.wl"
+
+# Weinberg dimension-five matching at one loop.
+EFT_ORDER = 5
+LOOP_ORDER = 1
 
 
 def _physicalize_shared_scalar_summary(

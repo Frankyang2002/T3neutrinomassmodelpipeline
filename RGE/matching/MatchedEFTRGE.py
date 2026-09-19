@@ -9,8 +9,8 @@ from RGE.general.AnomalousDimensions import calculate_complete_master_rge
 from RGE.general.FermionBasis import build_gauge_sectors
 from RGE.general.GaugeGenerators import g2
 from RGE.general.MasterWeinbergRGE import MasterRGEInputs
-from RGE.general.WilsonTensors import SparseWilsonLookup
 from RGE.matching.WeinbergWilsonAdapter import (
+    SparseWilsonLookup,
     build_sm_eft,
     build_sm_yukawa,
     yd,
@@ -220,9 +220,9 @@ def run_matched_eft_rge(
     # The hierarchical pipeline supplies the physical full-flavor JSON.  The
     # purpose of this stage is only the universal one-generation SMEFT RGE
     # benchmark, so reduce that physical coefficient to a 1x1 flavor problem.
-    # Import locally to avoid the module-level cycle: FinalWeinbergAdapter uses
+    # Import locally to avoid the module-level cycle: FlavorMatchedC5 uses
     # parse_matchete_c5 from this module for the hard threshold expression.
-    from RGE.matching.FinalWeinbergAdapter import (
+    from RGE.matching.FlavorMatchedC5 import (
         is_final_weinberg_json,
         load_final_weinberg_flavor_matrix,
     )

@@ -4,9 +4,14 @@ import argparse
 import json
 from pathlib import Path
 from typing import Any
-
 import sympy as sp
+import re
+from sympy.printing.mathematica import mathematica_code
 
+# ---------------------------------------------------------------------------
+# Direct Weinberg flavor transport in EFT1
+# Consolidated from the former EFT1DirectWeinbergRunning.py module.
+# ---------------------------------------------------------------------------
 
 def _expr(raw: Any) -> sp.Expr:
     return sp.sympify(
@@ -187,7 +192,3 @@ def main() -> int:
         "equal_scale_running_vanishes": result["equal_scale_running_vanishes"],
     }, indent=2))
     return 0 if result["status"] == "Success" else 1
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())

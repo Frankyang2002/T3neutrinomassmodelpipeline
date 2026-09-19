@@ -14,7 +14,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from RGE.running.EFT1WilsonAdapter import load_and_build_eft1_wilson_tensor
+from RGE.running.EFT1TensorAdapters import load_and_build_eft1_wilson_tensor
 
 
 HBAR = sp.Symbol("hbar")

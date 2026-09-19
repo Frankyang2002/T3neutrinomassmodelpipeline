@@ -4,8 +4,12 @@ from functools import lru_cache
 import sympy as sp
 
 from RGE.general.GaugeGenerators import quadratic_casimir_matrix
-from RGE.general.MasterWeinbergRGE import MasterRGEInputs, calculate_master_rge
-from RGE.general.RGECommon import C, HALF
+from RGE.general.MasterWeinbergRGE import (
+    C,
+    HALF,
+    MasterRGEInputs,
+    calculate_master_rge,
+)
 from RGE.general.RGEModel import RGEModel
 
 # Collinear anomalous dimensions and the complete one-loop Weinberg RGE.

@@ -1,4 +1,12 @@
+from __future__ import annotations
+
 from pathlib import Path
+import sys
+import tempfile
+
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 from common.T3Model import (
     shared_scalar_formal_dimensions,
@@ -46,3 +54,27 @@ def test_shared_rge_model_counts_one_scalar_block():
     assert tuple(model.blocks) == ("H", "S")
     assert model.total_real_scalar_dimension == 8
     assert tuple(model.block("S").indices) == (5, 6, 7, 8)
+
+
+def main() -> None:
+    print("=" * 72)
+    print("SHARED-SCALAR MODE REGRESSION")
+    print("=" * 72)
+
+    test_shared_scalar_dimensions()
+    print("PASS: shared-scalar dimensions")
+
+    with tempfile.TemporaryDirectory() as directory:
+        test_shared_threshold_plan_is_physical_but_expands_for_matchete(
+            Path(directory)
+        )
+    print("PASS: shared-scalar threshold plan")
+
+    test_shared_rge_model_counts_one_scalar_block()
+    print("PASS: one physical scalar block")
+
+    print("PASS: shared-scalar mode")
+
+
+if __name__ == "__main__":
+    main()

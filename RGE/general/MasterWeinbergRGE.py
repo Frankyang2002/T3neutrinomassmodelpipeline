@@ -5,8 +5,31 @@ from dataclasses import dataclass
 import sympy as sp
 
 from RGE.general.GaugeGenerators import GaugeSector
-from RGE.general.RGECommon import C, HALF, QuarticComponent, _validate_output_component
 from RGE.general.RGEModel import RGEModel
+
+# Shared symbolic definitions and validation helpers for the general RGE.
+HALF = sp.Rational(1, 2)
+C = sp.IndexedBase("C")
+QuarticComponent = Callable[[int, int, int, int], sp.Expr]
+
+
+def _validate_output_component(
+    model: RGEModel,
+    output_component: tuple[int, int, int, int],
+) -> None:
+    """Validate the external scalar indices of a psi^2 phi^2 component."""
+
+    if len(output_component) != 4:
+        raise ValueError("output_component must have the form (i, j, a, b).")
+
+    _, _, a, b = output_component
+    n = model.total_real_scalar_dimension
+
+    if not 1 <= a <= n:
+        raise IndexError(f"Scalar index a={a} is outside 1,...,{n}.")
+    if not 1 <= b <= n:
+        raise IndexError(f"Scalar index b={b} is outside 1,...,{n}.")
+
 
 # Master one-loop RGE for the psi^2 phi^2 Wilson coefficient.
 

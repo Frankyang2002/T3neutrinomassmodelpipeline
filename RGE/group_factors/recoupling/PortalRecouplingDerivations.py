@@ -6,12 +6,23 @@ The three derivations remain logically independent and retain their original cal
 
 import argparse
 from itertools import combinations_with_replacement
+import json
 from pathlib import Path
 import sys
-import json
+
 import sympy as sp
-from RGE.group_factors.core.QuarticTensorAlgebra import pair_maps, restrict_sector, sparse_dot, tensor_from_polynomial, tensor_inner
-from RGE.group_factors.core.QuarticTensorAlgebra import restrict_sector, tensor_from_polynomial, tensor_inner
+
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from RGE.group_factors.core.QuarticTensorAlgebra import (
+    pair_maps,
+    restrict_sector,
+    sparse_dot,
+    tensor_from_polynomial,
+    tensor_inner,
+)
 
 # ---------------------------------------------------------------------------
 # T3-E portal cross-scalar recoupling derivation
@@ -56,11 +67,6 @@ with
 For distinct couplings X,Y both orderings contribute.
 """
 
-
-
-ecrossportal_PROJECT_ROOT = Path(__file__).resolve().parents[2]
-if str(ecrossportal_PROJECT_ROOT) not in sys.path:
-    sys.path.insert(0, str(ecrossportal_PROJECT_ROOT))
 
 
 
@@ -391,11 +397,6 @@ beta functions and are intentionally excluded from the residual.
 
 
 
-adjportal_PROJECT_ROOT = Path(__file__).resolve().parents[2]
-if str(adjportal_PROJECT_ROOT) not in sys.path:
-    sys.path.insert(0, str(adjportal_PROJECT_ROOT))
-
-
 
 adjportal_MODEL_DIMS = {
     "A": (1, 3, 2),
@@ -717,11 +718,6 @@ operator basis:
 No RGBeta coefficients are used as inputs.
 """
 
-
-
-gaugeportal_PROJECT_ROOT = Path(__file__).resolve().parents[2]
-if str(gaugeportal_PROJECT_ROOT) not in sys.path:
-    sys.path.insert(0, str(gaugeportal_PROJECT_ROOT))
 
 
 

@@ -35,9 +35,14 @@ from fractions import Fraction
 import json
 from pathlib import Path
 import re
+import sys
 from typing import Any
 
 import sympy as sp
+
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 from RGE.group_factors.core.RepresentationFactors import (
     su2_quadratic_casimir_from_dimension,
@@ -647,8 +652,8 @@ def main() -> int:
         "rgbeta_resolved_checks": rgbeta_checks,
         "raw_rgbeta_non_singlet_diagnostic_only": rgbeta_raw,
         "independent_derivations": [
-            "RGE/group_factors/RGBetaMixingQuarticRecoupling.py",
-            "RGE/group_factors/MixingQuarticRecoupling.py",
+            "RGE/group_factors/recoupling/RGBetaMixingQuarticRecoupling.py",
+            "RGE/group_factors/recoupling/MixingQuarticRecoupling.py",
         ],
         "notes": [
             (

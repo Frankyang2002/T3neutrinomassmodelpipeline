@@ -35,10 +35,10 @@ import time
 
 # Allow this file to be run directly from the repository root with
 #
-#     python RGE/running/EFT1WilsonRGE.py ...
+#     python RGE/running/eft1/EFT1WilsonRGE.py ...
 #
 # while keeping package-style imports below.
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 

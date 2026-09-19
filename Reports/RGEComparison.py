@@ -10,9 +10,9 @@ import json
 from pathlib import Path
 from typing import Any
 
-from common.Paths import REPORT_OUTPUT_DIR
 from common.Records import RunRecord
 from Reports.ReportGeneration import (
+    REPORT_OUTPUT_DIR,
     compile_latex_document,
     final_eft_stage_label,
     latex_escape_text,

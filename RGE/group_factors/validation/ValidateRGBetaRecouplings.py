@@ -92,7 +92,7 @@ def bcdiag_tensor_from_polynomial(expr, variables):
 
 
 def bcdiag_get(tensor, *indices):
-    return tensor.bcdiag_get(tuple(sorted(indices)), sp.S.Zero)
+    return tensor.get(tuple(sorted(indices)), sp.S.Zero)
 
 
 def bcdiag_ordered_weight(key):
@@ -518,7 +518,7 @@ def bctensor_tensor_from_polynomial(expr, variables):
 
 
 def bctensor_get(tensor, *indices):
-    return tensor.bctensor_get(tuple(sorted(indices)), sp.S.Zero)
+    return tensor.get(tuple(sorted(indices)), sp.S.Zero)
 
 
 def bctensor_ordered_weight(key):
@@ -872,7 +872,7 @@ def einv_tensor_from_polynomial(expr, variables):
 
 
 def einv_get(tensor, *indices):
-    return tensor.einv_get(tuple(sorted(indices)), sp.S.Zero)
+    return tensor.get(tuple(sorted(indices)), sp.S.Zero)
 
 
 def einv_ordered_weight(key):
@@ -1165,7 +1165,7 @@ def ecross_tensor_from_polynomial(expr, variables):
 
 
 def ecross_get(tensor, *indices):
-    return tensor.ecross_get(tuple(sorted(indices)), sp.S.Zero)
+    return tensor.get(tuple(sorted(indices)), sp.S.Zero)
 
 
 def ecross_ordered_weight(key):

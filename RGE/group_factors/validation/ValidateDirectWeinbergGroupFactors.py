@@ -33,16 +33,11 @@ from dataclasses import dataclass
 import json
 from pathlib import Path
 import re
-import sys
 from typing import Any
 
 import sympy as sp
 from sympy.physics.wigner import wigner_6j
 
-
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
-if str(PROJECT_ROOT) not in sys.path:
-    sys.path.insert(0, str(PROJECT_ROOT))
 
 MODEL_DIMS = {
     "A": (1, 3, 2),

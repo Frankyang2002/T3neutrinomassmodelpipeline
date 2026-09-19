@@ -43,8 +43,8 @@ $$
 - `data/c5_coefficient.txt` is the main input from matching.
 - The symbolic stages run automatically after a successful match.
 - Numerical running only occurs when `--numerical CONFIG.json` is supplied.
-- `MaFullRunningComparison.py` separately compares frozen, UV-only,
-  EFT-only, and full UV-to-EFT evolution for the Ma benchmark.
+- The UV RGBeta stage and the EFT1 threshold-running stage are handled by
+  `RGE/running/rgbeta/` and `RGE/running/eft1/`, respectively.
 - `rge_report.pdf` is the main human-readable RGE result for each model.
 - The later stages do **not** read `c5_beta.txt`, `c5_flavor_matrix.txt`, or
   `c5_loop_kernel.txt`; these are reports, not pipeline dependencies.
@@ -130,7 +130,7 @@ currently assumes a diagonal heavy-fermion mass basis and common scalar
 masses.
 
 The full one-loop SMEFT equation implemented by
-`SMEFTWeinbergFlavorRGE.py` is
+`RGE/running/weinberg/WeinbergRunning.py` is
 
 $$
 16\pi^2\frac{dC_5}{d\ln\mu}
@@ -158,18 +158,19 @@ The symbolic beta matrix is saved as `c5_flavor_beta_matrix.txt`.
 
 ## 4. Neutrino-Mass Matrix
 
-After electroweak symmetry breaking, the current implementation converts the
-coefficient using
+After electroweak symmetry breaking, the code uses the same convention bridge
+throughout the symbolic and numerical stages. With the $v\simeq174$ GeV
+neutral-Higgs convention this is
 
 $$
 m_\nu=-v^2C_5.
 $$
 
-The symbolic result is saved in `neutrino_mass_matrix.txt`.
+Equivalently, with the $v\simeq246$ GeV electroweak convention used by the
+numerical input, the implementation evaluates $m_\nu=-(v^2/2)C_5$. The two
+forms are the same convention expressed with $v_{246}/\sqrt2=v_{174}$.
 
-This normalization has been checked directly against the matched T3-B
-operator convention. The Python symbolic and numerical stages use the same
-conversion.
+The symbolic result is saved in `neutrino_mass_matrix.txt`.
 
 ---
 
@@ -200,141 +201,98 @@ stage compares these quantities with the included NuFIT reference data.
 
 ## 6. Code Structure
 
-### Main symbolic pipeline
+### Matching and final Weinberg stages
 
 | File | Purpose |
 |---|---|
-| `MatchedEFTRGE.py` | Parses `c5_coefficient.txt`, calculates the one-generation beta function, and checks the SMEFT benchmark. |
-| `FlavorMatchedC5.py` | Extracts the T3 loop kernel and constructs the symmetric $3\times3$ flavor coefficient. |
-| `SMEFTWeinbergFlavorRGE.py` | Implements the full three-generation Weinberg-operator RGE. |
-| `FlavorMatchedRGEStage.py` | Connects the flavor matching and matrix RGE stages. |
-| `NeutrinoMassStage.py` | Converts the symbolic coefficient matrix into $m_\nu$. |
+| `RGE/matching/MatchedEFTRGE.py` | Parses the matched $C_5$, evaluates the general $\psi^2\phi^2$ one-loop RGE, and checks the one-generation SMEFT benchmark. |
+| `RGE/matching/FlavorMatchedC5.py` | Lifts the matched coefficient to the symmetric three-generation flavor matrix. |
+| `RGE/matching/WeinbergWilsonAdapter.py` | Embeds $C_5$ into the general Wilson-tensor representation used by the master RGE. |
+| `RGE/running/weinberg/FlavorMatchedRGEStage.py` | Runs the symbolic full-flavor beta matrix and constructs the symbolic neutrino-mass matrix. |
+| `RGE/running/weinberg/WeinbergRunning.py` | Contains the symbolic three-generation Weinberg RGE and the numerical coupled SM+$C_5$ evolution. |
+| `RGE/running/weinberg/FinalWeinbergCoefficient.py` | Combines hard matching and threshold-running pieces into the final Weinberg coefficient. |
+| `RGE/running/weinberg/NumericalPipelineStage.py` | Evaluates the matched coefficient numerically and evolves it to the requested low scale. |
+| `RGE/phenomenology/NeutrinoObservables.py` | Takagi-factorises the low-scale Majorana mass matrix and writes neutrino observables. |
 
-### Numerical and phenomenology tools
+### UV and intermediate-EFT running
 
 | File | Purpose |
 |---|---|
-| `NumericalWeinbergRGE.py` | Numerically evolves the SM parameters and $C_5$. |
-| `MaUVRGE.py` | Evolves the one-loop Ma-model gauge, Yukawa, Majorana-mass, scalar-quartic, and scalar-mass parameters above the threshold. |
-| `MaFullRunningComparison.py` | Matches the Ma model at a common threshold and separates UV-only, EFT-only, and combined effects. |
-| `MaPhysicalBenchmarkFit.py` | Fits $h(\Lambda)$ through the complete UV-to-EFT calculation to a selected low-energy neutrino target. |
-| `NumericalPipelineStage.py` | Reads the numerical configuration and writes the high- and low-scale matrices. |
-| `RGEReportStage.py` | Builds the concise per-model RGE report, equations, numerical matrices, and observable tables. |
-| `NeutrinoObservables.py` | Takagi-factorises $m_\nu$ and calculates observables. |
-| `NeutrinoDataComparison.py` | Compares the calculated observables with NuFIT data. |
-| `T3NeutrinoTarget.py` | Builds a target neutrino-mass or $C_5$ matrix. |
-| `T3YukawaFit.py` | Fits T3 Yukawa matrices to a target coefficient. |
-| `T3PhysicalYukawaPoint.py` | Creates a fitted numerical point using the matched loop kernel. |
-| `T3RGECorrectedYukawaPoint.py` | Fits at the matching scale after accounting for RGE evolution. |
+| `RGE/running/rgbeta/RGBetaT3Running.py` | Python interface to the UV and EFT1 RGBeta calculations. |
+| `RGE/running/rgbeta/RunT3RGBeta.wl` | Runs RGBeta for the full UV T3 theory. |
+| `RGE/running/rgbeta/RunT3EFT1RGBeta.wl` | Runs RGBeta for the first intermediate EFT after the first threshold. |
+| `RGE/running/rgbeta/T3RGBetaModel.wl` | Builds the RGBeta model definition from the exported T3 data. |
+| `RGE/running/rgbeta/T3RGBetaRunnerCommon.wl` | Shared Wolfram runner utilities used by the UV and EFT1 RGBeta stages. |
+| `RGE/running/eft1/EFT1TensorAdapters.py` | Builds the EFT1 Wilson and quartic tensors from exported Matchete data. |
+| `RGE/running/eft1/EFT1WilsonRGE.py` | Evaluates the EFT1 Wilson-coefficient RGE with the general tensor machinery. |
+| `RGE/running/eft1/EFT1WilsonFlow.py` | Performs EFT1 Wilson transport and exports the flavor seed used at the next threshold. |
+| `RGE/running/eft1/EFT1DirectWeinberg.py` | Builds and exports the direct one-loop $C_{12}\to C_5$ running contribution. |
+| `RGE/running/eft1/EFT1ThresholdResume.py` | Resumes the second threshold with the transported EFT1 result. |
+| `RGE/running/eft1/MatcheteParsing.py` | Parses Matchete CG registries and matching expressions used by the EFT1 stages. |
 
 ### General tensor infrastructure
 
 | File | Purpose |
 |---|---|
-| `GeneralWeinbergRGEGenerator.py` | Implements the general $\psi^2\phi^2$ master-equation terms in a real-scalar basis. |
-| `GeneralT3WeinbergRGEStage.py` | Assembles exported T3 tensors, constructs the Weinberg tensor, and checks the representation-generic one-loop beta function component by component. |
-| `T3RGETensors.py` | Constructs and validates the T3 scalar, fermion, generator, and coupling tensors. |
-| `T3YukawaAdapter.py` | Converts exported Wolfram Yukawa invariants into real-component tensors. |
-| `WeinbergWilsonAdapter.py` | Embeds $C_5$ into the general Wilson tensor and checks its symmetries. |
-| `T3RGETensorExport.wl` | Exports exact T3 tensor data from Wolfram/Matchete. |
-| `GeneralRGE.wl` | Provides Wolfram-side foundations only; automatic RGBeta model definition and beta extraction are not yet implemented. |
+| `RGE/general/RGEModel.py` | Defines the scalar representation/basis model used by the general RGE machinery. |
+| `RGE/general/GaugeGenerators.py` | Builds the real-scalar SU(2) and U(1) generators and gauge sectors. |
+| `RGE/general/FermionBasis.py` | Builds the Weyl-fermion basis and its gauge generators. |
+| `RGE/general/MasterWeinbergRGE.py` | Implements the general $\psi^2\phi^2$ master-equation tensor terms. |
+| `RGE/general/AnomalousDimensions.py` | Adds the scalar and fermion collinear anomalous-dimension contributions and assembles the complete master RGE. |
+
+### Group factors and independent checks
+
+The production group-factor code is split into `RGE/group_factors/core/`,
+`RGE/group_factors/recoupling/`, and `RGE/group_factors/validation/`.
+Independent research checks remain under `tests/`, including
+`tests/python/check_t3_scalar_quartics.py`, `tests/wolfram/ProbeT3SU2Factors.wl`,
+`tests/reference/MaUVRGE.py`, and the three independent T3 RGE exporters in
+`tests/reference/`.
 
 ---
 
 ## 7. Running the Pipeline
 
-### Symbolic RGE
+### Ordinary three-field T3 model
 
 ```powershell
-python pipeline.py --dims 3 5 4 --alpha 0
+python pipeline.py --dims 2 2 1 --alpha -1
 ```
 
-After successful construction and matching, this automatically runs the
-one-generation RGE, full-flavor RGE, and symbolic neutrino-mass stages.
+The three dimensions are $d_{S_1}$, $d_{S_2}$, and $d_F$. For the ordinary
+T3 pipeline the threshold order is the heavy fermion first, followed by
+$S_1/S_2$.
+
+### Shared-scalar mode
+
+```powershell
+python pipeline.py --dims 2 1
+```
+
+Two dimensions select one physical shared scalar $S$ and the fermion $F$.
+Internally the formal topology uses $S_1=i\sigma_2S^*$ and $S_2=S$, with
+$\alpha=-1$, while the physical scalar is counted once. The threshold order
+is $F$ followed by $S$.
 
 ### Numerical RGE
 
 ```powershell
-python pipeline.py --dims 3 5 4 --alpha 0 --numerical path\to\config.json
+python pipeline.py --dims 2 2 1 --alpha -1 --numerical path\to\config.json
 ```
+
+When `--numerical` is supplied, `NumericalPipelineStage.py` evaluates the
+matched coefficient at the configured matching scale, `WeinbergRunning.py`
+evolves the SM parameters and $C_5$, and `NeutrinoObservables.py` calculates
+the low-scale neutrino observables.
 
 ### Include detailed diagnostics
 
 ```powershell
-python pipeline.py --dims 3 5 4 --alpha 0 --debug-reports
+python pipeline.py --dims 2 2 1 --alpha -1 --debug-reports
 ```
 
-### Full Ma UV-to-EFT comparison
-
-Place `MaUVRGE.py` and `MaFullRunningComparison.py` under `RGE/running/`, then
-run from the project root:
-
-```powershell
-python -m RGE.running.MaFullRunningComparison examples\ma_full_running_example.json --output output\ma_full_running_comparison.json
-```
-
-The calculation uses one common matching scale and reports four cases:
-
-| Case | UV running | EFT running |
-|---|---:|---:|
-| `frozen` | No | No |
-| `uv_only` | Yes | No |
-| `eft_only` | No | Yes |
-| `full` | Yes | Yes |
-
-This makes the separate effects on $C_5$, the neutrino mass matrix, the
-heavy masses, $h$, $\lambda_5$, and the other UV parameters explicit.
-
-At the common threshold, the code diagonalizes the full complex charged-lepton
-Yukawa matrix as $Y_e=U_RD_eV_L^\dagger$ and applies
-
-$$
-h\rightarrow hV_L,
-\qquad
-C_5\rightarrow V_L^TC_5V_L.
-$$
-
-The output JSON records $V_L$, the ordered electron--muon--tau Yukawa
-eigenvalues, and the diagonalization residual.
-
-The Ma parameters are connected to the generated T3-B Matchete convention by
-
-$$
-\lambda_{T3}=-\lambda_5,
-\qquad
-y_1=y_2=h^*.
-$$
-
-With this bridge, the Matchete equal-scalar loop kernel is the negative of the
-paper's $f/M$ function, and the two signs cancel in $C_5$. The completely
-degenerate result is $C_5=-\lambda_5h^Th/(32\pi^2M)$.
-
-### Fit a physical Ma benchmark
-
-```powershell
-python -m RGE.phenomenology.MaPhysicalBenchmarkFit examples\ma_full_running_example.json --output examples\ma_full_running_fitted.json --summary output\ma_full_running_fitted_fit_summary.json --comparison output\ma_full_running_fitted_comparison.json --ordering NO --m-lightest 0.001
-```
-
-The fitter varies only the high-scale scotogenic Yukawa matrix. Every objective
-evaluation performs the full Ma UV running, threshold matching, charged-lepton
-basis rotation, and SMEFT running. The summary includes the low-energy NuFIT
-comparison and a 64-point UV-trajectory check of perturbativity, boundedness
-from below, and positive inert-scalar squared masses.
-
-Because the NuFIT central values are used as the fitting target, a very small
-diagnostic chi-square demonstrates numerical reconstruction rather than a
-model prediction. The lightest mass and CP phases remain benchmark inputs.
-
-### Generate the full-running comparison report
-
-```powershell
-python -m RGE.phenomenology.MaRunningReport examples\ma_full_running_fitted.json --output-dir output\ma_running_report
-```
-
-This samples the UV and EFT solutions once each and writes machine-readable
-CSV trajectories, a four-case comparison table, the complete comparison JSON,
-and publication-ready PNG/PDF figures. The report retains the fit-target
-provenance and states the common-threshold and small-$\lambda_5$ limitations.
+`--debug-reports` writes expanded intermediate algebra and logs in addition
+to the normal report products.
 
 ---
 
@@ -403,14 +361,22 @@ The standalone Ma full-running report additionally writes
 
 ## 9. Present Limitations and Checks
 
-- The evolution below the matching scale is SMEFT only; threshold splitting
-  between non-degenerate heavy particles is not yet implemented.
-- The Ma UV-to-EFT benchmark uses the small-$\lambda_5$ matching expression
-  and one common matching scale. It is not yet the general T3 UV runner.
-- The flavor lift assumes a diagonal heavy-fermion mass basis and common
-  scalar masses.
-- The numerical SM running currently uses diagonal Yukawa matrices.
-- `GeneralRGE.wl` is not yet a complete automatic RGE calculator.
+- RGBeta is currently used only for the SU(2) representations supported by
+  the present Wolfram/RGBeta model setup (fundamental and adjoint).
+- Sequential threshold running is implemented for the supported T3 threshold
+  plans. The intermediate EFT1 calculation should therefore be distinguished
+  from the final SMEFT Weinberg running below the last heavy threshold.
+- The flavor lift assumes a diagonal heavy-fermion mass basis. The legacy
+  scalar-$C_5$ path also assumes common scalar masses; the hierarchical final
+  Weinberg JSON path keeps the hard and running pieces separated before the
+  flavor matrix is constructed.
+- The numerical SM running in `WeinbergRunning.py` uses diagonal SM Yukawa
+  eigenvalues and evolves a complex symmetric $C_5$ matrix.
+- `tests/reference/MaUVRGE.py` is retained as an independent Ma/scotogenic RGE
+  reference implementation; it is not a production pipeline module.
+- The independent SU(2), recoupling, RGBeta, and Weinberg regressions under
+  `tests/` should be kept separate from production code even when they duplicate
+  part of a calculation, because they provide cross-checks rather than wrappers.
 
 For ordinary use, inspect `c5_coefficient.pdf` and `rge_report.pdf`. Open the
 files under `data/` only when the expanded expressions or numerical matrices
@@ -420,29 +386,59 @@ are needed. Enable debug reports only when checking the intermediate algebra.
 
 ## 10. Pipeline Detailed for RGE
 
-1. After our RGE pipeline, we obtain the weinberg coefficients from c5_coefficient.txt created by RunMatching.wl
-2. Pipeline.py runs the run_uv_rgbeta_stage() which calls run_rgbeta_t3() from RGBetaT3Running.py. We give the model parameters and get the UV thoery RGEs
-3. RGBetaT3Running.py uses runner RunT3RGBeta.wl which creates our UV model parameter beta functions and  is given as a JSON in uv_rgbeta_rge.json
-4. After UV RGE, pipeline.py runs EFT RGE with run_matched_eft_rge_stage() which gives c5_coefficient.txt to run_matched_eft_rge() in MatchedEFTRGE.py
-5. MatchedEFTRGE.py uses parse_matchete_c5() to convert Matchete coefficient into SymPy for symbolic python expressions
-6. MatchedEFTRGE.py constructs one generation SMEFT for checking implementation
-7. Matched coefficient $C_5$ becomes general Wilson tensor $C_{ijab}$ for our generic RGE. MatchedEFTRGE.py selects one component and gets the RGE from it.
-8. We have RGEModel.py for scalar representation, GaugeGenerators.py for SU(2) and U(1) generator matrix, and RGECommon.py for other indices and objects.
-9. MasterWeinbergRGE.py collates every term in the RGE together 
-10. AnomalousDimensions.py gives scalar and fermion collinear anomalous dimensions and put into the master-equation. Then we call calculate_master_rge() giving us the full one loop-equation
-11. MatchedEFTRGE.py sums all these contributions and divide by the Wilson coefficient compoennt, now we try to confirm if our one generation works $$\frac{16\pi^2\beta_{C_5}}{C_5}=-3g^2_2+2\lambda_H+6|y_u|^2+6|y_d|^2-|y_e|^2$$, and we write this to c5_beta.txt to check
-12. Now we use run_flavor_rge_stage() which calls run_flavor_matched_rge() in FlavorMatchedRGEStage.py which tries to get all 3 generation Weinberg Coeffciients
-13. With 3 generations, we use FlavorMatchedRGEStage.py to call flavor_match_from_c5_file() from FlavorMatchedC5.py. We separate our flavour dependent and flavour independent part of our Coefficient, splitting our one generation into 
-$C_5=F_{loop}y^*_1y^*_2$
-We can use $F_{loop}(Masses + ScalarCoupling)$ from our one generation coefficient and make it general for 3 generations
-14. Now in FlavorMatchedC5.py we have 3 lepton generations where we make $F_loop$ change with heavy fermion mass, giving us the symmetric flavor matrix
-$$(C_5)_{pq}=\frac{1}{2}\sum_{r}F_r[y^*_{1pr}y^*_{2pr}+y^*_{2pr}y^*_{1qr}]$$
-15. Then FlavorMatchedRGEStage.py makes our symbolic $3\times3$ SM Yukawa matrices $Y_e,Y_u,Y_d$ and we also put the $C_5$ matrix to beta_weinberg_matrix() in SMEFTWeinbergFlavorRGE.py
-16. SMEFTWeinbergFlavor.py gets the whole Weinberg RGE with all 3 flavors and FlavorMatchedRGEStage.py saves this matrix in c5_flavor_beta_matrix.txt. We have all the symbolic RGE for all flavor components
-17. pipeline.py calls run_symbolic_neutrino_mass_stage() which uses NeutrinoMassStage which uses our $C_5$  matrix to get the Majorana neutrino mass matrix with $m_\nu=-v^2C_5$
-18. If the user uses --numerical and CONFIG.json, the pipeline.py uses run_numerical_rge_stage() which gives our initial conditions to NumericalPipelineStage.py
-19. NumericalPipelineStage.py reads our T3 masses, scalar coupling, T3 Yukawa matrices and SM parameters form JSON file and gets symbolic T3 loop kernel for each heavy-fermion mass and gets a numerical complex symmetric matrix $C_5(M)$. This, with our couplings g_{Y,2,3},$\lambda$ and diagonal SM yukawa is put into SMInitialConditions object and put into evolve_weinberg() in NumericalWeinbergRGE.py
-20. NumericalWeinbergRGE.py has the actual coupled differential equations which evolves our SM gauge couplings, the diagonal Yukawa couplings and the $C_5$ matrix. We use $t=ln\mu$. Then we pack real SM parameters with the real and imaginary parts of $C_5$ into a real ODE vector where _beta() calculates one-loop derivatives, where we use solve_ivp to integrate from $ln(M)$ to $ln(\mu)$ (Uses Runge-Kutta integration method). This gives us $C_5(M)\to C_5(\mu)$ with a low-scale coefficient. 
-21. NumericalPipelineStage.py gives us our low-sclae neutrino-mass matrix $m_\nu(\mu)=-v^2C_5(\mu)$
-22. We send our low-scale neutrino mass matrix from pipeline.py to NeutrinoObservables.py and we diagonalise it to obtain our Majorana mass matrix to get $U^Tm_\nu U=diag(m_1,m_2,m_3)$. This gives us our normal or invertex ordering and gives us our squared differences, our masses and PMNS matrix, and this si saved in neutrino_observables.json. THen we get summaries
+1. `Lagrangian/RunMatching.wl` produces the matched Weinberg coefficient and
+   the pipeline organises it as `data/c5_coefficient.txt` (or the corresponding
+   final-Weinberg JSON after hierarchical threshold transport).
+2. `pipeline.py` calls `run_uv_rgbeta_stage()`, which uses
+   `RGE/running/rgbeta/RGBetaT3Running.py` and `RunT3RGBeta.wl` to obtain the
+   UV-theory beta functions.
+3. When the threshold plan contains an intermediate EFT after integrating out
+   the heavy fermion, the pipeline runs the EFT1 RGBeta/Wilson stages. The
+   relevant code is in `RGE/running/rgbeta/` and `RGE/running/eft1/`.
+4. `EFT1TensorAdapters.py` converts exported matching data into the Wilson and
+   quartic tensors needed by `EFT1WilsonRGE.py`.
+5. `EFT1WilsonFlow.py` transports the EFT1 Wilson coefficients between the
+   first and second thresholds and exports the flavor seed for the resumed
+   threshold calculation.
+6. `EFT1DirectWeinberg.py` carries the direct one-loop $C_{12}\to C_5$
+   contribution separately. At fixed one-loop order, the heavy LLSS
+   self-running insertion is not fed back through the scalar loop because that
+   would be an $O(\hbar^2)$ effect.
+7. `EFT1ThresholdResume.py` supplies the transported EFT1 result to the second
+   threshold calculation. `FinalWeinbergCoefficient.py` then combines the hard
+   threshold contribution and running contribution into the final physical
+   Weinberg coefficient.
+8. `pipeline.py` runs `run_matched_eft_rge_stage()`, which calls
+   `RGE/matching/MatchedEFTRGE.py`. This parses the matched coefficient into
+   SymPy, embeds it in the general Wilson tensor through
+   `WeinbergWilsonAdapter.py`, and evaluates the generic master RGE.
+9. The general tensor calculation uses `RGEModel.py`, `GaugeGenerators.py`,
+   `FermionBasis.py`, `MasterWeinbergRGE.py`, and `AnomalousDimensions.py`.
+10. The one-generation result is checked against
 
+$$
+\frac{16\pi^2\beta_{C_5}}{C_5}
+=-3g_2^2+2\lambda_H+6|y_u|^2+6|y_d|^2-|y_e|^2.
+$$
+
+11. `run_flavor_rge_stage()` calls
+    `RGE/running/weinberg/FlavorMatchedRGEStage.py`. It obtains the symmetric
+    three-generation $C_5$ matrix from `FlavorMatchedC5.py`, constructs symbolic
+    $Y_e$, $Y_u$, and $Y_d$, and evaluates `beta_weinberg_matrix()` from
+    `WeinbergRunning.py`.
+12. The symbolic full-flavor beta matrix is written to
+    `data/c5_flavor_beta_matrix.txt`.
+13. `run_symbolic_neutrino_mass_stage()` calls the neutrino-mass stage now
+    contained in `FlavorMatchedRGEStage.py`. It converts the matched symmetric
+    coefficient to the Majorana mass matrix using the project convention bridge
+    described in Section 4 and writes `data/neutrino_mass_matrix.txt`.
+14. If `--numerical CONFIG.json` is supplied,
+    `RGE/running/weinberg/NumericalPipelineStage.py` evaluates the matched
+    coefficient and builds `SMInitialConditions` for `WeinbergRunning.py`.
+15. `evolve_weinberg()` integrates the one-loop SM gauge couplings,
+    $\lambda_H$, diagonal SM Yukawa eigenvalues, and the complex symmetric
+    $C_5$ matrix using $t=\ln\mu$ and SciPy `solve_ivp` with `DOP853`.
+16. The low-scale coefficient and neutrino-mass matrix are written under
+    `data/`. `RGE/phenomenology/NeutrinoObservables.py` then performs the Takagi
+    factorisation and writes the neutrino masses, mass-squared splittings, and
+    mixing information to `data/neutrino_observables.json`.

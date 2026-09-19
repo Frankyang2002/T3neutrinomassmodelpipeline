@@ -4,16 +4,23 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from dataclasses import asdict, dataclass
 from fractions import Fraction
-import sympy as sp
-from RGE.group_factors.core.RepresentationFactors import canonical_yukawa_leg_factors, su2_quadratic_casimir_from_dimension
 from pathlib import Path
 import re
-import sys
 from typing import Any
-from Reports.RGEComparison import normalise_rgbeta_latex
-from Reports.ReportGeneration import split_latex_terms
+
+import sympy as sp
+
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from RGE.group_factors.core.RepresentationFactors import (
+    canonical_yukawa_leg_factors,
+    su2_quadratic_casimir_from_dimension,
+)
 
 # ---------------------------------------------------------------------------
 # Complete Yukawa beta group factors
@@ -233,7 +240,7 @@ def a_main() -> int:
 # Former source: ValidateYukawa2NongaugeBranches.py
 # ---------------------------------------------------------------------------
 
-"""Validate the T3 Yukawa beta-function group factors against RGBeta.
+r"""Validate the T3 Yukawa beta-function group factors against RGBeta.
 
 This file combines the former beta_y2 extraction/branch validator with the
 standalone Yukawa gauge-factor validator.
@@ -270,10 +277,6 @@ branch-aware validation question; this refactor does not change any physics.
 
 
 
-
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
-if str(PROJECT_ROOT) not in sys.path:
-    sys.path.insert(0, str(PROJECT_ROOT))
 
 
 
@@ -444,8 +447,8 @@ def _extract_gauge_coefficient(
     if not raw:
         raise KeyError(f"Missing report_beta_latex[{yukawa!r}]")
 
-    cleaned = normalise_rgbeta_latex(str(raw))
-    terms = split_latex_terms(cleaned) or [cleaned]
+    beta_latex = str(raw)
+    terms = split_top_level_additive(beta_latex) or [beta_latex]
     candidates = [
         term
         for term in terms
@@ -457,7 +460,7 @@ def _extract_gauge_coefficient(
         raise ValueError(
             f"Expected exactly one {gauge}^2 {yukawa} term, found "
             f"{len(candidates)}:\n{diagnostic}\n"
-            f"Full normalized beta:\n{cleaned}"
+            f"Full RGBeta beta:\n{beta_latex}"
         )
 
     return _leading_rational(candidates[0])

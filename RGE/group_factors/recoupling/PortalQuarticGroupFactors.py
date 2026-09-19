@@ -9,7 +9,6 @@ import json
 from RGE.group_factors.core.RepresentationFactors import su2_quadratic_casimir_from_dimension
 from pathlib import Path
 import re
-import sys
 from typing import Any
 import sympy as sp
 
@@ -278,10 +277,6 @@ here only to select the five supported benchmark representation assignments.
 
 
 
-
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
-if str(PROJECT_ROOT) not in sys.path:
-    sys.path.insert(0, str(PROJECT_ROOT))
 
 
 

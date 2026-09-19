@@ -2,29 +2,36 @@ from __future__ import annotations
 
 """Scalar-quartic basis mapping and invariant-completeness validation."""
 
+import argparse
+import json
+import re
 import sys
-import argparse, json, re, sys
 from collections import Counter
 from dataclasses import dataclass
 from math import factorial
 from pathlib import Path
 from typing import Iterable
+
 import sympy as sp
+
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
 from RGE.general.GaugeGenerators import su2_complex_generators
-from RGE.group_factors.core.MixingQuarticTensorAlgebra import basis_tensor, tensor_inner_product
-from RGE.running.eft1.EFT1TensorAdapters import SparseQuarticTensor, load_and_build_eft1_quartic_tensor
-import argparse
-import json
+from RGE.group_factors.core.MixingQuarticTensorAlgebra import (
+    basis_tensor,
+    tensor_inner_product,
+)
+from RGE.running.eft1.EFT1TensorAdapters import (
+    SparseQuarticTensor,
+    load_and_build_eft1_quartic_tensor,
+)
 
 # ---------------------------------------------------------------------------
 # Scalar-quartic basis mapping
 # Former source: ScalarQuarticBasisMap.py
 # ---------------------------------------------------------------------------
-
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
-if str(PROJECT_ROOT) not in sys.path:
-    sys.path.insert(0, str(PROJECT_ROOT))
-
 
 @dataclass(frozen=True)
 class FieldBlock:

@@ -5,8 +5,9 @@ from pathlib import Path
 
 import sympy as sp
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(PROJECT_ROOT))
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 from RGE.running.rgbeta.RGBetaT3Running import run_rgbeta_t3
 

@@ -8,25 +8,26 @@ between thresholds and extraction of the full-flavor seed from Matchete.
 """
 
 import argparse
+from dataclasses import asdict, dataclass
 import json
 from pathlib import Path
+import re
 import sys
 from typing import Any
+
 import sympy as sp
+
+# Allow direct execution:
+#     python RGE/running/eft1/EFT1WilsonFlow.py ...
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
 from RGE.running.eft1.EFT1TensorAdapters import load_and_build_eft1_wilson_tensor
-from dataclasses import dataclass, asdict
-import re
 
 # ---------------------------------------------------------------------------
 # Wilson-coefficient transport
 # ---------------------------------------------------------------------------
-
-# Allow direct execution from the repository root:
-#     python RGE/running/EFT1WilsonRunning.py ...
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
-if str(PROJECT_ROOT) not in sys.path:
-    sys.path.insert(0, str(PROJECT_ROOT))
-
 
 
 HBAR = sp.Symbol("hbar")

@@ -54,7 +54,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from RGE.group_factors.MixingQuarticTensorAlgebra import (
+from RGE.group_factors.core.MixingQuarticTensorAlgebra import (
     basis_tensor,
     build_cross_tensor,
     project_onto_direction,

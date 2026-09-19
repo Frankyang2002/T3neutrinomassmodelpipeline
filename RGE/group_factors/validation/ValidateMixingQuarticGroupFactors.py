@@ -39,7 +39,7 @@ from typing import Any
 
 import sympy as sp
 
-from RGE.group_factors.RepresentationFactors import (
+from RGE.group_factors.core.RepresentationFactors import (
     su2_quadratic_casimir_from_dimension,
 )
 

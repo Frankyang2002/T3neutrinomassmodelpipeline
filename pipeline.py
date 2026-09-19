@@ -19,11 +19,11 @@ import time
 from pathlib import Path
 
 from RGE.matching.MatchedEFTRGE import run_matched_eft_rge
-from RGE.stages.FlavorMatchedRGEStage import (
+from RGE.running.FlavorMatchedRGEStage import (
     run_flavor_matched_rge,
     run_neutrino_mass_stage,
 )
-from RGE.stages.NumericalPipelineStage import run_numerical_pipeline_stage
+from RGE.running.NumericalPipelineStage import run_numerical_pipeline_stage
 from RGE.phenomenology.NeutrinoObservables import run_neutrino_observables_stage
 from RGE.running.RGBetaT3Running import (
     run_rgbeta_t3,

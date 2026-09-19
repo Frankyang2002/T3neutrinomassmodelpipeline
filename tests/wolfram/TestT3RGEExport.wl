@@ -15,9 +15,7 @@ builderPath = FileNameJoin[{projectRoot, "Lagrangian", "LagrangianBuilder.wl"}];
 exporterPath = FileNameJoin[{
     projectRoot,
     "tests",
-    "non_pipeline_rge",
-    "general",
-    "wolfram",
+    "reference",
     "T3RGETensorExport.wl"
 }];
 

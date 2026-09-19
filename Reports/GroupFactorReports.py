@@ -40,20 +40,20 @@ from Reports.ReportGeneration import (
     paper_symbol_latex,
     split_latex_terms,
 )
-from RGE.group_factors.ValidateDirectWeinbergGroupFactors import (
+from RGE.group_factors.validation.ValidateDirectWeinbergGroupFactors import (
     direct_weinberg_group_factor,
 )
-from RGE.group_factors.ValidateFermionMassGroupFactors import (
+from RGE.group_factors.validation.ValidateMassGroupFactors import (
     expected_fermion_mass_coefficients,
 )
-from RGE.group_factors.FullYukawaBetaGroupFactors import complete_yukawa_group_factors
-from RGE.group_factors.PortalQuarticBetaGroupFactors import (
+from RGE.group_factors.validation.YukawaBetaGroupFactors import complete_yukawa_group_factors
+from RGE.group_factors.recoupling.PortalQuarticGroupFactors import (
     portal_quartic_beta_group_factors,
 )
-from RGE.group_factors.ValidateMixingQuarticGroupFactors import (
+from RGE.group_factors.validation.ValidateMixingQuarticGroupFactors import (
     mixing_quartic_group_factors,
 )
-from RGE.group_factors.ValidateScalarMassGroupFactors import (
+from RGE.group_factors.validation.ValidateMassGroupFactors import (
     scalar_mass_group_factors,
 )
 from RGE.running.EFT1WilsonAdapter import build_eft1_wilson_tensor

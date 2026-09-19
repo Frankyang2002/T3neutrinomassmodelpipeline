@@ -11,7 +11,7 @@ from RGE.matching.FlavorMatchedC5 import (
     load_final_weinberg_flavor_matrix,
     write_flavor_outputs,
 )
-from RGE.running.WeinbergRunning import beta_weinberg_matrix, symbolic_complex_matrix
+from RGE.running.weinberg.WeinbergRunning import beta_weinberg_matrix, symbolic_complex_matrix
 
 
 def run_flavor_matched_rge(

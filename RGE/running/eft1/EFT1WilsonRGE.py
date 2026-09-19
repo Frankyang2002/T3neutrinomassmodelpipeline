@@ -54,7 +54,7 @@ from RGE.matching.WeinbergWilsonAdapter import (
     build_sm_yukawa,
     build_weinberg_wilson_tensor,
 )
-from RGE.running.EFT1TensorAdapters import (
+from RGE.running.eft1.EFT1TensorAdapters import (
     load_and_build_eft1_quartic_tensor,
     load_and_build_eft1_wilson_tensor,
 )

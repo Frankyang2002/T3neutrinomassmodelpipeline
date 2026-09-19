@@ -8,7 +8,7 @@ import sympy as sp
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from RGE.running.RGBetaT3Running import run_rgbeta_t3
+from RGE.running.rgbeta.RGBetaT3Running import run_rgbeta_t3
 
 
 MODELS = [

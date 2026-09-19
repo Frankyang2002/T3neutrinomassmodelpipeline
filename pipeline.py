@@ -19,25 +19,25 @@ import time
 from pathlib import Path
 
 from RGE.matching.MatchedEFTRGE import run_matched_eft_rge
-from RGE.running.FlavorMatchedRGEStage import (
+from RGE.running.weinberg.FlavorMatchedRGEStage import (
     run_flavor_matched_rge,
     run_neutrino_mass_stage,
 )
-from RGE.running.NumericalPipelineStage import run_numerical_pipeline_stage
+from RGE.running.weinberg.NumericalPipelineStage import run_numerical_pipeline_stage
 from RGE.phenomenology.NeutrinoObservables import run_neutrino_observables_stage
-from RGE.running.RGBetaT3Running import (
+from RGE.running.rgbeta.RGBetaT3Running import (
     run_rgbeta_t3,
     run_rgbeta_t3_eft1,
 )
-from RGE.running.EFT1WilsonRGE import run_eft1_wilson_rge
-from RGE.running.EFT1WilsonRunning import run_eft1_wilson_transport
-from RGE.running.EFT1WilsonFlavorSeed import run_flavor_seed_export
-from RGE.running.EFT1DirectWeinberg import (
+from RGE.running.eft1.EFT1WilsonRGE import run_eft1_wilson_rge
+from RGE.running.eft1.EFT1WilsonFlow import run_eft1_wilson_transport
+from RGE.running.eft1.EFT1WilsonFlow import run_flavor_seed_export
+from RGE.running.eft1.EFT1DirectWeinberg import (
     build_direct_weinberg_flavor_transport,
     export_direct_weinberg_matchete,
 )
-from RGE.running.EFT1ThresholdResume import rerun_threshold2_with_running
-from RGE.running.FinalWeinbergCoefficient import (
+from RGE.running.eft1.EFT1ThresholdResume import rerun_threshold2_with_running
+from RGE.running.weinberg.FinalWeinbergCoefficient import (
     build_final_weinberg_coefficient,
     normalize_pole_rge_consistency,
 )

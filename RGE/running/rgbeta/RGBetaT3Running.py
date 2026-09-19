@@ -159,7 +159,7 @@ def run_rgbeta_t3(
     runner = (
         Path(runner_path)
         if runner_path is not None
-        else Path(__file__).resolve().parent / "wolfram" / "RunT3RGBeta.wl"
+        else Path(__file__).resolve().parent / "RunT3RGBeta.wl"
     )
 
     return _run_rgbeta(
@@ -191,7 +191,7 @@ def run_rgbeta_t3_eft1(
     runner = (
         Path(runner_path)
         if runner_path is not None
-        else Path(__file__).resolve().parent / "wolfram" / "RunT3EFT1RGBeta.wl"
+        else Path(__file__).resolve().parent / "RunT3EFT1RGBeta.wl"
     )
 
     return _run_rgbeta(

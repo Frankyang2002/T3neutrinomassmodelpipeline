@@ -47,7 +47,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from RGE.running.MatcheteParsing import matching_bracket
+from RGE.running.eft1.MatcheteParsing import matching_bracket
 
 
 TARGETS = ("lambdaH1Adj", "lambdaH2Adj", "lambda12Adj")

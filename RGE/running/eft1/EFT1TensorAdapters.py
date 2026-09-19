@@ -27,7 +27,7 @@ from typing import Iterable
 
 import sympy as sp
 
-from RGE.running.MatcheteParsing import (
+from RGE.running.eft1.MatcheteParsing import (
     CGTensor,
     load_cg_registry,
     matching_brace as _matching_brace,

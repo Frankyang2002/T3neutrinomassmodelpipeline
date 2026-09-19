@@ -12,7 +12,7 @@ from RGE.matching.FlavorMatchedC5 import (
     load_final_weinberg_flavor_matrix,
 )
 from RGE.matching.MatchedEFTRGE import parse_matchete_c5
-from RGE.running.WeinbergRunning import (
+from RGE.running.weinberg.WeinbergRunning import (
     SMInitialConditions,
     evolve_weinberg,
     neutrino_mass_matrix,

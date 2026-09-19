@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Iterable
 import sympy as sp
 from RGE.general.GaugeGenerators import su2_complex_generators
-from RGE.group_factors.core.MixingQuarticTensorAlgebra import basis_tensor, tensor_inner_product
+from RGE.group_factors.MixingQuarticTensorAlgebra import basis_tensor, tensor_inner_product
 from RGE.running.eft1.EFT1TensorAdapters import SparseQuarticTensor, load_and_build_eft1_quartic_tensor
 import argparse
 import json

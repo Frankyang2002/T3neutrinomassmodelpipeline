@@ -36,8 +36,8 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from RGE.matching.FlavorMatchedC5 import build_flavor_matched_c5
-from RGE.running.EFT1TensorAdapters import build_eft1_wilson_tensor
-from RGE.running.FlavorMatchedRGEStage import build_neutrino_mass_matrix
+from RGE.running.eft1.EFT1TensorAdapters import build_eft1_wilson_tensor
+from RGE.running.weinberg.FlavorMatchedRGEStage import build_neutrino_mass_matrix
 
 
 def canonical_items(tensor) -> dict[tuple[int, ...], sp.Expr]:

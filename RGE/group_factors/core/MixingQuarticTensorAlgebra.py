@@ -15,7 +15,7 @@ from math import factorial
 
 import sympy as sp
 
-from RGE.running.EFT1TensorAdapters import SparseQuarticTensor
+from RGE.running.eft1.EFT1TensorAdapters import SparseQuarticTensor
 
 
 def basis_tensor(

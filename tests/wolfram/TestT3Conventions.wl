@@ -17,8 +17,8 @@ AssertEqual[label_, actual_, expected_] := Assert[label <> " (got " <> ToString[
 (* Project SU(2) representation logic                                      *)
 (* ---------------------------------------------------------------------- *)
 
-su2File = FileNameJoin[{projectRoot, "Lagrangian", "SU2Invariants.wl"}];
-catalogFile = FileNameJoin[{projectRoot, "Lagrangian", "T3ModelCatalog.wl"}];
+su2File = FileNameJoin[{projectRoot, "Lagrangian", "model", "SU2Invariants.wl"}];
+catalogFile = FileNameJoin[{projectRoot, "Lagrangian", "model", "T3ModelCatalog.wl"}];
 
 If[!FileExistsQ[su2File], TestFail["SU2Invariants.wl not found at " <> su2File]];
 If[!FileExistsQ[catalogFile], TestFail["T3ModelCatalog.wl not found at " <> catalogFile]];

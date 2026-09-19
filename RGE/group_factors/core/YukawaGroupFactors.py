@@ -4,7 +4,7 @@ from __future__ import annotations
 
 Input
 -----
-A UV CG registry JSON produced by ``Lagrangian/ExportUVCGRegistry.wl``.
+A UV CG registry JSON produced by ``Lagrangian/interactions/ExportUVCGRegistry.wl``.
 
 Physics
 -------

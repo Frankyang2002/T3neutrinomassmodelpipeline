@@ -88,9 +88,9 @@ If[!TrueQ[matcheteLoaded],
 ];
 
 modelCatalogFile =
-  FileNameJoin[{scriptDirectory, "T3ModelCatalog.wl"}];
+  FileNameJoin[{scriptDirectory, "model", "T3ModelCatalog.wl"}];
 builderFile =
-  FileNameJoin[{scriptDirectory, "LagrangianBuilder.wl"}];
+  FileNameJoin[{scriptDirectory, "model", "LagrangianBuilder.wl"}];
 matchingFile =
   FileNameJoin[{scriptDirectory, "RunMatching.wl"}];
 

@@ -30,7 +30,7 @@ Get[FileNameJoin[{DirectoryName @ ExpandFileName[$InputFileName], "SU2Invariants
 
 
 (* Scalar-potential invariant and quartic-candidate helpers. *)
-Get[FileNameJoin[{DirectoryName @ ExpandFileName[$InputFileName], "ScalarPotential.wl"}]];
+Get[FileNameJoin[{DirectoryName @ ExpandFileName[$InputFileName], "..", "interactions", "ScalarPotential.wl"}]];
 
 (* T3 BSM fields and couplings. *)
 Get[FileNameJoin[{DirectoryName @ ExpandFileName[$InputFileName], "T3Fields.wl"}]];
@@ -45,7 +45,7 @@ Get[FileNameJoin[{DirectoryName @ ExpandFileName[$InputFileName], "T3Fields.wl"}
 
 
 (* T3 topology interaction candidates. *)
-Get[FileNameJoin[{DirectoryName @ ExpandFileName[$InputFileName], "T3Topology.wl"}]];
+Get[FileNameJoin[{DirectoryName @ ExpandFileName[$InputFileName], "..", "interactions", "T3Topology.wl"}]];
 
 (* We check with Matchete if the lagrangian with the interaction is valid 
 1. use CheckLagrangian to see if Lagrangian is valid with the interaction and indices*)

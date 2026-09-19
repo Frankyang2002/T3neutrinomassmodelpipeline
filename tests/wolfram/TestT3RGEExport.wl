@@ -10,8 +10,8 @@ projectRoot = ExpandFileName @ FileNameJoin[{scriptDirectory, "..", ".."}];
 
 TestFail[msg_] := (Print["FAIL: ", msg]; Exit[1]);
 
-catalogPath = FileNameJoin[{projectRoot, "Lagrangian", "T3ModelCatalog.wl"}];
-builderPath = FileNameJoin[{projectRoot, "Lagrangian", "LagrangianBuilder.wl"}];
+catalogPath = FileNameJoin[{projectRoot, "Lagrangian", "model", "T3ModelCatalog.wl"}];
+builderPath = FileNameJoin[{projectRoot, "Lagrangian", "model", "LagrangianBuilder.wl"}];
 exporterPath = FileNameJoin[{
     projectRoot,
     "tests",

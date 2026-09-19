@@ -3,7 +3,7 @@
    Matchete registry populated by BuildT3Lagrangian.
 
    Usage:
-     wolframscript -file Lagrangian/ExportUVCGRegistry.wl dS1 dS2 dF alpha output.json
+     wolframscript -file Lagrangian/interactions/ExportUVCGRegistry.wl dS1 dS2 dF alpha output.json
 *)
 
 ClearAll["Global`*"];
@@ -36,8 +36,8 @@ If[!TrueQ[matcheteLoaded],
   Exit[3];
 ];
 
-Get[FileNameJoin[{projectRoot, "Lagrangian", "T3ModelCatalog.wl"}]];
-Get[FileNameJoin[{projectRoot, "Lagrangian", "LagrangianBuilder.wl"}]];
+Get[FileNameJoin[{projectRoot, "Lagrangian", "model", "T3ModelCatalog.wl"}]];
+Get[FileNameJoin[{projectRoot, "Lagrangian", "model", "LagrangianBuilder.wl"}]];
 
 model = T3ModelFromDimensions[dS1, dS2, dF, alpha];
 If[model === $Failed,

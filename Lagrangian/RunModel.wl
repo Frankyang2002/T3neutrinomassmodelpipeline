@@ -313,13 +313,13 @@ projectRoot = DirectoryName[lagrangianDir];
 
 (* Get modules and helpers from these files *)
 physicsLaTeXFile =
-    FileNameJoin[{lagrangianDir, "PhysicsLaTeX.wl"}];
+    FileNameJoin[{lagrangianDir, "interactions", "PhysicsLaTeX.wl"}];
 
 modelCatalogFile =
-    FileNameJoin[{lagrangianDir, "T3ModelCatalog.wl"}];
+    FileNameJoin[{lagrangianDir, "model", "T3ModelCatalog.wl"}];
 
 lagrangianBuilderFile =
-    FileNameJoin[{lagrangianDir, "LagrangianBuilder.wl"}];
+    FileNameJoin[{lagrangianDir, "model", "LagrangianBuilder.wl"}];
 
 matchingFile =
     FileNameJoin[{lagrangianDir, "RunMatching.wl"}];

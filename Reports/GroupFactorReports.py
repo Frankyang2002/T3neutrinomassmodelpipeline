@@ -42,16 +42,22 @@ from Reports.ReportGeneration import (
     latex_escape_text,
     split_latex_terms,
 )
-from RGE.group_factors.DirectWeinbergGroupFactors import direct_weinberg_group_factor
-from RGE.group_factors.FermionMassGroupFactors import fermion_mass_group_factors
+from RGE.group_factors.ValidateDirectWeinbergGroupFactors import (
+    direct_weinberg_group_factor,
+)
+from RGE.group_factors.ValidateFermionMassGroupFactors import (
+    expected_fermion_mass_coefficients,
+)
 from RGE.group_factors.FullYukawaBetaGroupFactors import complete_yukawa_group_factors
 from RGE.group_factors.PortalQuarticBetaGroupFactors import (
     portal_quartic_beta_group_factors,
 )
-from RGE.group_factors.MixingQuarticGroupFactors import (
+from RGE.group_factors.ValidateMixingQuarticGroupFactors import (
     mixing_quartic_group_factors,
 )
-from RGE.group_factors.ScalarMassGroupFactors import scalar_mass_group_factors
+from RGE.group_factors.ValidateScalarMassGroupFactors import (
+    scalar_mass_group_factors,
+)
 from RGE.running.EFT1WilsonAdapter import build_eft1_wilson_tensor
 from Reports.RGEComparison import (
     load_eft1_renormalisable_rge_payload,
@@ -339,8 +345,11 @@ def _uv_group_factor_data(record: RunRecord) -> dict[str, dict[str, object]]:
         dF=record.d_f,
         alpha=record.alpha,
     )
-    mf = fermion_mass_group_factors(
-        record.d_s1, record.d_s2, record.d_f, record.alpha
+    mf = expected_fermion_mass_coefficients(
+        record.d_s1,
+        record.d_s2,
+        record.d_f,
+        record.alpha,
     )
     ms = scalar_mass_group_factors(
         record.d_s1, record.d_s2, record.d_f, record.alpha
@@ -356,10 +365,10 @@ def _uv_group_factor_data(record: RunRecord) -> dict[str, dict[str, object]]:
         "y1": asdict(y.y1),
         "y2": asdict(y.y2),
         "MF": {
-            "y1_left": mf.y1_left,
-            "y2_right": mf.y2_right,
-            "su2_gauge": mf.su2_gauge,
-            "u1_gauge": mf.u1_gauge,
+            "y1_left": mf["y1_left"],
+            "y2_right": mf["y2_right"],
+            "su2_gauge": mf["su2_gauge"],
+            "u1_gauge": mf["u1_gauge"],
         },
         "mS1Sq": dict(ms.beta_mS1Sq),
         "mS2Sq": dict(ms.beta_mS2Sq),

@@ -1,86 +1,69 @@
 from __future__ import annotations
 
-"""Branch-aware validation of the remaining nongauge beta_y2 sector.
+"""Validate the T3 Yukawa beta-function group factors against RGBeta.
 
-Input:
-    output/group_factors/y2_nongauge_diagnostic.json
+This file combines the former beta_y2 extraction/branch validator with the
+standalone Yukawa gauge-factor validator.
 
-Validation logic:
-  * alpha != -1:
-      compare every nongauge expression to the same model's alpha=0 reference.
-      This checks hypercharge-independence of the vector-like nongauge sector.
-  * alpha == -1 and dF odd (T3-B,C):
-      validate the two extra self-conjugate structures found by RGBeta:
-          G_S2 Tr(y2 y1^\dagger) y1
-          (1/2) G_F2 y2 y1^\dagger y1
-  * alpha == -1 and dF even (T3-A,D,E):
-      record an excluded branch diagnostic, because RGBeta's neutral branch is
-      not the current Matchete-side physical T3 field branch.
+Source data
+-----------
+Saved RGBeta UV JSON files under
 
-This script deliberately does not use RGEComparison term signatures.
+    output/full/hypercharge/T3_*_alpha_*/data/uv_rgbeta_rge.json
+
+are read directly.  The nongauge part of ``report_beta_latex["y2"]`` is
+extracted without using the report-comparison parser.
+
+Validation logic
+----------------
+* alpha != -1:
+    compare every nongauge expression with the same model's alpha=0 reference.
+    This checks hypercharge-independence of the vector-like nongauge sector.
+
+* alpha == -1 and dF odd (T3-B,C):
+    validate the two additional physical self-conjugate structures
+
+        G_S2 Tr(y2 y1^\dagger) y1
+        (1/2) G_F2 y2 y1^\dagger y1.
+
+* alpha == -1 and dF even (T3-A,D,E):
+    record an excluded branch diagnostic because RGBeta's neutral branch is
+    not the current Matchete-side physical T3 field branch.
+
+The known self-conjugate beta_y2 reporting issue is therefore preserved as a
+branch-aware validation question; this refactor does not change any physics.
 """
 
 import argparse
+from fractions import Fraction
 import json
 from pathlib import Path
 import re
 import sys
-from fractions import Fraction
+from typing import Any
+
+
+from Reports.RGEComparison import normalise_rgbeta_latex
+from Reports.ReportGeneration import split_latex_terms
+
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from RGE.group_factors.Yukawa2BetaGroupFactors import (
-    yukawa2_beta_group_factors,
+from RGE.group_factors.FullYukawaBetaGroupFactors import (
+    complete_yukawa_group_factors,
     physical_self_conjugate_f,
 )
 
 
-def _canon(s: str) -> str:
-    return re.sub(r"\s+", "", str(s))
-
-
-def _frac_prefix(text: str, target: str) -> Fraction | None:
-    """Coefficient of a standalone target term from its leading TeX prefix."""
-    c = _canon(text)
-    t = _canon(target)
-    pos = c.find(t)
-    if pos < 0:
-        return None
-    prefix = c[:pos].lstrip("+")
-    if prefix == "":
-        return Fraction(1)
-    m = re.fullmatch(r"\\frac\{(-?\d+)\}\{(\d+)\}", prefix)
-    if m:
-        return Fraction(int(m.group(1)), int(m.group(2)))
-    m = re.fullmatch(r"(-?\d+)", prefix)
-    if m:
-        return Fraction(int(m.group(1)))
-    return None
-
-
-def _outer_fraction(text: str) -> Fraction:
-    c = _canon(text).lstrip("+")
-    m = re.match(r"\\frac\{(-?\d+)\}\{(\d+)\}\(", c)
-    if m:
-        return Fraction(int(m.group(1)), int(m.group(2)))
-    return Fraction(1)
-
-
-def _inner_integer_before(text: str, target: str) -> Fraction | None:
-    c = _canon(text)
-    t = _canon(target)
-    pos = c.find(t)
-    if pos < 0:
-        return None
-    before = c[:pos]
-    # The target is inside a sum.  Its immediate multiplicative coefficient is
-    # the final integer before the Matrix token, or 1 if no integer is present.
-    m = re.search(r"(?:\+|\()(-?\d+)$", before)
-    if m:
-        return Fraction(int(m.group(1)))
-    return Fraction(1)
+MODEL_DIMS = {
+    "A": (1, 3, 2),
+    "B": (2, 2, 1),
+    "C": (2, 2, 3),
+    "D": (3, 1, 2),
+    "E": (3, 3, 2),
+}
 
 
 TRACE_CROSS = (
@@ -94,13 +77,310 @@ MATRIX_CROSS = (
 )
 
 
-def extract_self_conjugate_extras(terms: list[str]):
+def fraction_text(value: Fraction) -> str:
+    return (
+        str(value.numerator)
+        if value.denominator == 1
+        else f"{value.numerator}/{value.denominator}"
+    )
+
+
+def model_alpha(path: Path) -> tuple[str, int]:
+    name = path.parents[1].name
+    match = re.fullmatch(r"T3_([A-E])_alpha_([mp])(\d+)", name)
+    if not match:
+        raise ValueError(name)
+
+    model, sign, magnitude = match.groups()
+    alpha = int(magnitude)
+    return model, (-alpha if sign == "m" else alpha)
+
+
+def split_top_level_additive(text: str) -> list[str]:
+    """Split a TeXForm expression at top-level + or - while preserving signs."""
+    parts: list[str] = []
+    start = 0
+    par = brk = brc = 0
+
+    for index, char in enumerate(text):
+        if char == "(":
+            par += 1
+        elif char == ")":
+            par -= 1
+        elif char == "[":
+            brk += 1
+        elif char == "]":
+            brk -= 1
+        elif char == "{":
+            brc += 1
+        elif char == "}":
+            brc -= 1
+        elif (
+            char in "+-"
+            and par == brk == brc == 0
+            and index > start
+        ):
+            parts.append(text[start:index].strip())
+            start = index
+
+    tail = text[start:].strip()
+    if tail:
+        parts.append(tail)
+
+    return parts
+
+
+def canonical_term(term: str) -> str:
+    """Apply formatting-only canonicalisation; do not alter physics content."""
+    text = re.sub(r"\s+", "", term)
+    return text.replace(r"\left", "").replace(r"\right", "")
+
+
+def is_gauge_term(term: str) -> bool:
+    text = canonical_term(term)
+    return (
+        "g2" in text
+        or "gY" in text
+        or r"g_2" in text
+        or r"g_Y" in text
+        or r"g_{2}" in text
+        or r"g_{Y}" in text
+    )
+
+
+def nongauge_from_latex(raw_latex: str) -> tuple[list[str], str]:
+    terms = split_top_level_additive(str(raw_latex))
+    nongauge_terms = [term for term in terms if not is_gauge_term(term)]
+    canonical = "|".join(canonical_term(term) for term in nongauge_terms)
+    return nongauge_terms, canonical
+
+
+def _compact_latex(text: str) -> str:
+    text = text.replace(r"\,", "")
+    text = text.replace(r"\!", "")
+    text = text.replace(r"\left", "")
+    text = text.replace(r"\right", "")
+    return text.replace(" ", "")
+
+
+def _leading_rational(term: str) -> Fraction:
+    """Extract the leading numerical coefficient of a normalized LaTeX term."""
+    text = _compact_latex(term)
+
+    sign = 1
+    if text.startswith("+"):
+        text = text[1:]
+    elif text.startswith("-"):
+        sign = -1
+        text = text[1:]
+
+    match = re.match(r"\\frac\{(\d+)\}\{(\d+)\}", text)
+    if match:
+        return sign * Fraction(int(match.group(1)), int(match.group(2)))
+
+    match = re.match(r"(\d+)", text)
+    if match:
+        return sign * Fraction(int(match.group(1)), 1)
+
+    return Fraction(sign, 1)
+
+
+def _contains_gauge_yukawa(term: str, gauge: str, yukawa: str) -> bool:
+    text = _compact_latex(term)
+
+    if gauge == "gY":
+        gauge_present = (
+            r"g_Y" in text
+            or r"g_{Y}" in text
+            or "gY" in text
+        )
+    elif gauge == "g2":
+        gauge_present = (
+            r"g_2" in text
+            or r"g_{2}" in text
+            or "g2" in text
+        )
+    else:
+        raise ValueError(gauge)
+
+    y_index = "1" if yukawa == "y1" else "2"
+    yukawa_present = (
+        rf"y_{y_index}" in text
+        or rf"y_{{{y_index}}}" in text
+        or yukawa in text
+    )
+    squared = "^2" in text or "^{2}" in text
+
+    return gauge_present and yukawa_present and squared
+
+
+def _extract_gauge_coefficient(
+    payload: dict[str, Any],
+    yukawa: str,
+    gauge: str,
+) -> Fraction:
+    latex_map = payload.get("report_beta_latex", {}) or {}
+    raw = latex_map.get(yukawa)
+    if not raw:
+        raise KeyError(f"Missing report_beta_latex[{yukawa!r}]")
+
+    cleaned = normalise_rgbeta_latex(str(raw))
+    terms = split_latex_terms(cleaned) or [cleaned]
+    candidates = [
+        term
+        for term in terms
+        if _contains_gauge_yukawa(term, gauge, yukawa)
+    ]
+
+    if len(candidates) != 1:
+        diagnostic = "\n".join(f"  {item}" for item in candidates) or "  (none)"
+        raise ValueError(
+            f"Expected exactly one {gauge}^2 {yukawa} term, found "
+            f"{len(candidates)}:\n{diagnostic}\n"
+            f"Full normalized beta:\n{cleaned}"
+        )
+
+    return _leading_rational(candidates[0])
+
+
+def validate_gauge_rows(root: Path) -> tuple[list[dict[str, Any]], bool]:
+    paths = sorted(root.glob("T3_*_alpha_*/data/uv_rgbeta_rge.json"))
+    if not paths:
+        raise FileNotFoundError(f"No UV RGBeta outputs found below {root}")
+
+    rows: list[dict[str, Any]] = []
+    overall = True
+
+    print()
+    print("Yukawa gauge-factor validation")
+    print(
+        f"{'model':<6} {'alpha':>5} {'y':>3} "
+        f"{'U1 exp':>8} {'U1 RGB':>8} {'dU1':>6} "
+        f"{'SU2 exp':>8} {'SU2 RGB':>8} {'dSU2':>6} status"
+    )
+    print("-" * 86)
+
+    for path in paths:
+        payload = json.loads(path.read_text(encoding="utf-8-sig"))
+        if payload.get("status") != "Success":
+            continue
+
+        model, alpha = model_alpha(path)
+        d_s1, d_s2, d_f = MODEL_DIMS[model]
+        prediction = complete_yukawa_group_factors(
+            dS1=d_s1,
+            dS2=d_s2,
+            dF=d_f,
+            alpha=alpha,
+        )
+
+        for yukawa in ("y1", "y2"):
+            predicted = prediction.y1 if yukawa == "y1" else prediction.y2
+            expected_u1 = Fraction(predicted.u1_gauge)
+            expected_su2 = Fraction(predicted.su2_gauge)
+
+            got_u1 = _extract_gauge_coefficient(payload, yukawa, "gY")
+            got_su2 = _extract_gauge_coefficient(payload, yukawa, "g2")
+
+            u1_residual = got_u1 - expected_u1
+            su2_residual = got_su2 - expected_su2
+            ok = u1_residual == 0 and su2_residual == 0
+            overall &= ok
+
+            print(
+                f"T3-{model:<3} {alpha:>5} {yukawa:>3} "
+                f"{fraction_text(expected_u1):>8} "
+                f"{fraction_text(got_u1):>8} "
+                f"{fraction_text(u1_residual):>6} "
+                f"{fraction_text(expected_su2):>8} "
+                f"{fraction_text(got_su2):>8} "
+                f"{fraction_text(su2_residual):>6} "
+                f"{'PASS' if ok else 'FAIL'}"
+            )
+
+            rows.append(
+                {
+                    "model": model,
+                    "alpha": alpha,
+                    "yukawa": yukawa,
+                    "expected_u1": fraction_text(expected_u1),
+                    "rgbeta_u1": fraction_text(got_u1),
+                    "u1_residual": fraction_text(u1_residual),
+                    "u1_match": u1_residual == 0,
+                    "expected_su2": fraction_text(expected_su2),
+                    "rgbeta_su2": fraction_text(got_su2),
+                    "su2_residual": fraction_text(su2_residual),
+                    "su2_match": su2_residual == 0,
+                    "match": ok,
+                    "source": str(path),
+                }
+            )
+
+    return rows, overall
+
+
+def _canon(text: str) -> str:
+    return re.sub(r"\s+", "", str(text))
+
+
+def _frac_prefix(text: str, target: str) -> Fraction | None:
+    """Coefficient of a standalone target term from its leading TeX prefix."""
+    canonical = _canon(text)
+    target_canonical = _canon(target)
+    position = canonical.find(target_canonical)
+
+    if position < 0:
+        return None
+
+    prefix = canonical[:position].lstrip("+")
+    if prefix == "":
+        return Fraction(1)
+
+    match = re.fullmatch(r"\\frac\{(-?\d+)\}\{(\d+)\}", prefix)
+    if match:
+        return Fraction(int(match.group(1)), int(match.group(2)))
+
+    match = re.fullmatch(r"(-?\d+)", prefix)
+    if match:
+        return Fraction(int(match.group(1)))
+
+    return None
+
+
+def _outer_fraction(text: str) -> Fraction:
+    canonical = _canon(text).lstrip("+")
+    match = re.match(r"\\frac\{(-?\d+)\}\{(\d+)\}\(", canonical)
+    if match:
+        return Fraction(int(match.group(1)), int(match.group(2)))
+    return Fraction(1)
+
+
+def _inner_integer_before(text: str, target: str) -> Fraction | None:
+    canonical = _canon(text)
+    target_canonical = _canon(target)
+    position = canonical.find(target_canonical)
+
+    if position < 0:
+        return None
+
+    before = canonical[:position]
+    match = re.search(r"(?:\+|\()(-?\d+)$", before)
+    if match:
+        return Fraction(int(match.group(1)))
+
+    return Fraction(1)
+
+
+def extract_self_conjugate_extras(
+    terms: list[str],
+) -> tuple[Fraction | None, Fraction | None]:
     trace_coeff = None
     matrix_coeff = None
 
     for term in terms:
         if _canon(TRACE_CROSS) in _canon(term):
             trace_coeff = _frac_prefix(term, TRACE_CROSS)
+
         if _canon(MATRIX_CROSS) in _canon(term):
             outer = _outer_fraction(term)
             inner = _inner_integer_before(term, MATRIX_CROSS)
@@ -110,51 +390,125 @@ def extract_self_conjugate_extras(terms: list[str]):
     return trace_coeff, matrix_coeff
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--input",
-        type=Path,
-        default=Path("output/group_factors/y2_nongauge_diagnostic.json"),
-    )
-    parser.add_argument(
-        "--output",
-        type=Path,
-        default=Path("output/group_factors/y2_nongauge_branch_validation.json"),
-    )
-    args = parser.parse_args()
+def extract_rows(root: Path) -> tuple[
+    list[dict[str, Any]],
+    dict[str, int],
+    bool,
+]:
+    paths = sorted(root.glob("T3_*_alpha_*/data/uv_rgbeta_rge.json"))
+    if not paths:
+        raise FileNotFoundError(f"No UV RGBeta outputs found below {root}")
 
-    payload = json.loads(args.input.read_text(encoding="utf-8"))
+    rows: list[dict[str, Any]] = []
+    by_model: dict[str, set[str]] = {}
+
+    for path in paths:
+        payload = json.loads(path.read_text(encoding="utf-8-sig"))
+        if payload.get("status") != "Success":
+            continue
+
+        model, alpha = model_alpha(path)
+        d_s1, d_s2, d_f = MODEL_DIMS[model]
+
+        latex_map = payload.get("report_beta_latex", {}) or {}
+        raw_latex = latex_map.get("y2")
+        if not raw_latex:
+            raise RuntimeError(f"No report_beta_latex['y2'] in {path}")
+
+        terms, canonical = nongauge_from_latex(raw_latex)
+        predicted = complete_yukawa_group_factors(
+            dS1=d_s1,
+            dS2=d_s2,
+            dF=d_f,
+            alpha=alpha,
+        )
+
+        rows.append(
+            {
+                "model": model,
+                "alpha": alpha,
+                "dS1": d_s1,
+                "dS2": d_s2,
+                "dF": d_f,
+                "nongauge_terms": terms,
+                "canonical_nongauge": canonical,
+                "predicted_coefficients": {
+                    "Tr_y2*y2": predicted.y2.trace,
+                    "y2_y2dag_y2": predicted.y2.self_matrix,
+                    "y1_y1dag_y2": predicted.y2.cross_matrix,
+                    "Ye_Yedag_y2": predicted.y2.charged_lepton_matrix,
+                },
+                "source": str(path),
+            }
+        )
+        by_model.setdefault(model, set()).add(canonical)
+
+    distinct_counts = {
+        model: len(values)
+        for model, values in sorted(by_model.items())
+    }
+    raw_alpha_independent = all(
+        count == 1
+        for count in distinct_counts.values()
+    )
+
+    return rows, distinct_counts, raw_alpha_independent
+
+
+def load_rows_from_diagnostic(
+    path: Path,
+) -> tuple[list[dict[str, Any]], dict[str, int] | None, bool | None]:
+    payload = json.loads(path.read_text(encoding="utf-8"))
     rows = payload.get("rows") or []
     if not rows:
-        raise SystemExit(f"No rows in {args.input}")
+        raise ValueError(f"No rows in {path}")
 
-    reference = {}
+    return (
+        rows,
+        payload.get("distinct_nongauge_expression_count"),
+        payload.get("alpha_independent"),
+    )
+
+
+def validate_rows(
+    rows: list[dict[str, Any]],
+) -> tuple[list[dict[str, Any]], bool, int]:
+    reference: dict[str, str] = {}
     for row in rows:
         if int(row["alpha"]) == 0:
-            reference[row["model"]] = row["canonical_nongauge"]
+            reference[str(row["model"])] = str(row["canonical_nongauge"])
 
-    results = []
+    results: list[dict[str, Any]] = []
     overall = True
     excluded = 0
 
-    print("beta_y2 branch-aware nongauge validation")
-    print("model alpha branch                         status")
-    print("-" * 64)
-
     for row in rows:
-        model = row["model"]
+        model = str(row["model"])
         alpha = int(row["alpha"])
-        d1, d2, dF = int(row["dS1"]), int(row["dS2"]), int(row["dF"])
-        pred = yukawa2_beta_group_factors(d1, d2, dF, alpha)
+        d_s1 = int(row["dS1"])
+        d_s2 = int(row["dS2"])
+        d_f = int(row["dF"])
+
+        prediction = complete_yukawa_group_factors(
+            dS1=d_s1,
+            dS2=d_s2,
+            dF=d_f,
+            alpha=alpha,
+        )
 
         if alpha != -1:
-            ok = row["canonical_nongauge"] == reference[model]
-            overall &= ok
+            reference_value = reference.get(model)
+            ok = (
+                reference_value is not None
+                and row["canonical_nongauge"] == reference_value
+            )
             branch = "vector-like"
-            detail = {"matches_alpha0_reference": ok}
+            detail = {
+                "matches_alpha0_reference": ok,
+                "alpha0_reference_present": reference_value is not None,
+            }
 
-        elif dF % 2 == 0:
+        elif d_f % 2 == 0:
             # Known RGBeta/Matchete neutral-field-content mismatch.
             ok = True
             excluded += 1
@@ -169,20 +523,22 @@ def main() -> int:
 
         else:
             branch = "physical self-conjugate"
+
             trace_got, matrix_got = extract_self_conjugate_extras(
-                row["nongauge_terms"]
+                list(row["nongauge_terms"])
             )
             trace_expected = Fraction(
-                pred.self_conjugate_extra["Tr_y2_y1dag*y1"]
+                prediction.y2_self_conjugate_extra["Tr_y2_y1dag*y1"]
             )
             matrix_expected = Fraction(
-                pred.self_conjugate_extra["y2_y1dag_y1"]
+                prediction.y2_self_conjugate_extra["y2_y1dag_y1"]
             )
+
             ok = (
                 trace_got == trace_expected
                 and matrix_got == matrix_expected
             )
-            overall &= ok
+
             detail = {
                 "trace_extra_expected": str(trace_expected),
                 "trace_extra_extracted": (
@@ -194,22 +550,203 @@ def main() -> int:
                 ),
             }
 
-        print(
-            f"T3-{model} {alpha:>5} {branch:<30} "
-            f"{'PASS' if ok else 'FAIL'}"
+        overall &= ok
+
+        results.append(
+            {
+                "model": model,
+                "alpha": alpha,
+                "dS1": d_s1,
+                "dS2": d_s2,
+                "dF": d_f,
+                "source": row.get("source"),
+                "physical_self_conjugate_F": physical_self_conjugate_f(
+                    d_f,
+                    alpha,
+                ),
+                "branch": branch,
+                "match": ok,
+                **detail,
+            }
         )
-        results.append({
-            "model": model,
-            "alpha": alpha,
-            "dF": dF,
-            "physical_self_conjugate_F": physical_self_conjugate_f(dF, alpha),
-            "branch": branch,
-            "match": ok,
-            **detail,
-        })
+
+    return results, overall, excluded
+
+
+def print_extraction_summary(
+    rows: list[dict[str, Any]],
+    distinct_counts: dict[str, int] | None,
+    raw_alpha_independent: bool | None,
+) -> None:
+    print("Extracted RGBeta nongauge beta_y2 terms")
+    print()
+
+    for row in rows:
+        print(f"T3-{row['model']} alpha={int(row['alpha']):+d}")
+        for term in row["nongauge_terms"]:
+            print(f"  {term}")
+
+        predicted = row.get("predicted_coefficients") or {}
+        if predicted:
+            print(
+                "  predicted vector-like coeffs: "
+                + ", ".join(
+                    f"{name}={value}"
+                    for name, value in predicted.items()
+                )
+            )
+        print()
+
+    if distinct_counts is not None:
+        print("Raw alpha-independence diagnostic:")
+        for model in sorted(distinct_counts):
+            count = distinct_counts[model]
+            print(
+                f"  T3-{model}: "
+                f"{'PASS' if count == 1 else 'DIFFERS'} "
+                f"({count} distinct nongauge expressions)"
+            )
+
+    print(f"raw alpha-independent across all saved rows: {raw_alpha_independent}")
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--root",
+        type=Path,
+        default=Path("output/full/hypercharge"),
+        help="Root containing T3_*_alpha_*/data/uv_rgbeta_rge.json.",
+    )
+    parser.add_argument(
+        "--input",
+        type=Path,
+        default=None,
+        help=(
+            "Optional legacy y2_nongauge_diagnostic.json. If supplied, "
+            "validate those rows instead of extracting directly from --root."
+        ),
+    )
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=Path(
+            "output/group_factors/y2_nongauge_branch_validation.json"
+        ),
+    )
+    parser.add_argument(
+        "--gauge-output",
+        type=Path,
+        default=None,
+        help=(
+            "Optional compatibility artifact reproducing the former "
+            "yukawa_gauge_validation.json result."
+        ),
+    )
+    parser.add_argument(
+        "--diagnostic-output",
+        type=Path,
+        default=None,
+        help=(
+            "Optional compatibility/debug output reproducing the former "
+            "extraction-only diagnostic payload."
+        ),
+    )
+    args = parser.parse_args()
+
+    if args.input is not None:
+        (
+            rows,
+            distinct_counts,
+            raw_alpha_independent,
+        ) = load_rows_from_diagnostic(args.input)
+        source_mode = "legacy_diagnostic_json"
+    else:
+        try:
+            (
+                rows,
+                distinct_counts,
+                raw_alpha_independent,
+            ) = extract_rows(args.root)
+        except FileNotFoundError as exc:
+            raise SystemExit(str(exc)) from exc
+        source_mode = "direct_extraction"
+
+    if not rows:
+        raise SystemExit("No successful beta_y2 rows were extracted.")
+
+    print_extraction_summary(
+        rows,
+        distinct_counts,
+        raw_alpha_independent,
+    )
+
+    if args.diagnostic_output is not None:
+        diagnostic = {
+            "status": (
+                "Success"
+                if rows and bool(raw_alpha_independent)
+                else "NeedsInspection"
+            ),
+            "alpha_independent": raw_alpha_independent,
+            "distinct_nongauge_expression_count": distinct_counts,
+            "rows": rows,
+        }
+        args.diagnostic_output.parent.mkdir(parents=True, exist_ok=True)
+        args.diagnostic_output.write_text(
+            json.dumps(diagnostic, indent=2),
+            encoding="utf-8",
+        )
+        print()
+        print(f"Diagnostic JSON: {args.diagnostic_output}")
+
+    results, overall, excluded = validate_rows(rows)
+
+    print()
+    print("Branch-aware beta_y2 nongauge validation")
+    print("model alpha branch                         status")
+    print("-" * 64)
+
+    for row in results:
+        print(
+            f"T3-{row['model']} {int(row['alpha']):>5} "
+            f"{row['branch']:<30} "
+            f"{'PASS' if row['match'] else 'FAIL'}"
+        )
+
+    gauge_rows, gauge_ok = validate_gauge_rows(args.root)
+    overall = overall and gauge_ok
+
+    if args.gauge_output is not None:
+        gauge_payload = {
+            "status": "Success" if gauge_ok else "Failed",
+            "file_count": len(
+                list(args.root.glob("T3_*_alpha_*/data/uv_rgbeta_rge.json"))
+            ),
+            "check_count": len(gauge_rows),
+            "u1_match_count": sum(row["u1_match"] for row in gauge_rows),
+            "su2_match_count": sum(row["su2_match"] for row in gauge_rows),
+            "all_u1_match": all(row["u1_match"] for row in gauge_rows),
+            "all_su2_match": all(row["su2_match"] for row in gauge_rows),
+            "formulae": {
+                "u1": "-3*(YL^2+YF^2)",
+                "su2": "-3*(C2(L)+C2(F))",
+            },
+            "checks": gauge_rows,
+        }
+        args.gauge_output.parent.mkdir(parents=True, exist_ok=True)
+        args.gauge_output.write_text(
+            json.dumps(gauge_payload, indent=2),
+            encoding="utf-8",
+        )
 
     result = {
         "status": "Success" if overall else "Failed",
+        "source_mode": source_mode,
+        "root": str(args.root) if args.input is None else None,
+        "input": str(args.input) if args.input is not None else None,
+        "raw_alpha_independent": raw_alpha_independent,
+        "distinct_nongauge_expression_count": distinct_counts,
         "formulas": {
             "vectorlike": {
                 "Tr_y2*y2": "G_S2",
@@ -223,16 +760,31 @@ def main() -> int:
             },
         },
         "excluded_even_dF_neutral_rows": excluded,
+        "gauge_validation": {
+            "status": "Success" if gauge_ok else "Failed",
+            "checks": gauge_rows,
+        },
+        "known_issue": (
+            "Self-conjugate beta_y2 reporting remains a known project physics "
+            "issue. This validator preserves the existing branch-aware "
+            "comparison and excluded even-dF neutral branch."
+        ),
         "rows": results,
     }
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(result, indent=2), encoding="utf-8")
+    args.output.write_text(
+        json.dumps(result, indent=2),
+        encoding="utf-8",
+    )
 
     print()
     print(f"Excluded even-dF neutral RGBeta rows: {excluded}")
-    print(f"JSON summary: {args.output}")
-    print(f"OVERALL:      {result['status']}")
+    if args.gauge_output is not None:
+        print(f"Gauge compatibility JSON: {args.gauge_output}")
+    print(f"Validation JSON: {args.output}")
+    print(f"OVERALL:         {result['status']}")
+
     return 0 if overall else 1
 
 

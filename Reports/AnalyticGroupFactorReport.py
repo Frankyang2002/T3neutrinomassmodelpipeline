@@ -21,6 +21,9 @@ from pathlib import Path
 import subprocess
 import sys
 
+import sympy as sp
+from sympy.physics.wigner import wigner_6j
+
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
@@ -28,14 +31,6 @@ if str(PROJECT_ROOT) not in sys.path:
 from common.Paths import REPORT_OUTPUT_DIR
 from common.T3Model import T3_CLASSES
 from Reports.ReportGeneration import paper_notation_key_lines
-
-from RGE.group_factors.ScalarMassGroupFactors import (
-    scalar_mass_group_factors,
-)
-from RGE.group_factors.DirectWeinbergGroupFactors import (
-    direct_weinberg_group_factor,
-)
-
 
 
 def c2(d: int) -> Fraction:
@@ -65,11 +60,35 @@ def mathcell(value: str) -> str:
     return rf"\ensuremath{{{value}}}"
 
 
-def sympy_to_latex_text(text: str) -> str:
-    """Small exact formatter for the reduced Wigner-6j factors."""
-    import sympy as sp
-    expr = sp.sympify(text, locals={"sqrt": sp.sqrt})
-    return sp.latex(expr)
+def direct_weinberg_reduced_factor(
+    d1: int,
+    d2: int,
+    dF: int,
+) -> sp.Expr:
+    """Preserve the project's current direct C12 -> C5 analytic expression."""
+    j1 = sp.Rational(d1 - 1, 2)
+    j2 = sp.Rational(d2 - 1, 2)
+    jf = sp.Rational(dF - 1, 2)
+
+    phase = 1 if dF in (1, 2) else -1
+
+    sixj = sp.simplify(
+        wigner_6j(
+            sp.Rational(1, 2),
+            sp.Rational(1, 2),
+            1,
+            j2,
+            j1,
+            jf,
+        )
+    )
+
+    return sp.factor(
+        sp.Rational(4, 3)
+        * phase
+        * sp.sqrt(3 * d1 * d2 * dF)
+        * sixj
+    )
 
 
 def model_table_rows() -> list[str]:
@@ -83,7 +102,7 @@ def model_table_rows() -> list[str]:
         y2_self = Fraction(1, 2) * (GL2 + GF2)
         y2_cross = Fraction(1, 2) * GL1
 
-        rw = direct_weinberg_group_factor(d1, d2, dF)
+        rw = direct_weinberg_reduced_factor(d1, d2, dF)
 
         rows.append(
             " & ".join(
@@ -98,7 +117,7 @@ def model_table_rows() -> list[str]:
                     mathcell(ftex(GS2)),
                     mathcell(ftex(y2_self)),
                     mathcell(ftex(y2_cross)),
-                    mathcell(sympy_to_latex_text(rw.reduced_factor)),
+                    mathcell(sp.latex(rw)),
                 ]
             )
             + r" \\"
@@ -108,28 +127,44 @@ def model_table_rows() -> list[str]:
 
 def scalar_mass_rows(alpha: int = 0) -> list[str]:
     rows = []
+
     for model, (d1, d2, dF) in T3_CLASSES.items():
-        gf = scalar_mass_group_factors(d1, d2, dF, alpha)
-        b1 = gf.beta_mS1Sq
-        b2 = gf.beta_mS2Sq
+        GS1, _, _ = leg_factors(d1, dF)
+        GS2, _, _ = leg_factors(d2, dF)
+
+        self_conjugate = alpha == -1 and dF % 2 == 1
+        heavy_factor = Fraction(-16 if self_conjugate else -4)
+
+        b1 = {
+            "mS1Sq*Tr_y1": 2 * GS1,
+            "Tr_MF_y1": heavy_factor * GS1,
+            "lambdaS1*mS1Sq": Fraction(2 * (d1 + 1)),
+            "lambda12*mS2Sq": Fraction(2 * d2),
+        }
+        b2 = {
+            "mS2Sq*Tr_y2": 2 * GS2,
+            "Tr_MF_y2": heavy_factor * GS2,
+            "lambdaS2*mS2Sq": Fraction(2 * (d2 + 1)),
+            "lambda12*mS1Sq": Fraction(2 * d1),
+        }
+
         rows.append(
             " & ".join(
                 [
                     rf"T3-{model}",
-                    mathcell(b1["mS1Sq*Tr_y1"]),
-                    mathcell(b1["Tr_MF_y1"]),
-                    mathcell(b1["lambdaS1*mS1Sq"]),
-                    mathcell(b1["lambda12*mS2Sq"]),
-                    mathcell(b2["mS2Sq*Tr_y2"]),
-                    mathcell(b2["Tr_MF_y2"]),
-                    mathcell(b2["lambdaS2*mS2Sq"]),
-                    mathcell(b2["lambda12*mS1Sq"]),
+                    mathcell(ftex(b1["mS1Sq*Tr_y1"])),
+                    mathcell(ftex(b1["Tr_MF_y1"])),
+                    mathcell(ftex(b1["lambdaS1*mS1Sq"])),
+                    mathcell(ftex(b1["lambda12*mS2Sq"])),
+                    mathcell(ftex(b2["mS2Sq*Tr_y2"])),
+                    mathcell(ftex(b2["Tr_MF_y2"])),
+                    mathcell(ftex(b2["lambdaS2*mS2Sq"])),
+                    mathcell(ftex(b2["lambda12*mS1Sq"])),
                 ]
             )
             + r" \\"
         )
     return rows
-
 
 
 def document() -> str:
@@ -146,8 +181,8 @@ def document() -> str:
         (
             r"This report presents the validated analytic representation-dependent "
             r"group factors used by the T3 RGE pipeline.  Model dimensions are "
-            r"read from \texttt{common.T3Model.T3\_CLASSES} and model-specific coefficients "
-            r"are evaluated from the analytic group-factor implementations, not "
+            r"read from \texttt{common.T3Model.T3\_CLASSES}; the compact formulas "
+            r"below are evaluated directly from representation data and are not "
             r"copied from RGBeta comparison tables."
         ),
         r"\subsection*{Representation conventions}",

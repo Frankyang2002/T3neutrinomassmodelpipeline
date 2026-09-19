@@ -32,9 +32,9 @@ from pathlib import Path
 
 import sympy as sp
 
-from RGE.running.MatcheteCG import CGTensor, load_cg_registry
-
 from RGE.running.MatcheteParsing import (
+    CGTensor,
+    load_cg_registry,
     matching_brace as _matching_brace,
     matching_bracket as _matching_bracket,
     parse_index as _parse_index,

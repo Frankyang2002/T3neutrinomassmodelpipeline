@@ -31,15 +31,13 @@ from typing import Iterable, Mapping, Sequence
 import sympy as sp
 
 from common.Records import RunRecord
-from Reports.StageReports import group_factor_report_path
-from Reports.Notation import (
+from Reports.ReportGeneration import (
     beta_symbol_latex,
+    compile_latex_document,
+    group_factor_report_path,
+    latex_escape_text,
     paper_notation_key_lines,
     paper_symbol_latex,
-)
-from Reports.ReportGeneration import (
-    compile_latex_document,
-    latex_escape_text,
     split_latex_terms,
 )
 from RGE.group_factors.ValidateDirectWeinbergGroupFactors import (

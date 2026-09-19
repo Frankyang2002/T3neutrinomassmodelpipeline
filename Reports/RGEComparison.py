@@ -12,18 +12,17 @@ from typing import Any
 
 from common.Paths import REPORT_OUTPUT_DIR
 from common.Records import RunRecord
-from Reports.StageReports import final_eft_stage_label, rge_report_path
-from Reports.Notation import (
-    paper_notation_key_lines,
-    paper_symbol_latex,
-    rgbeta_symbol_latex,
-)
 from Reports.ReportGeneration import (
     compile_latex_document,
+    final_eft_stage_label,
     latex_escape_text,
     latex_fraction,
     matrix_cell,
+    paper_notation_key_lines,
+    paper_symbol_latex,
     record_quantum_numbers,
+    rge_report_path,
+    rgbeta_symbol_latex,
     split_latex_terms,
 )
 

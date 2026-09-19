@@ -49,8 +49,9 @@ from RGE.general.MasterWeinbergRGE import MasterRGEInputs
 from RGE.general.RGEModel import RGEModel
 from RGE.general.FermionBasis import build_gauge_sectors
 from RGE.general.WilsonTensors import SparseWilsonLookup
-from RGE.matching.SMEFTBasis import build_sm_eft, build_sm_yukawa
 from RGE.matching.WeinbergWilsonAdapter import (
+    build_sm_eft,
+    build_sm_yukawa,
     build_weinberg_wilson_tensor,
 )
 from RGE.running.EFT1QuarticAdapter import (

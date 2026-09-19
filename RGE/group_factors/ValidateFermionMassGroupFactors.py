@@ -4,7 +4,7 @@ from __future__ import annotations
 
 The analytic vector-like beta_MF coefficients are small enough to live directly
 in this validator.  They are expressed only through the shared representation
-helpers in ``YukawaLegFactors.py`` and ``RepresentationFactors.py``:
+helpers consolidated in ``RepresentationFactors.py``:
 
     GF_i = max(dF,dSi)/dF
 
@@ -39,7 +39,7 @@ import sympy as sp
 from RGE.group_factors.RepresentationFactors import (
     su2_quadratic_casimir_from_dimension,
 )
-from RGE.group_factors.YukawaLegFactors import (
+from RGE.group_factors.RepresentationFactors import (
     canonical_yukawa_leg_factors,
 )
 

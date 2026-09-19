@@ -10,14 +10,12 @@ from RGE.general.FermionBasis import build_gauge_sectors
 from RGE.general.GaugeGenerators import g2
 from RGE.general.MasterWeinbergRGE import MasterRGEInputs
 from RGE.general.WilsonTensors import SparseWilsonLookup
-from RGE.matching.SMEFTBasis import (
+from RGE.matching.WeinbergWilsonAdapter import (
     build_sm_eft,
     build_sm_yukawa,
     yd,
     ye,
     yu,
-)
-from RGE.matching.WeinbergWilsonAdapter import (
     build_weinberg_wilson_tensor,
     validate_weinberg_tensor_symmetry,
 )

@@ -50,7 +50,7 @@ from fractions import Fraction
 
 import sympy as sp
 
-from RGE.group_factors.YukawaLegFactors import (
+from RGE.group_factors.RepresentationFactors import (
     canonical_yukawa_leg_factors,
     su2_quadratic_casimir_from_dimension,
 )

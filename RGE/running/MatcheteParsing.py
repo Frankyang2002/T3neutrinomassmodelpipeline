@@ -8,6 +8,7 @@ physics.
 """
 
 import re
+from dataclasses import dataclass
 
 import sympy as sp
 
@@ -279,3 +280,27 @@ def parse_sparse_array(text: str) -> sp.MutableDenseNDimArray:
             data[index] = values[pointer]
 
     return data
+
+
+# ---------------------------------------------------------------------------
+# Clebsch--Gordan registry parsing
+# Consolidated from the former MatcheteCG helper.
+# ---------------------------------------------------------------------------
+
+@dataclass(frozen=True)
+class CGTensor:
+    name: str
+    reps: tuple[str, ...]
+    tensor: sp.MutableDenseNDimArray
+
+
+def load_cg_registry(seed: dict) -> dict[str, CGTensor]:
+    """Parse a Matchete ``CGRegistry`` payload into exact tensors."""
+    result: dict[str, CGTensor] = {}
+    for item in seed.get("CGRegistry", []):
+        result[item["Name"]] = CGTensor(
+            name=item["Name"],
+            reps=parse_reps(item["RepsInputForm"]),
+            tensor=parse_sparse_array(item["TensorInputForm"]),
+        )
+    return result

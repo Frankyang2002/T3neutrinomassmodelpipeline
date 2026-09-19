@@ -1,13 +1,16 @@
 from __future__ import annotations
 
-"""Weinberg-normalization and EFT1 Wilson-prefactor regressions.
+"""Weinberg-normalization, flavor-symmetry, and EFT1 Wilson-prefactor regressions.
 
 Default mode
 ------------
-Run the existing normalization-cleanup regression:
+Run the normalization-cleanup regression plus the mixed-C12 flavor-symmetry
+checks consolidated from ``RGE/running/C12FlavorSymmetryValidation.py``:
 
 * ``build_flavor_matched_c5`` must produce the physical symmetric coefficient
   C5 = A_pq + A_qp, giving 2*A_ordered in the one-generation symbolic test.
+* The mixed C12 flavor kernel must be symmetric for non-diagonal complex
+  Yukawas and equal 1/2(K + K^T), where K is the ordered y1* y2* kernel.
 * ``build_neutrino_mass_matrix`` must preserve the previous physical mass
   bookkeeping.
 
@@ -153,6 +156,93 @@ def check_scaled_term(
     }
 
 
+def _ordered_c12_kernel(
+    y1: sp.MatrixBase,
+    y2: sp.MatrixBase,
+    masses: list[sp.Expr] | tuple[sp.Expr, ...],
+) -> sp.Matrix:
+    """Return K_pq = sum_r y1^*_{pr} y2^*_{qr}/M_r."""
+    if y1.shape != y2.shape:
+        raise ValueError("y1 and y2 must have the same shape.")
+
+    n_lepton, n_heavy = y1.shape
+    if len(masses) != n_heavy:
+        raise ValueError("Need one heavy-fermion mass per heavy generation.")
+
+    return sp.Matrix(
+        n_lepton,
+        n_lepton,
+        lambda p, q: sp.simplify(
+            sum(
+                sp.conjugate(y1[p, r])
+                * sp.conjugate(y2[q, r])
+                / masses[r]
+                for r in range(n_heavy)
+            )
+        ),
+    )
+
+
+def check_c12_flavor_symmetry() -> bool:
+    """Preserve the former standalone non-diagonal C12 flavor validation."""
+    y1 = sp.Matrix(
+        [
+            [1 + sp.I, 2],
+            [3, 1 - 2 * sp.I],
+            [2 - sp.I, -1],
+        ]
+    )
+    y2 = sp.Matrix(
+        [
+            [2, -sp.I],
+            [1 + sp.I, 4],
+            [-2, 3 + sp.I],
+        ]
+    )
+    masses = [sp.Integer(5), sp.Integer(7)]
+
+    ordered = _ordered_c12_kernel(y1, y2, masses)
+
+    # build_flavor_matched_c5 with kernel=1 and explicit heavy masses produces
+    # the physical symmetric sum K + K^T.  The mixed C12 convention itself is
+    # 1/2(K + K^T), so compare after the explicit factor of 1/2.
+    physical_c5 = build_flavor_matched_c5(
+        sp.Integer(1),
+        y1,
+        y2,
+        heavy_masses=masses,
+    )
+    mixed_c12 = sp.Rational(1, 2) * physical_c5
+
+    symmetry_residual = (mixed_c12 - mixed_c12.T).applyfunc(sp.simplify)
+    reconstruction = (
+        mixed_c12
+        - sp.Rational(1, 2) * (ordered + ordered.T)
+    ).applyfunc(sp.simplify)
+
+    ordered_is_nonsymmetric = (
+        (ordered - ordered.T).applyfunc(sp.simplify)
+        != sp.zeros(3)
+    )
+
+    ok = (
+        symmetry_residual == sp.zeros(3)
+        and reconstruction == sp.zeros(3)
+        and ordered_is_nonsymmetric
+    )
+
+    print()
+    print("=" * 72)
+    print("MIXED C12 FLAVOR-SYMMETRY REGRESSION")
+    print("=" * 72)
+    print(
+        "PASS" if ok else "FAIL",
+        ": C12 = 1/2 (K + K^T) for non-diagonal complex Yukawas",
+    )
+
+    return ok
+
+
 def check_weinberg_normalization_cleanup() -> bool:
     A, y1, y2, v = sp.symbols(
         "A y1 y2 v"
@@ -274,8 +364,8 @@ def check_wilson_prefactor_preservation(
 def main() -> int:
     parser = argparse.ArgumentParser(
         description=(
-            "Run the Weinberg-normalization regression and, "
-            "optionally, the EFT1 Wilson outer-prefactor "
+            "Run the Weinberg-normalization and C12 flavor-symmetry "
+            "regressions and, optionally, the EFT1 Wilson outer-prefactor "
             "preservation regression."
         )
     )
@@ -328,6 +418,7 @@ def main() -> int:
     normalization_ok = (
         check_weinberg_normalization_cleanup()
     )
+    flavor_symmetry_ok = check_c12_flavor_symmetry()
 
     prefactor_ok = True
 
@@ -380,7 +471,11 @@ def main() -> int:
             ]
         )
 
-    return 0 if normalization_ok and prefactor_ok else 1
+    return (
+        0
+        if normalization_ok and flavor_symmetry_ok and prefactor_ok
+        else 1
+    )
 
 
 if __name__ == "__main__":

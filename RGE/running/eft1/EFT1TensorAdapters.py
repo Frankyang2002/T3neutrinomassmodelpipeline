@@ -24,7 +24,6 @@ from math import factorial
 from pathlib import Path
 import re
 import sys
-from typing import Iterable
 
 import sympy as sp
 
@@ -35,7 +34,6 @@ if str(PROJECT_ROOT) not in sys.path:
 from RGE.running.eft1.MatcheteParsing import (
     CGTensor,
     load_cg_registry,
-    matching_brace as _matching_brace,
     matching_bracket as _matching_bracket,
     parse_index as _parse_index,
     parse_mathematica_scalar as _parse_mathematica_scalar,
@@ -116,7 +114,7 @@ class WilsonScalarLayout:
 
 
 class SparseWilsonTensor:
-    """Sparse C_ijab lookup compatible with MasterWeinbergRGE call sites."""
+    """Sparse C_ijab lookup compatible with WilsonTensorRGE call sites."""
 
     def __init__(self, entries: dict[tuple[int, int, int, int], sp.Expr]):
         self.entries = {
@@ -480,19 +478,6 @@ def _term_prefactor(term: dict) -> sp.Expr:
         }
     )
     return sp.simplify(result)
-
-
-def prefactor_scaling_regression(
-    term: dict,
-    scale: sp.Expr = sp.Integer(7),
-) -> bool:
-    """Cheap check that an overall term rescaling survives parsing exactly."""
-
-    scaled = dict(term)
-    scaled["TermInputForm"] = f"({sp.sstr(scale)})*({term['TermInputForm']})"
-    lhs = sp.simplify(_term_prefactor(scaled))
-    rhs = sp.simplify(scale * _term_prefactor(term))
-    return sp.simplify(lhs - rhs) == 0
 
 
 def _wilson_cg_value(

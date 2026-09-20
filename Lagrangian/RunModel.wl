@@ -312,8 +312,8 @@ lagrangianDir = DirectoryName[$InputFileName];
 projectRoot = DirectoryName[lagrangianDir];
 
 (* Get modules and helpers from these files *)
-physicsLaTeXFile =
-    FileNameJoin[{lagrangianDir, "interactions", "PhysicsLaTeX.wl"}];
+physicsNotationFile =
+    FileNameJoin[{lagrangianDir, "PhysicsNotation.wl"}];
 
 modelCatalogFile =
     FileNameJoin[{lagrangianDir, "model", "T3ModelCatalog.wl"}];
@@ -328,7 +328,7 @@ rgeTensorExporterFile = FileNameJoin[
   {projectRoot, "RGE", "general", "wolfram", "T3RGETensorExport.wl"}
 ];
 
-Get[physicsLaTeXFile];
+Get[physicsNotationFile];
 Get[modelCatalogFile];
 Get[lagrangianBuilderFile];
 Get[matchingFile];
@@ -519,8 +519,8 @@ sequentialStageData = Map[
       label = "EFT_" <> ToString[level] <> "_after_" <>
         StringRiffle[integrated, "_"];
 
-      stageTeX = ExpressionToLaTeX[stageLag];
-      stageBSMTeX = ExpressionToLaTeX[stageBSM];
+      stageTeX = PhysicsExpressionToLaTeX[stageLag];
+      stageBSMTeX = PhysicsExpressionToLaTeX[stageBSM];
 
       <|
         "Level" -> level,
@@ -553,12 +553,12 @@ If[
 bsmMatchedEFT = Lookup[difference, "BSMEFT", 0];
 
 (* Get latex of everything *)
-freeTeX = ExpressionToLaTeX[build["LFree"]];
-interactionTeX = ExpressionToLaTeX[build["LInt"]];
-uvTeX = ExpressionToLaTeX[build["LUV"]];
-bsmTeX = ExpressionToLaTeX[build["LBSM"]];
-eftTeX = ExpressionToLaTeX[matchedEFT];
-bsmEftTeX = ExpressionToLaTeX[bsmMatchedEFT];
+freeTeX = PhysicsExpressionToLaTeX[build["LFree"]];
+interactionTeX = PhysicsExpressionToLaTeX[build["LInt"]];
+uvTeX = PhysicsExpressionToLaTeX[build["LUV"]];
+bsmTeX = PhysicsExpressionToLaTeX[build["LBSM"]];
+eftTeX = PhysicsExpressionToLaTeX[matchedEFT];
+bsmEftTeX = PhysicsExpressionToLaTeX[bsmMatchedEFT];
 
 (* Get Weinberg Coefficient from matchedEFT *)
 weinbergData = ExtractWeinbergCoefficient[matchedEFT];
@@ -576,18 +576,18 @@ weinbergCanonicalCoefficient = Lookup[
 weinbergData = Join[
   weinbergData,
   <|
-    "SectorTeX" -> ExpressionToLaTeX @ Lookup[weinbergData, "Sector", 0],
+    "SectorTeX" -> PhysicsExpressionToLaTeX @ Lookup[weinbergData, "Sector", 0],
     "CoefficientTeX" -> If[
       MissingQ[weinbergCoefficient],
       <|"Success" -> False, "LaTeX" -> ""|>,
-      ExpressionToLaTeX[weinbergCoefficient]
+      PhysicsExpressionToLaTeX[weinbergCoefficient]
     ],
     "CanonicalCoefficientTeX" -> If[
       MissingQ[weinbergCanonicalCoefficient],
       <|"Success" -> False, "LaTeX" -> ""|>,
-      ExpressionToLaTeX[weinbergCanonicalCoefficient]
+      PhysicsExpressionToLaTeX[weinbergCanonicalCoefficient]
     ],
-    "LoopFunctionTeX" -> ExpressionToLaTeX[
+    "LoopFunctionTeX" -> PhysicsExpressionToLaTeX[
       T3LoopI[
         Coupling[MF, {}, 0]^2,
         Coupling[MS1, {}, 0]^2,

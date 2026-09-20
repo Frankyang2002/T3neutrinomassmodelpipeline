@@ -171,47 +171,32 @@ def _alpha_token(alpha: int) -> str:
     return f"p{alpha}"
 
 
-def rerun_threshold2_with_running(
-    *,
+def _resolve_threshold2_result_path(
     output_dir: Path,
-    running_insertion: Path,
+    result_path: Path | None,
+) -> Path:
+    if result_path is None:
+        result_path = output_dir / "data" / "threshold_2_with_eft1_running.wxf"
+    resolved = Path(result_path).resolve()
+    resolved.parent.mkdir(parents=True, exist_ok=True)
+    return resolved
+
+
+def _build_threshold2_resume_command(
+    *,
     run_threshold_script: Path,
+    result_path: Path,
+    running_insertion: Path,
+    continuation: Threshold2Continuation,
     d_s1: int,
     d_s2: int,
     d_f: int,
     alpha: int,
-    eft_order: int = 5,
-    loop_order: int = 1,
-    continuation: Threshold2Continuation | None = None,
-    result_path: Path | None = None,
-    shared_scalar: bool = False,
-    validation_mode: bool = False,
-) -> dict:
-    output_dir = Path(output_dir).resolve()
-    running_insertion = Path(running_insertion).resolve()
-    run_threshold_script = Path(run_threshold_script).resolve()
-
-    if not running_insertion.exists():
-        raise FileNotFoundError(running_insertion)
-    if not run_threshold_script.exists():
-        raise FileNotFoundError(run_threshold_script)
-
-    if continuation is None:
-        continuation = discover_continuation(output_dir)
-
-    if result_path is None:
-        result_path = (
-            output_dir
-            / "data"
-            / "threshold_2_with_eft1_running.wxf"
-        )
-    result_path = Path(result_path).resolve()
-    result_path.parent.mkdir(parents=True, exist_ok=True)
-
-    debug_dir = output_dir / "debug" / "threshold_2_with_eft1_running"
-    debug_dir.mkdir(parents=True, exist_ok=True)
-
-    command = [
+    eft_order: int,
+    loop_order: int,
+    validation_mode: bool,
+) -> list[str]:
+    return [
         "wolframscript",
         "-file",
         str(run_threshold_script),
@@ -233,16 +218,13 @@ def rerun_threshold2_with_running(
         "validation" if validation_mode else "results",
     ]
 
-    # Stream Wolfram output live. The old capture_output=True implementation
-    # made long Matchete calculations look frozen until the subprocess ended.
-    stdout_log = debug_dir / "stdout.log"
-    stderr_log = debug_dir / "stderr.log"
 
-    (debug_dir / "command.json").write_text(
-        json.dumps(command, indent=2),
-        encoding="utf-8",
-    )
-
+def _stream_threshold2_wolfram_run(
+    *,
+    command: list[str],
+    working_directory: Path,
+    stdout_log: Path,
+) -> tuple[int, list[str]]:
     output_lines: list[str] = []
     print("[resume] Launching threshold-2 Wolfram kernel...")
     print(f"[resume] Live log: {stdout_log}")
@@ -250,7 +232,7 @@ def rerun_threshold2_with_running(
     with stdout_log.open("w", encoding="utf-8") as log_handle:
         process = subprocess.Popen(
             command,
-            cwd=run_threshold_script.parent.parent,
+            cwd=working_directory,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             text=True,
@@ -280,52 +262,60 @@ def rerun_threshold2_with_running(
 
         return_code = process.wait()
 
-    stderr_log.write_text(
-        "stderr was merged into stdout.log for live streaming.\n",
-        encoding="utf-8",
-    )
+    return return_code, output_lines
 
+
+def _threshold2_resume_markers(output_lines: list[str]) -> dict[str, bool]:
     combined_output = "\n".join(output_lines)
+    return {
+        "running_insertion_loaded": (
+            "[fresh kernel] EFT1 running heavy insertion loaded."
+            in combined_output
+        ),
+        "running_inserted_in_C_only": (
+            "[fresh kernel] Added EFT1 leading-log heavy insertion to [C] only."
+            in combined_output
+        ),
+        "direct_weinberg_carried_separately": (
+            "[fresh kernel] Direct EFT1 Weinberg running coefficient carried separately to final C5."
+            in combined_output
+        ),
+        "direct_weinberg_equal_scale_vanishes": (
+            "[fresh kernel] Direct Weinberg equal-scale check: True"
+            in combined_output
+        ),
+    }
 
-    loaded_marker = (
-        "[fresh kernel] EFT1 running heavy insertion loaded."
-        in combined_output
-    )
-    c_marker = (
-        "[fresh kernel] Added EFT1 leading-log heavy insertion to [C] only."
-        in combined_output
-    )
-    direct_weinberg_marker = (
-        "[fresh kernel] Direct EFT1 Weinberg running coefficient carried separately to final C5."
-        in combined_output
-    )
-    equal_scale_marker = (
-        "[fresh kernel] Direct Weinberg equal-scale check: True"
-        in combined_output
-    )
 
+def _build_threshold2_resume_result(
+    *,
+    return_code: int,
+    output_lines: list[str],
+    result_path: Path,
+    running_insertion: Path,
+    validation_mode: bool,
+    shared_scalar: bool,
+    continuation: Threshold2Continuation,
+    stdout_log: Path,
+    stderr_log: Path,
+) -> dict:
+    markers = _threshold2_resume_markers(output_lines)
     status = (
         "Success"
         if return_code == 0
         and result_path.exists()
-        and loaded_marker
-        and c_marker
-        and direct_weinberg_marker
-        and equal_scale_marker
+        and all(markers.values())
         else "Failed"
     )
 
-    result = {
+    return {
         "status": status,
         "return_code": return_code,
         "stdout_tail": output_lines[-40:],
         "stderr_tail": [],
         "result_path": str(result_path),
         "running_insertion": str(running_insertion),
-        "running_insertion_loaded": loaded_marker,
-        "running_inserted_in_C_only": c_marker,
-        "direct_weinberg_carried_separately": direct_weinberg_marker,
-        "direct_weinberg_equal_scale_vanishes": equal_scale_marker,
+        **markers,
         "validation_mode": bool(validation_mode),
         "shared_scalar": bool(shared_scalar),
         "continuation": {
@@ -339,11 +329,87 @@ def rerun_threshold2_with_running(
         "stderr_log": str(stderr_log),
     }
 
+
+def rerun_threshold2_with_running(
+    *,
+    output_dir: Path,
+    running_insertion: Path,
+    run_threshold_script: Path,
+    d_s1: int,
+    d_s2: int,
+    d_f: int,
+    alpha: int,
+    eft_order: int = 5,
+    loop_order: int = 1,
+    continuation: Threshold2Continuation | None = None,
+    result_path: Path | None = None,
+    shared_scalar: bool = False,
+    validation_mode: bool = False,
+) -> dict:
+    output_dir = Path(output_dir).resolve()
+    running_insertion = Path(running_insertion).resolve()
+    run_threshold_script = Path(run_threshold_script).resolve()
+
+    if not running_insertion.exists():
+        raise FileNotFoundError(running_insertion)
+    if not run_threshold_script.exists():
+        raise FileNotFoundError(run_threshold_script)
+
+    if continuation is None:
+        continuation = discover_continuation(output_dir)
+
+    result_path = _resolve_threshold2_result_path(output_dir, result_path)
+    debug_dir = output_dir / "debug" / "threshold_2_with_eft1_running"
+    debug_dir.mkdir(parents=True, exist_ok=True)
+
+    command = _build_threshold2_resume_command(
+        run_threshold_script=run_threshold_script,
+        result_path=result_path,
+        running_insertion=running_insertion,
+        continuation=continuation,
+        d_s1=d_s1,
+        d_s2=d_s2,
+        d_f=d_f,
+        alpha=alpha,
+        eft_order=eft_order,
+        loop_order=loop_order,
+        validation_mode=validation_mode,
+    )
+
+    stdout_log = debug_dir / "stdout.log"
+    stderr_log = debug_dir / "stderr.log"
+    (debug_dir / "command.json").write_text(
+        json.dumps(command, indent=2),
+        encoding="utf-8",
+    )
+
+    return_code, output_lines = _stream_threshold2_wolfram_run(
+        command=command,
+        working_directory=run_threshold_script.parent.parent,
+        stdout_log=stdout_log,
+    )
+
+    stderr_log.write_text(
+        "stderr was merged into stdout.log for live streaming.\n",
+        encoding="utf-8",
+    )
+
+    result = _build_threshold2_resume_result(
+        return_code=return_code,
+        output_lines=output_lines,
+        result_path=result_path,
+        running_insertion=running_insertion,
+        validation_mode=validation_mode,
+        shared_scalar=shared_scalar,
+        continuation=continuation,
+        stdout_log=stdout_log,
+        stderr_log=stderr_log,
+    )
+
     (output_dir / "data" / "threshold_2_running_resume_summary.json").write_text(
         json.dumps(result, indent=2),
         encoding="utf-8",
     )
-
     return result
 
 

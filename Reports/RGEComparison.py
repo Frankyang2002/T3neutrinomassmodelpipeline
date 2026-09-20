@@ -10,13 +10,13 @@ import json
 from pathlib import Path
 from typing import Any
 
-from common.Records import RunRecord
+from common.RunRecords import RunRecord
 from Reports.ReportGeneration import (
-    REPORT_OUTPUT_DIR,
     compile_latex_document,
     final_eft_stage_label,
     latex_escape_text,
     latex_fraction,
+    latex_document_preamble,
     matrix_cell,
     paper_notation_key_lines,
     paper_symbol_latex,
@@ -94,29 +94,6 @@ GLOSSARY_ROWS = (
 
 
 
-def _load_uv_payload(record: RunRecord) -> dict[str, Any] | None:
-    """Read one model's saved RGBeta JSON payload."""
-
-    relative_path = record.summary.get("UVRGEFile")
-    if not relative_path:
-        return None
-
-    path = record.output_dir / str(relative_path)
-    if not path.is_file():
-        return None
-
-    try:
-        payload = json.loads(path.read_text(encoding="utf-8-sig"))
-    except (OSError, json.JSONDecodeError):
-        return None
-
-    if payload.get("status") != "Success":
-        return None
-
-    return payload
-
-
-
 def _load_json_payload_from_summary(
     record: RunRecord,
     summary_key: str,
@@ -148,30 +125,6 @@ def _load_json_payload_from_summary(
     return payload
 
 
-def _load_eft1_renormalisable_payload(
-    record: RunRecord,
-) -> dict[str, Any] | None:
-    """Read the saved RGBeta payload for EFT1 = SM + S1 + S2."""
-
-    return _load_json_payload_from_summary(
-        record,
-        "EFT1RenormalisableRGEFile",
-        require_success_key="EFT1RenormalisableRGEStatus",
-    )
-
-
-def _load_eft1_wilson_payload(
-    record: RunRecord,
-) -> dict[str, Any] | None:
-    """Read the component-level dimension-five Wilson RGE payload."""
-
-    return _load_json_payload_from_summary(
-        record,
-        "EFT1WilsonRGEFile",
-        require_success_key="EFT1WilsonRGEStatus",
-    )
-
-
 def _coupling_symbol(name: str) -> str:
     """Return the shared report symbol, with a safe fallback for unknown names."""
     shared = paper_symbol_latex(name)
@@ -182,15 +135,30 @@ def _coupling_symbol(name: str) -> str:
 
 
 def load_uv_rge_payload(record: RunRecord) -> dict[str, Any] | None:
-    """Public report-layer accessor for one saved UV RGBeta payload."""
-    return _load_uv_payload(record)
+    """Load one run's successful UV RGBeta payload."""
+    return _load_json_payload_from_summary(record, "UVRGEFile")
 
 
 def load_eft1_renormalisable_rge_payload(
     record: RunRecord,
 ) -> dict[str, Any] | None:
-    """Public report-layer accessor for the saved EFT1 renormalisable RGBeta payload."""
-    return _load_eft1_renormalisable_payload(record)
+    """Load the successful EFT1 renormalisable RGBeta payload."""
+    return _load_json_payload_from_summary(
+        record,
+        "EFT1RenormalisableRGEFile",
+        require_success_key="EFT1RenormalisableRGEStatus",
+    )
+
+
+def load_eft1_wilson_rge_payload(
+    record: RunRecord,
+) -> dict[str, Any] | None:
+    """Load the successful EFT1 dimension-five Wilson RGE payload."""
+    return _load_json_payload_from_summary(
+        record,
+        "EFT1WilsonRGEFile",
+        require_success_key="EFT1WilsonRGEStatus",
+    )
 
 
 def _ordered_couplings(names: set[str]) -> list[str]:
@@ -542,6 +510,128 @@ def _search_name_line(name: str) -> str:
     return rf"\noindent\textbf{{Quantity: }}${symbol}$\par\smallskip"
 
 
+
+def _comparison_record(row: RunRecord | tuple[RunRecord, dict[str, Any]]) -> RunRecord:
+    """Return the model record from either report-row representation."""
+
+    if isinstance(row, tuple):
+        return row[0]
+    return row
+
+
+def _append_term_comparison_tables(
+    lines: list[str],
+    signatures: list[str],
+    model_terms: dict[int, dict[str, list[str]]],
+    representative: dict[str, str],
+    rows: list[RunRecord] | list[tuple[RunRecord, dict[str, Any]]],
+    *,
+    quantity_name: str,
+    chunk_size: int = 3,
+) -> None:
+    """Append the shared chunked term legend and model-comparison tables."""
+
+    signature_chunks = [
+        signatures[index:index + chunk_size]
+        for index in range(0, len(signatures), chunk_size)
+    ]
+
+    for chunk_number, signature_chunk in enumerate(signature_chunks, start=1):
+        if chunk_number > 1:
+            lines.append(r"\clearpage")
+            lines.append(_search_name_line(quantity_name))
+
+        if len(signature_chunks) > 1:
+            lines.append(
+                rf"\subsection*{{Terms {chunk_number} of {len(signature_chunks)}}}"
+            )
+
+        lines.extend(
+            [
+                r"\begin{center}",
+                r"\begin{tabular}{@{}c >{\raggedright\arraybackslash}p{0.82\linewidth}@{}}",
+                r"\toprule",
+                r"Column & Representative term structure \\",
+                r"\midrule",
+            ]
+        )
+
+        for local_index, signature in enumerate(signature_chunk, start=1):
+            lines.append(
+                rf"T{local_index} & "
+                + r"\(\displaystyle "
+                + representative[signature]
+                + r"\) \\"
+            )
+            lines.append(r"\midrule")
+
+        lines.extend(
+            [
+                r"\bottomrule",
+                r"\end{tabular}",
+                r"\end{center}",
+                r"\smallskip",
+            ]
+        )
+
+        widths = " ".join(
+            r">{\raggedright\arraybackslash}p{0.21\linewidth}"
+            for _ in signature_chunk
+        )
+        column_spec = r"@{}llcccccc " + widths + r"@{}"
+        headers = [
+            r"Model",
+            r"$\alpha$",
+            r"$d_{S_1}$",
+            r"$Y_{S_1}$",
+            r"$d_{S_2}$",
+            r"$Y_{S_2}$",
+            r"$d_F$",
+            r"$Y_F$",
+            *[
+                rf"T{index}"
+                for index in range(1, len(signature_chunk) + 1)
+            ],
+        ]
+
+        lines.extend(
+            [
+                r"\tiny",
+                rf"\begin{{longtable}}{{{column_spec}}}",
+                r"\toprule",
+                " & ".join(headers) + r" \\",
+                r"\midrule",
+                r"\endfirsthead",
+                r"\toprule",
+                " & ".join(headers) + r" \\",
+                r"\midrule",
+                r"\endhead",
+            ]
+        )
+
+        for row_index, row in enumerate(rows):
+            record = _comparison_record(row)
+            d_s1, y_s1, d_s2, y_s2, d_f, y_f = record_quantum_numbers(record)
+            grouped = model_terms.get(row_index, {})
+            cells = [
+                latex_escape_text(record.name),
+                rf"${record.alpha}$",
+                rf"${d_s1}$",
+                rf"${latex_fraction(y_s1)}$",
+                rf"${d_s2}$",
+                rf"${latex_fraction(y_s2)}$",
+                rf"${d_f}$",
+                rf"${latex_fraction(y_f)}$",
+                *[
+                    _rge_term_cell(grouped.get(signature))
+                    for signature in signature_chunk
+                ],
+            ]
+            lines.append(" & ".join(cells) + r" \\")
+            lines.append(r"\midrule")
+
+        lines.extend([r"\bottomrule", r"\end{longtable}"])
+
 def write_rge_comparison(
     records: list[RunRecord],
     *,
@@ -563,7 +653,7 @@ def write_rge_comparison(
         if record.summary.get("UVRGEStatus") != "Success":
             continue
 
-        payload = _load_uv_payload(record)
+        payload = load_uv_rge_payload(record)
         if payload is None:
             continue
 
@@ -583,13 +673,13 @@ def write_rge_comparison(
         rows.append((record, payload))
 
     lines: list[str] = [
-        r"\documentclass[8pt]{article}",
-        r"\usepackage[margin=0.65cm]{geometry}",
-        r"\usepackage{amsmath,amssymb,adjustbox,pdflscape,longtable,array,booktabs}",
-        r"\usepackage[T1]{fontenc}",
-        r"\setlength{\tabcolsep}{2pt}",
-        r"\renewcommand{\arraystretch}{1.2}",
-        r"\begin{document}",
+        *latex_document_preamble(
+            "8pt",
+            "margin=0.65cm",
+            "amsmath,amssymb,adjustbox,pdflscape,longtable,array,booktabs",
+            r"\setlength{\tabcolsep}{2pt}",
+            r"\renewcommand{\arraystretch}{1.2}",
+        ),
         r"\begin{landscape}",
         r"\section*{T3 UV one-loop RGE term comparison}",
         *paper_notation_key_lines(),
@@ -640,129 +730,14 @@ def write_rge_comparison(
                 )
                 continue
 
-            # Large RGEs can contain many additive terms. Split the term columns
-            # across multiple tables while preserving the same model rows.
-            term_chunk_size = 3
-            signature_chunks = [
-                signatures[index:index + term_chunk_size]
-                for index in range(0, len(signatures), term_chunk_size)
-            ]
-
-            for chunk_number, signature_chunk in enumerate(
-                signature_chunks,
-                start=1,
-            ):
-                if chunk_number > 1:
-                    lines.append(r"\clearpage")
-                    lines.append(_search_name_line(coupling))
-
-                if len(signature_chunks) > 1:
-                    lines.append(
-                        rf"\subsection*{{Terms {chunk_number} of "
-                        rf"{len(signature_chunks)}}}"
-                    )
-
-                # Show what each term column represents.  This is only a column
-                # label/representative; the table cells below retain each model's
-                # complete term.
-                lines.append(r"\begin{center}")
-                lines.append(
-                    r"\begin{tabular}{@{}c >{\raggedright\arraybackslash}p{0.82\linewidth}@{}}"
-                )
-                lines.append(r"\toprule")
-                lines.append(r"Column & Representative term structure \\")
-                lines.append(r"\midrule")
-
-                for local_index, signature in enumerate(signature_chunk, start=1):
-                    representative_term = representative[signature]
-                    lines.append(
-                        rf"T{local_index} & "
-                        + r"\(\displaystyle "
-                        + representative_term
-                        + r"\) \\"
-                    )
-                    lines.append(r"\midrule")
-
-                lines.extend(
-                    [
-                        r"\bottomrule",
-                        r"\end{tabular}",
-                        r"\end{center}",
-                        r"\smallskip",
-                    ]
-                )
-
-                widths = " ".join(
-                    r">{\raggedright\arraybackslash}p{0.21\linewidth}"
-                    for _ in signature_chunk
-                )
-
-                column_spec = (
-                    r"@{}llcccccc "
-                    + widths
-                    + r"@{}"
-                )
-
-                term_headers = [
-                    rf"T{index}"
-                    for index in range(1, len(signature_chunk) + 1)
-                ]
-
-                header = [
-                    r"Model",
-                    r"$\alpha$",
-                    r"$d_{S_1}$",
-                    r"$Y_{S_1}$",
-                    r"$d_{S_2}$",
-                    r"$Y_{S_2}$",
-                    r"$d_F$",
-                    r"$Y_F$",
-                    *term_headers,
-                ]
-
-                lines.extend(
-                    [
-                        r"\tiny",
-                        rf"\begin{{longtable}}{{{column_spec}}}",
-                        r"\toprule",
-                        " & ".join(header) + r" \\",
-                        r"\midrule",
-                        r"\endfirsthead",
-                        r"\toprule",
-                        " & ".join(header) + r" \\",
-                        r"\midrule",
-                        r"\endhead",
-                    ]
-                )
-
-                for row_index, (record, payload) in enumerate(rows):
-                    d_s1, y_s1, d_s2, y_s2, d_f, y_f = record_quantum_numbers(record)
-                    grouped = model_terms.get(row_index, {})
-
-                    cells = [
-                        latex_escape_text(record.name),
-                        rf"${record.alpha}$",
-                        rf"${d_s1}$",
-                        rf"${latex_fraction(y_s1)}$",
-                        rf"${d_s2}$",
-                        rf"${latex_fraction(y_s2)}$",
-                        rf"${d_f}$",
-                        rf"${latex_fraction(y_f)}$",
-                        *[
-                            _rge_term_cell(grouped.get(signature))
-                            for signature in signature_chunk
-                        ],
-                    ]
-
-                    lines.append(" & ".join(cells) + r" \\")
-                    lines.append(r"\midrule")
-
-                lines.extend(
-                    [
-                        r"\bottomrule",
-                        r"\end{longtable}",
-                    ]
-                )
+            _append_term_comparison_tables(
+                lines,
+                signatures,
+                model_terms,
+                representative,
+                rows,
+                quantity_name=coupling,
+            )
 
     lines.extend(
         [
@@ -870,7 +845,7 @@ def _eft1_wilson_component_rows(
     representative: dict[str, str] = {}
 
     for row_index, record in enumerate(records):
-        payload = _load_eft1_wilson_payload(record)
+        payload = load_eft1_wilson_rge_payload(record)
         if payload is None:
             model_terms[row_index] = {}
             continue
@@ -923,18 +898,18 @@ def write_eft1_rge_comparison(
 
     ren_rows, coupling_names = _renormalisable_rows_from_loader(
         records,
-        _load_eft1_renormalisable_payload,
+        load_eft1_renormalisable_rge_payload,
     )
 
     wilson_records = [
         record
         for record in records
-        if _load_eft1_wilson_payload(record) is not None
+        if load_eft1_wilson_rge_payload(record) is not None
     ]
 
     wilson_components: set[str] = set()
     for record in wilson_records:
-        payload = _load_eft1_wilson_payload(record)
+        payload = load_eft1_wilson_rge_payload(record)
         if payload is None:
             continue
         betas = payload.get("betas", {}) or {}
@@ -942,13 +917,13 @@ def write_eft1_rge_comparison(
             wilson_components.update(str(name) for name in betas)
 
     lines: list[str] = [
-        r"\documentclass[8pt]{article}",
-        r"\usepackage[margin=0.65cm]{geometry}",
-        r"\usepackage{amsmath,amssymb,adjustbox,pdflscape,longtable,array,booktabs}",
-        r"\usepackage[T1]{fontenc}",
-        r"\setlength{\tabcolsep}{2pt}",
-        r"\renewcommand{\arraystretch}{1.2}",
-        r"\begin{document}",
+        *latex_document_preamble(
+            "8pt",
+            "margin=0.65cm",
+            "amsmath,amssymb,adjustbox,pdflscape,longtable,array,booktabs",
+            r"\setlength{\tabcolsep}{2pt}",
+            r"\renewcommand{\arraystretch}{1.2}",
+        ),
         r"\begin{landscape}",
         r"\section*{T3 intermediate-EFT one-loop RGE term comparison: EFT\_1 after $F$}",
         (
@@ -1002,111 +977,14 @@ def write_eft1_rge_comparison(
                 )
                 continue
 
-            term_chunk_size = 3
-            signature_chunks = [
-                signatures[index:index + term_chunk_size]
-                for index in range(0, len(signatures), term_chunk_size)
-            ]
-
-            for chunk_number, signature_chunk in enumerate(
-                signature_chunks,
-                start=1,
-            ):
-                if chunk_number > 1:
-                    lines.append(r"\clearpage")
-                    lines.append(_search_name_line(coupling))
-
-                if len(signature_chunks) > 1:
-                    lines.append(
-                        rf"\subsection*{{Terms {chunk_number} of "
-                        rf"{len(signature_chunks)}}}"
-                    )
-
-                lines.extend(
-                    [
-                        r"\begin{center}",
-                        r"\begin{tabular}{@{}c >{\raggedright\arraybackslash}p{0.82\linewidth}@{}}",
-                        r"\toprule",
-                        r"Column & Representative term structure \\",
-                        r"\midrule",
-                    ]
-                )
-                for local_index, signature in enumerate(signature_chunk, start=1):
-                    lines.append(
-                        rf"T{local_index} & "
-                        + r"\(\displaystyle "
-                        + representative[signature]
-                        + r"\) \\"
-                    )
-                    lines.append(r"\midrule")
-
-                lines.extend(
-                    [
-                        r"\bottomrule",
-                        r"\end{tabular}",
-                        r"\end{center}",
-                        r"\smallskip",
-                    ]
-                )
-
-                widths = " ".join(
-                    r">{\raggedright\arraybackslash}p{0.21\linewidth}"
-                    for _ in signature_chunk
-                )
-                column_spec = r"@{}llcccccc " + widths + r"@{}"
-                headers = [
-                    r"Model",
-                    r"$\alpha$",
-                    r"$d_{S_1}$",
-                    r"$Y_{S_1}$",
-                    r"$d_{S_2}$",
-                    r"$Y_{S_2}$",
-                    r"$d_F$",
-                    r"$Y_F$",
-                    *[
-                        rf"T{index}"
-                        for index in range(1, len(signature_chunk) + 1)
-                    ],
-                ]
-
-                lines.extend(
-                    [
-                        r"\tiny",
-                        rf"\begin{{longtable}}{{{column_spec}}}",
-                        r"\toprule",
-                        " & ".join(headers) + r" \\",
-                        r"\midrule",
-                        r"\endfirsthead",
-                        r"\toprule",
-                        " & ".join(headers) + r" \\",
-                        r"\midrule",
-                        r"\endhead",
-                    ]
-                )
-
-                for row_index, (record, _payload) in enumerate(ren_rows):
-                    d_s1, y_s1, d_s2, y_s2, d_f, y_f = record_quantum_numbers(
-                        record
-                    )
-                    grouped = model_terms.get(row_index, {})
-                    cells = [
-                        latex_escape_text(record.name),
-                        rf"${record.alpha}$",
-                        rf"${d_s1}$",
-                        rf"${latex_fraction(y_s1)}$",
-                        rf"${d_s2}$",
-                        rf"${latex_fraction(y_s2)}$",
-                        rf"${d_f}$",
-                        rf"${latex_fraction(y_f)}$",
-                        *[
-                            _rge_term_cell(grouped.get(signature))
-                            for signature in signature_chunk
-                        ],
-                    ]
-                    lines.append(" & ".join(cells) + r" \\")
-                    lines.append(r"\midrule")
-
-                lines.extend([r"\bottomrule", r"\end{longtable}"])
+            _append_term_comparison_tables(
+                lines,
+                signatures,
+                model_terms,
+                representative,
+                ren_rows,
+                quantity_name=coupling,
+            )
 
     lines.extend(
         [
@@ -1159,107 +1037,14 @@ def write_eft1_rge_comparison(
                 )
                 continue
 
-            term_chunk_size = 3
-            chunks = [
-                signatures[index:index + term_chunk_size]
-                for index in range(0, len(signatures), term_chunk_size)
-            ]
-
-            for chunk_number, signature_chunk in enumerate(chunks, start=1):
-                if chunk_number > 1:
-                    lines.append(r"\clearpage")
-                    lines.append(_search_name_line(component))
-
-                if len(chunks) > 1:
-                    lines.append(
-                        rf"\subsection*{{Terms {chunk_number} of {len(chunks)}}}"
-                    )
-
-                lines.extend(
-                    [
-                        r"\begin{center}",
-                        r"\begin{tabular}{@{}c >{\raggedright\arraybackslash}p{0.82\linewidth}@{}}",
-                        r"\toprule",
-                        r"Column & Representative term structure \\",
-                        r"\midrule",
-                    ]
-                )
-                for local_index, signature in enumerate(signature_chunk, start=1):
-                    lines.append(
-                        rf"T{local_index} & "
-                        + r"\(\displaystyle "
-                        + representative[signature]
-                        + r"\) \\"
-                    )
-                    lines.append(r"\midrule")
-
-                lines.extend(
-                    [
-                        r"\bottomrule",
-                        r"\end{tabular}",
-                        r"\end{center}",
-                        r"\smallskip",
-                    ]
-                )
-
-                widths = " ".join(
-                    r">{\raggedright\arraybackslash}p{0.21\linewidth}"
-                    for _ in signature_chunk
-                )
-                column_spec = r"@{}llcccccc " + widths + r"@{}"
-                headers = [
-                    r"Model",
-                    r"$\alpha$",
-                    r"$d_{S_1}$",
-                    r"$Y_{S_1}$",
-                    r"$d_{S_2}$",
-                    r"$Y_{S_2}$",
-                    r"$d_F$",
-                    r"$Y_F$",
-                    *[
-                        rf"T{index}"
-                        for index in range(1, len(signature_chunk) + 1)
-                    ],
-                ]
-
-                lines.extend(
-                    [
-                        r"\tiny",
-                        rf"\begin{{longtable}}{{{column_spec}}}",
-                        r"\toprule",
-                        " & ".join(headers) + r" \\",
-                        r"\midrule",
-                        r"\endfirsthead",
-                        r"\toprule",
-                        " & ".join(headers) + r" \\",
-                        r"\midrule",
-                        r"\endhead",
-                    ]
-                )
-
-                for row_index, record in enumerate(wilson_records):
-                    d_s1, y_s1, d_s2, y_s2, d_f, y_f = record_quantum_numbers(
-                        record
-                    )
-                    grouped = model_terms.get(row_index, {})
-                    cells = [
-                        latex_escape_text(record.name),
-                        rf"${record.alpha}$",
-                        rf"${d_s1}$",
-                        rf"${latex_fraction(y_s1)}$",
-                        rf"${d_s2}$",
-                        rf"${latex_fraction(y_s2)}$",
-                        rf"${d_f}$",
-                        rf"${latex_fraction(y_f)}$",
-                        *[
-                            _rge_term_cell(grouped.get(signature))
-                            for signature in signature_chunk
-                        ],
-                    ]
-                    lines.append(" & ".join(cells) + r" \\")
-                    lines.append(r"\midrule")
-
-                lines.extend([r"\bottomrule", r"\end{longtable}"])
+            _append_term_comparison_tables(
+                lines,
+                signatures,
+                model_terms,
+                representative,
+                wilson_records,
+                quantity_name=component,
+            )
 
     lines.extend(
         [
@@ -1464,13 +1249,13 @@ def write_final_eft_rge_comparison(
     )
 
     lines: list[str] = [
-        r"\documentclass[8pt]{article}",
-        r"\usepackage[margin=0.65cm]{geometry}",
-        r"\usepackage{amsmath,amssymb,adjustbox,pdflscape,longtable,array,booktabs}",
-        r"\usepackage[T1]{fontenc}",
-        r"\setlength{\tabcolsep}{2pt}",
-        r"\renewcommand{\arraystretch}{1.2}",
-        r"\begin{document}",
+        *latex_document_preamble(
+            "8pt",
+            "margin=0.65cm",
+            "amsmath,amssymb,adjustbox,pdflscape,longtable,array,booktabs",
+            r"\setlength{\tabcolsep}{2pt}",
+            r"\renewcommand{\arraystretch}{1.2}",
+        ),
         r"\begin{landscape}",
         rf"\section*{{T3 final-EFT one-loop RGE term comparison: {latex_escape_text(stage_label)}}}",
         (
@@ -1501,116 +1286,14 @@ def write_final_eft_rge_comparison(
             r"\textit{No additive beta-function terms could be parsed.}"
         )
     else:
-        term_chunk_size = 3
-        chunks = [
-            signatures[index:index + term_chunk_size]
-            for index in range(0, len(signatures), term_chunk_size)
-        ]
-
-        for chunk_number, signature_chunk in enumerate(chunks, start=1):
-            if chunk_number > 1:
-                lines.append(r"\clearpage")
-                lines.append(_search_name_line("C5"))
-
-            if len(chunks) > 1:
-                lines.append(
-                    rf"\subsection*{{Terms {chunk_number} of {len(chunks)}}}"
-                )
-
-            lines.extend(
-                [
-                    r"\begin{center}",
-                    r"\begin{tabular}{@{}c >{\raggedright\arraybackslash}p{0.82\linewidth}@{}}",
-                    r"\toprule",
-                    r"Column & Representative term structure \\",
-                    r"\midrule",
-                ]
-            )
-
-            for local_index, signature in enumerate(signature_chunk, start=1):
-                lines.append(
-                    rf"T{local_index} & "
-                    + r"\(\displaystyle "
-                    + representative[signature]
-                    + r"\) \\"
-                )
-                lines.append(r"\midrule")
-
-            lines.extend(
-                [
-                    r"\bottomrule",
-                    r"\end{tabular}",
-                    r"\end{center}",
-                    r"\smallskip",
-                ]
-            )
-
-            widths = " ".join(
-                r">{\raggedright\arraybackslash}p{0.21\linewidth}"
-                for _ in signature_chunk
-            )
-            column_spec = r"@{}llcccccc " + widths + r"@{}"
-
-            headers = [
-                r"Model",
-                r"$\alpha$",
-                r"$d_{S_1}$",
-                r"$Y_{S_1}$",
-                r"$d_{S_2}$",
-                r"$Y_{S_2}$",
-                r"$d_F$",
-                r"$Y_F$",
-                *[
-                    rf"T{index}"
-                    for index in range(1, len(signature_chunk) + 1)
-                ],
-            ]
-
-            lines.extend(
-                [
-                    r"\tiny",
-                    rf"\begin{{longtable}}{{{column_spec}}}",
-                    r"\toprule",
-                    " & ".join(headers) + r" \\",
-                    r"\midrule",
-                    r"\endfirsthead",
-                    r"\toprule",
-                    " & ".join(headers) + r" \\",
-                    r"\midrule",
-                    r"\endhead",
-                ]
-            )
-
-            for row_index, record in enumerate(successful_records):
-                d_s1, y_s1, d_s2, y_s2, d_f, y_f = record_quantum_numbers(
-                    record
-                )
-                grouped = model_terms.get(row_index, {})
-
-                cells = [
-                    latex_escape_text(record.name),
-                    rf"${record.alpha}$",
-                    rf"${d_s1}$",
-                    rf"${latex_fraction(y_s1)}$",
-                    rf"${d_s2}$",
-                    rf"${latex_fraction(y_s2)}$",
-                    rf"${d_f}$",
-                    rf"${latex_fraction(y_f)}$",
-                    *[
-                        _rge_term_cell(grouped.get(signature))
-                        for signature in signature_chunk
-                    ],
-                ]
-
-                lines.append(" & ".join(cells) + r" \\")
-                lines.append(r"\midrule")
-
-            lines.extend(
-                [
-                    r"\bottomrule",
-                    r"\end{longtable}",
-                ]
-            )
+        _append_term_comparison_tables(
+            lines,
+            signatures,
+            model_terms,
+            representative,
+            successful_records,
+            quantity_name="C5",
+        )
 
     lines.extend(
         [

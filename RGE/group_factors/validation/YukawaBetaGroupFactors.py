@@ -212,7 +212,7 @@ def complete_yukawa_group_factors(
     )
 
 
-def a_main() -> int:
+def run_yukawa_group_factor_cli() -> int:
     parser = argparse.ArgumentParser(
         description=(
             "Complete generic T3 y1/y2 one-loop group-factor coefficients, "
@@ -833,7 +833,7 @@ def print_extraction_summary(
     print(f"raw alpha-independent across all saved rows: {raw_alpha_independent}")
 
 
-def b_main() -> int:
+def run_yukawa_beta_validation_cli() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--root",
@@ -1009,3 +1009,27 @@ def b_main() -> int:
     print(f"OVERALL:         {result['status']}")
 
     return 0 if overall else 1
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description="T3 Yukawa-beta group-factor calculation and validation."
+    )
+    parser.add_argument(
+        "mode",
+        choices=("factors", "validate"),
+        help="Calculate generic Yukawa group factors or validate saved RGBeta beta functions.",
+    )
+    args, remaining = parser.parse_known_args()
+    original_argv = sys.argv
+    try:
+        sys.argv = [original_argv[0], *remaining]
+        if args.mode == "factors":
+            return run_yukawa_group_factor_cli()
+        return run_yukawa_beta_validation_cli()
+    finally:
+        sys.argv = original_argv
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

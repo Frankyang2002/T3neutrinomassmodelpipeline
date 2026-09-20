@@ -5,11 +5,11 @@ from pathlib import Path
 
 import sympy as sp
 
-from RGE.general.AnomalousDimensions import calculate_complete_master_rge
+from RGE.general.AnomalousDimensions import calculate_complete_wilson_tensor_rge
 from RGE.general.FermionBasis import build_gauge_sectors
 from RGE.general.GaugeGenerators import g2
-from RGE.general.MasterWeinbergRGE import MasterRGEInputs
-from RGE.matching.WeinbergWilsonAdapter import (
+from RGE.general.WilsonTensorRGE import WilsonRGEInputs
+from RGE.matching.WeinbergTensorAdapter import (
     SparseWilsonLookup,
     build_sm_eft,
     build_sm_yukawa,
@@ -138,7 +138,7 @@ def higgs_quartic(a: int, b: int, c: int, d: int) -> sp.Expr:
     )
 
 
-def calculate_matched_eft_rge(kappa: sp.Expr) -> dict:
+def calculate_matched_weinberg_rge(kappa: sp.Expr) -> dict:
     """Evaluate the matched Weinberg coefficient in the active SM EFT."""
 
     scalar_model, fermion_basis = build_sm_eft()
@@ -157,7 +157,7 @@ def calculate_matched_eft_rge(kappa: sp.Expr) -> dict:
     component = (nu, nu, h0_r, h0_r)
     c_value = coefficient[component]
 
-    inputs = MasterRGEInputs(
+    inputs = WilsonRGEInputs(
         fermion_dimension=fermion_basis.dimension,
         yukawa=yukawa,
         quartic=higgs_quartic,
@@ -167,7 +167,7 @@ def calculate_matched_eft_rge(kappa: sp.Expr) -> dict:
         ),
     )
 
-    contributions = calculate_complete_master_rge(
+    contributions = calculate_complete_wilson_tensor_rge(
         model=scalar_model,
         inputs=inputs,
         output_component=component,
@@ -200,7 +200,7 @@ def calculate_matched_eft_rge(kappa: sp.Expr) -> dict:
     }
 
 
-def run_matched_eft_rge(
+def run_matched_weinberg_rge(
     c5_path: Path,
     output_dir: Path,
     *,
@@ -220,9 +220,9 @@ def run_matched_eft_rge(
     # The hierarchical pipeline supplies the physical full-flavor JSON.  The
     # purpose of this stage is only the universal one-generation SMEFT RGE
     # benchmark, so reduce that physical coefficient to a 1x1 flavor problem.
-    # Import locally to avoid the module-level cycle: FlavorMatchedC5 uses
+    # Import locally to avoid the module-level cycle: FlavorC5Matching uses
     # parse_matchete_c5 from this module for the hard threshold expression.
-    from RGE.matching.FlavorMatchedC5 import (
+    from RGE.matching.FlavorC5Matching import (
         is_final_weinberg_json,
         load_final_weinberg_flavor_matrix,
     )
@@ -247,7 +247,7 @@ def run_matched_eft_rge(
         c5_input_kind = "legacy_scalar_c5"
         matching_assumption = "Common heavy T3 threshold"
 
-    result = calculate_matched_eft_rge(kappa)
+    result = calculate_matched_weinberg_rge(kappa)
 
     if sp.simplify(result["difference"]) != 0:
         raise RuntimeError(

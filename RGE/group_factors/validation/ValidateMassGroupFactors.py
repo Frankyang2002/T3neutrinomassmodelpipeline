@@ -7,10 +7,18 @@ from fractions import Fraction
 import json
 from pathlib import Path
 import re
+import sys
 from typing import Any
 import sympy as sp
-from RGE.group_factors.core.RepresentationFactors import su2_quadratic_casimir_from_dimension
-from RGE.group_factors.core.RepresentationFactors import canonical_yukawa_leg_factors
+
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from RGE.group_factors.core.RepresentationFactors import (
+    canonical_yukawa_leg_factors,
+    su2_quadratic_casimir_from_dimension,
+)
 from dataclasses import dataclass
 
 # ---------------------------------------------------------------------------
@@ -29,17 +37,17 @@ helpers consolidated in ``RepresentationFactors.py``:
     16*pi^2 beta_MF =
         1/2 GF1 (y1^T y1*) MF
       + 1/2 GF2 MF (y2^dagger y2)
-      - 6 g2^2 C2(F) MF
+      - 6 g2^2 C2(fraction_from_value) MF
       - 6 gY^2 YF^2 MF,
 
 with
-    C2(F) = (dF^2-1)/4,
+    C2(fraction_from_value) = (dF^2-1)/4,
     YF    = (alpha+1)/2.
 
 This validator parses RGBeta's saved ``report_betas["MF"]`` structurally by
 replacing each complete ``Matrix[...][heavy[i],heavy[j]]`` object with a
 symbolic token and letting SymPy extract exact coefficients.  This also handles
-the neutral-F branch, where RGBeta writes both MF and Trans[MF].
+the neutral-fraction_from_value branch, where RGBeta writes both MF and Trans[MF].
 
 The neutral-branch Yukawa tensor structure is deliberately not identified with
 the vector-like left/right formula here.
@@ -210,7 +218,7 @@ def _sympy_scalar_expr(
 def _gauge_coeff(expr: str, gauge: str) -> Fraction:
     """Coefficient of g^2 times the physical MF direction.
 
-    The neutral-F branch contains Matrix[MF] + Matrix[Trans[MF]].
+    The neutral-fraction_from_value branch contains Matrix[MF] + Matrix[Trans[MF]].
     Both are mapped onto the same physical mass token M, i.e. MF^T=MF.
     """
 
@@ -228,8 +236,8 @@ def _gauge_coeff(expr: str, gauge: str) -> Fraction:
 
     coefficient = (
         sp.expand(parsed)
-        .coeff(mass_symbol, 1)
-        .coeff(gauge_symbol, 2)
+        .extract_beta_coefficient(mass_symbol, 1)
+        .extract_beta_coefficient(gauge_symbol, 2)
     )
 
     for symbol in coefficient.free_symbols:
@@ -256,7 +264,7 @@ def _yukawa_coeff(expr: str, target_inner: str) -> Fraction:
     parsed = _sympy_scalar_expr(reduced, ("X",))
     target = sp.Symbol("X")
 
-    coefficient = sp.expand(parsed).coeff(target, 1)
+    coefficient = sp.expand(parsed).extract_beta_coefficient(target, 1)
 
     for symbol in list(coefficient.free_symbols):
         if symbol != target:
@@ -284,7 +292,7 @@ def _vectorlike_y2_coeff(expr: str) -> Fraction:
     )
 
 
-def a_main() -> int:
+def run_fermion_mass_validation_cli() -> int:
     parser = argparse.ArgumentParser(
         description=(
             "Validate T3 beta_MF group factors against saved RGBeta results."
@@ -423,10 +431,10 @@ def a_main() -> int:
         "formula_vectorlike_branch": (
             "16*pi^2 beta_MF = 1/2 GF1 (y1^T y1*) MF "
             "+ 1/2 GF2 MF (y2^dagger y2) "
-            "- 6 g2^2 C2(F) MF - 6 gY^2 YF^2 MF"
+            "- 6 g2^2 C2(fraction_from_value) MF - 6 gY^2 YF^2 MF"
         ),
         "neutral_branch_note": (
-            "For YF=0 RGBeta defines the mass as {F,F}; its saved beta "
+            "For YF=0 RGBeta defines the mass as {fraction_from_value,fraction_from_value}; its saved beta "
             "contains MF and Trans[MF]. Gauge validation projects onto "
             "MF^T=MF. The neutral-branch Yukawa tensor structure is not "
             "identified with the vector-like left/right formula in this "
@@ -490,7 +498,7 @@ MODELS = {
 }
 
 
-def txt(value: Fraction) -> str:
+def fraction_text(value: Fraction) -> str:
     return (
         str(value.numerator)
         if value.denominator == 1
@@ -498,12 +506,12 @@ def txt(value: Fraction) -> str:
     )
 
 
-def F(value) -> Fraction:
+def fraction_from_value(value) -> Fraction:
     return Fraction(str(value))
 
 
 def physical_self_conjugate_f(dF: int, alpha: int) -> bool:
-    """Current Matchete-side physical self-conjugate-F criterion."""
+    """Current Matchete-side physical self-conjugate-fraction_from_value criterion."""
     return int(alpha) == -1 and int(dF) % 2 == 1
 
 
@@ -557,13 +565,13 @@ def scalar_mass_group_factors(
 
     if self_conjugate_F and alpha != -1:
         raise ValueError(
-            "A self-conjugate F requires Y_F=0, hence alpha=-1."
+            "A self-conjugate fraction_from_value requires Y_F=0, hence alpha=-1."
         )
 
     if self_conjugate_F and dF % 2 == 0:
         raise ValueError(
             "Current physical T3 branch does not treat even-dimensional "
-            "SU(2) F as self-conjugate."
+            "SU(2) fraction_from_value as self-conjugate."
         )
 
     C1 = su2_quadratic_casimir_from_dimension(d1)
@@ -579,31 +587,31 @@ def scalar_mass_group_factors(
     heavy_factor = Fraction(-16 if self_conjugate_F else -4)
 
     m1 = {
-        "mS1Sq*Tr_y1": txt(2 * GS1),
-        "Tr_MF_y1": txt(heavy_factor * GS1),
-        "lambdaS1*mS1Sq": txt(Fraction(2 * (d1 + 1))),
-        "g2_sq*mS1Sq": txt(-6 * C1),
-        "gY_sq*mS1Sq": txt(-6 * Y1 * Y1),
-        "lambda12*mS2Sq": txt(Fraction(2 * d2)),
+        "mS1Sq*Tr_y1": fraction_text(2 * GS1),
+        "Tr_MF_y1": fraction_text(heavy_factor * GS1),
+        "lambdaS1*mS1Sq": fraction_text(Fraction(2 * (d1 + 1))),
+        "g2_sq*mS1Sq": fraction_text(-6 * C1),
+        "gY_sq*mS1Sq": fraction_text(-6 * Y1 * Y1),
+        "lambda12*mS2Sq": fraction_text(Fraction(2 * d2)),
     }
 
     if d1 == 3:
-        m1["lambdaS1Adj*mS1Sq"] = txt(2 * C1)
+        m1["lambdaS1Adj*mS1Sq"] = fraction_text(2 * C1)
 
     if d1 == d2 == 3:
         m1["lambda12Cross*mS2Sq"] = "4"
 
     m2 = {
-        "mS2Sq*Tr_y2": txt(2 * GS2),
-        "Tr_MF_y2": txt(heavy_factor * GS2),
-        "lambdaS2*mS2Sq": txt(Fraction(2 * (d2 + 1))),
-        "g2_sq*mS2Sq": txt(-6 * C2),
-        "gY_sq*mS2Sq": txt(-6 * Y2 * Y2),
-        "lambda12*mS1Sq": txt(Fraction(2 * d1)),
+        "mS2Sq*Tr_y2": fraction_text(2 * GS2),
+        "Tr_MF_y2": fraction_text(heavy_factor * GS2),
+        "lambdaS2*mS2Sq": fraction_text(Fraction(2 * (d2 + 1))),
+        "g2_sq*mS2Sq": fraction_text(-6 * C2),
+        "gY_sq*mS2Sq": fraction_text(-6 * Y2 * Y2),
+        "lambda12*mS1Sq": fraction_text(Fraction(2 * d1)),
     }
 
     if d2 == 3:
-        m2["lambdaS2Adj*mS2Sq"] = txt(2 * C2)
+        m2["lambdaS2Adj*mS2Sq"] = fraction_text(2 * C2)
 
     if d1 == d2 == 3:
         m2["lambda12Cross*mS1Sq"] = "4"
@@ -614,18 +622,18 @@ def scalar_mass_group_factors(
         dF=dF,
         alpha=alpha,
         self_conjugate_F=self_conjugate_F,
-        GS1=txt(GS1),
-        GS2=txt(GS2),
-        C2S1=txt(C1),
-        C2S2=txt(C2),
-        YS1=txt(Y1),
-        YS2=txt(Y2),
+        GS1=fraction_text(GS1),
+        GS2=fraction_text(GS2),
+        C2S1=fraction_text(C1),
+        C2S2=fraction_text(C2),
+        YS1=fraction_text(Y1),
+        YS2=fraction_text(Y2),
         beta_mS1Sq=m1,
         beta_mS2Sq=m2,
     )
 
 
-def matching_bracket(text: str, open_index: int) -> int:
+def find_matching_bracket(text: str, open_index: int) -> int:
     depth = 0
 
     for index in range(open_index, len(text)):
@@ -639,7 +647,7 @@ def matching_bracket(text: str, open_index: int) -> int:
     raise ValueError("Unbalanced []")
 
 
-def replace_traces(expr: str) -> str:
+def replace_trace_expressions(expr: str) -> str:
     result = expr
     replacements = []
     pos = 0
@@ -651,7 +659,7 @@ def replace_traces(expr: str) -> str:
             break
 
         open_index = start + 2
-        close = matching_bracket(result, open_index)
+        close = find_matching_bracket(result, open_index)
         inner = result[open_index + 1:close].replace(" ", "")
 
         if "MF" in inner and "y1" in inner:
@@ -675,14 +683,14 @@ def replace_traces(expr: str) -> str:
     return result
 
 
-def replace_bar_calls(expr: str) -> str:
+def replace_barred_couplings(expr: str) -> str:
     result = expr
     count = 0
 
     while "Bar[" in result:
         start = result.find("Bar[")
         open_index = start + 3
-        close = matching_bracket(result, open_index)
+        close = find_matching_bracket(result, open_index)
         inner = result[open_index + 1:close]
         safe = re.sub(r"[^A-Za-z0-9_]", "_", inner)
 
@@ -696,9 +704,9 @@ def replace_bar_calls(expr: str) -> str:
     return result
 
 
-def parse_beta(raw: str) -> sp.Expr:
-    text = replace_traces(str(raw))
-    text = replace_bar_calls(text)
+def parse_rgbeta_beta_expression(raw: str) -> sp.Expr:
+    text = replace_trace_expressions(str(raw))
+    text = replace_barred_couplings(text)
     text = text.replace("^", "**")
 
     names = set(
@@ -720,7 +728,7 @@ def parse_beta(raw: str) -> sp.Expr:
     )
 
 
-def coeff(
+def extract_beta_coefficient(
     expr: sp.Expr,
     monomial: dict[str, int],
 ) -> Fraction:
@@ -731,7 +739,7 @@ def coeff(
     }
 
     for symbol, power in target.items():
-        out = sp.expand(out).coeff(symbol, power)
+        out = sp.expand(out).extract_beta_coefficient(symbol, power)
 
     for symbol in list(out.free_symbols):
         if symbol not in target:
@@ -745,7 +753,7 @@ def coeff(
     )
 
 
-def model_alpha(path: Path) -> tuple[str, int]:
+def parse_model_alpha_from_path(path: Path) -> tuple[str, int]:
     name = path.parents[1].name
     match = re.fullmatch(
         r"T3_([A-E])_alpha_([mp])(\d+)",
@@ -760,7 +768,7 @@ def model_alpha(path: Path) -> tuple[str, int]:
     return model, (-alpha if sign == "m" else alpha)
 
 
-def load_betas(path: Path) -> dict[str, sp.Expr]:
+def load_scalar_mass_betas(path: Path) -> dict[str, sp.Expr]:
     payload = json.loads(
         path.read_text(
             encoding="utf-8-sig",
@@ -775,12 +783,12 @@ def load_betas(path: Path) -> dict[str, sp.Expr]:
     report = payload.get("report_betas", {}) or {}
 
     return {
-        "mS1Sq": parse_beta(report["mS1Sq"]),
-        "mS2Sq": parse_beta(report["mS2Sq"]),
+        "mS1Sq": parse_rgbeta_beta_expression(report["mS1Sq"]),
+        "mS2Sq": parse_rgbeta_beta_expression(report["mS2Sq"]),
     }
 
 
-def checks_for(
+def build_scalar_mass_checks(
     prediction: ScalarMassGroupFactors,
 ) -> dict[str, dict[str, tuple[dict[str, int], str]]]:
     m1 = prediction.beta_mS1Sq
@@ -870,7 +878,7 @@ def checks_for(
     }
 
 
-def b_main() -> int:
+def run_scalar_mass_validation_cli() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--root",
@@ -912,7 +920,7 @@ def b_main() -> int:
     print("-" * 46)
 
     for path in paths:
-        model, alpha = model_alpha(path)
+        model, alpha = parse_model_alpha_from_path(path)
         d1, d2, dF = MODELS[model]
 
         prediction = scalar_mass_group_factors(
@@ -921,14 +929,14 @@ def b_main() -> int:
             dF,
             alpha,
         )
-        betas = load_betas(path)
+        betas = load_scalar_mass_betas(path)
 
         rgbeta_even_neutral_mismatch = (
             alpha == -1
             and dF % 2 == 0
         )
 
-        for beta_name, checks in checks_for(
+        for beta_name, checks in build_scalar_mass_checks(
             prediction
         ).items():
             beta = betas[beta_name]
@@ -940,11 +948,11 @@ def b_main() -> int:
                 monomial,
                 expected_text,
             ) in checks.items():
-                got = coeff(
+                got = extract_beta_coefficient(
                     beta,
                     monomial,
                 )
-                expected = F(
+                expected = fraction_from_value(
                     expected_text
                 )
                 residual = (
@@ -966,13 +974,13 @@ def b_main() -> int:
                             "dF": dF,
                             "beta": beta_name,
                             "structure": label,
-                            "physical_expected": txt(
+                            "physical_expected": fraction_text(
                                 expected
                             ),
-                            "rgbeta_neutral_branch": txt(
+                            "rgbeta_neutral_branch": fraction_text(
                                 got
                             ),
-                            "residual": txt(
+                            "residual": fraction_text(
                                 residual
                             ),
                             "reason": (
@@ -987,13 +995,13 @@ def b_main() -> int:
                     )
 
                     details[label] = {
-                        "expected": txt(
+                        "expected": fraction_text(
                             expected
                         ),
-                        "rgbeta": txt(
+                        "rgbeta": fraction_text(
                             got
                         ),
-                        "residual": txt(
+                        "residual": fraction_text(
                             residual
                         ),
                         "match": None,
@@ -1008,13 +1016,13 @@ def b_main() -> int:
                 row_ok &= passed
 
                 details[label] = {
-                    "expected": txt(
+                    "expected": fraction_text(
                         expected
                     ),
-                    "rgbeta": txt(
+                    "rgbeta": fraction_text(
                         got
                     ),
-                    "residual": txt(
+                    "residual": fraction_text(
                         residual
                     ),
                     "match": passed,
@@ -1125,3 +1133,27 @@ def b_main() -> int:
     )
 
     return 0 if overall else 1
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description="Fermion- and scalar-mass group-factor validation."
+    )
+    parser.add_argument(
+        "mode",
+        choices=("fermion", "scalar"),
+        help="Validate the heavy-fermion mass beta or the scalar-mass betas.",
+    )
+    args, remaining = parser.parse_known_args()
+    original_argv = sys.argv
+    try:
+        sys.argv = [original_argv[0], *remaining]
+        if args.mode == "fermion":
+            return run_fermion_mass_validation_cli()
+        return run_scalar_mass_validation_cli()
+    finally:
+        sys.argv = original_argv
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

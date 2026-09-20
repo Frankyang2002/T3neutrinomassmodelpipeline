@@ -10,7 +10,7 @@ from fractions import Fraction
 from pathlib import Path
 from typing import Iterable
 
-from common.Records import RunRecord
+from common.RunRecords import RunRecord
 
 
 # Human-readable reports are kept separate from machine-readable pipeline output.
@@ -20,7 +20,6 @@ REPORT_OUTPUT_DIR = PROJECT_ROOT / "Reports" / "output"
 # These are presentation metadata matching the RunModel invocation convention.
 EFT_ORDER = 5
 LOOP_ORDER = 1
-
 
 
 # ---------------------------------------------------------------------------
@@ -105,6 +104,27 @@ RENDERED_PAPER_REPLACEMENTS: dict[str, str] = {
     r"M_{S_1}": r"m_1",
     r"M_{S_2}": r"m_2",
 }
+
+
+def latex_document_preamble(
+    font_size: str,
+    geometry: str,
+    packages: str,
+    *extra_lines: str,
+) -> list[str]:
+    """Build the shared LaTeX article preamble used by generated reports.
+
+    Report-specific content starts after ``\\begin{document}``; callers keep
+    control of page layout, landscape mode, titles, and table sizing.
+    """
+    return [
+        rf"\documentclass[{font_size}]{{article}}",
+        rf"\usepackage[{geometry}]{{geometry}}",
+        rf"\usepackage{{{packages}}}",
+        r"\usepackage[T1]{fontenc}",
+        *extra_lines,
+        r"\begin{document}",
+    ]
 
 
 def paper_symbol_latex(name: str) -> str:
@@ -257,13 +277,6 @@ def group_factor_report_path(
 def c5_report_path(report_root: Path | None = None) -> Path:
     root = report_root or REPORT_OUTPUT_DIR
     return root / "Lagrangian" / "C5.tex"
-
-
-def report_output_dir_for(record: RunRecord) -> Path:
-    # Human-readable per-model reports are kept away from raw calculation data.
-    output_dir = REPORT_OUTPUT_DIR / record.output_dir.name
-    output_dir.mkdir(parents=True, exist_ok=True)
-    return output_dir
 
 
 # ---------------------------------------------------------------------------
@@ -819,13 +832,13 @@ def write_lagrangian_report(records: list[RunRecord]) -> Path:
     output_path = REPORT_OUTPUT_DIR / "lagrangian_report.tex"
 
     lines: list[str] = [
-        r"\documentclass[10pt]{article}",
-        r"\usepackage[margin=1.7cm]{geometry}",
-        r"\usepackage{amsmath,amssymb,adjustbox,booktabs,array,longtable}",
-        r"\usepackage[T1]{fontenc}",
-        r"\allowdisplaybreaks[4]",
-        r"\setlength{\emergencystretch}{3em}",
-        r"\begin{document}",
+        *latex_document_preamble(
+            "10pt",
+            "margin=1.7cm",
+            "amsmath,amssymb,adjustbox,booktabs,array,longtable",
+            r"\allowdisplaybreaks[4]",
+            r"\setlength{\emergencystretch}{3em}",
+        ),
         r"\section*{T3 Lagrangian and Weinberg-operator report}",
         *paper_notation_key_lines(),
         rf"EFT order: ${EFT_ORDER}$; loop order: ${LOOP_ORDER}$.",
@@ -947,13 +960,13 @@ def write_latex_lagrangian_table(records: list[RunRecord]) -> Path:
     output_path = REPORT_OUTPUT_DIR / "eft_lagrangians.tex"
 
     lines: list[str] = [
-        r"\documentclass[10pt]{article}",
-        r"\usepackage[margin=1.5cm]{geometry}",
-        r"\usepackage{amsmath,amssymb,adjustbox,pdflscape,longtable}",
-        r"\usepackage[T1]{fontenc}",
-        r"\allowdisplaybreaks[4]",
-        r"\setlength{\emergencystretch}{3em}",
-        r"\begin{document}",
+        *latex_document_preamble(
+            "10pt",
+            "margin=1.5cm",
+            "amsmath,amssymb,adjustbox,pdflscape,longtable",
+            r"\allowdisplaybreaks[4]",
+            r"\setlength{\emergencystretch}{3em}",
+        ),
         r"\section*{T3 UV and EFT Lagrangians}",
         *paper_notation_key_lines(),
         rf"EFT order: ${EFT_ORDER}$; loop order: ${LOOP_ORDER}$.",
@@ -1028,13 +1041,13 @@ def write_bsm_lagrangian_table(records: list[RunRecord]) -> Path:
     output_path = REPORT_OUTPUT_DIR / "bsm_lagrangians.tex"
 
     lines: list[str] = [
-        r"\documentclass[10pt]{article}",
-        r"\usepackage[margin=1.5cm]{geometry}",
-        r"\usepackage{amsmath,amssymb,adjustbox,pdflscape,longtable}",
-        r"\usepackage[T1]{fontenc}",
-        r"\allowdisplaybreaks[4]",
-        r"\setlength{\emergencystretch}{3em}",
-        r"\begin{document}",
+        *latex_document_preamble(
+            "10pt",
+            "margin=1.5cm",
+            "amsmath,amssymb,adjustbox,pdflscape,longtable",
+            r"\allowdisplaybreaks[4]",
+            r"\setlength{\emergencystretch}{3em}",
+        ),
         r"\section*{T3 BSM UV and matched EFT contributions}",
         *paper_notation_key_lines(),
         rf"EFT order: ${EFT_ORDER}$; loop order: ${LOOP_ORDER}$.",
@@ -1210,16 +1223,13 @@ def write_bsm_field_table(
     )
 
     lines: list[str] = [
-        r"\documentclass[8pt]{article}",
-        r"\usepackage[margin=0.8cm]{geometry}",
-        (
-            r"\usepackage{amsmath,amssymb,adjustbox,"
-            r"pdflscape,longtable,array,booktabs}"
+        *latex_document_preamble(
+            "8pt",
+            "margin=0.8cm",
+            "amsmath,amssymb,adjustbox,pdflscape,longtable,array,booktabs",
+            r"\setlength{\tabcolsep}{2pt}",
+            r"\renewcommand{\arraystretch}{1.25}",
         ),
-        r"\usepackage[T1]{fontenc}",
-        r"\setlength{\tabcolsep}{2pt}",
-        r"\renewcommand{\arraystretch}{1.25}",
-        r"\begin{document}",
         r"\begin{landscape}",
         rf"\section*{{{title}}}",
         rf"EFT order: ${EFT_ORDER}$; loop order: ${LOOP_ORDER}$. ",
@@ -1579,13 +1589,13 @@ def write_c5_coefficient_report(
             rows.append((record, coefficient_latex))
 
     lines: list[str] = [
-        r"\documentclass[8pt]{article}",
-        r"\usepackage[margin=0.7cm]{geometry}",
-        r"\usepackage{amsmath,amssymb,adjustbox,longtable,array,booktabs,pdflscape}",
-        r"\usepackage[T1]{fontenc}",
-        r"\setlength{\tabcolsep}{4pt}",
-        r"\renewcommand{\arraystretch}{1.35}",
-        r"\begin{document}",
+        *latex_document_preamble(
+            "8pt",
+            "margin=0.7cm",
+            "amsmath,amssymb,adjustbox,longtable,array,booktabs,pdflscape",
+            r"\setlength{\tabcolsep}{4pt}",
+            r"\renewcommand{\arraystretch}{1.35}",
+        ),
         r"\begin{landscape}",
         r"\section*{T3 Weinberg-operator coefficient comparison}",
         *paper_notation_key_lines(),
@@ -1801,42 +1811,5 @@ def compile_latex_document(tex_path: Path) -> None:
         f"Compiled PDF:\n"
         f"{tex_path.with_suffix('.pdf')}"
     )
-
-
-def write_reports(
-    records: list[RunRecord],
-    debug_reports: bool = False,
-    *,
-    report_root: Path | None = None,
-) -> None:
-    """Generate all Lagrangian reports and term tables."""
-
-    report_tex = write_lagrangian_report(records)
-    compile_latex_document(report_tex)
-
-    uv_table_tex = write_bsm_uv_field_table(
-        records,
-        report_root=report_root,
-    )
-    compile_latex_document(uv_table_tex)
-
-    matched_table_tex = write_bsm_matched_field_table(
-        records,
-        report_root=report_root,
-    )
-    compile_latex_document(matched_table_tex)
-
-    coefficient_tex = write_c5_coefficient_report(
-        records,
-        report_root=report_root,
-    )
-    compile_latex_document(coefficient_tex)
-
-    if debug_reports:
-        full_tex = write_latex_lagrangian_table(records)
-        compile_latex_document(full_tex)
-
-        bsm_tex = write_bsm_lagrangian_table(records)
-        compile_latex_document(bsm_tex)
 
 

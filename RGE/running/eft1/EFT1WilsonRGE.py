@@ -4,9 +4,9 @@ from __future__ import annotations
 
 This stage combines the already validated ingredients
 
-    C_ijab^(0)          from EFT1WilsonAdapter
-    lambda_abcd         from EFT1QuarticAdapter
-    SM Yukawa tensor    from MatchedEFTRGE
+    C_ijab^(0)          from EFT1TensorAdapters
+    lambda_abcd         from EFT1TensorAdapters
+    SM Yukawa tensor    from MatchedWeinbergRGE
     SU(2)xU(1) generators from the general RGE machinery
 
 and evaluates the complete one-loop master equation for psi^2 phi^2
@@ -44,11 +44,11 @@ if str(PROJECT_ROOT) not in sys.path:
 
 import sympy as sp
 
-from RGE.general.AnomalousDimensions import calculate_complete_master_rge
-from RGE.general.MasterWeinbergRGE import MasterRGEInputs
+from RGE.general.AnomalousDimensions import calculate_complete_wilson_tensor_rge
+from RGE.general.WilsonTensorRGE import WilsonRGEInputs
 from RGE.general.RGEModel import RGEModel
 from RGE.general.FermionBasis import build_gauge_sectors
-from RGE.matching.WeinbergWilsonAdapter import (
+from RGE.matching.WeinbergTensorAdapter import (
     SparseWilsonLookup,
     build_sm_eft,
     build_sm_yukawa,
@@ -66,7 +66,7 @@ class EFT1RGEContext:
     fermion_basis: object
     coefficient: object
     quartic: object
-    inputs: MasterRGEInputs
+    inputs: WilsonRGEInputs
     metadata: dict
 
 
@@ -159,7 +159,7 @@ def build_eft1_rge_context(
         fermion_basis,
     )
 
-    inputs = MasterRGEInputs(
+    inputs = WilsonRGEInputs(
         fermion_dimension=fermion_basis.dimension,
         yukawa=yukawa,
         quartic=quartic,
@@ -239,7 +239,7 @@ def calculate_component_betas(
     ] = {}
 
     for component in components:
-        contributions = calculate_complete_master_rge(
+        contributions = calculate_complete_wilson_tensor_rge(
             model=context.model,
             inputs=context.inputs,
             output_component=component,
@@ -274,7 +274,7 @@ def weinberg_subspace_diagnostics(
 ) -> dict:
     """Check whether the generated LL-HH beta is exactly a Weinberg operator.
 
-    This uses the already benchmarked WeinbergWilsonAdapter as the normalization
+    This uses the already benchmarked WeinbergTensorAdapter as the normalization
     template.  With template kappa=1, a proportionality factor r means
 
         16*pi^2 d(kappa)/dln(mu) = r

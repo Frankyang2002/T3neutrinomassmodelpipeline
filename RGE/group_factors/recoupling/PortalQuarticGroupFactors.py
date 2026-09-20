@@ -6,8 +6,14 @@ from dataclasses import asdict, dataclass
 from fractions import Fraction
 import argparse
 import json
-from RGE.group_factors.core.RepresentationFactors import su2_quadratic_casimir_from_dimension
+import sys
 from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from RGE.group_factors.core.RepresentationFactors import su2_quadratic_casimir_from_dimension
 import re
 from typing import Any
 import sympy as sp
@@ -229,7 +235,7 @@ def portal_quartic_beta_group_factors(
     )
 
 
-def a_main() -> int:
+def run_portal_group_factor_cli() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("dS1", type=int)
     parser.add_argument("dS2", type=int)
@@ -301,7 +307,7 @@ def txt(value: Fraction) -> str:
     )
 
 
-def matching_bracket(text: str, open_index: int) -> int:
+def find_matching_bracket(text: str, open_index: int) -> int:
     depth = 0
     for index in range(open_index, len(text)):
         if text[index] == "[":
@@ -313,7 +319,7 @@ def matching_bracket(text: str, open_index: int) -> int:
     raise ValueError("unbalanced brackets")
 
 
-def replace_traces(expr: str) -> str:
+def replace_trace_expressions(expr: str) -> str:
     mapping = {
         "y1.Trans[Bar[y1]]": "Ty1",
         "y2.Trans[Bar[y2]]": "Ty2",
@@ -336,7 +342,7 @@ def replace_traces(expr: str) -> str:
             break
 
         open_index = start + 2
-        close = matching_bracket(result, open_index)
+        close = find_matching_bracket(result, open_index)
         inner = result[open_index + 1:close].replace(" ", "")
         token = mapping.get(inner, f"Tother{unknown}")
         unknown += 1
@@ -350,8 +356,8 @@ def replace_traces(expr: str) -> str:
     return result
 
 
-def parse_beta(raw: str) -> sp.Expr:
-    text = replace_traces(str(raw))
+def parse_rgbeta_beta_expression(raw: str) -> sp.Expr:
+    text = replace_trace_expressions(str(raw))
     text = text.replace("Bar[lambdaT3]", "lambdaT3Bar")
     text = text.replace("^", "**")
 
@@ -359,7 +365,7 @@ def parse_beta(raw: str) -> sp.Expr:
     while "Bar[" in text:
         start = text.find("Bar[")
         open_index = start + 3
-        close = matching_bracket(text, open_index)
+        close = find_matching_bracket(text, open_index)
         inner = text[open_index + 1:close]
         safe = re.sub(r"[^A-Za-z0-9_]", "_", inner)
         token = f"Bar_{safe}_{count}"
@@ -371,7 +377,7 @@ def parse_beta(raw: str) -> sp.Expr:
     return sp.expand(sp.sympify(text, locals=locals_))
 
 
-def coeff(expr: sp.Expr, monomial: dict[str, int]) -> Fraction:
+def extract_monomial_coefficient(expr: sp.Expr, monomial: dict[str, int]) -> Fraction:
     out = expr
     target = {
         sp.Symbol(name): power
@@ -379,7 +385,7 @@ def coeff(expr: sp.Expr, monomial: dict[str, int]) -> Fraction:
     }
 
     for symbol, power in target.items():
-        out = sp.expand(out).coeff(symbol, power)
+        out = sp.expand(out).extract_monomial_coefficient(symbol, power)
 
     for symbol in list(out.free_symbols):
         if symbol not in target:
@@ -389,7 +395,7 @@ def coeff(expr: sp.Expr, monomial: dict[str, int]) -> Fraction:
     return Fraction(int(sp.numer(out)), int(sp.denom(out)))
 
 
-def model_alpha(path: Path) -> tuple[str, int]:
+def parse_model_alpha_from_path(path: Path) -> tuple[str, int]:
     name = path.parents[1].name
     match = re.fullmatch(r"T3_([A-E])_alpha_([mp])(\d+)", name)
     if not match:
@@ -400,14 +406,14 @@ def model_alpha(path: Path) -> tuple[str, int]:
     return model, (-alpha if sign == "m" else alpha)
 
 
-def load_betas(path: Path) -> dict[str, sp.Expr]:
+def load_portal_betas(path: Path) -> dict[str, sp.Expr]:
     payload = json.loads(path.read_text(encoding="utf-8-sig"))
     if payload.get("status") != "Success":
         raise ValueError(f"RGBeta failed: {path}")
 
     report = payload.get("report_betas", {}) or {}
     return {
-        name: parse_beta(report[name])
+        name: parse_rgbeta_beta_expression(report[name])
         for name in ("lambdaH1", "lambdaH2", "lambda12")
         if name in report
     }
@@ -577,7 +583,7 @@ def check_rgbeta_backbone(root: Path):
     print("-" * 45)
 
     for path in paths:
-        model, alpha = model_alpha(path)
+        model, alpha = parse_model_alpha_from_path(path)
         d_s1, d_s2, d_f = MODELS[model]
 
         prediction = portal_quartic_beta_group_factors(
@@ -586,7 +592,7 @@ def check_rgbeta_backbone(root: Path):
             d_f,
             alpha,
         )
-        betas = load_betas(path)
+        betas = load_portal_betas(path)
         checks_by_beta = expected_backbone_checks(prediction)
 
         for beta_name, checks in checks_by_beta.items():
@@ -598,7 +604,7 @@ def check_rgbeta_backbone(root: Path):
             ok = True
 
             for label, (monomial, expected_text) in checks.items():
-                got = coeff(beta, monomial)
+                got = extract_monomial_coefficient(beta, monomial)
                 expected = F(expected_text)
                 residual = got - expected
                 passed = residual == 0
@@ -800,7 +806,7 @@ def check_gauge_scan():
     return rows, overall
 
 
-def b_main() -> int:
+def run_portal_validation_cli() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--root",
@@ -918,3 +924,27 @@ def b_main() -> int:
     print(f"OVERALL:      {payload['status']}")
 
     return 0 if overall else 1
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description="Portal-quartic group-factor calculation and validation."
+    )
+    parser.add_argument(
+        "mode",
+        choices=("factors", "validate"),
+        help="Calculate representation-level factors or validate them against saved RGBeta outputs.",
+    )
+    args, remaining = parser.parse_known_args()
+    original_argv = sys.argv
+    try:
+        sys.argv = [original_argv[0], *remaining]
+        if args.mode == "factors":
+            return run_portal_group_factor_cli()
+        return run_portal_validation_cli()
+    finally:
+        sys.argv = original_argv
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

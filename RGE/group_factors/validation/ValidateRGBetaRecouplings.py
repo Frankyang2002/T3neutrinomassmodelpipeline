@@ -47,7 +47,7 @@ close back onto the same one-dimensional tensor direction: residual = 0.
 
 
 
-def bcdiag_complex_block(d: int, first: int):
+def bc_diagonal_complex_block(d: int, first: int):
     z, zb, variables = [], [], []
     for c in range(d):
         x = sp.Symbol(f"x{first + 2*c}")
@@ -58,7 +58,7 @@ def bcdiag_complex_block(d: int, first: int):
     return z, zb, variables
 
 
-def bcdiag_generators():
+def bc_diagonal_generators():
     return (
         sp.Matrix([[0, 1], [1, 0]]) / 2,
         sp.Matrix([[0, -sp.I], [sp.I, 0]]) / 2,
@@ -66,7 +66,7 @@ def bcdiag_generators():
     )
 
 
-def bcdiag_bilinear(zb, z, matrix):
+def bc_diagonal_bilinear(zb, z, matrix):
     return sp.expand(sum(
         zb[i] * matrix[i, j] * z[j]
         for i in range(2)
@@ -74,7 +74,7 @@ def bcdiag_bilinear(zb, z, matrix):
     ))
 
 
-def bcdiag_tensor_from_polynomial(expr, variables):
+def bc_diagonal_tensor_from_polynomial(expr, variables):
     poly = sp.Poly(sp.expand(expr), *variables)
     entries = {}
     for powers, coefficient in poly.terms():
@@ -91,11 +91,11 @@ def bcdiag_tensor_from_polynomial(expr, variables):
     return entries
 
 
-def bcdiag_get(tensor, *indices):
+def bc_diagonal_get(tensor, *indices):
     return tensor.get(tuple(sorted(indices)), sp.S.Zero)
 
 
-def bcdiag_ordered_weight(key):
+def bc_diagonal_ordered_weight(key):
     counts = Counter(key)
     value = factorial(4)
     for count in counts.values():
@@ -103,16 +103,16 @@ def bcdiag_ordered_weight(key):
     return value
 
 
-def bcdiag_inner(left, right):
+def bc_diagonal_inner(left, right):
     return sp.simplify(sum(
-        bcdiag_ordered_weight(key)
-        * sp.conjugate(bcdiag_get(left, *key))
-        * bcdiag_get(right, *key)
+        bc_diagonal_ordered_weight(key)
+        * sp.conjugate(bc_diagonal_get(left, *key))
+        * bc_diagonal_get(right, *key)
         for key in set(left) | set(right)
     ))
 
 
-def bcdiag_scalar_cross_beta(target, other, n_real):
+def bc_diagonal_scalar_cross_beta(target, other, n_real):
     generated = {}
     for key in combinations_with_replacement(range(1, n_real + 1), 4):
         a, b, c, d = key
@@ -125,8 +125,8 @@ def bcdiag_scalar_cross_beta(target, other, n_real):
             for e in range(1, n_real + 1):
                 for f in range(1, n_real + 1):
                     value += (
-                        bcdiag_get(target, p, q, e, f) * bcdiag_get(other, e, f, r, s)
-                        + bcdiag_get(other, p, q, e, f) * bcdiag_get(target, e, f, r, s)
+                        bc_diagonal_get(target, p, q, e, f) * bc_diagonal_get(other, e, f, r, s)
+                        + bc_diagonal_get(other, p, q, e, f) * bc_diagonal_get(target, e, f, r, s)
                     )
         value = sp.simplify(value)
         if value != 0:
@@ -134,17 +134,17 @@ def bcdiag_scalar_cross_beta(target, other, n_real):
     return generated
 
 
-def bcdiag_project(generated, target):
-    coefficient = sp.simplify(bcdiag_inner(target, generated) / bcdiag_inner(target, target))
+def bc_diagonal_project(generated, target):
+    coefficient = sp.simplify(bc_diagonal_inner(target, generated) / bc_diagonal_inner(target, target))
     residual = {
-        key: sp.simplify(bcdiag_get(generated, *key) - coefficient * bcdiag_get(target, *key))
+        key: sp.simplify(bc_diagonal_get(generated, *key) - coefficient * bc_diagonal_get(target, *key))
         for key in set(generated) | set(target)
     }
     residual = {k: v for k, v in residual.items() if v != 0}
     return coefficient, residual
 
 
-def build_mix(H, S1, S2b, eps_s1: bool, eps_s2: bool):
+def build_bc_diagonal_mix(H, S1, S2b, eps_s1: bool, eps_s2: bool):
     eps = sp.Matrix([[0, 1], [-1, 0]])
     expr = sp.S.Zero
 
@@ -172,24 +172,24 @@ def build_mix(H, S1, S2b, eps_s1: bool, eps_s2: bool):
     return sp.expand(expr)
 
 
-def bcdiag_run():
-    H, Hb, hv = bcdiag_complex_block(2, 1)
-    S1, S1b, s1v = bcdiag_complex_block(2, 5)
-    S2, S2b, s2v = bcdiag_complex_block(2, 9)
+def bc_diagonal_run():
+    H, Hb, hv = bc_diagonal_complex_block(2, 1)
+    S1, S1b, s1v = bc_diagonal_complex_block(2, 5)
+    S2, S2b, s2v = bc_diagonal_complex_block(2, 9)
     variables = hv + s1v + s2v
 
-    T = bcdiag_generators()
+    T = bc_diagonal_generators()
     quartics = {
         "lambdaH1Adj": sum(
-            bcdiag_bilinear(Hb, H, T[A]) * bcdiag_bilinear(S1b, S1, T[A])
+            bc_diagonal_bilinear(Hb, H, T[A]) * bc_diagonal_bilinear(S1b, S1, T[A])
             for A in range(3)
         ),
         "lambdaH2Adj": sum(
-            bcdiag_bilinear(Hb, H, T[A]) * bcdiag_bilinear(S2b, S2, T[A])
+            bc_diagonal_bilinear(Hb, H, T[A]) * bc_diagonal_bilinear(S2b, S2, T[A])
             for A in range(3)
         ),
         "lambda12Adj": sum(
-            bcdiag_bilinear(S1b, S1, T[A]) * bcdiag_bilinear(S2b, S2, T[A])
+            bc_diagonal_bilinear(S1b, S1, T[A]) * bc_diagonal_bilinear(S2b, S2, T[A])
             for A in range(3)
         ),
     }
@@ -198,14 +198,14 @@ def bcdiag_run():
 
     for eps_s1, eps_s2 in ((False, False), (True, False), (False, True), (True, True)):
         key = f"epsS1={eps_s1},epsS2={eps_s2}"
-        mix = build_mix(H, S1, S2b, eps_s1, eps_s2)
-        target = bcdiag_tensor_from_polynomial(mix, variables)
+        mix = build_bc_diagonal_mix(H, S1, S2b, eps_s1, eps_s2)
+        target = bc_diagonal_tensor_from_polynomial(mix, variables)
 
         rows = {}
         for name, polynomial in quartics.items():
-            other = bcdiag_tensor_from_polynomial(polynomial, variables)
-            generated = bcdiag_scalar_cross_beta(target, other, len(variables))
-            coefficient, residual = bcdiag_project(generated, target)
+            other = bc_diagonal_tensor_from_polynomial(polynomial, variables)
+            generated = bc_diagonal_scalar_cross_beta(target, other, len(variables))
+            coefficient, residual = bc_diagonal_project(generated, target)
             rows[name] = {
                 "coefficient": sp.sstr(coefficient),
                 "residual_nonzero_components": len(residual),
@@ -217,12 +217,12 @@ def bcdiag_run():
     return output
 
 
-def bcdiag_main():
+def run_bc_diagonal_diagnostic_cli():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
 
-    result = bcdiag_run()
+    result = bc_diagonal_run()
 
     print("T3-B/C pseudoreal-map diagnostic")
     print("A valid embedding of the unique invariant should have residual = 0.")
@@ -251,7 +251,7 @@ def bcdiag_main():
             "Only the epsilon-on-S1, no-epsilon-on-S2 embedding closes for all "
             "three adjoint quartics.  Its coefficients are "
             "H1Adj=-2, H2Adj=2, lambda12Adj=-1/2.  The no-epsilon embedding "
-            "has projection coefficients 2/3, 2, 1/6 but nonzero residuals for "
+            "has projection coefficients 2/3, 2, 1/6 but nonzero bc_ward_residuals for "
             "H1Adj and lambda12Adj, so those projection values alone do not "
             "constitute a closed tensor derivation."
         ),
@@ -307,7 +307,7 @@ component-by-component.
 
 
 
-def bcward_generators():
+def bc_ward_generators():
     return (
         sp.Matrix([[0, 1], [1, 0]]) / 2,
         sp.Matrix([[0, -sp.I], [sp.I, 0]]) / 2,
@@ -318,7 +318,7 @@ def bcward_generators():
 EPS = sp.Matrix([[0, 1], [-1, 0]])
 
 
-def raw_tensor(h1, h2, s1, sb2):
+def build_bc_ward_raw_tensor(h1, h2, s1, sb2):
     return sp.Rational(1, 2) * (
         int(h1 == sb2 and h2 == s1)
         + int(h1 == s1 and h2 == sb2)
@@ -327,27 +327,27 @@ def raw_tensor(h1, h2, s1, sb2):
 
 def eps_on_s1(h1, h2, s1, sb2):
     return sp.simplify(sum(
-        raw_tensor(h1, h2, u, sb2) * EPS[u, s1]
+        build_bc_ward_raw_tensor(h1, h2, u, sb2) * EPS[u, s1]
         for u in range(2)
     ))
 
 
 def eps_on_s2bar(h1, h2, s1, sb2):
     return sp.simplify(sum(
-        raw_tensor(h1, h2, s1, u) * EPS[u, sb2]
+        build_bc_ward_raw_tensor(h1, h2, s1, u) * EPS[u, sb2]
         for u in range(2)
     ))
 
 
 def eps_on_both(h1, h2, s1, sb2):
     return sp.simplify(sum(
-        raw_tensor(h1, h2, u, v) * EPS[u, s1] * EPS[v, sb2]
+        build_bc_ward_raw_tensor(h1, h2, u, v) * EPS[u, s1] * EPS[v, sb2]
         for u in range(2)
         for v in range(2)
     ))
 
 
-def ward_component(tensor, T, h1, h2, s1, sb2):
+def bc_ward_component(tensor, T, h1, h2, s1, sb2):
     out = sp.S.Zero
 
     for p in range(2):
@@ -361,22 +361,22 @@ def ward_component(tensor, T, h1, h2, s1, sb2):
     return sp.simplify(out)
 
 
-def residuals(tensor):
+def bc_ward_residuals(tensor):
     rows = []
-    for A, T in enumerate(bcward_generators(), start=1):
+    for A, T in enumerate(bc_ward_generators(), start=1):
         nonzero = {}
         for h1 in range(2):
             for h2 in range(2):
                 for s1 in range(2):
                     for sb2 in range(2):
-                        r = ward_component(tensor, T, h1, h2, s1, sb2)
+                        r = bc_ward_component(tensor, T, h1, h2, s1, sb2)
                         if r != 0:
                             nonzero[(h1, h2, s1, sb2)] = r
         rows.append((A, nonzero))
     return rows
 
 
-def print_result(name, rows):
+def print_bc_ward_result(name, rows):
     print(name)
     total = 0
     for A, nonzero in rows:
@@ -391,13 +391,13 @@ def print_result(name, rows):
     print()
 
 
-def bcward_main():
+def run_bc_ward_validation_cli():
     print("T3-B/C RGBeta mixing-invariant Ward-identity test")
     print("field ordering: H, H, S1, Bar[S2]")
     print()
 
     cases = [
-        ("Raw RGBeta-refined tensor", raw_tensor),
+        ("Raw RGBeta-refined tensor", build_bc_ward_raw_tensor),
         ("Epsilon on S1", eps_on_s1),
         ("Epsilon on Bar[S2]", eps_on_s2bar),
         ("Epsilon on both scalar legs", eps_on_both),
@@ -405,8 +405,8 @@ def bcward_main():
 
     totals = {}
     for name, tensor in cases:
-        rows = residuals(tensor)
-        print_result(name, rows)
+        rows = bc_ward_residuals(tensor)
+        print_bc_ward_result(name, rows)
         totals[name] = sum(len(x) for _, x in rows)
 
     ok = (
@@ -467,7 +467,7 @@ does not by itself encode all pseudoreal/conjugate-index structure.
 
 
 
-def bctensor_complex_block(d: int, first: int):
+def bc_tensor_complex_block(d: int, first: int):
     z = []
     zb = []
     variables = []
@@ -480,7 +480,7 @@ def bctensor_complex_block(d: int, first: int):
     return z, zb, variables
 
 
-def bctensor_fundamental_generators():
+def bc_tensor_fundamental_generators():
     return (
         sp.Matrix([[0, 1], [1, 0]]) / 2,
         sp.Matrix([[0, -sp.I], [sp.I, 0]]) / 2,
@@ -488,7 +488,7 @@ def bctensor_fundamental_generators():
     )
 
 
-def bctensor_bilinear(zb, z, matrix):
+def bc_tensor_bilinear(zb, z, matrix):
     return sp.expand(sum(
         zb[i] * matrix[i, j] * z[j]
         for i in range(len(z))
@@ -496,7 +496,7 @@ def bctensor_bilinear(zb, z, matrix):
     ))
 
 
-def bctensor_tensor_from_polynomial(expr, variables):
+def bc_tensor_tensor_from_polynomial(expr, variables):
     poly = sp.Poly(sp.expand(expr), *variables)
     entries = {}
 
@@ -517,11 +517,11 @@ def bctensor_tensor_from_polynomial(expr, variables):
     return entries
 
 
-def bctensor_get(tensor, *indices):
+def bc_tensor_get(tensor, *indices):
     return tensor.get(tuple(sorted(indices)), sp.S.Zero)
 
 
-def bctensor_ordered_weight(key):
+def bc_tensor_ordered_weight(key):
     counts = Counter(key)
     value = factorial(4)
     for count in counts.values():
@@ -529,16 +529,16 @@ def bctensor_ordered_weight(key):
     return value
 
 
-def bctensor_inner(left, right):
+def bc_tensor_inner(left, right):
     return sp.simplify(sum(
-        bctensor_ordered_weight(key)
-        * sp.conjugate(bctensor_get(left, *key))
-        * bctensor_get(right, *key)
+        bc_tensor_ordered_weight(key)
+        * sp.conjugate(bc_tensor_get(left, *key))
+        * bc_tensor_get(right, *key)
         for key in set(left) | set(right)
     ))
 
 
-def bctensor_scalar_cross_beta(target, other, n_real):
+def bc_tensor_scalar_cross_beta(target, other, n_real):
     generated = {}
 
     for key in combinations_with_replacement(range(1, n_real + 1), 4):
@@ -553,8 +553,8 @@ def bctensor_scalar_cross_beta(target, other, n_real):
             for e in range(1, n_real + 1):
                 for f in range(1, n_real + 1):
                     value += (
-                        bctensor_get(target, p, q, e, f) * bctensor_get(other, e, f, r, s)
-                        + bctensor_get(other, p, q, e, f) * bctensor_get(target, e, f, r, s)
+                        bc_tensor_get(target, p, q, e, f) * bc_tensor_get(other, e, f, r, s)
+                        + bc_tensor_get(other, p, q, e, f) * bc_tensor_get(target, e, f, r, s)
                     )
 
         value = sp.simplify(value)
@@ -564,13 +564,13 @@ def bctensor_scalar_cross_beta(target, other, n_real):
     return generated
 
 
-def bctensor_project(generated, target):
-    coefficient = sp.simplify(bctensor_inner(target, generated) / bctensor_inner(target, target))
+def bc_tensor_project(generated, target):
+    coefficient = sp.simplify(bc_tensor_inner(target, generated) / bc_tensor_inner(target, target))
     residual = {}
 
     for key in set(generated) | set(target):
         value = sp.simplify(
-            bctensor_get(generated, *key) - coefficient * bctensor_get(target, *key)
+            bc_tensor_get(generated, *key) - coefficient * bc_tensor_get(target, *key)
         )
         if value != 0:
             residual[key] = value
@@ -578,10 +578,10 @@ def bctensor_project(generated, target):
     return coefficient, residual
 
 
-def bctensor_run():
-    H, Hb, hv = bctensor_complex_block(2, 1)
-    S1, S1b, s1v = bctensor_complex_block(2, 5)
-    S2, S2b, s2v = bctensor_complex_block(2, 9)
+def bc_tensor_run():
+    H, Hb, hv = bc_tensor_complex_block(2, 1)
+    S1, S1b, s1v = bc_tensor_complex_block(2, 5)
+    S2, S2b, s2v = bc_tensor_complex_block(2, 9)
     variables = hv + s1v + s2v
 
     # Exact RGBeta RefineGroupStructures result:
@@ -597,30 +597,30 @@ def bctensor_run():
                     )
                     mix += coeff * H[h1] * H[h2] * S1[s1] * S2b[s2]
 
-    gens = bctensor_fundamental_generators()
+    gens = bc_tensor_fundamental_generators()
 
     quartics = {
         "lambdaH1Adj": sum(
-            bctensor_bilinear(Hb, H, gens[A]) * bctensor_bilinear(S1b, S1, gens[A])
+            bc_tensor_bilinear(Hb, H, gens[A]) * bc_tensor_bilinear(S1b, S1, gens[A])
             for A in range(3)
         ),
         "lambdaH2Adj": sum(
-            bctensor_bilinear(Hb, H, gens[A]) * bctensor_bilinear(S2b, S2, gens[A])
+            bc_tensor_bilinear(Hb, H, gens[A]) * bc_tensor_bilinear(S2b, S2, gens[A])
             for A in range(3)
         ),
         "lambda12Adj": sum(
-            bctensor_bilinear(S1b, S1, gens[A]) * bctensor_bilinear(S2b, S2, gens[A])
+            bc_tensor_bilinear(S1b, S1, gens[A]) * bc_tensor_bilinear(S2b, S2, gens[A])
             for A in range(3)
         ),
     }
 
-    target = bctensor_tensor_from_polynomial(mix, variables)
+    target = bc_tensor_tensor_from_polynomial(mix, variables)
     rows = {}
 
     for name, polynomial in quartics.items():
-        other = bctensor_tensor_from_polynomial(polynomial, variables)
-        generated = bctensor_scalar_cross_beta(target, other, len(variables))
-        coefficient, residual = bctensor_project(generated, target)
+        other = bc_tensor_tensor_from_polynomial(polynomial, variables)
+        generated = bc_tensor_scalar_cross_beta(target, other, len(variables))
+        coefficient, residual = bc_tensor_project(generated, target)
         rows[name] = {
             "projection_coefficient": sp.sstr(coefficient),
             "residual_nonzero_components": len(residual),
@@ -629,12 +629,12 @@ def bctensor_run():
     return rows
 
 
-def bctensor_main():
+def run_bc_tensor_validation_cli():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
 
-    rows = bctensor_run()
+    rows = bc_tensor_run()
 
     print("Direct recoupling from RGBeta-refined T3-B/C mixing tensor")
     print(f"{'quartic':<18} {'projection':>12} {'residual':>10}")
@@ -655,7 +655,7 @@ def bctensor_main():
         "results": rows,
         "interpretation": (
             "Projection coefficients reproduce RGBeta B/C directly. "
-            "Nonzero residuals for H1Adj and lambda12Adj show that the naively "
+            "Nonzero bc_ward_residuals for H1Adj and lambda12Adj show that the naively "
             "embedded refined tensor does not yet encode the complete "
             "pseudoreal/conjugate-index convention."
         ),
@@ -708,29 +708,29 @@ current definition returns 0.  Therefore Cross needs a separate treatment.
 
 
 
-einv_EPS2 = sp.Matrix([[0, 1], [-1, 0]])
+e_invariant_EPS2 = sp.Matrix([[0, 1], [-1, 0]])
 
 # Orthonormal symmetric-pair map for j=1, ordered as m=+1,0,-1.
-einv_D = {}
+e_invariant_D = {}
 for a in range(3):
     for i in range(2):
         for j in range(2):
-            einv_D[a, i, j] = sp.S.Zero
-einv_D[0, 0, 0] = 1
-einv_D[1, 0, 1] = 1 / sp.sqrt(2)
-einv_D[1, 1, 0] = 1 / sp.sqrt(2)
-einv_D[2, 1, 1] = 1
+            e_invariant_D[a, i, j] = sp.S.Zero
+e_invariant_D[0, 0, 0] = 1
+e_invariant_D[1, 0, 1] = 1 / sp.sqrt(2)
+e_invariant_D[1, 1, 0] = 1 / sp.sqrt(2)
+e_invariant_D[2, 1, 1] = 1
 
 # Spin-1 charge-conjugation / real-structure intertwiner
 # C_{m,m'} = (-1)^(1-m) delta_{m,-m'} in the (+1,0,-1) basis.
-einv_C1 = sp.Matrix([
+e_invariant_C1 = sp.Matrix([
     [0, 0, 1],
     [0, -1, 0],
     [1, 0, 0],
 ])
 
 
-def einv_fundamental_generators():
+def e_invariant_fundamental_generators():
     return (
         sp.Matrix([[0, 1], [1, 0]]) / 2,
         sp.Matrix([[0, -sp.I], [sp.I, 0]]) / 2,
@@ -752,24 +752,24 @@ def triplet_generators():
     )
 
 
-def einv_refined_mix_pair(h1, h2, p, q, r, s):
+def e_invariant_refined_mix_pair(h1, h2, p, q, r, s):
     """Exact 8-term RGBeta-refined T3-E tensor in symmetric-pair indices."""
     terms = (
-        einv_EPS2[h1, s] * einv_EPS2[h2, q] * einv_EPS2[p, r],
-        einv_EPS2[h1, q] * einv_EPS2[h2, s] * einv_EPS2[p, r],
-        einv_EPS2[h1, r] * einv_EPS2[h2, q] * einv_EPS2[p, s],
-        einv_EPS2[h1, q] * einv_EPS2[h2, r] * einv_EPS2[p, s],
-        einv_EPS2[h1, s] * einv_EPS2[h2, p] * einv_EPS2[q, r],
-        einv_EPS2[h1, p] * einv_EPS2[h2, s] * einv_EPS2[q, r],
-        einv_EPS2[h1, r] * einv_EPS2[h2, p] * einv_EPS2[q, s],
-        einv_EPS2[h1, p] * einv_EPS2[h2, r] * einv_EPS2[q, s],
+        e_invariant_EPS2[h1, s] * e_invariant_EPS2[h2, q] * e_invariant_EPS2[p, r],
+        e_invariant_EPS2[h1, q] * e_invariant_EPS2[h2, s] * e_invariant_EPS2[p, r],
+        e_invariant_EPS2[h1, r] * e_invariant_EPS2[h2, q] * e_invariant_EPS2[p, s],
+        e_invariant_EPS2[h1, q] * e_invariant_EPS2[h2, r] * e_invariant_EPS2[p, s],
+        e_invariant_EPS2[h1, s] * e_invariant_EPS2[h2, p] * e_invariant_EPS2[q, r],
+        e_invariant_EPS2[h1, p] * e_invariant_EPS2[h2, s] * e_invariant_EPS2[q, r],
+        e_invariant_EPS2[h1, r] * e_invariant_EPS2[h2, p] * e_invariant_EPS2[q, s],
+        e_invariant_EPS2[h1, p] * e_invariant_EPS2[h2, r] * e_invariant_EPS2[q, s],
     )
     return sp.simplify(sum(terms) / 8)
 
 
-def einv_mix_triplet_raw(h1, h2, a, b):
+def e_invariant_mix_triplet_raw(h1, h2, a, b):
     return sp.simplify(sum(
-        einv_D[a, p, q] * einv_D[b, r, s] * einv_refined_mix_pair(h1, h2, p, q, r, s)
+        e_invariant_D[a, p, q] * e_invariant_D[b, r, s] * e_invariant_refined_mix_pair(h1, h2, p, q, r, s)
         for p in range(2)
         for q in range(2)
         for r in range(2)
@@ -777,18 +777,18 @@ def einv_mix_triplet_raw(h1, h2, a, b):
     ))
 
 
-def mix_with_maps(h1, h2, a, b, map_s1=False, map_s2bar=False):
+def build_e_invariant_mix_with_maps(h1, h2, a, b, map_s1=False, map_s2bar=False):
     return sp.simplify(sum(
-        (einv_C1[u, a] if map_s1 else int(u == a))
-        * (einv_C1[v, b] if map_s2bar else int(v == b))
-        * einv_mix_triplet_raw(h1, h2, u, v)
+        (e_invariant_C1[u, a] if map_s1 else int(u == a))
+        * (e_invariant_C1[v, b] if map_s2bar else int(v == b))
+        * e_invariant_mix_triplet_raw(h1, h2, u, v)
         for u in range(3)
         for v in range(3)
     ))
 
 
-def ward_residual_count(map_s1=False, map_s2bar=False):
-    tf = einv_fundamental_generators()
+def count_e_invariant_ward_residuals(map_s1=False, map_s2bar=False):
+    tf = e_invariant_fundamental_generators()
     tt = triplet_generators()
     total = 0
     by_generator = []
@@ -804,22 +804,22 @@ def ward_residual_count(map_s1=False, map_s2bar=False):
                         for p in range(2):
                             value += (
                                 tf[A][h1, p]
-                                * mix_with_maps(p, h2, a, b, map_s1, map_s2bar)
+                                * build_e_invariant_mix_with_maps(p, h2, a, b, map_s1, map_s2bar)
                             )
                             value += (
                                 tf[A][h2, p]
-                                * mix_with_maps(h1, p, a, b, map_s1, map_s2bar)
+                                * build_e_invariant_mix_with_maps(h1, p, a, b, map_s1, map_s2bar)
                             )
 
                         for c in range(3):
                             value += (
                                 tt[A][a, c]
-                                * mix_with_maps(h1, h2, c, b, map_s1, map_s2bar)
+                                * build_e_invariant_mix_with_maps(h1, h2, c, b, map_s1, map_s2bar)
                             )
                             # Bar[S2] transforms in the conjugate representation.
                             value -= (
                                 tt[A][c, b]
-                                * mix_with_maps(h1, h2, a, c, map_s1, map_s2bar)
+                                * build_e_invariant_mix_with_maps(h1, h2, a, c, map_s1, map_s2bar)
                             )
 
                         if sp.simplify(value) != 0:
@@ -831,7 +831,7 @@ def ward_residual_count(map_s1=False, map_s2bar=False):
     return by_generator, total
 
 
-def einv_complex_block(d, first):
+def e_invariant_complex_block(d, first):
     z, zb, variables = [], [], []
     for c in range(d):
         x = sp.Symbol(f"x{first + 2*c}")
@@ -842,7 +842,7 @@ def einv_complex_block(d, first):
     return z, zb, variables
 
 
-def einv_bilinear(zb, z, matrix):
+def e_invariant_bilinear(zb, z, matrix):
     return sp.expand(sum(
         zb[i] * matrix[i, j] * z[j]
         for i in range(len(z))
@@ -850,7 +850,7 @@ def einv_bilinear(zb, z, matrix):
     ))
 
 
-def einv_tensor_from_polynomial(expr, variables):
+def e_invariant_tensor_from_polynomial(expr, variables):
     poly = sp.Poly(sp.expand(expr), *variables)
     entries = {}
 
@@ -871,11 +871,11 @@ def einv_tensor_from_polynomial(expr, variables):
     return entries
 
 
-def einv_get(tensor, *indices):
+def e_invariant_get(tensor, *indices):
     return tensor.get(tuple(sorted(indices)), sp.S.Zero)
 
 
-def einv_ordered_weight(key):
+def e_invariant_ordered_weight(key):
     counts = Counter(key)
     value = factorial(4)
     for count in counts.values():
@@ -883,16 +883,16 @@ def einv_ordered_weight(key):
     return value
 
 
-def einv_inner(left, right):
+def e_invariant_inner(left, right):
     return sp.simplify(sum(
-        einv_ordered_weight(key)
-        * sp.conjugate(einv_get(left, *key))
-        * einv_get(right, *key)
+        e_invariant_ordered_weight(key)
+        * sp.conjugate(e_invariant_get(left, *key))
+        * e_invariant_get(right, *key)
         for key in set(left) | set(right)
     ))
 
 
-def einv_scalar_cross_beta(target, other, n_real):
+def e_invariant_scalar_cross_beta(target, other, n_real):
     generated = {}
 
     for key in combinations_with_replacement(range(1, n_real + 1), 4):
@@ -907,8 +907,8 @@ def einv_scalar_cross_beta(target, other, n_real):
             for e in range(1, n_real + 1):
                 for f in range(1, n_real + 1):
                     value += (
-                        einv_get(target, p, q, e, f) * einv_get(other, e, f, r, s)
-                        + einv_get(other, p, q, e, f) * einv_get(target, e, f, r, s)
+                        e_invariant_get(target, p, q, e, f) * e_invariant_get(other, e, f, r, s)
+                        + e_invariant_get(other, p, q, e, f) * e_invariant_get(target, e, f, r, s)
                     )
 
         value = sp.simplify(value)
@@ -918,11 +918,11 @@ def einv_scalar_cross_beta(target, other, n_real):
     return generated
 
 
-def einv_project(generated, target):
-    coefficient = sp.simplify(einv_inner(target, generated) / einv_inner(target, target))
+def e_invariant_project(generated, target):
+    coefficient = sp.simplify(e_invariant_inner(target, generated) / e_invariant_inner(target, target))
     residual = {
         key: sp.simplify(
-            einv_get(generated, *key) - coefficient * einv_get(target, *key)
+            e_invariant_get(generated, *key) - coefficient * e_invariant_get(target, *key)
         )
         for key in set(generated) | set(target)
     }
@@ -931,44 +931,44 @@ def einv_project(generated, target):
 
 
 def recoupling_for_embedding(map_s1, map_s2bar):
-    H, Hb, hv = einv_complex_block(2, 1)
-    S1, S1b, s1v = einv_complex_block(3, 5)
-    S2, S2b, s2v = einv_complex_block(3, 11)
+    H, Hb, hv = e_invariant_complex_block(2, 1)
+    S1, S1b, s1v = e_invariant_complex_block(3, 5)
+    S2, S2b, s2v = e_invariant_complex_block(3, 11)
     variables = hv + s1v + s2v
 
     mix_poly = sp.expand(sum(
-        mix_with_maps(h1, h2, a, b, map_s1, map_s2bar)
+        build_e_invariant_mix_with_maps(h1, h2, a, b, map_s1, map_s2bar)
         * H[h1] * H[h2] * S1[a] * S2b[b]
         for h1 in range(2)
         for h2 in range(2)
         for a in range(3)
         for b in range(3)
     ))
-    target = einv_tensor_from_polynomial(mix_poly, variables)
+    target = e_invariant_tensor_from_polynomial(mix_poly, variables)
 
-    tf = einv_fundamental_generators()
+    tf = e_invariant_fundamental_generators()
     tt = triplet_generators()
 
     quartics = {
         "lambdaH1Adj": sum(
-            einv_bilinear(Hb, H, tf[A]) * einv_bilinear(S1b, S1, tt[A])
+            e_invariant_bilinear(Hb, H, tf[A]) * e_invariant_bilinear(S1b, S1, tt[A])
             for A in range(3)
         ),
         "lambdaH2Adj": sum(
-            einv_bilinear(Hb, H, tf[A]) * einv_bilinear(S2b, S2, tt[A])
+            e_invariant_bilinear(Hb, H, tf[A]) * e_invariant_bilinear(S2b, S2, tt[A])
             for A in range(3)
         ),
         "lambda12Adj": sum(
-            einv_bilinear(S1b, S1, tt[A]) * einv_bilinear(S2b, S2, tt[A])
+            e_invariant_bilinear(S1b, S1, tt[A]) * e_invariant_bilinear(S2b, S2, tt[A])
             for A in range(3)
         ),
     }
 
     rows = {}
     for name, polynomial in quartics.items():
-        other = einv_tensor_from_polynomial(polynomial, variables)
-        generated = einv_scalar_cross_beta(target, other, len(variables))
-        coefficient, residual = einv_project(generated, target)
+        other = e_invariant_tensor_from_polynomial(polynomial, variables)
+        generated = e_invariant_scalar_cross_beta(target, other, len(variables))
+        coefficient, residual = e_invariant_project(generated, target)
         rows[name] = {
             "coefficient": sp.sstr(coefficient),
             "residual_nonzero_components": residual,
@@ -978,7 +978,7 @@ def recoupling_for_embedding(map_s1, map_s2bar):
     return rows
 
 
-def einv_main():
+def run_e_invariant_validation_cli():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
@@ -996,7 +996,7 @@ def einv_main():
         (True, True),
     ):
         label = f"C1_on_S1={map_s1},C1_on_BarS2={map_s2bar}"
-        by_gen, total = ward_residual_count(map_s1, map_s2bar)
+        by_gen, total = count_e_invariant_ward_residuals(map_s1, map_s2bar)
         ward[label] = {
             "by_generator": by_gen,
             "total": total,
@@ -1086,41 +1086,41 @@ quartic tensor convention.
 
 
 
-ecross_EPS2 = sp.Matrix([[0, 1], [-1, 0]])
-ecross_C1 = sp.Matrix([
+e_cross_EPS2 = sp.Matrix([[0, 1], [-1, 0]])
+e_cross_C1 = sp.Matrix([
     [0, 0, 1],
     [0, -1, 0],
     [1, 0, 0],
 ])
 
-ecross_D = {}
+e_cross_D = {}
 for a in range(3):
     for i in range(2):
         for j in range(2):
-            ecross_D[a, i, j] = sp.S.Zero
-ecross_D[0, 0, 0] = 1
-ecross_D[1, 0, 1] = 1 / sp.sqrt(2)
-ecross_D[1, 1, 0] = 1 / sp.sqrt(2)
-ecross_D[2, 1, 1] = 1
+            e_cross_D[a, i, j] = sp.S.Zero
+e_cross_D[0, 0, 0] = 1
+e_cross_D[1, 0, 1] = 1 / sp.sqrt(2)
+e_cross_D[1, 1, 0] = 1 / sp.sqrt(2)
+e_cross_D[2, 1, 1] = 1
 
 
-def ecross_refined_mix_pair(h1, h2, p, q, r, s):
+def e_cross_refined_mix_pair(h1, h2, p, q, r, s):
     terms = (
-        ecross_EPS2[h1, s] * ecross_EPS2[h2, q] * ecross_EPS2[p, r],
-        ecross_EPS2[h1, q] * ecross_EPS2[h2, s] * ecross_EPS2[p, r],
-        ecross_EPS2[h1, r] * ecross_EPS2[h2, q] * ecross_EPS2[p, s],
-        ecross_EPS2[h1, q] * ecross_EPS2[h2, r] * ecross_EPS2[p, s],
-        ecross_EPS2[h1, s] * ecross_EPS2[h2, p] * ecross_EPS2[q, r],
-        ecross_EPS2[h1, p] * ecross_EPS2[h2, s] * ecross_EPS2[q, r],
-        ecross_EPS2[h1, r] * ecross_EPS2[h2, p] * ecross_EPS2[q, s],
-        ecross_EPS2[h1, p] * ecross_EPS2[h2, r] * ecross_EPS2[q, s],
+        e_cross_EPS2[h1, s] * e_cross_EPS2[h2, q] * e_cross_EPS2[p, r],
+        e_cross_EPS2[h1, q] * e_cross_EPS2[h2, s] * e_cross_EPS2[p, r],
+        e_cross_EPS2[h1, r] * e_cross_EPS2[h2, q] * e_cross_EPS2[p, s],
+        e_cross_EPS2[h1, q] * e_cross_EPS2[h2, r] * e_cross_EPS2[p, s],
+        e_cross_EPS2[h1, s] * e_cross_EPS2[h2, p] * e_cross_EPS2[q, r],
+        e_cross_EPS2[h1, p] * e_cross_EPS2[h2, s] * e_cross_EPS2[q, r],
+        e_cross_EPS2[h1, r] * e_cross_EPS2[h2, p] * e_cross_EPS2[q, s],
+        e_cross_EPS2[h1, p] * e_cross_EPS2[h2, r] * e_cross_EPS2[q, s],
     )
     return sp.simplify(sum(terms) / 8)
 
 
-def ecross_mix_triplet_raw(h1, h2, a, b):
+def e_cross_mix_triplet_raw(h1, h2, a, b):
     return sp.simplify(sum(
-        ecross_D[a, p, q] * ecross_D[b, r, s] * ecross_refined_mix_pair(h1, h2, p, q, r, s)
+        e_cross_D[a, p, q] * e_cross_D[b, r, s] * e_cross_refined_mix_pair(h1, h2, p, q, r, s)
         for p in range(2)
         for q in range(2)
         for r in range(2)
@@ -1128,15 +1128,15 @@ def ecross_mix_triplet_raw(h1, h2, a, b):
     ))
 
 
-def mix_gauge_covariant(h1, h2, a, b):
+def build_e_cross_gauge_covariant_mix(h1, h2, a, b):
     # Ward test selected C1 on the Bar[S2] triplet leg.
     return sp.simplify(sum(
-        ecross_C1[v, b] * ecross_mix_triplet_raw(h1, h2, a, v)
+        e_cross_C1[v, b] * e_cross_mix_triplet_raw(h1, h2, a, v)
         for v in range(3)
     ))
 
 
-def ecross_complex_block(d, first):
+def e_cross_complex_block(d, first):
     z, zb, variables = [], [], []
     for c in range(d):
         x = sp.Symbol(f"x{first + 2*c}")
@@ -1147,7 +1147,7 @@ def ecross_complex_block(d, first):
     return z, zb, variables
 
 
-def ecross_tensor_from_polynomial(expr, variables):
+def e_cross_tensor_from_polynomial(expr, variables):
     poly = sp.Poly(sp.expand(expr), *variables)
     entries = {}
     for powers, coefficient in poly.terms():
@@ -1164,11 +1164,11 @@ def ecross_tensor_from_polynomial(expr, variables):
     return entries
 
 
-def ecross_get(tensor, *indices):
+def e_cross_get(tensor, *indices):
     return tensor.get(tuple(sorted(indices)), sp.S.Zero)
 
 
-def ecross_ordered_weight(key):
+def e_cross_ordered_weight(key):
     counts = Counter(key)
     value = factorial(4)
     for count in counts.values():
@@ -1176,16 +1176,16 @@ def ecross_ordered_weight(key):
     return value
 
 
-def ecross_inner(left, right):
+def e_cross_inner(left, right):
     return sp.simplify(sum(
-        ecross_ordered_weight(key)
-        * sp.conjugate(ecross_get(left, *key))
-        * ecross_get(right, *key)
+        e_cross_ordered_weight(key)
+        * sp.conjugate(e_cross_get(left, *key))
+        * e_cross_get(right, *key)
         for key in set(left) | set(right)
     ))
 
 
-def ecross_scalar_cross_beta(target, other, n_real):
+def e_cross_scalar_cross_beta(target, other, n_real):
     generated = {}
     for key in combinations_with_replacement(range(1, n_real + 1), 4):
         a, b, c, d = key
@@ -1198,8 +1198,8 @@ def ecross_scalar_cross_beta(target, other, n_real):
             for e in range(1, n_real + 1):
                 for f in range(1, n_real + 1):
                     value += (
-                        ecross_get(target, p, q, e, f) * ecross_get(other, e, f, r, s)
-                        + ecross_get(other, p, q, e, f) * ecross_get(target, e, f, r, s)
+                        e_cross_get(target, p, q, e, f) * e_cross_get(other, e, f, r, s)
+                        + e_cross_get(other, p, q, e, f) * e_cross_get(target, e, f, r, s)
                     )
         value = sp.simplify(value)
         if value != 0:
@@ -1207,28 +1207,28 @@ def ecross_scalar_cross_beta(target, other, n_real):
     return generated
 
 
-def ecross_project(generated, target):
-    coefficient = sp.simplify(ecross_inner(target, generated) / ecross_inner(target, target))
+def e_cross_project(generated, target):
+    coefficient = sp.simplify(e_cross_inner(target, generated) / e_cross_inner(target, target))
     residual = {
-        key: sp.simplify(ecross_get(generated, *key) - coefficient * ecross_get(target, *key))
+        key: sp.simplify(e_cross_get(generated, *key) - coefficient * e_cross_get(target, *key))
         for key in set(generated) | set(target)
     }
     residual = {k: v for k, v in residual.items() if v != 0}
     return coefficient, residual
 
 
-def ecross_main():
+def run_e_cross_validation_cli():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
 
-    H, Hb, hv = ecross_complex_block(2, 1)
-    S1, S1b, s1v = ecross_complex_block(3, 5)
-    S2, S2b, s2v = ecross_complex_block(3, 11)
+    H, Hb, hv = e_cross_complex_block(2, 1)
+    S1, S1b, s1v = e_cross_complex_block(3, 5)
+    S2, S2b, s2v = e_cross_complex_block(3, 11)
     variables = hv + s1v + s2v
 
     mix_poly = sp.expand(sum(
-        mix_gauge_covariant(h1, h2, a, b)
+        build_e_cross_gauge_covariant_mix(h1, h2, a, b)
         * H[h1] * H[h2] * S1[a] * S2b[b]
         for h1 in range(2)
         for h2 in range(2)
@@ -1238,8 +1238,8 @@ def ecross_main():
 
     # Exact Cross operator in spherical basis.
     same_orientation = (
-        sum(S1b[a] * ecross_C1[a, b] * S2b[b] for a in range(3) for b in range(3))
-        * sum(S1[a] * ecross_C1[a, b] * S2[b] for a in range(3) for b in range(3))
+        sum(S1b[a] * e_cross_C1[a, b] * S2b[b] for a in range(3) for b in range(3))
+        * sum(S1[a] * e_cross_C1[a, b] * S2[b] for a in range(3) for b in range(3))
     )
     opposite_orientation = (
         sum(S1b[a] * S2[a] for a in range(3))
@@ -1247,10 +1247,10 @@ def ecross_main():
     )
     cross_poly = sp.expand(same_orientation + opposite_orientation)
 
-    target = ecross_tensor_from_polynomial(mix_poly, variables)
-    cross = ecross_tensor_from_polynomial(cross_poly, variables)
-    generated = ecross_scalar_cross_beta(target, cross, len(variables))
-    coefficient, residual = ecross_project(generated, target)
+    target = e_cross_tensor_from_polynomial(mix_poly, variables)
+    cross = e_cross_tensor_from_polynomial(cross_poly, variables)
+    generated = e_cross_scalar_cross_beta(target, cross, len(variables))
+    coefficient, residual = e_cross_project(generated, target)
 
     print("T3-E exact Cross recoupling")
     print(f"projection coefficient : {coefficient}")
@@ -1292,15 +1292,15 @@ def main() -> None:
     sys.argv = [sys.argv[0], *remaining]
 
     if args.mode == "diagnose-bc-pseudoreal":
-        bcdiag_main()
+        run_bc_diagonal_diagnostic_cli()
     elif args.mode == "bc-ward":
-        bcward_main()
+        run_bc_ward_validation_cli()
     elif args.mode == "bc-tensor":
-        bctensor_main()
+        run_bc_tensor_validation_cli()
     elif args.mode == "e-invariant":
-        einv_main()
+        run_e_invariant_validation_cli()
     elif args.mode == "e-cross":
-        ecross_main()
+        run_e_cross_validation_cli()
 
 
 if __name__ == "__main__":

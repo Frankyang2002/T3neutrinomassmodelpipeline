@@ -4,39 +4,20 @@ from functools import lru_cache
 import sympy as sp
 
 from RGE.general.GaugeGenerators import quadratic_casimir_matrix
-from RGE.general.MasterWeinbergRGE import (
+from RGE.general.WilsonTensorRGE import (
     C,
     HALF,
-    MasterRGEInputs,
-    calculate_master_rge,
+    WilsonRGEInputs,
+    calculate_wilson_tensor_rge,
 )
 from RGE.general.RGEModel import RGEModel
 
 # Collinear anomalous dimensions and the complete one-loop Weinberg RGE.
 
-def symbolic_scalar_anomalous_dimension(
-    b: int,
-    d: int,
-    gamma_tensor=sp.IndexedBase("gamma_s"),
-) -> sp.Expr:
-    """Return a formal scalar collinear anomalous dimension gamma_s^bd."""
-
-    return gamma_tensor[b, d]
-
-
-def symbolic_fermion_anomalous_dimension(
-    j: int,
-    k: int,
-    gamma_tensor=sp.IndexedBase("gamma_f"),
-) -> sp.Expr:
-    """Return a formal fermion collinear anomalous dimension gamma_f^jk."""
-
-    return gamma_tensor[j, k]
-
 
 def scalar_collinear_anomalous_dimension(
     model: RGEModel,
-    inputs: MasterRGEInputs,
+    inputs: WilsonRGEInputs,
     a: int,
     b: int,
 ) -> sp.Expr:
@@ -80,7 +61,7 @@ def scalar_collinear_anomalous_dimension(
 
 def fermion_collinear_anomalous_dimension(
     model: RGEModel,
-    inputs: MasterRGEInputs,
+    inputs: WilsonRGEInputs,
     i: int,
     j: int,
 ) -> sp.Expr:
@@ -130,8 +111,8 @@ def fermion_collinear_anomalous_dimension(
 
 def with_collinear_anomalous_dimensions(
     model: RGEModel,
-    inputs: MasterRGEInputs,
-) -> MasterRGEInputs:
+    inputs: WilsonRGEInputs,
+) -> WilsonRGEInputs:
     """Return a copy of the master-RGE inputs with A.2 and A.3 wired in."""
 
     @lru_cache(maxsize=None)
@@ -152,7 +133,7 @@ def with_collinear_anomalous_dimensions(
             j=j,
         )
 
-    return MasterRGEInputs(
+    return WilsonRGEInputs(
         fermion_dimension=inputs.fermion_dimension,
         yukawa=inputs.yukawa,
         quartic=inputs.quartic,
@@ -162,9 +143,9 @@ def with_collinear_anomalous_dimensions(
     )
 
 
-def calculate_complete_master_rge(
+def calculate_complete_wilson_tensor_rge(
     model: RGEModel,
-    inputs: MasterRGEInputs,
+    inputs: WilsonRGEInputs,
     output_component: tuple[int, int, int, int],
     coefficient=C,
     simplify_each: bool = True,
@@ -176,7 +157,7 @@ def calculate_complete_master_rge(
         inputs=inputs,
     )
 
-    return calculate_master_rge(
+    return calculate_wilson_tensor_rge(
         model=model,
         inputs=complete_inputs,
         output_component=output_component,

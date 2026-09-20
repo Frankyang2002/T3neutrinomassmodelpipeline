@@ -43,7 +43,7 @@ FermionAnomalousDimension = Callable[[int, int], sp.Expr]
 
 
 @dataclass(frozen=True)
-class MasterRGEInputs:
+class WilsonRGEInputs:
     """Tensor inputs required to evaluate the general psi^2 phi^2 beta function."""
 
     fermion_dimension: int
@@ -83,9 +83,9 @@ def _simultaneous_pair_permutations(a, b, i, j):
     )
 
 
-def _validate_master_dimensions(
+def _validate_rge_dimensions(
     model: RGEModel,
-    inputs: MasterRGEInputs,
+    inputs: WilsonRGEInputs,
     output_component: tuple[int, int, int, int],
 ) -> None:
     """Validate external indices and tensor dimensions for Eq. (4.85)."""
@@ -124,13 +124,13 @@ def _validate_master_dimensions(
 
 def yukawa_wavefunction_term(
     model: RGEModel,
-    inputs: MasterRGEInputs,
+    inputs: WilsonRGEInputs,
     output_component: tuple[int, int, int, int],
     coefficient=C,
 ) -> sp.Expr:
     r"""Return y_ijd y^*_{kld} C_klab from Eq. (4.85)."""
 
-    _validate_master_dimensions(model, inputs, output_component)
+    _validate_rge_dimensions(model, inputs, output_component)
     i, j, a, b = output_component
     nf = inputs.fermion_dimension
     ns = model.total_real_scalar_dimension
@@ -152,7 +152,7 @@ def yukawa_wavefunction_term(
 
 def scalar_pair_term(
     model: RGEModel,
-    inputs: MasterRGEInputs,
+    inputs: WilsonRGEInputs,
     output_component: tuple[int, int, int, int],
     coefficient=C,
 ) -> sp.Expr:
@@ -170,7 +170,7 @@ def scalar_pair_term(
     when the scalar quartic tensor is fully symmetric.
     """
 
-    _validate_master_dimensions(model, inputs, output_component)
+    _validate_rge_dimensions(model, inputs, output_component)
     i, j, a, b = output_component
     ns = model.total_real_scalar_dimension
     quartic = inputs.quartic
@@ -198,7 +198,7 @@ def scalar_pair_term(
 
 def mixed_yukawa_gauge_term(
     model: RGEModel,
-    inputs: MasterRGEInputs,
+    inputs: WilsonRGEInputs,
     output_component: tuple[int, int, int, int],
     coefficient=C,
 ) -> sp.Expr:
@@ -213,7 +213,7 @@ def mixed_yukawa_gauge_term(
       ] C_ilac.
     """
 
-    _validate_master_dimensions(model, inputs, output_component)
+    _validate_rge_dimensions(model, inputs, output_component)
     i, j, a, b = output_component
     nf = inputs.fermion_dimension
     ns = model.total_real_scalar_dimension
@@ -271,13 +271,13 @@ def mixed_yukawa_gauge_term(
 
 def crossed_yukawa_term(
     model: RGEModel,
-    inputs: MasterRGEInputs,
+    inputs: WilsonRGEInputs,
     output_component: tuple[int, int, int, int],
     coefficient=C,
 ) -> sp.Expr:
     r"""Return sum_sigma y_jla y_ikc C_lkbc from Eq. (4.85)."""
 
-    _validate_master_dimensions(model, inputs, output_component)
+    _validate_rge_dimensions(model, inputs, output_component)
     i, j, a, b = output_component
     nf = inputs.fermion_dimension
     ns = model.total_real_scalar_dimension
@@ -301,13 +301,13 @@ def crossed_yukawa_term(
 
 def conjugate_coefficient_yukawa_term(
     model: RGEModel,
-    inputs: MasterRGEInputs,
+    inputs: WilsonRGEInputs,
     output_component: tuple[int, int, int, int],
     coefficient=C,
 ) -> sp.Expr:
     r"""Return (2 y_ild y_jkd + y_ijd y_kld) C^*_{klab} from Eq. (4.85)."""
 
-    _validate_master_dimensions(model, inputs, output_component)
+    _validate_rge_dimensions(model, inputs, output_component)
     i, j, a, b = output_component
     nf = inputs.fermion_dimension
     ns = model.total_real_scalar_dimension
@@ -327,7 +327,7 @@ def conjugate_coefficient_yukawa_term(
 
 def scalar_anomalous_dimension_term(
     model: RGEModel,
-    inputs: MasterRGEInputs,
+    inputs: WilsonRGEInputs,
     output_component: tuple[int, int, int, int],
     coefficient=C,
 ) -> sp.Expr:
@@ -337,7 +337,7 @@ def scalar_anomalous_dimension_term(
     not a summed scalar index.
     """
 
-    _validate_master_dimensions(model, inputs, output_component)
+    _validate_rge_dimensions(model, inputs, output_component)
 
     if inputs.gamma_scalar is None:
         return sp.S.Zero
@@ -359,7 +359,7 @@ def scalar_anomalous_dimension_term(
 
 def fermion_anomalous_dimension_term(
     model: RGEModel,
-    inputs: MasterRGEInputs,
+    inputs: WilsonRGEInputs,
     output_component: tuple[int, int, int, int],
     coefficient=C,
 ) -> sp.Expr:
@@ -369,7 +369,7 @@ def fermion_anomalous_dimension_term(
     not a summed fermion index.
     """
 
-    _validate_master_dimensions(model, inputs, output_component)
+    _validate_rge_dimensions(model, inputs, output_component)
 
     if inputs.gamma_fermion is None:
         return sp.S.Zero
@@ -389,9 +389,9 @@ def fermion_anomalous_dimension_term(
     return sp.simplify(result)
 
 
-def calculate_master_rge(
+def calculate_wilson_tensor_rge(
     model: RGEModel,
-    inputs: MasterRGEInputs,
+    inputs: WilsonRGEInputs,
     output_component: tuple[int, int, int, int],
     coefficient=C,
     simplify_each: bool = True,

@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 
-
 # ---------------------------------------------------------------------------
 # Symbolic three-generation SMEFT Weinberg running
 # Consolidated from SMEFTWeinbergFlavorRGE.py
@@ -138,26 +137,6 @@ def one_generation_reduction() -> sp.Expr:
     return sp.factor(sp.simplify(beta / kappa))
 
 
-def build_symbolic_three_generation_system() -> dict:
-    """Construct symbolic K, Ye, Yu, Yd and their full beta matrix."""
-
-    K = symbolic_symmetric_matrix("k", 3)
-    Ye = symbolic_complex_matrix("ye", 3, 3)
-    Yu = symbolic_complex_matrix("yu", 3, 3)
-    Yd = symbolic_complex_matrix("yd", 3, 3)
-
-    beta = beta_weinberg_matrix(K, Ye, Yu, Yd)
-
-    return {
-        "K": K,
-        "Ye": Ye,
-        "Yu": Yu,
-        "Yd": Yd,
-        "T": yukawa_trace(Ye, Yu, Yd),
-        "beta": beta,
-    }
-
-
 if __name__ == "__main__":
     expected = (
         -3 * g2**2
@@ -268,22 +247,6 @@ class NumericalRGEResult:
     g2: float
     g3: float
     lambdaH: float
-    ye: np.ndarray
-    yu: np.ndarray
-    yd: np.ndarray
-    K: np.ndarray
-    solver_success: bool
-    solver_message: str
-    nfev: int
-
-
-@dataclass(frozen=True)
-class NumericalRGETrajectoryResult:
-    scales_gev: np.ndarray
-    gY: np.ndarray
-    g2: np.ndarray
-    g3: np.ndarray
-    lambdaH: np.ndarray
     ye: np.ndarray
     yu: np.ndarray
     yd: np.ndarray
@@ -491,56 +454,6 @@ def evolve_weinberg(
         yd=yd.copy(),
         K=K,
         solver_success=bool(solution.success),
-        solver_message=str(solution.message),
-        nfev=int(solution.nfev),
-    )
-
-
-def sample_weinberg_trajectory(
-    initial: SMInitialConditions,
-    mu_initial: float,
-    mu_final: float,
-    *,
-    samples: int = 64,
-    rtol: float = 1e-8,
-    atol: float = 1e-11,
-) -> NumericalRGETrajectoryResult:
-    """Return logarithmically spaced points along one EFT integration."""
-
-    if mu_initial <= 0.0 or mu_final <= 0.0:
-        raise ValueError("RGE scales must be positive.")
-    if samples < 2:
-        raise ValueError("At least two trajectory samples are required.")
-
-    initial = initial.validated()
-    scales = np.geomspace(mu_initial, mu_final, num=samples)
-    solution = solve_ivp(
-        _beta,
-        t_span=(np.log(mu_initial), np.log(mu_final)),
-        y0=_pack(initial),
-        t_eval=np.log(scales),
-        method="DOP853",
-        rtol=rtol,
-        atol=atol,
-    )
-    if not solution.success:
-        raise RuntimeError(
-            f"Numerical RGE trajectory integration failed: {solution.message}"
-        )
-
-    unpacked = [_unpack(vector) for vector in solution.y.T]
-    K = np.asarray([0.5 * (point[7] + point[7].T) for point in unpacked])
-    return NumericalRGETrajectoryResult(
-        scales_gev=scales,
-        gY=np.asarray([point[0] for point in unpacked], dtype=float),
-        g2=np.asarray([point[1] for point in unpacked], dtype=float),
-        g3=np.asarray([point[2] for point in unpacked], dtype=float),
-        lambdaH=np.asarray([point[3] for point in unpacked], dtype=float),
-        ye=np.asarray([point[4] for point in unpacked], dtype=float),
-        yu=np.asarray([point[5] for point in unpacked], dtype=float),
-        yd=np.asarray([point[6] for point in unpacked], dtype=float),
-        K=K,
-        solver_success=True,
         solver_message=str(solution.message),
         nfev=int(solution.nfev),
     )

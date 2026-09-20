@@ -191,7 +191,7 @@ def build_basis_map(seed_path: Path, rgbeta_path: Path):
             "det_A":_text(det),"coordinate_residual_nonzero_components":residuals,"note":note}
     return result
 
-def basismap_main():
+def run_basis_map_cli():
     p=argparse.ArgumentParser()
     p.add_argument("quartic_seed_json",type=Path)
     p.add_argument("--rgbeta",type=Path,default=None)
@@ -340,7 +340,7 @@ def expected_invariant_count(d_a: int, d_b: int) -> int:
     return min(int(d_a), int(d_b))
 
 
-def validate(seed_path: Path, d_s1: int, d_s2: int) -> dict:
+def validate_invariant_completeness(seed_path: Path, d_s1: int, d_s2: int) -> dict:
     seed = json.loads(seed_path.read_text(encoding="utf-8"))
     dims = {"H": 2, "S1": int(d_s1), "S2": int(d_s2)}
     sector_fields = {
@@ -382,7 +382,7 @@ def validate(seed_path: Path, d_s1: int, d_s2: int) -> dict:
     }
 
 
-def invcomplete_main() -> int:
+def run_invariant_completeness_cli() -> int:
     p = argparse.ArgumentParser()
     p.add_argument("quartic_seed_json", type=Path)
     p.add_argument("dS1", type=int)
@@ -390,7 +390,7 @@ def invcomplete_main() -> int:
     p.add_argument("--output", type=Path, default=None)
     a = p.parse_args()
 
-    payload = validate(a.quartic_seed_json, a.dS1, a.dS2)
+    payload = validate_invariant_completeness(a.quartic_seed_json, a.dS1, a.dS2)
 
     print(f"seed: {a.quartic_seed_json}")
     print("rule: N_invariants = min(d_A, d_B)")
@@ -429,9 +429,9 @@ def main() -> None:
     sys.argv = [sys.argv[0], *remaining]
 
     if args.mode == "basis-map":
-        basismap_main()
+        run_basis_map_cli()
     elif args.mode == "invariant-completeness":
-        invcomplete_main()
+        run_invariant_completeness_cli()
 
 
 if __name__ == "__main__":

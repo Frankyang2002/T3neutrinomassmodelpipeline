@@ -30,12 +30,13 @@ from typing import Iterable, Mapping, Sequence
 
 import sympy as sp
 
-from common.Records import RunRecord
+from common.RunRecords import RunRecord
 from Reports.ReportGeneration import (
     beta_symbol_latex,
     compile_latex_document,
     group_factor_report_path,
     latex_escape_text,
+    latex_document_preamble,
     paper_notation_key_lines,
     paper_symbol_latex,
     split_latex_terms,
@@ -67,7 +68,7 @@ from Reports.RGEComparison import (
 MAX_RUN_COLUMNS = 5
 
 
-def _tex_expr(value: object) -> str:
+def _latex_expression(value: object) -> str:
     """Render exact rational/SymPy/string values as mathematical LaTeX."""
     try:
         return sp.latex(sp.sympify(str(value), locals={"sqrt": sp.sqrt}))
@@ -75,7 +76,7 @@ def _tex_expr(value: object) -> str:
         return latex_escape_text(value)
 
 
-def _model_math_label(record: RunRecord) -> str:
+def _model_column_label(record: RunRecord) -> str:
     """Compact mathematical run label used as a table column heading."""
     name = latex_escape_text(record.name)
     return rf"\mathrm{{{name}}}\;(\alpha={record.alpha})"
@@ -110,7 +111,7 @@ def _valid_records(records: Iterable[RunRecord]) -> list[RunRecord]:
     return [record for record in records if record.summary.get("BuildStatus") == "Success"]
 
 
-def _chunks(values: Sequence[RunRecord], size: int = MAX_RUN_COLUMNS):
+def _chunk_records(values: Sequence[RunRecord], size: int = MAX_RUN_COLUMNS):
     for start in range(0, len(values), size):
         yield list(values[start : start + size])
 
@@ -278,7 +279,7 @@ def _comparison_table(
     }
     all_keys = _union_keys(compact_values)
 
-    for chunk_index, chunk in enumerate(_chunks(records), start=1):
+    for chunk_index, chunk in enumerate(_chunk_records(records), start=1):
         if len(records) > MAX_RUN_COLUMNS:
             lines.append(
                 rf"\textit{{Run block {chunk_index}: "
@@ -289,7 +290,7 @@ def _comparison_table(
         lines.append(rf"\begin{{longtable}}{{{colspec}}}")
         lines.append(r"\toprule")
         header = [r"$\mathcal{S}$"] + [
-            rf"$ {_model_math_label(record)} $" for record in chunk
+            rf"$ {_model_column_label(record)} $" for record in chunk
         ]
         lines.append(" & ".join(header) + r" \\")
         lines.append(r"\midrule")
@@ -299,7 +300,7 @@ def _comparison_table(
             for record in chunk:
                 values = compact_values.get(_run_key(record), {})
                 if key in values:
-                    row.append(rf"$ {_tex_expr(values[key])} $")
+                    row.append(rf"$ {_latex_expression(values[key])} $")
                 else:
                     row.append(r"$0$")
             lines.append(" & ".join(row) + r" \\")
@@ -378,7 +379,7 @@ def _uv_group_factor_data(record: RunRecord) -> dict[str, dict[str, object]]:
     }
 
 
-def _mf_structure_tex(key: str) -> str:
+def _fermion_mass_structure_latex(key: str) -> str:
     mapping = {
         "y1_left": r"(y_1^T y_1^*)M_F",
         "y2_right": r"M_F(y_2^\dagger y_2)",
@@ -416,14 +417,14 @@ def _comparison_table_yukawa(
         raise ValueError(f"Unsupported Yukawa beta name: {beta_name}")
 
     lines = [rf"\subsection*{{$ \beta_{{{beta_name}}} $}}"]
-    for chunk in _chunks(records):
+    for chunk in _chunk_records(records):
         colspec = "@{}p{0.31\\linewidth}" + "c" * len(chunk) + "@{}"
         lines.extend([
             rf"\begin{{longtable}}{{{colspec}}}",
             r"\toprule",
             " & ".join(
                 [r"$\mathcal{S}$"]
-                + [rf"$ {_model_math_label(record)} $" for record in chunk]
+                + [rf"$ {_model_column_label(record)} $" for record in chunk]
             ) + r" \\",
             r"\midrule",
         ])
@@ -431,13 +432,13 @@ def _comparison_table_yukawa(
             row = [rf"$ {structure} $"]
             for record in chunk:
                 value = per_record_values.get(_run_key(record), {}).get(key)
-                row.append(r"$0$" if value is None else rf"$ {_tex_expr(value)} $")
+                row.append(r"$0$" if value is None else rf"$ {_latex_expression(value)} $")
             lines.append(" & ".join(row) + r" \\")
         lines.extend([r"\bottomrule", r"\end{longtable}"])
     return lines
 
 
-def _comparison_table_mf(
+def _fermion_mass_comparison_table(
     records: Sequence[RunRecord],
     per_record_values: Mapping[str, Mapping[str, object]],
 ) -> list[str]:
@@ -447,7 +448,7 @@ def _comparison_table_mf(
     lines = [r"\subsection*{$ \beta_{M_F} $}"]
     all_keys = _union_keys(per_record_values)
 
-    for chunk_index, chunk in enumerate(_chunks(records), start=1):
+    for chunk_index, chunk in enumerate(_chunk_records(records), start=1):
         if len(records) > MAX_RUN_COLUMNS:
             lines.append(rf"\textit{{Run block {chunk_index}}}")
 
@@ -455,17 +456,17 @@ def _comparison_table_mf(
         lines.append(rf"\begin{{longtable}}{{{colspec}}}")
         lines.append(r"\toprule")
         header = [r"$\mathcal{S}$"] + [
-            rf"$ {_model_math_label(record)} $" for record in chunk
+            rf"$ {_model_column_label(record)} $" for record in chunk
         ]
         lines.append(" & ".join(header) + r" \\")
         lines.append(r"\midrule")
 
         for key in all_keys:
-            row = [rf"$ {_mf_structure_tex(key)} $"]
+            row = [rf"$ {_fermion_mass_structure_latex(key)} $"]
             for record in chunk:
                 values = per_record_values.get(_run_key(record), {})
                 row.append(
-                    rf"$ {_tex_expr(values[key])} $" if key in values else r"$0$"
+                    rf"$ {_latex_expression(values[key])} $" if key in values else r"$0$"
                 )
             lines.append(" & ".join(row) + r" \\")
 
@@ -583,17 +584,17 @@ def _direct_weinberg_comparison(records: Sequence[RunRecord]) -> list[str]:
         r"\]",
     ]
 
-    for chunk in _chunks(records):
+    for chunk in _chunk_records(records):
         colspec = "@{}l" + "c" * len(chunk) + "@{}"
         lines.append(rf"\begin{{longtable}}{{{colspec}}}")
         lines.append(r"\toprule")
         header = [r"$\mathcal{S}$"] + [
-            rf"$ {_model_math_label(record)} $" for record in chunk
+            rf"$ {_model_column_label(record)} $" for record in chunk
         ]
         lines.append(" & ".join(header) + r" \\")
         lines.append(r"\midrule")
         row = [r"$R_W$"] + [
-            rf"$ {_tex_expr(values[_run_key(record)]['RW'])} $" for record in chunk
+            rf"$ {_latex_expression(values[_run_key(record)]['RW'])} $" for record in chunk
         ]
         lines.append(" & ".join(row) + r" \\")
         lines.extend([r"\bottomrule", r"\end{longtable}"])
@@ -825,14 +826,14 @@ def _saved_rge_term_table(
     all_structures = _union_keys(per_run)
     lines = [rf"\subsection*{{$ {beta_tex} $}}"]
 
-    for chunk in _chunks(records):
+    for chunk in _chunk_records(records):
         colspec = "@{}p{0.38\\linewidth}" + "c" * len(chunk) + "@{}"
         lines.extend([
             rf"\begin{{longtable}}{{{colspec}}}",
             r"\toprule",
             " & ".join(
                 [r"$\mathcal{S}$"]
-                + [rf"$ {_model_math_label(record)} $" for record in chunk]
+                + [rf"$ {_model_column_label(record)} $" for record in chunk]
             ) + r" \\",
             r"\midrule",
         ])
@@ -841,7 +842,7 @@ def _saved_rge_term_table(
             row = [rf"$ {structure} $"]
             for record in chunk:
                 value = per_run.get(_run_key(record), {}).get(structure)
-                row.append(r"$0$" if value is None else rf"$ {_tex_expr(value)} $")
+                row.append(r"$0$" if value is None else rf"$ {_latex_expression(value)} $")
             lines.append(" & ".join(row) + r" \\")
 
         lines.extend([r"\bottomrule", r"\end{longtable}"])
@@ -928,7 +929,7 @@ def _matching_tensor_appendix(records: Sequence[RunRecord]) -> list[str]:
     ]
     for record in records:
         rows, note = _matching_tensor_rows(record)
-        lines.append(rf"\subsection*{{$ {_model_math_label(record)} $}}")
+        lines.append(rf"\subsection*{{$ {_model_column_label(record)} $}}")
         lines.append(rf"\textit{{{latex_escape_text(note)}}}")
         if rows:
             lines.extend(
@@ -1076,17 +1077,17 @@ def _eft1_notation_key() -> list[str]:
     ])
 
 
-def _document_header(title: str, stage_text: str) -> list[str]:
+def _group_factor_document_header(title: str, stage_text: str) -> list[str]:
     return [
-        r"\documentclass[9pt]{article}",
-        r"\usepackage[a4paper,margin=1.15cm]{geometry}",
-        r"\usepackage{amsmath,amssymb,booktabs,longtable,array}",
-        r"\usepackage[T1]{fontenc}",
-        r"\setlength{\parindent}{0pt}",
-        r"\setlength{\parskip}{0.45em}",
-        r"\setlength{\tabcolsep}{3.5pt}",
-        r"\renewcommand{\arraystretch}{1.16}",
-        r"\begin{document}",
+        *latex_document_preamble(
+            "9pt",
+            "a4paper,margin=1.15cm",
+            "amsmath,amssymb,booktabs,longtable,array",
+            r"\setlength{\parindent}{0pt}",
+            r"\setlength{\parskip}{0.45em}",
+            r"\setlength{\tabcolsep}{3.5pt}",
+            r"\renewcommand{\arraystretch}{1.16}",
+        ),
         rf"\section*{{{title}}}",
         stage_text,
         r"\["
@@ -1099,8 +1100,7 @@ def _document_header(title: str, stage_text: str) -> list[str]:
     ]
 
 
-
-def _stage_payload(record: RunRecord, stage_label: str) -> Mapping[str, object] | None:
+def _stage_summary_payload(record: RunRecord, stage_label: str) -> Mapping[str, object] | None:
     """Return one serialized EFT-stage payload by label."""
     for stage in record.summary.get("EFTStages", []) or []:
         if str(stage.get("Label", "")).strip() == stage_label:
@@ -1108,7 +1108,7 @@ def _stage_payload(record: RunRecord, stage_label: str) -> Mapping[str, object] 
     return None
 
 
-def _stage_labels(records: Sequence[RunRecord]) -> list[str]:
+def _stage_display_labels(records: Sequence[RunRecord]) -> list[str]:
     """Return all EFT-stage labels in first-seen threshold order."""
     labels: list[str] = []
     for record in records:
@@ -1119,7 +1119,7 @@ def _stage_labels(records: Sequence[RunRecord]) -> list[str]:
     return labels
 
 
-def _records_for_stage(
+def _records_at_stage(
     records: Sequence[RunRecord],
     stage_label: str,
 ) -> list[RunRecord]:
@@ -1127,23 +1127,23 @@ def _records_for_stage(
     return [
         record
         for record in _valid_records(records)
-        if _stage_payload(record, stage_label) is not None
+        if _stage_summary_payload(record, stage_label) is not None
     ]
 
 
-def _stage_active_fields(
+def _active_fields_for_stage(
     record: RunRecord,
     stage_label: str,
 ) -> tuple[str, ...]:
-    payload = _stage_payload(record, stage_label) or {}
+    payload = _stage_summary_payload(record, stage_label) or {}
     return tuple(str(field) for field in payload.get("ActiveHeavyFields", []) or [])
 
 
-def _stage_integrated_fields(
+def _integrated_fields_for_stage(
     record: RunRecord,
     stage_label: str,
 ) -> tuple[str, ...]:
-    payload = _stage_payload(record, stage_label) or {}
+    payload = _stage_summary_payload(record, stage_label) or {}
     return tuple(str(field) for field in payload.get("IntegratedFields", []) or [])
 
 
@@ -1153,8 +1153,8 @@ def _stage_is_f_first_eft1(
 ) -> bool:
     """Return True for the analytically supported SM+S1+S2 EFT after F."""
     return (
-        set(_stage_integrated_fields(record, stage_label)) == {"F"}
-        and set(_stage_active_fields(record, stage_label))
+        set(_integrated_fields_for_stage(record, stage_label)) == {"F"}
+        and set(_active_fields_for_stage(record, stage_label))
         == ({"S"} if record.shared_scalar else {"S1", "S2"})
     )
 
@@ -1164,7 +1164,7 @@ def _stage_is_fully_decoupled(
     stage_label: str,
 ) -> bool:
     """Return True when no T3 heavy field remains dynamical."""
-    return len(_stage_active_fields(record, stage_label)) == 0
+    return len(_active_fields_for_stage(record, stage_label)) == 0
 
 
 def _stage_content_table(
@@ -1187,14 +1187,14 @@ def _stage_content_table(
         for record in records:
             y_s = sp.Rational(1, 2)
             y_f = sp.Rational(0)
-            integrated = _stage_integrated_fields(record, stage_label)
-            active = _stage_active_fields(record, stage_label)
+            integrated = _integrated_fields_for_stage(record, stage_label)
+            active = _active_fields_for_stage(record, stage_label)
             lines.append(
                 " & ".join(
                     [
                         latex_escape_text(record.name),
-                        rf"$({record.d_s1},{_tex_expr(y_s)})$",
-                        rf"$({record.d_f},{_tex_expr(y_f)})$",
+                        rf"$({record.d_s1},{_latex_expression(y_s)})$",
+                        rf"$({record.d_f},{_latex_expression(y_f)})$",
                         latex_escape_text(", ".join(integrated) if integrated else "none"),
                         latex_escape_text(", ".join(active) if active else "none"),
                     ]
@@ -1215,12 +1215,12 @@ def _stage_content_table(
     for record in records:
         y_s1, y_s2, y_f = _hypercharges(record)
         representations = {
-            "S1": rf"$({record.d_s1},{_tex_expr(y_s1)})$",
-            "S2": rf"$({record.d_s2},{_tex_expr(y_s2)})$",
-            "F": rf"$({record.d_f},{_tex_expr(y_f)})$",
+            "S1": rf"$({record.d_s1},{_latex_expression(y_s1)})$",
+            "S2": rf"$({record.d_s2},{_latex_expression(y_s2)})$",
+            "F": rf"$({record.d_f},{_latex_expression(y_f)})$",
         }
-        integrated = _stage_integrated_fields(record, stage_label)
-        active = _stage_active_fields(record, stage_label)
+        integrated = _integrated_fields_for_stage(record, stage_label)
+        active = _active_fields_for_stage(record, stage_label)
         lines.append(
             " & ".join(
                 [
@@ -1278,7 +1278,7 @@ def _active_quantity_table(
         r"\toprule",
         " & ".join(
             [r"quantity"]
-            + [rf"$ {_model_math_label(record)} $" for record in records]
+            + [rf"$ {_model_column_label(record)} $" for record in records]
         )
         + r" \\",
         r"\midrule",
@@ -1287,7 +1287,7 @@ def _active_quantity_table(
     for symbol, predicate in quantity_rules:
         cells = [symbol]
         for record in records:
-            active = set(_stage_active_fields(record, stage_label))
+            active = set(_active_fields_for_stage(record, stage_label))
             cells.append(r"$\checkmark$" if predicate(active) else r"$-$")
         lines.append(" & ".join(cells) + r" \\")
 
@@ -1357,7 +1357,7 @@ def _write_gf_f_first_stage_shared(
 ) -> Path:
     path = group_factor_report_path(stage_label, report_root=report_root)
     path.parent.mkdir(parents=True, exist_ok=True)
-    lines = _document_header(
+    lines = _group_factor_document_header(
         "Scotogenic/shared-scalar group factors: " + stage_label.replace("_", r"\_"),
         r"Active theory: $\mathrm{SM}+S+C_{LLSS}$. The heavy fermion is absent.",
     )
@@ -1397,7 +1397,7 @@ def _write_gf_f_first_stage(
     path = group_factor_report_path(stage_label, report_root=report_root)
     path.parent.mkdir(parents=True, exist_ok=True)
 
-    lines = _document_header(
+    lines = _group_factor_document_header(
         "T3 group factors: " + stage_label.replace("_", r"\_"),
         (
             r"Active theory: $\mathrm{SM}+S_1+S_2+C_{LLS_1S_2}$.  "
@@ -1464,7 +1464,7 @@ def _write_gf_fully_decoupled_stage(
     path = group_factor_report_path(stage_label, report_root=report_root)
     path.parent.mkdir(parents=True, exist_ok=True)
 
-    lines = _document_header(
+    lines = _group_factor_document_header(
         "T3 group factors: " + stage_label.replace("_", r"\_"),
         (
             r"Active theory: SMEFT with the Weinberg operator $C_5$.  "
@@ -1530,7 +1530,7 @@ def _write_gf_generic_intermediate_stage(
 
     active_examples = sorted(
         {
-            tuple(_stage_active_fields(record, stage_label))
+            tuple(_active_fields_for_stage(record, stage_label))
             for record in records
         }
     )
@@ -1539,7 +1539,7 @@ def _write_gf_generic_intermediate_stage(
         for active in active_examples
     )
 
-    lines = _document_header(
+    lines = _group_factor_document_header(
         "T3 group factors: " + stage_label.replace("_", r"\_"),
         (
             r"Threshold-order-aware EFT stage.  Active heavy-field content: "
@@ -1586,7 +1586,7 @@ def write_gf_stage(
     report_root: Path,
 ) -> Path | None:
     """Write the GroupFactors report for one actual serialized EFT stage."""
-    relevant = _records_for_stage(records, stage_label)
+    relevant = _records_at_stage(records, stage_label)
     if not relevant:
         return None
 
@@ -1638,7 +1638,7 @@ def _shared_scalar_notation_key() -> list[str]:
 def _write_gf_uv_shared(records: list[RunRecord], *, report_root: Path) -> Path:
     path = group_factor_report_path("UV", report_root=report_root)
     path.parent.mkdir(parents=True, exist_ok=True)
-    lines = _document_header(
+    lines = _group_factor_document_header(
         "Scotogenic/shared-scalar group factors: UV",
         (
             r"Active theory: $\mathrm{SM}+S+F$.  The formal T3 legs are "
@@ -1670,7 +1670,7 @@ def write_gf_uv(records: list[RunRecord], *, report_root: Path) -> Path:
     path = group_factor_report_path("UV", report_root=report_root)
     path.parent.mkdir(parents=True, exist_ok=True)
 
-    lines = _document_header(
+    lines = _group_factor_document_header(
         "T3 group factors: UV",
         (
             r"Active theory: $\mathrm{SM}+S_1+S_2+F$.  "
@@ -1692,7 +1692,7 @@ def write_gf_uv(records: list[RunRecord], *, report_root: Path) -> Path:
     uv_data = {_run_key(record): _uv_group_factor_data(record) for record in valid}
 
     lines.extend(
-        _comparison_table_mf(
+        _fermion_mass_comparison_table(
             valid,
             {_run_key(record): uv_data[_run_key(record)]["MF"] for record in valid},
         )
@@ -1725,26 +1725,6 @@ def write_gf_uv(records: list[RunRecord], *, report_root: Path) -> Path:
     return path
 
 
-def write_gf_eft1(
-    records: list[RunRecord],
-    *,
-    report_root: Path,
-) -> Path | None:
-    """Compatibility wrapper for the special F-first intermediate EFT."""
-    for stage_label in _stage_labels(_valid_records(records)):
-        relevant = _records_for_stage(records, stage_label)
-        if relevant and all(
-            _stage_is_f_first_eft1(record, stage_label)
-            for record in relevant
-        ):
-            return _write_gf_f_first_stage(
-                relevant,
-                stage_label=stage_label,
-                report_root=report_root,
-            )
-    return None
-
-
 def write_and_compile_stage_group_factor_reports(
     records: list[RunRecord],
     *,
@@ -1764,7 +1744,7 @@ def write_and_compile_stage_group_factor_reports(
     compile_latex_document(uv)
     outputs.append(uv)
 
-    for stage_label in _stage_labels(valid):
+    for stage_label in _stage_display_labels(valid):
         stage_report = write_gf_stage(
             valid,
             stage_label=stage_label,

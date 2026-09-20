@@ -4,7 +4,6 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from common.T3Model import (
-    FormalT3Dimensions,
     SharedScalarDimensions,
     physical_dimensions_from_formal,
 )
@@ -27,16 +26,6 @@ class EFTStageRecord:
     label: str
     output_dir: Path | None = None
     summary: dict = field(default_factory=dict)
-
-    @property
-    def is_uv(self) -> bool:
-        """Return whether this record describes the UV theory."""
-        return self.level == 0
-
-    @property
-    def is_fully_decoupled(self) -> bool:
-        """Return whether no physical heavy fields remain active."""
-        return not self.active_heavy_fields
 
 
 @dataclass
@@ -61,15 +50,11 @@ class RunRecord:
     eft_stages: list[EFTStageRecord] = field(default_factory=list)
     shared_scalar: bool = False
 
-    @property
-    def formal_dimensions(self) -> FormalT3Dimensions:
-        """Return formal matching-topology dimensions (dS1, dS2, dF)."""
-        return self.d_s1, self.d_s2, self.d_f
 
     @property
     def physical_dimensions(
         self,
-    ) -> FormalT3Dimensions | SharedScalarDimensions:
+    ) -> tuple[int, int, int] | SharedScalarDimensions:
         """Return physical heavy-field dimensions for this run.
 
         Ordinary T3 returns ``(dS1, dS2, dF)``.
@@ -116,20 +101,9 @@ class RunRecord:
             f"{self.name} has multiple EFT stages with level {level}."
         )
 
-    @property
-    def uv_stage(self) -> EFTStageRecord:
-        """Return the UV stage (level 0)."""
-        return self.stage(0)
 
     @property
     def first_eft_stage(self) -> EFTStageRecord:
         """Return the first EFT after the first threshold (level 1)."""
         return self.stage(1)
 
-    @property
-    def final_stage(self) -> EFTStageRecord:
-        """Return the highest-level recorded theory stage."""
-        if not self.eft_stages:
-            raise KeyError(f"{self.name} has no EFT stage records.")
-
-        return max(self.eft_stages, key=lambda stage: stage.level)

@@ -281,9 +281,9 @@ Wolfram-side orchestration layer.
 
 It connects model construction, UV validation, matching, Weinberg extraction, LaTeX conversion, and output generation.
 
-### `PhysicsLaTeX.wl`
+### `PhysicsNotation.wl`
 
-Converts Matchete's internal expressions into more readable physics-oriented LaTeX for exported results.
+Converts Matchete's internal fields, indices, couplings, invariant tensors, and Dirac structures into readable physics notation, then renders that notation as LaTeX for exported results. It lives at the `Lagrangian/` level because it is presentation/serialization support used by `RunModel.wl`, not an interaction definition.
 
 ---
 

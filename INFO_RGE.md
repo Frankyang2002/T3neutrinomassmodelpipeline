@@ -76,7 +76,7 @@ stages. The model directory also contains `c5_coefficient.tex` and
 
 ## 2. One-Generation Symbolic RGE
 
-`MatchedEFTRGE.py` reads the Matchete expression and computes its SMEFT beta
+`MatchedWeinbergRGE.py` reads the Matchete expression and computes its SMEFT beta
 function. The code uses
 
 $$
@@ -205,13 +205,13 @@ stage compares these quantities with the included NuFIT reference data.
 
 | File | Purpose |
 |---|---|
-| `RGE/matching/MatchedEFTRGE.py` | Parses the matched $C_5$, evaluates the general $\psi^2\phi^2$ one-loop RGE, and checks the one-generation SMEFT benchmark. |
-| `RGE/matching/FlavorMatchedC5.py` | Lifts the matched coefficient to the symmetric three-generation flavor matrix. |
-| `RGE/matching/WeinbergWilsonAdapter.py` | Embeds $C_5$ into the general Wilson-tensor representation used by the master RGE. |
-| `RGE/running/weinberg/FlavorMatchedRGEStage.py` | Runs the symbolic full-flavor beta matrix and constructs the symbolic neutrino-mass matrix. |
+| `RGE/matching/MatchedWeinbergRGE.py` | Parses the matched $C_5$, evaluates the general $\psi^2\phi^2$ one-loop RGE, and checks the one-generation SMEFT benchmark. |
+| `RGE/matching/FlavorC5Matching.py` | Lifts the matched coefficient to the symmetric three-generation flavor matrix. |
+| `RGE/matching/WeinbergTensorAdapter.py` | Embeds $C_5$ into the general Wilson-tensor representation used by the master RGE. |
+| `RGE/running/weinberg/FlavorMatchedWeinbergStage.py` | Runs the symbolic full-flavor beta matrix and constructs the symbolic neutrino-mass matrix. |
 | `RGE/running/weinberg/WeinbergRunning.py` | Contains the symbolic three-generation Weinberg RGE and the numerical coupled SM+$C_5$ evolution. |
 | `RGE/running/weinberg/FinalWeinbergCoefficient.py` | Combines hard matching and threshold-running pieces into the final Weinberg coefficient. |
-| `RGE/running/weinberg/NumericalPipelineStage.py` | Evaluates the matched coefficient numerically and evolves it to the requested low scale. |
+| `RGE/running/weinberg/NumericalWeinbergStage.py` | Evaluates the matched coefficient numerically and evolves it to the requested low scale. |
 | `RGE/phenomenology/NeutrinoObservables.py` | Takagi-factorises the low-scale Majorana mass matrix and writes neutrino observables. |
 
 ### UV and intermediate-EFT running
@@ -237,7 +237,7 @@ stage compares these quantities with the included NuFIT reference data.
 | `RGE/general/RGEModel.py` | Defines the scalar representation/basis model used by the general RGE machinery. |
 | `RGE/general/GaugeGenerators.py` | Builds the real-scalar SU(2) and U(1) generators and gauge sectors. |
 | `RGE/general/FermionBasis.py` | Builds the Weyl-fermion basis and its gauge generators. |
-| `RGE/general/MasterWeinbergRGE.py` | Implements the general $\psi^2\phi^2$ master-equation tensor terms. |
+| `RGE/general/WilsonTensorRGE.py` | Implements the general $\psi^2\phi^2$ master-equation tensor terms. |
 | `RGE/general/AnomalousDimensions.py` | Adds the scalar and fermion collinear anomalous-dimension contributions and assembles the complete master RGE. |
 
 ### Group factors and independent checks
@@ -280,7 +280,7 @@ is $F$ followed by $S$.
 python pipeline.py --dims 2 2 1 --alpha -1 --numerical path\to\config.json
 ```
 
-When `--numerical` is supplied, `NumericalPipelineStage.py` evaluates the
+When `--numerical` is supplied, `NumericalWeinbergStage.py` evaluates the
 matched coefficient at the configured matching scale, `WeinbergRunning.py`
 evolves the SM parameters and $C_5$, and `NeutrinoObservables.py` calculates
 the low-scale neutrino observables.
@@ -408,12 +408,12 @@ are needed. Enable debug reports only when checking the intermediate algebra.
    threshold calculation. `FinalWeinbergCoefficient.py` then combines the hard
    threshold contribution and running contribution into the final physical
    Weinberg coefficient.
-8. `pipeline.py` runs `run_matched_eft_rge_stage()`, which calls
-   `RGE/matching/MatchedEFTRGE.py`. This parses the matched coefficient into
+8. `pipeline.py` runs `run_matched_weinberg_rge_stage()`, which calls
+   `RGE/matching/MatchedWeinbergRGE.py`. This parses the matched coefficient into
    SymPy, embeds it in the general Wilson tensor through
-   `WeinbergWilsonAdapter.py`, and evaluates the generic master RGE.
+   `WeinbergTensorAdapter.py`, and evaluates the generic master RGE.
 9. The general tensor calculation uses `RGEModel.py`, `GaugeGenerators.py`,
-   `FermionBasis.py`, `MasterWeinbergRGE.py`, and `AnomalousDimensions.py`.
+   `FermionBasis.py`, `WilsonTensorRGE.py`, and `AnomalousDimensions.py`.
 10. The one-generation result is checked against
 
 $$
@@ -421,19 +421,19 @@ $$
 =-3g_2^2+2\lambda_H+6|y_u|^2+6|y_d|^2-|y_e|^2.
 $$
 
-11. `run_flavor_rge_stage()` calls
-    `RGE/running/weinberg/FlavorMatchedRGEStage.py`. It obtains the symmetric
-    three-generation $C_5$ matrix from `FlavorMatchedC5.py`, constructs symbolic
+11. `run_symbolic_flavor_weinberg_stage()` calls
+    `RGE/running/weinberg/FlavorMatchedWeinbergStage.py`. It obtains the symmetric
+    three-generation $C_5$ matrix from `FlavorC5Matching.py`, constructs symbolic
     $Y_e$, $Y_u$, and $Y_d$, and evaluates `beta_weinberg_matrix()` from
     `WeinbergRunning.py`.
 12. The symbolic full-flavor beta matrix is written to
     `data/c5_flavor_beta_matrix.txt`.
 13. `run_symbolic_neutrino_mass_stage()` calls the neutrino-mass stage now
-    contained in `FlavorMatchedRGEStage.py`. It converts the matched symmetric
+    contained in `FlavorMatchedWeinbergStage.py`. It converts the matched symmetric
     coefficient to the Majorana mass matrix using the project convention bridge
     described in Section 4 and writes `data/neutrino_mass_matrix.txt`.
 14. If `--numerical CONFIG.json` is supplied,
-    `RGE/running/weinberg/NumericalPipelineStage.py` evaluates the matched
+    `RGE/running/weinberg/NumericalWeinbergStage.py` evaluates the matched
     coefficient and builds `SMInitialConditions` for `WeinbergRunning.py`.
 15. `evolve_weinberg()` integrates the one-loop SM gauge couplings,
     $\lambda_H$, diagonal SM Yukawa eigenvalues, and the complex symmetric

@@ -5,16 +5,16 @@ from pathlib import Path
 
 import sympy as sp
 
-from RGE.matching.FlavorMatchedC5 import (
-    flavor_match_from_c5_file,
+from RGE.matching.FlavorC5Matching import (
+    match_c5_flavor_from_file,
     is_final_weinberg_json,
     load_final_weinberg_flavor_matrix,
-    write_flavor_outputs,
+    write_flavor_matching_outputs,
 )
 from RGE.running.weinberg.WeinbergRunning import beta_weinberg_matrix, symbolic_complex_matrix
 
 
-def run_flavor_matched_rge(
+def run_flavor_matched_weinberg_rge(
     c5_path: Path,
     output_dir: Path,
     *,
@@ -72,14 +72,14 @@ def run_flavor_matched_rge(
             "plus EFT1 running"
         )
     else:
-        flavor_result = flavor_match_from_c5_file(
+        flavor_result = match_c5_flavor_from_file(
             c5_path,
             n_lepton=3,
             n_heavy=n_heavy,
             split_heavy_masses=True,
         )
 
-        flavor_files = write_flavor_outputs(
+        flavor_files = write_flavor_matching_outputs(
             output_dir,
             flavor_result,
             debug_outputs=debug_outputs,
@@ -151,7 +151,7 @@ def build_neutrino_mass_matrix(
     return (-sp.Rational(1, 2) * vev**2 * c5_matrix)
 
 
-def run_neutrino_mass_stage(
+def run_symbolic_neutrino_mass_stage(
     c5_path: Path,
     output_dir: Path,
     *,
@@ -173,7 +173,7 @@ def run_neutrino_mass_stage(
         )
         c5_input_kind = "final_weinberg_json"
     else:
-        flavor_result = flavor_match_from_c5_file(
+        flavor_result = match_c5_flavor_from_file(
             c5_path,
             n_lepton=3,
             n_heavy=n_heavy,

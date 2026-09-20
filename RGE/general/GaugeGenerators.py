@@ -151,32 +151,6 @@ class GaugeSector:
             )
 
 
-def gauge_sectors_from_generators(
-    model: RGEModel,
-    fermion_su2_generators: tuple[sp.Matrix, sp.Matrix, sp.Matrix],
-    fermion_u1_generator: sp.Matrix,
-) -> tuple[GaugeSector, GaugeSector]:
-    """Build the SU(2)_L and U(1)_Y sectors used by Eq. (4.85).
-
-    This helper assumes the fermion basis supplied by the caller already
-    contains every fermion component relevant to C_ijab and y_ija.
-    """
-
-    su2_sector = GaugeSector(
-        coupling=g2,
-        scalar_generators=global_su2_generators(model),
-        fermion_generators=fermion_su2_generators,
-    )
-
-    u1_sector = GaugeSector(
-        coupling=g1,
-        scalar_generators=(global_u1_generator(model),),
-        fermion_generators=(fermion_u1_generator,),
-    )
-
-    return su2_sector, u1_sector
-
-
 def quadratic_casimir_matrix(
     generators: tuple[sp.Matrix, ...],
 ) -> sp.Matrix:

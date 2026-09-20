@@ -74,15 +74,6 @@ class FermionBasis:
         self.blocks = tuple(blocks)
         self.dimension = start - 1
 
-    def blocks_named(self, name: str) -> tuple[FermionBasisBlock, ...]:
-        result = tuple(
-            block
-            for block in self.blocks
-            if block.fermion.name == name
-        )
-        if not result:
-            raise KeyError(f"Unknown fermion multiplet {name!r}.")
-        return result
 
     def block(self, name: str, copy: int = 1) -> FermionBasisBlock:
         for block in self.blocks:

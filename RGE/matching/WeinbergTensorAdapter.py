@@ -44,14 +44,6 @@ class SparseWilsonLookup:
         return self[i, j, a, b]
 
 
-def wilson_component_function(
-    components: Mapping[tuple[int, int, int, int], sp.Expr],
-) -> SparseWilsonLookup:
-    """Return a sparse Wilson-coefficient lookup callable."""
-
-    return SparseWilsonLookup(components)
-
-
 # ---------------------------------------------------------------------------
 # One-generation SM EFT basis and Yukawa tensor
 # Consolidated from the former SMEFTBasis helper.

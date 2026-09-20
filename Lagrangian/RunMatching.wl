@@ -289,7 +289,7 @@ ExportIntermediateEFTForRGE[
 
   (* Export the exact tree-level Majorana-type psi^2 phi^2 sector together
      with every CG tensor it references.  This is the bridge to the Python
-     MasterWeinbergRGE tensor representation: Python should not infer SU(2)
+     WilsonTensorRGE tensor representation: Python should not infer SU(2)
      contractions from field dimensions alone. *)
   expandedTree = Expand[treeEFT];
   treeTerms = If[

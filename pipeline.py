@@ -18,12 +18,14 @@ import sys
 import time
 from pathlib import Path
 
-from RGE.matching.MatchedEFTRGE import run_matched_eft_rge
-from RGE.running.weinberg.FlavorMatchedRGEStage import (
-    run_flavor_matched_rge,
-    run_neutrino_mass_stage,
+from RGE.matching.MatchedWeinbergRGE import run_matched_weinberg_rge
+from RGE.running.weinberg.FlavorMatchedWeinbergStage import (
+    run_flavor_matched_weinberg_rge,
+    run_symbolic_neutrino_mass_stage as _run_symbolic_neutrino_mass_stage,
 )
-from RGE.running.weinberg.NumericalPipelineStage import run_numerical_pipeline_stage
+from RGE.running.weinberg.NumericalWeinbergStage import (
+    run_numerical_weinberg_stage as _run_numerical_weinberg_stage,
+)
 from RGE.phenomenology.NeutrinoObservables import run_neutrino_observables_stage
 from RGE.running.rgbeta.RGBetaT3Running import (
     run_rgbeta_t3,
@@ -42,7 +44,7 @@ from RGE.running.weinberg.FinalWeinbergCoefficient import (
     normalize_pole_rge_consistency,
 )
 
-from common.Records import RunRecord
+from common.RunRecords import RunRecord
 from common.Thresholds import (
     build_eft_stage_records,
     threshold_plan_label,
@@ -691,182 +693,180 @@ def _is_f_then_scalar_threshold_plan(
     )
 
 
-def run_eft1_full_flavor_threshold_bridge(
+def _eft1_full_flavor_bridge_paths(record: RunRecord) -> dict[str, Path]:
+    """Return all files used by the fixed-one-loop EFT1 Weinberg bridge."""
+    data_dir = record.output_dir / "data"
+    data_dir.mkdir(parents=True, exist_ok=True)
+    return {
+        "data_dir": data_dir,
+        "wilson_seed": data_dir / "eft1_after_F_wilson_seed.json",
+        "component_rge": data_dir / "eft1_wilson_rge.json",
+        "flavor_seed": data_dir / "eft1_wilson_flavor_seed.json",
+        "flavor_transport": data_dir / "eft1_wilson_flavor_at_S_threshold.json",
+        "insertion": data_dir / "eft1_wilson_flavor_running_insertion.wl",
+        "pole_rge": data_dir / "c5_pole_rge_consistency.json",
+        "threshold_c5": data_dir / "c5_threshold_with_eft1_running.txt",
+        "direct_c5": data_dir / "c5_direct_eft1_running.txt",
+        "final_c5": data_dir / "final_weinberg_coefficient.json",
+    }
+
+
+def _fail_eft1_full_flavor_bridge(record: RunRecord, message: str) -> bool:
+    """Record and print a failed fixed-one-loop EFT1 Weinberg bridge."""
+    record.summary["EFT1FullFlavorBridgeStatus"] = "Failed"
+    record.summary["EFT1FullFlavorBridgeError"] = message
+    print(f"  {record.name}: full-flavor EFT1 bridge failed: {message}")
+    return False
+
+
+def _validate_eft1_full_flavor_bridge_inputs(
     record: RunRecord,
+    paths: dict[str, Path],
+) -> bool:
+    """Check that the direct-Weinberg bridge inputs have been produced."""
+    required = (paths["wilson_seed"], paths["component_rge"])
+    missing = [path for path in required if not path.is_file()]
+    if not missing:
+        return True
+
+    message = (
+        "Missing direct-Weinberg bridge input(s): "
+        + ", ".join(
+            path.relative_to(record.output_dir).as_posix()
+            for path in missing
+        )
+    )
+    return _fail_eft1_full_flavor_bridge(record, message)
+
+
+def _run_direct_weinberg_bridge_stages(
+    record: RunRecord,
+    paths: dict[str, Path],
     *,
     mu_high: str,
     mu_low: str,
-    debug_reports: bool = False,
-) -> bool:
-    """Build the authoritative fixed-one-loop hierarchical C5.
-
-    The tree LLSS Wilson boundary is O(hbar^0). Its direct mixing into O5 is
-    O(hbar^1). LLSS self-running is also O(hbar^1), so matching that corrected
-    heavy operator through the scalar loop would be O(hbar^2). Therefore only
-    the direct full-flavor C12 -> Weinberg running enters the authoritative
-    one-loop neutrino-mass calculation.
-    """
-
-    summary = record.summary
-
-    if not _is_f_then_s1_s2_plan(record):
-        summary["EFT1FullFlavorBridgeStatus"] = "NotApplicable"
-        return True
-
-    data_dir = record.output_dir / "data"
-    data_dir.mkdir(parents=True, exist_ok=True)
-
-    wilson_seed_path = data_dir / "eft1_after_F_wilson_seed.json"
-    component_rge_path = data_dir / "eft1_wilson_rge.json"
-    flavor_seed_path = data_dir / "eft1_wilson_flavor_seed.json"
-    flavor_transport_path = data_dir / "eft1_wilson_flavor_at_S_threshold.json"
-    insertion_path = data_dir / "eft1_wilson_flavor_running_insertion.wl"
-
-    required = (wilson_seed_path, component_rge_path)
-    missing = [path for path in required if not path.is_file()]
-    if missing:
-        summary["EFT1FullFlavorBridgeStatus"] = "Failed"
-        summary["EFT1FullFlavorBridgeError"] = (
-            "Missing direct-Weinberg bridge input(s): "
-            + ", ".join(
-                path.relative_to(record.output_dir).as_posix()
-                for path in missing
-            )
-        )
-        print(
-            f"  {record.name}: full-flavor EFT1 bridge failed: "
-            f"{summary['EFT1FullFlavorBridgeError']}"
-        )
-        return False
-
-    print(
-        f"  {record.name}: starting fixed-one-loop direct Weinberg bridge "
-        f"{mu_high} -> {mu_low}...",
-        flush=True,
+    debug_reports: bool,
+) -> tuple[dict, dict, dict, dict]:
+    """Run flavor seeding, direct Weinberg transport, and threshold resume."""
+    flavor_seed = run_flavor_seed_export(
+        wilson_seed_path=paths["wilson_seed"],
+        output_path=paths["flavor_seed"],
     )
+    if flavor_seed.get("status") != "Success":
+        raise RuntimeError("Full-flavor Wilson seed regression failed.")
 
-    try:
-        flavor_seed = run_flavor_seed_export(
-            wilson_seed_path=wilson_seed_path,
-            output_path=flavor_seed_path,
+    flavor_transport = build_direct_weinberg_flavor_transport(
+        flavor_seed_path=paths["flavor_seed"],
+        component_rge_path=paths["component_rge"],
+        mu_high=mu_high,
+        mu_low=mu_low,
+        output_path=paths["flavor_transport"],
+    )
+    if flavor_transport.get("status") != "Success":
+        raise RuntimeError(
+            "Direct full-flavor Weinberg transport regression failed."
         )
-        if flavor_seed.get("status") != "Success":
-            raise RuntimeError("Full-flavor Wilson seed regression failed.")
 
-        flavor_transport = build_direct_weinberg_flavor_transport(
-            flavor_seed_path=flavor_seed_path,
-            component_rge_path=component_rge_path,
-            mu_high=mu_high,
-            mu_low=mu_low,
-            output_path=flavor_transport_path,
+    insertion = export_direct_weinberg_matchete(
+        transport_path=paths["flavor_transport"],
+        output_path=paths["insertion"],
+    )
+    if insertion.get("status") != "Success":
+        raise RuntimeError("Direct Weinberg Matchete insertion export failed.")
+
+    resume = rerun_threshold2_with_running(
+        output_dir=record.output_dir,
+        running_insertion=paths["insertion"],
+        run_threshold_script=RUN_THRESHOLD_STAGE_SCRIPT,
+        d_s1=record.d_s1,
+        d_s2=record.d_s2,
+        d_f=record.d_f,
+        alpha=record.alpha,
+        shared_scalar=record.shared_scalar,
+        validation_mode=debug_reports,
+    )
+    if resume.get("status") != "Success":
+        raise RuntimeError(
+            "Threshold-2 rerun with direct Weinberg running failed."
         )
-        if flavor_transport.get("status") != "Success":
+
+    if paths["pole_rge"].is_file():
+        pole_rge = normalize_pole_rge_consistency(paths["pole_rge"])
+        if not pole_rge.get("ConsistencyValidated", False):
             raise RuntimeError(
-                "Direct full-flavor Weinberg transport regression failed."
+                "C5 pole/RGE consistency failed strict regression: "
+                "direct log coefficient must equal 2 x hard pole residue; "
+                f"reported ratio="
+                f"{pole_rge.get('DirectLogToPoleRatioOneGenerationInputForm')}."
             )
 
-        insertion = export_direct_weinberg_matchete(
-            transport_path=flavor_transport_path,
-            output_path=insertion_path,
-        )
-        if insertion.get("status") != "Success":
-            raise RuntimeError(
-                "Direct Weinberg Matchete insertion export failed."
-            )
+    return flavor_seed, flavor_transport, insertion, resume
 
-        resume = rerun_threshold2_with_running(
-            output_dir=record.output_dir,
-            running_insertion=insertion_path,
-            run_threshold_script=RUN_THRESHOLD_STAGE_SCRIPT,
-            d_s1=record.d_s1,
-            d_s2=record.d_s2,
-            d_f=record.d_f,
-            alpha=record.alpha,
-            shared_scalar=record.shared_scalar,
-            validation_mode=debug_reports,
-        )
-        if resume.get("status") != "Success":
-            raise RuntimeError(
-                "Threshold-2 rerun with direct Weinberg running failed."
-            )
 
-        pole_rge_path = data_dir / "c5_pole_rge_consistency.json"
-        if pole_rge_path.is_file():
-            pole_rge = normalize_pole_rge_consistency(pole_rge_path)
-            if not pole_rge.get("ConsistencyValidated", False):
-                raise RuntimeError(
-                    "C5 pole/RGE consistency failed strict regression: "
-                    "direct log coefficient must equal 2 x hard pole residue; "
-                    f"reported ratio="
-                    f"{pole_rge.get('DirectLogToPoleRatioOneGenerationInputForm')}."
-                )
-
-    except Exception as exc:
-        summary["EFT1FullFlavorBridgeStatus"] = "Failed"
-        summary["EFT1FullFlavorBridgeError"] = str(exc)
-        print(f"  {record.name}: full-flavor EFT1 bridge failed: {exc}")
-        return False
-
-    authoritative_threshold_c5 = data_dir / "c5_threshold_with_eft1_running.txt"
-    authoritative_direct_c5 = data_dir / "c5_direct_eft1_running.txt"
-    final_c5_bookkeeping_path = data_dir / "final_weinberg_coefficient.json"
-
-    if not authoritative_threshold_c5.is_file():
-        summary["EFT1FullFlavorBridgeStatus"] = "Failed"
-        summary["EFT1FullFlavorBridgeError"] = (
+def _build_authoritative_final_weinberg(
+    record: RunRecord,
+    paths: dict[str, Path],
+    *,
+    flavor_transport: dict,
+) -> dict:
+    """Build and validate the authoritative hierarchical Weinberg coefficient."""
+    if not paths["threshold_c5"].is_file():
+        raise RuntimeError(
             "Authoritative resumed threshold C5 was not exported: "
-            f"{authoritative_threshold_c5}"
+            f"{paths['threshold_c5']}"
         )
-        print(
-            f"  {record.name}: full-flavor EFT1 bridge failed: "
-            f"{summary['EFT1FullFlavorBridgeError']}"
-        )
-        return False
 
     try:
         final_c5 = build_final_weinberg_coefficient(
-            threshold_c5_path=authoritative_threshold_c5,
-            flavor_transport_path=flavor_transport_path,
-            output_path=final_c5_bookkeeping_path,
+            threshold_c5_path=paths["threshold_c5"],
+            flavor_transport_path=paths["flavor_transport"],
+            output_path=paths["final_c5"],
         )
     except Exception as exc:
-        summary["EFT1FullFlavorBridgeStatus"] = "Failed"
-        summary["EFT1FullFlavorBridgeError"] = (
+        raise RuntimeError(
             f"Final Weinberg coefficient bookkeeping failed: {exc}"
-        )
-        print(
-            f"  {record.name}: full-flavor EFT1 bridge failed: "
-            f"{summary['EFT1FullFlavorBridgeError']}"
-        )
-        return False
+        ) from exc
 
     if final_c5.get("status") != "Success":
-        summary["EFT1FullFlavorBridgeStatus"] = "Failed"
-        summary["EFT1FullFlavorBridgeError"] = (
+        raise RuntimeError(
             "Final Weinberg coefficient bookkeeping returned non-success."
         )
-        return False
 
     combined = final_c5.get("combined", {})
     if not combined.get("ready_for_physical_majorana_numerics", False):
-        summary["EFT1FullFlavorBridgeStatus"] = "Failed"
-        summary["EFT1FullFlavorBridgeError"] = (
+        raise RuntimeError(
             "Final Weinberg coefficient is not ready for physical Majorana "
             f"downstream use: {combined.get('physical_majorana_reason')!r}"
         )
-        return False
 
-    # From this point onward every EFT-side stage must consume the authoritative
-    # hierarchical full-flavor coefficient, never the preliminary
-    # c5_coefficient.txt extracted before the resumed threshold calculation.
+    return final_c5
+
+
+def _record_eft1_full_flavor_bridge_success(
+    record: RunRecord,
+    paths: dict[str, Path],
+    *,
+    flavor_seed: dict,
+    flavor_transport: dict,
+    insertion: dict,
+    resume: dict,
+    final_c5: dict,
+) -> None:
+    """Store successful EFT1 bridge provenance in the run summary."""
+    summary = record.summary
+    combined = final_c5.get("combined", {})
+
+    # Every EFT-side stage after this point consumes the authoritative
+    # hierarchical full-flavor coefficient, never the preliminary C5 exported
+    # before the resumed threshold calculation.
     summary["WeinbergCoefficientFile"] = (
-        final_c5_bookkeeping_path.relative_to(record.output_dir).as_posix()
+        paths["final_c5"].relative_to(record.output_dir).as_posix()
     )
 
     summary.update(
         {
             "EFT1FlavorSeedStatus": flavor_seed.get("status"),
-            "EFT1FlavorSeedFile": flavor_seed_path.relative_to(
+            "EFT1FlavorSeedFile": paths["flavor_seed"].relative_to(
                 record.output_dir
             ).as_posix(),
             "EFT1FlavorSeedOneGenerationCheck": flavor_seed.get(
@@ -875,14 +875,14 @@ def run_eft1_full_flavor_threshold_bridge(
             "EFT1FlavorRGEStatus": "DiagnosticNotRequiredForOneLoopC5",
             "EFT1FlavorRGEOneGenerationCheck": None,
             "EFT1FlavorTransportStatus": flavor_transport.get("status"),
-            "EFT1FlavorTransportFile": flavor_transport_path.relative_to(
+            "EFT1FlavorTransportFile": paths["flavor_transport"].relative_to(
                 record.output_dir
             ).as_posix(),
             "EFT1FlavorTransportEqualScaleCheck": flavor_transport.get(
                 "equal_scale_running_vanishes"
             ),
             "EFT1FlavorRunningInsertionStatus": insertion.get("status"),
-            "EFT1FlavorRunningInsertionFile": insertion_path.relative_to(
+            "EFT1FlavorRunningInsertionFile": paths["insertion"].relative_to(
                 record.output_dir
             ).as_posix(),
             "EFT1HeavySelfRunningIncludedInAuthoritativeC5": False,
@@ -908,22 +908,17 @@ def run_eft1_full_flavor_threshold_bridge(
                 "direct_weinberg_equal_scale_vanishes"
             ),
             "EFT1FullFlavorBridgeStatus": "Success",
-            "AuthoritativeThresholdC5File":
-                authoritative_threshold_c5.relative_to(
-                    record.output_dir
-                ).as_posix(),
+            "AuthoritativeThresholdC5File": paths["threshold_c5"].relative_to(
+                record.output_dir
+            ).as_posix(),
             "AuthoritativeDirectRunningC5File": (
-                authoritative_direct_c5.relative_to(
-                    record.output_dir
-                ).as_posix()
-                if authoritative_direct_c5.is_file()
+                paths["direct_c5"].relative_to(record.output_dir).as_posix()
+                if paths["direct_c5"].is_file()
                 else ""
             ),
-            "FinalWeinbergCoefficientFile": (
-                final_c5_bookkeeping_path.relative_to(
-                    record.output_dir
-                ).as_posix()
-            ),
+            "FinalWeinbergCoefficientFile": paths["final_c5"].relative_to(
+                record.output_dir
+            ).as_posix(),
             "AuthoritativeFinalC5Status": "ReadyForDownstream",
             "AuthoritativeFinalC5FullFlavorReady": combined.get(
                 "ready_for_full_flavor_numerics"
@@ -931,24 +926,78 @@ def run_eft1_full_flavor_threshold_bridge(
             "AuthoritativeFinalC5PhysicalMajoranaReady": combined.get(
                 "ready_for_physical_majorana_numerics"
             ),
-            "AuthoritativeDownstreamC5File": (
-                final_c5_bookkeeping_path.relative_to(
-                    record.output_dir
-                ).as_posix()
-            ),
+            "AuthoritativeDownstreamC5File": paths["final_c5"].relative_to(
+                record.output_dir
+            ).as_posix(),
         }
+    )
+
+
+def run_eft1_full_flavor_threshold_bridge(
+    record: RunRecord,
+    *,
+    mu_high: str,
+    mu_low: str,
+    debug_reports: bool = False,
+) -> bool:
+    """Build the authoritative fixed-one-loop hierarchical C5.
+
+    The tree LLSS Wilson boundary is O(hbar^0). Its direct mixing into O5 is
+    O(hbar^1). LLSS self-running is also O(hbar^1), so matching that corrected
+    heavy operator through the scalar loop would be O(hbar^2). Therefore only
+    the direct full-flavor C12 -> Weinberg running enters the authoritative
+    one-loop neutrino-mass calculation.
+    """
+    if not _is_f_then_s1_s2_plan(record):
+        record.summary["EFT1FullFlavorBridgeStatus"] = "NotApplicable"
+        return True
+
+    paths = _eft1_full_flavor_bridge_paths(record)
+    if not _validate_eft1_full_flavor_bridge_inputs(record, paths):
+        return False
+
+    print(
+        f"  {record.name}: starting fixed-one-loop direct Weinberg bridge "
+        f"{mu_high} -> {mu_low}...",
+        flush=True,
+    )
+
+    try:
+        flavor_seed, flavor_transport, insertion, resume = (
+            _run_direct_weinberg_bridge_stages(
+                record,
+                paths,
+                mu_high=mu_high,
+                mu_low=mu_low,
+                debug_reports=debug_reports,
+            )
+        )
+        final_c5 = _build_authoritative_final_weinberg(
+            record,
+            paths,
+            flavor_transport=flavor_transport,
+        )
+    except Exception as exc:
+        return _fail_eft1_full_flavor_bridge(record, str(exc))
+
+    _record_eft1_full_flavor_bridge_success(
+        record,
+        paths,
+        flavor_seed=flavor_seed,
+        flavor_transport=flavor_transport,
+        insertion=insertion,
+        resume=resume,
+        final_c5=final_c5,
     )
 
     print(
         f"  {record.name}: direct one-loop Weinberg bridge=Success "
         f"(heavy self-running excluded at O(hbar); "
         f"equal-scale check="
-        f"{summary['EFT1FlavorTransportEqualScaleCheck']})",
+        f"{record.summary['EFT1FlavorTransportEqualScaleCheck']})",
         flush=True,
     )
-
     return True
-
 
 def print_summary(records: list[RunRecord], aggregate_dir: Path | None = None) -> int:
     """Print the results of all completed T3 runs."""
@@ -1096,7 +1145,7 @@ def matched_c5_path(record: RunRecord) -> Path | None:
     return c5_path
 
 
-def run_matched_eft_rge_stage(
+def run_matched_weinberg_rge_stage(
     record: RunRecord,
     debug_reports: bool = False,
 ) -> bool:
@@ -1117,7 +1166,7 @@ def run_matched_eft_rge_stage(
     print(f"  {record.name}: starting matched-EFT RGE stage...", flush=True)
 
     try:
-        rge_summary = run_matched_eft_rge(
+        rge_summary = run_matched_weinberg_rge(
             c5_path=c5_path,
             output_dir=record.output_dir,
             debug_outputs=debug_reports,
@@ -1140,7 +1189,7 @@ def run_matched_eft_rge_stage(
     return summary.get("RGEStatus") == "Success"
 
 
-def run_flavor_rge_stage(
+def run_symbolic_flavor_weinberg_stage(
     record: RunRecord,
     debug_reports: bool = False,
 ) -> bool:
@@ -1159,7 +1208,7 @@ def run_flavor_rge_stage(
     )
 
     try:
-        flavor_summary = run_flavor_matched_rge(
+        flavor_summary = run_flavor_matched_weinberg_rge(
             c5_path=c5_path,
             output_dir=record.output_dir,
             debug_outputs=debug_reports,
@@ -1199,7 +1248,7 @@ def run_symbolic_neutrino_mass_stage(record: RunRecord) -> bool:
     )
 
     try:
-        mass_summary = run_neutrino_mass_stage(
+        mass_summary = _run_symbolic_neutrino_mass_stage(
             c5_path=c5_path,
             output_dir=record.output_dir,
         )
@@ -1222,7 +1271,7 @@ def run_symbolic_neutrino_mass_stage(record: RunRecord) -> bool:
     return summary.get("NeutrinoMassStatus") == "Success"
 
 
-def run_numerical_rge_stage(
+def run_numerical_weinberg_stage(
     record: RunRecord,
     numerical_config: Path,
 ) -> bool:
@@ -1238,7 +1287,7 @@ def run_numerical_rge_stage(
     print(f"  {record.name}: starting numerical RGE stage...", flush=True)
 
     try:
-        numerical_summary = run_numerical_pipeline_stage(
+        numerical_summary = _run_numerical_weinberg_stage(
             c5_path=c5_path,
             output_dir=record.output_dir,
             config_path=numerical_config,
@@ -1384,36 +1433,28 @@ def finish_runs(
     return status
 
 
-# Function:
-# 1. Get all arguments
-# 2. Start process
-# 3. Get reports
-def main() -> int:
-    # Get Arguments
+
+def _build_argument_parser() -> argparse.ArgumentParser:
+    """Build the command-line interface for the T3 pipeline."""
+
     parser = argparse.ArgumentParser(
         description=(
             "Run T3 matching for known benchmark models "
             "or arbitrary valid SU(2) irreps."
         )
     )
-
-    # Mutually exclusive command arguments
     mode = parser.add_mutually_exclusive_group()
 
-    # If we use --smoke we use the 5 T3 models we know
     mode.add_argument(
         "--smoke",
         action="store_true",
         help="five T3 regression models",
     )
-
-    # More running (not used)
     mode.add_argument(
         "--extended",
         action="store_true",
         help="seven historical benchmark points",
     )
-
     mode.add_argument(
         "--hypercharge-comparison",
         action="store_true",
@@ -1422,7 +1463,6 @@ def main() -> int:
             "to isolate hypercharge dependence"
         ),
     )
-
     mode.add_argument(
         "--dimension-comparison",
         action="store_true",
@@ -1431,7 +1471,6 @@ def main() -> int:
             "representation dependence"
         ),
     )
-
     mode.add_argument(
         "--full",
         action="store_true",
@@ -1440,8 +1479,6 @@ def main() -> int:
             "sequentially under output/full and Reports/output/full"
         ),
     )
-
-    # Dimension input to use a specific diagram
     mode.add_argument(
         "--dims",
         nargs="+",
@@ -1454,7 +1491,6 @@ def main() -> int:
         ),
     )
 
-
     parser.add_argument(
         "--study",
         type=str,
@@ -1465,19 +1501,15 @@ def main() -> int:
             "examples: hypercharge, dimensions"
         ),
     )
-
-    # We can attach a file for UV scale initial values for our couplings etc to RGE down to EFT
     parser.add_argument(
         "--numerical",
         type=Path,
         default=None,
         help=(
-            "optional JSON parameter point for numerical "
-            "matched-EFT running E.g python pipeline.py --numerical examples/t3_numerical_example.json"
+            "optional JSON parameter point for numerical matched-EFT running; "
+            "e.g. python pipeline.py --numerical examples/t3_numerical_example.json"
         ),
     )
-
-    # Adds the alpha hypercharge which is added onto the dims
     parser.add_argument(
         "--alpha",
         type=int,
@@ -1487,15 +1519,6 @@ def main() -> int:
             "Two-number shared-scalar mode fixes alpha=-1."
         ),
     )
-
-    # Ordered heavy-particle thresholds. Repeat --threshold to create
-    # successive EFT levels; fields given in the same occurrence are
-    # integrated out together.
-    #
-    # Examples:
-    #   --threshold F --threshold S1 S2
-    #   --threshold S1 --threshold F --threshold S2
-    #   --threshold F S1 S2
     parser.add_argument(
         "--threshold",
         action="append",
@@ -1503,13 +1526,12 @@ def main() -> int:
         metavar="FIELD",
         default=None,
         help=(
-            "ordered threshold group; ordinary mode uses F,S1,S2 and shared-scalar mode uses F,S. "
-            "Repeat the option for successive thresholds. "
-            "Fields in one group are integrated out together. "
+            "ordered threshold group; ordinary mode uses F,S1,S2 and "
+            "shared-scalar mode uses F,S. Repeat the option for successive "
+            "thresholds. Fields in one group are integrated out together. "
             "If omitted, F S1 S2 are integrated out together."
         ),
     )
-
     parser.add_argument(
         "--threshold-scale",
         action="append",
@@ -1521,8 +1543,6 @@ def main() -> int:
             "For F -> (S1,S2), defaults are MF and MS."
         ),
     )
-
-    # For logging just in case
     parser.add_argument(
         "--debug-reports",
         action="store_true",
@@ -1531,13 +1551,14 @@ def main() -> int:
             "UV/EFT expression reports"
         ),
     )
+    return parser
 
-    args = parser.parse_args()
 
-    # --full is a pure orchestration mode. It launches the ordinary study
-    # modes as child processes, each with its own nested output/report root.
-    if args.full:
-        return run_full_study(args)
+def _resolve_model_mode(
+    parser: argparse.ArgumentParser,
+    args: argparse.Namespace,
+) -> bool:
+    """Validate dimension/alpha options and return shared-scalar mode."""
 
     shared_scalar_mode = False
     if args.dims is not None:
@@ -1552,9 +1573,21 @@ def main() -> int:
     elif args.alpha is None:
         args.alpha = 0
 
+    return shared_scalar_mode
+
+
+def _resolve_threshold_configuration(
+    parser: argparse.ArgumentParser,
+    args: argparse.Namespace,
+    *,
+    shared_scalar_mode: bool,
+) -> tuple[list[list[str]], list[str]]:
+    """Validate threshold ordering and choose one scale per threshold group."""
+
     try:
         threshold_plan = validate_threshold_plan(
-            args.threshold, shared_scalar=shared_scalar_mode
+            args.threshold,
+            shared_scalar=shared_scalar_mode,
         )
     except ValueError as exc:
         parser.error(str(exc))
@@ -1572,49 +1605,62 @@ def main() -> int:
             for group in threshold_plan
         ]
 
+    return threshold_plan, threshold_scales
+
+
+def _study_name(args: argparse.Namespace) -> str:
+    """Return the output/report study directory name for one pipeline run."""
+
     if args.study:
         # Keep '/' so --full can intentionally create nested study roots such
-        # as full/hypercharge. Spaces are still normalised for CLI convenience.
-        study_name = args.study.strip().replace(" ", "_")
-    elif args.smoke:
-        study_name = "smoke"
-    elif args.hypercharge_comparison:
-        study_name = "hypercharge"
-    elif args.dimension_comparison:
-        study_name = "dimensions"
-    elif args.extended:
-        study_name = "extended"
-    elif args.dims:
-        study_name = "single"
-    else:
-        study_name = "interesting"
+        # as full/hypercharge. Spaces are normalised for CLI convenience.
+        return args.study.strip().replace(" ", "_")
+    if args.smoke:
+        return "smoke"
+    if args.hypercharge_comparison:
+        return "hypercharge"
+    if args.dimension_comparison:
+        return "dimensions"
+    if args.extended:
+        return "extended"
+    if args.dims:
+        return "single"
+    return "interesting"
 
-    study_output_dir = OUTPUT_DIR / study_name
-    study_report_dir = REPORT_OUTPUT_DIR / study_name
 
-    print(
-        "Threshold plan: "
-        + threshold_plan_label(threshold_plan)
-    )
+def _scan_definition(
+    args: argparse.Namespace,
+) -> tuple[str, tuple[tuple[str, int], ...]]:
+    """Return the label and benchmark points for a non-``--dims`` scan."""
 
-    study_output_dir.mkdir(parents=True, exist_ok=True)
-    study_report_dir.mkdir(parents=True, exist_ok=True)
+    if args.smoke:
+        return "smoke", SMOKE
+    if args.hypercharge_comparison:
+        return "hypercharge comparison", HYPERCHARGE_COMPARISON
+    if args.dimension_comparison:
+        return "dimension comparison", DIMENSION_COMPARISON
+    if args.extended:
+        return "extended", EXTENDED
+    return "interesting", INTERESTING
 
-    print(f"Study: {study_name}")
-    print(f"Raw output: {study_output_dir}")
-    print(f"Reports: {study_report_dir}")
-    # ----------------------------------------------------------------------
-    # Lagrangian and Weinberg Coefficient pipeline
-    # ----------------------------------------------------------------------
 
-    # If the dimensions happen to match T3-A ... T3-E, validate_dimensions()
-    # automatically recognises and labels the model appropriately.
+def _build_run_records(
+    parser: argparse.ArgumentParser,
+    args: argparse.Namespace,
+    *,
+    shared_scalar_mode: bool,
+    threshold_plan: list[list[str]],
+    study_output_dir: Path,
+) -> list[RunRecord]:
+    """Build the requested model(s) through the common Lagrangian path."""
+
     if args.dims:
         try:
             if shared_scalar_mode:
                 d_s, d_f = args.dims
                 record = validate_shared_dimensions(
-                    d_s, d_f,
+                    d_s,
+                    d_f,
                     debug_reports=args.debug_reports,
                     export_rge_tensors=False,
                     threshold_plan=threshold_plan,
@@ -1623,67 +1669,48 @@ def main() -> int:
             else:
                 d_s1, d_s2, d_f = args.dims
                 record = validate_dimensions(
-                    d_s1, d_s2, d_f, args.alpha, args.debug_reports, False,
-                    threshold_plan, study_output_dir,
+                    d_s1,
+                    d_s2,
+                    d_f,
+                    args.alpha,
+                    args.debug_reports,
+                    False,
+                    threshold_plan,
+                    study_output_dir,
                 )
         except ValueError as exc:
             parser.error(str(exc))
+        return [record]
 
-        records = [record]
-
-    else:
-        # The benchmark lists still use the familiar A-E notation because
-        # it is convenient for regression testing and comparison with the paper.
-        if args.smoke:
-            mode_name = "smoke"
-            points = SMOKE
-
-        elif args.hypercharge_comparison:
-            mode_name = "hypercharge comparison"
-            points = HYPERCHARGE_COMPARISON
-
-        elif args.dimension_comparison:
-            mode_name = "dimension comparison"
-            points = DIMENSION_COMPARISON
-
-        elif args.extended:
-            mode_name = "extended"
-            points = EXTENDED
-
-        else:
-            mode_name = "interesting"
-            points = INTERESTING
-
-        print(
-            f"T3 scan mode: {mode_name}; "
-            f"{len(points)} model(s)."
+    mode_name, points = _scan_definition(args)
+    print(f"T3 scan mode: {mode_name}; {len(points)} model(s).")
+    return [
+        obtain_class_dimensions(
+            model_class,
+            alpha,
+            args.debug_reports,
+            False,
+            threshold_plan,
+            study_output_dir,
         )
+        for model_class, alpha in points
+    ]
 
-        # This line only exist if we use the special interesting, extended and smoke options where we dont input any dimensions
-        # Known A-E models are converted to dimensions first and then sent
-        # through exactly the same validate_dimensions() path as generalised models.
-        records = [
-            obtain_class_dimensions(
-                model_class,
-                alpha,
-                args.debug_reports,
-                False,
-                threshold_plan,
-                study_output_dir,
-            )
-            for model_class, alpha in points
-        ]
 
-    # Attach Python-side stage records using the same threshold plan.  The
-    # Wolfram summary now contains the actual sequentially matched EFT-stage
-    # Lagrangians; do not overwrite those physics results here.
+def _attach_threshold_metadata(
+    records: list[RunRecord],
+    *,
+    threshold_plan: list[list[str]],
+    threshold_scales: list[str],
+) -> None:
+    """Attach Python-side stage records and threshold metadata to each run."""
+
     for record in records:
         record.eft_stages = build_eft_stage_records(
             threshold_plan,
             record.output_dir,
             shared_scalar=record.shared_scalar,
         )
-
         record.summary.setdefault(
             "ThresholdPlan",
             threshold_plan_to_json(threshold_plan),
@@ -1692,125 +1719,164 @@ def main() -> int:
             "ThresholdPlanLabel",
             threshold_plan_label(threshold_plan),
         )
-        record.summary.setdefault(
-            "ThresholdScales",
-            threshold_scales,
-        )
+        record.summary.setdefault("ThresholdScales", threshold_scales)
 
-    # Organise the matched coefficient before starting the RGE pipeline, so all
-    # later stages read C5 from the same final machine-readable location.
-    for record in records:
-        organise_c5_input(record)
 
-    # ----------------------------------------------------------------------
-    # RGE pipeline
-    # ----------------------------------------------------------------------
+def _run_intermediate_eft_stages(
+    records: list[RunRecord],
+    *,
+    threshold_plan: list[list[str]],
+    threshold_scales: list[str],
+    debug_reports: bool,
+) -> bool:
+    """Run UV and, when present, intermediate-EFT RGBeta/Wilson stages."""
 
     physics_failed = False
 
-    # For every model, only run the UV RGE stage if the model Lagrangian was built successfully. Also remember whether any model failed.
-    # We want UV RGE for comparison with EFT RGE
     for record in records:
         if record.summary.get("BuildStatus") == "Success":
             physics_failed |= not run_uv_rgbeta_stage(record)
         else:
             record.summary["UVRGEStatus"] = "NotRun"
 
-    # If F is the first threshold, generate the dimension-four running in the
-    # genuine intermediate EFT SM + S1 + S2.  This is intentionally separate
-    # from the higher-dimensional Wilson-coefficient running.
     for record in records:
-        if record.summary.get("BuildStatus") == "Success":
-            eft1_renormalisable_ok = run_eft1_rgbeta_stage(record)
-            physics_failed |= not eft1_renormalisable_ok
-
-            # The higher-dimensional EFT1 RGE needs the RGBeta metadata written
-            # by the preceding stage, so only run it when that stage succeeded.
-            if eft1_renormalisable_ok:
-                eft1_wilson_ok = run_eft1_wilson_rge_stage(record)
-                physics_failed |= not eft1_wilson_ok
-
-                if (
-                    eft1_wilson_ok
-                    and _is_f_then_scalar_threshold_plan(
-                        threshold_plan,
-                        record,
-                    )
-                ):
-                    # Keep the one-generation component transport as a compact
-                    # regression/diagnostic, then run the authoritative
-                    # full-flavor stop/run/resume threshold bridge.
-                    transport_ok = run_eft1_wilson_transport_stage(
-                        record,
-                        mu_high=threshold_scales[0],
-                        mu_low=threshold_scales[1],
-                    )
-                    physics_failed |= not transport_ok
-
-                    if transport_ok:
-                        physics_failed |= not run_eft1_full_flavor_threshold_bridge(
-                            record,
-                            mu_high=threshold_scales[0],
-                            mu_low=threshold_scales[1],
-                            debug_reports=args.debug_reports,
-                        )
-
-    # After matching has generated the Weinberg coefficient C5, the EFT RGE pipeline starts here. 
-    # Each later stage runs only if the previous stage for that model succeeded.
-    for record in records:
-        summary = record.summary
-
-        # Check if any part works for a model, if a model fails we skip
-        if summary.get("BuildStatus") != "Success":
+        if record.summary.get("BuildStatus") != "Success":
             continue
 
-        if summary.get("MatchingStatus") != "Success":
+        eft1_renormalisable_ok = run_eft1_rgbeta_stage(record)
+        physics_failed |= not eft1_renormalisable_ok
+        if not eft1_renormalisable_ok:
             continue
 
-        if summary.get("WeinbergExtractionStatus") != "Success":
+        eft1_wilson_ok = run_eft1_wilson_rge_stage(record)
+        physics_failed |= not eft1_wilson_ok
+        if not eft1_wilson_ok:
             continue
 
-        # Hierarchical F -> (S1,S2) runs promote
-        # data/final_weinberg_coefficient.json to WeinbergCoefficientFile in
-        # run_eft1_full_flavor_threshold_bridge.  Legacy/common-threshold runs
-        # continue to use their organised scalar C5 text file.
+        if not _is_f_then_scalar_threshold_plan(threshold_plan, record):
+            continue
 
-        # Evaluate the matched Weinberg coefficient with the general
-        # one-generation SMEFT RGE machinery and verify the known SMEFT result.
-        if not run_matched_eft_rge_stage(
+        # Keep the one-generation component transport as a compact diagnostic,
+        # then run the authoritative full-flavor stop/run/resume bridge.
+        transport_ok = run_eft1_wilson_transport_stage(
             record,
-            args.debug_reports,
-        ):
+            mu_high=threshold_scales[0],
+            mu_low=threshold_scales[1],
+        )
+        physics_failed |= not transport_ok
+        if not transport_ok:
+            continue
+
+        bridge_ok = run_eft1_full_flavor_threshold_bridge(
+            record,
+            mu_high=threshold_scales[0],
+            mu_low=threshold_scales[1],
+            debug_reports=debug_reports,
+        )
+        physics_failed |= not bridge_ok
+
+    return physics_failed
+
+
+def _ready_for_final_weinberg_stages(record: RunRecord) -> bool:
+    """Return whether matching produced the inputs needed by final C5 stages."""
+
+    summary = record.summary
+    return (
+        summary.get("BuildStatus") == "Success"
+        and summary.get("MatchingStatus") == "Success"
+        and summary.get("WeinbergExtractionStatus") == "Success"
+    )
+
+
+def _run_final_weinberg_stages(
+    records: list[RunRecord],
+    *,
+    debug_reports: bool,
+    numerical_input: Path | None,
+) -> bool:
+    """Run matched, flavor, neutrino-mass, and optional numerical stages."""
+
+    physics_failed = False
+
+    for record in records:
+        if not _ready_for_final_weinberg_stages(record):
+            continue
+
+        if not run_matched_weinberg_rge_stage(record, debug_reports):
             physics_failed = True
             continue
 
-        # Get the matched one-generation C5 into the full 3x3 lepton-flavor
-        # matrix and calculate its symbolic SMEFT beta matrix.
-        if not run_flavor_rge_stage(
-            record,
-            args.debug_reports,
-        ):
+        if not run_symbolic_flavor_weinberg_stage(record, debug_reports):
             physics_failed = True
             continue
 
-        # Convert the matched symbolic flavor coefficient into the symbolic
-        # Majorana neutrino-mass matrix using m_nu = -v^2 C5.
         if not run_symbolic_neutrino_mass_stage(record):
             physics_failed = True
             continue
 
-        # If a numerical parameter point and argument is given, evaluate C5 at the
-        # matching scale and numerically integrate the coupled one-loop SMEFT RGEs
-        # down to the requested low scale. Then calculate neutrino observables.
-        if args.numerical is not None:
-            if not run_numerical_rge_stage(
-                record,
-                args.numerical,
-            ):
+        if numerical_input is not None:
+            if not run_numerical_weinberg_stage(record, numerical_input):
                 physics_failed = True
-                continue
 
-    # Reports and final summaries happen only after the full physics pipeline.
+    return physics_failed
+
+
+def main() -> int:
+    """Parse one pipeline run, execute its stages, and generate reports."""
+
+    parser = _build_argument_parser()
+    args = parser.parse_args()
+
+    if args.full:
+        return run_full_study(args)
+
+    shared_scalar_mode = _resolve_model_mode(parser, args)
+    threshold_plan, threshold_scales = _resolve_threshold_configuration(
+        parser,
+        args,
+        shared_scalar_mode=shared_scalar_mode,
+    )
+
+    study_name = _study_name(args)
+    study_output_dir = OUTPUT_DIR / study_name
+    study_report_dir = REPORT_OUTPUT_DIR / study_name
+    study_output_dir.mkdir(parents=True, exist_ok=True)
+    study_report_dir.mkdir(parents=True, exist_ok=True)
+
+    print(f"Threshold plan: {threshold_plan_label(threshold_plan)}")
+    print(f"Study: {study_name}")
+    print(f"Raw output: {study_output_dir}")
+    print(f"Reports: {study_report_dir}")
+
+    records = _build_run_records(
+        parser,
+        args,
+        shared_scalar_mode=shared_scalar_mode,
+        threshold_plan=threshold_plan,
+        study_output_dir=study_output_dir,
+    )
+    _attach_threshold_metadata(
+        records,
+        threshold_plan=threshold_plan,
+        threshold_scales=threshold_scales,
+    )
+
+    for record in records:
+        organise_c5_input(record)
+
+    physics_failed = _run_intermediate_eft_stages(
+        records,
+        threshold_plan=threshold_plan,
+        threshold_scales=threshold_scales,
+        debug_reports=args.debug_reports,
+    )
+    physics_failed |= _run_final_weinberg_stages(
+        records,
+        debug_reports=args.debug_reports,
+        numerical_input=args.numerical,
+    )
+
     return finish_runs(
         records,
         args.debug_reports,

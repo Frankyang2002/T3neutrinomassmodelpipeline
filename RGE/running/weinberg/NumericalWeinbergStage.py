@@ -6,12 +6,12 @@ from pathlib import Path
 import numpy as np
 import sympy as sp
 
-from RGE.matching.FlavorMatchedC5 import (
+from RGE.matching.FlavorC5Matching import (
     extract_t3_loop_kernel,
     is_final_weinberg_json,
     load_final_weinberg_flavor_matrix,
 )
-from RGE.matching.MatchedEFTRGE import parse_matchete_c5
+from RGE.matching.MatchedWeinbergRGE import parse_matchete_c5
 from RGE.running.weinberg.WeinbergRunning import (
     SMInitialConditions,
     evolve_weinberg,
@@ -242,7 +242,7 @@ def evaluate_symbolic_c5(
     return K
 
 
-def run_numerical_pipeline_stage(
+def run_numerical_weinberg_stage(
     c5_path: Path,
     output_dir: Path,
     config_path: Path,

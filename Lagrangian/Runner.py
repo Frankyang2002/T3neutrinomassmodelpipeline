@@ -3,10 +3,9 @@ from __future__ import annotations
 import json
 import shutil
 import subprocess
-import sys
 from pathlib import Path
 
-from common.Records import RunRecord
+from common.RunRecords import RunRecord
 from common.Thresholds import (
     default_threshold_plan,
     threshold_plan_for_wolfram,

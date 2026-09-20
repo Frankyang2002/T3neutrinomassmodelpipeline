@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import TypeAlias
 
-from common.Records import EFTStageRecord
+from common.RunRecords import EFTStageRecord
 
 
 ThresholdField: TypeAlias = str

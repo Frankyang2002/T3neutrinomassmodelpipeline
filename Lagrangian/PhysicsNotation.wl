@@ -1,9 +1,9 @@
 (* ::Package:: *)
 
 (*
-  PhysicsLaTeX.wl
+  PhysicsNotation.wl
   
-  Convert Matchete expressions into readable physics notation before TeX export.
+  Convert Matchete expressions into readable physics notation and LaTeX output.
 
   The conversion is intentionally recursive: field, index, coupling and Dirac
   structures are formatted independently, then the final expression is checked
@@ -31,7 +31,7 @@ ClearAll[
   PhysicsDisplayForm,
   RemainingInternalObjects,
   FullyConvertedQ,
-  ExpressionToLaTeX
+  PhysicsExpressionToLaTeX
 ];
 
 (* Symbol-name matching keeps the formatter independent of Matchete contexts. *)
@@ -684,7 +684,7 @@ RemainingInternalObjects[expression_] := DeleteDuplicates@Cases[
 FullyConvertedQ[expression_] :=
   RemainingInternalObjects[expression] === {};
 
-ExpressionToLaTeX[expression_] := Module[
+PhysicsExpressionToLaTeX[expression_] := Module[
   {formatted, remaining, latex},
 
   If[

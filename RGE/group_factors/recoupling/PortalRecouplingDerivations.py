@@ -70,7 +70,7 @@ For distinct couplings X,Y both orderings contribute.
 
 
 
-def ecrossportal_su2_generators(d: int):
+def cross_portal_su2_generators(d: int):
     j = sp.Rational(d - 1, 2)
     ms = [j - i for i in range(d)]
     jp = sp.zeros(d)
@@ -89,7 +89,7 @@ def ecrossportal_su2_generators(d: int):
     )
 
 
-def ecrossportal_charge_conjugation_metric(d: int):
+def cross_portal_charge_conjugation_metric(d: int):
     j = sp.Rational(d - 1, 2)
     ms = [j - i for i in range(d)]
     C = sp.zeros(d)
@@ -100,7 +100,7 @@ def ecrossportal_charge_conjugation_metric(d: int):
     return C
 
 
-def ecrossportal_complex_block(d: int, prefix: str):
+def cross_portal_complex_block(d: int, prefix: str):
     z, zb, variables = [], [], []
     for c in range(d):
         x = sp.Symbol(f"{prefix}R{c}")
@@ -111,11 +111,11 @@ def ecrossportal_complex_block(d: int, prefix: str):
     return z, zb, variables
 
 
-def ecrossportal_dot(a, b):
+def cross_portal_dot(a, b):
     return sp.expand(sum(x * y for x, y in zip(a, b)))
 
 
-def ecrossportal_bilinear(zb, z, M):
+def cross_portal_bilinear(zb, z, M):
     return sp.expand(sum(
         zb[i] * M[i, j] * z[j]
         for i in range(len(z))
@@ -158,7 +158,7 @@ def scalar_cross_tensor(A, B, n, same=False):
     return out
 
 
-def ecrossportal_decompose(generated, basis):
+def decompose_cross_portal(generated, basis):
     names = list(basis)
     tensors = [basis[name] for name in names]
 
@@ -189,9 +189,9 @@ def ecrossportal_decompose(generated, basis):
 
 
 def build_e_operators():
-    H, Hb, hv = ecrossportal_complex_block(2, "H")
-    S1, S1b, s1v = ecrossportal_complex_block(3, "S1")
-    S2, S2b, s2v = ecrossportal_complex_block(3, "S2")
+    H, Hb, hv = cross_portal_complex_block(2, "H")
+    S1, S1b, s1v = cross_portal_complex_block(3, "S1")
+    S2, S2b, s2v = cross_portal_complex_block(3, "S2")
     variables = hv + s1v + s2v
 
     groups = {
@@ -200,33 +200,33 @@ def build_e_operators():
         "S2": set(range(len(hv) + len(s1v), len(variables))),
     }
 
-    tH = ecrossportal_su2_generators(2)
-    t1 = ecrossportal_su2_generators(3)
-    t2 = ecrossportal_su2_generators(3)
-    C = ecrossportal_charge_conjugation_metric(3)
+    tH = cross_portal_su2_generators(2)
+    t1 = cross_portal_su2_generators(3)
+    t2 = cross_portal_su2_generators(3)
+    C = cross_portal_charge_conjugation_metric(3)
 
     polynomials = {
-        "H1": ecrossportal_dot(Hb, H) * ecrossportal_dot(S1b, S1),
-        "H2": ecrossportal_dot(Hb, H) * ecrossportal_dot(S2b, S2),
-        "12": ecrossportal_dot(S1b, S1) * ecrossportal_dot(S2b, S2),
+        "H1": cross_portal_dot(Hb, H) * cross_portal_dot(S1b, S1),
+        "H2": cross_portal_dot(Hb, H) * cross_portal_dot(S2b, S2),
+        "12": cross_portal_dot(S1b, S1) * cross_portal_dot(S2b, S2),
         "H1Adj": sum(
-            ecrossportal_bilinear(Hb, H, tH[A]) * ecrossportal_bilinear(S1b, S1, t1[A])
+            cross_portal_bilinear(Hb, H, tH[A]) * cross_portal_bilinear(S1b, S1, t1[A])
             for A in range(3)
         ),
         "H2Adj": sum(
-            ecrossportal_bilinear(Hb, H, tH[A]) * ecrossportal_bilinear(S2b, S2, t2[A])
+            cross_portal_bilinear(Hb, H, tH[A]) * cross_portal_bilinear(S2b, S2, t2[A])
             for A in range(3)
         ),
         "12Adj": sum(
-            ecrossportal_bilinear(S1b, S1, t1[A]) * ecrossportal_bilinear(S2b, S2, t2[A])
+            cross_portal_bilinear(S1b, S1, t1[A]) * cross_portal_bilinear(S2b, S2, t2[A])
             for A in range(3)
         ),
         "S1Adj": sp.Rational(1, 2) * sum(
-            ecrossportal_bilinear(S1b, S1, t1[A]) ** 2
+            cross_portal_bilinear(S1b, S1, t1[A]) ** 2
             for A in range(3)
         ),
         "S2Adj": sp.Rational(1, 2) * sum(
-            ecrossportal_bilinear(S2b, S2, t2[A]) ** 2
+            cross_portal_bilinear(S2b, S2, t2[A]) ** 2
             for A in range(3)
         ),
     }
@@ -242,7 +242,7 @@ def build_e_operators():
                 for a in range(3) for b in range(3)
             )
         )
-        + ecrossportal_dot(S1b, S2) * ecrossportal_dot(S1, S2b)
+        + cross_portal_dot(S1b, S2) * cross_portal_dot(S1, S2b)
     )
 
     tensors = {
@@ -269,7 +269,7 @@ def build_e_operators():
     return variables, groups, tensors, bases
 
 
-def ecrossportal_main():
+def run_cross_portal_derivation_cli():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--output",
@@ -326,7 +326,7 @@ def ecrossportal_main():
             tensors[left], tensors[right], n, same=same
         )
         generated = restrict_sector(generated, groups, required)
-        coefficients, residual = ecrossportal_decompose(generated, bases[sector])
+        coefficients, residual = decompose_cross_portal(generated, bases[sector])
 
         row = {
             "beta": beta,
@@ -398,7 +398,7 @@ beta functions and are intentionally excluded from the residual.
 
 
 
-adjportal_MODEL_DIMS = {
+ADJOINT_PORTAL_MODEL_DIMS = {
     "A": (1, 3, 2),
     "B": (2, 2, 1),
     "C": (2, 2, 3),
@@ -407,7 +407,7 @@ adjportal_MODEL_DIMS = {
 }
 
 
-def adjportal_su2_generators(d: int):
+def adjoint_portal_su2_generators(d: int):
     j = sp.Rational(d - 1, 2)
     ms = [j - i for i in range(d)]
     jp = sp.zeros(d)
@@ -424,7 +424,7 @@ def adjportal_su2_generators(d: int):
     )
 
 
-def adjportal_charge_conjugation_metric(d: int):
+def adjoint_portal_charge_conjugation_metric(d: int):
     j = sp.Rational(d - 1, 2)
     ms = [j - i for i in range(d)]
     C = sp.zeros(d)
@@ -435,7 +435,7 @@ def adjportal_charge_conjugation_metric(d: int):
     return C
 
 
-def adjportal_complex_block(d: int, prefix: str):
+def adjoint_portal_complex_block(d: int, prefix: str):
     z, zb, variables = [], [], []
     for c in range(d):
         x = sp.Symbol(f"{prefix}R{c}")
@@ -446,11 +446,11 @@ def adjportal_complex_block(d: int, prefix: str):
     return z, zb, variables
 
 
-def adjportal_dot(a, b):
+def adjoint_portal_dot(a, b):
     return sp.expand(sum(x * y for x, y in zip(a, b)))
 
 
-def adjportal_bilinear(zb, z, M):
+def adjoint_portal_bilinear(zb, z, M):
     return sp.expand(sum(
         zb[i] * M[i, j] * z[j]
         for i in range(len(z))
@@ -479,7 +479,7 @@ def square_loop_tensor(A, n):
     return out
 
 
-def adjportal_decompose(generated, basis):
+def decompose_adjoint_portal(generated, basis):
     names = list(basis)
     tensors = [basis[name] for name in names]
 
@@ -512,10 +512,10 @@ def adjportal_decompose(generated, basis):
     )
 
 
-def adjportal_build_model(d1, d2):
-    H, Hb, hv = adjportal_complex_block(2, "H")
-    S1, S1b, s1v = adjportal_complex_block(d1, "S1")
-    S2, S2b, s2v = adjportal_complex_block(d2, "S2")
+def build_adjoint_portal_model(d1, d2):
+    H, Hb, hv = adjoint_portal_complex_block(2, "H")
+    S1, S1b, s1v = adjoint_portal_complex_block(d1, "S1")
+    S2, S2b, s2v = adjoint_portal_complex_block(d2, "S2")
     variables = hv + s1v + s2v
 
     groups = {
@@ -524,34 +524,34 @@ def adjportal_build_model(d1, d2):
         "S2": set(range(len(hv) + len(s1v), len(variables))),
     }
 
-    tH = adjportal_su2_generators(2)
-    t1 = adjportal_su2_generators(d1)
-    t2 = adjportal_su2_generators(d2)
+    tH = adjoint_portal_su2_generators(2)
+    t1 = adjoint_portal_su2_generators(d1)
+    t2 = adjoint_portal_su2_generators(d2)
 
     poly = {
-        "H1": adjportal_dot(Hb, H) * adjportal_dot(S1b, S1),
-        "H2": adjportal_dot(Hb, H) * adjportal_dot(S2b, S2),
-        "12": adjportal_dot(S1b, S1) * adjportal_dot(S2b, S2),
+        "H1": adjoint_portal_dot(Hb, H) * adjoint_portal_dot(S1b, S1),
+        "H2": adjoint_portal_dot(Hb, H) * adjoint_portal_dot(S2b, S2),
+        "12": adjoint_portal_dot(S1b, S1) * adjoint_portal_dot(S2b, S2),
     }
 
     if d1 > 1:
         poly["H1Adj"] = sum(
-            adjportal_bilinear(Hb, H, tH[A]) * adjportal_bilinear(S1b, S1, t1[A])
+            adjoint_portal_bilinear(Hb, H, tH[A]) * adjoint_portal_bilinear(S1b, S1, t1[A])
             for A in range(3)
         )
     if d2 > 1:
         poly["H2Adj"] = sum(
-            adjportal_bilinear(Hb, H, tH[A]) * adjportal_bilinear(S2b, S2, t2[A])
+            adjoint_portal_bilinear(Hb, H, tH[A]) * adjoint_portal_bilinear(S2b, S2, t2[A])
             for A in range(3)
         )
     if d1 > 1 and d2 > 1:
         poly["12Adj"] = sum(
-            adjportal_bilinear(S1b, S1, t1[A]) * adjportal_bilinear(S2b, S2, t2[A])
+            adjoint_portal_bilinear(S1b, S1, t1[A]) * adjoint_portal_bilinear(S2b, S2, t2[A])
             for A in range(3)
         )
 
     if d1 == 3 and d2 == 3:
-        C = adjportal_charge_conjugation_metric(3)
+        C = adjoint_portal_charge_conjugation_metric(3)
         poly["12Cross"] = sp.expand(
             (
                 sum(
@@ -563,7 +563,7 @@ def adjportal_build_model(d1, d2):
                     for a in range(3) for b in range(3)
                 )
             )
-            + adjportal_dot(S1b, S2) * adjportal_dot(S1, S2b)
+            + adjoint_portal_dot(S1b, S2) * adjoint_portal_dot(S1, S2b)
         )
 
     tensor = {
@@ -575,8 +575,8 @@ def adjportal_build_model(d1, d2):
 
 
 def derive_model(model):
-    d1, d2, _ = adjportal_MODEL_DIMS[model]
-    variables, groups, tensor = adjportal_build_model(d1, d2)
+    d1, d2, _ = ADJOINT_PORTAL_MODEL_DIMS[model]
+    variables, groups, tensor = build_adjoint_portal_model(d1, d2)
     n = len(variables)
     rows = []
 
@@ -619,7 +619,7 @@ def derive_model(model):
             sector,
             reject_unassigned=True,
         )
-        coefficients, residual = adjportal_decompose(generated, basis)
+        coefficients, residual = decompose_adjoint_portal(generated, basis)
         rows.append({
             "beta": beta,
             "source": source,
@@ -634,7 +634,7 @@ def derive_model(model):
     return rows
 
 
-def adjportal_main():
+def run_adjoint_portal_derivation_cli():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--output",
@@ -648,7 +648,7 @@ def adjportal_main():
     payload = {}
     overall = True
 
-    for model in adjportal_MODEL_DIMS:
+    for model in ADJOINT_PORTAL_MODEL_DIMS:
         rows = derive_model(model)
         payload[model] = rows
         print(f"T3-{model}")
@@ -721,7 +721,7 @@ No RGBeta coefficients are used as inputs.
 
 
 
-gaugeportal_MODEL_DIMS = {
+GAUGE_PORTAL_MODEL_DIMS = {
     "A": (1, 3, 2),
     "B": (2, 2, 1),
     "C": (2, 2, 3),
@@ -732,7 +732,7 @@ gaugeportal_MODEL_DIMS = {
 g2, gY = sp.symbols("g2 gY", real=True)
 
 
-def gaugeportal_su2_generators(d: int):
+def gauge_portal_su2_generators(d: int):
     j = sp.Rational(d - 1, 2)
     ms = [j - i for i in range(d)]
     jp = sp.zeros(d)
@@ -766,7 +766,7 @@ def block_diag(*blocks):
     return sp.diag(*blocks)
 
 
-def gaugeportal_charge_conjugation_metric(d: int):
+def gauge_portal_charge_conjugation_metric(d: int):
     j = sp.Rational(d - 1, 2)
     ms = [j - i for i in range(d)]
     C = sp.zeros(d)
@@ -777,7 +777,7 @@ def gaugeportal_charge_conjugation_metric(d: int):
     return C
 
 
-def gaugeportal_complex_block(d: int, symbols):
+def gauge_portal_complex_block(d: int, symbols):
     z, zb = [], []
     R = symbols[:d]
     I = symbols[d:]
@@ -787,11 +787,11 @@ def gaugeportal_complex_block(d: int, symbols):
     return z, zb
 
 
-def gaugeportal_dot(a, b):
+def gauge_portal_dot(a, b):
     return sp.expand(sum(x * y for x, y in zip(a, b)))
 
 
-def gaugeportal_bilinear(zb, z, T):
+def gauge_portal_bilinear(zb, z, T):
     return sp.expand(sum(
         zb[i] * T[i, j] * z[j]
         for i in range(len(z))
@@ -799,7 +799,7 @@ def gaugeportal_bilinear(zb, z, T):
     ))
 
 
-def gaugeportal_decompose(generated, basis):
+def decompose_gauge_portal(generated, basis):
     names = list(basis)
     tensors = [basis[name] for name in names]
     gram = sp.Matrix([[tensor_inner(A, B) for B in tensors] for A in tensors])
@@ -850,7 +850,7 @@ def gauge_tensor(generators, n):
     return out
 
 
-def gaugeportal_build_model(d1, d2, alpha):
+def build_gauge_portal_model(d1, d2, alpha):
     nH, n1, n2 = 4, 2 * d1, 2 * d2
     n = nH + n1 + n2
     variables = sp.symbols(f"x0:{n}", real=True)
@@ -859,13 +859,13 @@ def gaugeportal_build_model(d1, d2, alpha):
     S1vars = list(variables[nH:nH+n1])
     S2vars = list(variables[nH+n1:])
 
-    H, Hb = gaugeportal_complex_block(2, Hvars)
-    S1, S1b = gaugeportal_complex_block(d1, S1vars)
-    S2, S2b = gaugeportal_complex_block(d2, S2vars)
+    H, Hb = gauge_portal_complex_block(2, Hvars)
+    S1, S1b = gauge_portal_complex_block(d1, S1vars)
+    S2, S2b = gauge_portal_complex_block(d2, S2vars)
 
-    tH = gaugeportal_su2_generators(2)
-    t1 = gaugeportal_su2_generators(d1)
-    t2 = gaugeportal_su2_generators(d2)
+    tH = gauge_portal_su2_generators(2)
+    t1 = gauge_portal_su2_generators(d1)
+    t2 = gauge_portal_su2_generators(d2)
 
     zeroH = sp.zeros(nH)
     zero1 = sp.zeros(n1)
@@ -894,35 +894,35 @@ def gaugeportal_build_model(d1, d2, alpha):
     )
 
     poly = {
-        "H1": gaugeportal_dot(Hb, H) * gaugeportal_dot(S1b, S1),
-        "H2": gaugeportal_dot(Hb, H) * gaugeportal_dot(S2b, S2),
-        "12": gaugeportal_dot(S1b, S1) * gaugeportal_dot(S2b, S2),
+        "H1": gauge_portal_dot(Hb, H) * gauge_portal_dot(S1b, S1),
+        "H2": gauge_portal_dot(Hb, H) * gauge_portal_dot(S2b, S2),
+        "12": gauge_portal_dot(S1b, S1) * gauge_portal_dot(S2b, S2),
     }
 
     if d1 > 1:
         poly["H1Adj"] = sum(
-            gaugeportal_bilinear(Hb, H, tH[A]) * gaugeportal_bilinear(S1b, S1, t1[A])
+            gauge_portal_bilinear(Hb, H, tH[A]) * gauge_portal_bilinear(S1b, S1, t1[A])
             for A in range(3)
         )
     if d2 > 1:
         poly["H2Adj"] = sum(
-            gaugeportal_bilinear(Hb, H, tH[A]) * gaugeportal_bilinear(S2b, S2, t2[A])
+            gauge_portal_bilinear(Hb, H, tH[A]) * gauge_portal_bilinear(S2b, S2, t2[A])
             for A in range(3)
         )
     if d1 > 1 and d2 > 1:
         poly["12Adj"] = sum(
-            gaugeportal_bilinear(S1b, S1, t1[A]) * gaugeportal_bilinear(S2b, S2, t2[A])
+            gauge_portal_bilinear(S1b, S1, t1[A]) * gauge_portal_bilinear(S2b, S2, t2[A])
             for A in range(3)
         )
 
     if d1 == 3 and d2 == 3:
-        C = gaugeportal_charge_conjugation_metric(3)
+        C = gauge_portal_charge_conjugation_metric(3)
         poly["12Cross"] = sp.expand(
             (
                 sum(S1b[a] * C[a, b] * S2b[b] for a in range(3) for b in range(3))
                 * sum(S1[a] * C[a, b] * S2[b] for a in range(3) for b in range(3))
             )
-            + gaugeportal_dot(S1b, S2) * gaugeportal_dot(S1, S2b)
+            + gauge_portal_dot(S1b, S2) * gauge_portal_dot(S1, S2b)
         )
 
     tensors = {
@@ -953,9 +953,9 @@ def gaugeportal_build_model(d1, d2, alpha):
     return n, weighted, tensors, bases, groups
 
 
-def derive(model, alpha):
-    d1, d2, _ = gaugeportal_MODEL_DIMS[model]
-    n, weighted, tensors, bases, groups = gaugeportal_build_model(d1, d2, alpha)
+def derive_gauge_portal_recouplings(model, alpha):
+    d1, d2, _ = GAUGE_PORTAL_MODEL_DIMS[model]
+    n, weighted, tensors, bases, groups = build_gauge_portal_model(d1, d2, alpha)
     generated = gauge_tensor(weighted, n)
 
     sectors = {
@@ -967,7 +967,7 @@ def derive(model, alpha):
     rows = {}
     for beta, (sector, required) in sectors.items():
         restricted = restrict_sector(generated, groups, required)
-        coeffs, residual = gaugeportal_decompose(restricted, bases[sector])
+        coeffs, residual = decompose_gauge_portal(restricted, bases[sector])
         rows[beta] = {
             "coefficients": {
                 name: sp.sstr(sp.factor(value))
@@ -979,7 +979,7 @@ def derive(model, alpha):
     return rows
 
 
-def gaugeportal_main():
+def run_gauge_portal_derivation_cli():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--output",
@@ -991,11 +991,11 @@ def gaugeportal_main():
     payload = {}
     overall = True
 
-    for model in gaugeportal_MODEL_DIMS:
+    for model in GAUGE_PORTAL_MODEL_DIMS:
         print(f"T3-{model}")
         payload[model] = {}
         for alpha in (-2, -1, 0, 1, 2):
-            rows = derive(model, alpha)
+            rows = derive_gauge_portal_recouplings(model, alpha)
             payload[model][str(alpha)] = rows
 
             print(f"  alpha={alpha:+d}")
@@ -1040,11 +1040,11 @@ def main() -> None:
     sys.argv = [sys.argv[0], *remaining]
 
     if args.mode == "e-cross":
-        ecrossportal_main()
+        run_cross_portal_derivation_cli()
     elif args.mode == "adjoint":
-        adjportal_main()
+        run_adjoint_portal_derivation_cli()
     elif args.mode == "gauge":
-        gaugeportal_main()
+        run_gauge_portal_derivation_cli()
 
 
 if __name__ == "__main__":

@@ -280,7 +280,7 @@ def run_eft1_wilson_transport(
     return payload
 
 
-def transport_main() -> int:
+def run_transport_cli() -> int:
     parser = argparse.ArgumentParser(
         description=(
             "Transport tree-generated EFT1 dimension-five Wilson "
@@ -672,7 +672,7 @@ def run_flavor_seed_export(
     return payload
 
 
-def flavor_seed_main() -> int:
+def run_flavor_seed_cli() -> int:
     parser = argparse.ArgumentParser(
         description=(
             "Extract the full flavor tensors of tree-generated EFT1 "
@@ -723,8 +723,8 @@ def main() -> int:
     try:
         sys.argv = [original_argv[0], *remaining]
         if args.mode == "transport":
-            return transport_main()
-        return flavor_seed_main()
+            return run_transport_cli()
+        return run_flavor_seed_cli()
     finally:
         sys.argv = original_argv
 

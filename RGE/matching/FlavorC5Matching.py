@@ -31,12 +31,11 @@ Assumptions
 """
 
 import json
-import re
 from pathlib import Path
 
 import sympy as sp
 
-from RGE.matching.MatchedEFTRGE import parse_matchete_c5
+from RGE.matching.MatchedWeinbergRGE import parse_matchete_c5
 
 
 def extract_t3_loop_kernel(
@@ -83,7 +82,7 @@ def symbolic_t3_yukawas(
     return y1, y2
 
 
-def build_flavor_matched_c5(
+def build_flavor_c5_matrix(
     kernel: sp.Expr,
     y1: sp.MatrixBase,
     y2: sp.MatrixBase,
@@ -141,7 +140,7 @@ def build_flavor_matched_c5(
     return sp.Matrix(K)
 
 
-def flavor_match_from_c5_file(
+def match_c5_flavor_from_file(
     c5_path: Path,
     *,
     n_lepton: int = 3,
@@ -171,7 +170,7 @@ def flavor_match_from_c5_file(
     else:
         heavy_masses = None
 
-    K = build_flavor_matched_c5(
+    K = build_flavor_c5_matrix(
         kernel,
         y1,
         y2,
@@ -188,7 +187,7 @@ def flavor_match_from_c5_file(
     }
 
 
-def write_flavor_outputs(
+def write_flavor_matching_outputs(
     output_dir: Path,
     result: dict,
     *,
@@ -263,7 +262,7 @@ def _parse_direct_c12_prefactor(raw_expression: str) -> sp.Expr:
 
     Since
         C12[p,q] = 1/(2 MF) sum_r (y1* y2* + y2* y1*),
-    the kernel passed to build_flavor_matched_c5 is A/MF.
+    the kernel passed to build_flavor_c5_matrix is A/MF.
     """
     marker = "C12[p,q]"
 
@@ -332,7 +331,7 @@ def load_final_weinberg_flavor_matrix(
     MF = sp.Symbol("MF")
     hbar = sp.Symbol("hbar")
 
-    # build_flavor_matched_c5 contributes 1/2 * kernel * symmetric Yukawas.
+    # build_flavor_c5_matrix contributes 1/2 * kernel * symmetric Yukawas.
     # C12 itself contributes 1/(2 MF), hence kernel = prefactor/MF.
     running_kernel = sp.simplify(hbar * direct_prefactor / MF)
 
@@ -349,7 +348,7 @@ def load_final_weinberg_flavor_matrix(
     else:
         heavy_masses = None
 
-    K_hard = build_flavor_matched_c5(
+    K_hard = build_flavor_c5_matrix(
         hard_kernel,
         y1,
         y2,
@@ -357,7 +356,7 @@ def load_final_weinberg_flavor_matrix(
         heavy_masses=heavy_masses,
     )
 
-    K_running = build_flavor_matched_c5(
+    K_running = build_flavor_c5_matrix(
         running_kernel,
         y1,
         y2,

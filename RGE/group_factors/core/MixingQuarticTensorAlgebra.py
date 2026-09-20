@@ -3,7 +3,7 @@ from __future__ import annotations
 """Shared tensor algebra for exact lambdaT3 scalar-quartic recouplings.
 
 This module operates on the one-based ``SparseQuarticTensor`` convention used
-by ``EFT1QuarticAdapter``.  It contains only common basis extraction,
+by ``EFT1TensorAdapters``.  It contains only common basis extraction,
 cross-contraction, inner-product, and projection machinery.  It does not define
 which quartic couplings are physical targets or assign any recoupling
 coefficient by hand.

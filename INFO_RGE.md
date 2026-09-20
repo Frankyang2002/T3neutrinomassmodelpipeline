@@ -442,3 +442,12 @@ $$
     `data/`. `RGE/phenomenology/NeutrinoObservables.py` then performs the Takagi
     factorisation and writes the neutrino masses, mass-squared splittings, and
     mixing information to `data/neutrino_observables.json`.
+
+
+
+
+
+From bottom up
+1. RGEModel.py takes our scalar fields and puts their indices into scalar blocks where we are in the real basis, and we get our scalar models
+2. Gauge generators uses these indices and builds gauge generators for these blocks,
+3. WilsonTensorRGE.py and AnomalousDimensions.py uses these for beta functions

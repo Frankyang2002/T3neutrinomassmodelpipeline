@@ -1,3 +1,6 @@
+# This file tells us how heavy T3 fields are integrated across
+# EFT thresholds
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -6,26 +9,29 @@ from typing import TypeAlias
 from common.RunRecords import EFTStageRecord
 
 
-ThresholdField: TypeAlias = str
-ThresholdGroup: TypeAlias = tuple[ThresholdField, ...]
-ThresholdPlan: TypeAlias = tuple[ThresholdGroup, ...]
+ThresholdField: TypeAlias = str # The heavy field name, like S, S1, F etc
+ThresholdGroup: TypeAlias = tuple[ThresholdField, ...] # Set of fields integrated out, like ("S1","S2")
+ThresholdPlan: TypeAlias = tuple[ThresholdGroup, ...] # The sequence of integrating out, Eg: ((F),(S1,S2))
 
-T3_HEAVY_FIELDS: tuple[str, ...] = ("F", "S1", "S2")
+# Convention for Field or Shared integration out
+T3_HEAVY_FIELDS: tuple[str, ...] = ("F", "S1", "S2") 
 SHARED_HEAVY_FIELDS: tuple[str, ...] = ("F", "S")
 
 
 def heavy_fields(*, shared_scalar: bool = False) -> tuple[str, ...]:
-    """Return the physical heavy fields that may appear in a threshold plan."""
+    """Based on settings give the fields either shared or split."""
     return SHARED_HEAVY_FIELDS if shared_scalar else T3_HEAVY_FIELDS
 
 
 def default_threshold_plan(*, shared_scalar: bool = False) -> ThresholdPlan:
-    """Return the historical common-threshold plan for one physical model."""
+    """We just go back to default without threshold structure, just the fields.
+    This helps doing UV -> Final EFT as backup"""
     return (heavy_fields(shared_scalar=shared_scalar),)
 
 
 def _threshold_aliases(*, shared_scalar: bool) -> dict[str, str]:
-    """Return CLI aliases mapped to canonical physical heavy-field names."""
+    """We map different names to the specific field names,
+     helps with shared and split scalar differences ."""
     if shared_scalar:
         return {
             "F": "F",
@@ -53,13 +59,8 @@ def normalise_threshold_field(
     *,
     shared_scalar: bool = False,
 ) -> str:
-    """Normalise one CLI field name to a canonical physical heavy-field name.
-
-    Ordinary T3 uses the physical fields F, S1 and S2.
-
-    Shared-scalar mode uses the physical fields F and S.  In that mode S1/S2
-    are accepted only as input aliases and both normalise to the single
-    physical scalar S.
+    """We normalise different names to the actual physical fields
+    We use _threshold_aliases to do so
     """
     token = value.strip().upper().replace("_", "")
     aliases = _threshold_aliases(shared_scalar=shared_scalar)
@@ -78,13 +79,9 @@ def validate_threshold_plan(
     *,
     shared_scalar: bool = False,
 ) -> ThresholdPlan:
-    """Validate and canonicalise an ordered physical decoupling plan.
-
-    Every physical heavy field must occur exactly once across the plan.
-    Fields in the same group are integrated out at the same threshold.
-
-    If no explicit plan is supplied, all physical heavy fields are integrated
-    out together, preserving the historical common-threshold behaviour.
+    """Make sure our threshold plans are valid
+    
+    So we cant integrate out a field more than once
     """
     fields = heavy_fields(shared_scalar=shared_scalar)
 
@@ -94,6 +91,9 @@ def validate_threshold_plan(
     canonical_groups: list[ThresholdGroup] = []
     flattened: list[str] = []
 
+    # Loop through our groups and check if threshold is empty
+    # or has duplicated fields across groups or within a group
+    # Or if a field is not what we want, as we want fermion/scalar
     for raw_group in threshold_groups:
         if not raw_group:
             raise ValueError("A threshold group cannot be empty.")
@@ -127,6 +127,7 @@ def validate_threshold_plan(
     ]
     unknown = sorted(set(flattened) - set(fields))
 
+    # Error message
     errors: list[str] = []
 
     if duplicates:
@@ -153,7 +154,7 @@ def _formal_fields_for_physical_field(
     *,
     shared_scalar: bool,
 ) -> tuple[str, ...]:
-    """Map one physical threshold field to its formal T3 matching role(s)."""
+    """For shared scalar, S -> S1,S2, for split nothing really changes"""
     if shared_scalar and field == "S":
         return "S1", "S2"
 
@@ -165,13 +166,7 @@ def threshold_plan_for_wolfram(
     *,
     shared_scalar: bool = False,
 ) -> ThresholdPlan:
-    """Convert a physical threshold plan to formal T3 matching field names.
-
-    Ordinary T3 is unchanged.
-
-    In shared-scalar mode the one physical scalar S occupies both formal
-    matching roles, so a physical S threshold is exported to Wolfram as the
-    simultaneous formal threshold (S1, S2).
+    """We prepare the plan for thresholds for wolfram and fix shared scalar
     """
     if not shared_scalar:
         return plan
@@ -195,12 +190,14 @@ def threshold_plan_for_wolfram(
 
 
 def threshold_plan_to_json(plan: ThresholdPlan) -> list[list[str]]:
-    """Return a JSON-safe representation of a physical threshold plan."""
+    """Return a JSON-safe representation of a physical threshold plan.
+    It just converts our tuples into lists as JSON doesnt preserve Python Tuples"""
     return [list(group) for group in plan]
 
 
 def threshold_plan_label(plan: ThresholdPlan) -> str:
-    """Return a compact human-readable label for a physical threshold plan."""
+    """We just make it readable for us, like if we have ((F),(S1,S2))
+    It becomes F -> (S1,S2) for us to read well"""
     labels: list[str] = []
 
     for group in plan:
@@ -218,14 +215,8 @@ def build_eft_stage_records(
     *,
     shared_scalar: bool = False,
 ) -> list[EFTStageRecord]:
-    """Construct UV/EFT metadata using physical heavy-field content.
-
-    The resulting ``integrated_fields`` and ``active_heavy_fields`` always
-    refer to physical fields.  Therefore shared-scalar records contain S, not
-    the formal matching roles S1 and S2.
-
-    Level 0 is the UV theory.  Each subsequent level is the theory after one
-    threshold group from ``plan`` has been integrated out.
+    """
+    We convert our threshold plan into EFTStageRecord objects metadata
     """
     stages: list[EFTStageRecord] = []
     active = list(heavy_fields(shared_scalar=shared_scalar))

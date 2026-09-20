@@ -1,3 +1,7 @@
+# This is the data structure to carry the one model run and its EFT stages 
+# through Python Pipeline
+# This is the runtime metadata
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -13,27 +17,24 @@ from common.T3Model import (
 class EFTStageRecord:
     """Metadata for one physical theory level in the threshold sequence.
 
-    ``level == 0`` is the UV theory.
+    level is which EFT stage, like level = 0 for UV, 1 for eft 1
 
-    ``integrated_fields`` and ``active_heavy_fields`` use physical field names.
+    Note: ``integrated_fields`` and ``active_heavy_fields`` use physical field names.
     Therefore shared-scalar mode uses ``S`` rather than the formal matching
     roles ``S1`` and ``S2``.
     """
 
     level: int
-    integrated_fields: tuple[str, ...]
-    active_heavy_fields: tuple[str, ...]
+    integrated_fields: tuple[str, ...] # Fields that have been decoupled at this stage 
+    active_heavy_fields: tuple[str, ...] # Current fields
     label: str
     output_dir: Path | None = None
-    summary: dict = field(default_factory=dict)
+    summary: dict = field(default_factory=dict) # For success/failure and other stuff
 
 
 @dataclass
 class RunRecord:
     """Bookkeeping for one complete T3 pipeline run.
-
-    ``d_s1``, ``d_s2`` and ``d_f`` always store the formal T3 topology
-    dimensions used by the matching code.
 
     ``shared_scalar`` determines whether the two formal scalar roles S1 and S2
     correspond to one physical scalar S.
@@ -69,7 +70,8 @@ class RunRecord:
 
     @property
     def d_s(self) -> int | None:
-        """Return the physical shared-scalar dimension, if applicable."""
+        """Return the physical shared-scalar dimension, if applicable.
+        So if we have ordinary split it gives nothing"""
         if not self.shared_scalar:
             return None
 
@@ -92,6 +94,7 @@ class RunRecord:
         if len(matches) == 1:
             return matches[0]
 
+        # Checking against malformed states 
         if not matches:
             raise KeyError(
                 f"{self.name} has no EFT stage with level {level}."

@@ -8,7 +8,6 @@
 # 5. Constructs the neutrino-mass matrix.
 # 6. Optionally performs numerical running and calculates neutrino observables.
 # 7. Generates the final reports and run summaries.
-#
 from __future__ import annotations
 
 import argparse
@@ -51,7 +50,7 @@ from common.Thresholds import (
     threshold_plan_to_json,
     validate_threshold_plan,
 )
-from common.T3Model import EXTENDED, INTERESTING, SMOKE
+from common.T3Model import SMOKE
 from Lagrangian.Runner import validate_dimensions, validate_shared_dimensions, obtain_class_dimensions
 from Reports.ReportGeneration import (
     compile_latex_document,
@@ -1451,11 +1450,6 @@ def _build_argument_parser() -> argparse.ArgumentParser:
         help="five T3 regression models",
     )
     mode.add_argument(
-        "--extended",
-        action="store_true",
-        help="seven historical benchmark points",
-    )
-    mode.add_argument(
         "--hypercharge-comparison",
         action="store_true",
         help=(
@@ -1621,11 +1615,9 @@ def _study_name(args: argparse.Namespace) -> str:
         return "hypercharge"
     if args.dimension_comparison:
         return "dimensions"
-    if args.extended:
-        return "extended"
     if args.dims:
         return "single"
-    return "interesting"
+    return
 
 
 def _scan_definition(
@@ -1639,9 +1631,7 @@ def _scan_definition(
         return "hypercharge comparison", HYPERCHARGE_COMPARISON
     if args.dimension_comparison:
         return "dimension comparison", DIMENSION_COMPARISON
-    if args.extended:
-        return "extended", EXTENDED
-    return "interesting", INTERESTING
+    return
 
 
 def _build_run_records(

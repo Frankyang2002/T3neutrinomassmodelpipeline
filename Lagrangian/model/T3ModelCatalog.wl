@@ -1,13 +1,6 @@
 (* T3ModelCatalog.wl
-  Interesting T3 classes are labelled
-
-   Hypercharge convention:
-     Q = T3 + Y,
-     Y(S1) = alpha/2,
-     Y(S2) = (alpha + 2)/2,
-     Y(F)  = (alpha + 1)/2.
-
-  We convert alpha to our hypercharges
+  We convert representations into an association (dictionary) in wolfram
+  We make it so that Lagrangian Builder can read our representations
 *)
 ClearAll[
   T3YukawaAllowedQ,

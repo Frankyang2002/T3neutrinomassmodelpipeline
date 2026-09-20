@@ -508,7 +508,7 @@ Converts Matchete's internal field/index/coupling representation into readable p
 
 ### `RGE/general/`
 
-#### `RGE/general/RGEModel.py`
+#### `RGE/general/ScalarBasis.py`
 Defines the scalar representation/basis model used by the generic tensor RGE machinery.
 
 **Role:** generic RGE model/basis definition.  

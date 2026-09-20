@@ -234,7 +234,7 @@ stage compares these quantities with the included NuFIT reference data.
 
 | File | Purpose |
 |---|---|
-| `RGE/general/RGEModel.py` | Defines the scalar representation/basis model used by the general RGE machinery. |
+| `RGE/general/ScalarBasis.py` | Defines the scalar representation/basis model used by the general RGE machinery. |
 | `RGE/general/GaugeGenerators.py` | Builds the real-scalar SU(2) and U(1) generators and gauge sectors. |
 | `RGE/general/FermionBasis.py` | Builds the Weyl-fermion basis and its gauge generators. |
 | `RGE/general/WilsonTensorRGE.py` | Implements the general $\psi^2\phi^2$ master-equation tensor terms. |
@@ -412,7 +412,7 @@ are needed. Enable debug reports only when checking the intermediate algebra.
    `RGE/matching/MatchedWeinbergRGE.py`. This parses the matched coefficient into
    SymPy, embeds it in the general Wilson tensor through
    `WeinbergTensorAdapter.py`, and evaluates the generic master RGE.
-9. The general tensor calculation uses `RGEModel.py`, `GaugeGenerators.py`,
+9. The general tensor calculation uses `ScalarBasis.py`, `GaugeGenerators.py`,
    `FermionBasis.py`, `WilsonTensorRGE.py`, and `AnomalousDimensions.py`.
 10. The one-generation result is checked against
 
@@ -448,6 +448,6 @@ $$
 
 
 From bottom up
-1. RGEModel.py takes our scalar fields and puts their indices into scalar blocks where we are in the real basis, and we get our scalar models
+1. ScalarBasis.py takes our scalar fields and puts their indices into scalar blocks where we are in the real basis, and we get our scalar models
 2. Gauge generators uses these indices and builds gauge generators for these blocks,
 3. WilsonTensorRGE.py and AnomalousDimensions.py uses these for beta functions

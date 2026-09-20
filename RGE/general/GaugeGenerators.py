@@ -6,7 +6,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 import sympy as sp
 
-from RGE.general.RGEModel import RGEModel
+from RGE.general.ScalarBasis import ScalarBasis
 
 g1, g2, g3 = sp.symbols("g1 g2 g3") # Symbolic gauge couplings
 
@@ -81,7 +81,7 @@ def u1_real_scalar_generator(dimension: int, hypercharge) -> sp.Matrix:
 
 
 def embed_local_generator(
-    model: RGEModel,
+    model: ScalarBasis,
     scalar_name: str,
     local_generator: sp.Matrix,
 ) -> sp.Matrix:
@@ -110,7 +110,7 @@ def embed_local_generator(
     return result
 
 
-def global_su2_generators(model: RGEModel) -> tuple[sp.Matrix, sp.Matrix, sp.Matrix]:
+def global_su2_generators(model: ScalarBasis) -> tuple[sp.Matrix, sp.Matrix, sp.Matrix]:
     """Gets full model-wide SU(2) generators. We construct local generators
     and place them into the right block in a matrix."""
 
@@ -131,7 +131,7 @@ def global_su2_generators(model: RGEModel) -> tuple[sp.Matrix, sp.Matrix, sp.Mat
     return tuple(sp.simplify(generator) for generator in generators)
 
 
-def global_u1_generator(model: RGEModel) -> sp.Matrix:
+def global_u1_generator(model: ScalarBasis) -> sp.Matrix:
     """Return the U(1)_Y generator acting on the full real-scalar basis."""
 
     result = sp.zeros(model.total_real_scalar_dimension)
@@ -170,6 +170,7 @@ def quadratic_casimir_matrix(
     generators: tuple[sp.Matrix, ...],
 ) -> sp.Matrix:
     r"""Return C2 = sum_A T^A T^A for one representation.
+    It will be block diagonal  
     """
 
     if not generators:

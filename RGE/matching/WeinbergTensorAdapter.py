@@ -9,7 +9,7 @@ from typing import Mapping
 import sympy as sp
 
 from RGE.general.FermionBasis import FermionBasis, WeylFermion
-from RGE.general.RGEModel import ComplexScalar, RGEModel
+from RGE.general.ScalarBasis import ComplexScalar, ScalarBasis
 
 
 # ---------------------------------------------------------------------------
@@ -64,7 +64,7 @@ def _add_symmetric_yukawa(
 
 
 def build_sm_yukawa(
-    scalar_model: RGEModel,
+    scalar_model: ScalarBasis,
     fermion_basis: FermionBasis,
 ):
     """Build the one-generation SM y_ija tensor including colour multiplicity."""
@@ -194,10 +194,10 @@ def build_sm_yukawa(
     return yukawa
 
 
-def build_sm_eft() -> tuple[RGEModel, FermionBasis]:
+def build_sm_eft() -> tuple[ScalarBasis, FermionBasis]:
     """Construct the active one-generation SM EFT basis below the T3 threshold."""
 
-    scalar_model = RGEModel(
+    scalar_model = ScalarBasis(
         (
             ComplexScalar(
                 name="H",
@@ -261,7 +261,7 @@ def _complex_scalar_from_real_pair(
 
 
 def weinberg_polynomial(
-    scalar_model: RGEModel,
+    scalar_model: ScalarBasis,
     fermion_basis: FermionBasis,
     kappa: sp.Expr,
     embedding: WeinbergEmbedding = WeinbergEmbedding(),
@@ -330,7 +330,7 @@ def weinberg_polynomial(
 
 
 def build_weinberg_wilson_tensor(
-    scalar_model: RGEModel,
+    scalar_model: ScalarBasis,
     fermion_basis: FermionBasis,
     kappa: sp.Expr,
     embedding: WeinbergEmbedding = WeinbergEmbedding(),

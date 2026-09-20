@@ -1,3 +1,5 @@
+# Does 1 loop RGE for our wilson coefficient
+
 from __future__ import annotations
 
 from collections.abc import Callable
@@ -5,41 +7,18 @@ from dataclasses import dataclass
 import sympy as sp
 
 from RGE.general.GaugeGenerators import GaugeSector
-from RGE.general.RGEModel import RGEModel
+from RGE.general.ScalarBasis import ScalarBasis
 
 # Shared symbolic definitions and validation helpers for the general RGE.
 HALF = sp.Rational(1, 2)
 C = sp.IndexedBase("C")
+# Quartic(a,b,c,d), yukawa(i,j,a)
 QuarticComponent = Callable[[int, int, int, int], sp.Expr]
-
-
-def _validate_output_component(
-    model: RGEModel,
-    output_component: tuple[int, int, int, int],
-) -> None:
-    """Validate the external scalar indices of a psi^2 phi^2 component."""
-
-    if len(output_component) != 4:
-        raise ValueError("output_component must have the form (i, j, a, b).")
-
-    _, _, a, b = output_component
-    n = model.total_real_scalar_dimension
-
-    if not 1 <= a <= n:
-        raise IndexError(f"Scalar index a={a} is outside 1,...,{n}.")
-    if not 1 <= b <= n:
-        raise IndexError(f"Scalar index b={b} is outside 1,...,{n}.")
-
-
-# Master one-loop RGE for the psi^2 phi^2 Wilson coefficient.
-
 YukawaComponent = Callable[[int, int, int], sp.Expr]
-
-
+# Scalar(a,b), fermion(i,j)
 ScalarAnomalousDimension = Callable[[int, int], sp.Expr]
-
-
 FermionAnomalousDimension = Callable[[int, int], sp.Expr]
+
 
 
 @dataclass(frozen=True)
@@ -57,9 +36,9 @@ class WilsonRGEInputs:
         if self.fermion_dimension < 1:
             raise ValueError("fermion_dimension must be positive.")
 
-
+# Some helpers
 def _swap_pair(first, second):
-    """Return the identity and swap permutations of a two-element pair."""
+    """Get all permutation of a pair (itself and 1 swap)."""
 
     return ((first, second), (second, first))
 
@@ -75,7 +54,8 @@ def _pair_product_permutations(a, b, i, j):
 
 
 def _simultaneous_pair_permutations(a, b, i, j):
-    """Return the two simultaneous pair exchanges used by Eq. (4.85)."""
+    """Pair exchange, not all combinations
+    Switching scalar indices, and also switching fermion indices once"""
 
     return (
         (a, b, i, j),
@@ -83,14 +63,29 @@ def _simultaneous_pair_permutations(a, b, i, j):
     )
 
 
+
+
 def _validate_rge_dimensions(
-    model: RGEModel,
+    model: ScalarBasis,
     inputs: WilsonRGEInputs,
     output_component: tuple[int, int, int, int],
 ) -> None:
-    """Validate external indices and tensor dimensions for Eq. (4.85)."""
+    """Make sure everything is valid
+    We first validate scalar indices and inputs
+    Then we validate fermion indices and inputs
+    Then we check if the generators are in the right dimensions for our field."""
 
-    _validate_output_component(model, output_component)
+    _, _, a, b = output_component
+    n = model.total_real_scalar_dimension
+
+    if len(output_component) != 4:
+        raise ValueError("output_component must have the form (i, j, a, b).")
+    
+    if not 1 <= a <= n:
+        raise IndexError(f"Scalar index a={a} is outside 1,...,{n}.")
+    if not 1 <= b <= n:
+        raise IndexError(f"Scalar index b={b} is outside 1,...,{n}.")
+
     i, j, _, _ = output_component
 
     if not 1 <= i <= inputs.fermion_dimension:
@@ -123,12 +118,13 @@ def _validate_rge_dimensions(
 
 
 def yukawa_wavefunction_term(
-    model: RGEModel,
+    model: ScalarBasis,
     inputs: WilsonRGEInputs,
     output_component: tuple[int, int, int, int],
     coefficient=C,
 ) -> sp.Expr:
-    r"""Return y_ijd y^*_{kld} C_klab from Eq. (4.85)."""
+    r"""Return y_ijd y^*_{kld} C_klab
+    We sum over k,l,d"""
 
     _validate_rge_dimensions(model, inputs, output_component)
     i, j, a, b = output_component
@@ -151,23 +147,15 @@ def yukawa_wavefunction_term(
 
 
 def scalar_pair_term(
-    model: RGEModel,
+    model: ScalarBasis,
     inputs: WilsonRGEInputs,
     output_component: tuple[int, int, int, int],
     coefficient=C,
 ) -> sp.Expr:
-    r"""Return the -1/2! sigma({a,b}) gauge/quartic term in Eq. (4.85).
-
-    This contains both
-
-      - sum_alpha g_alpha^2
-        (theta_ac theta_bd + theta_bc theta_ad) C_ijcd
-
-    and
-
-      + sum_cd lambda_abcd C_ijcd,
-
-    when the scalar quartic tensor is fully symmetric.
+    r"""Return the -1/2! sigma({a,b})sigma(cd)[2sigma(\alpha,A)
+    g^2_alpha \theta^A_ac \theta^A_bd
+    -\lambda_abcd] C_ijcd 
+    term
     """
 
     _validate_rge_dimensions(model, inputs, output_component)
@@ -197,7 +185,7 @@ def scalar_pair_term(
 
 
 def mixed_yukawa_gauge_term(
-    model: RGEModel,
+    model: ScalarBasis,
     inputs: WilsonRGEInputs,
     output_component: tuple[int, int, int, int],
     coefficient=C,
@@ -270,7 +258,7 @@ def mixed_yukawa_gauge_term(
 
 
 def crossed_yukawa_term(
-    model: RGEModel,
+    model: ScalarBasis,
     inputs: WilsonRGEInputs,
     output_component: tuple[int, int, int, int],
     coefficient=C,
@@ -300,7 +288,7 @@ def crossed_yukawa_term(
 
 
 def conjugate_coefficient_yukawa_term(
-    model: RGEModel,
+    model: ScalarBasis,
     inputs: WilsonRGEInputs,
     output_component: tuple[int, int, int, int],
     coefficient=C,
@@ -326,7 +314,7 @@ def conjugate_coefficient_yukawa_term(
 
 
 def scalar_anomalous_dimension_term(
-    model: RGEModel,
+    model: ScalarBasis,
     inputs: WilsonRGEInputs,
     output_component: tuple[int, int, int, int],
     coefficient=C,
@@ -358,7 +346,7 @@ def scalar_anomalous_dimension_term(
 
 
 def fermion_anomalous_dimension_term(
-    model: RGEModel,
+    model: ScalarBasis,
     inputs: WilsonRGEInputs,
     output_component: tuple[int, int, int, int],
     coefficient=C,
@@ -390,7 +378,7 @@ def fermion_anomalous_dimension_term(
 
 
 def calculate_wilson_tensor_rge(
-    model: RGEModel,
+    model: ScalarBasis,
     inputs: WilsonRGEInputs,
     output_component: tuple[int, int, int, int],
     coefficient=C,

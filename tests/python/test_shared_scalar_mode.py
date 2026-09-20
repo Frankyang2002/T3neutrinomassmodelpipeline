@@ -48,9 +48,9 @@ def test_shared_threshold_plan_is_physical_but_expands_for_matchete(tmp_path: Pa
 
 def test_shared_rge_model_counts_one_scalar_block():
     import sympy as sp
-    from RGE.general.RGEModel import RGEModel
+    from RGE.general.ScalarBasis import ScalarBasis
 
-    model = RGEModel.t3_shared(2, sp.Rational(1, 2), include_higgs=True)
+    model = ScalarBasis.t3_shared(2, sp.Rational(1, 2), include_higgs=True)
     assert tuple(model.blocks) == ("H", "S")
     assert model.total_real_scalar_dimension == 8
     assert tuple(model.block("S").indices) == (5, 6, 7, 8)

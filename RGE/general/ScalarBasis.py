@@ -54,7 +54,7 @@ class ScalarBasisBlock:
 
 
 @dataclass
-class RGEModel:
+class ScalarBasis:
     """All scalar data to be used by RGE system."""
 
     scalars: tuple[ComplexScalar, ...]
@@ -101,7 +101,7 @@ class RGEModel:
         d_s2: int,
         y_s2,
         include_higgs: bool = True,
-    ) -> "RGEModel":
+    ) -> "ScalarBasis":
         """Construct the scalar sector of a generalized T3 model."""
 
         scalars: list[ComplexScalar] = []
@@ -138,7 +138,7 @@ class RGEModel:
         d_s: int,
         y_s=sp.Rational(1, 2),
         include_higgs: bool = True,
-    ) -> "RGEModel":
+    ) -> "ScalarBasis":
         """Construct the physical one-scalar scotogenic-style scalar sector."""
         scalars: list[ComplexScalar] = []
         if include_higgs:

@@ -10,13 +10,13 @@ from RGE.general.WilsonTensorRGE import (
     WilsonRGEInputs,
     calculate_wilson_tensor_rge,
 )
-from RGE.general.RGEModel import RGEModel
+from RGE.general.ScalarBasis import ScalarBasis
 
 # Collinear anomalous dimensions and the complete one-loop Weinberg RGE.
 
 
 def scalar_collinear_anomalous_dimension(
-    model: RGEModel,
+    model: ScalarBasis,
     inputs: WilsonRGEInputs,
     a: int,
     b: int,
@@ -60,7 +60,7 @@ def scalar_collinear_anomalous_dimension(
 
 
 def fermion_collinear_anomalous_dimension(
-    model: RGEModel,
+    model: ScalarBasis,
     inputs: WilsonRGEInputs,
     i: int,
     j: int,
@@ -110,7 +110,7 @@ def fermion_collinear_anomalous_dimension(
 
 
 def with_collinear_anomalous_dimensions(
-    model: RGEModel,
+    model: ScalarBasis,
     inputs: WilsonRGEInputs,
 ) -> WilsonRGEInputs:
     """Return a copy of the master-RGE inputs with A.2 and A.3 wired in."""
@@ -144,7 +144,7 @@ def with_collinear_anomalous_dimensions(
 
 
 def calculate_complete_wilson_tensor_rge(
-    model: RGEModel,
+    model: ScalarBasis,
     inputs: WilsonRGEInputs,
     output_component: tuple[int, int, int, int],
     coefficient=C,

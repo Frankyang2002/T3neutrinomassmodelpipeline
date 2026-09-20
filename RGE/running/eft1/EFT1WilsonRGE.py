@@ -46,7 +46,7 @@ import sympy as sp
 
 from RGE.general.AnomalousDimensions import calculate_complete_wilson_tensor_rge
 from RGE.general.WilsonTensorRGE import WilsonRGEInputs
-from RGE.general.RGEModel import RGEModel
+from RGE.general.ScalarBasis import ScalarBasis
 from RGE.general.FermionBasis import build_gauge_sectors
 from RGE.matching.WeinbergTensorAdapter import (
     SparseWilsonLookup,
@@ -62,7 +62,7 @@ from RGE.running.eft1.EFT1TensorAdapters import (
 
 @dataclass(frozen=True)
 class EFT1RGEContext:
-    model: RGEModel
+    model: ScalarBasis
     fermion_basis: object
     coefficient: object
     quartic: object
@@ -119,11 +119,11 @@ def build_eft1_rge_context(
     shared_scalar = bool(metadata.get("SharedScalar", False))
 
     if shared_scalar:
-        scalar_model = RGEModel.t3_shared(
+        scalar_model = ScalarBasis.t3_shared(
             d_s=d_s2, y_s=y_s2, include_higgs=True
         )
     else:
-        scalar_model = RGEModel.t3(
+        scalar_model = ScalarBasis.t3(
             d_s1=d_s1, y_s1=y_s1, d_s2=d_s2, y_s2=y_s2, include_higgs=True
         )
 

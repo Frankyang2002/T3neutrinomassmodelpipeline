@@ -4,15 +4,10 @@ from functools import lru_cache
 import sympy as sp
 
 from RGE.general.GaugeGenerators import quadratic_casimir_matrix
-from RGE.general.WilsonTensorRGE import (
-    C,
-    HALF,
-    WilsonRGEInputs,
-    calculate_wilson_tensor_rge,
-)
+from RGE.general.WilsonTensorRGE import HALF, WilsonRGEInputs
 from RGE.general.ScalarBasis import ScalarBasis
 
-# Collinear anomalous dimensions and the complete one-loop Weinberg RGE.
+# Collinear anomalous dimensions used by the generic one-loop Wilson-tensor RGE.
 
 
 def scalar_collinear_anomalous_dimension(
@@ -21,7 +16,7 @@ def scalar_collinear_anomalous_dimension(
     a: int,
     b: int,
 ) -> sp.Expr:
-    r"""Return gamma_{c,s}^{ab} from Eq. (A.2).
+    r"""Return gamma_{c,s}^{ab} 
 
     Implements
 
@@ -65,16 +60,13 @@ def fermion_collinear_anomalous_dimension(
     i: int,
     j: int,
 ) -> sp.Expr:
-    r"""Return gamma_{c,f}^{ij} from Eq. (A.3).
+    r"""Return gamma_{c,f}^{ij} .
 
-    The source equation is implemented exactly as printed:
+    The source equation is displayed as
 
       gamma_{c,f}^{ij}
         = -3 sum_alpha [C2(F_alpha)]_{ij}
           + 1/2 sum_{k,a} y_{ika} y^*_{jka}.
-
-    In particular, unlike Eq. (A.2), the displayed Eq. (A.3) does not show an
-    explicit factor g_alpha^2 multiplying C2(F_alpha).
     """
 
     nf = inputs.fermion_dimension
@@ -113,7 +105,7 @@ def with_collinear_anomalous_dimensions(
     model: ScalarBasis,
     inputs: WilsonRGEInputs,
 ) -> WilsonRGEInputs:
-    """Return a copy of the master-RGE inputs with A.2 and A.3 wired in."""
+    """Return a copy of the master-RGE inputs with them wired in."""
 
     @lru_cache(maxsize=None)
     def gamma_scalar(a: int, b: int) -> sp.Expr:
@@ -140,27 +132,4 @@ def with_collinear_anomalous_dimensions(
         gauge_sectors=inputs.gauge_sectors,
         gamma_scalar=gamma_scalar,
         gamma_fermion=gamma_fermion,
-    )
-
-
-def calculate_complete_wilson_tensor_rge(
-    model: ScalarBasis,
-    inputs: WilsonRGEInputs,
-    output_component: tuple[int, int, int, int],
-    coefficient=C,
-    simplify_each: bool = True,
-) -> dict[str, sp.Expr]:
-    """Evaluate Eq. (4.85) using the collinear anomalous dimensions A.2 and A.3."""
-
-    complete_inputs = with_collinear_anomalous_dimensions(
-        model=model,
-        inputs=inputs,
-    )
-
-    return calculate_wilson_tensor_rge(
-        model=model,
-        inputs=complete_inputs,
-        output_component=output_component,
-        coefficient=coefficient,
-        simplify_each=simplify_each,
     )

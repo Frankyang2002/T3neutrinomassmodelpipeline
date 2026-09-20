@@ -190,11 +190,9 @@ def mixed_yukawa_gauge_term(
     output_component: tuple[int, int, int, int],
     coefficient=C,
 ) -> sp.Expr:
-    r"""Return the third line's first sigma({a,b} x {i,j}) term in Eq. (4.85).
-
+    r"""
     Implements
-
-      sum_sigma [
+      sum_sigma({a,b} x {i,j}) [
         2 y_jkc y^*_{klb}
         + y_jkb y^*_{klc}
         + 4 sum_alpha g_alpha^2 t^A_lj theta^A_bc
@@ -209,9 +207,8 @@ def mixed_yukawa_gauge_term(
     result = sp.S.Zero
 
     # The Yukawa contractions require the four independent external-pair swaps.
-    for a_perm, b_perm, i_perm, j_perm in _pair_product_permutations(
-        a, b, i, j
-    ):
+    # This one is for the 2 yukawa terms
+    for a_perm, b_perm, i_perm, j_perm in _pair_product_permutations(a, b, i, j):
         for k in range(1, nf + 1):
             for l in range(1, nf + 1):
                 for c in range(1, ns + 1):
@@ -263,7 +260,7 @@ def crossed_yukawa_term(
     output_component: tuple[int, int, int, int],
     coefficient=C,
 ) -> sp.Expr:
-    r"""Return sum_sigma y_jla y_ikc C_lkbc from Eq. (4.85)."""
+    r"""Return sum_sigma y_jla y_ikc C_lkbc"""
 
     _validate_rge_dimensions(model, inputs, output_component)
     i, j, a, b = output_component
@@ -351,7 +348,7 @@ def fermion_anomalous_dimension_term(
     output_component: tuple[int, int, int, int],
     coefficient=C,
 ) -> sp.Expr:
-    r"""Return sum_sigma({i,j}) gamma_{c,f}^{jk} C_ikab from Eq. (4.85).
+    r"""Return sum_sigma({i,j}) gamma_{c,f}^{jk} C_ikab.
 
     The ``c`` in gamma_{c,f} labels the *collinear* anomalous dimension; it is
     not a summed fermion index.
@@ -384,11 +381,10 @@ def calculate_wilson_tensor_rge(
     coefficient=C,
     simplify_each: bool = True,
 ) -> dict[str, sp.Expr]:
-    """Evaluate every term displayed in Eq. (4.85).
+    """Evaluate every term
 
     The anomalous-dimension terms are included whenever ``gamma_scalar`` and
-    ``gamma_fermion`` are supplied.  Their explicit formulae should be taken
-    from Eqs. (A.2) and (A.3), rather than guessed here.
+    ``gamma_fermion`` are supplied.
     """
 
     functions = (
@@ -416,3 +412,31 @@ def calculate_wilson_tensor_rge(
     contributions["total"] = sp.simplify(total)
 
     return contributions
+
+
+def calculate_complete_wilson_tensor_rge(
+    model: ScalarBasis,
+    inputs: WilsonRGEInputs,
+    output_component: tuple[int, int, int, int],
+    coefficient=C,
+    simplify_each: bool = True,
+) -> dict[str, sp.Expr]:
+    """Evaluate the complete RGE with collinear anomalous dimensions wired in.
+    """
+
+    from RGE.general.AnomalousDimensions import (
+        with_collinear_anomalous_dimensions,
+    )
+
+    complete_inputs = with_collinear_anomalous_dimensions(
+        model=model,
+        inputs=inputs,
+    )
+
+    return calculate_wilson_tensor_rge(
+        model=model,
+        inputs=complete_inputs,
+        output_component=output_component,
+        coefficient=coefficient,
+        simplify_each=simplify_each,
+    )

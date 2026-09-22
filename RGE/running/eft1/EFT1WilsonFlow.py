@@ -1,10 +1,13 @@
 from __future__ import annotations
 
 """EFT1 Wilson-coefficient transport and full-flavor seed extraction.
+Seed = starting data, wilson seed are the ones produced as threshold
 
-This module combines the two adjacent EFT1 flow steps while keeping their
-calculation bodies separate: transport of the dimension-five Wilson tensor
-between thresholds and extraction of the full-flavor seed from Matchete.
+1. Transport EFT1 Wilson tensor between thresholds
+    We have to make sure the starting values and the running values
+    are separated completely 
+2. Matchete starting values into full flavour tensors
+    So we no longer just do C_12, we do C_11 and C_22 as well etc
 """
 
 import argparse
@@ -91,7 +94,8 @@ def _tree_boundary_components(
     wilson_seed_path: Path,
     rgbeta_path: Path,
 ) -> dict[tuple[int, int, int, int], sp.Expr]:
-    """Reconstruct the same projected C^(0) tensor used by EFT1WilsonRGE."""
+    """Reconstruct the same projected C^(0) tensor used by EFT1WilsonRGE
+    at threshold boundary"""
     tensor = load_and_build_eft1_wilson_tensor(
         wilson_seed_path,
         rgbeta_path,
@@ -116,6 +120,7 @@ def _tree_boundary_components(
 def _beta_components(
     rge_payload: dict[str, Any],
 ) -> dict[tuple[int, int, int, int], sp.Expr]:
+    ''' Read JSON output of RGE and get beta functions'''
     result: dict[tuple[int, int, int, int], sp.Expr] = {}
 
     for key, entry in rge_payload["betas"].items():
@@ -143,33 +148,23 @@ def run_eft1_wilson_transport(
     output_path: Path | None = None,
 ) -> dict[str, Any]:
     """Transport EFT1 Wilson coefficients between two thresholds at O(hbar).
-
-    Convention
-    ----------
-    The master-RGE payload stores beta^(1) defined by
-
+    hbar = 1/(16*pi^2),
+    Beta^(1) defined by
         16*pi^2 dC/dln(mu) = beta^(1)[C^(0)].
 
     The EFT expansion is kept in the form
-
         C(mu_low) = C^(0)
                     + hbar * C_run^(1)
                     + O(hbar^2),
-
-        hbar = 1/(16*pi^2),
-
     with
-
         C_run^(1)
           = log(mu_low/mu_high) * beta^(1)[C^(0)].
 
     Crucially, C^(0) itself is not overwritten.  This separation is what the
     next threshold needs for fixed-order matching:
-
         M_2^(0)[C^(0)]                       tree piece
         M_2^(1)[C^(0)]                       threshold one-loop piece
         M_2^(0)[hbar * C_run^(1)]            inherited running piece
-
     The stage-1 one-loop matching boundary term is deliberately not evolved
     here; doing so would first contribute at O(hbar^2).
     """
@@ -341,36 +336,21 @@ def run_transport_cli() -> int:
 # Flavor-seed extraction
 # ---------------------------------------------------------------------------
 
-"""Preserve the full flavor tensor of the tree-generated EFT1 Wilson operators.
-
-Why this exists
----------------
+"""
 The component RGE currently used by EFT1WilsonRGE.py collapses the flavor
-structure to one generation before running.  That is sufficient for the
-SU(2)/scalar/gauge regression, but it is not sufficient to reconstruct a
+structure to one generation before running. But we need full flavour to reconstruct a
 Matchete expression with explicit flavor indices after running.
 
-This module is the first flavor-aware layer.  It reads the exact PL terms
-exported by Matchete at the F threshold and extracts the Wilson flavor tensor
-
+This module is the first flavor-aware layer.  It reads Matchete at the F threshold and extracts the Wilson flavor tensor
     C^{ab}_{pq}
-
 without replacing y1, y2, ... by scalar symbols.
 
 For the present T3 tree operators, the flavor structure is of the form
-
     Sum_r Conjugate[yA[p,r]] Conjugate[yB[q,r]] / MF
-
 with the symmetry/combinatorial factor taken directly from the Matchete term.
-
-The output is deliberately representation independent: it keeps the original
-Matchete TermInputForm and adds a symbolic flavor kernel that can be consumed
-by a later flavor-aware master-RGE layer.
 
 This file does NOT guess a flavor lift from a one-generation beta function.
 """
-
-
 
 
 BARRED_COUPLING_RE = re.compile(
@@ -433,6 +413,7 @@ def _extract_symmetry_denominator(term: str) -> str:
 
 
 def _extract_yukawa_factors(term: str) -> tuple[FlavorYukawaFactor, ...]:
+    '''Find matchete Yukawas'''
     factors = []
     for match in BARRED_COUPLING_RE.finditer(term):
         factors.append(
@@ -449,6 +430,8 @@ def _extract_yukawa_factors(term: str) -> tuple[FlavorYukawaFactor, ...]:
 def _flavor_label(
     yukawas: tuple[FlavorYukawaFactor, ...],
 ) -> str:
+    '''Classify which wilson coefficient is being used,
+    Eg: y1y1 -> C_11, y2y2 -> C_22'''
     if len(yukawas) != 2:
         raise ValueError("A T3 flavor tensor requires exactly two Yukawas.")
 
@@ -466,19 +449,20 @@ def _flavor_label(
 def _kernel_strings(
     yukawas: tuple[FlavorYukawaFactor, ...],
 ) -> tuple[str, str, str]:
-    """Return the canonical flavor tensor, independent of SU(2) geometry.
-
-    Representation-dependent numerical/CG factors belong to the operator
-    geometry, not to the flavor tensor.  Hence every mixed y1-y2 direction
-    uses the same C12 boundary even when the raw Matchete term contains
-    factors such as 1/Sqrt[3] or Sqrt[2/3].
-    """
+    """Return the canonical flavor tensor 
+        We construct C_12,pq = 1/2M sum_r[y*_1y*_2+y*_2y*_1]
+        It is returned as
+        1. Human readable text
+        2. Wolfram/mathematica text
+        3. 1 generation reduction (becomes 1/M y1y2)
+        """
     if len(yukawas) != 2:
         raise ValueError(
             "The current T3 flavor extractor expects exactly two barred "
             f"Yukawa factors, found {len(yukawas)}."
         )
 
+    # Assign Yukawas
     y_a, y_b = yukawas
     if y_a.internal_dummy != y_b.internal_dummy:
         raise ValueError(
@@ -486,6 +470,7 @@ def _kernel_strings(
             "NFlavor dummy."
         )
 
+    # They need to be different yukawas
     mixed = y_a.name != y_b.name
 
     if mixed:
@@ -525,6 +510,7 @@ def _kernel_strings(
 
 
 def extract_flavor_seed_term(term: dict[str, Any]) -> FlavorSeedTerm:
+    '''Constructs flavour seed, where we have boundary EFT1 with full generation indices explicit'''
     if term.get("Chirality") != "PL":
         raise ValueError("Flavor seed extraction is defined for PL terms.")
 
@@ -570,6 +556,7 @@ def _expected_one_generation_kernel(
     y_a: str,
     y_b: str,
 ) -> sp.Expr:
+    '''One generation yukawa result'''
     locals_ = {
         "MF": sp.Symbol("MF", nonzero=True),
         y_a: sp.Symbol(y_a),
@@ -600,6 +587,7 @@ def run_flavor_seed_export(
     wilson_seed_path: Path,
     output_path: Path | None = None,
 ) -> dict[str, Any]:
+    '''We check the one generation result with our flavour result'''
     seed = json.loads(Path(wilson_seed_path).read_text(encoding="utf-8"))
 
     pl_terms = [

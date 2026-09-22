@@ -1,3 +1,6 @@
+'''Numerical Realisation of Symbolic Weinberg Pipeline
+We use the benchmark vlaues from config into symbolic expressions 
+and make a complex 3x3 weinberg matrix'''
 from __future__ import annotations
 
 import json
@@ -20,6 +23,7 @@ from RGE.running.weinberg.WeinbergRunning import (
 
 
 def _complex_matrix_from_json(real_part, imag_part) -> np.ndarray:
+    '''Get Numpy complex matrix from our real and imaginary arrays from JSON'''
     real = np.asarray(real_part, dtype=float)
     imag = np.asarray(imag_part, dtype=float)
 
@@ -30,6 +34,7 @@ def _complex_matrix_from_json(real_part, imag_part) -> np.ndarray:
 
 
 def _complex_matrix_to_lists(matrix: np.ndarray) -> dict:
+    '''We make our Complex Matrix into something being able to be read by JSON'''
     matrix = np.asarray(matrix, dtype=complex)
 
     return {
@@ -39,6 +44,7 @@ def _complex_matrix_to_lists(matrix: np.ndarray) -> dict:
 
 
 def _sympy_substitutions_from_config(config: dict) -> dict:
+    '''Build dictionary connecting T3 symbolic expression into actual numbers'''
     substitutions: dict[sp.Expr, complex | float] = {}
 
     model = config["t3"]
@@ -99,7 +105,7 @@ def _sympy_substitutions_from_config(config: dict) -> dict:
 
 
 def _hierarchical_scale_substitutions(config: dict) -> dict[sp.Expr, float]:
-    """Numerical values for the grouped F -> (S1,S2) threshold symbols."""
+    """We deal with scalar mass substitution, and deal with shared vs not shared"""
     model = config["t3"]
 
     if "MS" in model:

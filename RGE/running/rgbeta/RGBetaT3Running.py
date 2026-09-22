@@ -1,3 +1,8 @@
+
+# Python wrapper for Wolfram RGBeta runners for python pipeline
+# It just calls our wolfram scripts in python
+# We run RGBeta for UV and RGBeta running
+
 from __future__ import annotations
 
 import json
@@ -33,7 +38,7 @@ class RGBetaT3IntermediateResult:
 
 
 def _wolfram_integer_token(value: int) -> str:
-    """Encode a signed integer in the token form expected by the Wolfram runners."""
+    """Give -3 -> m3 for wolfram to read"""
     return f"m{abs(value)}" if value < 0 else str(value)
 
 

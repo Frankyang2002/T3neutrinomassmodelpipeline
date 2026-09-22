@@ -1,18 +1,17 @@
 (* T3RGBetaRunnerCommon.wl
-   Shared command-line, JSON, and report-beta utilities for the UV and EFT1
-   RGBeta runners.
-
-   Physics/model construction remains in T3RGBetaModel.wl and is selected
-   explicitly by each stage-specific runner.
+   Gets command line arguments,
+   We format the metadata and do symbolic mathematica things
+   We convert the beta funcitons into reporting convention and do JSON
 *)
 
+(* Common 3 -> 3, m3 -> -3 translation *)
 T3RGBetaParseIntegerToken[token_String] := If[
     StringStartsQ[token, "m"],
     -ToExpression[StringDrop[token, 1]],
     ToExpression[token]
 ];
 
-
+(* Get runner arugment *)
 T3RGBetaParseRunnerArguments[] := Module[
     {sharedMode, dS, dS1, dS2, dF, alpha, outputPath},
 
@@ -57,6 +56,7 @@ T3RGBetaParseRunnerArguments[] := Module[
 ];
 
 
+(* Get JSON into output path *)
 T3RGBetaWriteJSON[outputPath_String, payload_Association] := Module[{json},
     json = ExportString[payload, "RawJSON"];
     If[!StringQ[json],
@@ -66,7 +66,7 @@ T3RGBetaWriteJSON[outputPath_String, payload_Association] := Module[{json},
     Export[outputPath, json, "Text"];
 ];
 
-
+(* Gets model metadata used for UV and EFT1 output files *)
 T3RGBetaCommonMetadata[
     config_Association,
     build_Association
@@ -98,14 +98,15 @@ T3RGBetaCommonMetadata[
     |>
 ];
 
-
+(* Make symbolic beta functions into a JSON-compatible string *)
 T3RGBetaSerializeAssociation[association_Association] :=
     Association @ KeyValueMap[
         (#1 -> ToString[InputForm[#2]]) &,
         association
     ];
 
-
+(* We need to change our conventions as RGBeta uses the dg^2/dln\mu
+We just use dg/dlnmu. So the conversion is just divide by 2g  *)
 T3RGBetaConventionalReportBetas[betaAssociation_Association] :=
     Association @ KeyValueMap[
         Function[{name, beta},
@@ -120,7 +121,7 @@ T3RGBetaConventionalReportBetas[betaAssociation_Association] :=
         betaAssociation
     ];
 
-
+(* Make our symbolic beta functions into Latex string *)
 T3RGBetaLaTeXAssociation[association_Association] :=
     Association @ KeyValueMap[
         (#1 -> ToString[TeXForm[#2]]) &,

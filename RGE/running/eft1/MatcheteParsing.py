@@ -2,9 +2,7 @@ from __future__ import annotations
 
 """Small Matchete InputForm parsing helpers shared by EFT1 adapters.
 
-These functions parse only the Mathematica/InputForm subset emitted by the
-current Matchete export. They contain no T3 matching, RGE, or normalization
-physics.
+Converts Matchete Mathematica -> Python Sympy
 """
 
 import re

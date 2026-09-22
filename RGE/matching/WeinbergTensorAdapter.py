@@ -1,6 +1,11 @@
 from __future__ import annotations
 
-"""Construct the Weinberg-operator C_ijab tensor in the production RGE basis."""
+"""Construct the Weinberg-operator C_ijab tensor in the production RGE basis.
+We convert our normal operators into real basis that we need for RGE
+We also add more SM EFT ingredients which are required to run the
+Weinberg tensor into the Wilson RGE.
+The beta function needs Yukawa to evolve so its here too (will move later)
+"""
 
 from dataclasses import dataclass
 from itertools import product
@@ -17,6 +22,8 @@ from RGE.general.ScalarBasis import ComplexScalar, ScalarBasis
 # Consolidated from the former standalone helper module.
 # ---------------------------------------------------------------------------
 
+# Allows for using C[i,j,a,b] instead of needing C.get((i,j,a,b),0)
+# Just for convenience
 class SparseWilsonLookup:
     """Sparse C_ijab lookup with zero for components absent from the mapping."""
 
@@ -59,9 +66,10 @@ def _add_symmetric_yukawa(
     a: int,
     value: sp.Expr,
 ) -> None:
+    """Inserts both y_ija and y_jia"""
+
     entries[(i, j, a)] = value
     entries[(j, i, a)] = value
-
 
 def build_sm_yukawa(
     scalar_model: ScalarBasis,
@@ -70,16 +78,18 @@ def build_sm_yukawa(
     """Build the one-generation SM y_ija tensor including colour multiplicity."""
 
     entries: dict[tuple[int, int, int], sp.Expr] = {}
-    h = scalar_model.block("H")
-    hp_r = h.local_to_global(1)
+    h = scalar_model.block("H") # Put into the scalar basis block H
+    # link basis to each of these variables, Hp is H+ for top one in doublet
+    hp_r = h.local_to_global(1) 
     hp_i = h.local_to_global(2)
     h0_r = h.local_to_global(3)
     h0_i = h.local_to_global(4)
     root2 = sp.sqrt(2)
 
-    nu = fermion_basis.global_index("L", 1)
-    e = fermion_basis.global_index("L", 2)
-    ec = fermion_basis.global_index("eC", 1)
+    nu = fermion_basis.global_index("L", 1) # neutrino
+    e = fermion_basis.global_index("L", 2) # electron
+    ec = fermion_basis.global_index("eC", 1) # right handed electron
+
 
     _add_symmetric_yukawa(
         entries,
@@ -95,6 +105,9 @@ def build_sm_yukawa(
         hp_i,
         -sp.I * ye / root2,
     )
+
+
+
     _add_symmetric_yukawa(
         entries,
         e,
@@ -110,7 +123,11 @@ def build_sm_yukawa(
         -sp.I * ye / root2,
     )
 
+
+
+
     for colour in range(1, 4):
+        # Assign fermion basis
         q_up = fermion_basis.global_index(
             f"Q{colour}",
             1,
@@ -128,6 +145,7 @@ def build_sm_yukawa(
             1,
         )
 
+        # Add yukawa
         _add_symmetric_yukawa(
             entries,
             q_up,
@@ -195,7 +213,8 @@ def build_sm_yukawa(
 
 
 def build_sm_eft() -> tuple[ScalarBasis, FermionBasis]:
-    """Construct the active one-generation SM EFT basis below the T3 threshold."""
+    """Construct the active one-generation SM EFT basis below the T3 threshold.
+    This is after we integrated out our fermion"""
 
     scalar_model = ScalarBasis(
         (
@@ -257,6 +276,7 @@ def _complex_scalar_from_real_pair(
     real_symbol: sp.Symbol,
     imag_symbol: sp.Symbol,
 ) -> sp.Expr:
+    '''Convert into complex scalar from real pair'''
     return (real_symbol + sp.I * imag_symbol) / sp.sqrt(2)
 
 
@@ -268,20 +288,20 @@ def weinberg_polynomial(
 ) -> tuple[sp.Expr, dict[int, sp.Symbol], dict[int, sp.Symbol]]:
     """Return the expanded Weinberg polynomial and global placeholders."""
 
+    # We first check each of our blocks that exist and valid for weinberg
     lepton_block = fermion_basis.block(embedding.lepton_name)
-
     if lepton_block.fermion.su2_dimension != 2:
         raise ValueError(
             "The Weinberg operator requires an SU(2) lepton doublet."
         )
 
     higgs_block = scalar_model.block(embedding.higgs_name)
-
     if higgs_block.scalar.su2_dimension != 2:
         raise ValueError(
             "The Weinberg operator requires an SU(2) Higgs doublet."
         )
 
+    # Symbolic placeholders for our fermion and scalar coordinates in our bases
     fermion_symbols = {
         index: sp.Symbol(f"psi{index}", commutative=True)
         for index in range(1, fermion_basis.dimension + 1)
@@ -361,6 +381,7 @@ def build_weinberg_wilson_tensor(
 
     result: dict[tuple[int, int, int, int], sp.Expr] = {}
 
+    # Get Weinberg Tensor
     for i, j, a, b in product(
         lepton_indices,
         lepton_indices,

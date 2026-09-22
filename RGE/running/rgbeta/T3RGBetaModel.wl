@@ -1,22 +1,13 @@
 (* T3RGBetaModel.wl
-   Reusable RGBeta model builder for the current T3 scope.
+   Tells RGBeta the gauge groups, fields, representations and interactions etc
 
    Current supported SU(2) dimensions:
        1 = singlet
        2 = doublet
        3 = triplet
 
-   Project convention:
-       Q = T3 + Y
-       Y(S1) = alpha/2
-       Y(F)  = (alpha + 1)/2
-       Y(S2) = (alpha + 2)/2
-
-   The historical T3 paper labels hypercharge by 2Y.
-
    This file defines the renormalisable gauge/fermion/scalar field content and
-   the SM + T3 Yukawa sector in RGBeta.  Scalar-potential registration is kept
-   in separate helpers so it can be extended without changing the field logic.
+   the SM + T3 Yukawa sector in RGBeta. 
 *)
 
 ClearAll[
@@ -49,12 +40,12 @@ ClearAll[
 
 T3RGBetaSupportedDimensionQ[d_Integer] := MemberQ[{1, 2, 3}, d];
 
-
+(* SU2 Rep for RGBeta *)
 T3RGBetaRep[1] := None;
 T3RGBetaRep[2] := SU2L[fund];
 T3RGBetaRep[3] := SU2L[S2];
-
-
+ 
+(* U(1) Rep for RGBeta *)
 T3RGBetaGaugeRep[d_Integer, y_] := If[
     d === 1,
     {U1Y[y]},
@@ -62,20 +53,26 @@ T3RGBetaGaugeRep[d_Integer, y_] := If[
 ];
 
 
-(* Slots are always {scalar, lepton doublet, heavy fermion}. *)
+(* These define the invariant tensor required to contract our SU2 indices
+these are the clebsch gordon. 
+These are for the SU(2) dimensions for the scalar and fermion
+*)
+
+(*Note we have a singlet here so we contract only 2 fields*)
 T3RGBetaYukawaInvariant[2, 1] :=
     (eps[SU2L @ fund, #1, #2] &);
 
 T3RGBetaYukawaInvariant[1, 2] :=
     (eps[SU2L @ fund, #2, #3] &);
 
+(*We contract 3 fields here so we use this clebsch gordon*)
 T3RGBetaYukawaInvariant[2, 3] :=
     (delS2[SU2L, #3, #1, #2] &);
 
 T3RGBetaYukawaInvariant[3, 2] :=
     (delS2[SU2L, #1, #2, #3] &);
 
-
+(* We add the standard model *)
 T3RGBetaAddSM[] := Module[{},
     AddGaugeGroup[gY, U1Y, U1];
     AddGaugeGroup[g2, SU2L, SU[2]];
@@ -183,7 +180,7 @@ T3RGBetaAddHeavyFermion[dF_Integer, yF_] := Module[{},
             FlavorIndices -> {heavy}
         ],
 
-        (* Vectorlike case: two left-Weyl fields in conjugate gauge
+        (* Two left-Weyl fields in conjugate gauge
            representations. *)
         AddFermion[
             F,
@@ -199,7 +196,7 @@ T3RGBetaAddHeavyFermion[dF_Integer, yF_] := Module[{},
     ];
 ];
 
-
+(* Get BSM yukawas *)
 T3RGBetaAddT3Yukawas[
     dS1_Integer,
     dS2_Integer,
@@ -230,7 +227,7 @@ T3RGBetaAddT3Yukawas[
     ];
 ];
 
-
+(* We add scalar mass term *)
 T3RGBetaAddScalarMasses[
     dS1_Integer,
     dS2_Integer
@@ -262,7 +259,7 @@ T3RGBetaAddScalarMasses[
     ];
 ];
 
-
+(* We add scalar and fermion mass term *)
 T3RGBetaAddMasses[
     dS1_Integer,
     dS2_Integer,
@@ -308,6 +305,10 @@ T3RGBetaAddMasses[
 (* ---------------------------------------------------------------------- *)
 (* Scalar potential                                                        *)
 (* ---------------------------------------------------------------------- *)
+
+(* For scalar potential, we have some simple contractions
+But with non-singlets, we can obtain multiple singlets made by our fields
+This means we need to incorporate each way to contract a field *)
 
 T3RGBetaPairInvariant[1, i_, j_] := 1;
 T3RGBetaPairInvariant[2, i_, j_] := del[SU2L @ fund, i, j];
@@ -391,9 +392,8 @@ T3RGBetaAddBasicQuartics[
 ];
 
 
-(* Three-triplet antisymmetric invariant written entirely in the S2 basis.
-   This is required for T3-E.  Using fStruct would introduce SU2L[adj]
-   indices while our triplet fields are registered as SU2L[S2]. *)
+(*  The symmetric triplet is composed of the symmetric component of doublet x doublet 
+and try to contract our indices for the 2x2 with this*)
 T3RGBetaS2TripleInvariant[a_, b_, c_] := Module[
     {i, j, k, l, m, n},
     delS2[SU2L, a, i, j] *
@@ -407,15 +407,16 @@ T3RGBetaS2TripleInvariant[a_, b_, c_] := Module[
 
 (* Topology quartic:
        lambdaT3 H H S1 S2† + h.c.
-
-   The two identical Higgs fields are in the symmetric triplet channel.
+   The inputs are the dimensions of our scalar fields 
 *)
+(*Singlets so we only need 3 fields contracted*)
 T3RGBetaMixInvariant[1, 3] :=
     (delS2[SU2L, #4, #1, #2] &);
 
 T3RGBetaMixInvariant[3, 1] :=
     (delS2[SU2L, #3, #1, #2] &);
 
+(* We contract the HH and then SS and then together *)
 T3RGBetaMixInvariant[2, 2] :=
     (
         delS2[SU2L, a, #1, #2] *
@@ -441,16 +442,20 @@ T3RGBetaAddMixingQuartic[
 
 
 
-(* ---------------------------------------------------------------------- *)
-(* Additional quartics required by one-loop RG closure                    *)
-(* ---------------------------------------------------------------------- *)
+(* Topology quartic:
+       H H S1 S2
+       tGen is our generators, SU2L for 2dim, S2 for 3dim
+*)
 
+(* Extracted the generators for the doublet doublets*)
 T3RGBetaPortalAdjInvariant[2] :=
     (
         tGen[SU2L @ fund, A, #1, #2] *
         tGen[SU2L @ fund, A, #3, #4] &
     );
 
+
+(* Extracted generators for doublet triplet*)
 T3RGBetaPortalAdjInvariant[3] :=
     (
         tGen[SU2L @ fund, A, #1, #2] *
@@ -464,10 +469,6 @@ T3RGBetaAddRGClosedQuartics[
     dF_Integer,
     alpha_Integer
 ] := Module[{},
-    (* -------------------------------------------------------------- *)
-    (* Extra Higgs-BSM portal contractions                            *)
-    (* -------------------------------------------------------------- *)
-
     If[dS1 > 1,
         SetReal[lambdaH1Adj];
 
@@ -489,10 +490,7 @@ T3RGBetaAddRGClosedQuartics[
     ];
 
 
-    (* -------------------------------------------------------------- *)
-    (* Second self quartic for complex triplets                       *)
-    (* -------------------------------------------------------------- *)
-
+    (* This is for SSSS now, not HHSS *)
     If[dS1 == 3,
         SetReal[lambdaS1Adj];
 
@@ -520,10 +518,7 @@ T3RGBetaAddRGClosedQuartics[
     ];
 
 
-    (* -------------------------------------------------------------- *)
-    (* Additional S1-S2 contractions                                  *)
-    (* -------------------------------------------------------------- *)
-
+    (* Now S1S1S2S2 contractions *)
     If[dS1 > 1 && dS2 > 1,
         SetReal[lambda12Adj];
 
@@ -537,7 +532,6 @@ T3RGBetaAddRGClosedQuartics[
         ];
     ];
 
-    (* T3-E has a third independent mixed contraction. *)
     If[dS1 == 3 && dS2 == 3,
         SetReal[lambda12Cross];
 
@@ -554,10 +548,7 @@ T3RGBetaAddRGClosedQuartics[
     ];
 
 
-    (* -------------------------------------------------------------- *)
-    (* New field structures required only for T3-B / T3-C            *)
-    (* -------------------------------------------------------------- *)
-
+    (* Also HHSS, the hypercharge requirement makes the term viable *)
     If[dS1 == 2 && dS2 == 2 && alpha == -1,
         AddQuartic[
             lambdaHHdagS2S2,
@@ -589,7 +580,6 @@ T3RGBetaAddRGClosedQuartics[
             SelfConjugate -> False
         ];
 
-        (* Generated only after the first B/C closure enlargement. *)
 
         AddQuartic[
             lambdaS1barS2S2bar2,
@@ -624,7 +614,7 @@ T3RGBetaAddRGClosedQuartics[
 ];
 
 
-
+(* We get our UV built here and stored in T3RGBetaLastBuild *)
 T3RGBetaBuild[
     dS1_Integer,
     dS2_Integer,
@@ -686,7 +676,8 @@ T3RGBetaBuild[
 
 
 (* ---------------------------------------------------------------------- *)
-(* Intermediate EFT after integrating out F                              *)
+(* Intermediate EFT after integrating out F  
+    We dont do int S first due to dim 6 operator cbb                      *)
 (* ---------------------------------------------------------------------- *)
 
 T3RGBetaBuildEFT1[
@@ -749,7 +740,7 @@ T3RGBetaBuildEFT1[
     |>
 ];
 
-
+(* We get our RGBetas *)
 T3RGBetaEFT1OneLoopBetas[] := Module[
     {result, meta, dS1, dS2, alpha},
 
@@ -776,6 +767,7 @@ T3RGBetaEFT1OneLoopBetas[] := Module[
         "lambdaT3" -> Quiet[BetaTerm[lambdaT3, 1]]
     |>;
 
+    (* Other couplings that only exist with conditions *)
     If[dS1 > 1,
         AssociateTo[
             result,
@@ -937,7 +929,7 @@ T3RGBetaOneLoopBetas[] := Module[
 ];
 
 (* ---------------------------------------------------------------------- *)
-(* One-physical-scalar scotogenic branch                                  *)
+(* If shared scalars we use the following instead                         *)
 (* ---------------------------------------------------------------------- *)
 
 T3RGBetaAddSharedScalarMass[dS_Integer] := Module[{inv},

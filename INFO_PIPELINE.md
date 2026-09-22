@@ -1,3 +1,11 @@
+NOTE TO SELF: There are a few restrictions that make things annoying
+- 3 dimensions SU2 or less due to RG beta not working for higher order
+- We only look at F integrated out first due to annoyance of dimension 6 operator from integrating S first with LLHHS, and CBB
+- Shared scalars are fairly hard coded, might want to change if free time
+- Remove old threshold matching behaviour which doesnt have running, need to fix a lot of routes
+
+
+
 # T3 Neutrino-Mass Model Pipeline: End-to-End Guide
 
 This document is the repository-wide overview for the T3 neutrino-mass model pipeline.

@@ -1,20 +1,12 @@
 from __future__ import annotations
 
-"""Matchete EFT1 tensor adapters for Wilson and scalar-quartic seeds.
+"""
+We get our python objects of matchete EFT operators
+and we convert them into RGE tensors
 
-This module consolidates the former EFT1WilsonAdapter.py and
-EFT1QuarticAdapter.py source files without changing their tensor-building
-formulae or real-scalar basis conventions.
-
-The public production entry points are
-
-    build_eft1_wilson_tensor
-    load_and_build_eft1_wilson_tensor
-    build_eft1_quartic_tensor
-    load_and_build_eft1_quartic_tensor
-
-The Wilson adapter's private helper names are prefixed internally only to
-avoid collisions with the independent quartic-adapter parsing helpers.
+Specifically
+Wilson C_ijab for LLSS
+Scalar potential lambda_abcd
 """
 
 from dataclasses import dataclass
@@ -71,13 +63,15 @@ class WilsonCGCall:
 
 @dataclass(frozen=True)
 class WilsonScalarLayout:
-    """Global real-scalar offsets for ordinary or shared-scalar T3 EFT1."""
+    """We find where EFT1 scalars exist in our global real basis
+    like where 1234 -> H"""
 
     d_s1: int
     d_s2: int
     include_higgs: bool = True
     shared_scalar: bool = False
 
+    # Higgs takes up 1-4, so if we have higgs the s1 is at 5
     @property
     def s1_first(self) -> int:
         return 5 if self.include_higgs else 1
@@ -134,21 +128,11 @@ class SparseWilsonTensor:
 
 
     def symmetrized(self) -> "SparseWilsonTensor":
-        """Project onto C_(ij)(ab) without changing the represented operator.
-
-        For left-handed two-component fermions the Lorentz scalar psi_i psi_j
-        is symmetric under i<->j, while ordinary scalar fields commute under
-        a<->b.  Therefore only the separately symmetric part of C_ijab is
-        physically observable in the Lagrangian.
-
-        The projector is
-
+        """We have ij and ab symmetry, we have it symmetrised as 
             Csym_ijab = 1/4 (
                 C_ijab + C_jiab + C_ijba + C_jiba
             ).
-
-        Averaging, rather than summing, is essential: summing would multiply
-        the Lagrangian by combinatorial factors.
+            So antisymmetrised components cancel
         """
 
         keys = set(self.entries)
@@ -178,7 +162,8 @@ class SparseWilsonTensor:
         return SparseWilsonTensor(result)
 
     def symmetry_residuals(self) -> dict[str, dict[tuple[int, int, int, int], sp.Expr]]:
-        """Return exact residuals for the two operator-index symmetries."""
+        """Return exact residuals for the two operator-index symmetries.
+        We can check violations of our symmetries here"""
 
         keys = set(self.entries)
         for i, j, a, b in tuple(keys):
@@ -246,14 +231,8 @@ def _find_wilson_cg_calls(term: str) -> tuple[WilsonCGCall, ...]:
 
 
 def _find_wilson_scalar_legs(term: str) -> tuple[WilsonScalarLeg, ...]:
-    """Read the two actual NewScalar1/NewScalar2 Field[...] factors.
-
-    Matchete omits the SU(2) representation index entirely for singlets, e.g.
-
-        Field[NewScalar1, Scalar, {}, {}]
-
-    so a regex that requires Index[...] misses that scalar. Parse Field[...]
-    structurally instead and preserve multiplicity of repeated scalar fields.
+    """
+    We get the 2 scalar fields from the Matchete output into our fields
     """
 
     legs: list[WilsonScalarLeg] = []
@@ -331,6 +310,7 @@ _LEPTON_RE = re.compile(
 
 
 def _find_lepton_dummies(term: str) -> tuple[str, str]:
+    '''Find our Lepton Doublet indices and return it'''
     labels: list[str] = []
     for match in _LEPTON_RE.finditer(term):
         label = match.group("dummy").strip()
@@ -426,6 +406,10 @@ def _term_scalar_expression(term: dict) -> str:
 
 
 def _term_prefactor(term: dict) -> sp.Expr:
+    '''We reconstruct scalar coefficient by
+    multiplying fields and CG contractions.
+    So no more fields, CG objects and spinors butretaining
+    yukawa and fermion mass'''
     scalar_text = _term_scalar_expression(term)
 
     cleaned = scalar_text.strip()
@@ -485,6 +469,7 @@ def _wilson_cg_value(
     registry: dict[str, WilsonCGTensor],
     assignment: dict[tuple[str, str], int],
 ) -> sp.Expr:
+    '''For assigned SU2 Components we evaluate the CG'''
     if call.name not in registry:
         raise KeyError(f"CG {call.name!r} is absent from the exported registry.")
     tensor = registry[call.name]
@@ -527,8 +512,11 @@ def _wilson_shared_scalar_component_map(
 ) -> tuple[int, bool, sp.Expr]:
     """Map formal S1/S2 legs to one physical scalar S.
 
-    S1_a = C_ab S_b^*, S2_a = S_a with the standard SU(2)
-    charge-conjugation metric in descending-m ordering.
+    S1_a = C_ab S_b^*, 
+    S2_a = S_a with the standard SU(2)
+    C_ab is the charge-conjugation metric in descending-m ordering.
+    
+    This is for the shared scalar mode where they are counted the same
     """
     if leg.name == "S2":
         return component, leg.conjugated, sp.S.One
@@ -544,6 +532,7 @@ def _scalar_real_expansion(
     component: int,
     layout: WilsonScalarLayout,
 ) -> tuple[tuple[int, sp.Expr], tuple[int, sp.Expr]]:
+    '''Get complex leg -> real coordinates'''
     root2 = sp.sqrt(2)
     physical_component = component
     conjugated = leg.conjugated
@@ -572,16 +561,11 @@ def build_eft1_wilson_tensor(
     project_operator_symmetry: bool = False,
     shared_scalar: bool = False,
 ) -> SparseWilsonTensor:
-    """Convert exported tree Wilson terms to the real-scalar C_ijab basis.
-
-    ``lepton_indices`` gives the global fermion-basis positions of the two
-    SU(2) components of L.  In the current FermionBasis construction L is the
-    first multiplet, so the default is (1, 2).
-
-    The returned tensor is in the direct Lagrangian coefficient normalisation
-    obtained from the Matchete term.  A later calibration step should compare
-    this convention with ``build_weinberg_wilson_tensor`` before using it for
-    a final numerical RGE.
+    """Tree Wilson Terms becomes C_ijab
+    We get our scalar and lepton legs and get our CG contraction
+    We get the coefficients in terms of yukawa, 1/MF etc 
+    Then we evaluate our CG and make everything in terms of real
+    This gives us C_ijab with coefficient prefactor
     """
 
     if chirality not in {"PL", "PR"}:
@@ -679,7 +663,8 @@ def load_and_build_eft1_wilson_tensor(
     lepton_indices: tuple[int, int] = (1, 2),
     project_operator_symmetry: bool = False,
 ) -> SparseWilsonTensor:
-    """Build the tensor using the two files emitted by the current pipeline."""
+    """Build the tensor using the two files emitted by the current pipeline
+    The RGbeta and the matchete EFT1 seed."""
 
     seed = json.loads(Path(seed_path).read_text(encoding="utf-8"))
     rgbeta = json.loads(Path(rgbeta_path).read_text(encoding="utf-8"))
@@ -697,7 +682,7 @@ def load_and_build_eft1_wilson_tensor(
 
 
 def wilson_tensor_diagnostics(tensor: SparseWilsonTensor) -> dict:
-    """Serialisable raw-vs-projected symmetry diagnostics."""
+    """Compares Matchete tensor to our new projected one."""
 
     residuals = tensor.symmetry_residuals()
     projected = tensor.symmetrized()
@@ -812,7 +797,7 @@ class ScalarLayout:
 
 
 class SparseQuarticTensor:
-    """Fully symmetric real-scalar lambda_abcd lookup."""
+    """This is fully symmetric."""
 
     def __init__(self, entries: dict[tuple[int, int, int, int], sp.Expr]):
         self.entries = {
@@ -834,7 +819,8 @@ class SparseQuarticTensor:
 
 
 def _find_scalar_legs(term: str) -> tuple[ScalarLeg, ...]:
-    """Read actual scalar Field[...] factors, including outer Bar[...] wrappers."""
+    """Read actual scalar Field[...] factors, including outer Bar[...] wrappers.
+    from our matchete"""
 
     legs: list[ScalarLeg] = []
     pos = 0
@@ -898,6 +884,7 @@ def _find_scalar_legs(term: str) -> tuple[ScalarLeg, ...]:
 
 
 def _find_cg_calls(term: str) -> tuple[CGCall, ...]:
+    '''get CG from matchete output'''
     calls: list[CGCall] = []
     pos = 0
 
@@ -936,6 +923,7 @@ def _find_cg_calls(term: str) -> tuple[CGCall, ...]:
 
 
 def _find_coupling(term: str) -> tuple[str, bool]:
+    '''Get coupling from matchete output'''
     starts: list[int] = []
     pos = 0
     while True:
@@ -966,7 +954,10 @@ def _find_coupling(term: str) -> tuple[str, bool]:
 
 
 def _object_spans(term: str) -> list[tuple[int, int]]:
-    """Spans of Field, CG and Coupling objects for prefactor extraction."""
+    """
+    We find all fields, CG and couplings and note their positions
+    Then we can remove them to just get the coefficient
+    ."""
 
     spans: list[tuple[int, int]] = []
 
@@ -1005,6 +996,7 @@ def _object_spans(term: str) -> list[tuple[int, int]]:
 
 
 def _numeric_prefactor(term: str) -> sp.Expr:
+    '''Replace all fields and couplings and cg with 1'''
     stripped = term
     for start, end in reversed(_object_spans(term)):
         stripped = stripped[:start] + "1" + stripped[end:]

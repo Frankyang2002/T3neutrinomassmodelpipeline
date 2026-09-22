@@ -290,7 +290,7 @@ def conjugate_coefficient_yukawa_term(
     output_component: tuple[int, int, int, int],
     coefficient=C,
 ) -> sp.Expr:
-    r"""Return (2 y_ild y_jkd + y_ijd y_kld) C^*_{klab} from Eq. (4.85)."""
+    r"""Return (2 y_ild y_jkd + y_ijd y_kld) C^*_{klab}"""
 
     _validate_rge_dimensions(model, inputs, output_component)
     i, j, a, b = output_component
@@ -316,7 +316,7 @@ def scalar_anomalous_dimension_term(
     output_component: tuple[int, int, int, int],
     coefficient=C,
 ) -> sp.Expr:
-    r"""Return sum_sigma({a,b}) gamma_{c,s}^{bd} C_ijad from Eq. (4.85).
+    r"""Return sum_sigma({a,b}) gamma_{c,s}^{bd} C_ijad.
 
     The ``c`` in gamma_{c,s} labels the *collinear* anomalous dimension; it is
     not a summed scalar index.

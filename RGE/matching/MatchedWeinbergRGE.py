@@ -1,3 +1,9 @@
+'''This is the SMEFT Weinberg Operator runner
+This does 
+kappa(LHLH) -> C_ijab
+We get all our pieces for SMEFT with C
+We also convert Matchete expressions into SymPy'''
+
 from __future__ import annotations
 
 import json
@@ -5,7 +11,7 @@ from pathlib import Path
 
 import sympy as sp
 
-from RGE.general.AnomalousDimensions import calculate_complete_wilson_tensor_rge
+from RGE.general.WilsonTensorRGE import calculate_complete_wilson_tensor_rge
 from RGE.general.FermionBasis import build_gauge_sectors
 from RGE.general.GaugeGenerators import g2
 from RGE.general.WilsonTensorRGE import WilsonRGEInputs
@@ -25,6 +31,7 @@ lambdaH = sp.Symbol("lambdaH")
 
 
 def _matching_square_bracket(text: str, open_index: int) -> int:
+    # Check [] are all there 
     if text[open_index] != "[":
         raise ValueError("Expected '[' at open_index.")
 
@@ -45,6 +52,7 @@ def _matching_square_bracket(text: str, open_index: int) -> int:
 
 
 def _first_top_level_argument(arguments: str) -> str:
+    # Get first argument
     depth = 0
 
     for pos, char in enumerate(arguments):
@@ -59,6 +67,7 @@ def _first_top_level_argument(arguments: str) -> str:
 
 
 def _replace_matchete_barred_couplings(text: str) -> str:
+    # In the name, converts our bar coupling into cleaned form
     marker = "Bar[Coupling["
     result = text
 
@@ -84,6 +93,7 @@ def _replace_matchete_barred_couplings(text: str) -> str:
 
 
 def _replace_matchete_couplings(text: str) -> str:
+    # In the name, converts our couplings into cleaned form
     marker = "Coupling["
     result = text
 
@@ -99,7 +109,7 @@ def _replace_matchete_couplings(text: str) -> str:
 
 
 def parse_matchete_c5(text: str) -> sp.Expr:
-    """Parse the Matchete InputForm subset used by c5_coefficient.txt."""
+    """Convert Matchete into Sympy used by c5_coefficient.txt."""
 
     stripped = text.strip()
 
@@ -127,7 +137,8 @@ def parse_matchete_c5(text: str) -> sp.Expr:
 
 
 def higgs_quartic(a: int, b: int, c: int, d: int) -> sp.Expr:
-    """lambda_abcd for V=(lambdaH/2)(H^dagger H)^2."""
+    """lambda_abcd for V=(lambdaH/2)(H^dagger H)^2.
+    this is our quartic tensor"""
 
     delta = lambda x, y: sp.Integer(1 if x == y else 0)
 
@@ -139,24 +150,32 @@ def higgs_quartic(a: int, b: int, c: int, d: int) -> sp.Expr:
 
 
 def calculate_matched_weinberg_rge(kappa: sp.Expr) -> dict:
-    """Evaluate the matched Weinberg coefficient in the active SM EFT."""
+    """Evaluate the matched Weinberg coefficient in the active SM EFT.
+    This goes to data/rge_summary and data/c5_beta"""
 
+    # We get our SMEFT basis
     scalar_model, fermion_basis = build_sm_eft()
+
+    # Get Yukawa tensors
     yukawa = build_sm_yukawa(scalar_model, fermion_basis)
 
+    # Get Weinberg Wilson Tensor
     wilson = build_weinberg_wilson_tensor(
         scalar_model,
         fermion_basis,
         kappa,
     )
+
     validate_weinberg_tensor_symmetry(wilson)
     coefficient = SparseWilsonLookup(wilson)
 
+    # nu nu H0 H0 weinberg
     nu = fermion_basis.global_index("L", 1)
     h0_r = scalar_model.block("H").local_to_global(3)
     component = (nu, nu, h0_r, h0_r)
     c_value = coefficient[component]
 
+    # We get RGE inputs
     inputs = WilsonRGEInputs(
         fermion_dimension=fermion_basis.dimension,
         yukawa=yukawa,
@@ -167,6 +186,7 @@ def calculate_matched_weinberg_rge(kappa: sp.Expr) -> dict:
         ),
     )
 
+    # Get RGE for wilson
     contributions = calculate_complete_wilson_tensor_rge(
         model=scalar_model,
         inputs=inputs,
@@ -174,10 +194,12 @@ def calculate_matched_weinberg_rge(kappa: sp.Expr) -> dict:
         coefficient=coefficient,
     )
 
+    # 16pi^2 kdot/k= beta ratio
     beta_ratio = sp.factor(
         sp.simplify(contributions["total"] / c_value)
     )
 
+    # Expected result 
     expected_ratio = (
         -3 * g2**2
         + 2 * lambdaH
@@ -220,8 +242,6 @@ def run_matched_weinberg_rge(
     # The hierarchical pipeline supplies the physical full-flavor JSON.  The
     # purpose of this stage is only the universal one-generation SMEFT RGE
     # benchmark, so reduce that physical coefficient to a 1x1 flavor problem.
-    # Import locally to avoid the module-level cycle: FlavorC5Matching uses
-    # parse_matchete_c5 from this module for the hard threshold expression.
     from RGE.matching.FlavorC5Matching import (
         is_final_weinberg_json,
         load_final_weinberg_flavor_matrix,

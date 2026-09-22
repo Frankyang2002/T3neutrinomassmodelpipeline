@@ -1,11 +1,7 @@
 (* RunT3EFT1RGBeta.wl
-   Command-line runner for the renormalisable intermediate EFT1 RGBeta model.
+   Renormalisable running between thresholds after heavy femrion is removed
 
-   Usage:
-       wolframscript -file RunT3EFT1RGBeta.wl dS1 dS2 dF alpha output.json
-
-   Exact symbolic quantities are exported as InputForm strings because JSON
-   has no representation for Mathematica Rational or symbolic expressions.
+   Read RunT3RGBeta.wl for the same comments, its basically the same thing but with EFT1
 *)
 
 ClearAll["Global`*"];
@@ -24,7 +20,7 @@ dF = config["dF"];
 alpha = config["alpha"];
 outputPath = config["OutputPath"];
 
-
+(* Build our RGBetas *)
 build = CheckAbort[
     Quiet[
         If[
@@ -50,8 +46,7 @@ If[!AssociationQ[build],
 ];
 
 
-(* JSON cannot encode exact Mathematica Rational objects.  Preserve the
-   project's exact hypercharge convention as InputForm strings. *)
+(* JSON needs this metadata as it cant deal with this stuff *)
 jsonMetadata = Join[
     T3RGBetaCommonMetadata[config, build],
     <|
@@ -60,7 +55,7 @@ jsonMetadata = Join[
     |>
 ];
 
-
+(* Run RGBeta for EFT1 *)
 betaAssociation = CheckAbort[
     Quiet[
         If[
@@ -87,26 +82,10 @@ If[betaAssociation === $Aborted || !AssociationQ[betaAssociation],
 
 stringBetas = T3RGBetaSerializeAssociation[betaAssociation];
 
-(* RGBeta uses a special convention for gauge couplings:
-
-       beta_g^RGBeta = d(g^2)/d ln(mu).
-
-   For the human-facing report we instead use the conventional derivative
-
-       16 pi^2 d g/d ln(mu).
-
-   At one loop this is BetaTerm[g,1]/(2 g).  All non-gauge couplings already
-   use the ordinary derivative convention, so their one-loop report term is
-   simply BetaTerm[X,1].  The original BetaTerm output above is preserved
-   unchanged in "betas" for machine use. *)
 reportBetaAssociation = T3RGBetaConventionalReportBetas[betaAssociation];
 
 stringReportBetas = T3RGBetaSerializeAssociation[reportBetaAssociation];
 
-(* TeXForm is retained as a first-pass rendering.  RGBeta has internal heads
-   such as Matrix, Trans and Bar that TeXForm does not know how to typeset.
-   Reports/RGEComparison.py performs the final physics-aware display cleanup
-   while using these exact expressions. *)
 latexReportBetas = T3RGBetaLaTeXAssociation[reportBetaAssociation];
 
 

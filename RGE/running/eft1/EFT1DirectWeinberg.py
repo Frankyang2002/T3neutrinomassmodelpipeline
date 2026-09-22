@@ -1,3 +1,11 @@
+'''Get EFT1 RGE components into full flavour running 
+We do not work with real components now, we use flavour tensors
+We can get a flavour blind factor for beta to wilson coefficient
+In here we have
+C_{12,pq} for 12 with our yukawa flavour structure and
+p,q as lepton SM flavours electron, mu, tau 
+C{12,pq}∝∑_r[y*1,pry*2,qr+y*2,pry*1,qr]
+'''
 from __future__ import annotations
 
 import argparse
@@ -24,7 +32,6 @@ ALIASES = {"g2": "gL", "g3": "gs"}
 
 # ---------------------------------------------------------------------------
 # Direct Weinberg flavor transport in EFT1
-# Consolidated from the former EFT1DirectWeinbergRunning.py module.
 # ---------------------------------------------------------------------------
 
 def _expr(raw: Any) -> sp.Expr:
@@ -55,6 +62,8 @@ def _load_success(path: Path) -> dict[str, Any]:
 
 
 def _mixed_c12_boundary(flavor_seed: dict[str, Any]) -> dict[str, Any]:
+    '''Search for flavor in mixed y1-y2 coefficient
+    We obtain the flavor tensor form it C_{12,pq}'''
     matches = [
         term
         for term in flavor_seed.get("terms", [])
@@ -85,6 +94,10 @@ def build_direct_weinberg_flavor_transport(
     mu_low: str | sp.Expr,
     output_path: Path | None = None,
 ) -> dict[str, Any]:
+    '''
+    We obtain weinberg tensor
+    We check that it is proportional to Weinberg tensor
+    We obtain delta kappa as the change in Weinberg coefficient running'''
     flavor_seed = _load_success(flavor_seed_path)
     component_rge = _load_success(component_rge_path)
 
@@ -101,6 +114,7 @@ def build_direct_weinberg_flavor_transport(
 
     prefactor = sp.simplify(beta_kappa / c12_1g)
 
+    # These y1,y2 and MF should not be in the prefactor, we have them in our C_12
     y1 = sp.Symbol("y1")
     y2 = sp.Symbol("y2")
     MF = sp.Symbol("MF", nonzero=True)
@@ -109,6 +123,7 @@ def build_direct_weinberg_flavor_transport(
             "Could not factor beta_kappa into a representation coefficient times C12."
         )
 
+    # L = ln(mulow/muhigh)
     hi = _expr(mu_high)
     lo = _expr(mu_low)
     log_ratio = sp.simplify(sp.log(lo / hi))
@@ -184,6 +199,7 @@ def build_direct_weinberg_flavor_transport(
 
 
 def _to_wolfram_scalar(raw: Any) -> str:
+    '''SymPy scalar converted to mathematica'''
     text = mathematica_code(sp.simplify(_expr(raw)))
     for name in sorted(SAFE_SCALAR_COUPLINGS, key=len, reverse=True):
         target = ALIASES.get(name, name)
@@ -200,6 +216,7 @@ def _to_wolfram_scalar(raw: Any) -> str:
 
 
 def _c12_definition(info: dict[str, Any]) -> str:
+    '''Generate full flavour wolfram definition of C_12'''
     one_gen = _expr(info["one_generation_reduction"])
     y1 = sp.Symbol("y1")
     y2 = sp.Symbol("y2")

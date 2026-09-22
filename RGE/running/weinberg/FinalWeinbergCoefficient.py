@@ -1,3 +1,5 @@
+'''We combine threshold weinberg and the running weinberg together here
+We deal with poles and symmetries here'''
 from __future__ import annotations
 
 import argparse
@@ -23,6 +25,10 @@ WEINBERG_KEYS = (
 # ---------------------------------------------------------------------------
 
 def normalize_pole_rge_consistency(path: Path) -> dict[str, Any]:
+    '''Check if our residues are valid, 
+    Our thing in our code is proportional to ln(Ms/Mf) but our wolfram is in ln(Ms^2/Mf^2) 
+    so there is a 2 factor there that we should see in our code
+    We need to confirm they are the same across conventions'''
     path = Path(path)
     payload = json.loads(path.read_text(encoding="utf-8"))
 

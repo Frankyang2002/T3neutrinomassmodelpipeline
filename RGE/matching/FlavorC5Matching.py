@@ -1,10 +1,9 @@
 from __future__ import annotations
 
 """
-Lift a flavor-suppressed T3 Matchete coefficient into a full lepton-flavor
-Weinberg matrix.
+One generation matched C5 -> All 3 generations of lepton flavour C5 matrix
 
-The Matchete matching currently uses one symbolic lepton Yukawa at each T3
+The Matchete matching currently uses one lepton Yukawa at each T3
 vertex, y1 and y2.  Gauge and SU(2) contractions are independent of lepton
 generation, so the one-generation result can be factorized as
 
@@ -13,13 +12,15 @@ generation, so the one-generation result can be factorized as
 For three lepton flavors and n heavy-fermion generations, the symmetric
 Weinberg matrix is then
 
-    K_pq =
-        sum_r F_loop(MF -> MF_r)
+ K_pq = sum_r F_loop(MF -> MF_r)
         [ conjugate(y1_pr) conjugate(y2_qr)
         + conjugate(y2_pr) conjugate(y1_qr) ].
 
-Matchete supplies one ordered flavor coefficient A_pq. In the project convention
-L_EFT contains (1/2) C5_pq O_pq + h.c., so the physical symmetric coefficient is
+Matchete supplies one ordered flavor coefficient A_pq. 
+
+
+In the project convention L_EFT contains (1/2) C5_pq O_pq + h.c., 
+so the physical symmetric coefficient is
 C5_pq = A_pq + A_qp. The one-generation physical C5 is therefore twice the
 ordered Matchete coefficient.
 
@@ -44,7 +45,8 @@ def extract_t3_loop_kernel(
     y1_name: str = "y1",
     y2_name: str = "y2",
 ) -> sp.Expr:
-    """Remove the one-generation T3 Yukawa product from the matched C5."""
+    """Remove the one-generation T3 Yukawa product from the matched C5.
+    We get the F_loop factor"""
 
     y1 = sp.Symbol(y1_name)
     y2 = sp.Symbol(y2_name)
@@ -91,10 +93,12 @@ def build_flavor_c5_matrix(
     heavy_masses: list[sp.Expr] | tuple[sp.Expr, ...] | None = None,
 ) -> sp.Matrix:
     """
-    Build the symmetric lepton-flavor C5 matrix from the scalar loop kernel.
+    Build the symmetric lepton-flavor C5 matrix from the scalar loop kernel F_loop.
 
     If heavy_masses is supplied, MF in the kernel is replaced by MF_r for each
-    heavy generation before summing.
+    heavy generation before summing
+
+    So each generation has its own F_loop
     """
 
     if y1.shape != y2.shape:
@@ -147,7 +151,9 @@ def match_c5_flavor_from_file(
     n_heavy: int = 3,
     split_heavy_masses: bool = True,
 ) -> dict:
-    """Read Matchete C5 and construct its full symbolic flavor matrix."""
+    """Read Matchete C5 and construct its full symbolic flavor matrix.
+    weinberg -> extract F_loop -> put together with yukawa 
+    -> Weinberg Flavour Matrix"""
 
     c5_path = Path(c5_path)
 
@@ -193,7 +199,8 @@ def write_flavor_matching_outputs(
     *,
     debug_outputs: bool = False,
 ) -> dict:
-    """Write the full matched C5 matrix and loop kernel."""
+    """Write the full matched C5 matrix and loop kernel.
+    This is mostly the debug files which only happen if debug_output = true"""
 
     output_dir = Path(output_dir)
     debug_dir = output_dir / "debug"
@@ -234,6 +241,7 @@ def write_flavor_matching_outputs(
 # ---------------------------------------------------------------------------
 
 def _load_payload(path: Path) -> dict:
+    '''Loads our WeinbergJSON'''
     path = Path(path)
     payload = json.loads(path.read_text(encoding="utf-8"))
 
@@ -254,8 +262,7 @@ def _load_payload(path: Path) -> dict:
 
 def _parse_direct_c12_prefactor(raw_expression: str) -> sp.Expr:
     """
-    Parse A in
-
+    We obtain the prefactor A in
         A * C12[p,q]
 
     from the direct-running expression.
@@ -295,13 +302,15 @@ def load_final_weinberg_flavor_matrix(
     """
     Build the symbolic physical Majorana C5 matrix from the final JSON.
 
-    The hard part is read from the renormalized ordered Matchete expression.
-    Its scalar one-generation kernel is extracted, then the already validated
-    symmetric flavor lift is rebuilt explicitly.
+    Hard is the integrated out contribution when a heavy field is taken out. 
+    We get this directly from Matchete expression, where we convert the one
+    generation to full flavour.
 
-    The direct-running part is read from its C12 coefficient.  The stored
-    running object is order-one, so the physical correction receives one
-    explicit factor of hbar here.
+    The direct-running part is read from its C12 coefficient. 
+    Running piece comes from RGE running our Wilson coefficient from one scale to another
+
+    At threshold, C_5=C_hard, 
+    C_5 = C_hard+C_running
     """
     final_weinberg_path = Path(final_weinberg_path)
     payload = _load_payload(final_weinberg_path)

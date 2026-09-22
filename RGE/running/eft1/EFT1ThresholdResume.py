@@ -1,35 +1,11 @@
 from __future__ import annotations
 
 """Re-run threshold 2 after EFT1 running has been constructed.
+This is rerun to include our EFT 1 running correction inside for threshold-2 matching
+We run the wolfram threshold script which actually integrates out the scalar, this is just the wrapper for it
 
-This is the first orchestration bridge between the existing monolithic
-Wolfram matching run and the new Python EFT1-running chain.
-
-The current pipeline still performs threshold 2 too early.  However, the
-stage-1 run already leaves the exact fresh-kernel continuation payload on
-disk.  This helper reuses that payload and launches RunThresholdStage.wl a
-second time with the full-flavor running insertion as its optional 15th
-argument and a validation-mode token as its optional 16th argument.
-
-Ordinary result runs use validation_mode=False.  The authoritative [A]/[B]/[C]
-physics is still performed, but provenance-only Matchete re-matches are
-skipped.  Final/debug runs use validation_mode=True to restore those expensive
-cross-checks.
-
-Physics ordering of THIS re-run is therefore
-
-    stage-1 continuation package
-        + EFT1 running insertion
-        -> fresh threshold-2 kernel
-        -> [A] tree match L0
-        -> [B] one-loop match L0
-        -> [C] tree propagate (L1_threshold + L1_running).
-
-The earlier premature stage-2 result is not used by this helper.
-
-This is intentionally a small bridge before changing the whole pipeline
-driver.  Once regression passes, pipeline.py can call this function and use
-its result as the authoritative stage-2 output.
+Note to self:
+- Should change this to no longer be searching for files and do a direct pipeline
 """
 
 import argparse
@@ -50,6 +26,8 @@ class Threshold2Continuation:
 
 
 def _all_wxf(output_dir: Path) -> list[Path]:
+    '''Finds all .wxf files
+    In case we have a saved wolfram file we can use'''
     return sorted(
         p for p in output_dir.rglob("*.wxf")
         if p.is_file()
@@ -57,6 +35,7 @@ def _all_wxf(output_dir: Path) -> list[Path]:
 
 
 def _score(path: Path, required: tuple[str, ...], forbidden: tuple[str, ...]) -> int:
+    '''Give scores to wxf files based on how useful they are to stage 2 threshold'''
     name = path.name.lower()
     full = str(path).lower()
     if any(word not in full for word in required):
@@ -80,6 +59,7 @@ def _pick(
     forbidden: tuple[str, ...] = (),
     label: str,
 ) -> Path:
+    '''Choose the important files for this'''
     ranked = sorted(
         ((_score(path, required, forbidden), path) for path in files),
         key=lambda item: item[0],
@@ -107,6 +87,7 @@ def _pick(
 
 
 def discover_continuation(output_dir: Path) -> Threshold2Continuation:
+    '''We find the tree to continue'''
     files = _all_wxf(output_dir)
     if not files:
         raise FileNotFoundError(
@@ -166,6 +147,7 @@ def discover_continuation(output_dir: Path) -> Threshold2Continuation:
 
 
 def _alpha_token(alpha: int) -> str:
+    '''converts integer into string format for wolfram'''
     if alpha < 0:
         return f"m{abs(alpha)}"
     return f"p{alpha}"
@@ -175,6 +157,7 @@ def _resolve_threshold2_result_path(
     output_dir: Path,
     result_path: Path | None,
 ) -> Path:
+    '''Just where the results are put in'''
     if result_path is None:
         result_path = output_dir / "data" / "threshold_2_with_eft1_running.wxf"
     resolved = Path(result_path).resolve()
@@ -196,6 +179,7 @@ def _build_threshold2_resume_command(
     loop_order: int,
     validation_mode: bool,
 ) -> list[str]:
+    '''Constructs wolframscript command for our mathcing'''
     return [
         "wolframscript",
         "-file",
@@ -225,6 +209,7 @@ def _stream_threshold2_wolfram_run(
     working_directory: Path,
     stdout_log: Path,
 ) -> tuple[int, list[str]]:
+    '''Launches wolfram and runs it'''
     output_lines: list[str] = []
     print("[resume] Launching threshold-2 Wolfram kernel...")
     print(f"[resume] Live log: {stdout_log}")
@@ -266,6 +251,7 @@ def _stream_threshold2_wolfram_run(
 
 
 def _threshold2_resume_markers(output_lines: list[str]) -> dict[str, bool]:
+    '''does all the messaging while running'''
     combined_output = "\n".join(output_lines)
     return {
         "running_insertion_loaded": (
@@ -299,6 +285,7 @@ def _build_threshold2_resume_result(
     stdout_log: Path,
     stderr_log: Path,
 ) -> dict:
+    '''Tells us if our process is successful or not'''
     markers = _threshold2_resume_markers(output_lines)
     status = (
         "Success"
@@ -346,6 +333,7 @@ def rerun_threshold2_with_running(
     shared_scalar: bool = False,
     validation_mode: bool = False,
 ) -> dict:
+    ''''Take EFT1 running and make threshold 2 result'''
     output_dir = Path(output_dir).resolve()
     running_insertion = Path(running_insertion).resolve()
     run_threshold_script = Path(run_threshold_script).resolve()

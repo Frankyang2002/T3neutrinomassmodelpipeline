@@ -1,11 +1,5 @@
-(* RunT3RGBeta.wl
-   Command-line runner for the validated d<=3 T3 RGBeta model.
-
-   Usage:
-       wolframscript -file RunT3RGBeta.wl dS1 dS2 dF alpha output.json
-
-   Exact symbolic quantities are exported as InputForm strings because JSON
-   has no representation for Mathematica Rational or symbolic expressions.
+(* 
+Command line runner for full UV RGBeta
 *)
 
 ClearAll["Global`*"];
@@ -24,7 +18,7 @@ dF = config["dF"];
 alpha = config["alpha"];
 outputPath = config["OutputPath"];
 
-
+(* Build our UV model *)
 build = CheckAbort[
     Quiet[
         If[
@@ -36,6 +30,7 @@ build = CheckAbort[
     $Aborted
 ];
 
+(* If building fails we have this *)
 If[!AssociationQ[build],
     T3RGBetaWriteJSON[
         outputPath,
@@ -50,8 +45,7 @@ If[!AssociationQ[build],
 ];
 
 
-(* JSON cannot encode exact Mathematica Rational objects.  Preserve the
-   project's exact hypercharge convention as InputForm strings. *)
+(* Builds the jsonmeta data, as some things dont work with JSON *)
 jsonMetadata = Join[
     T3RGBetaCommonMetadata[config, build],
     <|
@@ -60,7 +54,7 @@ jsonMetadata = Join[
     |>
 ];
 
-
+(* We get our one loop beta function calculation here *)
 betaAssociation = CheckAbort[
     Quiet[
         If[
@@ -72,6 +66,7 @@ betaAssociation = CheckAbort[
     $Aborted
 ];
 
+(* Fail condition for rgbeta *)
 If[betaAssociation === $Aborted || !AssociationQ[betaAssociation],
     T3RGBetaWriteJSON[
         outputPath,
@@ -87,18 +82,7 @@ If[betaAssociation === $Aborted || !AssociationQ[betaAssociation],
 
 stringBetas = T3RGBetaSerializeAssociation[betaAssociation];
 
-(* RGBeta uses a special convention for gauge couplings:
-
-       beta_g^RGBeta = d(g^2)/d ln(mu).
-
-   For the human-facing report we instead use the conventional derivative
-
-       16 pi^2 d g/d ln(mu).
-
-   At one loop this is BetaTerm[g,1]/(2 g).  All non-gauge couplings already
-   use the ordinary derivative convention, so their one-loop report term is
-   simply BetaTerm[X,1].  The original BetaTerm output above is preserved
-   unchanged in "betas" for machine use. *)
+(* Reverse RGBeta convention to our convention *)
 reportBetaAssociation = T3RGBetaConventionalReportBetas[betaAssociation];
 
 stringReportBetas = T3RGBetaSerializeAssociation[reportBetaAssociation];

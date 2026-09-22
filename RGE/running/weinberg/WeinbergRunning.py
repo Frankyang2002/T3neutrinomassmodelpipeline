@@ -1,23 +1,15 @@
+"""
+Deals with after all BSM fields are integrated out
+We run the weinberg from matching threshold to low energy
+Note this is the flavour matrix of coefficient matrix, the weak structure is extracted previously
+"""
+
 from __future__ import annotations
-
-
-# ---------------------------------------------------------------------------
-# Symbolic three-generation SMEFT Weinberg running
-# Consolidated from SMEFTWeinbergFlavorRGE.py
-# ---------------------------------------------------------------------------
-
-"""
-Full three-generation one-loop SMEFT RGE for the Weinberg coefficient.
-Convention:
-    V(H) = (lambdaH / 2) (H^\dagger H)^2
-With this convention,
-    16 pi^2 beta_K = (2 lambdaH - 3 g2^2 + 2 T) K - 3/2 [Ye Ye^\dagger K + K (Ye Ye^\dagger)^T],
-where
-    T = Tr(Ye Ye^\dagger + 3 Yu Yu^\dagger + 3 Yd Yd^\dagger).
-K is a complex symmetric 3 x 3 matrix.
-"""
-
+from scipy.integrate import solve_ivp
+from dataclasses import dataclass
 import sympy as sp
+import numpy as np
+
 
 
 g2 = sp.Symbol("g2")
@@ -25,7 +17,8 @@ lambdaH = sp.Symbol("lambdaH")
 
 
 def symbolic_complex_matrix(prefix: str, rows: int, cols: int) -> sp.Matrix:
-    """Return a matrix with independent complex symbolic entries."""
+    """Return a matrix with independent complex symbolic entries.
+    it is very general, with no assumptions of symmetries"""
 
     return sp.Matrix(
         rows,
@@ -52,7 +45,6 @@ def symbolic_symmetric_matrix(prefix: str, size: int) -> sp.Matrix:
 
 def dagger(matrix: sp.MatrixBase) -> sp.Matrix:
     """Hermitian conjugate."""
-
     return sp.conjugate(matrix.T)
 
 
@@ -85,6 +77,8 @@ def beta_weinberg_matrix(
 
     K must be square and symmetric.  The Yukawa matrices must have compatible
     three-generation flavor dimensions.
+
+    We get the weinberg equation with the 2lambda-3g^2+2T-3/2(YeYedag K+K(YeYedag)^T)
     """
 
     if K.rows != K.cols:
@@ -122,7 +116,7 @@ def beta_weinberg_matrix(
 
 
 def one_generation_reduction() -> sp.Expr:
-    """Reduce the matrix equation to the validated one-generation benchmark."""
+    """Reduce the matrix equation to one generation so we can check if its valid"""
 
     kappa = sp.Symbol("kappa")
     ye, yu, yd = sp.symbols("ye yu yd")
@@ -165,36 +159,17 @@ if __name__ == "__main__":
 
 r"""
 Numerical one-loop SM evolution of the full 3x3 Weinberg coefficient.
-
-Conventions
------------
 - t = ln(mu)
-- gY is the ordinary SM hypercharge coupling, not GUT-normalized g1.
+- gY is the ordinary SM hypercharge coupling
 - V(H) = (lambdaH / 2) (H^\dagger H)^2.
-- The charged-lepton, up-quark and down-quark Yukawa matrices are taken
-  diagonal during the numerical evolution.
+- We use diagonal yukawa for our evolution, so we have D=diag(y_e^2,y_mu^2,y_tau^2)
+
 - K is the full complex symmetric 3x3 Weinberg coefficient.
-
-The evolved equations are
-
-    16 pi^2 dK/dt =
-        (2 lambdaH - 3 g2^2 + 2 T) K
-        - 3/2 [De K + K De^T],
-
-where De = diag(|ye_i|^2) and
-
-    T = sum_i |ye_i|^2
-        + 3 sum_i |yu_i|^2
-        + 3 sum_i |yd_i|^2.
 
 The gauge, diagonal Yukawa and Higgs-quartic couplings are evolved
 simultaneously at one loop.
 """
 
-from dataclasses import dataclass
-
-import numpy as np
-from scipy.integrate import solve_ivp
 
 
 LOOP = 16.0 * np.pi**2
@@ -212,6 +187,7 @@ class SMInitialConditions:
     K: np.ndarray
 
     def validated(self) -> "SMInitialConditions":
+        '''Package everything to start numerical running'''
         ye = np.asarray(self.ye, dtype=float)
         yu = np.asarray(self.yu, dtype=float)
         yd = np.asarray(self.yd, dtype=float)
@@ -241,6 +217,7 @@ class SMInitialConditions:
 
 @dataclass(frozen=True)
 class NumericalRGEResult:
+    '''stored state for after numerical evolution finishes'''
     mu_initial: float
     mu_final: float
     gY: float
@@ -257,7 +234,9 @@ class NumericalRGEResult:
 
 
 def _pack(state: SMInitialConditions) -> np.ndarray:
-    """Pack real SM couplings and complex K into one real ODE vector."""
+    """Pack real SM couplings and complex K into one real ODE vector.
+    Prepared for scipy.solve.ivp
+    We also split K into real components for this"""
 
     return np.concatenate(
         [
@@ -284,7 +263,8 @@ def _unpack(y: np.ndarray) -> tuple[
     np.ndarray,
     np.ndarray,
 ]:
-    """Unpack the ODE vector."""
+    """Unpack the ODE vector.
+    It reconstructs our weinberg"""
 
     gY, g2, g3, lambdaH = y[:4]
 
@@ -305,9 +285,12 @@ def _beta(
 ) -> np.ndarray:
     """
     One-loop SM beta functions plus the Weinberg-coefficient beta function.
-
-    The independent variable is t=ln(mu), so the right-hand side is d/dt.
-    """
+    We evaluate one loop beta functinos for all our parameters
+    g_y23, y_eud, lambda_H, K etc
+    
+    We evaluate the beta function we know, 
+    beta = (2lambda-3g^2_2+2T)K-3/2(DK+KD^T) 
+    D = diag(ye^2,ymu^2ytau^2)   """
 
     gY, g2, g3, lambdaH, ye, yu, yd, K = _unpack(y)
 
@@ -405,7 +388,7 @@ def evolve_weinberg(
     rtol: float = 1e-8,
     atol: float = 1e-11,
 ) -> NumericalRGEResult:
-    """Evolve all one-loop SM couplings and K between two positive scales."""
+    """Evolve all one-loop SM couplings and K between two positive scales from mu initial to mu final"""
 
     if mu_initial <= 0 or mu_final <= 0:
         raise ValueError("RGE scales must be positive.")

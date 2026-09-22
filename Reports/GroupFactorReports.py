@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import re
 """Stage-aware analytic group-factor comparison reports for the T3 pipeline.
@@ -57,7 +57,9 @@ from RGE.group_factors.validation.ValidateMixingQuarticGroupFactors import (
 from RGE.group_factors.validation.ValidateMassGroupFactors import (
     scalar_mass_group_factors,
 )
-from RGE.running.eft1.EFT1TensorAdapters import build_eft1_wilson_tensor
+from RGE.running.eft1.EFT1TensorAdapters import (
+    _term_prefactor as _eft1_wilson_term_prefactor,
+)
 from Reports.RGEComparison import (
     load_eft1_renormalisable_rge_payload,
     load_uv_rge_payload,
@@ -538,36 +540,171 @@ def _representation_table(records: Sequence[RunRecord], *, include_f: bool) -> l
     return lines
 
 
-def _matching_tensor_rows(
+def _matching_scalar_product_tex(term: Mapping[str, object]) -> str:
+    """Render the two scalar legs of a matched term in the complex basis.
+
+    The Matchete seed records both the total number of S1/S2 legs and the
+    number of barred legs.  A barred complex scalar is displayed as a daggered
+    field.  This presentation deliberately occurs before the conversion to
+    global real scalar coordinates.
+    """
+    pieces: list[str] = []
+
+    for index in (1, 2):
+        count = int(term.get(f"Scalar{index}Count", 0) or 0)
+        barred = int(term.get(f"BarredScalar{index}Count", 0) or 0)
+
+        if barred < 0 or barred > count:
+            raise ValueError(
+                f"Invalid barred-scalar count for S{index}: "
+                f"{barred} barred out of {count} total."
+            )
+
+        unbarred = count - barred
+
+        pieces.extend(
+            [rf"S_{index}^\dagger"] * barred
+        )
+        pieces.extend(
+            [rf"S_{index}"] * unbarred
+        )
+
+    if len(pieces) != 2:
+        raise ValueError(
+            "Expected exactly two scalar legs in an EFT1 Wilson term, "
+            f"found {len(pieces)}."
+        )
+
+    return r"\,".join(pieces)
+
+
+def _matching_cg_tex(term: Mapping[str, object]) -> str:
+    """Render the invariant contractions in one matched complex term."""
+    names = [
+        str(name)
+        for name in (term.get("CGNames", []) or [])
+        if str(name).strip()
+    ]
+
+    if not names:
+        return r"\mathbf{1}"
+
+    rendered: list[str] = []
+
+    for name in names:
+        if name == "eps[SU2L]":
+            rendered.append(r"\epsilon_{SU(2)_L}")
+        else:
+            rendered.append(
+                rf"\mathrm{{{latex_escape_text(name)}}}"
+            )
+
+    return r"\,".join(rendered)
+
+
+def _matching_operator_rows(
     record: RunRecord,
-    max_entries: int = 10,
 ) -> tuple[list[str], str]:
-    seed_path = record.output_dir / "data" / "eft1_after_F_wilson_seed.json"
+    """Summarise F-threshold operators in the original complex scalar basis.
+    """
+    seed_path = (
+        record.output_dir
+        / "data"
+        / "eft1_after_F_wilson_seed.json"
+    )
+
     if not seed_path.is_file():
         return [], "No exported EFT1 Wilson seed was available for this run."
 
     import json
 
-    seed = json.loads(seed_path.read_text(encoding="utf-8"))
-    tensor = build_eft1_wilson_tensor(
-        seed,
-        d_s1=record.d_s1,
-        d_s2=record.d_s2,
-        project_operator_symmetry=True,
+    seed = json.loads(
+        seed_path.read_text(encoding="utf-8")
     )
-    items = sorted(tensor.nonzero_items())
-    rows: list[str] = []
-    for (i, j, a, b), value in items[:max_entries]:
-        rendered_value = sp.latex(sp.simplify(value)).replace("MF", r"M_F")
-        rows.append(
-            rf"$C_{{{i}{j}{a}{b}}}$ & $ {rendered_value} $ \\"
-        )
-    note = (
-        f"{len(items)} non-zero real-basis tensor components reconstructed; "
-        f"showing the first {min(max_entries, len(items))}."
-    )
-    return rows, note
 
+    terms = list(
+        seed.get("TreeWilsonTerms", []) or []
+    )
+
+    representatives = [
+        term
+        for term in terms
+        if str(term.get("Chirality", "")).strip() == "PL"
+    ]
+
+    # Defensive fallback for a future Matchete export containing only one
+    # chirality rather than an explicit PL/PR pair.
+    if not representatives:
+        representatives = terms
+
+    rows: list[str] = []
+
+    seen: set[
+        tuple[
+            str,
+            str,
+            tuple[str, ...],
+        ]
+    ] = set()
+
+    for term in representatives:
+        scalar_product = _matching_scalar_product_tex(term)
+
+        prefactor = sp.simplify(
+            _eft1_wilson_term_prefactor(term)
+        )
+
+        prefactor_tex = (
+            sp.latex(prefactor)
+            .replace("MF", r"M_F")
+        )
+
+        cg_names = tuple(
+            str(name)
+            for name in (term.get("CGNames", []) or [])
+            if str(name).strip()
+        )
+
+        cg_tex = _matching_cg_tex(term)
+
+        # Remove only exact duplicate descriptions.  Different scalar
+        # structures, coefficients or CG contractions remain independent.
+        key = (
+            scalar_product,
+            sp.srepr(prefactor),
+            cg_names,
+        )
+
+        if key in seen:
+            continue
+
+        seen.add(key)
+
+        operator_tex = (
+            r"(L_i^T C L_j)\,"
+            + scalar_product
+            + r"+\mathrm{h.c.}"
+        )
+
+        rows.append(
+            rf"$ {operator_tex} $"
+            rf" & $ {prefactor_tex} $"
+            rf" & $ {cg_tex} $ \\"
+        )
+
+    count = len(rows)
+
+    noun = (
+        "structure"
+        if count == 1
+        else "structures"
+    )
+
+    note = (
+        f"{count} independent complex matched {noun} displayed. "
+    )
+
+    return rows, note
 
 def _direct_weinberg_comparison(records: Sequence[RunRecord]) -> list[str]:
     values: dict[str, dict[str, object]] = {}
@@ -580,7 +717,7 @@ def _direct_weinberg_comparison(records: Sequence[RunRecord]) -> list[str]:
         r"The active EFT1 scalar interaction produces",
         r"\["
         r"16\pi^2\,\beta_{C_5}\supset "
-        r"R_W\,\lambda_5\,C_{LLS_1S_2}."
+        r"K\,\lambda_5\,C_{LLS_1S_2}."
         r"\]",
     ]
 
@@ -593,7 +730,7 @@ def _direct_weinberg_comparison(records: Sequence[RunRecord]) -> list[str]:
         ]
         lines.append(" & ".join(header) + r" \\")
         lines.append(r"\midrule")
-        row = [r"$R_W$"] + [
+        row = [r"$K$"] + [
             rf"$ {_latex_expression(values[_run_key(record)]['RW'])} $" for record in chunk
         ]
         lines.append(" & ".join(row) + r" \\")
@@ -601,10 +738,7 @@ def _direct_weinberg_comparison(records: Sequence[RunRecord]) -> list[str]:
 
     lines.extend(
         [
-            r"The displayed $R_W$ values use the validated "
-            r"Wigner--$6j$ reduction and inherited tensor convention.  The "
-            r"overall tensor-level normalization/phase has not yet been "
-            r"independently derived from first principles.",
+            r"."
         ]
     )
     return lines
@@ -773,7 +907,7 @@ def _compact_saved_trace_terms(
             key = (species, remainder)
             traces[key] = traces.get(key, sp.Rational(0)) + coeff
 
-    # Combine the exact paper T = Tr(Ye†Ye+3Yu†Yu+3Yd†Yd).
+    # Combine the exact paper T = Tr(Yeâ€ Ye+3Yuâ€ Yu+3Ydâ€ Yd).
     remainders = {remainder for _, remainder in traces}
     used: set[tuple[str, str]] = set()
     for remainder in sorted(remainders):
@@ -920,31 +1054,47 @@ def _weinberg_index_conventions() -> list[str]:
     ]
 
 
-def _matching_tensor_appendix(records: Sequence[RunRecord]) -> list[str]:
-    """Keep basis-dependent tensor samples separate from comparison beta tables."""
+def _matching_operator_section(
+    records: Sequence[RunRecord],
+) -> list[str]:
+    """Display F-threshold matching in the original complex scalar basis."""
     lines = [
-        r"\section*{F-threshold matching tensor samples}",
-        r"The component bases have representation-dependent dimensions, so the "
-        r"raw tensor entries are not placed in the cross-run beta-function tables.",
+        r"."
     ]
-    for record in records:
-        rows, note = _matching_tensor_rows(record)
-        lines.append(rf"\subsection*{{$ {_model_column_label(record)} $}}")
-        lines.append(rf"\textit{{{latex_escape_text(note)}}}")
-        if rows:
-            lines.extend(
-                [
-                    r"\begin{longtable}{@{}ll@{}}",
-                    r"\toprule",
-                    r"$C_{ijab}$ & matched coefficient \\",
-                    r"\midrule",
-                    *rows,
-                    r"\bottomrule",
-                    r"\end{longtable}",
-                ]
-            )
-    return lines
 
+    for record in records:
+        rows, note = _matching_operator_rows(record)
+
+        lines.append(
+            rf"\subsection*{{$ {_model_column_label(record)} $}}"
+        )
+
+        lines.append(
+            rf"\textit{{{latex_escape_text(note)}}}"
+        )
+
+        if not rows:
+            continue
+
+        lines.extend(
+            [
+                r"\begin{longtable}{@{}"
+                r"p{0.36\linewidth}"
+                r"p{0.25\linewidth}"
+                r"p{0.29\linewidth}"
+                r"@{}}",
+                r"\toprule",
+                r"complex matched operator"
+                r" & matched prefactor"
+                r" & $SU(2)_L$ invariant \\",
+                r"\midrule",
+                *rows,
+                r"\bottomrule",
+                r"\end{longtable}",
+            ]
+        )
+
+    return lines
 
 def _generated_non_singlet_section(
     records: Sequence[RunRecord],
@@ -1436,7 +1586,7 @@ def _write_gf_f_first_stage(
 
     lines.extend(_generated_non_singlet_section(records, eft_data))
     lines.extend(_direct_weinberg_comparison(records))
-    lines.extend(_matching_tensor_appendix(records))
+    lines.extend(_matching_operator_section(records))
 
     lines.extend(
         [
@@ -1756,4 +1906,5 @@ def write_and_compile_stage_group_factor_reports(
         outputs.append(stage_report)
 
     return outputs
+
 

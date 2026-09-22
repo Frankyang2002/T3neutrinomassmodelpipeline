@@ -40,6 +40,7 @@ from RGE.running.eft1.MatcheteParsing import (
 # Wilson-seed -> C_ijab adapter
 # ---------------------------------------------------------------------------
 
+@dataclass(frozen=True)
 class WilsonCGTensor:
     name: str
     reps: tuple[str, ...]
@@ -128,7 +129,7 @@ class SparseWilsonTensor:
 
 
     def symmetrized(self) -> "SparseWilsonTensor":
-        """We have ij and ab symmetry, we have it symmetrised as 
+        """We have ij and ab symmetry, we have it symmetrised as
             Csym_ijab = 1/4 (
                 C_ijab + C_jiab + C_ijba + C_jiba
             ).
@@ -512,10 +513,10 @@ def _wilson_shared_scalar_component_map(
 ) -> tuple[int, bool, sp.Expr]:
     """Map formal S1/S2 legs to one physical scalar S.
 
-    S1_a = C_ab S_b^*, 
+    S1_a = C_ab S_b^*,
     S2_a = S_a with the standard SU(2)
     C_ab is the charge-conjugation metric in descending-m ordering.
-    
+
     This is for the shared scalar mode where they are counted the same
     """
     if leg.name == "S2":
@@ -563,7 +564,7 @@ def build_eft1_wilson_tensor(
 ) -> SparseWilsonTensor:
     """Tree Wilson Terms becomes C_ijab
     We get our scalar and lepton legs and get our CG contraction
-    We get the coefficients in terms of yukawa, 1/MF etc 
+    We get the coefficients in terms of yukawa, 1/MF etc
     Then we evaluate our CG and make everything in terms of real
     This gives us C_ijab with coefficient prefactor
     """

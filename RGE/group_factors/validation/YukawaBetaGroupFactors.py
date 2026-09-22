@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-"""Yukawa beta group factors and their validation."""
+"""Yukawa beta group factors and their validation.
+We assemble full yukawa beta function coefficients and validates with saved RGBeta output"""
 
 import argparse
 import json
@@ -21,56 +22,6 @@ from RGE.group_factors.core.RepresentationFactors import (
     canonical_yukawa_leg_factors,
     su2_quadratic_casimir_from_dimension,
 )
-
-# ---------------------------------------------------------------------------
-# Complete Yukawa beta group factors
-# Former source: FullYukawaBetaGroupFactors.py
-# ---------------------------------------------------------------------------
-
-"""Complete generic one-loop group factors for the T3 Yukawa beta functions.
-
-Conventions
------------
-Q = T3 + Y
-Y(L) = -1/2
-Y(F) = (alpha + 1)/2
-d_Si = d_F +/- 1
-
-For a Yukawa invariant involving L, F and S_i define
-    d_i^> = max(d_F, d_Si)
-
-and the canonically normalised SU(2) leg factors
-    G_Si = d_i^> / d_Si
-    G_Li = d_i^> / 2
-    G_Fi = d_i^> / d_F.
-
-The vector-like branch is
-
-16 pi^2 beta_y1 =
-    G_S1 Tr(y1 y1^dagger) y1
-  + 1/2 (G_L1 + G_F1) y1 y1^dagger y1
-  + 1/2 G_L2 y2 y2^dagger y1
-  + 1/2 Ye Ye^dagger y1
-  - 3 g2^2 [C2(L) + C2(F)] y1
-  - 3 gY^2 [Y(L)^2 + Y(F)^2] y1,
-
-with beta_y2 obtained by 1 <-> 2 in the Yukawa pieces.
-
-For the physical self-conjugate branch,
-    alpha == -1 and dF odd,
-RGBeta exposes two additional nongauge beta_y2 structures:
-    + G_S2 Tr(y2 y1^dagger) y1
-    + 1/2 G_F2 y2 y1^dagger y1.
-
-Even-dF alpha=-1 RGBeta points use a different neutral-field convention and
-are not exact validations of the current physical Matchete T3 model.
-
-The SU(2) and U(1) gauge terms are the standard one-loop fermion-Casimir
-contribution.  The scalar representation does not enter the gauge
-coefficients.
-"""
-
-
 
 
 
@@ -234,45 +185,6 @@ def run_yukawa_group_factor_cli() -> int:
     print(json.dumps(asdict(result), indent=2))
     return 0
 
-
-# ---------------------------------------------------------------------------
-# Yukawa2 nongauge/gauge validation
-# Former source: ValidateYukawa2NongaugeBranches.py
-# ---------------------------------------------------------------------------
-
-r"""Validate the T3 Yukawa beta-function group factors against RGBeta.
-
-This file combines the former beta_y2 extraction/branch validator with the
-standalone Yukawa gauge-factor validator.
-
-Source data
------------
-Saved RGBeta UV JSON files under
-
-    output/full/hypercharge/T3_*_alpha_*/data/uv_rgbeta_rge.json
-
-are read directly.  The nongauge part of ``report_beta_latex["y2"]`` is
-extracted without using the report-comparison parser.
-
-Validation logic
-----------------
-* alpha != -1:
-    compare every nongauge expression with the same model's alpha=0 reference.
-    This checks hypercharge-independence of the vector-like nongauge sector.
-
-* alpha == -1 and dF odd (T3-B,C):
-    validate the two additional physical self-conjugate structures
-
-        G_S2 Tr(y2 y1^\dagger) y1
-        (1/2) G_F2 y2 y1^\dagger y1.
-
-* alpha == -1 and dF even (T3-A,D,E):
-    record an excluded branch diagnostic because RGBeta's neutral branch is
-    not the current Matchete-side physical T3 field branch.
-
-The known self-conjugate beta_y2 reporting issue is therefore preserved as a
-branch-aware validation question; this refactor does not change any physics.
-"""
 
 
 

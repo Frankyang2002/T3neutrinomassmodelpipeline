@@ -986,3 +986,11 @@ m_i,\Delta m^2,U_{\rm PMNS}.
 $$
 
 `pipeline.py` is the orchestration layer connecting all three, while the files under `tests/` and `RGE/group_factors/validation/` provide independent checks that the calculation is being performed consistently.
+
+
+
+
+## 18. Group factors
+- Groupfactor validation is just using simple components of our RGE and check if its similar, complex ones are not validated
+- Other thing is that we extract coefficient from RGBeta's generated RGE and compare the two, which isnt too bad as we just look at coefficients of combinations of fields
+- For component based tensors like weinberg we compare the whole matrix, beta function should be a factor of the weinberg

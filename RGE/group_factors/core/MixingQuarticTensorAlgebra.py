@@ -1,12 +1,8 @@
 from __future__ import annotations
 
-"""Shared tensor algebra for exact lambdaT3 scalar-quartic recouplings.
+"""
+We get common operations on quartic tensors here, note that T3 is lambda5 scalar
 
-This module operates on the one-based ``SparseQuarticTensor`` convention used
-by ``EFT1TensorAdapters``.  It contains only common basis extraction,
-cross-contraction, inner-product, and projection machinery.  It does not define
-which quartic couplings are physical targets or assign any recoupling
-coefficient by hand.
 """
 
 from collections import Counter
@@ -24,7 +20,9 @@ def basis_tensor(
     *,
     identify_conjugate: bool,
 ) -> SparseQuarticTensor:
-    """Extract the coefficient tensor of one coupling from the full tensor."""
+    """Extract the coefficient tensor of one coupling from the full tensor.
+    So if we have Lambda_abcd = Lambda_a T^a + Lambda_b T_b
+    if we do basistensor(...,"lambda_a"), we get T^a"""
     symbol = sp.Symbol(coupling_name)
     conjugate = sp.conjugate(symbol)
 
@@ -41,12 +39,12 @@ def basis_tensor(
 
 
 def scalar_dimension(full: SparseQuarticTensor) -> int:
-    """Return the largest one-based real-scalar index present in the tensor."""
+    """get number of real scalars in tensor"""
     return max((max(key) for key in full.entries), default=0)
 
 
 def multiplicity_weight(key: tuple[int, int, int, int]) -> int:
-    """Number of ordered index tuples represented by one sorted quartic key."""
+    """Calculate distinct permutations, eg: 1234 = 4!, 1112 = 4!/3!"""
     counts = Counter(key)
     weight = factorial(4)
     for count in counts.values():
@@ -58,7 +56,7 @@ def tensor_inner_product(
     left: SparseQuarticTensor,
     right: SparseQuarticTensor,
 ) -> sp.Expr:
-    """Hermitian tensor inner product summed over all ordered quartic indices."""
+    """Defines inner product, <A,B> = sum_abcd A*_abcd B_abcd."""
     total = sp.S.Zero
     for key in set(left.entries) | set(right.entries):
         total += (
@@ -78,7 +76,12 @@ def cross_component(
     d: int,
     scalar_dimension_value: int,
 ) -> sp.Expr:
-    """Coefficient of lambdaT3*X in one beta_abcd component."""
+    """
+    We sum over (ab)(cd), (ac)(bd), (ad)(bc), summing our internal scalar indices
+    This gives us, lambdaT3*lambdaX(T^T3 T^X + T^X T^T3) for each of the pairing (..)(..)
+    We get this from expanding lambda*lambda
+    Then we can get our coefficient of it
+    This is for the RGE of the quartics themselves"""
     total = sp.S.Zero
 
     pairings = (
@@ -126,7 +129,12 @@ def project_onto_direction(
     generated: SparseQuarticTensor,
     target: SparseQuarticTensor,
 ) -> tuple[sp.Expr, SparseQuarticTensor, sp.Expr]:
-    """Project ``generated`` onto ``target`` and return coefficient/residual/norm."""
+    """We project our tensor onto our target tensor
+    c = <T,G>/<T,T>
+    We get residuals R=G-cT
+    Where if R=0, G=ct and is directly proportional
+    If not, then our group factor isnt there, and so we just return the residue
+    """
     norm = sp.simplify(tensor_inner_product(target, target))
     if norm == 0:
         raise ValueError("target quartic tensor has zero norm.")

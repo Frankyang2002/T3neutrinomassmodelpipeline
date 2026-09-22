@@ -107,17 +107,10 @@ def _normalise_expression(value: Any) -> str | None:
 
 
 def _find_direct_weinberg(payload: Any, path: tuple[str, ...] = ()) -> tuple[str, str] | None:
-    """Find the direct running-generated Weinberg coefficient.
+    """We are searching for the running corrections
 
     Current EFT1WilsonFlavorRunning.py writes the result as
-
         running_corrections["Weinberg"]["running_tensor_text"]
-
-    where ``running_tensor_text`` is already the complete full-flavor
-    leading-log correction, e.g. a sum of flavor-blind and
-    ``He.C + C.He^T`` tensor structures.  Prefer that exact schema.
-
-    Older/development schemas are handled by the recursive fallback below.
     """
     if isinstance(payload, dict):
         corrections = payload.get("running_corrections")
@@ -177,6 +170,7 @@ def _find_direct_weinberg(payload: Any, path: tuple[str, ...] = ()) -> tuple[str
 
 
 def _find_scalar_metadata(payload: Any, key_name: str) -> Any | None:
+    '''Find Scalar metadata'''
     if isinstance(payload, dict):
         if key_name in payload:
             return payload[key_name]
@@ -210,12 +204,7 @@ def _looks_flavor_indexed(expr: str) -> bool:
 
 
 def _contains_uv_pole(expr: str) -> bool:
-    """Detect common textual forms of an explicit dimensional-regulator pole.
-
-    Matchete/Wolfram InputForm commonly serialises epsilon as ``\\[Epsilon]``.
-    The raw expression is always preserved.  A pole is removed from the
-    separate renormalized-hard object only after the independent pole/RGE
-    consistency diagnostic has validated the subtraction.
+    """Detect 1/epsilon divergence in different forms
     """
     compact = expr.replace(" ", "")
     lower = compact.lower()
@@ -300,15 +289,7 @@ def _pole_rge_validation_status(
 
 
 def _drop_wolfram_epsilon_terms(expr: str) -> tuple[str, int]:
-    """Drop additive terms proportional to the explicit Wolfram UV pole.
-
-    This is intentionally narrow: it recognizes the Matchete InputForm shape
-
-        +(numerator)/(\\[Epsilon]*denominator)
-
-    seen in the authoritative threshold coefficient.  The raw Matchete
-    expression is always retained separately.  Call this only after the
-    pole/RGE relation has been independently validated.
+    """ After we check that our epsilon is correct normalisation, we can remove it here
     """
     pattern = re.compile(
         r"\s*\+\s*"
@@ -323,12 +304,7 @@ def _drop_wolfram_epsilon_terms(expr: str) -> tuple[str, int]:
 
 
 def _set_matchete_matching_scale_to_mf(expr: str) -> tuple[str, int]:
-    """Set the explicit Matchete MS-bar scale to the first threshold MF.
-
-    At mu_bar^2 = MF^2 the hard matching logarithm vanishes.  This turns the
-    finite hard threshold into the boundary coefficient at the matching scale;
-    subsequent MF -> MS evolution is supplied by the separate EFT1 running
-    contribution.
+    """Matching occuring at mu=MF
     """
     patterns = (
         re.compile(
@@ -353,12 +329,8 @@ def _build_msbar_hard_at_mf(
     *,
     validation_ok: bool,
 ) -> dict[str, Any]:
-    """Construct the finite hard threshold coefficient at mu = MF.
-
-    The subtraction is performed only after the independent pole/RGE
-    consistency check succeeds.  Otherwise the object is returned as blocked
-    and the raw threshold expression remains the only authoritative hard
-    expression.
+    """
+    get barMS renormalisation scheme at mu=MF after our pole check
     """
     if not validation_ok:
         return {
@@ -407,10 +379,6 @@ def _swap_matchete_external_flavor_indices(
     q_index: str,
 ) -> str:
     """Swap only the two external Matchete Flavor indices.
-
-    The same printed dummy name may also occur in NFlavor, so replacements
-    must be restricted to ``Index[..., Flavor]`` and must not touch the
-    internal fermion-generation index.
     """
     p_token = f"Index[{p_index}, Flavor]"
     q_token = f"Index[{q_index}, Flavor]"
@@ -434,9 +402,7 @@ def _build_physical_majorana_hard(
 
     Matchete returns an ordered p,q representative.  The Weinberg coefficient
     is symmetric in its two lepton-flavor indices, so construct
-
         C_phys[p,q] = C_ordered[p,q] + C_ordered[q,p].
-
     In one generation the physical coefficient is twice the ordered Matchete coefficient.
     """
     if not isinstance(renormalized_hard_expr, str):
@@ -516,6 +482,7 @@ def _direct_running_is_manifestly_symmetric(expr: str) -> bool:
 
 
 def _contains_explicit_hbar(expr: str) -> bool:
+    '''check for 1/16pi^2 as hbar'''
     compact = expr.replace(" ", "")
     return bool(
         re.search(r"\bhbar\b", compact, flags=re.IGNORECASE)
@@ -536,7 +503,8 @@ def _expand_boundary_tensors(
     expr: str,
     payload: dict[str, Any],
 ) -> tuple[str, dict[str, str]]:
-    """Expand symbolic Cij[p,q] tensors using transport boundary kernels."""
+    """Expand symbolic Cij[p,q] tensors using transport boundary kernels.
+    We make it into the yukawa flavor tensor with the y1y2+y2y1 stuff"""
     boundaries = payload.get("boundary_tensors")
     if not isinstance(boundaries, dict):
         return expr, {}
@@ -568,7 +536,9 @@ def _expand_boundary_tensors(
 
 
 def _matchete_threshold_flavor_info(expr: str) -> dict[str, Any]:
-    """Inspect a Matchete C5 coefficient for explicit flavor structure."""
+    """Inspect a Matchete C5 coefficient for explicit flavor structure.
+    We check mathcete coefficient for which ones are external lepton flavour indices
+    and which ones are BSM fermion flavour indices"""
     flavor_tokens = re.findall(r"Index\[([^,\]]+),\s*Flavor\]", expr)
     nflavor_tokens = re.findall(r"Index\[([^,\]]+),\s*NFlavor\]", expr)
 
@@ -745,6 +715,7 @@ def _prepare_final_weinberg_state(
 
 
 def _physical_majorana_block_reason(state: dict[str, Any]) -> str | None:
+    # Reasons for failure
     if state["ready_for_physical_majorana_numerics"]:
         return None
 
@@ -762,6 +733,7 @@ def _physical_majorana_block_reason(state: dict[str, Any]) -> str | None:
 
 
 def _ordered_full_flavor_block_reason(state: dict[str, Any]) -> str | None:
+    # Reasons for failure
     if state["ready_for_ordered_full_flavor_numerics"]:
         return None
 
@@ -920,10 +892,6 @@ def build_final_weinberg_coefficient(
         C5_final^{pq}(MS)
           = C5_hard,MSbar^{pq}(MF)
           + hbar * Delta C5_run,direct^(1),pq(MF -> MS).
-
-    The raw Matchete threshold expression is preserved unchanged for
-    diagnostics. A finite hard threshold is constructed only after the
-    independent pole/RGE consistency check validates the subtraction.
     """
     state = _prepare_final_weinberg_state(
         threshold_c5_path=threshold_c5_path,

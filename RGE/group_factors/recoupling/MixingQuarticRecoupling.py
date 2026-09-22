@@ -1,29 +1,20 @@
 from __future__ import annotations
 
-"""Exact scalar-quartic recoupling factors in beta_lambdaT3.
+"""Exact scalar-quartic recoupling factors in beta_lambda5.
 
-This module uses the existing Matchete -> real-scalar quartic tensor adapter.
-No A--E coefficient table is encoded.
-
-Convention
-----------
 The adapter constructs the fully symmetric real tensor lambda_abcd from
-
     V4 = (1/4!) lambda_abcd phi_a phi_b phi_c phi_d.
 
 For this convention the pure-scalar one-loop contribution is
-
     beta_abcd|_{lambda^2}
       = sum_{e,f} [
           lambda_abef lambda_efcd
         + lambda_acef lambda_efbd
         + lambda_adef lambda_efbc
         ].
-
 This is equivalent to (1/8) times the full 24-permutation sum.
 
 For a target real quartic X, write
-
     lambda_abcd = lambdaT3 * T_abcd + X * X_abcd + ...
 
 The coefficient linear in lambdaT3 * X is then built exactly from the
@@ -33,11 +24,6 @@ The output reports
 - the exact projection coefficient R_X,
 - the projection residual,
 - whether the full generated tensor is proportional to the lambdaT3 tensor.
-
-The lambdaT3 coupling is kept holomorphic: conjugate(lambdaT3) is treated as
-an independent direction.  The adjoint/cross quartics tested here are real, so
-their conjugates are identified with themselves before extracting their basis
-tensors.
 """
 
 import argparse
@@ -108,13 +94,16 @@ def recoupling_for_seed(
     *,
     targets: Iterable[str] = REAL_TARGETS,
 ) -> dict:
+    '''EFT1 scalar quartic seed, 
+    1. we build the quartic tensor
+    '''
     full = load_and_build_eft1_quartic_tensor(
         quartic_seed_path,
         rgbeta_path,
     )
     scalar_dimension_value = scalar_dimension(full)
 
-    # lambdaT3 is complex.  Keep only its holomorphic tensor direction.
+    # lambdaT3 (lambda_5) is complex.  Keep only its holomorphic tensor direction.
     t3 = basis_tensor(
         full,
         "lambdaT3",
@@ -127,6 +116,7 @@ def recoupling_for_seed(
 
     results: list[ProjectionResult] = []
 
+    # We combine the lambda5 with all other lambdas and get its factors or residuals
     for coupling_name in targets:
         other = basis_tensor(
             full,
@@ -193,6 +183,7 @@ def recoupling_for_seed(
 
 
 def _default_rgbeta(seed: Path) -> Path:
+    '''Return the EFT1 RGBeta file'''
     candidate = seed.with_name("eft1_rgbeta_rge.json")
     if not candidate.is_file():
         raise FileNotFoundError(

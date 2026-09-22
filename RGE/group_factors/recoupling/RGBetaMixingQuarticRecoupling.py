@@ -1,34 +1,7 @@
 from __future__ import annotations
 
 """Independent SU(2) recoupling check for beta(lambdaT3).
-
-This script does NOT fit the A--E RGBeta numbers.
-
-It constructs the unique T3 invariant in a canonical SU(2) spherical basis:
-
-  (H H)_{J=1} (S1 \tilde S2^*)_{J=1} -> J=0,
-
-with \tilde S2^* = E_j S2^* the standard SU(2) dual-to-primal map, and then
-evaluates the pure-scalar one-loop real-tensor contraction with the physical
-adjoint quartics
-
-  (H^\dagger T^A H)(S_i^\dagger T^A S_i),
-  (S1^\dagger T^A S1)(S2^\dagger T^A S2).
-
-The real-scalar convention is
-
-  V4 = (1/4!) lambda_abcd phi_a phi_b phi_c phi_d,
-
-for which the scalar-scalar one-loop term is the sum of the three pair
-contractions lambda_abef lambda_efcd + permutations.
-
-The overall normalization of the T3 Clebsch tensor cancels in the projection,
-so the result is a representation-theory prediction, independent of the
-component basis and CG normalization.
-
-If an RGBeta UV JSON is supplied, the script also extracts the corresponding
-lambdaT3 * quartic coefficients directly from beta_lambdaT3 and compares them.
-A disagreement is therefore a convention/implementation diagnostic, not a fit.
+Using representation theory to get Beta lambda_5
 """
 
 import argparse
@@ -39,7 +12,6 @@ from math import factorial
 from pathlib import Path
 import re
 import sys
-
 import sympy as sp
 from sympy.physics.wigner import clebsch_gordan
 
@@ -59,6 +31,7 @@ def _m_values(d: int) -> list[sp.Rational]:
 
 
 def _su2_generators(d: int) -> tuple[sp.Matrix, sp.Matrix, sp.Matrix]:
+    '''Create SU2 generator with diagonal T3'''
     j = sp.Rational(d - 1, 2)
     ms = _m_values(d)
     jp = sp.zeros(d)
@@ -82,7 +55,11 @@ def _su2_generators(d: int) -> tuple[sp.Matrix, sp.Matrix, sp.Matrix]:
 
 
 def _dual_map(d: int) -> sp.Matrix:
-    """E_j with E |j,m>^* = (-1)^(j-m) |j,-m>."""
+    """E_j with E |j,m>^* = (-1)^(j-m) |j,-m>.
+    Essentially we allow for conjugate complex representation to be equivalent to original rerpesentation
+    This equation establishes the equivalence between the two with this E matrix
+    For the doublet this is shown is 
+    E = i*sigma_2, allowing for our ~H = i sigma_2 H^* """
     j = sp.Rational(d - 1, 2)
     ms = _m_values(d)
     E = sp.zeros(d)
@@ -93,6 +70,7 @@ def _dual_map(d: int) -> sp.Matrix:
 
 
 def _complex_block(d: int, first: int):
+    '''Put a complex SU2 multiplet in terms of scalar coordinates in our basis'''
     z = []
     zb = []
     real_symbols = []
@@ -106,6 +84,7 @@ def _complex_block(d: int, first: int):
 
 
 def _t3_polynomial(d1: int, d2: int):
+    '''Build the quartic polynomial, the HHSS that becomes singlet'''
     H, Hb, hv = _complex_block(2, 1)
     S1, S1b, s1v = _complex_block(d1, 5)
     S2, S2b, s2v = _complex_block(d2, 5 + 2*d1)
@@ -153,6 +132,7 @@ def _t3_polynomial(d1: int, d2: int):
 
 
 def _bilinear(zb, z, matrix: sp.Matrix):
+    '''We make the bilinear term for something like S^dagger T^A S'''
     return sp.expand(sum(
         zb[i] * matrix[i, j] * z[j]
         for i in range(len(z))
@@ -161,6 +141,8 @@ def _bilinear(zb, z, matrix: sp.Matrix):
 
 
 def _adjoint_polynomials(d1: int, d2: int, fields):
+    '''We make our non-singlet quartic operators
+    HTH STS, or S1TS1 S1TS1 for example which can be triplets etc'''
     H, Hb, S1, S1b, S2, S2b = fields
     gh = _su2_generators(2)
     out = {}
@@ -191,6 +173,10 @@ def _adjoint_polynomials(d1: int, d2: int, fields):
 
 
 def _tensor_from_polynomial(expr: sp.Expr, variables: list[sp.Symbol]):
+    '''We convert our scalar polynomial into the symmetric real quartic tensor
+    Assume a polynomial with cx^2yz, with tensor convention 1/4! lambda abcd
+    abcd = 4!/2! x^2yz =12x^2yz. Then we know c=1/2 lambda
+    '''
     poly = sp.Poly(sp.expand(expr), *variables)
     entries = {}
 
@@ -233,6 +219,7 @@ def _inner(left, right):
 
 
 def _cross_beta(target, other, n_real: int):
+    '''Doing the TX+XT beta'''
     generated = {}
 
     for key in combinations_with_replacement(range(1, n_real + 1), 4):
@@ -259,6 +246,7 @@ def _cross_beta(target, other, n_real: int):
 
 
 def _project(generated, target):
+    '''Get coefficient of generated tensor by projection'''
     norm = sp.simplify(_inner(target, target))
     coefficient = sp.simplify(_inner(target, generated) / norm)
 
@@ -273,6 +261,8 @@ def _project(generated, target):
 
 
 def canonical_recouplings(d1: int, d2: int):
+    '''Get all recoupling coefficients from SU2 algebra that makes singlets
+    given our dimensions of our scalars'''
     variables, mix, fields = _t3_polynomial(d1, d2)
     target = _tensor_from_polynomial(mix, variables)
     operators = _adjoint_polynomials(d1, d2, fields)
@@ -314,14 +304,6 @@ def _replace_balanced_calls(text: str, head: str, replacement: str = "0") -> str
 
 def _numeric_cross_coefficient(beta: str, quartic: str):
     """Extract coeff(lambdaT3*quartic) from RGBeta InputForm.
-
-    RGBeta commonly factors lambdaT3 outside a parenthesis, e.g.
-
-        lambdaT3*(lambda12Adj/6 + 2*lambdaH1Adj/3 + ...)
-
-    so term-by-term string matching is insufficient.  Remove trace/function
-    structures irrelevant to the scalar-quartic coefficient, zero all other
-    symbols, then let SymPy expand the complete expression.
     """
     if not beta or "lambdaT3" not in beta or quartic not in beta:
         return None
@@ -359,6 +341,7 @@ def _numeric_cross_coefficient(beta: str, quartic: str):
 
 
 def rgbeta_coefficients(path: Path):
+    '''Get RGBeta JSON and get coefficients'''
     payload = json.loads(path.read_text(encoding="utf-8-sig"))
     betas = payload.get("betas", {})
     beta = (
@@ -373,6 +356,7 @@ def rgbeta_coefficients(path: Path):
 
 
 def main() -> int:
+    '''We get our recouplings and optionally compares with RGBeta'''
     parser = argparse.ArgumentParser()
     parser.add_argument("dS1", type=int)
     parser.add_argument("dS2", type=int)

@@ -193,9 +193,9 @@ def paper_notation_key_lines(*, heading: str = "Notation key") -> list[str]:
         r"$\lambda_5$ & $\lambda_5HHS_1S_2^\dagger+\mathrm{h.c.}$ \\",
         r"$\lambda_{12}^{(1)}$ & $\lambda_{12}^{(1)}(S_1^\dagger S_1)(S_2^\dagger S_2)$ \\",
         r"$\lambda_{12}^{(A)}$ & $\lambda_{12}^{(A)}(S_1^\dagger T^AS_1)(S_2^\dagger T^AS_2)$ \\",
-        r"$\lambda_{12}^{(\times)}$ & crossed independent $S_1$--$S_2$ contraction \\",
-        r"$\lambda_{S_1}^{(A)}$ & additional independent $S_1$ self-contraction \\",
-        r"$\lambda_{S_2}^{(A)}$ & additional independent $S_2$ self-contraction \\",
+        r"$\lambda_{12}^{(\times)}$ & $\lambda_{12}^{(\times)}(S_1^\dagger S_2)(S_2^\dagger S_1)$ \\",
+        r"$\lambda_{S_1}^{(A)}$ & $\lambda_{S_1}^{(A)}(S_1^\dagger T^A S_1)(S_1^\dagger T^A S_1)$ \\",
+        r"$\lambda_{S_2}^{(A)}$ & $\lambda_{S_2}^{(A)}(S_2^\dagger T^A S_2)(S_2^\dagger T^A S_2)$ \\",
         r"$\alpha$ & $Y_{S_1}=\alpha/2,\ Y_F=(\alpha+1)/2,\ Y_{S_2}=(\alpha+2)/2$ \\",
         r"$C_2(d)$ & $(d^2-1)/4$ \\",
         r"$T(d)$ & $d(d^2-1)/12$ \\",
@@ -337,9 +337,9 @@ def normalise_physics_latex(latex: str) -> str:
     # T3 Clebsch--Gordan / invariant tensors.  Bar[...] is not discarded: it
     # denotes the complex-conjugate invariant tensor.  Render it as a star.
     cg_map = {
-        "T3Y1CG": r"\mathcal{I}_{y_1}",
-        "T3Y2CG": r"\mathcal{I}_{y_2}",
-        "T3MixCG": r"\mathcal{I}_{T3}",
+        "T3Y1CG": r"\mathcal{C}_{LS_1F}",
+        "T3Y2CG": r"\mathcal{C}_{LS_2F}",
+        "T3MixCG": r"\mathcal{I}_{LLS_1S_2}",
     }
     for raw_name, pretty in cg_map.items():
         text = text.replace(

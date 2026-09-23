@@ -742,6 +742,7 @@ if __name__ == "__main__":
 # Scalar-potential -> lambda_abcd adapter
 # ---------------------------------------------------------------------------
 
+@dataclass(frozen=True)
 class ScalarLeg:
     name: str
     dummy: str | None

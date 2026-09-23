@@ -98,6 +98,10 @@ With our current restriction of representations of dimension 3 or less, giving u
 $$(F,S1,S2),(2,1,3),(1,2,2),(3,2,2),(2,3,1),(2,3,3)$$
 
 
+For the Z2 symmetry one the particles should be electrically neutral
+$$Q=T_3 +Y =0$$
+As we are restricted by triplets, our hypercharge is bounded with -4 to 2
+
 
 ---
 

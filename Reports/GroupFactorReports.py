@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import re
 """Stage-aware analytic group-factor comparison reports for the T3 pipeline.
@@ -591,13 +591,20 @@ def _matching_cg_tex(term: Mapping[str, object]) -> str:
 
     rendered: list[str] = []
 
+    invariant_tex = {
+        "eps[SU2L]": r"\epsilon",
+        "T3Y1CG": r"\mathcal{C}_{LS_1F}",
+        "T3Y2CG": r"\mathcal{C}_{LS_2F}",
+        "T3MixCG": r"\mathcal{I}_{LLS_1S_2}",
+    }
+
     for name in names:
-        if name == "eps[SU2L]":
-            rendered.append(r"\epsilon_{SU(2)_L}")
-        else:
-            rendered.append(
-                rf"\mathrm{{{latex_escape_text(name)}}}"
+        rendered.append(
+            invariant_tex.get(
+                name,
+                rf"\mathrm{{{latex_escape_text(name)}}}",
             )
+        )
 
     return r"\,".join(rendered)
 
@@ -713,11 +720,22 @@ def _direct_weinberg_comparison(records: Sequence[RunRecord]) -> list[str]:
         values[_run_key(record)] = {"RW": rw.reduced_factor}
 
     lines = [
-        r"\subsection*{Direct Weinberg mixing}",
-        r"The active EFT1 scalar interaction produces",
+        r"\section*{Full Weinberg-coefficient RGE in EFT1}",
+        r"Writing the canonical mixed LLSS coefficient as $C_{12}$, the coupled "
+        r"one-loop Weinberg equation used in the $F$-first EFT is",
+        r"\begin{align}",
+        r"16\pi^2\frac{dC_5}{d\ln\mu}={}&"
+        r"(2\lambda_1-3g_2^2+2T)C_5\\",
+        r"&-\frac32\left[(Y_e^\dagger Y_e)^T C_5"
+        r"+C_5(Y_e^\dagger Y_e)\right]\\",
+        r"&+R_W\,\lambda_5\,C_{12}.",
+        r"\end{align}",
+        r"Note: $\frac{7}{2}$ thing isnt there if we integrate out our fermion F so its not here "
+        r"\subsection*{Direct $C_{12}\to C_5$ recoupling factor}",
+        r"For each representation the source term is",
         r"\["
         r"16\pi^2\,\beta_{C_5}\supset "
-        r"K\,\lambda_5\,C_{LLS_1S_2}."
+        r"R_W\,\lambda_5\,C_{12}."
         r"\]",
     ]
 
@@ -730,17 +748,12 @@ def _direct_weinberg_comparison(records: Sequence[RunRecord]) -> list[str]:
         ]
         lines.append(" & ".join(header) + r" \\")
         lines.append(r"\midrule")
-        row = [r"$K$"] + [
+        row = [r"$R_W$"] + [
             rf"$ {_latex_expression(values[_run_key(record)]['RW'])} $" for record in chunk
         ]
         lines.append(" & ".join(row) + r" \\")
         lines.extend([r"\bottomrule", r"\end{longtable}"])
 
-    lines.extend(
-        [
-            r"."
-        ]
-    )
     return lines
 
 
@@ -1054,10 +1067,22 @@ def _weinberg_index_conventions() -> list[str]:
     ]
 
 
+def _eft1_c12_master_rge_section() -> list[str]:
+    """Render a compact and then component-level EFT1 C12 RGE.
+
+    The paper-style matrix equation is used only to organize the flavour and
+    scalar-index action.  The authoritative implementation remains the complete
+    real-scalar psi^2 phi^2 tensor equation in ``RGE.general.WilsonTensorRGE``.
+    """
+    return [
+        r""
+    ]
+
+
 def _matching_operator_section(
     records: Sequence[RunRecord],
 ) -> list[str]:
-    """Display F-threshold matching in the original complex scalar basis."""
+    """Display F-threshold ma tching in the original complex scalar basis."""
     lines = [
         r"."
     ]
@@ -1202,7 +1227,7 @@ def _uv_notation_key() -> list[str]:
         (r"$\lambda_5$", r"$HHS_1S_2^\dagger+\mathrm{h.c.}$"),
         (r"$\lambda_{12}^{(1)}$", r"$(S_1^\dagger S_1)(S_2^\dagger S_2)$"),
         (r"$\lambda_{12}^{(A)}$", r"$(S_1^\dagger T^AS_1)(S_2^\dagger T^AS_2)$"),
-        (r"$\lambda_{12}^{(\times)}$", r"crossed independent $S_1$--$S_2$ contraction"),
+        (r"$\lambda_{12}^{(\times)}$", r"$(S_1^\dagger S_2)(S_2^\dagger S_1)$"),
     ])
 
 
@@ -1219,7 +1244,7 @@ def _eft1_notation_key() -> list[str]:
         (r"$\lambda_5$", r"$HHS_1S_2^\dagger+\mathrm{h.c.}$"),
         (r"$\lambda_{12}^{(1)}$", r"$(S_1^\dagger S_1)(S_2^\dagger S_2)$"),
         (r"$\lambda_{12}^{(A)}$", r"$(S_1^\dagger T^AS_1)(S_2^\dagger T^AS_2)$"),
-        (r"$\lambda_{12}^{(\times)}$", r"crossed independent $S_1$--$S_2$ contraction"),
+        (r"$\lambda_{12}^{(\times)}$", r"$(S_1^\dagger S_2)(S_2^\dagger S_1)$"),
         (r"$C_{LLS_1S_2}^{ij;AB}$", r"$L_iL_jS_1^AS_2^B$"),
         (r"$C_{ijab}$", r"$L_iL_j\phi_a\phi_b$"),
         (r"$C_5^{ij}$", r"$(L_i^TCL_j)HH$"),
@@ -1520,6 +1545,7 @@ def _write_gf_f_first_stage_shared(
                    "lambdaH", "lambdaS", "lambda3", "lambda4", "lambda5"),
         title="Renormalisable one-loop beta functions in this EFT",
     ))
+    lines.extend(_eft1_c12_master_rge_section())
     lines.extend(_direct_weinberg_comparison(records))
     lines.extend([
         r"\section*{Matching-basis note}",
@@ -1585,6 +1611,7 @@ def _write_gf_f_first_stage(
         )
 
     lines.extend(_generated_non_singlet_section(records, eft_data))
+    lines.extend(_eft1_c12_master_rge_section())
     lines.extend(_direct_weinberg_comparison(records))
     lines.extend(_matching_operator_section(records))
 

@@ -994,3 +994,4 @@ $$
 - Groupfactor validation is just using simple components of our RGE and check if its similar, complex ones are not validated
 - Other thing is that we extract coefficient from RGBeta's generated RGE and compare the two, which isnt too bad as we just look at coefficients of combinations of fields
 - For component based tensors like weinberg we compare the whole matrix, beta function should be a factor of the weinberg
+- Matchete gives us our terms in terms of cg cg LLSS

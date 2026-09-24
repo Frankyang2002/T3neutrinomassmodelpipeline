@@ -15,8 +15,12 @@ from common.T3Model import (
     encode_alpha,
     identify_t3_class,
     shared_scalar_formal_dimensions,
+    t3_has_neutral_bsm_component,
+    t3_neutral_component_fields,
     valid_shared_scalar_dimensions,
+    valid_shared_scalar_topology_dimensions,
     valid_t3_dimensions,
+    valid_t3_topology_dimensions,
 )
 
 
@@ -293,19 +297,36 @@ def validate_dimensions(
     export_rge_tensors: bool = False,
     threshold_plan: tuple[tuple[str, ...], ...] | None = None,
     output_root: Path | None = None,
+    force: bool = False,
 ) -> RunRecord:
     """All it does is 
     1. Check if dimensions are correct, if not then return error
     2. Identify if its an T3-A..E model and name the output folder after it
     3. Use run_model"""
 
-    # First check whether the dimensions can form the required T3
-    # Yukawa and scalar interactions.
-    if not valid_t3_dimensions(d_s1, d_s2, d_f):
+    # ``--force`` bypasses only production-scope and neutrality restrictions.
+    # It never bypasses the representation-theory conditions that define T3.
+    topology_ok = valid_t3_topology_dimensions(d_s1, d_s2, d_f)
+    if not topology_ok:
         raise ValueError(
-            f"({d_s1}, {d_s2}, {d_f}) is not supported by the current T3 pipeline. "
-            "For now only SU(2) dimensions 1, 2, and 3 are supported, and the "
-            "assignment must satisfy dS=dF±1 with S1⊗S2 containing the triplet."
+            f"({d_s1}, {d_s2}, {d_f}) does not form the required T3 topology. "
+            "Dimensions must be positive, each scalar must satisfy dS=dF±1, "
+            "and S1⊗S2 must contain the triplet."
+        )
+
+    if not force and not valid_t3_dimensions(d_s1, d_s2, d_f):
+        raise ValueError(
+            f"({d_s1}, {d_s2}, {d_f}) is outside the current production support. "
+            "Normal mode supports only SU(2) dimensions 1, 2, and 3. "
+            "Use --force to attempt a larger representation that still satisfies "
+            "the T3 topology conditions."
+        )
+
+    if not force and not t3_has_neutral_bsm_component(d_s1, d_s2, d_f, alpha):
+        raise ValueError(
+            f"({d_s1}, {d_s2}, {d_f}), alpha={alpha} has no electrically neutral "
+            "BSM component. Normal mode requires at least one neutral state. "
+            "Use --force to run this charged-only point explicitly."
         )
 
     # Check whether these dimensions correspond to one of the known
@@ -365,14 +386,23 @@ def validate_shared_dimensions(
     export_rge_tensors: bool = False,
     threshold_plan: tuple[tuple[str, ...], ...] | None = None,
     output_root: Path | None = None,
+    force: bool = False,
 ) -> RunRecord:
     """Run the one-physical-scalar scotogenic branch."""
-    if not valid_shared_scalar_dimensions(d_s, d_f):
+    if not valid_shared_scalar_topology_dimensions(d_s, d_f):
         raise ValueError(
-            f"({d_s}, {d_f}) is not supported by shared-scalar mode. "
-            "Current production support is dS=2 with dF=1 or 3."
+            f"({d_s}, {d_f}) does not form the shared-scalar T3 topology. "
+            "Dimensions must be positive, dS=dF±1, and S⊗S must contain the triplet."
         )
-    d_s1, d_s2, d_f = shared_scalar_formal_dimensions(d_s, d_f)
+
+    if not force and not valid_shared_scalar_dimensions(d_s, d_f):
+        raise ValueError(
+            f"({d_s}, {d_f}) is outside supported shared-scalar mode. "
+            "Current production support is dS=2 with dF=1 or 3. "
+            "Use --force to attempt a larger topology-compatible representation."
+        )
+
+    d_s1, d_s2, d_f = shared_scalar_formal_dimensions(d_s, d_f, force=force)
     alpha = -1
     output_root = output_root or OUTPUT_DIR
     fermion_label = "N" if d_f == 1 else f"F{d_f}"
@@ -393,6 +423,7 @@ def obtain_class_dimensions(
     export_rge_tensors: bool = False,
     threshold_plan: tuple[tuple[str, ...], ...] | None = None,
     output_root: Path | None = None,
+    force: bool = False,
 ) -> RunRecord:
     """Convert a known A-E class into dimensions and then run normally."""
 
@@ -410,4 +441,5 @@ def obtain_class_dimensions(
         export_rge_tensors,
         threshold_plan,
         output_root,
+        force,
     )

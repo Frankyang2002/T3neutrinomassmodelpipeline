@@ -50,7 +50,11 @@ from common.Thresholds import (
     threshold_plan_to_json,
     validate_threshold_plan,
 )
-from common.T3Model import SMOKE
+from common.T3Model import (
+    SMOKE,
+    T3_CLASSES,
+    t3_has_neutral_bsm_component,
+)
 from Lagrangian.Runner import validate_dimensions, validate_shared_dimensions, obtain_class_dimensions
 from Reports.ReportGeneration import (
     compile_latex_document,
@@ -85,7 +89,7 @@ DIMENSION_COMPARISON = tuple(
     for model_class in ("A", "B", "C", "D", "E")
 )
 
-HYPERCHARGE_ALPHAS = (-2, -1, 0, 1, 2)
+HYPERCHARGE_ALPHAS = tuple(range(-4, 3))
 HYPERCHARGE_COMPARISON = tuple(
     (model_class, alpha)
     for model_class in ("A", "B", "C", "D", "E")
@@ -100,6 +104,9 @@ def _forward_common_cli_args(args: argparse.Namespace) -> list[str]:
 
     if args.debug_reports:
         forwarded.append("--debug-reports")
+
+    if args.force:
+        forwarded.append("--force")
 
     if args.numerical is not None:
         forwarded.extend(["--numerical", str(args.numerical)])
@@ -1453,8 +1460,8 @@ def _build_argument_parser() -> argparse.ArgumentParser:
         "--hypercharge-comparison",
         action="store_true",
         help=(
-            "scan alpha=-2,-1,0,1,2 for every T3-A...E SU(2) assignment "
-            "to isolate hypercharge dependence"
+            "scan alpha=-4,-3,...,2 for every T3-A...E SU(2) assignment; "
+            "normal mode runs only points with at least one neutral BSM state"
         ),
     )
     mode.add_argument(
@@ -1462,7 +1469,7 @@ def _build_argument_parser() -> argparse.ArgumentParser:
         action="store_true",
         help=(
             "compare T3-A...E at fixed alpha=0 to isolate SU(2) "
-            "representation dependence"
+            "representation dependence; normal mode keeps only neutral-compatible points"
         ),
     )
     mode.add_argument(
@@ -1545,6 +1552,15 @@ def _build_argument_parser() -> argparse.ArgumentParser:
             "UV/EFT expression reports"
         ),
     )
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help=(
+            "bypass the neutral-component requirement and the current "
+            "SU(2)-dimension production-support limit. Genuine T3 topology "
+            "conditions are still enforced."
+        ),
+    )
     return parser
 
 
@@ -1620,18 +1636,36 @@ def _study_name(args: argparse.Namespace) -> str:
     return
 
 
+def _neutral_scan_points(
+    points: tuple[tuple[str, int], ...],
+) -> tuple[tuple[str, int], ...]:
+    """Keep scan points containing at least one electrically neutral BSM state."""
+    selected: list[tuple[str, int]] = []
+    for model_class, alpha in points:
+        d_s1, d_s2, d_f = T3_CLASSES[model_class]
+        if t3_has_neutral_bsm_component(d_s1, d_s2, d_f, alpha):
+            selected.append((model_class, alpha))
+    return tuple(selected)
+
+
 def _scan_definition(
     args: argparse.Namespace,
 ) -> tuple[str, tuple[tuple[str, int], ...]]:
     """Return the label and benchmark points for a non-``--dims`` scan."""
 
     if args.smoke:
-        return "smoke", SMOKE
-    if args.hypercharge_comparison:
-        return "hypercharge comparison", HYPERCHARGE_COMPARISON
-    if args.dimension_comparison:
-        return "dimension comparison", DIMENSION_COMPARISON
-    return
+        label, candidates = "smoke", tuple(SMOKE)
+    elif args.hypercharge_comparison:
+        label, candidates = "hypercharge comparison", HYPERCHARGE_COMPARISON
+    elif args.dimension_comparison:
+        label, candidates = "dimension comparison", DIMENSION_COMPARISON
+    else:
+        return
+
+    if args.force:
+        return label, candidates
+
+    return label, _neutral_scan_points(candidates)
 
 
 def _build_run_records(
@@ -1655,6 +1689,7 @@ def _build_run_records(
                     export_rge_tensors=False,
                     threshold_plan=threshold_plan,
                     output_root=study_output_dir,
+                    force=args.force,
                 )
             else:
                 d_s1, d_s2, d_f = args.dims
@@ -1667,13 +1702,27 @@ def _build_run_records(
                     False,
                     threshold_plan,
                     study_output_dir,
+                    args.force,
                 )
         except ValueError as exc:
             parser.error(str(exc))
         return [record]
 
     mode_name, points = _scan_definition(args)
-    print(f"T3 scan mode: {mode_name}; {len(points)} model(s).")
+    candidate_count = (
+        len(HYPERCHARGE_COMPARISON)
+        if args.hypercharge_comparison
+        else len(DIMENSION_COMPARISON)
+        if args.dimension_comparison
+        else len(SMOKE)
+    )
+    if args.force:
+        print(f"T3 scan mode: {mode_name}; force enabled; {len(points)} model(s).")
+    else:
+        print(
+            f"T3 scan mode: {mode_name}; {len(points)}/{candidate_count} "
+            "neutral-compatible model(s)."
+        )
     return [
         obtain_class_dimensions(
             model_class,
@@ -1682,6 +1731,7 @@ def _build_run_records(
             False,
             threshold_plan,
             study_output_dir,
+            args.force,
         )
         for model_class, alpha in points
     ]

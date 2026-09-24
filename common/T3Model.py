@@ -25,8 +25,13 @@ def encode_alpha(alpha: int) -> str:
 
 
 def _supported_su2_dimension(dimension: int) -> bool:
-    """Return whether one SU(2) irrep dimension is in current pipeline scope."""
+    """Return whether one SU(2) irrep dimension is in current production scope."""
     return 1 <= dimension <= 3
+
+
+def _positive_su2_dimension(dimension: int) -> bool:
+    """Return whether a dimension can label a finite SU(2) irrep."""
+    return dimension >= 1
 
 
 def _scalar_can_couple_to_lepton_and_fermion(
@@ -52,13 +57,16 @@ def _scalar_pair_contains_triplet(
     )
 
 
-def valid_t3_dimensions(d_s1: int, d_s2: int, d_f: int) -> bool:
-    """Validate formal T3 topology dimensions (S1, S2, F) 
-    and requires conditions to form weinberg operator
+def valid_t3_topology_dimensions(d_s1: int, d_s2: int, d_f: int) -> bool:
+    """Validate the representation-theory conditions required by the T3 topology.
+
+    Unlike :func:`valid_t3_dimensions`, this does not impose the current
+    singlet/doublet/triplet production-support restriction. It is therefore the
+    validator used by the explicit ``--force`` path.
     """
     dimensions = (d_s1, d_s2, d_f)
 
-    if not all(_supported_su2_dimension(d) for d in dimensions):
+    if not all(_positive_su2_dimension(d) for d in dimensions):
         return False
 
     if not _scalar_can_couple_to_lepton_and_fermion(d_s1, d_f):
@@ -70,22 +78,120 @@ def valid_t3_dimensions(d_s1: int, d_s2: int, d_f: int) -> bool:
     return _scalar_pair_contains_triplet(d_s1, d_s2)
 
 
+def valid_t3_dimensions(d_s1: int, d_s2: int, d_f: int) -> bool:
+    """Validate a T3 representation inside the current production support."""
+    dimensions = (d_s1, d_s2, d_f)
+    return (
+        all(_supported_su2_dimension(d) for d in dimensions)
+        and valid_t3_topology_dimensions(d_s1, d_s2, d_f)
+    )
+
+
+def valid_shared_scalar_topology_dimensions(d_s: int, d_f: int) -> bool:
+    """Validate the topology for one physical scalar used in both T3 scalar roles."""
+    return valid_t3_topology_dimensions(d_s, d_s, d_f)
+
+
 def valid_shared_scalar_dimensions(d_s: int, d_f: int) -> bool:
-    """Validate physical dimensions for the supported shared-scalar branch.
-    """
+    """Validate physical dimensions for the supported shared-scalar branch."""
     return d_s == 2 and d_f in (1, 3)
+
+
+def _su2_irrep_contains_neutral_component(
+    dimension: int,
+    twice_hypercharge: int,
+) -> bool:
+    """Return whether an SU(2) irrep contains a state with electric charge Q=0.
+
+    The project uses the convention Q = T3 + Y. For an irrep of dimension
+    ``d`` the allowed values of ``2*T3`` are ``-(d-1), -(d-3), ..., d-1``.
+    A neutral component therefore exists exactly when ``-2Y`` is one of those
+    weights.
+    """
+    if not _positive_su2_dimension(dimension):
+        return False
+
+    highest_twice_t3 = dimension - 1
+    return (
+        abs(twice_hypercharge) <= highest_twice_t3
+        and (highest_twice_t3 - twice_hypercharge) % 2 == 0
+    )
+
+
+def t3_neutral_component_fields(
+    d_s1: int,
+    d_s2: int,
+    d_f: int,
+    alpha: int,
+) -> tuple[str, ...]:
+    """Return the BSM T3 multiplets that contain an electrically neutral state.
+
+    The T3 hypercharges are
+      2 Y(S1) = alpha,
+      2 Y(S2) = alpha + 2,
+      2 Y(F)  = alpha + 1.
+    """
+    candidates = (
+        ("S1", d_s1, alpha),
+        ("S2", d_s2, alpha + 2),
+        ("F", d_f, alpha + 1),
+    )
+    return tuple(
+        name
+        for name, dimension, twice_hypercharge in candidates
+        if _su2_irrep_contains_neutral_component(dimension, twice_hypercharge)
+    )
+
+
+def t3_has_neutral_bsm_component(
+    d_s1: int,
+    d_s2: int,
+    d_f: int,
+    alpha: int,
+) -> bool:
+    """Return whether at least one BSM T3 multiplet has a neutral component."""
+    return bool(t3_neutral_component_fields(d_s1, d_s2, d_f, alpha))
+
+
+def neutral_t3_class_points(
+    alphas,
+    model_classes: tuple[str, ...] = ("A", "B", "C", "D", "E"),
+) -> tuple[tuple[str, int], ...]:
+    """Return class/alpha points with at least one neutral BSM component."""
+    points: list[tuple[str, int]] = []
+    for model_class in model_classes:
+        if model_class not in T3_CLASSES:
+            raise ValueError(f"Unknown T3 model class: {model_class}")
+        d_s1, d_s2, d_f = T3_CLASSES[model_class]
+        for alpha in alphas:
+            if t3_has_neutral_bsm_component(d_s1, d_s2, d_f, alpha):
+                points.append((model_class, alpha))
+    return tuple(points)
 
 
 def shared_scalar_formal_dimensions(
     d_s: int,
     d_f: int,
+    *,
+    force: bool = False,
 ) -> FormalT3Dimensions:
     """Map physical shared-scalar dimensions (S, F) to formal (S1, S2, F).
     We do not treat the two of them separately but we represent them as separate for calculations
     """
-    if not valid_shared_scalar_dimensions(d_s, d_f):
+    validator = (
+        valid_shared_scalar_topology_dimensions
+        if force
+        else valid_shared_scalar_dimensions
+    )
+    if not validator(d_s, d_f):
+        if force:
+            raise ValueError(
+                "Forced shared-scalar dimensions must still form a T3 topology: "
+                "positive dimensions with dS=dF±1 and S⊗S containing the triplet."
+            )
         raise ValueError(
-            "Shared-scalar mode currently supports dS=2 with dF=1 or 3."
+            "Shared-scalar mode currently supports dS=2 with dF=1 or 3. "
+            "Use --force to bypass only this production-support restriction."
         )
 
     return d_s, d_s, d_f

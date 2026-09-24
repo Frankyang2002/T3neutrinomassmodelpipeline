@@ -1,0 +1,354 @@
+{
+  "_comment": "T3_B_alpha_m1 real-flavour smoke scan for NuFIT 6.1 NO. The heavy-fermion mass matrix remains diagonal to preserve the validated FinalC5Bridge mass-basis assumption. Six real off-diagonal Yukawa entries and lambdaT3_real are scanned. This is a structural/physics smoke scan, not a statistically complete fit.",
+  "representation": {
+    "d_s1": 2,
+    "d_s2": 2,
+    "d_f": 1,
+    "alpha": -1,
+    "shared_scalar": false
+  },
+  "scales": {
+    "mu_fermion_threshold_gev": 10000000000.0,
+    "mu_scalar_threshold_gev": 7000000000.0,
+    "mu_low_gev": 1000.0
+  },
+  "files": {
+    "uv_rgbeta": "../output/T3_B_alpha_m1/data/uv_rgbeta_rge.json",
+    "eft1_rgbeta": "../output/T3_B_alpha_m1/data/eft1_rgbeta_rge.json",
+    "final_weinberg": "../output/T3_B_alpha_m1/data/final_weinberg_coefficient.json",
+    "oscillation_target": "nufit_6_1_ic24_no.json"
+  },
+  "output": {
+    "result_json": "../output/scans/T3_B_alpha_m1_flavor_smoke_nufit61_no.json"
+  },
+  "numerical": {
+    "vev_gev": 246.22,
+    "rtol": 1e-08,
+    "atol": 1e-11
+  },
+  "base_state": {
+    "mu_gev": 1000000000000.0,
+    "sm": {
+      "gY": 0.36,
+      "g2": 0.65,
+      "g3": 0.6,
+      "lambdaH": 0.25,
+      "yu": {
+        "real": [
+          [
+            1e-05,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.007,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.75
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "yd": {
+        "real": [
+          [
+            2e-05,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0004,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.018
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "ye": {
+        "real": [
+          [
+            3e-06,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0006,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.01
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      }
+    },
+    "ordinary": {
+      "y1": {
+        "real": [
+          [
+            0.05,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.07,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.09
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "y2": {
+        "real": [
+          [
+            0.04,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.06,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.08
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "MF": {
+        "real": [
+          [
+            10000000000.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            11000000000.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            12000000000.0
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "mS1Sq": 6.4e+19,
+      "mS2Sq": 4.9e+19,
+      "lambdaS1": 0.1,
+      "lambdaS2": 0.12,
+      "lambdaH1": 0.02,
+      "lambdaH2": 0.03,
+      "lambda12": 0.01,
+      "lambdaT3": {
+        "real": 0.005,
+        "imag": 0.002
+      },
+      "lambdaH1Adj": 0.0,
+      "lambdaH2Adj": 0.0,
+      "lambda12Adj": 0.0,
+      "lambdaHHdagS2S2": {
+        "real": 0.0,
+        "imag": 0.0
+      },
+      "lambdaHHdagS1barS1bar": {
+        "real": 0.0,
+        "imag": 0.0
+      },
+      "lambdaS1bar2S2bar2": {
+        "real": 0.0,
+        "imag": 0.0
+      },
+      "lambdaS1barS2S2bar2": {
+        "real": 0.0,
+        "imag": 0.0
+      },
+      "lambdaS1S1bar2S2bar": {
+        "real": 0.0,
+        "imag": 0.0
+      },
+      "lambdaHHdagS1barS2barCross": {
+        "real": 0.0,
+        "imag": 0.0
+      }
+    }
+  },
+  "scan": {
+    "mode": "random",
+    "bindings": {
+      "lambdaT3_real": "ordinary.lambdaT3.real",
+      "y1_12": "ordinary.y1.real.0.1",
+      "y1_13": "ordinary.y1.real.0.2",
+      "y1_23": "ordinary.y1.real.1.2",
+      "y2_12": "ordinary.y2.real.0.1",
+      "y2_13": "ordinary.y2.real.0.2",
+      "y2_23": "ordinary.y2.real.1.2"
+    },
+    "parameters": [
+      {
+        "name": "lambdaT3_real",
+        "low": 0.005,
+        "high": 0.3,
+        "scale": "log"
+      },
+      {
+        "name": "y1_12",
+        "low": -0.5,
+        "high": 0.5,
+        "scale": "linear"
+      },
+      {
+        "name": "y1_13",
+        "low": -0.5,
+        "high": 0.5,
+        "scale": "linear"
+      },
+      {
+        "name": "y1_23",
+        "low": -0.5,
+        "high": 0.5,
+        "scale": "linear"
+      },
+      {
+        "name": "y2_12",
+        "low": -0.5,
+        "high": 0.5,
+        "scale": "linear"
+      },
+      {
+        "name": "y2_13",
+        "low": -0.5,
+        "high": 0.5,
+        "scale": "linear"
+      },
+      {
+        "name": "y2_23",
+        "low": -0.5,
+        "high": 0.5,
+        "scale": "linear"
+      }
+    ],
+    "n_points": 512,
+    "seed": 20260923,
+    "accepted_chi2_max": null,
+    "fail_fast": false
+  }
+}

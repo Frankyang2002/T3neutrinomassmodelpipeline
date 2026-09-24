@@ -1,0 +1,290 @@
+{
+  "_comment": "Template only. Replace file paths and base-state values with the validated model/run you intend to scan. No NuFIT values are hard-coded.",
+  "representation": {
+    "d_s1": 1,
+    "d_s2": 3,
+    "d_f": 2,
+    "alpha": 0,
+    "shared_scalar": false
+  },
+  "scales": {
+    "mu_fermion_threshold_gev": 10000000000.0,
+    "mu_scalar_threshold_gev": 7000000000.0,
+    "mu_low_gev": 1000.0
+  },
+  "files": {
+    "uv_rgbeta": "../output/T3_B_alpha_m1/data/uv_rgbeta_rge.json",
+    "eft1_rgbeta": "../output/T3_B_alpha_m1/data/eft1_rgbeta_rge.json",
+    "final_weinberg": "../output/T3_B_alpha_m1/data/final_weinberg_coefficient.json",
+    "oscillation_target": "nufit_6_1_ic24_no.json"
+  },
+  "output": {
+    "result_json": "../output/scans/T3_B_alpha_m1_nufit61_no.json"
+  },
+  "numerical": {
+    "vev_gev": 246.22,
+    "rtol": 1e-08,
+    "atol": 1e-11
+  },
+  "base_state": {
+    "mu_gev": 1000000000000.0,
+    "sm": {
+      "gY": 0.36,
+      "g2": 0.65,
+      "g3": 0.9,
+      "lambdaH": 0.25,
+      "yu": {
+        "real": [
+          [
+            1e-05,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.007,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.75
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "yd": {
+        "real": [
+          [
+            2e-05,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0004,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.018
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "ye": {
+        "real": [
+          [
+            3e-06,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0006,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.01
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      }
+    },
+    "ordinary": {
+      "y1": {
+        "real": [
+          [
+            0.05,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.07,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.09
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "y2": {
+        "real": [
+          [
+            0.04,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.06,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.08
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "MF": {
+        "real": [
+          [
+            10000000000.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            11000000000.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            12000000000.0
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "mS1Sq": 6.4e+19,
+      "mS2Sq": 4.9e+19,
+      "lambdaS1": 0.1,
+      "lambdaS2": 0.12,
+      "lambdaH1": 0.02,
+      "lambdaH2": 0.03,
+      "lambda12": 0.01,
+      "lambdaT3": {
+        "real": 0.005,
+        "imag": 0.002
+      },
+      "lambdaH2Adj": 0.004,
+      "lambdaS2Adj": 0.006
+    }
+  },
+  "scan": {
+    "mode": "grid",
+    "bindings": {
+      "lambdaT3_real": "ordinary.lambdaT3.real",
+      "y1_11": "ordinary.y1.real.0.0"
+    },
+    "values": {
+      "lambdaT3_real": [
+        0.001,
+        0.003,
+        0.01
+      ],
+      "y1_11": [
+        0.02,
+        0.05,
+        0.1
+      ]
+    },
+    "accepted_chi2_max": null,
+    "fail_fast": false
+  }
+}

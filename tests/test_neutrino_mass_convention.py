@@ -5,10 +5,8 @@ import unittest
 import numpy as np
 import sympy as sp
 
-from RGE.running.weinberg.FlavorMatchedWeinbergStage import (
-    build_neutrino_mass_matrix,
-)
 from Numerical.WeinbergRunning import neutrino_mass_matrix
+from physics.NeutrinoMass import build_neutrino_mass_matrix
 
 
 class NeutrinoMassConventionTests(unittest.TestCase):
@@ -27,22 +25,11 @@ class NeutrinoMassConventionTests(unittest.TestCase):
 
     def test_numeric_conversion_is_minus_v_squared_over_two_c5(self) -> None:
         expected = -0.5 * self.vev_gev**2 * self.c5
-
-        result = neutrino_mass_matrix(
-            self.c5,
-            vev_gev=self.vev_gev,
-        )
-
-        np.testing.assert_allclose(
-            result,
-            expected,
-            rtol=1.0e-14,
-            atol=0.0,
-        )
+        result = neutrino_mass_matrix(self.c5, vev_gev=self.vev_gev)
+        np.testing.assert_allclose(result, expected, rtol=1.0e-14, atol=0.0)
 
     def test_symbolic_and_numeric_conversions_agree(self) -> None:
         c5_symbolic = sp.Matrix(self.c5.tolist())
-
         symbolic_mass = build_neutrino_mass_matrix(
             c5_symbolic,
             vev=sp.Float(self.vev_gev),
@@ -51,12 +38,10 @@ class NeutrinoMassConventionTests(unittest.TestCase):
             symbolic_mass.evalf().tolist(),
             dtype=complex,
         )
-
         numerical_mass = neutrino_mass_matrix(
             self.c5,
             vev_gev=self.vev_gev,
         )
-
         np.testing.assert_allclose(
             numerical_mass,
             symbolic_numeric,
@@ -65,11 +50,7 @@ class NeutrinoMassConventionTests(unittest.TestCase):
         )
 
     def test_numeric_conversion_preserves_symmetry(self) -> None:
-        result = neutrino_mass_matrix(
-            self.c5,
-            vev_gev=self.vev_gev,
-        )
-
+        result = neutrino_mass_matrix(self.c5, vev_gev=self.vev_gev)
         np.testing.assert_allclose(
             result,
             result.T,

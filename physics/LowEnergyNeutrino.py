@@ -19,9 +19,9 @@ Conventions retained from the existing pipeline
 ------------------------------------------------
 The numerical and symbolic downstream modules retain the project's current
 Weinberg convention, including the existing relation between ``C5`` and the
-Majorana neutrino-mass matrix.  This refactor only moves orchestration details;
-it does not alter formulas, summary keys, filenames, printed status messages,
-or report inputs.
+Majorana neutrino-mass matrix. This refactor changes only module ownership; it
+does not alter formulas, summary keys, filenames, printed status messages, or
+report inputs.
 """
 
 from __future__ import annotations
@@ -30,14 +30,18 @@ import json
 from pathlib import Path
 
 from common.RunRecords import RunRecord
-from RGE.matching.MatchedWeinbergRGE import run_matched_weinberg_rge
-from RGE.phenomenology.NeutrinoObservables import run_neutrino_observables_stage
-from RGE.running.weinberg.FlavorMatchedWeinbergStage import (
-    run_flavor_matched_weinberg_rge,
+from Numerical.SMWeinbergStage import (
+    run_sm_weinberg_numerical_stage as _run_sm_weinberg_numerical_stage,
+)
+from physics.NeutrinoMass import (
     run_symbolic_neutrino_mass_stage as _run_symbolic_neutrino_mass_stage,
 )
-from Numerical.WeinbergStage import (
-    run_numerical_weinberg_stage as _run_numerical_weinberg_stage,
+from RGE.running.weinberg.OneGenerationWeinbergBenchmarkStage import (
+    run_one_generation_weinberg_benchmark,
+)
+from physics.NeutrinoObservables import run_neutrino_observables_stage
+from RGE.running.weinberg.FullFlavorWeinbergStage import (
+    run_full_flavor_weinberg_stage,
 )
 
 
@@ -90,7 +94,7 @@ def run_smeft_weinberg_rge(
     record: RunRecord,
     debug_reports: bool = False,
 ) -> bool:
-    """Evaluate the matched Weinberg coefficient with the general tensor RGE."""
+    """Run the one-generation tensor-RGE benchmark for the matched C5."""
 
     summary = record.summary
     c5_path = matched_weinberg_coefficient_path(record)
@@ -102,7 +106,7 @@ def run_smeft_weinberg_rge(
     print(f"  {record.name}: starting matched-EFT RGE stage...", flush=True)
 
     try:
-        rge_summary = run_matched_weinberg_rge(
+        rge_summary = run_one_generation_weinberg_benchmark(
             c5_path=c5_path,
             output_dir=record.output_dir,
             debug_outputs=debug_reports,
@@ -142,7 +146,7 @@ def run_full_flavor_weinberg_rge(
     )
 
     try:
-        flavor_summary = run_flavor_matched_weinberg_rge(
+        flavor_summary = run_full_flavor_weinberg_stage(
             c5_path=c5_path,
             output_dir=record.output_dir,
             debug_outputs=debug_reports,
@@ -215,7 +219,7 @@ def run_numerical_neutrino_observables(
     print(f"  {record.name}: starting numerical RGE stage...", flush=True)
 
     try:
-        numerical_summary = _run_numerical_weinberg_stage(
+        numerical_summary = _run_sm_weinberg_numerical_stage(
             c5_path=c5_path,
             output_dir=record.output_dir,
             config_path=numerical_config,

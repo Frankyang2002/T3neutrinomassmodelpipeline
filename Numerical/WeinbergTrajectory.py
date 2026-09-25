@@ -1,17 +1,12 @@
-"""Scale-dependent SM+Weinberg trajectory and neutrino observables.
+"""Scale-dependent SM+Weinberg numerical trajectory.
 
-This module reuses the numerical final-EFT state packing from
-``Numerical.WeinbergRunning`` and retains the full accepted trajectory. The
-actual beta-function model is defined under ``RGE.running.weinberg.WeinbergRGE``.
+This module owns numerical trajectory integration and saved running states.
+The beta-function model is defined under ``RGE.running.weinberg.WeinbergRGE``.
 
-The project convention is
-
-    L_EFT contains (1/2) C5 O5 + h.c.
-    m_nu(mu) = -(v^2/2) C5(mu).
-
-At every saved scale this module can therefore construct m_nu(mu) and run the
-existing Takagi/observable machinery from
-``RGE.phenomenology.NeutrinoObservables``.
+Physical interpretation of the saved trajectory -- C5 -> m_nu, charged-lepton
+basis rotation, and neutrino observables -- lives in
+``physics.NeutrinoTrajectory``.  Those helpers are re-exported here for
+compatibility with existing callers.
 """
 
 from __future__ import annotations
@@ -21,15 +16,17 @@ from dataclasses import dataclass
 import numpy as np
 from scipy.integrate import solve_ivp
 
-from RGE.phenomenology.NeutrinoObservables import (
-    NeutrinoObservables,
-    calculate_neutrino_observables,
-)
-from Numerical.WeinbergRunning import (
-    SMInitialConditions,
+from Numerical.SMWeinbergEvolution import (
+    SMWeinbergInitialConditions,
     _beta,
     _pack,
     _unpack,
+)
+from physics.NeutrinoTrajectory import (
+    ScaleDependentNeutrinoPoint,
+    charged_lepton_mass_basis_matrix,
+    neutrino_mass_from_c5,
+    scale_dependent_neutrino_observables,
 )
 
 
@@ -46,16 +43,6 @@ class WeinbergTrajectoryPoint:
     yu: np.ndarray
     yd: np.ndarray
     c5: np.ndarray
-
-
-@dataclass(frozen=True)
-class ScaleDependentNeutrinoPoint:
-    """Neutrino mass matrix and observables at one physical scale."""
-
-    mu_gev: float
-    c5: np.ndarray
-    mass_matrix_gev: np.ndarray
-    observables: NeutrinoObservables
 
 
 @dataclass(frozen=True)
@@ -173,7 +160,7 @@ def _prepare_save_scales(
 
 
 def run_weinberg_trajectory(
-    initial: SMInitialConditions,
+    initial: SMWeinbergInitialConditions,
     mu_initial_gev: float,
     mu_final_gev: float,
     *,
@@ -239,7 +226,7 @@ def run_weinberg_trajectory(
 
         c5 = 0.5 * (c5 + c5.T)
 
-        cleaned = SMInitialConditions(
+        cleaned = SMWeinbergInitialConditions(
             gY=gY,
             g2=g2,
             g3=g3,
@@ -262,101 +249,3 @@ def run_weinberg_trajectory(
         solver_message=str(solution.message),
         nfev=int(solution.nfev),
     )
-
-
-def neutrino_mass_from_c5(
-    c5: np.ndarray,
-    *,
-    vev_gev: float = 246.22,
-) -> np.ndarray:
-    """Return m_nu = -(v^2/2) C5 in the project's physical convention."""
-
-    c5 = np.asarray(c5, dtype=complex)
-
-    if c5.shape != (3, 3):
-        raise ValueError("C5 must be a 3x3 matrix.")
-
-    if not np.allclose(
-        c5,
-        c5.T,
-        rtol=1.0e-10,
-        atol=1.0e-14,
-    ):
-        raise ValueError("C5 must be symmetric.")
-
-    vev = float(vev_gev)
-
-    if not np.isfinite(vev) or vev <= 0.0:
-        raise ValueError("vev_gev must be finite and positive.")
-
-    return -(vev**2 / 2.0) * c5
-
-
-def charged_lepton_mass_basis_matrix(
-    mass_matrix_gev: np.ndarray,
-    ye: np.ndarray,
-) -> np.ndarray:
-    """Rotate a Majorana neutrino mass matrix to the charged-lepton mass basis."""
-
-    mass_matrix = np.asarray(mass_matrix_gev, dtype=complex)
-    ye = np.asarray(ye, dtype=complex)
-
-    if mass_matrix.shape != (3, 3):
-        raise ValueError("mass_matrix_gev must be a 3x3 matrix.")
-    if ye.shape != (3, 3):
-        raise ValueError("ye must be a 3x3 matrix.")
-
-    left, singular_values, _ = np.linalg.svd(ye)
-    order = np.argsort(singular_values)
-    left = left[:, order]
-
-    rotated = left.T @ mass_matrix @ left
-    return 0.5 * (rotated + rotated.T)
-
-
-def scale_dependent_neutrino_observables(
-    trajectory: WeinbergTrajectoryResult,
-    *,
-    vev_gev: float = 246.22,
-    ordering: str = "AUTO",
-    max_takagi_residual: float = 1.0e-7,
-) -> tuple[ScaleDependentNeutrinoPoint, ...]:
-    """Evaluate m_nu(mu) and Takagi observables at every saved scale."""
-
-    points: list[ScaleDependentNeutrinoPoint] = []
-
-    for index in range(trajectory.n_points):
-        running = trajectory.point_at_index(index)
-
-        mass_matrix = neutrino_mass_from_c5(
-            running.c5,
-            vev_gev=vev_gev,
-        )
-
-        mass_matrix_flavor = charged_lepton_mass_basis_matrix(
-            mass_matrix,
-            running.ye,
-        )
-
-        observables = calculate_neutrino_observables(
-            mass_matrix_flavor,
-            ordering=ordering,
-        )
-
-        if observables.takagi_residual > max_takagi_residual:
-            raise RuntimeError(
-                "Takagi decomposition residual is too large at "
-                f"mu={running.mu_gev} GeV: "
-                f"{observables.takagi_residual}"
-            )
-
-        points.append(
-            ScaleDependentNeutrinoPoint(
-                mu_gev=running.mu_gev,
-                c5=running.c5.copy(),
-                mass_matrix_gev=mass_matrix,
-                observables=observables,
-            )
-        )
-
-    return tuple(points)

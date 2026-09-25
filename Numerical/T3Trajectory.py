@@ -2,10 +2,10 @@
 
     UV state
       -> UV RGBeta running
-      -> F-threshold projection
+      -> F-threshold boundary
       -> scalar-only intermediate RGBeta running
-      -> scalar-threshold projection
-      -> final SM boundary
+      -> scalar-threshold boundary
+      -> final SM state
       -> optional SM+Weinberg running
 
 The controller does not perform Matchete matching or construct C5. The physical
@@ -19,6 +19,11 @@ from typing import Any, Mapping
 
 import numpy as np
 
+from Numerical.FermionThresholdBoundary import (
+    FermionThresholdDiagnostic,
+    build_intermediate_scalar_boundary,
+    fermion_threshold_masses,
+)
 from Numerical.IntermediateScalarRunner import (
     IntermediateScalarRunningResult,
     run_intermediate_scalar_segment,
@@ -27,24 +32,19 @@ from Numerical.IntermediateScalarState import (
     SharedT3IntermediateScalarState,
     T3IntermediateScalarState,
 )
-from Numerical.FinalSMBoundary import (
+from Numerical.ScalarThresholdBoundary import (
     FinalSMBoundaryState,
     ScalarThresholdDiagnostic,
-    build_weinberg_initial_conditions,
-    project_after_scalar_threshold,
+    build_final_sm_boundary,
+    build_sm_weinberg_initial_conditions,
     scalar_threshold_masses,
 )
+from Numerical.SMWeinbergEvolution import (
+    SMWeinbergEvolutionResult,
+    evolve_sm_weinberg,
+)
 from Numerical.State import SharedT3UVState, T3UVState
-from Numerical.ThresholdMatching import (
-    FermionThresholdDiagnostic,
-    fermion_singular_masses,
-    project_after_fermion_threshold,
-)
 from Numerical.UVRunner import UVRunningResult, run_uv_segment
-from Numerical.WeinbergRunning import (
-    NumericalRGEResult,
-    evolve_weinberg,
-)
 
 
 UVState = T3UVState | SharedT3UVState
@@ -83,11 +83,11 @@ class T3RenormalisableTrajectory:
 
 @dataclass(frozen=True)
 class T3FullNumericalTrajectory:
-    """Renormalisable T3 trajectory plus the existing SM+Weinberg segment."""
+    """Renormalisable T3 trajectory plus the final SM+Weinberg segment."""
 
     renormalisable: T3RenormalisableTrajectory
     c5_at_scalar_threshold: np.ndarray
-    weinberg: NumericalRGEResult
+    weinberg: SMWeinbergEvolutionResult
 
 
 def _positive_finite_scale(name: str, value: float) -> float:
@@ -161,9 +161,9 @@ def run_renormalisable_t3_trajectory(
     )
 
     uv_threshold_state = uv.final_state
-    fermion_diagnostic = fermion_singular_masses(uv_threshold_state)
+    fermion_diagnostic = fermion_threshold_masses(uv_threshold_state)
 
-    intermediate_initial = project_after_fermion_threshold(
+    intermediate_initial = build_intermediate_scalar_boundary(
         uv_threshold_state,
         matching_scale_gev=mu_f,
     )
@@ -182,7 +182,7 @@ def run_renormalisable_t3_trajectory(
     intermediate_threshold_state = intermediate.final_state
     scalar_diagnostic = scalar_threshold_masses(intermediate_threshold_state)
 
-    final_sm_boundary = project_after_scalar_threshold(
+    final_sm_boundary = build_final_sm_boundary(
         intermediate_threshold_state,
         matching_scale_gev=mu_s,
     )
@@ -208,7 +208,7 @@ def continue_with_weinberg_running(
     rtol: float = 1.0e-8,
     atol: float = 1.0e-11,
 ) -> T3FullNumericalTrajectory:
-    """Attach matched C5 and run the existing final SM+Weinberg stage."""
+    """Attach matched C5 and run the final SM+Weinberg segment."""
 
     mu_low = _positive_finite_scale("low-energy scale", mu_low_gev)
     mu_matching = trajectory.mu_scalar_threshold_gev
@@ -218,12 +218,12 @@ def continue_with_weinberg_running(
             "Low-energy Weinberg running requires mu_low < mu_S."
         )
 
-    initial = build_weinberg_initial_conditions(
+    initial = build_sm_weinberg_initial_conditions(
         trajectory.final_sm_boundary,
         c5_matrix,
     )
 
-    result = evolve_weinberg(
+    result = evolve_sm_weinberg(
         initial,
         mu_matching,
         mu_low,

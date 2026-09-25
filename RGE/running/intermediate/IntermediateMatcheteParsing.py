@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-"""Small Matchete InputForm parsing helpers shared by EFT1 adapters.
+"""Small Matchete ``InputForm`` parsing helpers for intermediate-EFT adapters.
 
-Converts Matchete Mathematica -> Python Sympy
+Converts the subset of Matchete Mathematica expressions used by the scalar-only
+matching/RGE bridge into exact SymPy objects.
 """
 
 import re
@@ -279,11 +280,6 @@ def parse_sparse_array(text: str) -> sp.MutableDenseNDimArray:
 
     return data
 
-
-# ---------------------------------------------------------------------------
-# Clebsch--Gordan registry parsing
-# Consolidated from the former MatcheteCG helper.
-# ---------------------------------------------------------------------------
 
 @dataclass(frozen=True)
 class CGTensor:

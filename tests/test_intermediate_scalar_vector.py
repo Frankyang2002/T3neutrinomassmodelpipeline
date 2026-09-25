@@ -4,14 +4,14 @@ import unittest
 
 import numpy as np
 
-from Numerical.EFT1RGBetaEvaluator import (
-    eft1_derivative_from_payload,
-    evaluate_eft1_rgbeta_payload,
+from Numerical.IntermediateScalarRGBetaEvaluator import (
+    evaluate_intermediate_scalar_rgbeta_payload,
+    intermediate_scalar_derivative_from_payload,
 )
-from Numerical.EFT1State import T3EFT1State
-from Numerical.EFT1StateVector import (
-    pack_eft1_state,
-    unpack_eft1_state,
+from Numerical.IntermediateScalarState import T3IntermediateScalarState
+from Numerical.IntermediateScalarStateVector import (
+    pack_intermediate_scalar_state,
+    unpack_intermediate_scalar_state,
 )
 from Numerical.State import (
     SMNumericalState,
@@ -19,8 +19,8 @@ from Numerical.State import (
 )
 
 
-def _state() -> T3EFT1State:
-    return T3EFT1State(
+def _state() -> T3IntermediateScalarState:
+    return T3IntermediateScalarState(
         mu_gev=1.0e10,
         representation=T3Representation(1, 3, 2, 0),
         sm=SMNumericalState(
@@ -45,9 +45,7 @@ def _state() -> T3EFT1State:
     ).validated()
 
 
-def _synthetic_payload(state: T3EFT1State) -> dict:
-    # This payload is structural only: it checks the real parser/evaluator
-    # against the exact coupling set exported by current T3RGBetaEFT1OneLoopBetas.
+def _synthetic_payload(state: T3IntermediateScalarState) -> dict:
     betas = {
         "gY": "(43*gY^3)/6",
         "g2": "-2*g2^3",
@@ -90,11 +88,11 @@ def _synthetic_payload(state: T3EFT1State) -> dict:
     }
 
 
-class EFT1VectorTests(unittest.TestCase):
+class IntermediateScalarVectorTests(unittest.TestCase):
     def test_round_trip(self) -> None:
         state = _state()
-        vector, layout = pack_eft1_state(state)
-        rebuilt = unpack_eft1_state(vector, layout)
+        vector, layout = pack_intermediate_scalar_state(state)
+        rebuilt = unpack_intermediate_scalar_state(vector, layout)
 
         self.assertEqual(rebuilt.representation, state.representation)
         self.assertEqual(rebuilt.lambdaT3, state.lambdaT3)
@@ -105,38 +103,36 @@ class EFT1VectorTests(unittest.TestCase):
         self.assertNotIn("y1", layout.names)
         self.assertNotIn("y2", layout.names)
 
-    def test_layout_matches_current_eft1_export_keys(self) -> None:
+    def test_layout_matches_current_scalar_only_export_keys(self) -> None:
         state = _state()
-        _, layout = pack_eft1_state(state)
+        _, layout = pack_intermediate_scalar_state(state)
         payload = _synthetic_payload(state)
 
-        self.assertEqual(
-            set(layout.names),
-            set(payload["report_betas"]),
-        )
+        self.assertEqual(set(layout.names), set(payload["report_betas"]))
 
-    def test_evaluator_maps_all_eft1_betas(self) -> None:
+    def test_evaluator_maps_all_scalar_only_betas(self) -> None:
         state = _state()
         payload = _synthetic_payload(state)
 
-        evaluated = evaluate_eft1_rgbeta_payload(payload, state)
-        _, layout = pack_eft1_state(state)
+        evaluated = evaluate_intermediate_scalar_rgbeta_payload(payload, state)
+        _, layout = pack_intermediate_scalar_state(state)
 
         self.assertEqual(set(evaluated), set(layout.names))
         np.testing.assert_allclose(evaluated["yu"], state.sm.yu)
-        self.assertEqual(evaluated["lambdaT3"], state.lambdaT3 * (
-            state.sm.lambdaH + state.lambdaH2Adj
-        ))
+        self.assertEqual(
+            evaluated["lambdaT3"],
+            state.lambdaT3 * (state.sm.lambdaH + state.lambdaH2Adj),
+        )
 
     def test_derivative_has_state_vector_shape(self) -> None:
         state = _state()
         payload = _synthetic_payload(state)
 
-        derivative, layout = eft1_derivative_from_payload(
+        derivative, layout = intermediate_scalar_derivative_from_payload(
             payload,
             state,
         )
-        vector, expected_layout = pack_eft1_state(state)
+        vector, expected_layout = pack_intermediate_scalar_state(state)
 
         self.assertEqual(layout, expected_layout)
         self.assertEqual(derivative.shape, vector.shape)
@@ -147,11 +143,8 @@ class EFT1VectorTests(unittest.TestCase):
         payload = _synthetic_payload(state)
         payload["metadata"]["IntegratedField"] = "S1"
 
-        with self.assertRaisesRegex(
-            ValueError,
-            "does not match",
-        ):
-            evaluate_eft1_rgbeta_payload(payload, state)
+        with self.assertRaisesRegex(ValueError, "does not match"):
+            evaluate_intermediate_scalar_rgbeta_payload(payload, state)
 
 
 if __name__ == "__main__":

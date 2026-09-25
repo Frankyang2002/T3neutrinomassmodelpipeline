@@ -1,19 +1,12 @@
-"""Second-threshold helpers connecting EFT1 to the final SM+Weinberg EFT.
+"""Scalar-threshold helpers connecting the intermediate scalar EFT to SMEFT.
 
-The current sequential T3 pipeline uses
+The verified sequential path is
 
-    UV -> EFT1 after F -> final EFT after the scalar threshold.
+    UV -> scalar-only EFT after F -> final EFT after the scalar threshold.
 
-For the ordinary branch, the second threshold integrates out S1 and S2 as one
-group.  For the shared-scalar branch, it integrates out S.
-
-This module handles only the numerical *renormalisable* state at that boundary.
-It deliberately does not replace the existing Matchete/Wilson machinery that
-constructs the matched Weinberg coefficient C5.
-
-No automatic grouped scalar matching scale is chosen.  In the ordinary branch
-mS1Sq and mS2Sq generally run differently, so a single grouped threshold scale
-must remain an explicit pipeline choice.
+This module handles only the numerical renormalisable state. The established
+Matchete/Wilson machinery remains authoritative for the matched Weinberg
+coefficient C5.
 """
 
 from __future__ import annotations
@@ -22,20 +15,20 @@ from dataclasses import dataclass
 
 import numpy as np
 
-from Numerical.EFT1State import (
-    SharedT3EFT1State,
-    T3EFT1State,
+from Numerical.IntermediateScalarState import (
+    SharedT3IntermediateScalarState,
+    T3IntermediateScalarState,
 )
 from Numerical.State import SMNumericalState
 from RGE.running.weinberg.WeinbergRunning import SMInitialConditions
 
 
-EFT1State = T3EFT1State | SharedT3EFT1State
+IntermediateScalarState = T3IntermediateScalarState | SharedT3IntermediateScalarState
 
 
 @dataclass(frozen=True)
 class ScalarThresholdDiagnostic:
-    """Running scalar mass information at one EFT1 scale."""
+    """Running scalar mass information at one intermediate-EFT scale."""
 
     mu_gev: float
     shared_scalar: bool
@@ -102,25 +95,13 @@ def _positive_scalar_mass(
 
 
 def scalar_threshold_masses(
-    state: EFT1State,
+    state: IntermediateScalarState,
 ) -> ScalarThresholdDiagnostic:
-    """Return the physical running scalar masses at the current EFT1 scale.
-
-    The masses are interpreted directly from the RGBeta quadratic parameters:
-
-        MS1(mu) = sqrt(mS1Sq(mu))
-        MS2(mu) = sqrt(mS2Sq(mu))
-
-    or, in shared-scalar mode,
-
-        MS(mu) = sqrt(mSSq(mu)).
-
-    This is a diagnostic only; it does not select a matching scale.
-    """
+    """Return physical running scalar masses at the current threshold scale."""
 
     state = state.validated()
 
-    if isinstance(state, SharedT3EFT1State):
+    if isinstance(state, SharedT3IntermediateScalarState):
         mass = _positive_scalar_mass("mSSq", state.mSSq)
 
         return ScalarThresholdDiagnostic(
@@ -145,19 +126,11 @@ def scalar_threshold_masses(
 
 
 def project_after_scalar_threshold(
-    eft1_state: EFT1State,
+    eft1_state: IntermediateScalarState,
     *,
     matching_scale_gev: float | None = None,
 ) -> FinalSMBoundaryState:
-    """Project the EFT1 endpoint onto the renormalisable final-SM state.
-
-    Surviving SM couplings are carried continuously across this numerical
-    projection.  Finite threshold effects and C5 matching are handled by the
-    existing symbolic Matchete pipeline, not invented here.
-
-    The EFT1 state must already have been evolved to the requested matching
-    scale.
-    """
+    """Project the scalar-only endpoint onto the renormalisable final SM state."""
 
     eft1_state = eft1_state.validated()
 
@@ -178,8 +151,8 @@ def project_after_scalar_threshold(
         atol=0.0,
     ):
         raise ValueError(
-            "The EFT1 state must first be evolved to the requested scalar "
-            "matching scale before constructing the final SM boundary."
+            "The intermediate scalar state must first be evolved to the requested "
+            "scalar matching scale before constructing the final SM boundary."
         )
 
     return FinalSMBoundaryState(
@@ -192,12 +165,7 @@ def build_weinberg_initial_conditions(
     boundary: FinalSMBoundaryState,
     c5_matrix: np.ndarray,
 ) -> SMInitialConditions:
-    """Build full-flavour final-SM+Weinberg numerical initial conditions.
-
-    ``c5_matrix`` must already be the physical symmetric 3x3 coefficient
-    produced by the established final-C5 matching stage.  This function only
-    joins that coefficient to the running SM couplings at the scalar boundary.
-    """
+    """Join the authoritative matched C5 to the running SM boundary state."""
 
     boundary = boundary.validated()
 
@@ -233,3 +201,7 @@ def build_weinberg_initial_conditions(
         yd=np.asarray(sm.yd, dtype=complex).copy(),
         K=c5,
     ).validated()
+
+
+# Compatibility alias for public type annotations/configuration code.
+EFT1State = IntermediateScalarState

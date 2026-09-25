@@ -23,7 +23,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[3]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from RGE.running.eft1.MatcheteParsing import (
+from RGE.running.intermediate.IntermediateMatcheteParsing import (
     CGTensor,
     load_cg_registry,
     matching_bracket as _matching_bracket,
@@ -1225,7 +1225,7 @@ def higgs_block_diagnostics(tensor: SparseQuarticTensor) -> dict:
         V4,H = +(lambda/2) (H† H)^2
              = lambda/8 (phi_a phi_a)^2
 
-    for the four real Higgs fields.  Therefore
+    for the four real Higgs fields. Therefore
 
         lambda_abcd =
             lambda (
@@ -1285,12 +1285,20 @@ def tensor_diagnostics(tensor: SparseQuarticTensor) -> dict:
     }
 
 
+# Descriptive production names. Historical function aliases are retained below
+# so serialized/report code does not need to change in the same migration.
+build_scalar_only_wilson_tensor = build_eft1_wilson_tensor
+load_and_build_scalar_only_wilson_tensor = load_and_build_eft1_wilson_tensor
+build_scalar_only_quartic_tensor = build_eft1_quartic_tensor
+load_and_build_scalar_only_quartic_tensor = load_and_build_eft1_quartic_tensor
+
+
 if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(
         description=(
-            "Convert an EFT1 Matchete scalar-quartic seed to real-basis "
+            "Convert a scalar-only Matchete scalar-quartic seed to real-basis "
             "lambda_abcd."
         )
     )
@@ -1298,7 +1306,7 @@ if __name__ == "__main__":
     parser.add_argument("rgbeta_json", type=Path)
     args = parser.parse_args()
 
-    quartic = load_and_build_eft1_quartic_tensor(
+    quartic = load_and_build_scalar_only_quartic_tensor(
         args.quartic_seed_json,
         args.rgbeta_json,
     )

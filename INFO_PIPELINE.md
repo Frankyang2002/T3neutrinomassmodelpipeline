@@ -174,13 +174,17 @@ and applies only when:
 2. the complete physical scalar sector remains active;
 3. all remaining physical T3 scalars are integrated out together on exit.
 
-The production backend calls descriptive interfaces under `RGE/running/intermediate/`.  The old `RGE/running/eft1/` implementation is reached only through
+The production backend calls descriptive interfaces under `RGE/running/intermediate/`.  The scalar-only implementation now lives directly in physically named modules, including
 
 ```text
-RGE/running/intermediate/LegacyEFT1Compatibility.py
+RGE/running/intermediate/ScalarOnlyTensorAdapters.py
+RGE/running/intermediate/ScalarOnlyWilsonTensorRGE.py
+RGE/running/intermediate/ScalarOnlyWilsonFlow.py
+RGE/running/intermediate/DirectWeinbergRunning.py
+RGE/running/intermediate/ScalarThresholdMatching.py
 ```
 
-until the historical modules themselves are retired.  Existing JSON keys and filenames containing `EFT1` are retained as serialization/report compatibility names; they are not the dispatch model used by new production code.
+The former ordinal `EFT1` implementation modules are no longer production dependencies.  Existing JSON keys, filenames, and a small number of Wolfram symbols containing `EFT1` are retained only as serialization/report compatibility names; they are not the dispatch model used by new production code.
 
 ## 7. Validation versus production
 
@@ -272,9 +276,10 @@ Historical report paths, summary keys, and serialized filenames are intentionall
 | `RGE/running/UVRunning.py` | UV RGE orchestration |
 | `RGE/running/IntermediateEFTRunning.py` | intermediate field-content dispatch |
 | `RGE/running/backends/` | concrete intermediate-EFT production backends |
-| `RGE/running/intermediate/` | descriptive interfaces and legacy compatibility boundary |
+| `RGE/running/intermediate/` | scalar-only intermediate-EFT tensor, Wilson-flow, and threshold implementations |
 | `RGE/general/` | generic tensor RGE machinery |
 | `RGE/running/weinberg/` | final C5 construction and SMEFT running |
+| `Numerical/IntermediateScalarState.py` | numerical state for the post-F scalar-only intermediate EFT |
 | `physics/LowEnergyNeutrino.py` | post-matching neutrino calculation orchestration |
 | `validation/` | independent scientific/regression checks |
 | `Reports/` | report generation only |

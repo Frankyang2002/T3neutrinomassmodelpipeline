@@ -36,7 +36,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from RGE.matching.FlavorC5Matching import build_flavor_c5_matrix
-from RGE.running.eft1.EFT1TensorAdapters import build_eft1_wilson_tensor
+from RGE.running.intermediate.ScalarOnlyTensorAdapters import build_eft1_wilson_tensor
 from RGE.running.weinberg.FlavorMatchedWeinbergStage import build_neutrino_mass_matrix
 
 

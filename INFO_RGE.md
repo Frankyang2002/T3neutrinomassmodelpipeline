@@ -132,17 +132,11 @@ This fixed-order separation is why the code distinguishes:
 - direct LLSS \(\to\) Weinberg running;
 - diagnostic heavy-operator transport.
 
-## 7. Historical `EFT1` implementation boundary
+## 7. Scalar-only intermediate-EFT implementation
 
-The original implementation called the scalar-only fermion-first theory `EFT1`.  The refactored production API no longer depends on that stage number.
+The original implementation called the scalar-only fermion-first theory `EFT1`.  The refactored production API no longer depends on that stage number, and the implementation now lives directly under `RGE/running/intermediate/`.
 
-All direct imports of the historical package `RGE.running.eft1` are intentionally confined to
-
-```text
-RGE/running/intermediate/LegacyEFT1Compatibility.py
-```
-
-The descriptive interfaces then call compatibility aliases such as:
+The main descriptive interfaces are:
 
 ```text
 run_scalar_only_renormalisable_rge
@@ -152,7 +146,9 @@ build_direct_weinberg_running
 resume_scalar_threshold_with_running
 ```
 
-Existing `EFT1...` JSON keys and filenames are preserved for report and regression compatibility.  They should be treated as serialized legacy names, not as the conceptual EFT identifier used by new code.
+The component Wilson calculation itself is implemented in `ScalarOnlyWilsonTensorRGE.py`, with tensor construction in `ScalarOnlyTensorAdapters.py` and transport logic in `ScalarOnlyWilsonFlow.py`.
+
+Existing `EFT1...` JSON keys, filenames, and Wolfram insertion symbols are preserved for report and regression compatibility.  They are serialized legacy names, not the conceptual EFT identifier used by production dispatch.
 
 ## 8. General tensor RGE machinery
 

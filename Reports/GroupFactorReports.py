@@ -57,7 +57,7 @@ from RGE.group_factors.validation.ValidateMixingQuarticGroupFactors import (
 from RGE.group_factors.validation.ValidateMassGroupFactors import (
     scalar_mass_group_factors,
 )
-from RGE.running.eft1.EFT1TensorAdapters import (
+from RGE.running.intermediate.ScalarOnlyTensorAdapters import (
     _term_prefactor as _eft1_wilson_term_prefactor,
 )
 from Reports.RGEComparison import (

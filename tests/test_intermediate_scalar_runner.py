@@ -4,16 +4,16 @@ import unittest
 
 import numpy as np
 
-from Numerical.EFT1Runner import run_eft1_segment
-from Numerical.EFT1State import T3EFT1State
+from Numerical.IntermediateScalarRunner import run_intermediate_scalar_segment
+from Numerical.IntermediateScalarState import T3IntermediateScalarState
 from Numerical.State import (
     SMNumericalState,
     T3Representation,
 )
 
 
-def _state() -> T3EFT1State:
-    return T3EFT1State(
+def _state() -> T3IntermediateScalarState:
+    return T3IntermediateScalarState(
         mu_gev=1.0e10,
         representation=T3Representation(1, 3, 2, 0),
         sm=SMNumericalState(
@@ -38,10 +38,8 @@ def _state() -> T3EFT1State:
     ).validated()
 
 
-def _payload(state: T3EFT1State) -> dict:
-    # Structural test payload matching the exact current EFT1 coupling keys.
-    # The expressions are deliberately simple so the runner itself is tested
-    # independently of a local Wolfram/RGBeta installation.
+def _payload(state: T3IntermediateScalarState) -> dict:
+    # Structural payload matching the exact current scalar-only RGBeta keys.
     betas = {
         "gY": "(43*gY^3)/6",
         "g2": "-2*g2^3",
@@ -84,14 +82,10 @@ def _payload(state: T3EFT1State) -> dict:
     }
 
 
-class EFT1RunnerTests(unittest.TestCase):
+class IntermediateScalarRunnerTests(unittest.TestCase):
     def test_short_downward_run_reaches_endpoint(self) -> None:
         state = _state()
-        result = run_eft1_segment(
-            state,
-            _payload(state),
-            9.0e9,
-        )
+        result = run_intermediate_scalar_segment(state, _payload(state), 9.0e9)
 
         self.assertTrue(result.solver_success)
         self.assertGreaterEqual(result.n_points, 2)
@@ -102,7 +96,7 @@ class EFT1RunnerTests(unittest.TestCase):
         state = _state()
         scales = [1.0e10, 9.8e9, 9.5e9, 9.0e9]
 
-        result = run_eft1_segment(
+        result = run_intermediate_scalar_segment(
             state,
             _payload(state),
             9.0e9,
@@ -118,15 +112,11 @@ class EFT1RunnerTests(unittest.TestCase):
 
     def test_final_state_reconstructs(self) -> None:
         state = _state()
-        result = run_eft1_segment(
-            state,
-            _payload(state),
-            9.0e9,
-        )
+        result = run_intermediate_scalar_segment(state, _payload(state), 9.0e9)
 
         final_state = result.final_state
 
-        self.assertIsInstance(final_state, T3EFT1State)
+        self.assertIsInstance(final_state, T3IntermediateScalarState)
         self.assertEqual(final_state.mu_gev, 9.0e9)
         self.assertTrue(np.isfinite(final_state.sm.gY))
         self.assertTrue(np.isfinite(final_state.lambdaH2Adj))
@@ -134,11 +124,7 @@ class EFT1RunnerTests(unittest.TestCase):
 
     def test_running_changes_couplings(self) -> None:
         state = _state()
-        result = run_eft1_segment(
-            state,
-            _payload(state),
-            9.0e9,
-        )
+        result = run_intermediate_scalar_segment(state, _payload(state), 9.0e9)
 
         final_state = result.final_state
 
@@ -148,7 +134,7 @@ class EFT1RunnerTests(unittest.TestCase):
     def test_upward_running_is_supported(self) -> None:
         state = _state()
 
-        result = run_eft1_segment(
+        result = run_intermediate_scalar_segment(
             state,
             _payload(state),
             1.1e10,
@@ -161,15 +147,8 @@ class EFT1RunnerTests(unittest.TestCase):
     def test_equal_scales_are_rejected(self) -> None:
         state = _state()
 
-        with self.assertRaisesRegex(
-            ValueError,
-            "must be different",
-        ):
-            run_eft1_segment(
-                state,
-                _payload(state),
-                state.mu_gev,
-            )
+        with self.assertRaisesRegex(ValueError, "must be different"):
+            run_intermediate_scalar_segment(state, _payload(state), state.mu_gev)
 
 
 if __name__ == "__main__":

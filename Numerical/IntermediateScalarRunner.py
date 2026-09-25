@@ -1,11 +1,12 @@
-"""Numerical one-loop running of the renormalisable T3 intermediate EFT.
+"""Numerical one-loop running of the renormalisable scalar-only intermediate EFT.
 
-EFT1 is the theory after the heavy fermion F has been integrated out:
+This is the theory after the heavy fermion F has been integrated out:
 
     ordinary T3:      SM + S1 + S2
     shared-scalar T3: SM + S
 
-The independent variable is t = ln(mu).  The RGBeta payload is expected to use
+The independent variable is ``t = ln(mu)``. The RGBeta payload is expected to
+use
 
     16*pi^2 dX/dln(mu) = beta_X^(1),
 
@@ -21,33 +22,29 @@ import numpy as np
 from scipy.integrate import solve_ivp
 
 from Numerical.BetaVector import beta_values_to_derivative
-from Numerical.EFT1RGBetaEvaluator import (
-    eft1_derivative_from_payload,
-    evaluate_eft1_rgbeta_payload,
+from Numerical.IntermediateScalarRGBetaEvaluator import (
+    evaluate_intermediate_scalar_rgbeta_payload,
+    intermediate_scalar_derivative_from_payload,
 )
-from Numerical.EFT1State import (
-    SharedT3EFT1State,
-    T3EFT1State,
-)
-from Numerical.EFT1StateVector import (
-    EFT1State,
-    pack_eft1_state,
-    unpack_eft1_state,
+from Numerical.IntermediateScalarStateVector import (
+    IntermediateScalarState,
+    pack_intermediate_scalar_state,
+    unpack_intermediate_scalar_state,
 )
 from Numerical.StateVector import StateVectorLayout
 
 
 @dataclass(frozen=True)
-class EFT1RunningPoint:
-    """One saved point on an EFT1 RGE trajectory."""
+class IntermediateScalarRunningPoint:
+    """One saved point on a scalar-only intermediate-EFT trajectory."""
 
     mu_gev: float
     vector: np.ndarray
 
 
 @dataclass(frozen=True)
-class EFT1RunningResult:
-    """Complete numerical result for one EFT1 RGE segment."""
+class IntermediateScalarRunningResult:
+    """Complete numerical result for one scalar-only intermediate-EFT segment."""
 
     mu_initial_gev: float
     mu_final_gev: float
@@ -73,24 +70,24 @@ class EFT1RunningResult:
     def final_vector(self) -> np.ndarray:
         return self.y[:, -1].copy()
 
-    def state_at_index(self, index: int) -> EFT1State:
-        return unpack_eft1_state(
+    def state_at_index(self, index: int) -> IntermediateScalarState:
+        return unpack_intermediate_scalar_state(
             self.y[:, index],
             self.layout,
             mu_gev=float(self.mu_gev[index]),
         )
 
     @property
-    def initial_state(self) -> EFT1State:
+    def initial_state(self) -> IntermediateScalarState:
         return self.state_at_index(0)
 
     @property
-    def final_state(self) -> EFT1State:
+    def final_state(self) -> IntermediateScalarState:
         return self.state_at_index(-1)
 
-    def points(self) -> tuple[EFT1RunningPoint, ...]:
+    def points(self) -> tuple[IntermediateScalarRunningPoint, ...]:
         return tuple(
-            EFT1RunningPoint(
+            IntermediateScalarRunningPoint(
                 mu_gev=float(self.mu_gev[index]),
                 vector=self.y[:, index].copy(),
             )
@@ -164,8 +161,8 @@ def _state_from_vector(
     t: float,
     y: np.ndarray,
     layout: StateVectorLayout,
-) -> EFT1State:
-    return unpack_eft1_state(
+) -> IntermediateScalarState:
+    return unpack_intermediate_scalar_state(
         y,
         layout,
         mu_gev=float(np.exp(t)),
@@ -178,7 +175,7 @@ def _rhs_factory(
 ):
     def rhs(t: float, y: np.ndarray) -> np.ndarray:
         state = _state_from_vector(t, y, layout)
-        evaluated = evaluate_eft1_rgbeta_payload(payload, state)
+        evaluated = evaluate_intermediate_scalar_rgbeta_payload(payload, state)
 
         return beta_values_to_derivative(
             evaluated,
@@ -189,8 +186,8 @@ def _rhs_factory(
     return rhs
 
 
-def run_eft1_segment(
-    initial_state: EFT1State,
+def run_intermediate_scalar_segment(
+    initial_state: IntermediateScalarState,
     rgbeta_payload: Mapping[str, Any],
     mu_final_gev: float,
     *,
@@ -199,8 +196,8 @@ def run_eft1_segment(
     atol: float = 1.0e-11,
     method: str = "DOP853",
     max_step_log: float = np.inf,
-) -> EFT1RunningResult:
-    """Evolve one renormalisable EFT1 state between two positive scales."""
+) -> IntermediateScalarRunningResult:
+    """Evolve one renormalisable scalar-only state between two positive scales."""
 
     state = initial_state.validated()
 
@@ -209,23 +206,23 @@ def run_eft1_segment(
         mu_final_gev,
     )
 
-    y0, layout = pack_eft1_state(state)
+    y0, layout = pack_intermediate_scalar_state(state)
 
     # Validate the payload/state mapping and the initial derivative before
     # entering solve_ivp.
-    derivative0, derivative_layout = eft1_derivative_from_payload(
+    derivative0, derivative_layout = intermediate_scalar_derivative_from_payload(
         rgbeta_payload,
         state,
     )
 
     if derivative_layout != layout:
         raise RuntimeError(
-            "RGBeta EFT1 derivative layout does not match the state layout."
+            "RGBeta intermediate derivative layout does not match the state layout."
         )
 
     if derivative0.shape != y0.shape:
         raise RuntimeError(
-            "Initial RGBeta EFT1 derivative does not match the state vector."
+            "Initial RGBeta intermediate derivative does not match the state vector."
         )
 
     t_eval, exact_save_scales = _validate_save_scales(
@@ -247,7 +244,7 @@ def run_eft1_segment(
 
     if not solution.success:
         raise RuntimeError(
-            "EFT1 numerical RGE integration failed: "
+            "Intermediate scalar numerical RGE integration failed: "
             + str(solution.message)
         )
 
@@ -261,7 +258,7 @@ def run_eft1_segment(
         mu_values[0] = mu_initial
         mu_values[-1] = mu_final
 
-    return EFT1RunningResult(
+    return IntermediateScalarRunningResult(
         mu_initial_gev=mu_initial,
         mu_final_gev=mu_final,
         layout=layout,
@@ -274,3 +271,10 @@ def run_eft1_segment(
         njev=int(getattr(solution, "njev", 0) or 0),
         nlu=int(getattr(solution, "nlu", 0) or 0),
     )
+
+
+# Transitional public aliases so downstream data structures can remain stable
+# while the ordinal source filenames disappear.
+EFT1RunningPoint = IntermediateScalarRunningPoint
+EFT1RunningResult = IntermediateScalarRunningResult
+run_eft1_segment = run_intermediate_scalar_segment

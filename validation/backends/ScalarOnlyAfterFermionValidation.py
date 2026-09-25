@@ -18,8 +18,8 @@ from typing import Any
 
 from common.EFT import EFTRunningInterval
 from common.RunRecords import EFTStageRecord, RunRecord
-from RGE.running.intermediate.LegacyEFT1Compatibility import (
-    legacy_component_wilson_transport,
+from RGE.running.intermediate.ScalarOnlyWilsonFlow import (
+    run_component_wilson_transport,
 )
 from RGE.running.weinberg.FinalWeinbergCoefficient import (
     normalize_pole_rge_consistency,
@@ -82,7 +82,7 @@ def _run_component_transport_regression(
     )
 
     try:
-        result = legacy_component_wilson_transport(
+        result = run_component_wilson_transport(
             wilson_seed_path=wilson_seed_path,
             wilson_rge_path=wilson_rge_path,
             rgbeta_path=rgbeta_path,

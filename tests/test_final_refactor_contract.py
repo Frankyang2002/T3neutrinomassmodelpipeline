@@ -1,10 +1,4 @@
-"""Final architecture/documentation contracts for the structural refactor.
-
-These tests do not replace numerical/Wolfram regression.  They protect the
-boundaries established by the refactor so future edits do not silently restore
-stage-number dispatch, duplicate shared-scalar field identity, or describe a
-truncated scalar-first route as authoritative.
-"""
+"""Final architecture/documentation contracts for the structural refactor."""
 
 from __future__ import annotations
 
@@ -29,6 +23,8 @@ def test_central_documentation_matches_the_refactored_pipeline_boundaries() -> N
         "Lagrangian/T3ModelMatching.py",
         "RGE/running/IntermediateEFTRunning.py",
         "RGE/running/backends/ScalarOnlyAfterFermion.py",
+        "RGE/running/intermediate/ScalarOnlyWilsonTensorRGE.py",
+        "Numerical/IntermediateScalarState.py",
         "validation/",
         "physics/LowEnergyNeutrino.py",
         "Reports/PipelineReports.py",
@@ -54,37 +50,34 @@ def test_scalar_first_dimension_six_limitation_is_documented() -> None:
         assert "non-authoritative" in source.lower() or "not a complete" in source.lower()
 
 
-def test_historical_eft1_package_is_hidden_behind_one_compatibility_boundary() -> None:
-    compatibility = PROJECT_ROOT / "RGE" / "running" / "intermediate" / "LegacyEFT1Compatibility.py"
-    assert compatibility.is_file()
+def test_historical_eft1_implementation_package_is_retired() -> None:
+    assert not (
+        PROJECT_ROOT
+        / "RGE"
+        / "running"
+        / "intermediate"
+        / "LegacyEFT1Compatibility.py"
+    ).exists()
 
-    scanned_roots = (
+    source_roots = (
         PROJECT_ROOT / "pipeline.py",
         PROJECT_ROOT / "RGE" / "running" / "IntermediateEFTRunning.py",
         PROJECT_ROOT / "RGE" / "running" / "backends",
         PROJECT_ROOT / "RGE" / "running" / "intermediate",
         PROJECT_ROOT / "validation",
         PROJECT_ROOT / "physics",
+        PROJECT_ROOT / "Numerical",
     )
 
     offenders: list[str] = []
-    for root in scanned_roots:
+    for root in source_roots:
         paths = [root] if root.is_file() else root.rglob("*.py")
         for path in paths:
-            if path == compatibility:
-                continue
             source = path.read_text(encoding="utf-8")
-            if "from RGE.running.eft1" in source or "import RGE.running.eft1" in source:
+            if "from RGE.running.eft1" in source or "from Numerical.EFT1" in source:
                 offenders.append(path.relative_to(PROJECT_ROOT).as_posix())
 
     assert offenders == []
-
-
-def test_compatibility_boundary_is_explicitly_documented_as_legacy_only() -> None:
-    source = _text("RGE/running/intermediate/LegacyEFT1Compatibility.py")
-    assert "Single compatibility boundary" in source
-    assert "historical" in source.lower()
-    assert "RGE.running.eft1" in source
 
 
 def test_shared_scalar_identity_is_documented_as_physical_s_not_parallel_architecture() -> None:

@@ -1,7 +1,4 @@
-
-# Python wrapper for Wolfram RGBeta runners for python pipeline
-# It just calls our wolfram scripts in python
-# We run RGBeta for UV and RGBeta running
+# Python wrapper for Wolfram RGBeta runners used by the pipeline.
 
 from __future__ import annotations
 
@@ -38,7 +35,7 @@ class RGBetaT3IntermediateResult:
 
 
 def _wolfram_integer_token(value: int) -> str:
-    """Give -3 -> m3 for wolfram to read"""
+    """Encode a signed integer token for the Wolfram command line."""
     return f"m{abs(value)}" if value < 0 else str(value)
 
 
@@ -55,7 +52,7 @@ def _run_rgbeta(
     result_type: type[RGBetaT3Result] | type[RGBetaT3IntermediateResult],
     wolframscript: str,
 ):
-    """Run one of the UV/EFT1 RGBeta Wolfram front ends and parse its JSON output."""
+    """Run one UV/intermediate RGBeta Wolfram front end and parse its JSON."""
 
     if any(d not in {1, 2, 3} for d in (d_s1, d_s2, d_f)):
         raise ValueError(
@@ -181,7 +178,7 @@ def run_rgbeta_t3(
     )
 
 
-def run_rgbeta_t3_eft1(
+def run_rgbeta_t3_scalar_only(
     d_s1: int,
     d_s2: int,
     d_f: int,
@@ -191,12 +188,12 @@ def run_rgbeta_t3_eft1(
     runner_path: Path | None = None,
     wolframscript: str = "wolframscript",
 ) -> RGBetaT3IntermediateResult:
-    """Run the renormalisable RGEs in EFT1 after the heavy fermion is removed."""
+    """Run RGEs after F is removed and only the T3 scalar sector remains."""
 
     runner = (
         Path(runner_path)
         if runner_path is not None
-        else Path(__file__).resolve().parent / "RunT3EFT1RGBeta.wl"
+        else Path(__file__).resolve().parent / "RunT3ScalarOnlyRGBeta.wl"
     )
 
     return _run_rgbeta(
@@ -206,8 +203,13 @@ def run_rgbeta_t3_eft1(
         alpha,
         shared_scalar=shared_scalar,
         runner_path=runner,
+        # Historical output filename retained for report/config compatibility.
         output_name="rgbeta_t3_eft1_rge.json",
-        failure_message="RGBeta T3 EFT1 renormalisable RGE generation failed.",
+        failure_message="RGBeta T3 scalar-only renormalisable RGE generation failed.",
         result_type=RGBetaT3IntermediateResult,
         wolframscript=wolframscript,
     )
+
+
+# Compatibility alias for code/configurations using the old API symbol.
+run_rgbeta_t3_eft1 = run_rgbeta_t3_scalar_only

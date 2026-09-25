@@ -1,7 +1,6 @@
-"""Canonical numerical states for the intermediate EFT after F is removed.
+"""Canonical numerical states for the scalar-only intermediate EFT after F is removed.
 
-This file mirrors ``T3RGBetaBuildEFT1`` and
-``T3RGBetaSharedEFT1OneLoopBetas`` in the current symbolic pipeline.
+This file mirrors the current symbolic scalar-only RGBeta implementation.
 
 The intermediate renormalisable theories are
 
@@ -11,9 +10,9 @@ ordinary T3:
 shared-scalar T3:
     SM + S
 
-The heavy fermion F, its Yukawa couplings, and MF are absent.  Higher-
+The heavy fermion F, its Yukawa couplings, and MF are absent. Higher-
 dimensional Wilson coefficients generated at the fermion threshold are not
-stored here; they remain part of the existing EFT1 Wilson/matching layer.
+stored here; they remain part of the intermediate-EFT Wilson/matching layer.
 """
 
 from __future__ import annotations
@@ -94,7 +93,7 @@ def _require_optional_complex(
 
 
 @dataclass(frozen=True)
-class T3EFT1State:
+class T3IntermediateScalarState:
     """Renormalisable ordinary-T3 state after integrating out F."""
 
     mu_gev: float
@@ -125,12 +124,13 @@ class T3EFT1State:
     lambdaS1S1bar2S2bar: complex | None = None
     lambdaHHdagS1barS2barCross: complex | None = None
 
-    def validated(self) -> "T3EFT1State":
+    def validated(self) -> "T3IntermediateScalarState":
         rep = self.representation.validated()
 
         if rep.shared_scalar:
             raise ValueError(
-                "T3EFT1State is for split scalars; use SharedT3EFT1State."
+                "T3IntermediateScalarState is for split scalars; "
+                "use SharedT3IntermediateScalarState."
             )
 
         special_doublet_case = (
@@ -139,7 +139,7 @@ class T3EFT1State:
             and rep.alpha == -1
         )
 
-        return T3EFT1State(
+        return T3IntermediateScalarState(
             mu_gev=_positive_scale(self.mu_gev),
             representation=rep,
             sm=self.sm.validated(),
@@ -215,7 +215,7 @@ class T3EFT1State:
 
 
 @dataclass(frozen=True)
-class SharedT3EFT1State:
+class SharedT3IntermediateScalarState:
     """Renormalisable shared-scalar/scotogenic state after F is removed."""
 
     mu_gev: float
@@ -228,15 +228,15 @@ class SharedT3EFT1State:
     lambda4: float
     lambda5: float
 
-    def validated(self) -> "SharedT3EFT1State":
+    def validated(self) -> "SharedT3IntermediateScalarState":
         rep = self.representation.validated()
 
         if not rep.shared_scalar:
             raise ValueError(
-                "SharedT3EFT1State requires shared_scalar=True."
+                "SharedT3IntermediateScalarState requires shared_scalar=True."
             )
 
-        return SharedT3EFT1State(
+        return SharedT3IntermediateScalarState(
             mu_gev=_positive_scale(self.mu_gev),
             representation=rep,
             sm=self.sm.validated(),
@@ -246,3 +246,10 @@ class SharedT3EFT1State:
             lambda4=_finite_real("lambda4", self.lambda4),
             lambda5=_finite_real("lambda5", self.lambda5),
         )
+
+
+# Transitional symbol aliases for serialized/numerical code that still refers
+# to the historical state class names.  The old source files can be removed;
+# these aliases do not create an ordinal EFT architecture.
+T3EFT1State = T3IntermediateScalarState
+SharedT3EFT1State = SharedT3IntermediateScalarState

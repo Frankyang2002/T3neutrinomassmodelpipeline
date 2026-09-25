@@ -4,9 +4,9 @@ import unittest
 
 import numpy as np
 
-from Numerical.EFT1State import (
-    SharedT3EFT1State,
-    T3EFT1State,
+from Numerical.IntermediateScalarState import (
+    SharedT3IntermediateScalarState,
+    T3IntermediateScalarState,
 )
 from Numerical.FinalSMBoundary import (
     build_weinberg_initial_conditions,
@@ -31,8 +31,8 @@ def _sm() -> SMNumericalState:
     )
 
 
-def _ordinary() -> T3EFT1State:
-    return T3EFT1State(
+def _ordinary() -> T3IntermediateScalarState:
+    return T3IntermediateScalarState(
         mu_gev=7.0e9,
         representation=T3Representation(1, 3, 2, 0),
         sm=_sm(),
@@ -64,7 +64,7 @@ class FinalSMBoundaryTests(unittest.TestCase):
         self.assertFalse(diagnostic.degenerate)
 
     def test_shared_scalar_mass_is_extracted(self) -> None:
-        state = SharedT3EFT1State(
+        state = SharedT3IntermediateScalarState(
             mu_gev=6.0e9,
             representation=T3Representation(
                 2, 2, 1, -1, shared_scalar=True
@@ -86,7 +86,7 @@ class FinalSMBoundaryTests(unittest.TestCase):
     def test_negative_mass_squared_is_rejected_for_threshold(self) -> None:
         state = _ordinary()
 
-        broken = T3EFT1State(
+        broken = T3IntermediateScalarState(
             mu_gev=state.mu_gev,
             representation=state.representation,
             sm=state.sm,
@@ -120,10 +120,7 @@ class FinalSMBoundaryTests(unittest.TestCase):
     def test_projection_rejects_scale_jump(self) -> None:
         state = _ordinary()
 
-        with self.assertRaisesRegex(
-            ValueError,
-            "must first be evolved",
-        ):
+        with self.assertRaisesRegex(ValueError, "must first be evolved"):
             project_after_scalar_threshold(
                 state,
                 matching_scale_gev=5.0e9,
@@ -141,24 +138,12 @@ class FinalSMBoundaryTests(unittest.TestCase):
             dtype=complex,
         )
 
-        initial = build_weinberg_initial_conditions(
-            boundary,
-            c5,
-        )
+        initial = build_weinberg_initial_conditions(boundary, c5)
 
         np.testing.assert_allclose(initial.K, c5)
-        np.testing.assert_allclose(
-            initial.yu,
-            boundary.sm.yu,
-        )
-        np.testing.assert_allclose(
-            initial.yd,
-            boundary.sm.yd,
-        )
-        np.testing.assert_allclose(
-            initial.ye,
-            boundary.sm.ye,
-        )
+        np.testing.assert_allclose(initial.yu, boundary.sm.yu)
+        np.testing.assert_allclose(initial.yd, boundary.sm.yd)
+        np.testing.assert_allclose(initial.ye, boundary.sm.ye)
 
     def test_nondiagonal_yukawa_is_preserved(self) -> None:
         state = _ordinary()
@@ -175,7 +160,7 @@ class FinalSMBoundaryTests(unittest.TestCase):
             ye=state.sm.ye,
         ).validated()
 
-        modified = T3EFT1State(
+        modified = T3IntermediateScalarState(
             mu_gev=state.mu_gev,
             representation=state.representation,
             sm=modified_sm,

@@ -1,7 +1,9 @@
-(* RunT3EFT1RGBeta.wl
-   Renormalisable running between thresholds after heavy femrion is removed
+(* RunT3ScalarOnlyRGBeta.wl
+   Renormalisable running between thresholds after the heavy fermion F is removed.
 
-   Read RunT3RGBeta.wl for the same comments, its basically the same thing but with EFT1
+   The underlying RGBeta model-builder function names are historical and are
+   retained here to avoid changing the verified Wolfram algebra in this
+   source-cleanup batch.
 *)
 
 ClearAll["Global`*"];
@@ -20,7 +22,6 @@ dF = config["dF"];
 alpha = config["alpha"];
 outputPath = config["OutputPath"];
 
-(* Build our RGBetas *)
 build = CheckAbort[
     Quiet[
         If[
@@ -45,8 +46,6 @@ If[!AssociationQ[build],
     Exit[1];
 ];
 
-
-(* JSON needs this metadata as it cant deal with this stuff *)
 jsonMetadata = Join[
     T3RGBetaCommonMetadata[config, build],
     <|
@@ -55,7 +54,6 @@ jsonMetadata = Join[
     |>
 ];
 
-(* Run RGBeta for EFT1 *)
 betaAssociation = CheckAbort[
     Quiet[
         If[
@@ -79,15 +77,10 @@ If[betaAssociation === $Aborted || !AssociationQ[betaAssociation],
     Exit[1];
 ];
 
-
 stringBetas = T3RGBetaSerializeAssociation[betaAssociation];
-
 reportBetaAssociation = T3RGBetaConventionalReportBetas[betaAssociation];
-
 stringReportBetas = T3RGBetaSerializeAssociation[reportBetaAssociation];
-
 latexReportBetas = T3RGBetaLaTeXAssociation[reportBetaAssociation];
-
 
 result = <|
     "status" -> "Success",
@@ -103,5 +96,5 @@ result = <|
 
 T3RGBetaWriteJSON[outputPath, result];
 
-Print["RGBeta T3 EFT1 renormalisable RGE export: SUCCESS"];
+Print["RGBeta T3 scalar-only renormalisable RGE export: SUCCESS"];
 Print["Output: ", outputPath];

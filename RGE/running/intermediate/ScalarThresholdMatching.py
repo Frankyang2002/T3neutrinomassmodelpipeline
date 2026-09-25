@@ -1,14 +1,310 @@
-"""Lower scalar-threshold matching after intermediate-EFT running."""
-
 from __future__ import annotations
 
-from pathlib import Path
-from typing import Any
+"""Resume the lower scalar threshold after intermediate-EFT running.
 
-from RGE.running.intermediate.LegacyEFT1Compatibility import (
-    LegacyScalarThresholdContinuation,
-    legacy_resume_scalar_threshold_with_running,
-)
+The Wolfram threshold script integrates out the remaining scalar sector. This
+Python module discovers/receives the saved continuation, injects the running
+term and launches that lower-threshold calculation.
+
+Historical ``EFT1`` strings in Wolfram log markers and filenames are retained
+because they are part of the existing serialized/output contract.
+"""
+
+import argparse
+import json
+from dataclasses import dataclass
+from pathlib import Path
+import subprocess
+from typing import Iterable
+
+
+@dataclass(frozen=True)
+class ScalarThresholdContinuation:
+    tree: Path
+    loop: Path
+    transition_tree: Path
+    transition_full: Path
+    cg_registry: Path
+
+
+def _all_wxf(output_dir: Path) -> list[Path]:
+    """Return all saved Wolfram continuation files below one model output."""
+    return sorted(p for p in output_dir.rglob("*.wxf") if p.is_file())
+
+
+def _score(path: Path, required: tuple[str, ...], forbidden: tuple[str, ...]) -> int:
+    """Score WXF files by usefulness to the lower scalar threshold."""
+    name = path.name.lower()
+    full = str(path).lower()
+    if any(word not in full for word in required):
+        return -10_000
+    if any(word in full for word in forbidden):
+        return -10_000
+
+    score = 0
+    if "fresh_kernel_stage_2" in full:
+        score += 20
+    if "stage_2" in full or "stage2" in full:
+        score += 5
+    score -= len(name) // 20
+    return score
+
+
+def _pick(
+    files: Iterable[Path],
+    *,
+    required: tuple[str, ...],
+    forbidden: tuple[str, ...] = (),
+    label: str,
+) -> Path:
+    """Choose one unambiguous continuation file."""
+    ranked = sorted(
+        ((_score(path, required, forbidden), path) for path in files),
+        key=lambda item: item[0],
+        reverse=True,
+    )
+    ranked = [item for item in ranked if item[0] > -10_000]
+
+    if not ranked:
+        candidates = "\n".join(f"  {p}" for p in files)
+        raise FileNotFoundError(
+            f"Could not auto-discover {label}. WXF files found:\n{candidates}"
+        )
+
+    best_score = ranked[0][0]
+    best = [path for score, path in ranked if score == best_score]
+
+    if len(best) != 1:
+        candidates = "\n".join(f"  {p}" for p in best)
+        raise RuntimeError(
+            f"Ambiguous auto-discovery for {label}:\n{candidates}\n"
+            "Pass the path explicitly."
+        )
+
+    return best[0]
+
+
+def discover_continuation(output_dir: Path) -> ScalarThresholdContinuation:
+    """Discover the saved Matchete/Wolfram state needed to resume matching."""
+    files = _all_wxf(output_dir)
+    if not files:
+        raise FileNotFoundError(
+            f"No WXF continuation files were found below {output_dir}."
+        )
+
+    transition_tree = _pick(
+        files,
+        required=("transition", "tree"),
+        forbidden=("result",),
+        label="canonical transition tree",
+    )
+    transition_full = _pick(
+        files,
+        required=("transition",),
+        forbidden=("tree", "result", "cg"),
+        label="canonical transition full/O(hbar) EFT",
+    )
+    cg_registry = _pick(
+        files,
+        required=("cg",),
+        forbidden=("result",),
+        label="CG registry",
+    )
+
+    non_transition = [
+        p for p in files
+        if "transition" not in p.name.lower()
+        and "result" not in p.name.lower()
+        and "cg" not in p.name.lower()
+    ]
+
+    tree = _pick(
+        non_transition,
+        required=("tree",),
+        forbidden=("transition",),
+        label="stage-2 input tree EFT",
+    )
+    loop = _pick(
+        non_transition,
+        required=("loop",),
+        forbidden=("transition",),
+        label="stage-2 inherited one-loop EFT",
+    )
+
+    return ScalarThresholdContinuation(
+        tree=tree,
+        loop=loop,
+        transition_tree=transition_tree,
+        transition_full=transition_full,
+        cg_registry=cg_registry,
+    )
+
+
+def _alpha_token(alpha: int) -> str:
+    if alpha < 0:
+        return f"m{abs(alpha)}"
+    return f"p{alpha}"
+
+
+def _resolve_threshold2_result_path(
+    output_dir: Path,
+    result_path: Path | None,
+) -> Path:
+    # Historical filename retained for compatibility with existing outputs.
+    if result_path is None:
+        result_path = output_dir / "data" / "threshold_2_with_eft1_running.wxf"
+    resolved = Path(result_path).resolve()
+    resolved.parent.mkdir(parents=True, exist_ok=True)
+    return resolved
+
+
+def _build_threshold2_resume_command(
+    *,
+    run_threshold_script: Path,
+    result_path: Path,
+    running_insertion: Path,
+    continuation: ScalarThresholdContinuation,
+    d_s1: int,
+    d_s2: int,
+    d_f: int,
+    alpha: int,
+    eft_order: int,
+    loop_order: int,
+    validation_mode: bool,
+) -> list[str]:
+    return [
+        "wolframscript",
+        "-file",
+        str(run_threshold_script),
+        str(result_path),
+        str(eft_order),
+        str(loop_order),
+        str(d_s1),
+        str(d_s2),
+        str(d_f),
+        _alpha_token(alpha),
+        "S1,S2",
+        "S1,S2",
+        str(continuation.tree),
+        str(continuation.loop),
+        str(continuation.transition_tree),
+        str(continuation.transition_full),
+        str(continuation.cg_registry),
+        str(running_insertion),
+        "validation" if validation_mode else "results",
+    ]
+
+
+def _stream_threshold2_wolfram_run(
+    *,
+    command: list[str],
+    working_directory: Path,
+    stdout_log: Path,
+) -> tuple[int, list[str]]:
+    output_lines: list[str] = []
+    print("[resume] Launching scalar-threshold Wolfram kernel...")
+    print(f"[resume] Live log: {stdout_log}")
+
+    with stdout_log.open("w", encoding="utf-8") as log_handle:
+        process = subprocess.Popen(
+            command,
+            cwd=working_directory,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            bufsize=1,
+        )
+
+        assert process.stdout is not None
+        try:
+            for line in process.stdout:
+                clean = line.rstrip("\n")
+                output_lines.append(clean)
+                print(clean, flush=True)
+                log_handle.write(line)
+                log_handle.flush()
+        except KeyboardInterrupt:
+            print(
+                "\n[resume] Interrupted; terminating Wolfram process...",
+                flush=True,
+            )
+            process.terminate()
+            try:
+                process.wait(timeout=10)
+            except subprocess.TimeoutExpired:
+                process.kill()
+                process.wait()
+            raise
+
+        return_code = process.wait()
+
+    return return_code, output_lines
+
+
+def _threshold2_resume_markers(output_lines: list[str]) -> dict[str, bool]:
+    """Interpret the established Wolfram completion markers."""
+    combined_output = "\n".join(output_lines)
+    return {
+        "running_insertion_loaded": (
+            "[fresh kernel] EFT1 running heavy insertion loaded."
+            in combined_output
+        ),
+        "running_inserted_in_C_only": (
+            "[fresh kernel] Added EFT1 leading-log heavy insertion to [C] only."
+            in combined_output
+        ),
+        "direct_weinberg_carried_separately": (
+            "[fresh kernel] Direct EFT1 Weinberg running coefficient carried separately to final C5."
+            in combined_output
+        ),
+        "direct_weinberg_equal_scale_vanishes": (
+            "[fresh kernel] Direct Weinberg equal-scale check: True"
+            in combined_output
+        ),
+    }
+
+
+def _build_threshold2_resume_result(
+    *,
+    return_code: int,
+    output_lines: list[str],
+    result_path: Path,
+    running_insertion: Path,
+    validation_mode: bool,
+    shared_scalar: bool,
+    continuation: ScalarThresholdContinuation,
+    stdout_log: Path,
+    stderr_log: Path,
+) -> dict:
+    markers = _threshold2_resume_markers(output_lines)
+    status = (
+        "Success"
+        if return_code == 0
+        and result_path.exists()
+        and all(markers.values())
+        else "Failed"
+    )
+
+    return {
+        "status": status,
+        "return_code": return_code,
+        "stdout_tail": output_lines[-40:],
+        "stderr_tail": [],
+        "result_path": str(result_path),
+        "running_insertion": str(running_insertion),
+        **markers,
+        "validation_mode": bool(validation_mode),
+        "shared_scalar": bool(shared_scalar),
+        "continuation": {
+            "tree": str(continuation.tree),
+            "loop": str(continuation.loop),
+            "transition_tree": str(continuation.transition_tree),
+            "transition_full": str(continuation.transition_full),
+            "cg_registry": str(continuation.cg_registry),
+        },
+        "stdout_log": str(stdout_log),
+        "stderr_log": str(stderr_log),
+    }
 
 
 def resume_scalar_threshold_with_running(
@@ -22,24 +318,175 @@ def resume_scalar_threshold_with_running(
     alpha: int,
     eft_order: int = 5,
     loop_order: int = 1,
-    continuation: LegacyScalarThresholdContinuation | None = None,
+    continuation: ScalarThresholdContinuation | None = None,
     result_path: Path | None = None,
     shared_scalar: bool = False,
     validation_mode: bool = False,
-) -> dict[str, Any]:
-    """Resume the existing scalar threshold with the calculated running term."""
-    return legacy_resume_scalar_threshold_with_running(
-        output_dir=output_dir,
-        running_insertion=running_insertion,
+) -> dict:
+    """Resume the lower scalar threshold with the calculated running insertion."""
+    output_dir = Path(output_dir).resolve()
+    running_insertion = Path(running_insertion).resolve()
+    run_threshold_script = Path(run_threshold_script).resolve()
+
+    if not running_insertion.exists():
+        raise FileNotFoundError(running_insertion)
+    if not run_threshold_script.exists():
+        raise FileNotFoundError(run_threshold_script)
+
+    if continuation is None:
+        continuation = discover_continuation(output_dir)
+
+    result_path = _resolve_threshold2_result_path(output_dir, result_path)
+    # Historical debug-directory name retained for compatibility.
+    debug_dir = output_dir / "debug" / "threshold_2_with_eft1_running"
+    debug_dir.mkdir(parents=True, exist_ok=True)
+
+    command = _build_threshold2_resume_command(
         run_threshold_script=run_threshold_script,
+        result_path=result_path,
+        running_insertion=running_insertion,
+        continuation=continuation,
         d_s1=d_s1,
         d_s2=d_s2,
         d_f=d_f,
         alpha=alpha,
         eft_order=eft_order,
         loop_order=loop_order,
-        continuation=continuation,
-        result_path=result_path,
-        shared_scalar=shared_scalar,
         validation_mode=validation_mode,
     )
+
+    stdout_log = debug_dir / "stdout.log"
+    stderr_log = debug_dir / "stderr.log"
+    (debug_dir / "command.json").write_text(
+        json.dumps(command, indent=2),
+        encoding="utf-8",
+    )
+
+    return_code, output_lines = _stream_threshold2_wolfram_run(
+        command=command,
+        working_directory=run_threshold_script.parent.parent,
+        stdout_log=stdout_log,
+    )
+
+    stderr_log.write_text(
+        "stderr was merged into stdout.log for live streaming.\n",
+        encoding="utf-8",
+    )
+
+    result = _build_threshold2_resume_result(
+        return_code=return_code,
+        output_lines=output_lines,
+        result_path=result_path,
+        running_insertion=running_insertion,
+        validation_mode=validation_mode,
+        shared_scalar=shared_scalar,
+        continuation=continuation,
+        stdout_log=stdout_log,
+        stderr_log=stderr_log,
+    )
+
+    (output_dir / "data" / "threshold_2_running_resume_summary.json").write_text(
+        json.dumps(result, indent=2),
+        encoding="utf-8",
+    )
+    return result
+
+
+# Compatibility aliases for external scripts.  The implementation file itself
+# is now named after the physical threshold rather than the ordinal EFT stage.
+Threshold2Continuation = ScalarThresholdContinuation
+rerun_threshold2_with_running = resume_scalar_threshold_with_running
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description=(
+            "Re-run the scalar threshold using the saved continuation package "
+            "and a full-flavor intermediate-EFT running insertion."
+        )
+    )
+    parser.add_argument("output_dir", type=Path)
+    parser.add_argument("running_insertion", type=Path)
+    parser.add_argument("--dims", nargs="+", type=int, required=True, metavar="D")
+    parser.add_argument("--alpha", type=int, default=None)
+    parser.add_argument(
+        "--script",
+        type=Path,
+        default=Path("Lagrangian") / "RunThresholdStage.wl",
+    )
+    parser.add_argument("--eft-order", type=int, default=5)
+    parser.add_argument("--loop-order", type=int, default=1)
+    parser.add_argument(
+        "--validation",
+        action="store_true",
+        help=(
+            "enable expensive threshold provenance/consistency re-matches; "
+            "ordinary result runs leave this disabled"
+        ),
+    )
+
+    parser.add_argument("--tree", type=Path)
+    parser.add_argument("--loop", type=Path)
+    parser.add_argument("--transition-tree", type=Path)
+    parser.add_argument("--transition-full", type=Path)
+    parser.add_argument("--cg-registry", type=Path)
+
+    args = parser.parse_args()
+
+    explicit = [
+        args.tree,
+        args.loop,
+        args.transition_tree,
+        args.transition_full,
+        args.cg_registry,
+    ]
+    if any(path is not None for path in explicit):
+        if not all(path is not None for path in explicit):
+            parser.error(
+                "If one continuation path is supplied, all five must be supplied."
+            )
+        continuation = ScalarThresholdContinuation(
+            tree=args.tree.resolve(),
+            loop=args.loop.resolve(),
+            transition_tree=args.transition_tree.resolve(),
+            transition_full=args.transition_full.resolve(),
+            cg_registry=args.cg_registry.resolve(),
+        )
+    else:
+        continuation = None
+
+    if len(args.dims) == 2:
+        d_s1, d_f = args.dims
+        d_s2 = d_s1
+        alpha = -1 if args.alpha is None else args.alpha
+        if alpha != -1:
+            parser.error("Two-number shared-scalar mode requires alpha=-1.")
+        shared_scalar = True
+    elif len(args.dims) == 3:
+        d_s1, d_s2, d_f = args.dims
+        alpha = 0 if args.alpha is None else args.alpha
+        shared_scalar = False
+    else:
+        parser.error("--dims requires DS DF or DS1 DS2 DF.")
+
+    result = resume_scalar_threshold_with_running(
+        output_dir=args.output_dir,
+        running_insertion=args.running_insertion,
+        run_threshold_script=args.script,
+        d_s1=d_s1,
+        d_s2=d_s2,
+        d_f=d_f,
+        alpha=alpha,
+        eft_order=args.eft_order,
+        loop_order=args.loop_order,
+        continuation=continuation,
+        shared_scalar=shared_scalar,
+        validation_mode=args.validation,
+    )
+
+    print(json.dumps(result, indent=2))
+    return 0 if result["status"] == "Success" else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

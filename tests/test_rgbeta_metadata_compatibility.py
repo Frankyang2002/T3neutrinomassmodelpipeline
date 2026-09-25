@@ -1,14 +1,14 @@
 from __future__ import annotations
 
-import json
-from pathlib import Path
 import unittest
 
 import numpy as np
 
-from Numerical.EFT1RGBetaEvaluator import _validate_eft1_metadata
+from Numerical.IntermediateScalarRGBetaEvaluator import (
+    _validate_intermediate_scalar_metadata,
+)
 from Numerical.RGBetaEvaluator import _validate_payload_metadata
-from Numerical.EFT1State import T3EFT1State
+from Numerical.IntermediateScalarState import T3IntermediateScalarState
 from Numerical.State import (
     SMNumericalState,
     T3Representation,
@@ -67,9 +67,9 @@ def _uv_state() -> T3UVState:
     ).validated()
 
 
-def _eft1_state() -> T3EFT1State:
+def _intermediate_state() -> T3IntermediateScalarState:
     zero = 0.0 + 0.0j
-    return T3EFT1State(
+    return T3IntermediateScalarState(
         mu_gev=7.0e9,
         representation=_rep(),
         sm=_sm(),
@@ -106,13 +106,9 @@ class RGBetaMetadataCompatibilityTests(unittest.TestCase):
                 ),
             }
         }
+        _validate_payload_metadata(payload, _uv_state())
 
-        _validate_payload_metadata(
-            payload,
-            _uv_state(),
-        )
-
-    def test_ordinary_eft1_payload_may_omit_sharedscalar(self) -> None:
+    def test_ordinary_intermediate_payload_may_omit_sharedscalar(self) -> None:
         payload = {
             "metadata": {
                 "dS1": 2,
@@ -126,11 +122,7 @@ class RGBetaMetadataCompatibilityTests(unittest.TestCase):
                 ),
             }
         }
-
-        _validate_eft1_metadata(
-            payload,
-            _eft1_state(),
-        )
+        _validate_intermediate_scalar_metadata(payload, _intermediate_state())
 
     def test_explicit_sharedscalar_true_is_rejected_for_ordinary_state(self) -> None:
         payload = {
@@ -146,14 +138,8 @@ class RGBetaMetadataCompatibilityTests(unittest.TestCase):
             }
         }
 
-        with self.assertRaisesRegex(
-            ValueError,
-            "SharedScalar",
-        ):
-            _validate_payload_metadata(
-                payload,
-                _uv_state(),
-            )
+        with self.assertRaisesRegex(ValueError, "SharedScalar"):
+            _validate_payload_metadata(payload, _uv_state())
 
 
 if __name__ == "__main__":

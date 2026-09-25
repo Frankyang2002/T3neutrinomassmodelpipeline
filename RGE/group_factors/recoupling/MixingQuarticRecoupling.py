@@ -47,7 +47,7 @@ from RGE.group_factors.core.MixingQuarticTensorAlgebra import (
     scalar_dimension,
     tensor_inner_product,
 )
-from RGE.running.eft1.EFT1TensorAdapters import (
+from RGE.running.intermediate.ScalarOnlyTensorAdapters import (
     SparseQuarticTensor,
     load_and_build_eft1_quartic_tensor,
 )

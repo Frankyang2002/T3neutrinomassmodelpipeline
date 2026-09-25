@@ -1,13 +1,10 @@
 from __future__ import annotations
 
-""" We evaluate the complete one-loop master equation for psi^2 phi^2
-operators.
+"""Complete one-loop ``psi^2 phi^2`` RGE in the scalar-only T3 EFT.
 
-Seed support = nonzero matched tensor at threshold
-Seed support is just there to make things much faster
-
-Closure = nonzero beta functions (tensor can be 0)
-Closure is better as it can detect oeprator mixing but it is slower
+Seed support means nonzero matched tensor components at the fermion threshold.
+Closure scans the allowed output components so operator mixing can generate
+components that vanish at the boundary.
 """
 
 from dataclasses import dataclass
@@ -24,8 +21,10 @@ if str(PROJECT_ROOT) not in sys.path:
 
 import sympy as sp
 
-
-from RGE.general.WilsonTensorRGE import WilsonRGEInputs,calculate_complete_wilson_tensor_rge
+from RGE.general.WilsonTensorRGE import (
+    WilsonRGEInputs,
+    calculate_complete_wilson_tensor_rge,
+)
 from RGE.general.ScalarBasis import ScalarBasis
 from RGE.general.FermionBasis import build_gauge_sectors
 from RGE.matching.WeinbergTensorAdapter import (
@@ -34,14 +33,14 @@ from RGE.matching.WeinbergTensorAdapter import (
     build_sm_yukawa,
     build_weinberg_wilson_tensor,
 )
-from RGE.running.eft1.EFT1TensorAdapters import (
-    load_and_build_eft1_quartic_tensor,
-    load_and_build_eft1_wilson_tensor,
+from RGE.running.intermediate.ScalarOnlyTensorAdapters import (
+    load_and_build_scalar_only_quartic_tensor,
+    load_and_build_scalar_only_wilson_tensor,
 )
 
 
 @dataclass(frozen=True)
-class EFT1RGEContext:
+class ScalarOnlyRGEContext:
     model: ScalarBasis
     fermion_basis: object
     coefficient: object
@@ -51,7 +50,7 @@ class EFT1RGEContext:
 
 
 def _parse_rational(value) -> sp.Rational:
-    """Parse Matchete/RGBeta metadata values such as '-1/2' exactly."""
+    """Parse Matchete/RGBeta metadata values such as ``-1/2`` exactly."""
     if isinstance(value, int):
         return sp.Rational(value)
     return sp.Rational(str(value))
@@ -65,7 +64,6 @@ def _canonical_component(
 
 
 def _symmetry_residual_count(coefficient) -> int:
-    # coefficient should be symmetric check
     failures = 0
     keys = set(coefficient.entries)
     for i, j, a, b in tuple(keys):
@@ -85,13 +83,12 @@ def _symmetry_residual_count(coefficient) -> int:
     return failures
 
 
-def build_eft1_rge_context(
+def build_scalar_only_rge_context(
     wilson_seed_path: Path,
     quartic_seed_path: Path,
     rgbeta_path: Path,
-) -> EFT1RGEContext:
-    # Get scalar representations and build wilson and quartic and put in yukawa
-    # Then we got the T3 EFT1 
+) -> ScalarOnlyRGEContext:
+    """Build the scalar-only intermediate EFT tensor-RGE context."""
     rgbeta = json.loads(Path(rgbeta_path).read_text(encoding="utf-8"))
     metadata = rgbeta["metadata"]
 
@@ -107,17 +104,21 @@ def build_eft1_rge_context(
         )
     else:
         scalar_model = ScalarBasis.t3(
-            d_s1=d_s1, y_s1=y_s1, d_s2=d_s2, y_s2=y_s2, include_higgs=True
+            d_s1=d_s1,
+            y_s1=y_s1,
+            d_s2=d_s2,
+            y_s2=y_s2,
+            include_higgs=True,
         )
 
-    # Reuse the validated one-generation SM Weyl basis.  F is absent in EFT1;
-    # S1 and S2 are scalars, so the active fermion basis is exactly the SM one.
+    # F has already been removed, so the active fermion basis is the validated
+    # one-generation SM Weyl basis.
     _, fermion_basis = build_sm_eft()
 
     l1 = fermion_basis.global_index("L", 1)
     l2 = fermion_basis.global_index("L", 2)
 
-    coefficient = load_and_build_eft1_wilson_tensor(
+    coefficient = load_and_build_scalar_only_wilson_tensor(
         wilson_seed_path,
         rgbeta_path,
         chirality="PL",
@@ -128,11 +129,11 @@ def build_eft1_rge_context(
     residual_count = _symmetry_residual_count(coefficient)
     if residual_count:
         raise RuntimeError(
-            "Projected EFT1 Wilson tensor is not separately symmetric: "
+            "Projected scalar-only Wilson tensor is not separately symmetric: "
             f"{residual_count} residual(s)."
         )
 
-    quartic = load_and_build_eft1_quartic_tensor(
+    quartic = load_and_build_scalar_only_quartic_tensor(
         quartic_seed_path,
         rgbeta_path,
     )
@@ -152,7 +153,7 @@ def build_eft1_rge_context(
         ),
     )
 
-    return EFT1RGEContext(
+    return ScalarOnlyRGEContext(
         model=scalar_model,
         fermion_basis=fermion_basis,
         coefficient=coefficient,
@@ -162,8 +163,8 @@ def build_eft1_rge_context(
     )
 
 
-def seed_support_components(context: EFT1RGEContext):
-    """Only reutrns non-zero tensor components"""
+def seed_support_components(context: ScalarOnlyRGEContext):
+    """Return independent components that are nonzero at the boundary."""
     return sorted(
         {
             _canonical_component(component)
@@ -173,14 +174,8 @@ def seed_support_components(context: EFT1RGEContext):
     )
 
 
-def closure_output_components(context: EFT1RGEContext):
-    """Output component options
-    eC is there due to yukawa coupling with L through Higgs 
-    so yukawa can quantum correct it
-    This can be seen in the 
-    [2y_jkc y_klb*+ y_jkb y_klc*]Cila component
-    """
-
+def closure_output_components(context: ScalarOnlyRGEContext):
+    """Return the L/eC one-loop closure component set."""
     fb = context.fermion_basis
     fermions = sorted(
         {
@@ -199,7 +194,7 @@ def closure_output_components(context: EFT1RGEContext):
 
 
 def calculate_component_betas(
-    context: EFT1RGEContext,
+    context: ScalarOnlyRGEContext,
     *,
     seed_support_only: bool = False,
     simplify_each: bool = False,
@@ -228,8 +223,6 @@ def calculate_component_betas(
 
         total = sp.simplify(contributions["total"])
         if total != 0:
-            # Store a simplified total but preserve the named structural
-            # contributions for later report decomposition.
             result[component] = {
                 **contributions,
                 "total": total,
@@ -246,23 +239,26 @@ def _serialise_component(component) -> str:
     return ",".join(str(index) for index in component)
 
 
-
 def weinberg_subspace_diagnostics(
-    context: EFT1RGEContext,
+    context: ScalarOnlyRGEContext,
     betas: dict[tuple[int, int, int, int], dict[str, sp.Expr]],
 ) -> dict:
     """Check whether the generated LL-HH beta is exactly a Weinberg operator.
-      With template kappa=1, a proportionality factor r means
+
+    With template kappa=1, a proportionality factor ``r`` means
+
         16*pi^2 d(kappa)/dln(mu) = r
-    for the part generated by EFT1 running.
+
+    for the part generated by scalar-only intermediate running.
     """
 
     sm_scalar_model, sm_fermion_basis = build_sm_eft()
 
     if sm_fermion_basis.dimension != context.fermion_basis.dimension:
-        raise RuntimeError("SM benchmark fermion basis does not match EFT1 basis.")
+        raise RuntimeError(
+            "SM benchmark fermion basis does not match the intermediate basis."
+        )
 
-    # We build reference tensor
     template_dict = build_weinberg_wilson_tensor(
         sm_scalar_model,
         sm_fermion_basis,
@@ -295,16 +291,15 @@ def weinberg_subspace_diagnostics(
     ]
 
     if not template_nonzero:
-        raise RuntimeError("Weinberg normalization template has no nonzero components.")
+        raise RuntimeError(
+            "Weinberg normalization template has no nonzero components."
+        )
 
     reference_component = template_nonzero[0]
     beta_kappa = sp.simplify(
         beta_value(reference_component) / template[reference_component]
     )
 
-    # We want to check if our beta satisfies beta_ijab=beta_kappa C_ijab
-    # If we have no residuals, then our beta function is in Weinberg subspace
-    # If it is then our beta would have a direct running contribution to our beta function
     failures = {}
     for component in components:
         expected = sp.simplify(beta_kappa * template[component])
@@ -322,7 +317,7 @@ def weinberg_subspace_diagnostics(
     }
 
 
-def run_eft1_wilson_rge(
+def run_scalar_only_wilson_rge(
     wilson_seed_path: Path,
     quartic_seed_path: Path,
     rgbeta_path: Path,
@@ -330,12 +325,10 @@ def run_eft1_wilson_rge(
     *,
     seed_support_only: bool = False,
 ) -> dict:
-    '''Builds EFT1 context
-    Computes nonzero beta components
-    does validationa nd serialises everything to JSON'''
+    """Evaluate and serialize the scalar-only dimension-five Wilson RGE."""
     started = time.perf_counter()
 
-    context = build_eft1_rge_context(
+    context = build_scalar_only_rge_context(
         wilson_seed_path=wilson_seed_path,
         quartic_seed_path=quartic_seed_path,
         rgbeta_path=rgbeta_path,
@@ -381,6 +374,7 @@ def run_eft1_wilson_rge(
             else "SM + S1 + S2 + tree-generated dimension-5 psi2phi2"
         ),
         "loop_order": 1,
+        # Historical serialized wording retained for output compatibility.
         "fixed_order_input": "tree-level EFT1 Wilson coefficients only",
         "scan_mode": (
             "seed_support_only"
@@ -395,9 +389,7 @@ def run_eft1_wilson_rge(
             "YS1": context.metadata["YS1"],
             "YS2": context.metadata["YS2"],
             "YS": context.metadata.get("YS"),
-            "real_scalar_dimension": (
-                context.model.total_real_scalar_dimension
-            ),
+            "real_scalar_dimension": context.model.total_real_scalar_dimension,
             "fermion_dimension": context.fermion_basis.dimension,
         },
         "candidate_component_count": len(candidates),
@@ -427,12 +419,18 @@ def run_eft1_wilson_rge(
     return payload
 
 
+# Compatibility alias for callers that still use the historical function name.
+run_eft1_wilson_rge = run_scalar_only_wilson_rge
+build_eft1_rge_context = build_scalar_only_rge_context
+EFT1RGEContext = ScalarOnlyRGEContext
+
+
 if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(
         description=(
-            "Evaluate the complete one-loop EFT1 psi^2 phi^2 master RGE."
+            "Evaluate the complete one-loop scalar-only psi^2 phi^2 master RGE."
         )
     )
     parser.add_argument("wilson_seed_json", type=Path)
@@ -454,7 +452,7 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    payload = run_eft1_wilson_rge(
+    payload = run_scalar_only_wilson_rge(
         wilson_seed_path=args.wilson_seed_json,
         quartic_seed_path=args.quartic_seed_json,
         rgbeta_path=args.rgbeta_json,
@@ -487,6 +485,5 @@ if __name__ == "__main__":
             )
         )
 
-    # Show a few nonzero beta functions without flooding the terminal.
     for component, contributions in list(payload["betas"].items())[:8]:
         print(f"{component}: {contributions['total']}")

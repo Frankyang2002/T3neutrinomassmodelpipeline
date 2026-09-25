@@ -1,21 +1,15 @@
 """Multi-segment numerical trajectory controller for the T3 pipeline.
 
-This module composes the numerical layers already implemented:
-
     UV state
       -> UV RGBeta running
       -> F-threshold projection
-      -> EFT1 RGBeta running
+      -> scalar-only intermediate RGBeta running
       -> scalar-threshold projection
       -> final SM boundary
-      -> optional existing SM+Weinberg running
+      -> optional SM+Weinberg running
 
-It does not perform Matchete matching and does not invent C5.  The physical
-symmetric C5 matrix must come from the existing matching pipeline and can then
-be attached explicitly for the final low-energy Weinberg evolution.
-
-The controller uses explicit matching scales.  It does not infer a grouped
-fermion or scalar matching scale from running mass matrices.
+The controller does not perform Matchete matching or construct C5. The physical
+symmetric C5 matrix remains an explicit input from the matching pipeline.
 """
 
 from __future__ import annotations
@@ -25,8 +19,14 @@ from typing import Any, Mapping
 
 import numpy as np
 
-from Numerical.EFT1Runner import EFT1RunningResult, run_eft1_segment
-from Numerical.EFT1State import SharedT3EFT1State, T3EFT1State
+from Numerical.IntermediateScalarRunner import (
+    IntermediateScalarRunningResult,
+    run_intermediate_scalar_segment,
+)
+from Numerical.IntermediateScalarState import (
+    SharedT3IntermediateScalarState,
+    T3IntermediateScalarState,
+)
 from Numerical.FinalSMBoundary import (
     FinalSMBoundaryState,
     ScalarThresholdDiagnostic,
@@ -48,12 +48,12 @@ from RGE.running.weinberg.WeinbergRunning import (
 
 
 UVState = T3UVState | SharedT3UVState
-EFT1State = T3EFT1State | SharedT3EFT1State
+IntermediateScalarState = T3IntermediateScalarState | SharedT3IntermediateScalarState
 
 
 @dataclass(frozen=True)
 class T3RenormalisableTrajectory:
-    """Complete numerical path through the UV and EFT1 renormalisable stages."""
+    """Complete numerical path through UV and scalar-only renormalisable stages."""
 
     mu_uv_initial_gev: float
     mu_fermion_threshold_gev: float
@@ -61,8 +61,10 @@ class T3RenormalisableTrajectory:
 
     uv: UVRunningResult
     fermion_threshold: FermionThresholdDiagnostic
-    eft1_initial_state: EFT1State
-    eft1: EFT1RunningResult
+    # Historical field names retained as a public/serialized compatibility
+    # contract. Their values are now physical IntermediateScalarState objects.
+    eft1_initial_state: IntermediateScalarState
+    eft1: IntermediateScalarRunningResult
     scalar_threshold: ScalarThresholdDiagnostic
     final_sm_boundary: FinalSMBoundaryState
 
@@ -75,7 +77,7 @@ class T3RenormalisableTrajectory:
         return self.uv.final_state
 
     @property
-    def eft1_threshold_state(self) -> EFT1State:
+    def eft1_threshold_state(self) -> IntermediateScalarState:
         return self.eft1.final_state
 
 
@@ -102,18 +104,9 @@ def _validate_downward_threshold_order(
     mu_fermion_threshold_gev: float,
     mu_scalar_threshold_gev: float,
 ) -> tuple[float, float, float]:
-    mu_uv = _positive_finite_scale(
-        "initial UV scale",
-        mu_uv_initial_gev,
-    )
-    mu_f = _positive_finite_scale(
-        "fermion matching scale",
-        mu_fermion_threshold_gev,
-    )
-    mu_s = _positive_finite_scale(
-        "scalar matching scale",
-        mu_scalar_threshold_gev,
-    )
+    mu_uv = _positive_finite_scale("initial UV scale", mu_uv_initial_gev)
+    mu_f = _positive_finite_scale("fermion matching scale", mu_fermion_threshold_gev)
+    mu_s = _positive_finite_scale("scalar matching scale", mu_scalar_threshold_gev)
 
     if not (mu_uv > mu_f > mu_s):
         raise ValueError(
@@ -142,11 +135,10 @@ def run_renormalisable_t3_trajectory(
     method: str = "DOP853",
     max_step_log: float = np.inf,
 ) -> T3RenormalisableTrajectory:
-    """Run the complete renormalisable UV -> EFT1 -> SM boundary path.
+    """Run UV -> scalar-only intermediate -> SM renormalisable evolution.
 
-    Matching scales are explicit inputs.  The running mass diagnostics are
-    stored in the returned result so the caller can compare the chosen scales
-    with the physical running masses.
+    ``eft1_*`` parameter names are retained for configuration compatibility;
+    they refer to the scalar-only intermediate interval after F is removed.
     """
 
     initial_state = initial_state.validated()
@@ -169,17 +161,15 @@ def run_renormalisable_t3_trajectory(
     )
 
     uv_threshold_state = uv.final_state
-    fermion_diagnostic = fermion_singular_masses(
-        uv_threshold_state
-    )
+    fermion_diagnostic = fermion_singular_masses(uv_threshold_state)
 
-    eft1_initial = project_after_fermion_threshold(
+    intermediate_initial = project_after_fermion_threshold(
         uv_threshold_state,
         matching_scale_gev=mu_f,
     )
 
-    eft1 = run_eft1_segment(
-        eft1_initial,
+    intermediate = run_intermediate_scalar_segment(
+        intermediate_initial,
         eft1_rgbeta_payload,
         mu_s,
         save_scales_gev=eft1_save_scales_gev,
@@ -189,13 +179,11 @@ def run_renormalisable_t3_trajectory(
         max_step_log=max_step_log,
     )
 
-    eft1_threshold_state = eft1.final_state
-    scalar_diagnostic = scalar_threshold_masses(
-        eft1_threshold_state
-    )
+    intermediate_threshold_state = intermediate.final_state
+    scalar_diagnostic = scalar_threshold_masses(intermediate_threshold_state)
 
     final_sm_boundary = project_after_scalar_threshold(
-        eft1_threshold_state,
+        intermediate_threshold_state,
         matching_scale_gev=mu_s,
     )
 
@@ -205,8 +193,8 @@ def run_renormalisable_t3_trajectory(
         mu_scalar_threshold_gev=mu_s,
         uv=uv,
         fermion_threshold=fermion_diagnostic,
-        eft1_initial_state=eft1_initial,
-        eft1=eft1,
+        eft1_initial_state=intermediate_initial,
+        eft1=intermediate,
         scalar_threshold=scalar_diagnostic,
         final_sm_boundary=final_sm_boundary,
     )
@@ -220,16 +208,9 @@ def continue_with_weinberg_running(
     rtol: float = 1.0e-8,
     atol: float = 1.0e-11,
 ) -> T3FullNumericalTrajectory:
-    """Attach matched C5 and run the existing final SM+Weinberg stage.
+    """Attach matched C5 and run the existing final SM+Weinberg stage."""
 
-    The supplied ``c5_matrix`` is authoritative matching output from the
-    existing C5 pipeline.  This function does not construct or modify it.
-    """
-
-    mu_low = _positive_finite_scale(
-        "low-energy scale",
-        mu_low_gev,
-    )
+    mu_low = _positive_finite_scale("low-energy scale", mu_low_gev)
     mu_matching = trajectory.mu_scalar_threshold_gev
 
     if mu_low >= mu_matching:
@@ -252,9 +233,6 @@ def continue_with_weinberg_running(
 
     return T3FullNumericalTrajectory(
         renormalisable=trajectory,
-        c5_at_scalar_threshold=np.asarray(
-            c5_matrix,
-            dtype=complex,
-        ).copy(),
+        c5_at_scalar_threshold=np.asarray(c5_matrix, dtype=complex).copy(),
         weinberg=result,
     )

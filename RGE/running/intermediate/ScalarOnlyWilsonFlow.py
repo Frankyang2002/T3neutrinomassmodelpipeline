@@ -1,13 +1,15 @@
 from __future__ import annotations
 
-"""EFT1 Wilson-coefficient transport and full-flavor seed extraction.
-Seed = starting data, wilson seed are the ones produced as threshold
+"""Scalar-only Wilson-coefficient transport and full-flavor seed extraction.
 
-1. Transport EFT1 Wilson tensor between thresholds
-    We have to make sure the starting values and the running values
-    are separated completely 
-2. Matchete starting values into full flavour tensors
-    So we no longer just do C_12, we do C_11 and C_22 as well etc
+1. Transport the scalar-only dimension-five Wilson tensor between thresholds
+   while keeping tree and one-loop running pieces perturbatively separated.
+2. Convert the Matchete threshold seed into full-flavor tensors rather than
+   collapsing to one generation.
+
+Historical serialized ``EFT1`` keys/filenames are intentionally retained by
+callers for report compatibility; the source architecture is field-content
+based.
 """
 
 import argparse
@@ -20,18 +22,18 @@ from typing import Any
 
 import sympy as sp
 
-# Allow direct execution:
-#     python RGE/running/eft1/EFT1WilsonFlow.py ...
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from RGE.running.eft1.EFT1TensorAdapters import load_and_build_eft1_wilson_tensor
+from RGE.running.intermediate.ScalarOnlyTensorAdapters import (
+    load_and_build_scalar_only_wilson_tensor,
+)
+
 
 # ---------------------------------------------------------------------------
 # Wilson-coefficient transport
 # ---------------------------------------------------------------------------
-
 
 HBAR = sp.Symbol("hbar")
 
@@ -82,11 +84,11 @@ def _load_rge_payload(path: Path) -> dict[str, Any]:
     payload = json.loads(Path(path).read_text(encoding="utf-8"))
     if payload.get("status") != "Success":
         raise ValueError(
-            f"EFT1 Wilson-RGE payload is not successful: "
+            "Scalar-only Wilson-RGE payload is not successful: "
             f"{payload.get('status')!r}"
         )
     if "betas" not in payload:
-        raise ValueError("EFT1 Wilson-RGE payload contains no beta functions.")
+        raise ValueError("Scalar-only Wilson-RGE payload contains no beta functions.")
     return payload
 
 
@@ -94,9 +96,8 @@ def _tree_boundary_components(
     wilson_seed_path: Path,
     rgbeta_path: Path,
 ) -> dict[tuple[int, int, int, int], sp.Expr]:
-    """Reconstruct the same projected C^(0) tensor used by EFT1WilsonRGE
-    at threshold boundary"""
-    tensor = load_and_build_eft1_wilson_tensor(
+    """Reconstruct the projected C^(0) tensor used at the threshold boundary."""
+    tensor = load_and_build_scalar_only_wilson_tensor(
         wilson_seed_path,
         rgbeta_path,
         chirality="PL",
@@ -120,7 +121,7 @@ def _tree_boundary_components(
 def _beta_components(
     rge_payload: dict[str, Any],
 ) -> dict[tuple[int, int, int, int], sp.Expr]:
-    ''' Read JSON output of RGE and get beta functions'''
+    """Read the serialized component beta functions."""
     result: dict[tuple[int, int, int, int], sp.Expr] = {}
 
     for key, entry in rge_payload["betas"].items():
@@ -139,7 +140,7 @@ def _beta_components(
     return result
 
 
-def run_eft1_wilson_transport(
+def run_component_wilson_transport(
     wilson_seed_path: Path,
     wilson_rge_path: Path,
     rgbeta_path: Path,
@@ -147,26 +148,21 @@ def run_eft1_wilson_transport(
     mu_low: str | sp.Expr,
     output_path: Path | None = None,
 ) -> dict[str, Any]:
-    """Transport EFT1 Wilson coefficients between two thresholds at O(hbar).
-    hbar = 1/(16*pi^2),
-    Beta^(1) defined by
-        16*pi^2 dC/dln(mu) = beta^(1)[C^(0)].
+    """Transport scalar-only Wilson coefficients between thresholds at O(hbar).
 
-    The EFT expansion is kept in the form
+    With hbar = 1/(16*pi^2) and
+
+        16*pi^2 dC/dln(mu) = beta^(1)[C^(0)],
+
+    the interval is kept perturbatively separated as
+
         C(mu_low) = C^(0)
-                    + hbar * C_run^(1)
-                    + O(hbar^2),
-    with
-        C_run^(1)
-          = log(mu_low/mu_high) * beta^(1)[C^(0)].
+                    + hbar * log(mu_low/mu_high) * beta^(1)[C^(0)]
+                    + O(hbar^2).
 
-    Crucially, C^(0) itself is not overwritten.  This separation is what the
-    next threshold needs for fixed-order matching:
-        M_2^(0)[C^(0)]                       tree piece
-        M_2^(1)[C^(0)]                       threshold one-loop piece
-        M_2^(0)[hbar * C_run^(1)]            inherited running piece
-    The stage-1 one-loop matching boundary term is deliberately not evolved
-    here; doing so would first contribute at O(hbar^2).
+    The boundary tensor C^(0) is never overwritten. This is required so the
+    lower threshold can distinguish tree matching, hard one-loop matching and
+    inherited one-loop running.
     """
 
     mu_high_expr = sp.simplify(_expr(mu_high))
@@ -203,8 +199,6 @@ def run_eft1_wilson_transport(
         if component not in tree and sp.simplify(value) != 0
     )
 
-    # This is useful for later consistency checks: if the two thresholds
-    # coincide, the entire running correction must vanish identically.
     zero_log_check = all(
         sp.simplify(value.subs(mu_low_expr, mu_high_expr)) == 0
         if mu_low_expr != mu_high_expr
@@ -241,20 +235,14 @@ def run_eft1_wilson_transport(
             list(component) for component in generated_by_running
         ],
         "equal_scale_running_vanishes": zero_log_check,
-        # C^(0): the tree boundary tensor entering the interval.
         "tree_boundary_components": {
             _component_key(component): _text(value)
             for component, value in sorted(tree.items())
         },
-        # C_run^(1): coefficient multiplying hbar in the inherited O(hbar)
-        # running correction.  This is the form intended for stage-2
-        # tree-level propagation.
         "one_loop_running_components": {
             _component_key(component): _text(value)
             for component, value in sorted(running_one_loop.items())
         },
-        # Convenience view only.  The perturbatively separated fields above
-        # are the authoritative representation for later matching.
         "full_fixed_order_components": {
             _component_key(component): _text(value)
             for component, value in sorted(full_fixed_order.items())
@@ -278,7 +266,7 @@ def run_eft1_wilson_transport(
 def run_transport_cli() -> int:
     parser = argparse.ArgumentParser(
         description=(
-            "Transport tree-generated EFT1 dimension-five Wilson "
+            "Transport tree-generated scalar-only dimension-five Wilson "
             "coefficients between two thresholds at fixed one-loop order."
         )
     )
@@ -299,7 +287,7 @@ def run_transport_cli() -> int:
 
     args = parser.parse_args()
 
-    payload = run_eft1_wilson_transport(
+    payload = run_component_wilson_transport(
         wilson_seed_path=args.wilson_seed_json,
         wilson_rge_path=args.wilson_rge_json,
         rgbeta_path=args.rgbeta_json,
@@ -335,23 +323,6 @@ def run_transport_cli() -> int:
 # ---------------------------------------------------------------------------
 # Flavor-seed extraction
 # ---------------------------------------------------------------------------
-
-"""
-The component RGE currently used by EFT1WilsonRGE.py collapses the flavor
-structure to one generation before running. But we need full flavour to reconstruct a
-Matchete expression with explicit flavor indices after running.
-
-This module is the first flavor-aware layer.  It reads Matchete at the F threshold and extracts the Wilson flavor tensor
-    C^{ab}_{pq}
-without replacing y1, y2, ... by scalar symbols.
-
-For the present T3 tree operators, the flavor structure is of the form
-    Sum_r Conjugate[yA[p,r]] Conjugate[yB[q,r]] / MF
-with the symmetry/combinatorial factor taken directly from the Matchete term.
-
-This file does NOT guess a flavor lift from a one-generation beta function.
-"""
-
 
 BARRED_COUPLING_RE = re.compile(
     r"Bar\[Coupling\[(?P<name>[A-Za-z0-9_]+),\s*"
@@ -397,7 +368,6 @@ def _normalise_dummy(name: str) -> str:
     """Turn Matchete temporaries such as d$$1 into readable labels."""
     return name.strip()
 
-
 def _extract_symmetry_denominator(term: str) -> str:
     if MASS_DENOM_UNIT_RE.search(term):
         return "1"
@@ -413,7 +383,7 @@ def _extract_symmetry_denominator(term: str) -> str:
 
 
 def _extract_yukawa_factors(term: str) -> tuple[FlavorYukawaFactor, ...]:
-    '''Find matchete Yukawas'''
+    """Find the Matchete Yukawa factors."""
     factors = []
     for match in BARRED_COUPLING_RE.finditer(term):
         factors.append(
@@ -430,8 +400,7 @@ def _extract_yukawa_factors(term: str) -> tuple[FlavorYukawaFactor, ...]:
 def _flavor_label(
     yukawas: tuple[FlavorYukawaFactor, ...],
 ) -> str:
-    '''Classify which wilson coefficient is being used,
-    Eg: y1y1 -> C_11, y2y2 -> C_22'''
+    """Classify the Wilson coefficient: y1y1 -> C11, y2y2 -> C22, mixed -> C12."""
     if len(yukawas) != 2:
         raise ValueError("A T3 flavor tensor requires exactly two Yukawas.")
 
@@ -449,20 +418,13 @@ def _flavor_label(
 def _kernel_strings(
     yukawas: tuple[FlavorYukawaFactor, ...],
 ) -> tuple[str, str, str]:
-    """Return the canonical flavor tensor 
-        We construct C_12,pq = 1/2M sum_r[y*_1y*_2+y*_2y*_1]
-        It is returned as
-        1. Human readable text
-        2. Wolfram/mathematica text
-        3. 1 generation reduction (becomes 1/M y1y2)
-        """
+    """Return human, Wolfram and one-generation forms of the flavor tensor."""
     if len(yukawas) != 2:
         raise ValueError(
             "The current T3 flavor extractor expects exactly two barred "
             f"Yukawa factors, found {len(yukawas)}."
         )
 
-    # Assign Yukawas
     y_a, y_b = yukawas
     if y_a.internal_dummy != y_b.internal_dummy:
         raise ValueError(
@@ -470,7 +432,6 @@ def _kernel_strings(
             "NFlavor dummy."
         )
 
-    # They need to be different yukawas
     mixed = y_a.name != y_b.name
 
     if mixed:
@@ -510,7 +471,7 @@ def _kernel_strings(
 
 
 def extract_flavor_seed_term(term: dict[str, Any]) -> FlavorSeedTerm:
-    '''Constructs flavour seed, where we have boundary EFT1 with full generation indices explicit'''
+    """Construct one full-flavor threshold Wilson seed term."""
     if term.get("Chirality") != "PL":
         raise ValueError("Flavor seed extraction is defined for PL terms.")
 
@@ -556,7 +517,7 @@ def _expected_one_generation_kernel(
     y_a: str,
     y_b: str,
 ) -> sp.Expr:
-    '''One generation yukawa result'''
+    """One-generation Yukawa result used as an independent regression."""
     locals_ = {
         "MF": sp.Symbol("MF", nonzero=True),
         y_a: sp.Symbol(y_a),
@@ -583,11 +544,11 @@ def _parse_one_generation_kernel(text: str) -> sp.Expr:
     return sp.simplify(sp.sympify(cleaned, locals=locals_))
 
 
-def run_flavor_seed_export(
+def export_full_flavor_wilson_boundary(
     wilson_seed_path: Path,
     output_path: Path | None = None,
 ) -> dict[str, Any]:
-    '''We check the one generation result with our flavour result'''
+    """Export full-flavor Wilson boundary tensors from the Matchete seed."""
     seed = json.loads(Path(wilson_seed_path).read_text(encoding="utf-8"))
 
     pl_terms = [
@@ -618,6 +579,7 @@ def run_flavor_seed_export(
 
     payload = {
         "status": "Success" if not regression_failures else "Failed",
+        # Historical serialized wording retained for report compatibility.
         "purpose": (
             "full-flavor EFT1 Wilson boundary tensors before one-loop running"
         ),
@@ -663,15 +625,15 @@ def run_flavor_seed_export(
 def run_flavor_seed_cli() -> int:
     parser = argparse.ArgumentParser(
         description=(
-            "Extract the full flavor tensors of tree-generated EFT1 "
-            "dimension-five Wilson operators from the Matchete seed."
+            "Extract full-flavor tree-generated scalar-only dimension-five "
+            "Wilson operators from the Matchete seed."
         )
     )
     parser.add_argument("wilson_seed_json", type=Path)
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
 
-    payload = run_flavor_seed_export(
+    payload = export_full_flavor_wilson_boundary(
         args.wilson_seed_json,
         output_path=args.output,
     )
@@ -697,9 +659,10 @@ def run_flavor_seed_cli() -> int:
 
     return 0 if payload["status"] == "Success" else 1
 
+
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="EFT1 Wilson flow utilities."
+        description="Scalar-only intermediate Wilson flow utilities."
     )
     parser.add_argument(
         "mode",
@@ -715,6 +678,12 @@ def main() -> int:
         return run_flavor_seed_cli()
     finally:
         sys.argv = original_argv
+
+
+# Compatibility aliases. Serialized outputs keep historical names, while the
+# implementation is now reached through field-content-based source modules.
+run_eft1_wilson_transport = run_component_wilson_transport
+run_flavor_seed_export = export_full_flavor_wilson_boundary
 
 
 if __name__ == "__main__":

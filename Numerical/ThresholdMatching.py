@@ -1,19 +1,13 @@
-"""Numerical threshold helpers for the first T3 threshold.
+"""Numerical projection at the first T3 threshold.
 
-The current symbolic pipeline defines EFT1 specifically as the theory after
-integrating out the heavy fermion F:
+For the verified fermion-first path the heavy fermion F is removed first:
 
     ordinary:      UV -> SM + S1 + S2
     shared scalar: UV -> SM + S
 
-This module implements only the renormalisable state projection at that
-boundary.  It does *not* replace the existing Matchete threshold matching for
-higher-dimensional Wilson coefficients, and it does not invent finite
-threshold corrections to renormalisable couplings.
-
-At tree level the surviving renormalisable parameters are carried continuously
-from the UV endpoint into EFT1, while F, MF and the F Yukawas disappear from
-the active renormalisable state.
+This module projects only the renormalisable numerical state. Higher-dimensional
+Wilson matching remains in the Matchete/RGE matching pipeline, and no finite
+threshold correction to renormalisable couplings is invented here.
 """
 
 from __future__ import annotations
@@ -22,9 +16,9 @@ from dataclasses import dataclass
 
 import numpy as np
 
-from Numerical.EFT1State import (
-    SharedT3EFT1State,
-    T3EFT1State,
+from Numerical.IntermediateScalarState import (
+    SharedT3IntermediateScalarState,
+    T3IntermediateScalarState,
 )
 from Numerical.State import (
     SharedT3UVState,
@@ -33,7 +27,7 @@ from Numerical.State import (
 
 
 UVState = T3UVState | SharedT3UVState
-EFT1State = T3EFT1State | SharedT3EFT1State
+IntermediateScalarState = T3IntermediateScalarState | SharedT3IntermediateScalarState
 
 
 @dataclass(frozen=True)
@@ -53,15 +47,7 @@ class FermionThresholdDiagnostic:
 
 
 def fermion_singular_masses(state: UVState) -> FermionThresholdDiagnostic:
-    """Return non-negative singular values of the running heavy mass matrix.
-
-    For the Majorana branch these coincide with the Takagi singular masses.
-    For the vector-like branch they are the usual bi-unitary singular masses.
-
-    No automatic single matching scale is chosen here because the current
-    field-level threshold plan integrates ``F`` as one group while a general
-    3x3 MF can contain three distinct physical masses.
-    """
+    """Return non-negative singular values of the running heavy mass matrix."""
 
     state = state.validated()
 
@@ -87,13 +73,12 @@ def project_after_fermion_threshold(
     uv_state: UVState,
     *,
     matching_scale_gev: float | None = None,
-) -> EFT1State:
-    """Project the UV endpoint onto the renormalisable EFT1 state.
+) -> IntermediateScalarState:
+    """Project the UV endpoint onto the scalar-only renormalisable state.
 
     ``matching_scale_gev`` is normally the same scale as ``uv_state.mu_gev``.
-    A different value is rejected: the caller should first run the UV ODE to
-    the desired matching scale, then project the endpoint.  This prevents an
-    accidental discontinuous jump in scale without RGE evolution.
+    A different value is rejected so the caller cannot jump between scales
+    without running the UV RGE first.
     """
 
     uv_state = uv_state.validated()
@@ -114,11 +99,11 @@ def project_after_fermion_threshold(
     ):
         raise ValueError(
             "The UV state must first be evolved to the requested matching "
-            "scale before constructing EFT1."
+            "scale before constructing the scalar-only intermediate EFT."
         )
 
     if isinstance(uv_state, SharedT3UVState):
-        return SharedT3EFT1State(
+        return SharedT3IntermediateScalarState(
             mu_gev=matching_scale,
             representation=uv_state.representation,
             sm=uv_state.sm,
@@ -149,7 +134,7 @@ def project_after_fermion_threshold(
         for name in optional_names
     }
 
-    return T3EFT1State(
+    return T3IntermediateScalarState(
         mu_gev=matching_scale,
         representation=uv_state.representation,
         sm=uv_state.sm,
@@ -163,3 +148,7 @@ def project_after_fermion_threshold(
         lambdaT3=uv_state.lambdaT3,
         **optionals,
     ).validated()
+
+
+# Compatibility type alias used by downstream parameter names/configuration.
+EFT1State = IntermediateScalarState

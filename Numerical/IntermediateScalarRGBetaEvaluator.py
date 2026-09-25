@@ -1,9 +1,9 @@
-"""Evaluate renormalisable RGBeta beta functions in EFT1.
+"""Evaluate renormalisable RGBeta beta functions in the scalar-only intermediate EFT.
 
 The parser itself is shared with ``Numerical.RGBetaEvaluator`` because the
-current UV and EFT1 Wolfram runners serialise expressions using the same
-``InputForm`` structures.  This module supplies the EFT1 state environment and
-stage-specific metadata checks.
+current UV and intermediate Wolfram runners serialise expressions using the
+same ``InputForm`` structures. This module supplies the intermediate scalar
+state environment and stage-specific metadata checks.
 """
 
 from __future__ import annotations
@@ -13,13 +13,13 @@ from typing import Any, Mapping
 import numpy as np
 
 from Numerical.BetaVector import beta_values_to_derivative, validate_beta_keys
-from Numerical.EFT1State import (
-    SharedT3EFT1State,
-    T3EFT1State,
+from Numerical.IntermediateScalarState import (
+    SharedT3IntermediateScalarState,
+    T3IntermediateScalarState,
 )
-from Numerical.EFT1StateVector import (
-    EFT1State,
-    pack_eft1_state,
+from Numerical.IntermediateScalarStateVector import (
+    IntermediateScalarState,
+    pack_intermediate_scalar_state,
 )
 from Numerical.RGBetaEvaluator import evaluate_inputform_expression
 
@@ -29,10 +29,10 @@ EXPECTED_CONVENTION = (
 )
 
 
-def eft1_state_environment(
-    state: EFT1State,
+def intermediate_scalar_state_environment(
+    state: IntermediateScalarState,
 ) -> dict[str, Any]:
-    """Return the numerical symbol environment for one EFT1 state."""
+    """Return the numerical symbol environment for one scalar-only state."""
 
     state = state.validated()
 
@@ -46,7 +46,7 @@ def eft1_state_environment(
         "lambdaH": state.sm.lambdaH,
     }
 
-    if isinstance(state, SharedT3EFT1State):
+    if isinstance(state, SharedT3IntermediateScalarState):
         environment.update(
             {
                 "mSSq": state.mSSq,
@@ -92,19 +92,19 @@ def eft1_state_environment(
     return environment
 
 
-def _validate_eft1_metadata(
+def _validate_intermediate_scalar_metadata(
     payload: Mapping[str, Any],
-    state: EFT1State,
+    state: IntermediateScalarState,
 ) -> None:
     metadata = payload.get("metadata", {})
     if not isinstance(metadata, Mapping):
-        raise ValueError("RGBeta EFT1 payload metadata must be an object.")
+        raise ValueError("RGBeta intermediate payload metadata must be an object.")
 
     rep = state.representation.validated()
 
-    # Historical ordinary-T3 EFT1 exports omitted SharedScalar.  Absence is
-    # therefore interpreted as False for the ordinary branch.  A shared-scalar
-    # payload must still declare SharedScalar=True explicitly.
+    # Historical ordinary-T3 exports omitted SharedScalar. Absence is
+    # interpreted as False for the ordinary branch. A shared-scalar payload
+    # must still declare SharedScalar=True explicitly.
     actual_shared = bool(metadata.get("SharedScalar", False))
 
     expected = {
@@ -128,7 +128,7 @@ def _validate_eft1_metadata(
     for key, expected_value in expected.items():
         if actual_values[key] != expected_value:
             raise ValueError(
-                "RGBeta EFT1 payload does not match the numerical state: "
+                "RGBeta intermediate payload does not match the numerical state: "
                 f"{key}: payload={actual_values[key]!r}, "
                 f"state={expected_value!r}"
             )
@@ -136,35 +136,35 @@ def _validate_eft1_metadata(
     expected_active = ["S"] if rep.shared_scalar else ["S1", "S2"]
     if list(metadata.get("ActiveBSMFields", [])) != expected_active:
         raise ValueError(
-            "RGBeta EFT1 payload has unexpected ActiveBSMFields: "
+            "RGBeta intermediate payload has unexpected ActiveBSMFields: "
             f"{metadata.get('ActiveBSMFields')!r}."
         )
 
     if metadata.get("ReportBetaConvention") != EXPECTED_CONVENTION:
         raise ValueError(
-            "Unsupported RGBeta EFT1 report-beta convention."
+            "Unsupported RGBeta intermediate report-beta convention."
         )
 
 
-def evaluate_eft1_rgbeta_payload(
+def evaluate_intermediate_scalar_rgbeta_payload(
     payload: Mapping[str, Any],
-    state: EFT1State,
+    state: IntermediateScalarState,
 ) -> dict[str, Any]:
-    """Evaluate all renormalisable EFT1 ``report_betas``."""
+    """Evaluate all renormalisable scalar-only ``report_betas``."""
 
     if payload.get("status") != "Success":
-        raise ValueError("RGBeta EFT1 payload status is not Success.")
+        raise ValueError("RGBeta intermediate payload status is not Success.")
 
     state = state.validated()
-    _validate_eft1_metadata(payload, state)
+    _validate_intermediate_scalar_metadata(payload, state)
 
     report_betas = payload.get("report_betas")
     if not isinstance(report_betas, Mapping):
         raise ValueError(
-            "RGBeta EFT1 payload does not contain report_betas."
+            "RGBeta intermediate payload does not contain report_betas."
         )
 
-    environment = eft1_state_environment(state)
+    environment = intermediate_scalar_state_environment(state)
 
     evaluated = {
         str(name): evaluate_inputform_expression(
@@ -174,21 +174,21 @@ def evaluate_eft1_rgbeta_payload(
         for name, expression in report_betas.items()
     }
 
-    _, layout = pack_eft1_state(state)
+    _, layout = pack_intermediate_scalar_state(state)
     validate_beta_keys(evaluated, layout)
 
     return evaluated
 
 
-def eft1_derivative_from_payload(
+def intermediate_scalar_derivative_from_payload(
     payload: Mapping[str, Any],
-    state: EFT1State,
+    state: IntermediateScalarState,
 ) -> tuple[np.ndarray, Any]:
-    """Return ``dy/dln(mu)`` for the renormalisable EFT1 state."""
+    """Return ``dy/dln(mu)`` for the renormalisable scalar-only state."""
 
     state = state.validated()
-    _, layout = pack_eft1_state(state)
-    evaluated = evaluate_eft1_rgbeta_payload(payload, state)
+    _, layout = pack_intermediate_scalar_state(state)
+    evaluated = evaluate_intermediate_scalar_rgbeta_payload(payload, state)
 
     derivative = beta_values_to_derivative(
         evaluated,
@@ -197,3 +197,11 @@ def eft1_derivative_from_payload(
     )
 
     return derivative, layout
+
+
+# Transitional aliases for existing callers/configuration tests.  Serialized
+# EFT1 metadata keys are intentionally unchanged for report compatibility.
+EFT1State = IntermediateScalarState
+eft1_state_environment = intermediate_scalar_state_environment
+evaluate_eft1_rgbeta_payload = evaluate_intermediate_scalar_rgbeta_payload
+eft1_derivative_from_payload = intermediate_scalar_derivative_from_payload

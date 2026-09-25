@@ -46,7 +46,7 @@ def test_validation_backend_owns_component_transport_regression() -> None:
     validation = _source(BACKEND_PATH)
     production = _source(PRODUCTION_PATH)
 
-    assert "legacy_component_wilson_transport" in validation
+    assert "run_component_wilson_transport" in validation
     assert "run_eft1_wilson_transport" not in validation
     assert "run_eft1_wilson_transport" not in production
     assert "eft1_wilson_at_S_threshold.json" in validation
@@ -131,4 +131,5 @@ def test_validation_backend_owns_interpretation_of_production_diagnostics() -> N
 def test_validation_backend_does_not_import_historical_eft1_package_directly() -> None:
     validation = _source(BACKEND_PATH)
     assert "from RGE.running.eft1" not in validation
-    assert "LegacyEFT1Compatibility" in validation
+    assert "LegacyEFT1Compatibility" not in validation
+    assert "ScalarOnlyWilsonFlow" in validation

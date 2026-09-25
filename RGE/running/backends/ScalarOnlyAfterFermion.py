@@ -6,10 +6,10 @@ This backend applies after the heavy T3 fermion ``F`` has been integrated out
 while the complete physical T3 scalar sector remains active.  The interval ends
 when those remaining scalars are integrated out together.
 
-The implementation reaches the historical ordinal-named calculation through a
-single compatibility boundary under ``RGE.running.intermediate``.  Historical
-``EFT1`` names remain only in serialized keys, filenames and reports while
-production orchestration identifies the theory by physical field content.
+The implementation is now housed directly under ``RGE.running.intermediate``
+using physical names.  Historical ``EFT1`` names remain only in serialized
+keys, filenames and Wolfram/report contracts while production orchestration
+identifies the theory by physical field content.
 
 Fixed-order convention
 ----------------------

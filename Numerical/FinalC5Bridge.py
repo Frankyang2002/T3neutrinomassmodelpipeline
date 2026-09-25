@@ -9,8 +9,8 @@ and is evaluated numerically by
 
     RGE.running.weinberg.NumericalWeinbergStage.evaluate_final_weinberg_json.
 
-This module supplies the missing adapter from the running numerical trajectory
-to the configuration expected by that existing evaluator.
+This module supplies the adapter from the running numerical trajectory to the
+configuration expected by that existing evaluator.
 
 Important basis convention
 --------------------------
@@ -49,7 +49,10 @@ import numpy as np
 
 from Numerical.T3Trajectory import T3RenormalisableTrajectory
 from Numerical.State import SharedT3UVState, T3UVState
-from Numerical.EFT1State import SharedT3EFT1State, T3EFT1State
+from Numerical.IntermediateScalarState import (
+    SharedT3IntermediateScalarState,
+    T3IntermediateScalarState,
+)
 from RGE.running.weinberg.NumericalWeinbergStage import (
     evaluate_final_weinberg_json,
 )
@@ -183,12 +186,8 @@ def _majorana_takagi_mass_basis(
             "diagonalization."
         )
 
-    # Remove only numerical antisymmetric roundoff before factorization.
     matrix = 0.5 * (matrix + matrix.T)
 
-    # For a complex-symmetric matrix M, the right singular vectors provide a
-    # Takagi basis up to column phases when the singular values are resolved.
-    # We explicitly phase-fix U so U^T M U has positive real diagonal entries.
     _, _, vh = np.linalg.svd(matrix)
     rotation = vh.conj().T
 
@@ -197,26 +196,16 @@ def _majorana_takagi_mass_basis(
 
     phase = np.ones(3, dtype=complex)
     nonzero = np.abs(diagonal) > max(float(residual_atol), 1.0e-30)
-    phase[nonzero] = np.exp(
-        -0.5j * np.angle(diagonal[nonzero])
-    )
+    phase[nonzero] = np.exp(-0.5j * np.angle(diagonal[nonzero]))
     rotation = rotation @ np.diag(phase)
 
     takagi_matrix = rotation.T @ matrix @ rotation
 
-    # Deterministic ordering: pair each Yukawa column with the corresponding
-    # ascending positive heavy mass.
-    masses = np.asarray(
-        np.real(np.diag(takagi_matrix)),
-        dtype=float,
-    )
+    masses = np.asarray(np.real(np.diag(takagi_matrix)), dtype=float)
     order = np.argsort(masses)
     rotation = rotation[:, order]
     takagi_matrix = rotation.T @ matrix @ rotation
-    masses = np.asarray(
-        np.real(np.diag(takagi_matrix)),
-        dtype=float,
-    )
+    masses = np.asarray(np.real(np.diag(takagi_matrix)), dtype=float)
 
     offdiagonal = takagi_matrix - np.diag(np.diag(takagi_matrix))
     imaginary_diagonal = np.imag(np.diag(takagi_matrix))
@@ -242,7 +231,6 @@ def _majorana_takagi_mass_basis(
     if not np.all(np.isfinite(masses)):
         raise ValueError("Takagi heavy masses must be finite.")
 
-    # Tiny negative values can arise from roundoff after the phase fix.
     negative_tolerance = float(residual_atol) + float(residual_rtol) * max(
         1.0,
         float(np.max(np.abs(masses))),
@@ -335,7 +323,8 @@ def final_c5_inputs_from_trajectory(
         taken at the UV endpoint mu_F, immediately before F is removed.
 
     MS1, MS2, lambdaT3:
-        taken at the EFT1 endpoint mu_S, immediately before S1/S2 are removed.
+        taken at the scalar-only intermediate endpoint mu_S, immediately before
+        S1/S2 are removed.
 
     MS:
         the explicit grouped scalar matching scale used by the numerical
@@ -343,11 +332,11 @@ def final_c5_inputs_from_trajectory(
     """
 
     uv_state = trajectory.uv_threshold_state
-    eft1_state = trajectory.eft1_threshold_state
+    intermediate_state = trajectory.eft1_threshold_state
 
     if isinstance(uv_state, SharedT3UVState) or isinstance(
-        eft1_state,
-        SharedT3EFT1State,
+        intermediate_state,
+        SharedT3IntermediateScalarState,
     ):
         raise NotImplementedError(
             "The current final-C5 numerical evaluator uses the ordinary "
@@ -358,8 +347,10 @@ def final_c5_inputs_from_trajectory(
     if not isinstance(uv_state, T3UVState):
         raise TypeError("Expected an ordinary T3UVState at the F threshold.")
 
-    if not isinstance(eft1_state, T3EFT1State):
-        raise TypeError("Expected an ordinary T3EFT1State at the scalar threshold.")
+    if not isinstance(intermediate_state, T3IntermediateScalarState):
+        raise TypeError(
+            "Expected an ordinary T3IntermediateScalarState at the scalar threshold."
+        )
 
     heavy_basis = _heavy_mass_basis_data(
         uv_state,
@@ -369,14 +360,14 @@ def final_c5_inputs_from_trajectory(
         takagi_residual_atol=takagi_residual_atol,
     )
 
-    if eft1_state.mS1Sq <= 0.0 or eft1_state.mS2Sq <= 0.0:
+    if intermediate_state.mS1Sq <= 0.0 or intermediate_state.mS2Sq <= 0.0:
         raise ValueError(
             "Positive scalar mass-squared parameters are required for final-C5 "
             "numerical evaluation."
         )
 
-    scalar_mass1 = float(np.sqrt(eft1_state.mS1Sq))
-    scalar_mass2 = float(np.sqrt(eft1_state.mS2Sq))
+    scalar_mass1 = float(np.sqrt(intermediate_state.mS1Sq))
+    scalar_mass2 = float(np.sqrt(intermediate_state.mS2Sq))
 
     if not np.isfinite(scalar_mass1) or not np.isfinite(scalar_mass2):
         raise ValueError("Running scalar masses are non-finite.")
@@ -390,7 +381,7 @@ def final_c5_inputs_from_trajectory(
         grouped_scalar_matching_scale_gev=float(
             trajectory.mu_scalar_threshold_gev
         ),
-        lambda_t3=complex(eft1_state.lambdaT3),
+        lambda_t3=complex(intermediate_state.lambdaT3),
     )
 
 
@@ -404,10 +395,7 @@ def evaluate_final_c5_from_trajectory(
     config = inputs.as_config()
 
     c5 = np.asarray(
-        evaluate_final_weinberg_json(
-            Path(final_weinberg_path),
-            config,
-        ),
+        evaluate_final_weinberg_json(Path(final_weinberg_path), config),
         dtype=complex,
     )
 
@@ -417,19 +405,12 @@ def evaluate_final_c5_from_trajectory(
             f"{c5.shape}, expected (3, 3)."
         )
 
-    if not np.all(np.isfinite(c5.real)) or not np.all(
-        np.isfinite(c5.imag)
-    ):
+    if not np.all(np.isfinite(c5.real)) or not np.all(np.isfinite(c5.imag)):
         raise RuntimeError(
             "Existing final-C5 evaluator returned non-finite entries."
         )
 
-    if not np.allclose(
-        c5,
-        c5.T,
-        rtol=1.0e-10,
-        atol=1.0e-14,
-    ):
+    if not np.allclose(c5, c5.T, rtol=1.0e-10, atol=1.0e-14):
         raise RuntimeError(
             "Existing final-C5 evaluator returned a non-symmetric matrix."
         )

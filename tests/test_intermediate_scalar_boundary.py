@@ -67,7 +67,6 @@ def _uv_payload(state: T3UVState) -> dict:
         "lambdaH2Adj": "lambdaH2Adj*lambdaH",
         "lambdaS2Adj": "lambdaS2Adj*lambdaS2",
     }
-
     return {
         "status": "Success",
         "metadata": {
@@ -84,7 +83,7 @@ def _uv_payload(state: T3UVState) -> dict:
     }
 
 
-def _eft1_payload(state: T3UVState) -> dict:
+def _intermediate_payload(state: T3UVState) -> dict:
     betas = {
         "gY": "(43*gY^3)/6",
         "g2": "-2*g2^3",
@@ -104,7 +103,6 @@ def _eft1_payload(state: T3UVState) -> dict:
         "lambdaH2Adj": "lambdaH2Adj*lambdaH",
         "lambdaS2Adj": "lambdaS2Adj*lambdaS2",
     }
-
     return {
         "status": "Success",
         "metadata": {
@@ -127,81 +125,43 @@ def _eft1_payload(state: T3UVState) -> dict:
 class T3TrajectoryTests(unittest.TestCase):
     def test_complete_renormalisable_path(self) -> None:
         state = _uv_state()
-
         trajectory = run_renormalisable_t3_trajectory(
             state,
             _uv_payload(state),
-            _eft1_payload(state),
+            _intermediate_payload(state),
             mu_fermion_threshold_gev=1.0e10,
             mu_scalar_threshold_gev=7.0e9,
         )
-
-        self.assertEqual(
-            trajectory.uv.mu_initial_gev,
-            1.0e12,
-        )
-        self.assertEqual(
-            trajectory.uv.mu_final_gev,
-            1.0e10,
-        )
-        self.assertEqual(
-            trajectory.eft1.mu_initial_gev,
-            1.0e10,
-        )
-        self.assertEqual(
-            trajectory.eft1.mu_final_gev,
-            7.0e9,
-        )
-        self.assertEqual(
-            trajectory.final_sm_boundary.mu_gev,
-            7.0e9,
-        )
-
-        self.assertFalse(
-            hasattr(trajectory.eft1_initial_state, "MF")
-        )
+        self.assertEqual(trajectory.uv.mu_initial_gev, 1.0e12)
+        self.assertEqual(trajectory.uv.mu_final_gev, 1.0e10)
+        self.assertEqual(trajectory.eft1.mu_initial_gev, 1.0e10)
+        self.assertEqual(trajectory.eft1.mu_final_gev, 7.0e9)
+        self.assertEqual(trajectory.final_sm_boundary.mu_gev, 7.0e9)
+        self.assertFalse(hasattr(trajectory.eft1_initial_state, "MF"))
 
     def test_threshold_diagnostics_are_retained(self) -> None:
         state = _uv_state()
-
         trajectory = run_renormalisable_t3_trajectory(
             state,
             _uv_payload(state),
-            _eft1_payload(state),
+            _intermediate_payload(state),
             mu_fermion_threshold_gev=1.0e10,
             mu_scalar_threshold_gev=7.0e9,
         )
-
-        self.assertEqual(
-            trajectory.fermion_threshold.masses_gev.shape,
-            (3,),
-        )
-        self.assertEqual(
-            len(trajectory.scalar_threshold.masses_gev),
-            2,
-        )
+        self.assertEqual(trajectory.fermion_threshold.masses_gev.shape, (3,))
+        self.assertEqual(len(trajectory.scalar_threshold.masses_gev), 2)
 
     def test_explicit_save_scales_survive_both_segments(self) -> None:
         state = _uv_state()
-
         trajectory = run_renormalisable_t3_trajectory(
             state,
             _uv_payload(state),
-            _eft1_payload(state),
+            _intermediate_payload(state),
             mu_fermion_threshold_gev=1.0e10,
             mu_scalar_threshold_gev=7.0e9,
-            uv_save_scales_gev=[
-                1.0e12,
-                1.0e11,
-                1.0e10,
-            ],
-            eft1_save_scales_gev=[
-                1.0e10,
-                8.0e9,
-                7.0e9,
-            ],
+            uv_save_scales_gev=[1.0e12, 1.0e11, 1.0e10],
+            eft1_save_scales_gev=[1.0e10, 8.0e9, 7.0e9],
         )
-
         np.testing.assert_allclose(
             trajectory.uv.mu_gev,
             np.array([1.0e12, 1.0e11, 1.0e10]),
@@ -213,30 +173,24 @@ class T3TrajectoryTests(unittest.TestCase):
 
     def test_non_descending_thresholds_are_rejected(self) -> None:
         state = _uv_state()
-
-        with self.assertRaisesRegex(
-            ValueError,
-            "mu_UV > mu_F > mu_S",
-        ):
+        with self.assertRaisesRegex(ValueError, "mu_UV > mu_F > mu_S"):
             run_renormalisable_t3_trajectory(
                 state,
                 _uv_payload(state),
-                _eft1_payload(state),
+                _intermediate_payload(state),
                 mu_fermion_threshold_gev=5.0e9,
                 mu_scalar_threshold_gev=7.0e9,
             )
 
     def test_weinberg_continuation_uses_scalar_boundary(self) -> None:
         state = _uv_state()
-
         trajectory = run_renormalisable_t3_trajectory(
             state,
             _uv_payload(state),
-            _eft1_payload(state),
+            _intermediate_payload(state),
             mu_fermion_threshold_gev=1.0e10,
             mu_scalar_threshold_gev=7.0e9,
         )
-
         c5 = np.array(
             [
                 [1.0e-14, 2.0e-15, 0.0],
@@ -245,45 +199,21 @@ class T3TrajectoryTests(unittest.TestCase):
             ],
             dtype=complex,
         )
-
-        # Keep this orchestration regression above the one-loop QCD
-        # strong-coupling pole implied by the deliberately synthetic test
-        # boundary value g3 ~= 1.05.  The purpose of this test is to verify
-        # the scalar-threshold handoff, not long-range SM running.
-        full = continue_with_weinberg_running(
-            trajectory,
-            c5,
-            1.0e9,
-        )
-
-        self.assertEqual(
-            full.weinberg.mu_initial,
-            7.0e9,
-        )
-        self.assertEqual(
-            full.weinberg.mu_final,
-            1.0e9,
-        )
-        np.testing.assert_allclose(
-            full.c5_at_scalar_threshold,
-            c5,
-        )
+        full = continue_with_weinberg_running(trajectory, c5, 1.0e9)
+        self.assertEqual(full.weinberg.mu_initial, 7.0e9)
+        self.assertEqual(full.weinberg.mu_final, 1.0e9)
+        np.testing.assert_allclose(full.c5_at_scalar_threshold, c5)
 
     def test_low_scale_must_be_below_scalar_threshold(self) -> None:
         state = _uv_state()
-
         trajectory = run_renormalisable_t3_trajectory(
             state,
             _uv_payload(state),
-            _eft1_payload(state),
+            _intermediate_payload(state),
             mu_fermion_threshold_gev=1.0e10,
             mu_scalar_threshold_gev=7.0e9,
         )
-
-        with self.assertRaisesRegex(
-            ValueError,
-            "mu_low < mu_S",
-        ):
+        with self.assertRaisesRegex(ValueError, "mu_low < mu_S"):
             continue_with_weinberg_running(
                 trajectory,
                 np.eye(3, dtype=complex) * 1.0e-14,

@@ -1,6 +1,6 @@
-"""Pack and unpack the renormalisable EFT1 numerical state.
+"""Pack and unpack the renormalisable scalar-only intermediate numerical state.
 
-EFT1 is the theory after the heavy fermion F has been integrated out:
+The theory is the region after the heavy fermion F has been integrated out:
 
 ordinary T3:
     SM + S1 + S2
@@ -8,23 +8,23 @@ ordinary T3:
 shared-scalar T3:
     SM + S
 
-The real ODE-vector convention matches ``Numerical.StateVector``:
-complex matrices are stored as flattened real entries followed by flattened
-imaginary entries, and complex scalars as (Re, Im).
+The real ODE-vector convention matches ``Numerical.StateVector``: complex
+matrices are stored as flattened real entries followed by flattened imaginary
+entries, and complex scalars as ``(Re, Im)``.
 """
 
 from __future__ import annotations
 
 import numpy as np
 
-from Numerical.EFT1State import (
-    SharedT3EFT1State,
-    T3EFT1State,
+from Numerical.IntermediateScalarState import (
+    SharedT3IntermediateScalarState,
+    T3IntermediateScalarState,
 )
 from Numerical.StateVector import StateVectorLayout, VectorBlock
 
 
-EFT1State = T3EFT1State | SharedT3EFT1State
+IntermediateScalarState = T3IntermediateScalarState | SharedT3IntermediateScalarState
 
 
 class _Builder:
@@ -86,7 +86,7 @@ class _Builder:
     def finish(
         self,
         *,
-        state: EFT1State,
+        state: IntermediateScalarState,
     ) -> tuple[np.ndarray, StateVectorLayout]:
         vector = np.concatenate(self.values)
         layout = StateVectorLayout(
@@ -98,7 +98,7 @@ class _Builder:
         return vector, layout
 
 
-def _pack_sm(builder: _Builder, state: EFT1State) -> None:
+def _pack_sm(builder: _Builder, state: IntermediateScalarState) -> None:
     builder.real("gY", state.sm.gY)
     builder.real("g2", state.sm.g2)
     builder.real("g3", state.sm.g3)
@@ -108,16 +108,16 @@ def _pack_sm(builder: _Builder, state: EFT1State) -> None:
     builder.real("lambdaH", state.sm.lambdaH)
 
 
-def pack_eft1_state(
-    state: EFT1State,
+def pack_intermediate_scalar_state(
+    state: IntermediateScalarState,
 ) -> tuple[np.ndarray, StateVectorLayout]:
-    """Validate and pack one EFT1 state into a real ODE vector."""
+    """Validate and pack one scalar-only intermediate state into a real ODE vector."""
 
     state = state.validated()
     builder = _Builder()
     _pack_sm(builder, state)
 
-    if isinstance(state, SharedT3EFT1State):
+    if isinstance(state, SharedT3IntermediateScalarState):
         builder.real("mSSq", state.mSSq)
         builder.real("lambdaS", state.lambdaS)
         builder.real("lambda3", state.lambda3)
@@ -168,27 +168,27 @@ def _check_vector(
     result = np.asarray(vector, dtype=float)
 
     if result.ndim != 1:
-        raise ValueError("EFT1 state vector must be one-dimensional.")
+        raise ValueError("Intermediate scalar state vector must be one-dimensional.")
 
     if result.size != layout.size:
         raise ValueError(
-            f"EFT1 state vector has length {result.size}; "
+            f"Intermediate scalar state vector has length {result.size}; "
             f"layout expects {layout.size}."
         )
 
     if not np.all(np.isfinite(result)):
-        raise ValueError("EFT1 state vector contains non-finite entries.")
+        raise ValueError("Intermediate scalar state vector contains non-finite entries.")
 
     return result
 
 
-def unpack_eft1_state(
+def unpack_intermediate_scalar_state(
     vector: np.ndarray,
     layout: StateVectorLayout,
     *,
     mu_gev: float | None = None,
-) -> EFT1State:
-    """Reconstruct one validated EFT1 state."""
+) -> IntermediateScalarState:
+    """Reconstruct one validated scalar-only intermediate state."""
 
     from Numerical.State import SMNumericalState
 
@@ -237,7 +237,7 @@ def unpack_eft1_state(
     )
 
     if layout.shared_scalar:
-        return SharedT3EFT1State(
+        return SharedT3IntermediateScalarState(
             mu_gev=scale,
             representation=layout.representation,
             sm=sm,
@@ -265,7 +265,7 @@ def unpack_eft1_state(
         "lambdaHHdagS1barS2barCross",
     )
 
-    return T3EFT1State(
+    return T3IntermediateScalarState(
         mu_gev=scale,
         representation=layout.representation,
         sm=sm,
@@ -286,3 +286,11 @@ def unpack_eft1_state(
             for name in optional_complex_names
         },
     ).validated()
+
+
+# Compatibility aliases for existing external callers and serialized workflow
+# code.  The implementation module itself is no longer named after an ordinal
+# EFT stage.
+EFT1State = IntermediateScalarState
+pack_eft1_state = pack_intermediate_scalar_state
+unpack_eft1_state = unpack_intermediate_scalar_state

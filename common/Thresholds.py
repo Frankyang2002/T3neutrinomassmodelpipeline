@@ -1,57 +1,54 @@
-# This file tells us how heavy T3 fields are integrated across
-# EFT thresholds
+"""Physical threshold-plan handling for the T3 EFT sequence.
+
+This module defines *ordering*, not matching physics.  Any valid ordered
+partition of the physical heavy fields is accepted.  Downstream calculation
+code is responsible for running to each threshold and matching the fields in
+that threshold group.
+
+The current production EFT approximation retains operators through dimension
+five.  That approximation is represented explicitly by ``EFTTruncation`` in
+``common.EFT`` rather than by restricting the threshold order.
+"""
 
 from __future__ import annotations
 
 from pathlib import Path
-from typing import TypeAlias
+from typing import Sequence, TypeAlias
 
+from common.EFT import ThresholdStep
 from common.RunRecords import EFTStageRecord
+from common.T3Fields import (
+    ORDINARY_T3_FIELDS,
+    SHARED_SCALAR_T3_FIELDS,
+    t3_heavy_field_scheme,
+)
 
 
-ThresholdField: TypeAlias = str # The heavy field name, like S, S1, F etc
-ThresholdGroup: TypeAlias = tuple[ThresholdField, ...] # Set of fields integrated out, like ("S1","S2")
-ThresholdPlan: TypeAlias = tuple[ThresholdGroup, ...] # The sequence of integrating out, Eg: ((F),(S1,S2))
+ThresholdField: TypeAlias = str
+ThresholdGroup: TypeAlias = tuple[ThresholdField, ...]
+ThresholdPlan: TypeAlias = tuple[ThresholdGroup, ...]
 
-# Convention for Field or Shared integration out
-T3_HEAVY_FIELDS: tuple[str, ...] = ("F", "S1", "S2") 
-SHARED_HEAVY_FIELDS: tuple[str, ...] = ("F", "S")
+# Compatibility constants.  The physical field identity itself is centralised
+# in ``common.T3Fields`` so all threshold/RGE code uses the same mapping.
+T3_HEAVY_FIELDS: tuple[str, ...] = ORDINARY_T3_FIELDS.heavy_fields
+SHARED_HEAVY_FIELDS: tuple[str, ...] = SHARED_SCALAR_T3_FIELDS.heavy_fields
 
 
 def heavy_fields(*, shared_scalar: bool = False) -> tuple[str, ...]:
-    """Based on settings give the fields either shared or split."""
-    return SHARED_HEAVY_FIELDS if shared_scalar else T3_HEAVY_FIELDS
+    """Return the physical heavy fields that must be removed by the plan."""
+    return t3_heavy_field_scheme(shared_scalar=shared_scalar).heavy_fields
 
 
 def default_threshold_plan(*, shared_scalar: bool = False) -> ThresholdPlan:
-    """We just go back to default without threshold structure, just the fields.
-    This helps doing UV -> Final EFT as backup"""
+    """Return the common-threshold plan in which all heavy fields are removed together."""
     return (heavy_fields(shared_scalar=shared_scalar),)
 
 
 def _threshold_aliases(*, shared_scalar: bool) -> dict[str, str]:
-    """We map different names to the specific field names,
-     helps with shared and split scalar differences ."""
-    if shared_scalar:
-        return {
-            "F": "F",
-            "FERMION": "F",
-            "S": "S",
-            "SCALAR": "S",
-            "S1": "S",
-            "S2": "S",
-            "SCALAR1": "S",
-            "SCALAR2": "S",
-        }
-
-    return {
-        "F": "F",
-        "FERMION": "F",
-        "S1": "S1",
-        "SCALAR1": "S1",
-        "S2": "S2",
-        "SCALAR2": "S2",
-    }
+    """Compatibility wrapper for accepted threshold aliases."""
+    return dict(
+        t3_heavy_field_scheme(shared_scalar=shared_scalar).threshold_aliases
+    )
 
 
 def normalise_threshold_field(
@@ -59,29 +56,22 @@ def normalise_threshold_field(
     *,
     shared_scalar: bool = False,
 ) -> str:
-    """We normalise different names to the actual physical fields
-    We use _threshold_aliases to do so
-    """
-    token = value.strip().upper().replace("_", "")
-    aliases = _threshold_aliases(shared_scalar=shared_scalar)
-    allowed = "F or S" if shared_scalar else "F, S1, or S2"
-
-    try:
-        return aliases[token]
-    except KeyError as exc:
-        raise ValueError(
-            f"Unknown heavy field {value!r}. Use {allowed}."
-        ) from exc
+    """Convert one user-facing field token to its physical pipeline name."""
+    return t3_heavy_field_scheme(
+        shared_scalar=shared_scalar
+    ).normalise_threshold_field(value)
 
 
 def validate_threshold_plan(
-    threshold_groups: list[list[str]] | None,
+    threshold_groups: Sequence[Sequence[str]] | None,
     *,
     shared_scalar: bool = False,
 ) -> ThresholdPlan:
-    """Make sure our threshold plans are valid
-    
-    So we cant integrate out a field more than once
+    """Validate and canonicalise an arbitrary physical threshold ordering.
+
+    A threshold plan is an ordered partition of the physical heavy fields.
+    Every heavy field must appear exactly once, but there is deliberately no
+    restriction on which field is integrated out first.
     """
     fields = heavy_fields(shared_scalar=shared_scalar)
 
@@ -91,9 +81,6 @@ def validate_threshold_plan(
     canonical_groups: list[ThresholdGroup] = []
     flattened: list[str] = []
 
-    # Loop through our groups and check if threshold is empty
-    # or has duplicated fields across groups or within a group
-    # Or if a field is not what we want, as we want fermion/scalar
     for raw_group in threshold_groups:
         if not raw_group:
             raise ValueError("A threshold group cannot be empty.")
@@ -120,16 +107,10 @@ def validate_threshold_plan(
         for field in fields
         if flattened.count(field) > 1
     )
-    missing = [
-        field
-        for field in fields
-        if field not in flattened
-    ]
+    missing = [field for field in fields if field not in flattened]
     unknown = sorted(set(flattened) - set(fields))
 
-    # Error message
     errors: list[str] = []
-
     if duplicates:
         errors.append("repeated field(s): " + ", ".join(duplicates))
     if missing:
@@ -149,16 +130,83 @@ def validate_threshold_plan(
     return tuple(canonical_groups)
 
 
+def default_threshold_scale(group: Sequence[str]) -> str:
+    """Return the established symbolic matching scale for one field group.
+
+    This naming convention already exists in ``pipeline.py``.  Keeping it next
+    to threshold-plan handling makes scale resolution reusable without making
+    the generic ``ThresholdStep`` object T3-specific.
+    """
+    fields = frozenset(group)
+
+    if fields == {"F"}:
+        return "MF"
+    if fields == {"S"}:
+        return "MS"
+    if fields == {"S1", "S2"}:
+        return "MS"
+    if fields == {"S1"}:
+        return "MS1"
+    if fields == {"S2"}:
+        return "MS2"
+
+    # This fallback is mainly useful for grouped thresholds such as (F,S1).
+    # Preserve the user-specified group order in the readable symbolic name.
+    return "M_" + "_".join(group)
+
+
+def resolve_threshold_scales(
+    plan: ThresholdPlan,
+    supplied_scales: Sequence[str | float] | None = None,
+) -> tuple[str | float, ...]:
+    """Return one matching scale for every threshold in ``plan``.
+
+    Explicit scales are preserved exactly.  When they are omitted, use the
+    existing project convention implemented by :func:`default_threshold_scale`.
+    """
+    if supplied_scales is None:
+        return tuple(default_threshold_scale(group) for group in plan)
+
+    if len(supplied_scales) != len(plan):
+        raise ValueError(
+            "Threshold scales must be supplied once for each threshold group."
+        )
+
+    return tuple(supplied_scales)
+
+
+def build_threshold_steps(
+    plan: ThresholdPlan,
+    scales: Sequence[str | float],
+) -> tuple[ThresholdStep, ...]:
+    """Combine a validated threshold plan with its matching scales.
+
+    The returned objects are generic threshold transitions and carry no
+    fermion-first or scalar-first assumption.
+    """
+    if len(plan) != len(scales):
+        raise ValueError(
+            "Threshold scales must be supplied once for each threshold group."
+        )
+
+    return tuple(
+        ThresholdStep(
+            fields_to_integrate=group,
+            scale=scale,
+        )
+        for group, scale in zip(plan, scales, strict=True)
+    )
+
+
 def _formal_fields_for_physical_field(
     field: str,
     *,
     shared_scalar: bool,
 ) -> tuple[str, ...]:
-    """For shared scalar, S -> S1,S2, for split nothing really changes"""
-    if shared_scalar and field == "S":
-        return "S1", "S2"
-
-    return (field,)
+    """Map a physical field to the formal T3 roles used by Wolfram matching."""
+    return t3_heavy_field_scheme(
+        shared_scalar=shared_scalar
+    ).formal_roles_for(field)
 
 
 def threshold_plan_for_wolfram(
@@ -166,8 +214,7 @@ def threshold_plan_for_wolfram(
     *,
     shared_scalar: bool = False,
 ) -> ThresholdPlan:
-    """We prepare the plan for thresholds for wolfram and fix shared scalar
-    """
+    """Convert a physical threshold plan to the formal T3 matching roles."""
     if not shared_scalar:
         return plan
 
@@ -175,7 +222,6 @@ def threshold_plan_for_wolfram(
 
     for group in plan:
         expanded: list[str] = []
-
         for field in group:
             expanded.extend(
                 _formal_fields_for_physical_field(
@@ -183,21 +229,18 @@ def threshold_plan_for_wolfram(
                     shared_scalar=True,
                 )
             )
-
         formal_groups.append(tuple(expanded))
 
     return tuple(formal_groups)
 
 
 def threshold_plan_to_json(plan: ThresholdPlan) -> list[list[str]]:
-    """Return a JSON-safe representation of a physical threshold plan.
-    It just converts our tuples into lists as JSON doesnt preserve Python Tuples"""
+    """Return the physical threshold plan in JSON-safe form."""
     return [list(group) for group in plan]
 
 
 def threshold_plan_label(plan: ThresholdPlan) -> str:
-    """We just make it readable for us, like if we have ((F),(S1,S2))
-    It becomes F -> (S1,S2) for us to read well"""
+    """Return a compact human-readable threshold ordering."""
     labels: list[str] = []
 
     for group in plan:
@@ -215,8 +258,12 @@ def build_eft_stage_records(
     *,
     shared_scalar: bool = False,
 ) -> list[EFTStageRecord]:
-    """
-    We convert our threshold plan into EFTStageRecord objects metadata
+    """Build stage metadata for every theory level in ``plan``.
+
+    Stage labels intentionally retain the existing ``EFT_<n>_after_<fields>``
+    format because report paths and historical output currently depend on it.
+    New calculation logic should identify a stage from its field content rather
+    than from this compatibility label.
     """
     stages: list[EFTStageRecord] = []
     active = list(heavy_fields(shared_scalar=shared_scalar))

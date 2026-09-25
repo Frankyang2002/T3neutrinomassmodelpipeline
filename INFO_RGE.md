@@ -6,37 +6,37 @@ This document describes the implemented RGE path after the T3 UV model has been 
 
 The code uses
 
-\[
+$$
 Q=T_3+Y,
 \qquad t=\ln\mu.
-\]
+$$
 
 The matched Weinberg coefficient is related to the Majorana neutrino mass by
 
-\[
+$$
 m_\nu=-\frac{v^2}{2}C_5
-\]
+$$
 
-when \(v\simeq246\,\mathrm{GeV}\), equivalently \(m_\nu=-v_{174}^2C_5\).
+when $v\simeq246\,\mathrm{GeV}$, equivalently $m_\nu=-v_{174}^2C_5$.
 
 The final SMEFT Weinberg equation implemented in `RGE/running/weinberg/WeinbergRunning.py` is
 
-\[
+$$
 16\pi^2\frac{dC_5}{d\ln\mu}
 =
 (2\lambda_H-3g_2^2+2T)C_5
 -\frac32\left[
 Y_eY_e^\dagger C_5+C_5(Y_eY_e^\dagger)^T
 \right],
-\]
+$$
 
 where
 
-\[
+$$
 T=\operatorname{Tr}\left(
 Y_eY_e^\dagger+3Y_uY_u^\dagger+3Y_dY_d^\dagger
 \right).
-\]
+$$
 
 ## 2. RGE architecture
 
@@ -100,19 +100,19 @@ scalar_only_after_fermion_d5
 
 It applies when
 
-\[
+$$
 \text{UV}\xrightarrow{\;F\;}
 \text{SM + complete T3 scalar sector}
 \xrightarrow{\;\text{all remaining scalars}\;}
 \text{SMEFT}.
-\]
+$$
 
-For ordinary T3 this means the intermediate active heavy fields are \(\{S_1,S_2\}\).  For the shared-scalar branch the active set is \(\{S\}\).
+For ordinary T3 this means the intermediate active heavy fields are $\{S_1,S_2\}$.  For the shared-scalar branch the active set is $\{S\}$.
 
 The production backend performs, in order:
 
 1. the renormalisable scalar-EFT RGE;
-2. the dimension-five \(\psi^2\phi^2\) Wilson RGE;
+2. the dimension-five $\psi^2\phi^2$ Wilson RGE;
 3. construction of the full-flavor tree-level Wilson boundary;
 4. direct one-loop mixing into the Weinberg operator;
 5. resumed scalar-threshold matching;
@@ -124,12 +124,12 @@ The descriptive interfaces are under `RGE/running/intermediate/`.
 
 After integrating out the heavy fermion, a tree-level LLSS-type dimension-five Wilson coefficient is present.  Its one-loop direct mixing into the Weinberg operator contributes at the one-loop order retained by the project.
 
-The backend deliberately does not feed one-loop self-running of the heavy LLSS coefficient back through a scalar loop into the authoritative one-loop C5, because that combination would be of order \(\hbar^2\).
+The backend deliberately does not feed one-loop self-running of the heavy LLSS coefficient back through a scalar loop into the authoritative one-loop C5, because that combination would be of order $\hbar^2$.
 
 This fixed-order separation is why the code distinguishes:
 
 - hard threshold matching;
-- direct LLSS \(\to\) Weinberg running;
+- direct LLSS $\to$ Weinberg running;
 - diagnostic heavy-operator transport.
 
 ## 7. Scalar-only intermediate-EFT implementation
@@ -157,7 +157,8 @@ The intermediate Wilson calculation ultimately uses the generic tensor infrastru
 - `ScalarBasis.py` defines real scalar blocks;
 - `GaugeGenerators.py` builds gauge generators;
 - `FermionBasis.py` builds the Weyl-fermion basis and gauge sectors;
-- `WilsonTensorRGE.py` evaluates the one-loop \(\psi^2\phi^2\) tensor terms;
+- `WilsonTensorRGE.py` evaluates the one-loop $\psi^2\phi^2$ tensor terms;
+- `Psi2Phi3RGE.py` evaluates the one-loop $\psi^2\phi^3\to\psi^2\phi^3$ self-running terms needed by the scalar-first $d=6$ path;
 - `AnomalousDimensions.py` supplies the anomalous-dimension contributions.
 
 The historical scalar-only Wilson module constructs its context from matched Wilson/quartic seeds and RGBeta metadata, projects onto the required coefficient symmetry, evaluates the nonzero tensor beta functions, and records Weinberg-subspace diagnostics.
@@ -166,18 +167,18 @@ The historical scalar-only Wilson module constructs its context from matched Wil
 
 The current full-flavor direct-running path constructs a symmetric flavor boundary coefficient and derives the direct Weinberg beta in the form
 
-\[
+$$
 16\pi^2\,\beta_{\kappa,pq}
 = r\,C_{12,pq},
-\]
+$$
 
-where \(r\) is the representation/coupling prefactor extracted from the component calculation and \(C_{12,pq}\) carries the full flavor structure.
+where $r$ is the representation/coupling prefactor extracted from the component calculation and $C_{12,pq}$ carries the full flavor structure.
 
-Between two threshold scales \(\mu_h\) and \(\mu_l\), the fixed-order leading-log correction is proportional to
+Between two threshold scales $\mu_h$ and $\mu_l$, the fixed-order leading-log correction is proportional to
 
-\[
+$$
 \ln\!\frac{\mu_l}{\mu_h}.
-\]
+$$
 
 The equal-scale limit therefore vanishes.  The corresponding equal-scale and one-generation reductions are scientific diagnostics recorded by the validation layer.
 
@@ -213,21 +214,21 @@ calculation completed but an independent cross-check failed
 
 A scalar-first threshold can generate an intermediate operator of dimension six, schematically
 
-\[
+$$
 \frac{y\lambda_{T3}}{M_S^2}LFHHS.
-\]
+$$
 
-After later integration of \(F\) and the remaining scalar, this operator can contribute to the leading Weinberg coefficient.  Consequently, a dimension-five-only scalar-first intermediate theory is a truncation of the leading path, not a complete alternative ordering.
+After later integration of $F$ and the remaining scalar, this operator can contribute to the leading Weinberg coefficient.  Consequently, a dimension-five-only scalar-first intermediate theory is a truncation of the leading path, not a complete alternative ordering.
 
-The current code therefore:
+The implemented $d=6$ foundation now contains three concrete pieces:
 
-- allows generic scalar-first metadata in `PipelinePlan`;
-- requires `--allow-truncated-scalar-first` to request the present \(d\le5\) approximation;
-- labels it experimental/non-authoritative;
-- refuses to route unsupported field content through the fermion-first backend;
-- blocks authoritative downstream neutrino physics when production is incomplete.
+- `--eft-max-dimension 6` propagates the requested operator dimension to the Wolfram/Matchete matching call;
+- `RGE/running/intermediate/ScalarFirstDimensionSixSeed.py` extracts exact candidate $LFHHS$ terms from the Matchete tree EFT and preserves them verbatim as a boundary JSON artifact;
+- `RGE/general/Psi2Phi3RGE.py` implements the explicit one-loop $\psi^2\phi^3\leftarrow\psi^2\phi^3$ kernel of Eq. (4.25) with the same gauge, Yukawa, quartic, and collinear-anomalous-dimension conventions as the existing general tensor machinery.
 
-A genuinely order-general calculation requires the relevant dimension-six intermediate basis, matching, and running.
+The general-EFT source states that this class must additionally be supplemented by the EOM/redundant-$D^2\phi^4$ contribution of Eq. (2.36); that piece is not yet implemented.  This is therefore not yet an authoritative scalar-first production backend.  The exact Matchete boundary still has to be mapped into the symmetric tensor $C_{ijabc}=C_{(ij)(abc)}$, and any additional dimension-six operator mixing/EOM contributions required by that matched boundary must be verified before the later thresholds are allowed to construct the physical $C_5$.  Until then `IntermediateEFTRunning.py` deliberately leaves the interval as `NotImplementedForFieldContent`, so downstream neutrino physics remains blocked.
+
+The old $d\le5$ scalar-first diagnostic is still available only with `--allow-truncated-scalar-first`.
 
 ## 13. Low-energy full-flavor and numerical running
 

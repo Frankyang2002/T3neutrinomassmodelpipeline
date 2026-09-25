@@ -41,6 +41,7 @@ def build_and_match_t3_model(
     """
 
     threshold_plan = pipeline_plan.threshold_plan
+    eft_order = pipeline_plan.truncation.max_operator_dimension
 
     if request.kind == "class":
         assert request.model_class is not None
@@ -52,6 +53,7 @@ def build_and_match_t3_model(
             threshold_plan,
             study_output_dir,
             force,
+            eft_order=eft_order,
         )
 
     if request.kind == "shared_dimensions":
@@ -64,6 +66,7 @@ def build_and_match_t3_model(
             threshold_plan=threshold_plan,
             output_root=study_output_dir,
             force=force,
+            eft_order=eft_order,
         )
 
     d_s1, d_s2, d_f = request.dimensions
@@ -77,6 +80,7 @@ def build_and_match_t3_model(
         threshold_plan,
         study_output_dir,
         force,
+        eft_order=eft_order,
     )
 
 

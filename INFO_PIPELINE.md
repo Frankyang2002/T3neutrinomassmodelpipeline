@@ -6,27 +6,27 @@ This file is the repository-wide map of the implemented T3 radiative neutrino-ma
 
 The code uses the Standard Model hypercharge convention
 
-\[
+$$
 Q=T_3+Y.
-\]
+$$
 
-The T3 classification parameter \(\alpha\) is related to the physical hypercharges by
+The T3 classification parameter $\alpha$ is related to the physical hypercharges by
 
-\[
+$$
 Y(S_1)=\frac{\alpha}{2},\qquad
 Y(S_2)=\frac{\alpha+2}{2},\qquad
 Y(F)=\frac{\alpha+1}{2}.
-\]
+$$
 
-This is one half of the hypercharge number used in references which write \(Q=T_3+Y/2\).  In particular, the Restrepo-Zapata-Yaguna classification uses the doubled convention
+This is one half of the hypercharge number used in references which write $Q=T_3+Y/2$.  In particular, the Restrepo-Zapata-Yaguna classification uses the doubled convention
 
-\[
+$$
 Y_{\rm RZY}=2Y.
-\]
+$$
 
 The historical T3 representation classes are
 
-| class | \(d_{S_1}\) | \(d_{S_2}\) | \(d_F\) |
+| class | $d_{S_1}$ | $d_{S_2}$ | $d_F$ |
 |---|---:|---:|---:|
 | A | 1 | 3 | 2 |
 | B | 2 | 2 | 1 |
@@ -38,17 +38,17 @@ Normal production mode is restricted to the currently supported singlet/doublet/
 
 The generic T3 interactions are schematically
 
-\[
+$$
 y_1LFS_1+y_2LFS_2+\lambda_{T3}HHS_1S_2^\dagger+\text{h.c.},
-\]
+$$
 
 with representation-dependent conjugations and Clebsch-Gordan contractions supplied by the Wolfram/Matchete model builder.
 
 The project uses the Weinberg-to-neutrino-mass convention
 
-\[
+$$
 m_\nu=-v_{174}^2C_5=-\frac{v_{246}^2}{2}C_5.
-\]
+$$
 
 ## 2. Physical heavy fields
 
@@ -66,11 +66,11 @@ F, S
 
 where the one physical scalar `S` fills both formal topology roles `S1` and `S2` up to conjugation.  The authoritative physical/formal translation is centralised in `common/T3Fields.py`.  Threshold planning and RGE dispatch use physical fields; expansion back to formal `S1,S2` roles occurs only at the matching boundary.
 
-For the T3-B scotogenic point with \(\alpha=-1\), the formal hypercharges are
+For the T3-B scotogenic point with $\alpha=-1$, the formal hypercharges are
 
-\[
+$$
 Y(S_1)=-\frac12,\qquad Y(S_2)=+\frac12,\qquad Y(F)=0,
-\]
+$$
 
 and the two scalar roles correspond to one physical doublet and its conjugate.
 
@@ -125,17 +125,31 @@ python pipeline.py --dims 2 1 `
     --threshold S
 ```
 
-### Scalar-first limitation
+### Scalar-first dimension-six status
 
-The generic threshold metadata can represent scalar-first plans, but the complete scalar-first physics is not yet implemented.  Integrating a scalar first can generate an intermediate dimension-six operator schematically
+Integrating a scalar first can generate an intermediate dimension-six operator schematically
 
-\[
+$$
 \frac{y\lambda_{T3}}{M_S^2}\,L F H H S,
-\]
+$$
 
-which can feed the leading dimension-five Weinberg coefficient after later thresholds.  Therefore a scalar-first calculation truncated at \(d\le5\) is not physically equivalent to the verified fermion-first calculation.
+which can feed the leading dimension-five Weinberg coefficient after later thresholds.  Therefore a scalar-first calculation truncated at $d\le5$ is not physically equivalent to the verified fermion-first calculation.
 
-The CLI requires `--allow-truncated-scalar-first` for such a diagnostic plan.  The plan metadata marks it non-authoritative, and an unsupported intermediate field content blocks the authoritative low-energy neutrino stages rather than silently reusing the fermion-first backend.
+The matching order is now explicit run configuration.  `--eft-max-dimension 6` sends `EFTOrder -> 6` to Matchete, so the exact scalar-first tree EFT is retained instead of being discarded by the $d\le5$ truncation.  For the first scalar threshold the Python layer also extracts the exact candidate $\psi^2\phi^3$ terms from Matchete `InputForm` into a JSON boundary artifact without guessing Clebsch-Gordan factors or conjugations.
+
+`RGE/general/Psi2Phi3RGE.py` implements the one-loop $\psi^2\phi^3\to\psi^2\phi^3$ self-running tensor kernel.  The Matchete-to-tensor adapter and the complete operator-mixing/next-threshold production bridge are not yet verified, so scalar-first intervals still report `NotImplementedForFieldContent` and block authoritative low-energy neutrino stages.  The older $d\le5$ diagnostic remains available only with `--allow-truncated-scalar-first`.
+
+A scalar-first $d=6$ boundary probe can be generated with
+
+```powershell
+python pipeline.py --dims 2 2 1 --alpha -1 `
+    --threshold S1 `
+    --threshold F `
+    --threshold S2 `
+    --eft-max-dimension 6 `
+    --study scalar_first_d6_probe `
+    --debug-reports
+```
 
 ## 5. Model selection and UV matching
 
@@ -154,7 +168,7 @@ The Wolfram side constructs the UV theory and performs matching through files un
 - `RunMatching.wl`;
 - `RunThresholdStage.wl`.
 
-The normal matching target remains dimension five at one loop.
+The default matching target remains dimension five at one loop.  Scalar-first studies can request dimension six explicitly with `--eft-max-dimension 6`.
 
 ## 6. UV and intermediate-EFT running
 
@@ -218,20 +232,20 @@ matched/final C5
 
 The three-generation SMEFT equation used by `RGE/running/weinberg/WeinbergRunning.py` is
 
-\[
+$$
 16\pi^2\frac{dC_5}{d\ln\mu}
 =
 (2\lambda_H-3g_2^2+2T)C_5
 -\frac32\left[
 Y_eY_e^\dagger C_5+C_5(Y_eY_e^\dagger)^T
 \right],
-\]
+$$
 
 with
 
-\[
+$$
 T=\operatorname{Tr}(Y_eY_e^\dagger+3Y_uY_u^\dagger+3Y_dY_d^\dagger).
-\]
+$$
 
 The numerical stage evolves the SM parameters and the complex symmetric `C5` matrix and then uses `RGE/phenomenology/NeutrinoObservables.py` for the Takagi factorisation and observable extraction.
 
@@ -277,7 +291,7 @@ Historical report paths, summary keys, and serialized filenames are intentionall
 | `RGE/running/IntermediateEFTRunning.py` | intermediate field-content dispatch |
 | `RGE/running/backends/` | concrete intermediate-EFT production backends |
 | `RGE/running/intermediate/` | scalar-only intermediate-EFT tensor, Wilson-flow, and threshold implementations |
-| `RGE/general/` | generic tensor RGE machinery |
+| `RGE/general/` | generic tensor RGE machinery, including the dimension-six `Psi2Phi3RGE.py` self-running kernel |
 | `RGE/running/weinberg/` | final C5 construction and SMEFT running |
 | `Numerical/IntermediateScalarState.py` | numerical state for the post-F scalar-only intermediate EFT |
 | `physics/LowEnergyNeutrino.py` | post-matching neutrino calculation orchestration |

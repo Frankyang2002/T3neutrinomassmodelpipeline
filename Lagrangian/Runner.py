@@ -29,9 +29,19 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 OUTPUT_DIR = PROJECT_ROOT / "output"
 RUN_MODEL_SCRIPT = PROJECT_ROOT / "Lagrangian" / "RunModel.wl"
 
-# Weinberg dimension-five matching at one loop.
+# Default production target. Individual PipelinePlan objects may request d=6
+# matching for scalar-first studies; the loop order remains one throughout.
 EFT_ORDER = 5
 LOOP_ORDER = 1
+
+
+def _validated_eft_order(eft_order: int) -> int:
+    """Return a supported matching order for the Wolfram/Matchete boundary."""
+    if isinstance(eft_order, bool) or not isinstance(eft_order, int):
+        raise TypeError("eft_order must be an integer.")
+    if eft_order not in (5, 6):
+        raise ValueError("Current T3 matching supports EFT order 5 or 6.")
+    return eft_order
 
 
 def _physicalize_shared_scalar_summary(
@@ -104,13 +114,16 @@ def run_model(
     export_rge_tensors: bool = False,
     threshold_plan: tuple[tuple[str, ...], ...] | None = None,
     shared_scalar: bool = False,
+    eft_order: int = EFT_ORDER,
 ) -> RunRecord:
-    """What this does is 
+    """What this does is
     1. Delete previous output directory and recreate for new results
     2. Run Runmodel.wl with out inputs
     3. Get its output and errors into a file
     4. Get debug reports and summaries
     5. Return a RunRecord object with all the data."""
+
+    eft_order = _validated_eft_order(eft_order)
 
     # Delete the previous output directory and recreate it.
     # This prevents an old successful result being mistaken for a new result
@@ -139,7 +152,7 @@ def run_model(
         "-file",
         str(RUN_MODEL_SCRIPT),
         str(output_dir),
-        str(EFT_ORDER),
+        str(eft_order),
         str(LOOP_ORDER),
         *model_args,
         threshold_token,
@@ -230,6 +243,7 @@ def run_model(
             "MatchingStatus": "NotRun",
         }
     )
+    summary.setdefault("RequestedEFTOrder", eft_order)
 
     if shared_scalar:
         summary = _physicalize_shared_scalar_summary(
@@ -298,8 +312,10 @@ def validate_dimensions(
     threshold_plan: tuple[tuple[str, ...], ...] | None = None,
     output_root: Path | None = None,
     force: bool = False,
+    *,
+    eft_order: int = EFT_ORDER,
 ) -> RunRecord:
-    """All it does is 
+    """All it does is
     1. Check if dimensions are correct, if not then return error
     2. Identify if its an T3-A..E model and name the output folder after it
     3. Use run_model"""
@@ -375,6 +391,7 @@ def validate_dimensions(
         debug_reports,
         export_rge_tensors,
         threshold_plan,
+        eft_order=eft_order,
     )
 
 
@@ -387,6 +404,7 @@ def validate_shared_dimensions(
     threshold_plan: tuple[tuple[str, ...], ...] | None = None,
     output_root: Path | None = None,
     force: bool = False,
+    eft_order: int = EFT_ORDER,
 ) -> RunRecord:
     """Run the one-physical-scalar scotogenic branch."""
     if not valid_shared_scalar_topology_dimensions(d_s, d_f):
@@ -413,6 +431,7 @@ def validate_shared_dimensions(
     return run_model(
         name, alpha, d_s1, d_s2, d_f, output_dir, model_args,
         debug_reports, export_rge_tensors, threshold_plan, shared_scalar=True,
+        eft_order=eft_order,
     )
 
 
@@ -424,6 +443,8 @@ def obtain_class_dimensions(
     threshold_plan: tuple[tuple[str, ...], ...] | None = None,
     output_root: Path | None = None,
     force: bool = False,
+    *,
+    eft_order: int = EFT_ORDER,
 ) -> RunRecord:
     """Convert a known A-E class into dimensions and then run normally."""
 
@@ -442,4 +463,5 @@ def obtain_class_dimensions(
         threshold_plan,
         output_root,
         force,
+        eft_order=eft_order,
     )

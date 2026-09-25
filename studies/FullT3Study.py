@@ -47,6 +47,10 @@ def _forward_common_cli_args(args: argparse.Namespace) -> list[str]:
     if args.allow_truncated_scalar_first:
         forwarded.append("--allow-truncated-scalar-first")
 
+    eft_max_dimension = int(getattr(args, "eft_max_dimension", 5))
+    if eft_max_dimension != 5:
+        forwarded.extend(["--eft-max-dimension", str(eft_max_dimension)])
+
     if args.numerical is not None:
         forwarded.extend(["--numerical", str(args.numerical)])
 

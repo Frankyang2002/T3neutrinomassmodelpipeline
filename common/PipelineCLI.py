@@ -12,6 +12,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from common.EFT import EFTTruncation
 from common.PipelinePlan import PipelinePlan
 
 
@@ -120,6 +121,17 @@ def build_argument_parser() -> argparse.ArgumentParser:
         ),
     )
     parser.add_argument(
+        "--eft-max-dimension",
+        type=int,
+        choices=(5, 6),
+        default=5,
+        help=(
+            "maximum EFT operator dimension retained by Matchete matching. "
+            "The default is 5. Use 6 for scalar-first studies that must retain "
+            "the leading psi^2 phi^3 intermediate operator."
+        ),
+    )
+    parser.add_argument(
         "--allow-truncated-scalar-first",
         action="store_true",
         help=(
@@ -185,6 +197,9 @@ def resolve_pipeline_plan(
             args.threshold,
             args.threshold_scale,
             shared_scalar=shared_scalar_mode,
+            truncation=EFTTruncation(
+                max_operator_dimension=args.eft_max_dimension,
+            ),
         )
     except (TypeError, ValueError) as exc:
         parser.error(str(exc))

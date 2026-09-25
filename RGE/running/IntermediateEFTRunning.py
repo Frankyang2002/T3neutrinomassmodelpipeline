@@ -21,6 +21,10 @@ from RGE.running.backends.ScalarOnlyAfterFermion import (
     run as run_scalar_only_after_fermion,
     supports as supports_scalar_only_after_fermion,
 )
+from RGE.running.intermediate.ScalarFirstDimensionSixSeed import (
+    extract_scalar_first_dimension_six_seed,
+    supports_scalar_first_dimension_six_seed,
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -79,6 +83,17 @@ def run_intermediate_eft_interval(
 
     if backend is None:
         status = "NotImplementedForFieldContent"
+
+        # A d=6 scalar-first run already contains the exact Matchete tree EFT.
+        # Preserve the candidate psi^2 phi^3 boundary terms now, without
+        # pretending that their tensor adapter/RGE is production-complete.
+        if supports_scalar_first_dimension_six_seed(record, stage, interval):
+            try:
+                extract_scalar_first_dimension_six_seed(record, stage, interval)
+            except Exception as exc:
+                stage.summary["ScalarFirstDimensionSixSeedStatus"] = "Failed"
+                stage.summary["ScalarFirstDimensionSixSeedError"] = str(exc)
+
         stage.summary.setdefault("IntermediateRunningStatus", status)
         stage.summary.setdefault("IntermediateRunningBackend", None)
         return IntermediateEFTRunningOutcome(

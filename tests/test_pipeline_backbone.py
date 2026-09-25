@@ -74,6 +74,8 @@ def test_pipeline_imports_configuration_helpers_instead_of_implementing_them() -
     assert "_build_run_records" not in function_names
     assert "_select_study_models" not in function_names
     assert "_build_and_match_t3_models" not in function_names
+    assert "print_summary" not in function_names
+    assert "finish_runs" not in function_names
 
 
 def test_main_keeps_complete_calculation_order_explicit() -> None:
@@ -92,7 +94,7 @@ def test_main_keeps_complete_calculation_order_explicit() -> None:
         "organise_matched_weinberg_coefficient",
         "_run_intermediate_eft_stages",
         "_run_low_energy_neutrino_stages",
-        "finish_runs",
+        "finish_pipeline_run",
     )
     positions = [source.index(name) for name in ordered_calls]
     assert positions == sorted(positions)

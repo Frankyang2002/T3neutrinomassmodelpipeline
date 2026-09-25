@@ -1,4 +1,4 @@
-"""Bridge from a numerical T3 trajectory to the existing final-C5 evaluator.
+"""Bridge from a numerical T3 trajectory to the final-C5 evaluator.
 
 The authoritative final hierarchical Weinberg coefficient remains the JSON
 produced by
@@ -7,36 +7,10 @@ produced by
 
 and is evaluated numerically by
 
-    RGE.running.weinberg.NumericalWeinbergStage.evaluate_final_weinberg_json.
+    Numerical.WeinbergStage.evaluate_final_weinberg_json.
 
 This module supplies the adapter from the running numerical trajectory to the
-configuration expected by that existing evaluator.
-
-Important basis convention
---------------------------
-``RGE.matching.FlavorC5Matching`` evaluates the heavy-generation sum in the
-heavy-fermion mass basis.
-
-For a Majorana heavy fermion the UV state enforces a complex-symmetric MF.
-At the F threshold this bridge therefore performs the Takagi change of basis
-
-    U_F^T MF U_F = diag(M_1, M_2, M_3),  M_r >= 0,
-
-and rotates the heavy index of the lepton-by-heavy Yukawa matrices as
-
-    y1 -> y1 U_F,
-    y2 -> y2 U_F.
-
-This follows the matrix layout used by ``FlavorC5Matching``, where the heavy
-index is the Yukawa column index.
-
-For non-Majorana heavy fermions, an off-diagonal MF would require a validated
-bi-unitary Dirac/vectorlike basis transformation.  That transformation is not
-implemented here, so such states are still rejected.
-
-Shared-scalar mode is also rejected here: the current final-C5 numerical
-adapter is written in terms of the ordinary y1/y2, MS1/MS2, lambdaT3
-parameterization, whereas the shared numerical state uses h and lambda5.
+configuration expected by that evaluator.
 """
 
 from __future__ import annotations
@@ -53,9 +27,7 @@ from Numerical.IntermediateScalarState import (
     SharedT3IntermediateScalarState,
     T3IntermediateScalarState,
 )
-from RGE.running.weinberg.NumericalWeinbergStage import (
-    evaluate_final_weinberg_json,
-)
+from Numerical.WeinbergStage import evaluate_final_weinberg_json
 
 
 @dataclass(frozen=True)
@@ -78,8 +50,6 @@ class FinalC5NumericalInputs:
                 "MF": self.heavy_masses_gev.tolist(),
                 "MS1": float(self.scalar_mass1_gev),
                 "MS2": float(self.scalar_mass2_gev),
-                # The hierarchical final-C5 adapter uses MS explicitly when
-                # supplied, avoiding the old equal-MS1/MS2 fallback.
                 "MS": float(self.grouped_scalar_matching_scale_gev),
                 "lambdaT3": complex(self.lambda_t3),
                 "y1_real": self.y1.real.tolist(),
@@ -148,16 +118,7 @@ def _majorana_takagi_mass_basis(
     residual_rtol: float,
     residual_atol: float,
 ) -> HeavyMassBasisData:
-    """Takagi-diagonalize Majorana MF and rotate the heavy Yukawa index.
-
-    The convention is
-
-        U_F^T MF U_F = D,
-
-    with D real, non-negative and sorted in ascending order.  Since y1 and y2
-    have shape (lepton, heavy), the same field redefinition acts on their
-    columns as y -> y U_F.
-    """
+    """Takagi-diagonalize Majorana MF and rotate the heavy Yukawa index."""
 
     matrix = np.asarray(state.MF, dtype=complex)
 
@@ -315,21 +276,7 @@ def final_c5_inputs_from_trajectory(
     takagi_residual_rtol: float = 1.0e-10,
     takagi_residual_atol: float = 1.0e-10,
 ) -> FinalC5NumericalInputs:
-    """Extract the existing final-C5 evaluator inputs from a trajectory.
-
-    Scale assignment
-    ----------------
-    y1, y2, MF:
-        taken at the UV endpoint mu_F, immediately before F is removed.
-
-    MS1, MS2, lambdaT3:
-        taken at the scalar-only intermediate endpoint mu_S, immediately before
-        S1/S2 are removed.
-
-    MS:
-        the explicit grouped scalar matching scale used by the numerical
-        trajectory.
-    """
+    """Extract the existing final-C5 evaluator inputs from a trajectory."""
 
     uv_state = trajectory.uv_threshold_state
     intermediate_state = trajectory.eft1_threshold_state

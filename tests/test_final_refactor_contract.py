@@ -42,12 +42,14 @@ def test_documentation_states_the_project_hypercharge_conversion_explicitly() ->
         assert "Y(F)=\\frac{\\alpha+1}{2}" in source.replace(" ", "")
 
 
-def test_scalar_first_dimension_six_limitation_is_documented() -> None:
+def test_scalar_first_is_documented_as_outside_production_scope() -> None:
     for relative in ("INFO_PIPELINE.md", "INFO_RGE.md", "INFO_LAGRANGIAN.md"):
         source = _text(relative)
-        assert "--allow-truncated-scalar-first" in source
         assert "dimension-six" in source.lower()
-        assert "non-authoritative" in source.lower() or "not a complete" in source.lower()
+        assert "scalar-first" in source.lower()
+        assert "production" in source.lower()
+        assert "--allow-truncated-scalar-first" not in source
+        assert "--eft-max-dimension" not in source
 
 
 def test_historical_eft1_implementation_package_is_retired() -> None:

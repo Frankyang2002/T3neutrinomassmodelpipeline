@@ -1,8 +1,8 @@
 """Scale-dependent SM+Weinberg trajectory and neutrino observables.
 
-This module reuses the full-flavour ODE packing and beta implementation from
-``RGE.running.weinberg.WeinbergRunning`` and retains the full accepted
-trajectory.
+This module reuses the numerical final-EFT state packing from
+``Numerical.WeinbergRunning`` and retains the full accepted trajectory. The
+actual beta-function model is defined under ``RGE.running.weinberg.WeinbergRGE``.
 
 The project convention is
 
@@ -25,7 +25,7 @@ from RGE.phenomenology.NeutrinoObservables import (
     NeutrinoObservables,
     calculate_neutrino_observables,
 )
-from RGE.running.weinberg.WeinbergRunning import (
+from Numerical.WeinbergRunning import (
     SMInitialConditions,
     _beta,
     _pack,
@@ -223,9 +223,6 @@ def run_weinberg_trajectory(
         mu_values[0] = mu_initial
         mu_values[-1] = mu_final
 
-    # Symmetrize each C5 only at the stored-output level to remove tiny
-    # antisymmetric integration roundoff, matching the endpoint runner's
-    # established treatment.
     y = np.asarray(solution.y, dtype=float).copy()
 
     for index in range(y.shape[1]):
@@ -242,7 +239,6 @@ def run_weinberg_trajectory(
 
         c5 = 0.5 * (c5 + c5.T)
 
-        # _pack expects the existing SMInitialConditions container.
         cleaned = SMInitialConditions(
             gY=gY,
             g2=g2,
@@ -296,21 +292,11 @@ def neutrino_mass_from_c5(
     return -(vev**2 / 2.0) * c5
 
 
-
 def charged_lepton_mass_basis_matrix(
     mass_matrix_gev: np.ndarray,
     ye: np.ndarray,
 ) -> np.ndarray:
-    """Rotate a Majorana neutrino mass matrix to the charged-lepton mass basis.
-
-    With the convention Y_e -> U_e^\dagger Y_e V_e, the lepton-doublet field
-    change gives
-
-        m_nu -> U_e^T m_nu U_e.
-
-    Singular values are ordered increasingly so the rows correspond to
-    (e, mu, tau).
-    """
+    """Rotate a Majorana neutrino mass matrix to the charged-lepton mass basis."""
 
     mass_matrix = np.asarray(mass_matrix_gev, dtype=complex)
     ye = np.asarray(ye, dtype=complex)
@@ -326,6 +312,7 @@ def charged_lepton_mass_basis_matrix(
 
     rotated = left.T @ mass_matrix @ left
     return 0.5 * (rotated + rotated.T)
+
 
 def scale_dependent_neutrino_observables(
     trajectory: WeinbergTrajectoryResult,

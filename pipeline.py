@@ -47,10 +47,7 @@ from Lagrangian.T3ModelMatching import (
     build_and_match_t3_models as _build_and_match_t3_models,
 )
 from RGE.running.UVRunning import run_uv_rge as run_uv_rgbeta_stage
-from Reports.PipelineReports import (
-    finish_pipeline_run,
-    print_pipeline_summary,
-)
+from Reports.PipelineReports import finish_pipeline_run
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent
@@ -66,31 +63,6 @@ def _stage_for_running_interval(
     return record.stage_with_active_fields(
         *sorted(interval.active_heavy_fields)
     )
-
-
-def print_summary(records: list[RunRecord], aggregate_dir: Path | None = None) -> int:
-    """Compatibility wrapper for the pipeline-level run summary."""
-    return print_pipeline_summary(records, aggregate_dir)
-
-
-
-def finish_runs(
-    records: list[RunRecord],
-    debug_reports: bool = False,
-    physics_failed: bool = False,
-    *,
-    study_output_dir: Path | None = None,
-    study_report_dir: Path | None = None,
-) -> int:
-    """Compatibility wrapper for summary and report generation."""
-    return finish_pipeline_run(
-        records,
-        debug_reports=debug_reports,
-        physics_failed=physics_failed,
-        study_output_dir=study_output_dir,
-        study_report_dir=study_report_dir,
-    )
-
 
 
 def _attach_threshold_metadata(
@@ -323,7 +295,7 @@ def main() -> int:
         numerical_input=args.numerical,
     )
 
-    return finish_runs(
+    return finish_pipeline_run(
         records,
         args.debug_reports,
         physics_failed,

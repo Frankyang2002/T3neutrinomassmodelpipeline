@@ -41,7 +41,7 @@ from Numerical.ThresholdMatching import (
     project_after_fermion_threshold,
 )
 from Numerical.UVRunner import UVRunningResult, run_uv_segment
-from RGE.running.weinberg.WeinbergRunning import (
+from Numerical.WeinbergRunning import (
     NumericalRGEResult,
     evolve_weinberg,
 )

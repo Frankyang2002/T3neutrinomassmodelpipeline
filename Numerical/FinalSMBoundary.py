@@ -20,7 +20,7 @@ from Numerical.IntermediateScalarState import (
     T3IntermediateScalarState,
 )
 from Numerical.State import SMNumericalState
-from RGE.running.weinberg.WeinbergRunning import SMInitialConditions
+from Numerical.WeinbergRunning import SMInitialConditions
 
 
 IntermediateScalarState = T3IntermediateScalarState | SharedT3IntermediateScalarState

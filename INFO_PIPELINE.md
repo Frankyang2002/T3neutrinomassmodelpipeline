@@ -125,31 +125,24 @@ python pipeline.py --dims 2 1 `
     --threshold S
 ```
 
-### Scalar-first dimension-six status
+### Scalar-first scope
 
-Integrating a scalar first can generate an intermediate dimension-six operator schematically
+Scalar-first threshold orderings are intentionally outside the production scope used for this project. Integrating a scalar first can generate an intermediate dimension-six operator schematically
 
 $$
 \frac{y\lambda_{T3}}{M_S^2}\,L F H H S,
 $$
 
-which can feed the leading dimension-five Weinberg coefficient after later thresholds.  Therefore a scalar-first calculation truncated at $d\le5$ is not physically equivalent to the verified fermion-first calculation.
+which can be the leading EFT representation of the T3 amplitude at that stage. A $d\le5$ scalar-first calculation would therefore be incomplete rather than merely a smaller correction.
 
-The matching order is now explicit run configuration.  `--eft-max-dimension 6` sends `EFTOrder -> 6` to Matchete, so the exact scalar-first tree EFT is retained instead of being discarded by the $d\le5$ truncation.  For the first scalar threshold the Python layer also extracts the exact candidate $\psi^2\phi^3$ terms from Matchete `InputForm` into a JSON boundary artifact without guessing Clebsch-Gordan factors or conjugations.
+The user-facing pipeline now rejects scalar-first and partially split scalar hierarchies before matching. The supported production choices are:
 
-`RGE/general/Psi2Phi3RGE.py` implements the one-loop $\psi^2\phi^3\to\psi^2\phi^3$ self-running tensor kernel.  The Matchete-to-tensor adapter and the complete operator-mixing/next-threshold production bridge are not yet verified, so scalar-first intervals still report `NotImplementedForFieldContent` and block authoritative low-energy neutrino stages.  The older $d\le5$ diagnostic remains available only with `--allow-truncated-scalar-first`.
-
-A scalar-first $d=6$ boundary probe can be generated with
-
-```powershell
-python pipeline.py --dims 2 2 1 --alpha -1 `
-    --threshold S1 `
-    --threshold F `
-    --threshold S2 `
-    --eft-max-dimension 6 `
-    --study scalar_first_d6_probe `
-    --debug-reports
+```text
+common threshold:          (F,S1,S2)   or (F,S)
+verified hierarchy:        F -> (S1,S2) or F -> S
 ```
+
+`PipelinePlan` remains field-content based internally, so the architecture does not need to be rewritten if a higher-dimensional scalar-first treatment is added in a future project. No scalar-first $d=6$ production code is retained in the current source tree.
 
 ## 5. Model selection and UV matching
 
@@ -168,7 +161,7 @@ The Wolfram side constructs the UV theory and performs matching through files un
 - `RunMatching.wl`;
 - `RunThresholdStage.wl`.
 
-The default matching target remains dimension five at one loop.  Scalar-first studies can request dimension six explicitly with `--eft-max-dimension 6`.
+The production matching target is fixed at dimension five at one loop.
 
 ## 6. UV and intermediate-EFT running
 
@@ -291,7 +284,7 @@ Historical report paths, summary keys, and serialized filenames are intentionall
 | `RGE/running/IntermediateEFTRunning.py` | intermediate field-content dispatch |
 | `RGE/running/backends/` | concrete intermediate-EFT production backends |
 | `RGE/running/intermediate/` | scalar-only intermediate-EFT tensor, Wilson-flow, and threshold implementations |
-| `RGE/general/` | generic tensor RGE machinery, including the dimension-six `Psi2Phi3RGE.py` self-running kernel |
+| `RGE/general/` | generic scalar, fermion, gauge, anomalous-dimension, and dimension-five Wilson-tensor RGE machinery |
 | `RGE/running/weinberg/` | final C5 construction and SMEFT running |
 | `Numerical/IntermediateScalarState.py` | numerical state for the post-F scalar-only intermediate EFT |
 | `physics/LowEnergyNeutrino.py` | post-matching neutrino calculation orchestration |

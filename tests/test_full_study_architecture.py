@@ -17,7 +17,6 @@ def _args(**overrides) -> argparse.Namespace:
         "numerical": None,
         "threshold": None,
         "threshold_scale": None,
-        "allow_truncated_scalar_first": False,
     }
     values.update(overrides)
     return argparse.Namespace(**values)
@@ -30,13 +29,11 @@ def test_forwarded_full_study_cli_contract_is_preserved() -> None:
         numerical=Path("point.json"),
         threshold=[["F"], ["S1", "S2"]],
         threshold_scale=["MF", "MS"],
-        allow_truncated_scalar_first=True,
     )
 
     assert FullT3Study._forward_common_cli_args(args) == [
         "--debug-reports",
         "--force",
-        "--allow-truncated-scalar-first",
         "--numerical",
         "point.json",
         "--threshold",

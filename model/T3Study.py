@@ -12,11 +12,8 @@ from __future__ import annotations
 
 import argparse
 from dataclasses import dataclass
-from pathlib import Path
 from typing import Literal
 
-from common.PipelinePlan import PipelinePlan
-from common.RunRecords import RunRecord
 from common.T3Model import SMOKE, T3_CLASSES, t3_has_neutral_bsm_component
 
 
@@ -174,37 +171,3 @@ def select_study_models(
         T3ModelRequest.class_point(model_class, alpha)
         for model_class, alpha in points
     ]
-
-
-def build_run_records(
-    parser: argparse.ArgumentParser,
-    args: argparse.Namespace,
-    *,
-    shared_scalar_mode: bool,
-    pipeline_plan: PipelinePlan,
-    study_output_dir: Path,
-) -> list[RunRecord]:
-    """Backward-compatible combined selection/build entry point.
-
-    New pipeline code calls :func:`select_study_models` and
-    ``Lagrangian.T3ModelMatching.build_and_match_t3_models`` separately so the
-    central backbone visibly distinguishes model selection from matching.
-    """
-
-    from Lagrangian.T3ModelMatching import build_and_match_t3_models
-
-    requests = select_study_models(
-        args,
-        shared_scalar_mode=shared_scalar_mode,
-    )
-    try:
-        return build_and_match_t3_models(
-            requests,
-            pipeline_plan=pipeline_plan,
-            study_output_dir=study_output_dir,
-            debug_reports=args.debug_reports,
-            force=args.force,
-        )
-    except ValueError as exc:
-        parser.error(str(exc))
-        raise AssertionError("argparse.error() should not return") from exc

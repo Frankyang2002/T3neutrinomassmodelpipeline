@@ -3,7 +3,7 @@ from __future__ import annotations
 import unittest
 import numpy as np
 
-from RGE.running.weinberg.WeinbergRunning import (
+from Numerical.WeinbergRunning import (
     LOOP,
     SMInitialConditions,
     _beta,

@@ -1,11 +1,14 @@
-"""
-Full-flavour one-loop SM + Weinberg-operator running.
+"""Numerical integration of the final SM + Weinberg EFT.
+
+The RGE equations themselves live in
+``RGE.running.weinberg.WeinbergRGE``. This module owns numerical state
+validation, packing/unpacking, ``solve_ivp`` integration, and endpoint results.
 
 Conventions
 -----------
 - t = ln(mu)
 - gY is the ordinary SM hypercharge coupling.
-- V(H) = (lambdaH / 2) (H^\dagger H)^2.
+- V(H) = (lambdaH / 2) (H^dagger H)^2.
 - ye, yu, yd are full complex 3x3 Yukawa matrices.
 - K is the full complex symmetric 3x3 Weinberg coefficient.
 - Project convention: L_EFT contains (1/2) K O5 + h.c., hence
@@ -17,94 +20,16 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 import numpy as np
-import sympy as sp
 from scipy.integrate import solve_ivp
 
-
-g2 = sp.Symbol("g2")
-lambdaH = sp.Symbol("lambdaH")
-LOOP = 16.0 * np.pi**2
-
-
-def symbolic_complex_matrix(prefix: str, rows: int, cols: int) -> sp.Matrix:
-    return sp.Matrix(
-        rows,
-        cols,
-        lambda i, j: sp.Symbol(f"{prefix}{i + 1}{j + 1}"),
-    )
+from RGE.running.weinberg.WeinbergRGE import (
+    LOOP_FACTOR,
+    sm_weinberg_beta,
+)
 
 
-def symbolic_symmetric_matrix(prefix: str, size: int) -> sp.Matrix:
-    entries: dict[tuple[int, int], sp.Symbol] = {}
-    for i in range(size):
-        for j in range(i, size):
-            entries[(i, j)] = sp.Symbol(f"{prefix}{i + 1}{j + 1}")
-    return sp.Matrix(
-        size,
-        size,
-        lambda i, j: entries[(min(i, j), max(i, j))],
-    )
-
-
-def dagger(matrix: sp.MatrixBase) -> sp.Matrix:
-    return sp.conjugate(matrix.T)
-
-
-def yukawa_trace(
-    Ye: sp.MatrixBase,
-    Yu: sp.MatrixBase,
-    Yd: sp.MatrixBase,
-) -> sp.Expr:
-    return sp.expand(
-        sp.trace(Ye * dagger(Ye))
-        + 3 * sp.trace(Yu * dagger(Yu))
-        + 3 * sp.trace(Yd * dagger(Yd))
-    )
-
-
-def beta_weinberg_matrix(
-    K: sp.MatrixBase,
-    Ye: sp.MatrixBase,
-    Yu: sp.MatrixBase,
-    Yd: sp.MatrixBase,
-    *,
-    higgs_quartic: sp.Expr = lambdaH,
-    weak_coupling: sp.Expr = g2,
-    expand_result: bool = True,
-) -> sp.Matrix:
-    """Return 16 pi^2 beta_K for the full three-generation SMEFT."""
-
-    if K.rows != K.cols:
-        raise ValueError("K must be square.")
-
-    n = K.rows
-    for name, matrix in (("Ye", Ye), ("Yu", Yu), ("Yd", Yd)):
-        if matrix.rows != n or matrix.cols != n:
-            raise ValueError(f"{name} must be {n}x{n} to match K.")
-
-    T = yukawa_trace(Ye, Yu, Yd)
-    YeYeDag = Ye * dagger(Ye)
-
-    beta = (
-        (2 * higgs_quartic - 3 * weak_coupling**2 + 2 * T) * K
-        - sp.Rational(3, 2)
-        * (YeYeDag * K + K * YeYeDag.T)
-    )
-
-    if expand_result:
-        return beta.applyfunc(sp.expand)
-    return beta
-
-
-def one_generation_reduction() -> sp.Expr:
-    kappa = sp.Symbol("kappa")
-    ye, yu, yd = sp.symbols("ye yu yd")
-    K = sp.Matrix([[kappa]])
-    Ye = sp.Matrix([[ye]])
-    Yu = sp.Matrix([[yu]])
-    Yd = sp.Matrix([[yd]])
-    beta = beta_weinberg_matrix(K, Ye, Yu, Yd)[0, 0]
-    return sp.factor(sp.simplify(beta / kappa))
+# Historical public constant retained for tests and callers.
+LOOP = LOOP_FACTOR
 
 
 @dataclass(frozen=True)
@@ -245,102 +170,32 @@ def _unpack(y: np.ndarray) -> tuple[
     )
 
 
-def _trace_yy_dagger(matrix: np.ndarray) -> float:
-    value = np.trace(matrix @ matrix.conj().T)
-    return float(np.real_if_close(value, tol=1000).real)
-
-
-def _trace_yyyy(matrix: np.ndarray) -> float:
-    yy = matrix @ matrix.conj().T
-    value = np.trace(yy @ yy)
-    return float(np.real_if_close(value, tol=1000).real)
-
-
 def _beta(
     _t: float,
     y: np.ndarray,
 ) -> np.ndarray:
-    """One-loop full-flavour SM beta functions plus beta_K."""
+    """Return d(state-vector)/dln(mu) from the final-EFT RGE model."""
 
     gY, g2_value, g3, lambdaH_value, ye, yu, yd, K = _unpack(y)
 
-    ye_ye_dag = ye @ ye.conj().T
-    yu_yu_dag = yu @ yu.conj().T
-    yd_yd_dag = yd @ yd.conj().T
-
-    T = (
-        _trace_yy_dagger(ye)
-        + 3.0 * _trace_yy_dagger(yu)
-        + 3.0 * _trace_yy_dagger(yd)
-    )
-    H4 = (
-        _trace_yyyy(ye)
-        + 3.0 * _trace_yyyy(yu)
-        + 3.0 * _trace_yyyy(yd)
-    )
-
-    beta_gY = (41.0 / 6.0) * gY**3
-    beta_g2 = (-19.0 / 6.0) * g2_value**3
-    beta_g3 = -7.0 * g3**3
-
-    beta_yu = (
-        (
-            T
-            - (17.0 / 12.0) * gY**2
-            - (9.0 / 4.0) * g2_value**2
-            - 8.0 * g3**2
-        )
-        * yu
-        + 1.5 * (yu_yu_dag @ yu - yd_yd_dag @ yu)
-    )
-
-    beta_yd = (
-        (
-            T
-            - (5.0 / 12.0) * gY**2
-            - (9.0 / 4.0) * g2_value**2
-            - 8.0 * g3**2
-        )
-        * yd
-        + 1.5 * (yd_yd_dag @ yd - yu_yu_dag @ yd)
-    )
-
-    beta_ye = (
-        (
-            T
-            - (15.0 / 4.0) * gY**2
-            - (9.0 / 4.0) * g2_value**2
-        )
-        * ye
-        + 1.5 * (ye_ye_dag @ ye)
-    )
-
-    beta_lambdaH = (
-        12.0 * lambdaH_value**2
-        + lambdaH_value
-        * (
-            -3.0 * gY**2
-            - 9.0 * g2_value**2
-            + 4.0 * T
-        )
-        + (3.0 / 4.0) * gY**4
-        + (3.0 / 2.0) * gY**2 * g2_value**2
-        + (9.0 / 4.0) * g2_value**4
-        - 4.0 * H4
-    )
-
-    beta_K = (
-        (
-            2.0 * lambdaH_value
-            - 3.0 * g2_value**2
-            + 2.0 * T
-        )
-        * K
-        - 1.5
-        * (
-            ye_ye_dag @ K
-            + K @ ye_ye_dag.T
-        )
+    (
+        beta_gY,
+        beta_g2,
+        beta_g3,
+        beta_lambdaH,
+        beta_ye,
+        beta_yu,
+        beta_yd,
+        beta_K,
+    ) = sm_weinberg_beta(
+        gY=gY,
+        g2_value=g2_value,
+        g3=g3,
+        lambdaH_value=lambdaH_value,
+        ye=ye,
+        yu=yu,
+        yd=yd,
+        K=K,
     )
 
     derivative = np.concatenate(
@@ -367,6 +222,8 @@ def evolve_weinberg(
     rtol: float = 1e-8,
     atol: float = 1e-11,
 ) -> NumericalRGEResult:
+    """Numerically evolve the final SM + Weinberg EFT between two scales."""
+
     if mu_initial <= 0 or mu_final <= 0:
         raise ValueError("RGE scales must be positive.")
 

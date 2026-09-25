@@ -43,13 +43,48 @@ def test_shared_scalar_mode_rejects_other_alpha() -> None:
     assert exc_info.value.code == 2
 
 
-def test_scalar_first_threshold_plan_requires_explicit_truncation_opt_in() -> None:
+def test_verified_fermion_first_plan_is_accepted() -> None:
+    parser = build_argument_parser()
+    args = parser.parse_args(
+        [
+            "--dims", "2", "2", "1",
+            "--threshold", "F",
+            "--threshold", "S1", "S2",
+        ]
+    )
+    shared = resolve_model_mode(parser, args)
+    plan = resolve_pipeline_plan(parser, args, shared_scalar_mode=shared)
+
+    assert plan.threshold_plan == (("F",), ("S1", "S2"))
+    assert plan.threshold_scales == ("MF", "MS")
+    assert plan.is_verified_fermion_first_hierarchy is True
+    assert plan.is_supported_production_order is True
+
+
+def test_scalar_first_threshold_plan_is_rejected_for_production() -> None:
     parser = build_argument_parser()
     args = parser.parse_args(
         [
             "--dims", "2", "2", "1",
             "--threshold", "S1",
+            "--threshold", "F", "S2",
+        ]
+    )
+    shared = resolve_model_mode(parser, args)
+
+    with pytest.raises(SystemExit) as exc_info:
+        resolve_pipeline_plan(parser, args, shared_scalar_mode=shared)
+
+    assert exc_info.value.code == 2
+
+
+def test_partially_split_scalar_hierarchy_is_rejected_for_production() -> None:
+    parser = build_argument_parser()
+    args = parser.parse_args(
+        [
+            "--dims", "2", "2", "1",
             "--threshold", "F",
+            "--threshold", "S1",
             "--threshold", "S2",
         ]
     )
@@ -61,27 +96,10 @@ def test_scalar_first_threshold_plan_requires_explicit_truncation_opt_in() -> No
     assert exc_info.value.code == 2
 
 
-def test_scalar_first_threshold_plan_is_preserved_after_explicit_opt_in() -> None:
+def test_retired_scalar_first_cli_options_are_absent() -> None:
     parser = build_argument_parser()
-    args = parser.parse_args(
-        [
-            "--dims", "2", "2", "1",
-            "--threshold", "S1",
-            "--threshold", "F",
-            "--threshold", "S2",
-            "--allow-truncated-scalar-first",
-        ]
-    )
-    shared = resolve_model_mode(parser, args)
-    plan = resolve_pipeline_plan(parser, args, shared_scalar_mode=shared)
-
-    assert plan.threshold_plan == (("S1",), ("F",), ("S2",))
-    assert plan.threshold_scales == ("MS1", "MF", "MS2")
-    assert plan.scalar_first_truncates_leading_path is True
-    assert [interval.active_heavy_fields for interval in plan.running_intervals] == [
-        frozenset({"F", "S2"}),
-        frozenset({"S2"}),
-    ]
+    assert "--eft-max-dimension" not in parser._option_string_actions
+    assert "--allow-truncated-scalar-first" not in parser._option_string_actions
 
 
 def test_study_name_preserves_nested_full_study_path() -> None:

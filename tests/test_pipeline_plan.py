@@ -18,6 +18,8 @@ def test_default_common_threshold_plan_preserves_existing_scale_convention() -> 
     assert plan.threshold_plan == (("F", "S1", "S2"),)
     assert plan.threshold_scales == ("M_F_S1_S2",)
     assert plan.label == "(F,S1,S2)"
+    assert plan.is_common_threshold is True
+    assert plan.is_supported_production_order is True
 
 
 def test_fermion_first_plan_retains_existing_default_scales() -> None:
@@ -28,21 +30,32 @@ def test_fermion_first_plan_retains_existing_default_scales() -> None:
     assert plan.threshold_plan == (("F",), ("S1", "S2"))
     assert plan.threshold_scales == ("MF", "MS")
     assert plan.label == "F -> (S1,S2)"
+    assert plan.is_verified_fermion_first_hierarchy is True
+    assert plan.is_supported_production_order is True
 
 
-def test_scalar_first_plan_uses_same_generic_plan_object() -> None:
+def test_scalar_first_plan_remains_representable_but_is_outside_production_scope() -> None:
     plan = PipelinePlan.from_threshold_configuration(
         [["S1"], ["F"], ["S2"]]
     )
 
     assert plan.threshold_plan == (("S1",), ("F",), ("S2",))
     assert plan.threshold_scales == ("MS1", "MF", "MS2")
+    assert plan.is_supported_production_order is False
+    assert "above dimension five" in plan.production_scope_error()
 
     lines = plan.description_lines()
     assert lines[0] == "EFT truncation: d<=5"
     assert lines[1] == "Threshold plan: S1 -> F -> S2"
     assert "active heavy fields: F, S2" in lines[3]
     assert lines[-1].endswith("active heavy fields: none")
+
+
+def test_split_scalar_fermion_first_plan_is_outside_production_scope() -> None:
+    plan = PipelinePlan.from_threshold_configuration(
+        [["F"], ["S1"], ["S2"]]
+    )
+    assert plan.is_supported_production_order is False
 
 
 def test_explicit_threshold_scales_are_preserved() -> None:
@@ -61,26 +74,25 @@ def test_pipeline_plan_exposes_dimension_five_truncation_in_summary_metadata() -
 
     metadata = plan.summary_metadata()
 
-    # Historical keys are retained for report/output compatibility.
+    # Historical threshold keys are retained for report/output compatibility.
     assert metadata["ThresholdPlan"] == [["F"], ["S1", "S2"]]
     assert metadata["ThresholdPlanLabel"] == "F -> (S1,S2)"
     assert metadata["ThresholdScales"] == ["MF", "MS"]
 
-    # The approximation that used to be implicit is now explicit metadata.
+    # The production approximation remains explicit metadata.
     assert metadata["EFTTruncation"] == {
         "MaxOperatorDimension": 5,
         "Label": "d<=5",
     }
+    assert "ThresholdOrderingPhysics" not in metadata
 
 
-def test_pipeline_plan_can_carry_a_different_truncation_without_changing_order() -> None:
-    plan = PipelinePlan.from_threshold_configuration(
-        [["S1"], ["F"], ["S2"]],
-        truncation=EFTTruncation(max_operator_dimension=6),
-    )
-
-    assert plan.truncation.max_operator_dimension == 6
-    assert plan.threshold_plan == (("S1",), ("F",), ("S2",))
+def test_pipeline_plan_rejects_nonproduction_operator_truncation() -> None:
+    with pytest.raises(ValueError, match="supports only the d<=5 EFT truncation"):
+        PipelinePlan.from_threshold_configuration(
+            [["F"], ["S1", "S2"]],
+            truncation=EFTTruncation(max_operator_dimension=6),
+        )
 
 
 def test_stage_records_preserve_historical_report_labels() -> None:
@@ -101,15 +113,16 @@ def test_stage_records_preserve_historical_report_labels() -> None:
 
 def test_shared_scalar_plan_uses_physical_scalar_name() -> None:
     plan = PipelinePlan.from_threshold_configuration(
-        [["S"], ["F"]],
+        [["F"], ["S"]],
         shared_scalar=True,
     )
 
-    assert plan.threshold_plan == (("S",), ("F",))
-    assert plan.threshold_scales == ("MS", "MF")
+    assert plan.threshold_plan == (("F",), ("S",))
+    assert plan.threshold_scales == ("MF", "MS")
+    assert plan.is_verified_fermion_first_hierarchy is True
     stages = plan.build_stage_records()
     assert stages[0].active_field_set == frozenset({"F", "S"})
-    assert stages[1].active_field_set == frozenset({"F"})
+    assert stages[1].active_field_set == frozenset({"S"})
 
 
 def test_pipeline_plan_rejects_missing_heavy_field_even_when_constructed_directly() -> None:

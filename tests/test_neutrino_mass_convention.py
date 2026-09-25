@@ -8,7 +8,7 @@ import sympy as sp
 from RGE.running.weinberg.FlavorMatchedWeinbergStage import (
     build_neutrino_mass_matrix,
 )
-from RGE.running.weinberg.WeinbergRunning import neutrino_mass_matrix
+from Numerical.WeinbergRunning import neutrino_mass_matrix
 
 
 class NeutrinoMassConventionTests(unittest.TestCase):

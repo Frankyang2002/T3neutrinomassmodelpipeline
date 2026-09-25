@@ -158,7 +158,6 @@ The intermediate Wilson calculation ultimately uses the generic tensor infrastru
 - `GaugeGenerators.py` builds gauge generators;
 - `FermionBasis.py` builds the Weyl-fermion basis and gauge sectors;
 - `WilsonTensorRGE.py` evaluates the one-loop $\psi^2\phi^2$ tensor terms;
-- `Psi2Phi3RGE.py` evaluates the one-loop $\psi^2\phi^3\to\psi^2\phi^3$ self-running terms needed by the scalar-first $d=6$ path;
 - `AnomalousDimensions.py` supplies the anomalous-dimension contributions.
 
 The historical scalar-only Wilson module constructs its context from matched Wilson/quartic seeds and RGBeta metadata, projects onto the required coefficient symmetry, evaluates the nonzero tensor beta functions, and records Weinberg-subspace diagnostics.
@@ -212,23 +211,21 @@ calculation completed but an independent cross-check failed
 
 ## 12. Scalar-first threshold ordering
 
-A scalar-first threshold can generate an intermediate operator of dimension six, schematically
+Scalar-first matching is deliberately not part of the production calculation used for this project. A first scalar threshold can generate a leading intermediate dimension-six operator schematically
 
 $$
 \frac{y\lambda_{T3}}{M_S^2}LFHHS.
 $$
 
-After later integration of $F$ and the remaining scalar, this operator can contribute to the leading Weinberg coefficient.  Consequently, a dimension-five-only scalar-first intermediate theory is a truncation of the leading path, not a complete alternative ordering.
+That operator is suppressed by the heavy scalar scale, but it is still the leading EFT operator for that threshold ordering. Dropping it solely because it has dimension six would remove the leading scalar-first path. Fully separated scalar-first hierarchies can require still higher-dimensional intermediate bookkeeping at later thresholds.
 
-The implemented $d=6$ foundation now contains three concrete pieces:
+The production pipeline therefore accepts only a common threshold or the verified fermion-first hierarchy
 
-- `--eft-max-dimension 6` propagates the requested operator dimension to the Wolfram/Matchete matching call;
-- `RGE/running/intermediate/ScalarFirstDimensionSixSeed.py` extracts exact candidate $LFHHS$ terms from the Matchete tree EFT and preserves them verbatim as a boundary JSON artifact;
-- `RGE/general/Psi2Phi3RGE.py` implements the explicit one-loop $\psi^2\phi^3\leftarrow\psi^2\phi^3$ kernel of Eq. (4.25) with the same gauge, Yukawa, quartic, and collinear-anomalous-dimension conventions as the existing general tensor machinery.
+$$
+F\rightarrow(S_1,S_2)
+$$
 
-The general-EFT source states that this class must additionally be supplemented by the EOM/redundant-$D^2\phi^4$ contribution of Eq. (2.36); that piece is not yet implemented.  This is therefore not yet an authoritative scalar-first production backend.  The exact Matchete boundary still has to be mapped into the symmetric tensor $C_{ijabc}=C_{(ij)(abc)}$, and any additional dimension-six operator mixing/EOM contributions required by that matched boundary must be verified before the later thresholds are allowed to construct the physical $C_5$.  Until then `IntermediateEFTRunning.py` deliberately leaves the interval as `NotImplementedForFieldContent`, so downstream neutrino physics remains blocked.
-
-The old $d\le5$ scalar-first diagnostic is still available only with `--allow-truncated-scalar-first`.
+for ordinary T3, and $F\rightarrow S$ for the shared-scalar branch. Unsupported orderings are rejected by the CLI before matching. The generic field-content objects remain order-independent so this restriction is a production-scope choice rather than an architectural dependency on stage numbering.
 
 ## 13. Low-energy full-flavor and numerical running
 

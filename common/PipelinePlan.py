@@ -1,14 +1,14 @@
 """High-level execution plan for one T3 EFT calculation.
 
-The pipeline should be readable as a sequence of physical operations.  This
-module therefore collects the *configuration* of that sequence in one place:
+The pipeline should be readable as a sequence of physical operations. This
+module therefore collects the configuration of that sequence in one place:
 which physical fields are removed at each threshold, the scale of each
 threshold, and the EFT operator-dimension truncation.
 
 No matching formula, beta function, numerical integration, report generation,
-or validation calculation belongs here.  ``pipeline.py`` can consume this
-object as its central description of what should happen, while the detailed
-physics remains in specialised modules.
+or validation calculation belongs here. ``pipeline.py`` consumes this object
+as its central description of what should happen, while detailed physics
+remains in specialised modules.
 """
 
 from __future__ import annotations
@@ -42,13 +42,15 @@ from common.Thresholds import (
 class PipelinePlan:
     """Physical threshold sequence and EFT truncation for one pipeline run.
 
-    ``threshold_steps`` uses physical field names.  For ordinary T3 these are
-    ``F``, ``S1`` and ``S2``.  Shared-scalar mode instead uses the physical
+    ``threshold_steps`` uses physical field names. For ordinary T3 these are
+    ``F``, ``S1`` and ``S2``. Shared-scalar mode instead uses the physical
     scalar ``S`` together with ``F``.
 
-    The plan deliberately has no concept of ``EFT1`` or a preferred first
-    threshold.  Fermion-first, scalar-first, grouped and common-threshold runs
-    are represented by the same object.
+    The data model remains generic enough to represent an arbitrary ordered
+    partition of the heavy fields. Production execution is intentionally
+    narrower: the current project supports either one common threshold or the
+    verified fermion-first hierarchy in which ``F`` is removed first and the
+    complete physical scalar sector is removed together at the next threshold.
     """
 
     threshold_steps: tuple[ThresholdStep, ...]
@@ -61,6 +63,12 @@ class PipelinePlan:
 
         if not isinstance(self.truncation, EFTTruncation):
             raise TypeError("truncation must be an EFTTruncation instance.")
+
+        if self.truncation != DEFAULT_EFT_TRUNCATION:
+            raise ValueError(
+                "The production T3 pipeline currently supports only the "
+                f"{DEFAULT_EFT_TRUNCATION.label} EFT truncation."
+            )
 
         # Reuse the canonical threshold validator so direct construction of a
         # PipelinePlan cannot bypass the same field-completeness rules used by
@@ -81,9 +89,13 @@ class PipelinePlan:
     ) -> "PipelinePlan":
         """Build a complete plan from user-facing threshold configuration.
 
-        ``threshold_groups`` is canonicalised and validated first.  If scales
-        are omitted, the existing symbolic scale convention is retained:
+        ``threshold_groups`` is canonicalised and validated first. If scales
+        are omitted, the established symbolic scale convention is retained:
         ``MF``, ``MS``, ``MS1`` and ``MS2`` where applicable.
+
+        The ``truncation`` argument remains explicit so the approximation is
+        visible in architecture/tests, but production currently accepts only
+        the default dimension-five truncation.
         """
         plan = validate_threshold_plan(
             threshold_groups,
@@ -130,10 +142,8 @@ class PipelinePlan:
     def transitions(self) -> tuple[EFTTransition, ...]:
         """Return every physical threshold as a content-aware transition.
 
-        This is the preferred execution view for new pipeline code.  Dispatch
-        should depend on ``transition.before.active_heavy_fields`` and
-        ``transition.after.active_heavy_fields`` rather than on labels such as
-        ``EFT1`` or on a hard-coded fermion-first route.
+        Dispatch should depend on physical field content rather than ordinal
+        stage labels such as ``EFT1`` or ``EFT2``.
         """
         transitions: list[EFTTransition] = []
         current = self.initial_content
@@ -158,7 +168,7 @@ class PipelinePlan:
 
         A common-threshold calculation has no intermediate running interval.
         Sequential plans produce one interval for every gap between adjacent
-        matching thresholds.  Each interval is identified only by its active
+        matching thresholds. Each interval is identified only by its active
         field content and matching scales.
         """
         transitions = self.transitions
@@ -183,31 +193,44 @@ class PipelinePlan:
         return tuple(intervals)
 
     @property
-    def has_scalar_first_threshold(self) -> bool:
-        """Return whether a scalar is removed before the heavy fermion ``F``.
+    def is_common_threshold(self) -> bool:
+        """Return whether all physical heavy fields are removed together."""
+        return len(self.threshold_steps) == 1
 
-        This is a physical ordering property, not a statement about whether a
-        numerical backend exists for the resulting EFT.  It is kept explicit
-        because scalar-first T3 matching can generate an intermediate
-        dimension-six operator before the final Weinberg operator appears.
+    @property
+    def is_verified_fermion_first_hierarchy(self) -> bool:
+        """Return whether this is the implemented hierarchical production path.
+
+        Ordinary T3 requires ``F -> (S1,S2)``. Shared-scalar mode requires
+        ``F -> S``. The remaining physical scalar sector must be removed
+        together because that is the field content implemented by the current
+        intermediate-EFT backend.
         """
-        first_fields = frozenset(self.threshold_steps[0].fields_to_integrate)
-        return (
-            "F" not in first_fields
-            and bool(first_fields & self.field_scheme.scalar_field_set)
+        if len(self.threshold_steps) != 2:
+            return False
+
+        first, second = self.threshold_steps
+        return bool(
+            frozenset(first.fields_to_integrate) == frozenset({"F"})
+            and frozenset(second.fields_to_integrate)
+            == self.field_scheme.scalar_field_set
         )
 
     @property
-    def scalar_first_truncates_leading_path(self) -> bool:
-        """Return whether the configured truncation drops the scalar-first d=6 path.
+    def is_supported_production_order(self) -> bool:
+        """Return whether the threshold ordering has a verified production path."""
+        return self.is_common_threshold or self.is_verified_fermion_first_hierarchy
 
-        Integrating out a scalar before ``F`` can first produce a dimension-six
-        operator of schematic form ``L F H H S / M_S^2``.  Later thresholds can
-        feed that operator into the dimension-five Weinberg coefficient.  A
-        scalar-first run truncated at ``d<=5`` therefore cannot be treated as
-        physically equivalent to the verified fermion-first calculation.
-        """
-        return self.has_scalar_first_threshold and not self.truncation.keeps(6)
+    def production_scope_error(self) -> str:
+        """Explain the currently supported threshold-order scope."""
+        scalar_label = "S" if self.shared_scalar else "(S1,S2)"
+        return (
+            "Current production threshold support is limited to one common "
+            f"threshold or the verified fermion-first hierarchy F -> {scalar_label}. "
+            "Scalar-first and partially split scalar hierarchies are outside "
+            "the production scope used for this project; scalar-first matching "
+            "can require leading intermediate operators above dimension five."
+        )
 
     @property
     def final_content(self) -> EFTContent:
@@ -231,11 +254,11 @@ class PipelinePlan:
         )
 
     def summary_metadata(self) -> dict[str, object]:
-        """Return JSON-safe run metadata without changing existing key names.
+        """Return JSON-safe run metadata without changing historical keys.
 
-        The three historical threshold keys are retained exactly.  The new
-        ``EFTTruncation`` entry makes the dimension-five approximation explicit
-        for future reports and downstream tools.
+        The established threshold keys are retained. ``EFTTruncation`` keeps
+        the dimension-five approximation explicit rather than hiding it in the
+        matching implementation.
         """
         return {
             "ThresholdPlan": threshold_plan_to_json(self.threshold_plan),
@@ -245,34 +268,7 @@ class PipelinePlan:
                 "MaxOperatorDimension": self.truncation.max_operator_dimension,
                 "Label": self.truncation.label,
             },
-            "ThresholdOrderingPhysics": {
-                "ScalarFirst": self.has_scalar_first_threshold,
-                "ScalarFirstDimensionSixPathRetained": (
-                    self.has_scalar_first_threshold and self.truncation.keeps(6)
-                ),
-                "ScalarFirstLeadingPathTruncated": (
-                    self.scalar_first_truncates_leading_path
-                ),
-                "AuthoritativeAtConfiguredTruncation": (
-                    not self.scalar_first_truncates_leading_path
-                ),
-            },
         }
-
-    def physics_warnings(self) -> tuple[str, ...]:
-        """Return explicit physics limitations implied by this plan.
-
-        Warnings are kept separate from ``description_lines`` so the historical
-        threshold-plan display remains stable while the pipeline can still make
-        non-authoritative approximations impossible to miss.
-        """
-        if self.scalar_first_truncates_leading_path:
-            return (
-                "Scalar-first d<=5 matching omits an intermediate dimension-six "
-                "operator that can feed the leading Weinberg coefficient; this "
-                "ordering is experimental/non-authoritative.",
-            )
-        return ()
 
     def description_lines(self) -> list[str]:
         """Return a compact, physics-facing description of the EFT sequence."""

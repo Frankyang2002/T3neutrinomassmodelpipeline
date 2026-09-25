@@ -147,8 +147,6 @@ $$
 d_{\rm EFT}=5,\qquad L=1.
 $$
 
-For scalar-first studies, `--eft-max-dimension 6` propagates $d_{\rm EFT}=6$ through `PipelinePlan`, `Lagrangian/T3ModelMatching.py`, and `Lagrangian/Runner.py` to the existing Matchete `EFTOrder` argument.  The one-loop order remains unchanged.
-
 The existing Matchete matching flow is conceptually
 
 ```text
@@ -196,7 +194,7 @@ shared:   F -> S
 
 A common threshold, with all heavy fields removed together, is also supported and requires no nontrivial heavy-field running interval.
 
-### Scalar-first dimension-six matching
+### Scalar-first scope
 
 A scalar-first threshold can generate an intermediate dimension-six operator, schematically
 
@@ -204,11 +202,9 @@ $$
 \frac{y\lambda_{T3}}{M_S^2}LFHHS,
 $$
 
-which can later feed the leading Weinberg operator.  The $d\le5$ scalar-first route is therefore an explicitly truncated diagnostic, not a complete reordering of the verified calculation.
+which can later feed the leading Weinberg operator. It is therefore not consistent to represent scalar-first matching by simply truncating the intermediate theory at $d\le5$.
 
-With `--eft-max-dimension 6`, the first scalar-threshold Matchete calculation now retains these dimension-six terms.  `ScalarFirstDimensionSixSeed.py` then searches the exact exported tree `InputForm` for the structural field content $L F H H S_{\rm remaining}$ and copies matching terms verbatim into a JSON boundary artifact.  It deliberately does not infer their CG normalization, field conjugation, or tensor components.
-
-The next implementation step is to validate that exact generated boundary and map it to the symmetric $\psi^2\phi^3$ tensor used by `RGE/general/Psi2Phi3RGE.py`, then verify the later-threshold matching into $C_5$.  Until that bridge is complete, the scalar-first intermediate interval remains non-production and the low-energy pipeline is blocked.
+For the present honours-project production calculation, scalar-first and partially split scalar hierarchies are not executed. The supported matching choices are the common threshold and the verified fermion-first sequence `F -> (S1,S2)` (or `F -> S` in shared-scalar mode). The CLI rejects unsupported threshold orders before Wolfram/Matchete is launched.
 
 ## 10. Data passed to the RGE layer
 

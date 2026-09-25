@@ -1,6 +1,11 @@
-'''Numerical Realisation of Symbolic Weinberg Pipeline
-We use the benchmark vlaues from config into symbolic expressions 
-and make a complex 3x3 weinberg matrix'''
+"""Numerical realization of the matched Weinberg-coefficient pipeline.
+
+This module converts matched symbolic/final C5 artifacts into numerical matrices,
+runs the final SM + Weinberg EFT numerically, and writes the established
+machine-readable outputs. The RGE equations live under ``RGE/``; numerical
+substitution and integration live here under ``Numerical/``.
+"""
+
 from __future__ import annotations
 
 import json
@@ -15,7 +20,7 @@ from RGE.matching.FlavorC5Matching import (
     load_final_weinberg_flavor_matrix,
 )
 from RGE.matching.MatchedWeinbergRGE import parse_matchete_c5
-from RGE.running.weinberg.WeinbergRunning import (
+from Numerical.WeinbergRunning import (
     SMInitialConditions,
     evolve_weinberg,
     neutrino_mass_matrix,
@@ -23,7 +28,7 @@ from RGE.running.weinberg.WeinbergRunning import (
 
 
 def _complex_matrix_from_json(real_part, imag_part) -> np.ndarray:
-    '''Get Numpy complex matrix from our real and imaginary arrays from JSON'''
+    """Build a NumPy complex matrix from JSON real/imaginary arrays."""
     real = np.asarray(real_part, dtype=float)
     imag = np.asarray(imag_part, dtype=float)
 
@@ -34,7 +39,7 @@ def _complex_matrix_from_json(real_part, imag_part) -> np.ndarray:
 
 
 def _complex_matrix_to_lists(matrix: np.ndarray) -> dict:
-    '''We make our Complex Matrix into something being able to be read by JSON'''
+    """Convert a complex matrix to JSON-compatible real/imaginary lists."""
     matrix = np.asarray(matrix, dtype=complex)
 
     return {
@@ -44,7 +49,7 @@ def _complex_matrix_to_lists(matrix: np.ndarray) -> dict:
 
 
 def _sympy_substitutions_from_config(config: dict) -> dict:
-    '''Build dictionary connecting T3 symbolic expression into actual numbers'''
+    """Build substitutions connecting T3 symbolic expressions to numbers."""
     substitutions: dict[sp.Expr, complex | float] = {}
 
     model = config["t3"]
@@ -103,9 +108,8 @@ def _sympy_substitutions_from_config(config: dict) -> dict:
     return substitutions
 
 
-
 def _hierarchical_scale_substitutions(config: dict) -> dict[sp.Expr, float]:
-    """We deal with scalar mass substitution, and deal with shared vs not shared"""
+    """Build the grouped scalar-threshold substitution."""
     model = config["t3"]
 
     if "MS" in model:

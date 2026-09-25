@@ -36,18 +36,13 @@ from RGE.running.weinberg.FlavorMatchedWeinbergStage import (
     run_flavor_matched_weinberg_rge,
     run_symbolic_neutrino_mass_stage as _run_symbolic_neutrino_mass_stage,
 )
-from RGE.running.weinberg.NumericalWeinbergStage import (
+from Numerical.WeinbergStage import (
     run_numerical_weinberg_stage as _run_numerical_weinberg_stage,
 )
 
 
 def organise_matched_weinberg_coefficient(record: RunRecord) -> Path | None:
-    """Move the matched ``C5`` into ``data/`` before EFT-side running.
-
-    The path recorded in ``summary['WeinbergCoefficientFile']`` is part of the
-    existing machine-output contract.  The move is therefore intentionally
-    conservative: an existing destination is never overwritten.
-    """
+    """Move the matched ``C5`` into ``data/`` before EFT-side running."""
 
     summary = record.summary
     coefficient_file = summary.get("WeinbergCoefficientFile")
@@ -95,13 +90,7 @@ def run_smeft_weinberg_rge(
     record: RunRecord,
     debug_reports: bool = False,
 ) -> bool:
-    """Evaluate the matched Weinberg coefficient with the general tensor RGE.
-
-    This preserves the existing one-generation SMEFT reduction check and the
-    associated ``RGE...`` summary/output fields.  It remains part of the current
-    production/report contract even though the full-flavor calculation below is
-    the physically richer downstream description.
-    """
+    """Evaluate the matched Weinberg coefficient with the general tensor RGE."""
 
     summary = record.summary
     c5_path = matched_weinberg_coefficient_path(record)
@@ -214,12 +203,7 @@ def run_numerical_neutrino_observables(
     record: RunRecord,
     numerical_config: Path,
 ) -> bool:
-    """Run numerical SMEFT evolution and calculate neutrino observables.
-
-    ``numerical_config`` retains the existing JSON schema, including the
-    optional ``ordering`` entry (default ``"NO"``).  All established summary
-    keys and filenames are preserved.
-    """
+    """Run numerical SMEFT evolution and calculate neutrino observables."""
 
     summary = record.summary
     c5_path = matched_weinberg_coefficient_path(record)

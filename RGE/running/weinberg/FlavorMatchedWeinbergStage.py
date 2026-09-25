@@ -1,6 +1,4 @@
-'''This file connects our full flavour weinberg coefficient into
-1. Symbolic SMEFT Weinberg RGE
-2. Symbolic neutrino mass matrix'''
+"""Symbolic full-flavor Weinberg RGE and neutrino-mass construction."""
 
 from __future__ import annotations
 
@@ -15,7 +13,10 @@ from RGE.matching.FlavorC5Matching import (
     load_final_weinberg_flavor_matrix,
     write_flavor_matching_outputs,
 )
-from RGE.running.weinberg.WeinbergRunning import beta_weinberg_matrix, symbolic_complex_matrix
+from RGE.running.weinberg.WeinbergRGE import (
+    beta_weinberg_matrix,
+    symbolic_complex_matrix,
+)
 
 
 def run_flavor_matched_weinberg_rge(
@@ -32,7 +33,6 @@ def run_flavor_matched_weinberg_rge(
     data_dir = output_dir / "data"
     data_dir.mkdir(parents=True, exist_ok=True)
 
-    # We check if we already have our hard mathcing and runnning bookkeeping, if we do we just load that data
     if is_final_weinberg_json(c5_path):
         flavor_result = load_final_weinberg_flavor_matrix(
             c5_path,
@@ -47,7 +47,6 @@ def run_flavor_matched_weinberg_rge(
             "C5LoopKernelFile": "",
         }
 
-        # Get debug reports 
         if debug_outputs:
             debug_dir = output_dir / "debug"
             debug_dir.mkdir(parents=True, exist_ok=True)
@@ -78,7 +77,6 @@ def run_flavor_matched_weinberg_rge(
             "plus EFT1 running"
         )
     else:
-        # Legacy branch generally 
         flavor_result = match_c5_flavor_from_file(
             c5_path,
             n_lepton=3,
@@ -139,11 +137,6 @@ def run_flavor_matched_weinberg_rge(
 
     return summary
 
-
-# ---------------------------------------------------------------------------
-# Symbolic neutrino-mass stage
-# Consolidated from the former standalone neutrino-mass stage module.
-# ---------------------------------------------------------------------------
 
 v = sp.Symbol("v")
 

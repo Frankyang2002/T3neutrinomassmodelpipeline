@@ -12,7 +12,6 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from common.EFT import EFTTruncation
 from common.PipelinePlan import PipelinePlan
 
 
@@ -121,28 +120,6 @@ def build_argument_parser() -> argparse.ArgumentParser:
         ),
     )
     parser.add_argument(
-        "--eft-max-dimension",
-        type=int,
-        choices=(5, 6),
-        default=5,
-        help=(
-            "maximum EFT operator dimension retained by Matchete matching. "
-            "The default is 5. Use 6 for scalar-first studies that must retain "
-            "the leading psi^2 phi^3 intermediate operator."
-        ),
-    )
-    parser.add_argument(
-        "--allow-truncated-scalar-first",
-        action="store_true",
-        help=(
-            "allow a scalar-first threshold plan with the current d<=5 "
-            "truncation. This is diagnostic/experimental only: scalar-first "
-            "matching can require an intermediate dimension-six operator for "
-            "the leading Weinberg contribution, and unsupported intermediate "
-            "EFT running will still block an authoritative low-energy result."
-        ),
-    )
-    parser.add_argument(
         "--debug-reports",
         action="store_true",
         help=(
@@ -197,26 +174,13 @@ def resolve_pipeline_plan(
             args.threshold,
             args.threshold_scale,
             shared_scalar=shared_scalar_mode,
-            truncation=EFTTruncation(
-                max_operator_dimension=args.eft_max_dimension,
-            ),
         )
     except (TypeError, ValueError) as exc:
         parser.error(str(exc))
         raise AssertionError("argparse.error() should not return") from exc
 
-    if (
-        plan.scalar_first_truncates_leading_path
-        and not args.allow_truncated_scalar_first
-    ):
-        parser.error(
-            "Scalar-first threshold ordering with the current d<=5 truncation "
-            "can discard an intermediate dimension-six operator that feeds the "
-            "leading T3 Weinberg coefficient. Use "
-            "--allow-truncated-scalar-first only for an explicit experimental "
-            "truncated run; the verified fermion-first/common-threshold route "
-            "remains authoritative."
-        )
+    if not plan.is_supported_production_order:
+        parser.error(plan.production_scope_error())
 
     return plan
 

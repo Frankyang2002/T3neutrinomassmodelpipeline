@@ -9,7 +9,7 @@ from Numerical.WeinbergTrajectory import (
     run_weinberg_trajectory,
     scale_dependent_neutrino_observables,
 )
-from RGE.running.weinberg.WeinbergRunning import SMInitialConditions
+from Numerical.WeinbergRunning import SMInitialConditions
 
 
 def _initial() -> SMInitialConditions:

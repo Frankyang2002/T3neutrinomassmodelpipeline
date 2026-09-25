@@ -42,7 +42,7 @@ from typing import Mapping, Sequence
 
 import numpy as np
 
-from RGE.phenomenology.NeutrinoObservables import (
+from physics.NeutrinoObservables import (
     calculate_neutrino_observables,
 )
 

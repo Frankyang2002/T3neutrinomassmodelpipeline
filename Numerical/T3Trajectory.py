@@ -77,8 +77,28 @@ class T3RenormalisableTrajectory:
         return self.uv.final_state
 
     @property
-    def eft1_threshold_state(self) -> IntermediateScalarState:
+    def intermediate_initial_state(self) -> IntermediateScalarState:
+        """Scalar-only state immediately below the fermion threshold."""
+
+        return self.eft1_initial_state
+
+    @property
+    def intermediate(self) -> IntermediateScalarRunningResult:
+        """Canonical name for the scalar-only intermediate trajectory."""
+
+        return self.eft1
+
+    @property
+    def intermediate_threshold_state(self) -> IntermediateScalarState:
+        """Scalar-only state immediately above the scalar threshold."""
+
         return self.eft1.final_state
+
+    @property
+    def eft1_threshold_state(self) -> IntermediateScalarState:
+        """Historical alias for ``intermediate_threshold_state``."""
+
+        return self.intermediate_threshold_state
 
 
 @dataclass(frozen=True)

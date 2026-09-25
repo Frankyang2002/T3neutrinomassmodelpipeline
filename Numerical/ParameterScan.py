@@ -7,7 +7,7 @@ This layer is deliberately split into two parts:
    supplied matched C5 builder, low-energy Weinberg running, and the oscillation
    chi-square layer.
 
-The matched C5 is *not* invented here.  It must be supplied by ``c5_builder``,
+The matched C5 is *not* invented here. It must be supplied by ``c5_builder``,
 which is the bridge to the existing symbolic/Matchete matching pipeline or to
 a separately validated numerical matching implementation.
 
@@ -17,7 +17,7 @@ A scan point therefore follows
       -> UV state builder
       -> UV running
       -> F threshold
-      -> EFT1 running
+      -> scalar-only intermediate running
       -> scalar threshold
       -> c5_builder(parameters, trajectory)
       -> SM + C5 running
@@ -46,7 +46,7 @@ from Numerical.T3Trajectory import (
     run_renormalisable_t3_trajectory,
 )
 from Numerical.State import SharedT3UVState, T3UVState
-from Numerical.WeinbergTrajectory import (
+from physics.NeutrinoTrajectory import (
     charged_lepton_mass_basis_matrix,
     neutrino_mass_from_c5,
 )
@@ -407,7 +407,7 @@ def make_t3_point_evaluator(
     numerical state.
 
     ``c5_builder(parameters, trajectory)`` must return the physical symmetric
-    C5 matrix at the scalar threshold.  It is intentionally external because
+    C5 matrix at the scalar threshold. It is intentionally external because
     the authoritative project matching remains in the existing Matchete/
     symbolic pipeline.
     """

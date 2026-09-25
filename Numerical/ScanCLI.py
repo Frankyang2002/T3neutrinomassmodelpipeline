@@ -12,7 +12,7 @@ The configuration file specifies
 - parameter bindings into that base state;
 - grid or random scan generation;
 - explicit threshold and low-energy scales;
-- the UV/EFT1 RGBeta JSON payloads;
+- the UV/intermediate RGBeta JSON payloads;
 - the authoritative final-Weinberg JSON;
 - the external oscillation-fit target;
 - the output JSON path.
@@ -21,10 +21,9 @@ No NuFIT values or matched C5 expressions are hard-coded here.
 
 Current production scope
 ------------------------
-The concrete ``FinalC5Bridge`` currently supports the ordinary split-scalar
-branch with diagonal, real, positive MF at the F threshold.  Shared-scalar
-scans are rejected by this CLI rather than silently routed through an
-unvalidated matching convention.
+The concrete ``FinalC5TrajectoryAdapter`` currently supports the ordinary
+split-scalar branch. Shared-scalar scans are rejected by this CLI rather than
+silently routed through an unvalidated matching convention.
 """
 
 from __future__ import annotations
@@ -38,7 +37,7 @@ from typing import Any, Mapping
 
 import numpy as np
 
-from Numerical.FinalC5Bridge import FinalC5TrajectoryBuilder
+from Numerical.FinalC5TrajectoryAdapter import FinalC5TrajectoryEvaluator
 from Numerical.OscillationFit import OscillationFitTarget
 from Numerical.ParameterScan import (
     ParameterScanResult,
@@ -172,7 +171,7 @@ def _validate_static_config(config: ResolvedScanConfig) -> None:
     if bool(representation.get("shared_scalar", False)):
         raise ValueError(
             "ScanCLI currently supports only the ordinary split-scalar branch "
-            "because FinalC5Bridge has no validated shared-scalar adapter."
+            "because FinalC5TrajectoryAdapter has no validated shared-scalar adapter."
         )
 
     scales = raw.get("scales")
@@ -384,10 +383,9 @@ def _validate_rgbeta_payload_compatibility(
 ) -> None:
     """Cross-check a loaded RGBeta payload against the scan representation.
 
-    ``load_rgbeta_payload`` verifies the generic JSON contract.  This function
+    ``load_rgbeta_payload`` verifies the generic JSON contract. This function
     adds the model/stage compatibility check required by the scan CLI so a
-    dry-run cannot succeed with, for example, a class-A base state and a
-    class-B RGBeta export.
+    dry-run cannot succeed with a representation-mismatched RGBeta export.
     """
 
     metadata = payload.get("metadata")
@@ -675,15 +673,11 @@ def validate_scan_inputs(
 
     points = build_scan_points(config)
 
-    # Validate at least one fully bound state before starting an expensive scan.
     build_uv_state_from_config(
         config,
         points[0],
     )
 
-    # Validate the external JSON contracts and, critically, cross-check the
-    # exported model/stage metadata against the numerical base-state
-    # representation.  Generic JSON validity alone is not sufficient.
     representation = _build_representation(
         config.raw["representation"]
     )
@@ -755,7 +749,7 @@ def execute_scan(
     if not isinstance(numerical, dict):
         raise ValueError("numerical must be an object when supplied.")
 
-    c5_builder = FinalC5TrajectoryBuilder(
+    c5_builder = FinalC5TrajectoryEvaluator(
         config.final_weinberg_path
     )
 
@@ -783,6 +777,7 @@ def execute_scan(
     )
 
     scan = config.raw["scan"]
+
     def checkpoint_callback(partial: ParameterScanResult) -> None:
         write_scan_result(
             partial,

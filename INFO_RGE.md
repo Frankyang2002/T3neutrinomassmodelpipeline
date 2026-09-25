@@ -1,25 +1,28 @@
 # T3 RGE and Neutrino-Mass Pipeline
 
-This document describes the implemented RGE path after the T3 UV model has been built and matched.  `INFO_PIPELINE.md` is the repository-wide map; this file focuses on running, threshold transport, the final Weinberg coefficient, and neutrino observables.
+This document describes the implemented running, threshold transport, final Weinberg coefficient, and low-energy neutrino stages.
 
 ## 1. Conventions
 
-The code uses
+The project uses
 
 $$
-Q=T_3+Y,
-\qquad t=\ln\mu.
+Q=T_3+Y,\qquad t=\ln\mu,
 $$
 
-The matched Weinberg coefficient is related to the Majorana neutrino mass by
+and
 
 $$
-m_\nu=-\frac{v^2}{2}C_5
+m_\nu=-\frac{v^2}{2}C_5=-v_{174}^2C_5.
 $$
 
-when $v\simeq246\,\mathrm{GeV}$, equivalently $m_\nu=-v_{174}^2C_5$.
+The final SM+Weinberg beta model is implemented in
 
-The final SMEFT Weinberg equation implemented in `RGE/running/weinberg/WeinbergRunning.py` is
+```text
+RGE/running/weinberg/WeinbergRGE.py
+```
+
+with
 
 $$
 16\pi^2\frac{dC_5}{d\ln\mu}
@@ -33,227 +36,199 @@ $$
 where
 
 $$
-T=\operatorname{Tr}\left(
+T=\operatorname{Tr}
+\left(
 Y_eY_e^\dagger+3Y_uY_u^\dagger+3Y_dY_d^\dagger
 \right).
 $$
 
-## 2. RGE architecture
-
-The implemented high-level flow is
+## 2. High-level RGE flow
 
 ```text
-UV T3 model
-    -> UV renormalisable RGEs
-    -> threshold matching
-    -> optional intermediate heavy-field EFT
-    -> final hard + running C5
-    -> SMEFT Weinberg RGE
-    -> full-flavor C5
-    -> neutrino mass matrix
-    -> optional numerical evolution
+UV T3
+    -> UV renormalisable running
+    -> fermion threshold
+    -> scalar-only intermediate EFT
+    -> direct LLSS -> Weinberg running
+    -> scalar threshold
+    -> authoritative final C5
+    -> final SM+Weinberg running
+    -> m_nu
     -> observables
 ```
 
-`pipeline.py` owns this order.  RGE modules calculate individual stages but do not decide the global execution sequence.
+`pipeline.py` owns the global sequence. RGE modules own equations and stage-specific calculations.
 
 ## 3. UV running
 
-`RGE/running/UVRunning.py` is the high-level Python entry point for the UV theory.  It uses the existing RGBeta machinery under `RGE/running/rgbeta/`.
+`RGE/running/UVRunning.py` is the production UV entry point and uses the RGBeta stack under `RGE/running/rgbeta/`.
 
-The UV stage is always associated with the complete physical T3 heavy-field content from `RunRecord.physical_heavy_fields`.
+Numerically, the UV state and `solve_ivp` integration live under `Numerical/State.py`, `Numerical/StateVector.py`, and `Numerical/UVRunner.py`.
 
-Normal production support remains tied to the representation range supported by the present T3/RGBeta model setup.  Larger topology-compatible representations can be attempted with `--force`, but that does not imply the downstream RGE implementation supports them.
+## 4. Intermediate scalar-only EFT
 
-## 4. Generic intermediate-EFT dispatch
-
-The threshold sequence is represented by `PipelinePlan`.  For every nonzero interval between two thresholds it produces an `EFTRunningInterval` containing:
-
-- the physical heavy fields active in that interval;
-- the threshold transition which entered the interval;
-- the threshold transition which exits it;
-- the high and low matching scales.
-
-`RGE/running/IntermediateEFTRunning.py` dispatches from that physical content.  Ordinal names such as `EFT1` are not used to decide which calculation applies.
-
-If no production backend exists for an interval, the outcome is explicitly
+The production dispatcher is
 
 ```text
-NotImplementedForFieldContent
+RGE/running/IntermediateEFTRunning.py
 ```
 
-and the main pipeline marks the route incomplete.  The low-energy neutrino stages are then blocked for that run.
-
-## 5. Verified fermion-first scalar-only backend
-
-The implemented nontrivial hierarchical backend is
+and the verified hierarchical backend is
 
 ```text
 RGE/running/backends/ScalarOnlyAfterFermion.py
 ```
 
-with backend identifier
-
-```text
-scalar_only_after_fermion_d5
-```
-
-It applies when
-
-$$
-\text{UV}\xrightarrow{\;F\;}
-\text{SM + complete T3 scalar sector}
-\xrightarrow{\;\text{all remaining scalars}\;}
-\text{SMEFT}.
-$$
-
-For ordinary T3 this means the intermediate active heavy fields are $\{S_1,S_2\}$.  For the shared-scalar branch the active set is $\{S\}$.
-
-The production backend performs, in order:
-
-1. the renormalisable scalar-EFT RGE;
-2. the dimension-five $\psi^2\phi^2$ Wilson RGE;
-3. construction of the full-flavor tree-level Wilson boundary;
-4. direct one-loop mixing into the Weinberg operator;
-5. resumed scalar-threshold matching;
-6. construction of the final authoritative Weinberg coefficient.
-
-The descriptive interfaces are under `RGE/running/intermediate/`.
-
-## 6. Fixed-order bookkeeping
-
-After integrating out the heavy fermion, a tree-level LLSS-type dimension-five Wilson coefficient is present.  Its one-loop direct mixing into the Weinberg operator contributes at the one-loop order retained by the project.
-
-The backend deliberately does not feed one-loop self-running of the heavy LLSS coefficient back through a scalar loop into the authoritative one-loop C5, because that combination would be of order $\hbar^2$.
-
-This fixed-order separation is why the code distinguishes:
-
-- hard threshold matching;
-- direct LLSS $\to$ Weinberg running;
-- diagnostic heavy-operator transport.
-
-## 7. Scalar-only intermediate-EFT implementation
-
-The original implementation called the scalar-only fermion-first theory `EFT1`.  The refactored production API no longer depends on that stage number, and the implementation now lives directly under `RGE/running/intermediate/`.
-
-The main descriptive interfaces are:
-
-```text
-run_scalar_only_renormalisable_rge
-run_scalar_only_dimension_five_wilson_rge
-export_full_flavor_wilson_boundary
-build_direct_weinberg_running
-resume_scalar_threshold_with_running
-```
-
-The component Wilson calculation itself is implemented in `ScalarOnlyWilsonTensorRGE.py`, with tensor construction in `ScalarOnlyTensorAdapters.py` and transport logic in `ScalarOnlyWilsonFlow.py`.
-
-Existing `EFT1...` JSON keys, filenames, and Wolfram insertion symbols are preserved for report and regression compatibility.  They are serialized legacy names, not the conceptual EFT identifier used by production dispatch.
-
-## 8. General tensor RGE machinery
-
-The intermediate Wilson calculation ultimately uses the generic tensor infrastructure under `RGE/general/`:
-
-- `ScalarBasis.py` defines real scalar blocks;
-- `GaugeGenerators.py` builds gauge generators;
-- `FermionBasis.py` builds the Weyl-fermion basis and gauge sectors;
-- `WilsonTensorRGE.py` evaluates the one-loop $\psi^2\phi^2$ tensor terms;
-- `AnomalousDimensions.py` supplies the anomalous-dimension contributions.
-
-The historical scalar-only Wilson module constructs its context from matched Wilson/quartic seeds and RGBeta metadata, projects onto the required coefficient symmetry, evaluates the nonzero tensor beta functions, and records Weinberg-subspace diagnostics.
-
-## 9. Direct Weinberg transport
-
-The current full-flavor direct-running path constructs a symmetric flavor boundary coefficient and derives the direct Weinberg beta in the form
-
-$$
-16\pi^2\,\beta_{\kappa,pq}
-= r\,C_{12,pq},
-$$
-
-where $r$ is the representation/coupling prefactor extracted from the component calculation and $C_{12,pq}$ carries the full flavor structure.
-
-Between two threshold scales $\mu_h$ and $\mu_l$, the fixed-order leading-log correction is proportional to
-
-$$
-\ln\!\frac{\mu_l}{\mu_h}.
-$$
-
-The equal-scale limit therefore vanishes.  The corresponding equal-scale and one-generation reductions are scientific diagnostics recorded by the validation layer.
-
-## 10. Final C5 construction
-
-`RGE/running/weinberg/FinalWeinbergCoefficient.py` assembles the final Weinberg coefficient after the last heavy threshold.  It combines the hard threshold contribution with the separately carried direct-running contribution and preserves the project's current MSbar/pole-consistency handling.
-
-The pole/RGE relation is currently not merely a cosmetic regression: parts of the historical final-C5 construction use the validated relation to authorize the existing subtraction/normalization step.  That condition therefore remains a production prerequisite until the construction API is redesigned.
-
-## 11. Production versus validation
-
-Independent post-production checks for the verified scalar-only interval are under
-
-```text
-validation/backends/ScalarOnlyAfterFermionValidation.py
-```
-
-They include the one-generation Wilson-transport regression and interpretation of diagnostic metadata already emitted by production artifacts.
-
-A validation failure still produces a nonzero pipeline status, but the production status is stored separately so it is possible to distinguish:
-
-```text
-calculation failed
-```
-
-from
-
-```text
-calculation completed but an independent cross-check failed
-```
-
-## 12. Scalar-first threshold ordering
-
-Scalar-first matching is deliberately not part of the production calculation used for this project. A first scalar threshold can generate a leading intermediate dimension-six operator schematically
-
-$$
-\frac{y\lambda_{T3}}{M_S^2}LFHHS.
-$$
-
-That operator is suppressed by the heavy scalar scale, but it is still the leading EFT operator for that threshold ordering. Dropping it solely because it has dimension six would remove the leading scalar-first path. Fully separated scalar-first hierarchies can require still higher-dimensional intermediate bookkeeping at later thresholds.
-
-The production pipeline therefore accepts only a common threshold or the verified fermion-first hierarchy
+for
 
 $$
 F\rightarrow(S_1,S_2)
 $$
 
-for ordinary T3, and $F\rightarrow S$ for the shared-scalar branch. Unsupported orderings are rejected by the CLI before matching. The generic field-content objects remain order-independent so this restriction is a production-scope choice rather than an architectural dependency on stage numbering.
+or $F\rightarrow S$ in the shared-scalar branch.
 
-## 13. Low-energy full-flavor and numerical running
+The production sequence is:
 
-After an authoritative final C5 is available, `physics/LowEnergyNeutrino.py` calls the final EFT stages in this order:
+1. scalar-only renormalisable running;
+2. dimension-five LLSS Wilson RGE;
+3. full-flavor tree-level Wilson boundary;
+4. direct one-loop LLSS $\to$ Weinberg mixing;
+5. resumed scalar-threshold matching;
+6. authoritative final-C5 construction.
 
-1. `RGE/matching/MatchedWeinbergRGE.py` for the existing one-generation SMEFT RGE output/check;
-2. `RGE/running/weinberg/FlavorMatchedWeinbergStage.py` for the symbolic three-generation coefficient and beta matrix;
-3. the symbolic Majorana mass construction;
-4. optionally `NumericalWeinbergStage.py` and `WeinbergRunning.py` for numerical evolution;
-5. `RGE/phenomenology/NeutrinoObservables.py` for masses, splittings, and mixing quantities.
+The fixed-order reason for excluding LLSS self-running from the authoritative one-loop C5 is
 
-The flavor coefficient is complex symmetric, and the neutrino mass matrix is Takagi-factorised rather than diagonalised as a generic Hermitian matrix.
+$$
+C_{\rm LLSS}^{(0)}
+\xrightarrow{\text{1-loop self-running}}
+C_{\rm LLSS}^{(1)}
+\xrightarrow{\text{scalar loop}}
+C_5^{(2)},
+$$
 
-## 14. Regression procedure
+which first contributes at two-loop order.
 
-After changing RGE architecture, run the full Python suite in the real checkout:
+## 5. Final C5 is matching/bookkeeping
+
+The canonical implementation is
+
+```text
+RGE/matching/FinalWeinbergCoefficient.py
+```
+
+not a running module. It combines
+
+$$
+C_5^{pq}(M_S)
+=
+C_{5,\mathrm{hard}}^{pq}(M_F)
++
+\hbar\,\Delta C_{5,\mathrm{direct}}^{(1),pq}(M_F\to M_S),
+$$
+
+performs the existing MSbar/pole-consistency bookkeeping, and constructs the physical symmetric Majorana coefficient.
+
+Flavor lifting is split into
+
+```text
+RGE/matching/WeinbergFlavorMatching.py
+RGE/matching/FinalWeinbergAdapter.py
+```
+
+Historical files such as `RGE/running/weinberg/FinalWeinbergCoefficient.py` and `RGE/matching/FlavorC5Matching.py` are compatibility surfaces.
+
+## 6. Symbolic final-EFT stages
+
+The symbolic three-generation stage is
+
+```text
+RGE/running/weinberg/FullFlavorWeinbergStage.py
+```
+
+and calls the analytic model in `WeinbergRGE.py`.
+
+The former ambiguous "matched Weinberg RGE" name has been replaced by an explicit one-generation benchmark:
+
+```text
+RGE/running/weinberg/OneGenerationWeinbergBenchmark.py
+RGE/running/weinberg/OneGenerationWeinbergBenchmarkStage.py
+```
+
+Historical `MatchedWeinbergRGE.py`, `MatchedWeinbergStage.py`, and `FlavorMatchedWeinbergStage.py` files remain compatibility-only.
+
+## 7. Numerical final SM+Weinberg evolution
+
+The canonical numerical modules are
+
+```text
+Numerical/SMWeinbergEvolution.py
+Numerical/SMWeinbergStage.py
+Numerical/WeinbergTrajectory.py
+```
+
+`SMWeinbergEvolution.py` owns state packing/unpacking and `solve_ivp`. It does not own the physical $C_5\to m_\nu$ interpretation.
+
+Threshold-state construction is split into
+
+```text
+Numerical/FermionThresholdBoundary.py
+Numerical/ScalarThresholdBoundary.py
+```
+
+and `Numerical/T3Trajectory.py` connects UV, intermediate, and final segments.
+
+The final-C5 numerical adapter is
+
+```text
+Numerical/FinalC5TrajectoryAdapter.py
+```
+
+which extracts the values at the correct threshold scales and calls the established final-C5 evaluator. `Numerical/FinalC5Bridge.py` remains a compatibility wrapper for historical callers and mocks.
+
+## 8. Neutrino physics ownership
+
+Physical interpretation is under `physics/`:
+
+```text
+physics/NeutrinoMass.py
+    symbolic and numerical C5 -> m_nu
+
+physics/NeutrinoObservables.py
+    Takagi factorisation, masses, mass splittings, |U_PMNS|
+
+physics/NeutrinoTrajectory.py
+    charged-lepton basis rotation and scale-dependent observables
+
+physics/LowEnergyNeutrino.py
+    orchestration only
+```
+
+The oscillation-fit numerical layer imports the physical observables from `physics.NeutrinoObservables` directly.
+
+## 9. Production versus validation
+
+Independent scientific checks live under `validation/`. The production backend may still consume a validated pole/RGE relation where the established final-C5 construction requires it; that is an operational prerequisite rather than a reason to move independent validation logic back into production.
+
+## 10. Scalar-first scope
+
+Scalar-first matching is outside production scope because a first scalar threshold can generate a leading dimension-six operator schematically
+
+$$
+\frac{y\lambda_{T3}}{M_S^2}LFHHS.
+$$
+
+Dropping it would remove the leading scalar-first EFT path. Current production therefore supports only the common threshold and the verified fermion-first hierarchy.
+
+## 11. Regression procedure
+
+Run:
 
 ```powershell
 python -m pytest -q
-```
-
-Then exercise the actual external calculation:
-
-```powershell
 python pipeline.py --smoke
 ```
 
-and one explicit hierarchical fermion-first point:
+and for the hierarchical benchmark:
 
 ```powershell
 python pipeline.py --dims 2 2 1 --alpha -1 `
@@ -261,4 +236,4 @@ python pipeline.py --dims 2 2 1 --alpha -1 `
     --threshold S1 S2
 ```
 
-The external Wolfram/Matchete/RGBeta smoke run is required to verify the generated physics artifacts; static architecture tests alone cannot establish numerical equivalence.
+The real Wolfram/Matchete/RGBeta run is required in addition to Python architecture tests.

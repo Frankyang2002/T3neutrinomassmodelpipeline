@@ -2,9 +2,12 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import pytest
 
 from common.PipelineCLI import (
+    DEFAULT_NUMERICAL_CONFIG,
     build_argument_parser,
     resolve_model_mode,
     resolve_pipeline_plan,
@@ -116,3 +119,24 @@ def test_existing_primary_cli_modes_remain_mutually_exclusive() -> None:
         parser.parse_args(["--smoke", "--dimension-comparison"])
 
     assert exc_info.value.code == 2
+
+
+def test_bare_numerical_uses_default_pipeline_config() -> None:
+    parser = build_argument_parser()
+    args = parser.parse_args(
+        ["--dims", "2", "2", "1", "--numerical"]
+    )
+
+    assert args.numerical == DEFAULT_NUMERICAL_CONFIG
+
+
+def test_explicit_numerical_path_remains_supported() -> None:
+    parser = build_argument_parser()
+    args = parser.parse_args(
+        [
+            "--dims", "2", "2", "1",
+            "--numerical", "configs/custom.json",
+        ]
+    )
+
+    assert args.numerical == Path("configs/custom.json")

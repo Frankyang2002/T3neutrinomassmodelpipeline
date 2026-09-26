@@ -6,7 +6,7 @@
 # 3. Organise the matched Weinberg coefficient C5.
 # 4. Run the UV theory and each intermediate EFT region.
 # 5. Run the low-energy Weinberg theory and construct the neutrino mass.
-# 6. Optionally run numerical evolution and calculate observables.
+# 6. Optionally run numerical evolution and calculate observables/figures.
 # 7. Generate summaries and reports.
 #
 # Detailed model selection, beta functions, matching algebra, validation, and
@@ -35,6 +35,10 @@ from common.PipelineCLI import (
     study_name as _study_name,
 )
 from common.RunRecords import EFTStageRecord, RunRecord
+from Numerical.PipelineNumericalResults import (
+    is_pipeline_numerical_results_config,
+    run_pipeline_numerical_results,
+)
 from physics.LowEnergyNeutrino import (
     build_symbolic_neutrino_mass,
     organise_matched_weinberg_coefficient,
@@ -180,10 +184,6 @@ def _run_intermediate_eft_stages(
                 physics_failed = True
                 continue
 
-            # Validation is a separate post-production phase.  It consumes the
-            # completed EFT artifacts but does not construct or mutate the EFT
-            # result.  Validation failures retain the historical nonzero exit
-            # behaviour while production status remains independently visible.
             validation = run_intermediate_eft_validation(
                 record,
                 stage,
@@ -230,7 +230,7 @@ def _run_low_energy_neutrino_stages(
     debug_reports: bool,
     numerical_input: Path | None,
 ) -> bool:
-    """Run the low-energy Weinberg, neutrino-mass, and observable stages."""
+    """Run the low-energy Weinberg, neutrino-mass, and optional numerical stages."""
 
     physics_failed = False
 
@@ -251,7 +251,16 @@ def _run_low_energy_neutrino_stages(
             continue
 
         if numerical_input is not None:
-            if not run_numerical_neutrino_observables(record, numerical_input):
+            if is_pipeline_numerical_results_config(numerical_input):
+                if not run_pipeline_numerical_results(
+                    record,
+                    numerical_input,
+                ):
+                    physics_failed = True
+            elif not run_numerical_neutrino_observables(
+                record,
+                numerical_input,
+            ):
                 physics_failed = True
 
     return physics_failed

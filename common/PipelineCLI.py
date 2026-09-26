@@ -15,6 +15,12 @@ from pathlib import Path
 from common.PipelinePlan import PipelinePlan
 
 
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_NUMERICAL_CONFIG = (
+    PROJECT_ROOT / "configs" / "t3_numerical_default_B_alpha_m1.json"
+)
+
+
 def build_argument_parser() -> argparse.ArgumentParser:
     """Build the command-line interface for the T3 pipeline."""
 
@@ -79,11 +85,15 @@ def build_argument_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--numerical",
+        nargs="?",
         type=Path,
+        const=DEFAULT_NUMERICAL_CONFIG,
         default=None,
         help=(
-            "optional JSON parameter point for numerical matched-EFT running; "
-            "e.g. python pipeline.py --numerical examples/t3_numerical_example.json"
+            "run numerical evolution. With no path, use the default T3-B "
+            "alpha=-1 benchmark config and generate running figures. With an "
+            "explicit JSON path, use that config; legacy numerical config files "
+            "remain supported."
         ),
     )
     parser.add_argument(

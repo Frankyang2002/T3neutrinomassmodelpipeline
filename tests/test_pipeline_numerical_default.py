@@ -45,6 +45,25 @@ def test_legacy_or_unrelated_json_is_not_detected(tmp_path: Path) -> None:
     assert not is_pipeline_numerical_results_config(path)
 
 
+def test_default_config_enables_automatic_sobol_benchmark_search() -> None:
+    payload = json.loads(DEFAULT_CONFIG.read_text(encoding="utf-8"))
+    search = payload["benchmark_search"]
+
+    assert search["enabled"] is True
+    assert search["method"] == "sobol"
+    assert search["use_current_model_representation"] is True
+    assert search["n_points"] == 256
+    assert search["target_chi2"] == 10.0
+    assert search["oscillation_target"].endswith(
+        "nufit_6_1_ic24_no.json"
+    )
+    local = search["local_refinement"]
+    assert local["enabled"] is True
+    assert local["seed_count"] == 5
+    assert local["active_counts"] == [5, 8, 12]
+    assert local["max_nfev"] == [30, 40, 60]
+
+
 def test_default_config_enables_controlled_sensitivity_scan() -> None:
     payload = json.loads(DEFAULT_CONFIG.read_text(encoding="utf-8"))
     sensitivity = payload["sensitivity"]

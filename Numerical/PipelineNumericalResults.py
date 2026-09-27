@@ -34,6 +34,7 @@ from Numerical.RunningDiagnostics import (
 )
 from Numerical.RunningResultFigures import generate_running_result_figures
 from Numerical.IntermediateWeinbergDiagnostics import sample_intermediate_direct_weinberg
+from Numerical.SobolBenchmarkSearch import resolve_model_benchmark
 from Numerical.FinalC5ContributionDiagnostics import evaluate_final_c5_contributions
 from Numerical.BenchmarkSensitivity import run_t3_sensitivity_scan
 from Numerical.ScalarThresholdBoundary import build_sm_weinberg_initial_conditions
@@ -146,6 +147,12 @@ def _run_and_build_payload(
     payload: dict[str, Any],
     config_path: Path,
 ) -> dict[str, Any]:
+    # The default numerical file acts as a template when automatic
+    # benchmark search is enabled.  Explicit fixed configs retain their
+    # representation check because retargeting is opt-in.
+    from Numerical.SobolBenchmarkSearch import retarget_payload_to_record
+
+    payload = retarget_payload_to_record(record, payload)
     _validate_record_against_config(record, payload)
 
     scales = payload.get("scales")
@@ -196,6 +203,15 @@ def _run_and_build_payload(
             "WeinbergCoefficientFile",
             fallback_name="final_weinberg_coefficient.json",
         )
+
+    benchmark = resolve_model_benchmark(
+        record=record,
+        payload=payload,
+        uv_rgbeta_path=uv_rgbeta_path,
+        intermediate_rgbeta_path=intermediate_rgbeta_path,
+        final_weinberg_path=final_weinberg_path,
+    )
+    payload = benchmark.payload
 
     uv_payload = load_rgbeta_payload(uv_rgbeta_path)
     intermediate_payload = load_rgbeta_payload(intermediate_rgbeta_path)
@@ -407,10 +423,14 @@ def _run_and_build_payload(
             ),
         },
         "sensitivity": sensitivity_payload,
+        "benchmark_search": benchmark.metadata,
         "notes": {
             "benchmark_status": (
-                "The default config is a reproducible numerical benchmark point, "
-                "not an oscillation-data best fit."
+                "The UV benchmark is resolved automatically by the configured "
+                "Sobol search when no compatible cached benchmark is available."
+                if benchmark.metadata.get("status") != "Disabled"
+                else
+                "The numerical config supplies a fixed benchmark point."
             ),
             "intermediate_dimension_five_running": (
                 "Not numerically sampled here. The scalar-only numerical state "

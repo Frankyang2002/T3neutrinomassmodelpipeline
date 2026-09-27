@@ -507,6 +507,98 @@ def plot_intermediate_direct_weinberg_running(
     _save(output_path)
 
 
+def plot_c5_threshold_contributions(
+    payload: dict[str, Any],
+    output_path: Path,
+) -> None:
+    """Compare hard, direct-running, and final C5 entries at the scalar threshold."""
+
+    data = payload.get("c5_threshold_contributions")
+    if not isinstance(data, dict):
+        return
+
+    labels = [
+        r"$11$",
+        r"$12$",
+        r"$13$",
+        r"$22$",
+        r"$23$",
+        r"$33$",
+    ]
+    components = (
+        (0, 0),
+        (0, 1),
+        (0, 2),
+        (1, 1),
+        (1, 2),
+        (2, 2),
+    )
+
+    hard = np.asarray(data["hard"]["abs"], dtype=float)
+    direct = np.asarray(data["direct_running"]["abs"], dtype=float)
+    combined = np.asarray(data["combined"]["abs"], dtype=float)
+
+    for name, matrix in (
+        ("hard", hard),
+        ("direct_running", direct),
+        ("combined", combined),
+    ):
+        if matrix.shape != (3, 3):
+            raise ValueError(
+                f"c5_threshold_contributions.{name}.abs must be 3x3."
+            )
+
+    hard_values = np.asarray(
+        [hard[i, j] for i, j in components],
+        dtype=float,
+    )
+    direct_values = np.asarray(
+        [direct[i, j] for i, j in components],
+        dtype=float,
+    )
+    combined_values = np.asarray(
+        [combined[i, j] for i, j in components],
+        dtype=float,
+    )
+
+    x = np.arange(len(labels), dtype=float)
+    width = 0.25
+
+    plt.figure(figsize=(8.0, 5.0))
+    plt.bar(
+        x - width,
+        hard_values,
+        width=width,
+        label="Hard threshold",
+    )
+    plt.bar(
+        x,
+        direct_values,
+        width=width,
+        label="Direct intermediate running",
+    )
+    plt.bar(
+        x + width,
+        combined_values,
+        width=width,
+        label="Final combined",
+    )
+
+    positive = np.concatenate(
+        [hard_values, direct_values, combined_values]
+    )
+    positive = positive[positive > 0.0]
+    if positive.size and positive.max() / positive.min() > 50.0:
+        plt.yscale("log")
+
+    plt.xticks(x, labels)
+    plt.xlabel(r"Independent flavor component $ij$")
+    plt.ylabel(r"$|C_5^{ij}|$ [GeV$^{-1}$]")
+    plt.title(r"Final-$C_5$ contributions at the scalar threshold")
+    plt.grid(True, axis="y", alpha=0.25)
+    plt.legend()
+    _save(output_path)
+
 def generate_running_result_figures(diagnostics_json: Path, output_dir: Path) -> Path:
     payload = _load_json(diagnostics_json)
     output_dir = Path(output_dir)

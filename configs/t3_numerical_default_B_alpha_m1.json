@@ -1,6 +1,6 @@
 {
   "kind": "t3_pipeline_numerical_results_v1",
-  "_comment": "Default reproducible numerical benchmark for ordinary T3-B, alpha=-1. This is a benchmark seed for running/figure generation, not a fitted oscillation-data best point.",
+  "_comment": "Default ordinary-T3 numerical template. Missing compatible benchmarks are found with a bounded scrambled Sobol sample, then the best Sobol seeds are refined by the existing sensitivity-screened bounded least-squares optimizer.",
   "representation": {
     "d_s1": 2,
     "d_s2": 2,
@@ -283,6 +283,32 @@
         "real": 0.0,
         "imag": 0.0
       }
+    }
+  },
+  "benchmark_search": {
+    "enabled": true,
+    "method": "sobol",
+    "use_current_model_representation": true,
+    "n_points": 256,
+    "target_chi2": 10.0,
+    "keep_best": 10,
+    "seed": 20260927,
+    "oscillation_target": "configs/nufit_6_1_ic24_no.json",
+    "_parameter_profile": "Default profile: lambdaT3_real log-uniform in [1e-3,0.3]; all 18 real y1/y2 entries uniform in [-0.5,0.5]. All other UV inputs remain fixed to base_state.",
+    "local_refinement": {
+      "enabled": true,
+      "seed_count": 5,
+      "active_counts": [
+        5,
+        8,
+        12
+      ],
+      "max_nfev": [
+        30,
+        40,
+        60
+      ],
+      "sensitivity_step": 0.02
     }
   },
   "sensitivity": {

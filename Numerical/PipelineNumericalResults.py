@@ -51,6 +51,10 @@ from physics.NeutrinoTrajectory import (
 
 PIPELINE_NUMERICAL_CONFIG_KIND = "t3_pipeline_numerical_results_v1"
 
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+RAW_OUTPUT_ROOT = PROJECT_ROOT / "output"
+REPORT_OUTPUT_ROOT = PROJECT_ROOT / "Reports" / "output"
+
 
 def _load_json_object(path: Path) -> dict[str, Any]:
     path = Path(path)
@@ -69,6 +73,28 @@ def is_pipeline_numerical_results_config(path: Path) -> bool:
         return False
 
     return payload.get("kind") == PIPELINE_NUMERICAL_CONFIG_KIND
+
+
+def _report_figure_dir(record: RunRecord) -> Path:
+    """Return the presentation-output directory corresponding to one raw run.
+
+    Raw numerical data remains under ``output/`` while presentation-ready
+    figures mirror the study/model path under ``Reports/output/``.
+    """
+
+    output_dir = Path(record.output_dir).resolve()
+    raw_root = RAW_OUTPUT_ROOT.resolve()
+
+    try:
+        relative_run_dir = output_dir.relative_to(raw_root)
+    except ValueError as exc:
+        raise ValueError(
+            "Pipeline numerical figure output expects record.output_dir to be "
+            f"inside the project raw-output root {RAW_OUTPUT_ROOT}; got "
+            f"{record.output_dir}."
+        ) from exc
+
+    return REPORT_OUTPUT_ROOT / relative_run_dir / "figures"
 
 
 def _record_artifact(
@@ -445,7 +471,7 @@ def run_pipeline_numerical_results(
     record: RunRecord,
     numerical_config: Path,
 ) -> bool:
-    """Generate running diagnostics and figures for one pipeline record."""
+    """Generate raw diagnostics and presentation figures for one pipeline record."""
 
     summary = record.summary
     print(
@@ -466,8 +492,13 @@ def run_pipeline_numerical_results(
             config_path=Path(numerical_config),
         )
 
+        # Machine-readable numerical data remains with the raw model output.
         data_dir = record.output_dir / "data"
-        figure_dir = record.output_dir / "figures"
+
+        # Presentation-ready figures mirror the same study/model hierarchy
+        # under Reports/output rather than living in raw output/.
+        figure_dir = _report_figure_dir(record)
+
         data_dir.mkdir(parents=True, exist_ok=True)
         figure_dir.mkdir(parents=True, exist_ok=True)
 
@@ -502,7 +533,7 @@ def run_pipeline_numerical_results(
         diagnostics_path.relative_to(record.output_dir).as_posix()
     )
     summary["RunningFiguresDirectory"] = (
-        figure_dir.relative_to(record.output_dir).as_posix()
+        figure_dir.relative_to(PROJECT_ROOT).as_posix()
     )
 
     print(

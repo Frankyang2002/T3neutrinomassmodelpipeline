@@ -97,6 +97,15 @@ def build_argument_parser() -> argparse.ArgumentParser:
         ),
     )
     parser.add_argument(
+        "--reset-numerical-configs",
+        action="store_true",
+        help=(
+            "regenerate model-specific configs under configs/generated_models "
+            "from the supplied --numerical template, replacing saved generated "
+            "configs before numerical running"
+        ),
+    )
+    parser.add_argument(
         "--alpha",
         type=int,
         default=None,
@@ -199,8 +208,6 @@ def study_name(args: argparse.Namespace) -> str:
     """Return the output/report study directory name for one pipeline run."""
 
     if args.study:
-        # Keep '/' so --full can intentionally create nested study roots such
-        # as full/hypercharge. Spaces are normalised for CLI convenience.
         return args.study.strip().replace(" ", "_")
     if args.smoke:
         return "smoke"

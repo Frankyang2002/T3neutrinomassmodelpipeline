@@ -47,6 +47,9 @@ def _forward_common_cli_args(args: argparse.Namespace) -> list[str]:
     if args.numerical is not None:
         forwarded.extend(["--numerical", str(args.numerical)])
 
+    if args.reset_numerical_configs:
+        forwarded.append("--reset-numerical-configs")
+
     if args.threshold:
         for group in args.threshold:
             forwarded.append("--threshold")

@@ -1,3 +1,6 @@
+python pipeline.py --dims 2 2 1 --alpha -1 --numerical --reset-numerical-configs
+python pipeline.py --full --numerical --reset-numerical-configs
+
 # T3 Neutrino-Mass Pipeline
 
 This file is the repository-wide map of the implemented T3 radiative neutrino-mass calculation. `pipeline.py` remains the authoritative execution backbone; detailed model construction, matching, running, numerical integration, neutrino physics, validation, and reporting are delegated to specialised modules.
@@ -224,26 +227,26 @@ Stable serialized names and historical summary keys are retained where downstrea
 
 ## 10. Main repository map
 
-| Area | Main responsibility |
-|---|---|
-| `pipeline.py` | authoritative calculation order and failure propagation |
-| `common/PipelinePlan.py` | thresholds and EFT intervals |
-| `common/T3Fields.py` | physical/formal heavy-field identity |
-| `model/T3Study.py` | requested model points |
-| `Lagrangian/T3ModelMatching.py` | compatibility boundary into matching |
-| `Lagrangian/ModelValidation.py` | model validation/specification |
-| `Lagrangian/WolframRunner.py` | external Wolfram process execution |
-| `Lagrangian/MatchingResults.py` | matching outputs and RunRecord construction |
-| `RGE/running/IntermediateEFTRunning.py` | intermediate-EFT dispatch |
-| `RGE/running/backends/ScalarOnlyAfterFermion.py` | verified hierarchical backend |
-| `RGE/running/intermediate/ScalarOnlyWilsonTensorRGE.py` | scalar-only dimension-five tensor RGE |
-| `RGE/matching/FinalWeinbergCoefficient.py` | authoritative final-C5 construction |
-| `RGE/running/weinberg/WeinbergRGE.py` | final SM+Weinberg beta model |
-| `Numerical/IntermediateScalarState.py` | scalar-only numerical state |
-| `Numerical/SMWeinbergEvolution.py` | final SM+Weinberg numerical integration |
-| `physics/LowEnergyNeutrino.py` | post-matching neutrino orchestration |
-| `validation/` | independent checks only |
-| `Reports/PipelineReports.py` | report orchestration |
+| Area                                                    | Main responsibility                                     |
+| ------------------------------------------------------- | ------------------------------------------------------- |
+| `pipeline.py`                                           | authoritative calculation order and failure propagation |
+| `common/PipelinePlan.py`                                | thresholds and EFT intervals                            |
+| `common/T3Fields.py`                                    | physical/formal heavy-field identity                    |
+| `model/T3Study.py`                                      | requested model points                                  |
+| `Lagrangian/T3ModelMatching.py`                         | compatibility boundary into matching                    |
+| `Lagrangian/ModelValidation.py`                         | model validation/specification                          |
+| `Lagrangian/WolframRunner.py`                           | external Wolfram process execution                      |
+| `Lagrangian/MatchingResults.py`                         | matching outputs and RunRecord construction             |
+| `RGE/running/IntermediateEFTRunning.py`                 | intermediate-EFT dispatch                               |
+| `RGE/running/backends/ScalarOnlyAfterFermion.py`        | verified hierarchical backend                           |
+| `RGE/running/intermediate/ScalarOnlyWilsonTensorRGE.py` | scalar-only dimension-five tensor RGE                   |
+| `RGE/matching/FinalWeinbergCoefficient.py`              | authoritative final-C5 construction                     |
+| `RGE/running/weinberg/WeinbergRGE.py`                   | final SM+Weinberg beta model                            |
+| `Numerical/IntermediateScalarState.py`                  | scalar-only numerical state                             |
+| `Numerical/SMWeinbergEvolution.py`                      | final SM+Weinberg numerical integration                 |
+| `physics/LowEnergyNeutrino.py`                          | post-matching neutrino orchestration                    |
+| `validation/`                                           | independent checks only                                 |
+| `Reports/PipelineReports.py`                            | report orchestration                                    |
 
 ## 11. Regression procedure
 

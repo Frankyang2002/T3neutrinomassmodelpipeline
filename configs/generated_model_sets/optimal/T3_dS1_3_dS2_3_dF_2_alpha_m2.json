@@ -2,10 +2,10 @@
   "kind": "t3_pipeline_numerical_results_v1",
   "_comment": "Default ordinary-T3 numerical template. Missing compatible benchmarks are found with a bounded scrambled Sobol sample, then the best Sobol seeds are refined by the existing sensitivity-screened bounded least-squares optimizer.",
   "representation": {
-    "d_s1": 2,
-    "d_s2": 2,
-    "d_f": 1,
-    "alpha": -1,
+    "d_s1": 3,
+    "d_s2": 3,
+    "d_f": 2,
+    "alpha": -2,
     "shared_scalar": false
   },
   "ordering": "NO",
@@ -140,19 +140,19 @@
       "y1": {
         "real": [
           [
-            0.19830771564563476,
-            0.12929221894592047,
-            -0.0936022661626339
+            0.05,
+            0,
+            0
           ],
           [
-            0.24501324248918788,
-            0.08104399219155312,
-            -0.07645101752132177
+            0,
+            0.07,
+            0
           ],
           [
-            0.31974343582987785,
-            -0.05580490149206552,
-            -0.25077997893095016
+            0,
+            0,
+            0.09
           ]
         ],
         "imag": [
@@ -176,19 +176,19 @@
       "y2": {
         "real": [
           [
-            0.08501638207150941,
-            -0.40729731414467096,
-            -0.13695700373500586
+            0.04,
+            0,
+            0
           ],
           [
-            -0.3824314968660474,
-            -0.42100935988128185,
-            -0.03528175037354231
+            0,
+            0.06,
+            0
           ],
           [
-            -0.3407329535111785,
-            0.42145866621285677,
-            0.368492279201746
+            0,
+            0,
+            0.08
           ]
         ],
         "imag": [
@@ -253,7 +253,7 @@
       "lambdaH2": 0.03,
       "lambda12": 0.01,
       "lambdaT3": {
-        "real": 0.023989489514990255,
+        "real": 0.005,
         "imag": 0.002
       },
       "lambdaH1Adj": 0.0,
@@ -286,7 +286,7 @@
     }
   },
   "benchmark_search": {
-    "enabled": false,
+    "enabled": true,
     "method": "sobol",
     "use_current_model_representation": true,
     "n_points": 256,
@@ -319,12 +319,8 @@
     "oscillation_target": "configs/nufit_6_1_ic24_no.json"
   },
   "generated_config": {
-    "model_key": "T3_dS1_2_dS2_2_dF_1_alpha_m1",
+    "model_key": "T3_dS1_3_dS2_3_dF_2_alpha_m2",
     "source_template": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\configs\\t3_numerical_default_B_alpha_m1.json",
-    "resolved_benchmark": true,
-    "benchmark_cache": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\benchmarks\\T3_dS1_2_dS2_2_dF_1_alpha_m1\\sobol_benchmark.json",
-    "benchmark_status": "Accepted",
-    "benchmark_chi2": 3.911054256607029e-23,
-    "benchmark_method": "sobol_plus_local_least_squares"
+    "resolved_benchmark": false
   }
 }

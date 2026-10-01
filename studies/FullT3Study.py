@@ -107,23 +107,98 @@ def _restore_active(source: Path) -> None:
         ACTIVE_CONFIG_DIR.mkdir(parents=True, exist_ok=True)
 
 
-def _add_representation_specific_quartics(
+OPTIONAL_REAL_QUARTICS = (
+    "lambdaH1Adj",
+    "lambdaH2Adj",
+    "lambdaS1Adj",
+    "lambdaS2Adj",
+    "lambda12Adj",
+    "lambda12Cross",
+)
+
+SPECIAL_DOUBLET_COMPLEX_QUARTICS = (
+    "lambdaHHdagS2S2",
+    "lambdaHHdagS1barS1bar",
+    "lambdaS1bar2S2bar2",
+    "lambdaS1barS2S2bar2",
+    "lambdaS1S1bar2S2bar",
+    "lambdaHHdagS1barS2barCross",
+)
+
+
+def _normalise_representation_quartics(
     ordinary: dict[str, Any],
     ds1: int,
     ds2: int,
+    alpha: int,
 ) -> None:
-    """Supply quartics required by the canonical numerical state.
+    """Make the optional quartic key set match Numerical.State exactly.
 
-    These are fixed to zero in comparison mode.  They are representation-
-    dependent independent invariants, not the comparison parameter lambdaT3.
+    Existing values are preserved when the coupling is valid for the target
+    representation. Missing required couplings are initialized to zero.
+    Couplings that do not exist for the target representation are removed.
     """
-    if ds1 == 3:
-        ordinary["lambdaS1Adj"] = 0.0
-    if ds2 == 3:
-        ordinary["lambdaS2Adj"] = 0.0
-    if ds1 == 3 and ds2 == 3:
-        ordinary["lambda12Cross"] = 0.0
+    required_real = {
+        "lambdaH1Adj": ds1 > 1,
+        "lambdaH2Adj": ds2 > 1,
+        "lambdaS1Adj": ds1 == 3,
+        "lambdaS2Adj": ds2 == 3,
+        "lambda12Adj": ds1 > 1 and ds2 > 1,
+        "lambda12Cross": ds1 == 3 and ds2 == 3,
+    }
 
+    for name in OPTIONAL_REAL_QUARTICS:
+        if required_real[name]:
+            ordinary.setdefault(name, 0.0)
+        else:
+            ordinary.pop(name, None)
+
+    special_doublet_case = ds1 == 2 and ds2 == 2 and alpha == -1
+    for name in SPECIAL_DOUBLET_COMPLEX_QUARTICS:
+        if special_doublet_case:
+            ordinary.setdefault(name, {"real": 0.0, "imag": 0.0})
+        else:
+            ordinary.pop(name, None)
+
+
+def _retarget_config(
+    template: dict[str, Any],
+    ds1: int,
+    ds2: int,
+    df: int,
+    alpha: int,
+) -> dict[str, Any]:
+    """Retarget a payload and normalize its representation-dependent quartics."""
+    cfg = deepcopy(template)
+    cfg["representation"] = {
+        "d_s1": ds1,
+        "d_s2": ds2,
+        "d_f": df,
+        "alpha": alpha,
+        "shared_scalar": False,
+    }
+    base_state = cfg.get("base_state")
+    if not isinstance(base_state, dict):
+        raise ValueError("Numerical config requires base_state object.")
+    ordinary = base_state.get("ordinary")
+    if not isinstance(ordinary, dict):
+        raise ValueError("Numerical config requires base_state.ordinary object.")
+    _normalise_representation_quartics(ordinary, ds1, ds2, alpha)
+    return cfg
+
+
+def _normalise_saved_model_config(
+    path: Path,
+    ds1: int,
+    ds2: int,
+    df: int,
+    alpha: int,
+) -> None:
+    """Repair only the representation-dependent key set of a saved config."""
+    if not path.is_file():
+        return
+    cfg = _retarget_config(_load_json(path), ds1, ds2, df, alpha)
+    _write_json(path, cfg)
 
 def _fixed_comparison_config(
     template: dict[str, Any],
@@ -134,14 +209,7 @@ def _fixed_comparison_config(
     yukawa: float,
     scalar: float,
 ) -> dict[str, Any]:
-    cfg = deepcopy(template)
-    cfg["representation"] = {
-        "d_s1": ds1,
-        "d_s2": ds2,
-        "d_f": df,
-        "alpha": alpha,
-        "shared_scalar": False,
-    }
+    cfg = _retarget_config(template, ds1, ds2, df, alpha)
     ordinary = cfg["base_state"]["ordinary"]
 
     # Common real diagonal flavor texture. This deliberately changes only the
@@ -157,7 +225,6 @@ def _fixed_comparison_config(
     # representation-specific quartics are present when required, but fixed
     # to zero so they do not introduce an additional varying comparison axis.
     ordinary["lambdaT3"] = {"real": scalar, "imag": 0.0}
-    _add_representation_specific_quartics(ordinary, ds1, ds2)
 
     search = cfg.setdefault("benchmark_search", {})
     search["enabled"] = False
@@ -166,7 +233,7 @@ def _fixed_comparison_config(
     cfg["comparison_point"] = {
         "yukawa_diagonal": yukawa,
         "lambdaT3_real": scalar,
-        "representation_specific_extra_quartics": "fixed to 0",
+        "representation_specific_extra_quartics": "required optional quartics fixed to 0",
         "texture": "y1=y2=y*I3; Im(y1)=Im(y2)=0; Im(lambdaT3)=0",
     }
     return cfg
@@ -212,23 +279,50 @@ def run_full_study(args: argparse.Namespace) -> int:
     print("Modes: per-model optimal benchmark + four common-parameter comparisons")
     print("Shared-scalar numerical branch: deferred until its numerical state is implemented")
 
-    # OPTIMAL: ordinary hypercharge scan already selects exactly the 16 neutral points.
-    optimal_cmd = [
-        sys.executable,
-        str(PIPELINE_SCRIPT),
-        "--hypercharge-comparison",
-        "--study",
-        "full/optimal",
-        "--numerical",
-        str(template_path),
-        *common,
-    ]
-    if getattr(args, "reset_numerical_configs", False):
-        optimal_cmd.append("--reset-numerical-configs")
-    t0 = time.time()
-    rc = _run(optimal_cmd)
-    elapsed = time.time() - t0
-    status = max(status, rc)
+    # OPTIMAL: run each model with a representation-clean template.
+    optimal_started = time.time()
+    optimal_rc = 0
+    optimal_input_dir = optimal_store / "input"
+    if optimal_input_dir.exists():
+        shutil.rmtree(optimal_input_dir)
+    optimal_input_dir.mkdir(parents=True, exist_ok=True)
+
+    for model_class, ds1, ds2, df, alpha in MODELS:
+        key = _model_key(ds1, ds2, df, alpha)
+        clean_template = _retarget_config(template, ds1, ds2, df, alpha)
+        search = clean_template.setdefault("benchmark_search", {})
+        search["enabled"] = True
+        search["use_current_model_representation"] = False
+
+        cfg_path = optimal_input_dir / f"{key}.json"
+        _write_json(cfg_path, clean_template)
+
+        saved = ACTIVE_CONFIG_DIR / f"{key}.json"
+        if saved.is_file() and not getattr(args, "reset_numerical_configs", False):
+            _normalise_saved_model_config(saved, ds1, ds2, df, alpha)
+
+        cmd = [
+            sys.executable,
+            str(PIPELINE_SCRIPT),
+            "--dims",
+            str(ds1),
+            str(ds2),
+            str(df),
+            "--alpha",
+            str(alpha),
+            "--study",
+            f"full/optimal/{key}",
+            "--numerical",
+            str(cfg_path),
+            *common,
+        ]
+        if getattr(args, "reset_numerical_configs", False):
+            cmd.append("--reset-numerical-configs")
+
+        rc = _run(cmd)
+        optimal_rc = max(optimal_rc, rc)
+        status = max(status, rc)
+
     _snapshot_active(optimal_store)
     optimal_dash = _dashboard(
         OUTPUT_ROOT / "optimal",
@@ -238,8 +332,8 @@ def run_full_study(args: argparse.Namespace) -> int:
     results.append(
         {
             "mode": "optimal",
-            "return_code": rc,
-            "runtime_seconds": elapsed,
+            "return_code": optimal_rc,
+            "runtime_seconds": time.time() - optimal_started,
             "dashboard": optimal_dash,
         }
     )
@@ -327,7 +421,7 @@ def run_full_study(args: argparse.Namespace) -> int:
         "comparison_definition": {
             "yukawa_texture": "y1=y2=y*I3, real",
             "scalar_parameter": "Re(lambdaT3), Im(lambdaT3)=0",
-            "representation_specific_extra_quartics": "fixed to 0",
+            "representation_specific_extra_quartics": "required optional quartics fixed to 0",
             "scenarios": {
                 k: {"yukawa": v[0], "lambdaT3": v[1]}
                 for k, v in COMPARISON_SCENARIOS.items()

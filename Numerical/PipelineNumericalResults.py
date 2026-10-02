@@ -167,6 +167,80 @@ def _build_default_uv_state(payload: dict[str, Any]):
     return build_uv_state_from_config(config_view, {}).validated()
 
 
+
+def _matrix_diagnostic_payload(matrix: np.ndarray) -> dict[str, Any]:
+    """Serialize a complex matrix without discarding phase information."""
+
+    values = np.asarray(matrix, dtype=complex)
+    return {
+        "real": values.real.tolist(),
+        "imag": values.imag.tolist(),
+        "abs": np.abs(values).tolist(),
+    }
+
+
+def _write_neutrino_failure_diagnostic(
+    *,
+    record: RunRecord,
+    payload: dict[str, Any],
+    uv_state: Any,
+    point: Any,
+    running: Any,
+    index: int,
+    error: Exception,
+) -> Path:
+    """Write the full flavour state at a failed PMNS-angle extraction point."""
+
+    mass_before = np.asarray(point.mass_matrix_gev, dtype=complex)
+    mass_after = charged_lepton_mass_basis_matrix(
+        mass_before,
+        running.ye,
+    )
+    obs = point.observables
+
+    diagnostic = {
+        "status": "PMNSAngleExtractionFailed",
+        "error": str(error),
+        "scale_index": int(index),
+        "mu_gev": float(point.mu_gev),
+        "ordering": str(obs.ordering),
+        "input_uv": {
+            "y1": _matrix_diagnostic_payload(uv_state.y1),
+            "y2": _matrix_diagnostic_payload(uv_state.y2),
+        },
+        "running_at_failure": {
+            "ye": _matrix_diagnostic_payload(running.ye),
+            "c5": _matrix_diagnostic_payload(point.c5),
+            "mnu_before_charged_lepton_rotation_gev":
+                _matrix_diagnostic_payload(mass_before),
+            "mnu_after_charged_lepton_rotation_gev":
+                _matrix_diagnostic_payload(mass_after),
+        },
+        "takagi_and_pmns": {
+            "masses_ev": np.asarray(obs.masses_ev, dtype=float).tolist(),
+            "pmns_abs": np.asarray(obs.pmns_abs, dtype=float).tolist(),
+            "takagi_residual": float(obs.takagi_residual),
+        },
+        "comparison_metadata": payload.get("comparison"),
+        "note": (
+            "Diagnostic written before re-raising the PMNS angle-extraction "
+            "exception. Complex matrices retain real, imaginary and absolute "
+            "parts."
+        ),
+    }
+
+    data_dir = Path(record.output_dir) / "data"
+    data_dir.mkdir(parents=True, exist_ok=True)
+    path = data_dir / "neutrino_failure_diagnostic.json"
+    temporary = path.with_name(path.name + ".tmp")
+    temporary.write_text(
+        json.dumps(diagnostic, indent=2),
+        encoding="utf-8",
+    )
+    temporary.replace(path)
+    return path
+
+
 def _run_and_build_payload(
     *,
     record: RunRecord,
@@ -334,9 +408,27 @@ def _run_and_build_payload(
             )
         )
 
-        angle12, angle13, angle23 = mixing_angles_from_pmns_abs(
-            obs.pmns_abs
-        )
+        try:
+            angle12, angle13, angle23 = mixing_angles_from_pmns_abs(
+                obs.pmns_abs
+            )
+        except Exception as exc:
+            diagnostic_path = _write_neutrino_failure_diagnostic(
+                record=record,
+                payload=payload,
+                uv_state=uv_state,
+                point=point,
+                running=running,
+                index=index,
+                error=exc,
+            )
+            print(
+                "  Neutrino failure diagnostic: "
+                f"{diagnostic_path}",
+                flush=True,
+            )
+            raise
+
         s12.append(angle12)
         s13.append(angle13)
         s23.append(angle23)

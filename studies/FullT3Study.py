@@ -200,6 +200,28 @@ def _normalise_saved_model_config(
     cfg = _retarget_config(_load_json(path), ds1, ds2, df, alpha)
     _write_json(path, cfg)
 
+
+# Fixed real non-diagonal flavor textures used only in comparison mode.
+# max(abs(entry)) = 1 for each texture, so Y is the common Yukawa scale.
+# These are controlled comparison textures, not oscillation-data fits.
+COMPARISON_Y1_TEXTURE = (
+    (1.00, 0.20, -0.10),
+    (0.20, 0.80, 0.30),
+    (-0.10, 0.30, 0.60),
+)
+COMPARISON_Y2_TEXTURE = (
+    (0.70, -0.30, 0.20),
+    (0.40, 1.00, -0.20),
+    (0.10, 0.30, 0.80),
+)
+
+
+def _scaled_real_texture(
+    texture: tuple[tuple[float, ...], ...],
+    scale: float,
+) -> list[list[float]]:
+    return [[scale * float(value) for value in row] for row in texture]
+
 def _fixed_comparison_config(
     template: dict[str, Any],
     ds1: int,
@@ -212,14 +234,13 @@ def _fixed_comparison_config(
     cfg = _retarget_config(template, ds1, ds2, df, alpha)
     ordinary = cfg["base_state"]["ordinary"]
 
-    # Common real diagonal flavor texture. This deliberately changes only the
-    # common Yukawa magnitude, leaving the same texture in all 16 models.
-    for name in ("y1", "y2"):
-        ordinary[name]["real"] = [
-            [yukawa if i == j else 0.0 for j in range(3)]
-            for i in range(3)
-        ]
-        ordinary[name]["imag"] = [[0.0] * 3 for _ in range(3)]
+    # Common real non-diagonal flavor texture. Only the overall Yukawa scale
+    # changes between small-Y and large-Y scenarios; the normalized texture is
+    # identical for every model.
+    ordinary["y1"]["real"] = _scaled_real_texture(COMPARISON_Y1_TEXTURE, yukawa)
+    ordinary["y2"]["real"] = _scaled_real_texture(COMPARISON_Y2_TEXTURE, yukawa)
+    ordinary["y1"]["imag"] = [[0.0] * 3 for _ in range(3)]
+    ordinary["y2"]["imag"] = [[0.0] * 3 for _ in range(3)]
 
     # lambdaT3 is the scalar comparison parameter.  Other independent
     # representation-specific quartics are present when required, but fixed
@@ -231,10 +252,12 @@ def _fixed_comparison_config(
     search["use_current_model_representation"] = False
     cfg.setdefault("sensitivity", {})["enabled"] = False
     cfg["comparison_point"] = {
-        "yukawa_diagonal": yukawa,
+        "yukawa_scale": yukawa,
         "lambdaT3_real": scalar,
         "representation_specific_extra_quartics": "required optional quartics fixed to 0",
-        "texture": "y1=y2=y*I3; Im(y1)=Im(y2)=0; Im(lambdaT3)=0",
+        "texture": "fixed real non-diagonal y1/y2 textures scaled by common Y; Im(y1)=Im(y2)=0; Im(lambdaT3)=0",
+        "y1_texture": [list(row) for row in COMPARISON_Y1_TEXTURE],
+        "y2_texture": [list(row) for row in COMPARISON_Y2_TEXTURE],
     }
     return cfg
 
@@ -419,7 +442,7 @@ def run_full_study(args: argparse.Namespace) -> int:
         "ordinary_model_count": len(MODELS),
         "shared_scalar_models_included": False,
         "comparison_definition": {
-            "yukawa_texture": "y1=y2=y*I3, real",
+            "yukawa_texture": "fixed real non-diagonal y1/y2 textures scaled by common Y",
             "scalar_parameter": "Re(lambdaT3), Im(lambdaT3)=0",
             "representation_specific_extra_quartics": "required optional quartics fixed to 0",
             "scenarios": {

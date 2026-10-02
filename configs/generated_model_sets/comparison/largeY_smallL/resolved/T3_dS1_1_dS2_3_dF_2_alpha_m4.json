@@ -141,18 +141,18 @@
         "real": [
           [
             0.5,
-            0.0,
-            0.0
+            0.1,
+            -0.05
           ],
           [
-            0.0,
-            0.5,
-            0.0
+            0.1,
+            0.4,
+            0.15
           ],
           [
-            0.0,
-            0.0,
-            0.5
+            -0.05,
+            0.15,
+            0.3
           ]
         ],
         "imag": [
@@ -176,19 +176,19 @@
       "y2": {
         "real": [
           [
-            0.5,
-            0.0,
-            0.0
+            0.35,
+            -0.15,
+            0.1
           ],
           [
-            0.0,
+            0.2,
             0.5,
-            0.0
+            -0.1
           ],
           [
-            0.0,
-            0.0,
-            0.5
+            0.05,
+            0.15,
+            0.4
           ]
         ],
         "imag": [
@@ -294,10 +294,44 @@
     "oscillation_target": "configs/nufit_6_1_ic24_no.json"
   },
   "comparison_point": {
-    "yukawa_diagonal": 0.5,
+    "yukawa_scale": 0.5,
     "lambdaT3_real": 0.01,
     "representation_specific_extra_quartics": "required optional quartics fixed to 0",
-    "texture": "y1=y2=y*I3; Im(y1)=Im(y2)=0; Im(lambdaT3)=0"
+    "texture": "fixed real non-diagonal y1/y2 textures scaled by common Y; Im(y1)=Im(y2)=0; Im(lambdaT3)=0",
+    "y1_texture": [
+      [
+        1.0,
+        0.2,
+        -0.1
+      ],
+      [
+        0.2,
+        0.8,
+        0.3
+      ],
+      [
+        -0.1,
+        0.3,
+        0.6
+      ]
+    ],
+    "y2_texture": [
+      [
+        0.7,
+        -0.3,
+        0.2
+      ],
+      [
+        0.4,
+        1.0,
+        -0.2
+      ],
+      [
+        0.1,
+        0.3,
+        0.8
+      ]
+    ]
   },
   "generated_config": {
     "model_key": "T3_dS1_1_dS2_3_dF_2_alpha_m4",

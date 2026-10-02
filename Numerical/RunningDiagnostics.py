@@ -74,9 +74,35 @@ def mixing_angles_from_pmns_abs(
 
     sin2_theta13 = float(values[0, 2] ** 2)
     denominator = 1.0 - sin2_theta13
+
     if denominator <= 0.0:
+        row_norms_sq = np.sum(values**2, axis=1)
+        col_norms_sq = np.sum(values**2, axis=0)
+
+        print("\n" + "=" * 72)
+        print("PMNS ANGLE-EXTRACTION DIAGNOSTIC")
+        print("=" * 72)
+        print("pmns_abs =")
+        print(np.array2string(values, precision=17))
+        print(f"|Ue3|^2 = {sin2_theta13:.17e}")
+        print(f"1-|Ue3|^2 = {denominator:.17e}")
+        print("row norm^2 =", np.array2string(row_norms_sq, precision=17))
+        print("column norm^2 =", np.array2string(col_norms_sq, precision=17))
+        print(
+            "max row-normalization error = "
+            f"{np.max(np.abs(row_norms_sq - 1.0)):.17e}"
+        )
+        print(
+            "max column-normalization error = "
+            f"{np.max(np.abs(col_norms_sq - 1.0)):.17e}"
+        )
+        print("=" * 72)
+
         raise RuntimeError(
-            "Cannot extract theta12/theta23 because 1-|Ue3|^2 <= 0."
+            "Cannot extract theta12/theta23 because "
+            "1-|Ue3|^2 <= 0. "
+            f"|Ue3|^2={sin2_theta13:.17e}, "
+            f"denominator={denominator:.17e}."
         )
 
     return (

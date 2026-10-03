@@ -70,6 +70,8 @@ class HeavyMassBasisData:
     y2: np.ndarray
     rotation: np.ndarray
     takagi_residual: float
+    right_rotation: np.ndarray | None = None
+    basis_residual: float = 0.0
 
 
 def _already_diagonal_positive(
@@ -221,6 +223,123 @@ def _majorana_takagi_mass_basis(
     )
 
 
+
+def _vectorlike_svd_mass_basis(
+    state: T3UVState,
+    *,
+    residual_rtol: float,
+    residual_atol: float,
+) -> HeavyMassBasisData:
+    """Bi-unitarily diagonalize vectorlike MF and rotate its two heavy indices.
+
+    The implemented T3 vertices are
+
+        Lbar y1 F^c S1
+        Lbar y2 F S2^dagger.
+
+    For the Dirac/vectorlike mass convention
+
+        - Fbar_L MF F_R + h.c.
+
+    use MF = U_L D U_R^dagger, so that U_L^dagger MF U_R = D.
+    The heavy-flavor Yukawa index therefore transforms as
+
+        y1 -> y1 U_L^*
+        y2 -> y2 U_R.
+    """
+
+    matrix = np.asarray(state.MF, dtype=complex)
+
+    if matrix.shape != (3, 3):
+        raise ValueError("MF must be a 3x3 matrix.")
+
+    if not np.all(np.isfinite(matrix.real)) or not np.all(
+        np.isfinite(matrix.imag)
+    ):
+        raise ValueError("MF must contain only finite entries.")
+
+    left_rotation, singular_values, vh = np.linalg.svd(matrix)
+    right_rotation = vh.conj().T
+
+    # np.linalg.svd orders singular values from largest to smallest.  Use
+    # ascending masses to match the ordering convention of the Majorana path.
+    order = np.argsort(singular_values)
+    masses = np.asarray(singular_values[order], dtype=float)
+    left_rotation = left_rotation[:, order]
+    right_rotation = right_rotation[:, order]
+
+    diagonalized = left_rotation.conj().T @ matrix @ right_rotation
+    target = np.diag(masses)
+
+    mass_residual = float(np.linalg.norm(diagonalized - target, ord="fro"))
+    identity = np.eye(3, dtype=complex)
+    left_unitarity_residual = float(
+        np.linalg.norm(
+            left_rotation.conj().T @ left_rotation - identity,
+            ord="fro",
+        )
+    )
+    right_unitarity_residual = float(
+        np.linalg.norm(
+            right_rotation.conj().T @ right_rotation - identity,
+            ord="fro",
+        )
+    )
+    residual = max(
+        mass_residual,
+        left_unitarity_residual,
+        right_unitarity_residual,
+    )
+
+    mass_allowed = float(residual_atol) + float(residual_rtol) * max(
+        1.0,
+        float(np.linalg.norm(matrix, ord="fro")),
+    )
+    unitarity_allowed = float(residual_atol) + float(residual_rtol)
+
+    if mass_residual > mass_allowed:
+        raise RuntimeError(
+            "SVD diagonalization of vectorlike MF did not reach the requested "
+            f"mass residual tolerance: residual={mass_residual:.6e}, "
+            f"allowed={mass_allowed:.6e}."
+        )
+
+    if left_unitarity_residual > unitarity_allowed:
+        raise RuntimeError(
+            "Left SVD rotation is not unitary within tolerance: "
+            f"residual={left_unitarity_residual:.6e}, "
+            f"allowed={unitarity_allowed:.6e}."
+        )
+
+    if right_unitarity_residual > unitarity_allowed:
+        raise RuntimeError(
+            "Right SVD rotation is not unitary within tolerance: "
+            f"residual={right_unitarity_residual:.6e}, "
+            f"allowed={unitarity_allowed:.6e}."
+        )
+
+    if not np.all(np.isfinite(masses)):
+        raise ValueError("SVD heavy masses must be finite.")
+
+    if np.any(masses <= 0.0):
+        raise ValueError(
+            "Final-C5 numerical evaluation requires strictly positive "
+            "vectorlike heavy masses."
+        )
+
+    y1 = np.asarray(state.y1, dtype=complex) @ left_rotation.conj()
+    y2 = np.asarray(state.y2, dtype=complex) @ right_rotation
+
+    return HeavyMassBasisData(
+        masses_gev=masses.copy(),
+        y1=y1.copy(),
+        y2=y2.copy(),
+        rotation=left_rotation.copy(),
+        takagi_residual=0.0,
+        right_rotation=right_rotation.copy(),
+        basis_residual=residual,
+    )
+
 def _heavy_mass_basis_data(
     state: T3UVState,
     *,
@@ -260,11 +379,10 @@ def _heavy_mass_basis_data(
             residual_atol=takagi_residual_atol,
         )
 
-    raise ValueError(
-        "Final-C5 numerical evaluation requires a diagonal positive heavy-"
-        "fermion mass basis for non-Majorana F. MF is off-diagonal, complex, "
-        "or has non-positive diagonal entries; no validated bi-unitary "
-        "Dirac/vectorlike basis rotation is implemented."
+    return _vectorlike_svd_mass_basis(
+        state,
+        residual_rtol=takagi_residual_rtol,
+        residual_atol=takagi_residual_atol,
     )
 
 
@@ -298,7 +416,6 @@ def extract_final_c5_inputs(
         raise TypeError(
             "Expected an ordinary T3IntermediateScalarState at the scalar threshold."
         )
-
     heavy_basis = _heavy_mass_basis_data(
         uv_state,
         offdiagonal_atol=offdiagonal_mass_atol,

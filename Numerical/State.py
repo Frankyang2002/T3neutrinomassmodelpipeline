@@ -220,8 +220,17 @@ class T3UVState:
         if rep.majorana_fermion and not np.allclose(
             mf, mf.T, rtol=1.0e-10, atol=1.0e-14
         ):
+            antisymmetric = mf - mf.T
+            asymmetry_norm = float(np.linalg.norm(antisymmetric))
+            mf_norm = float(np.linalg.norm(mf))
+            relative_asymmetry = asymmetry_norm / max(mf_norm, 1.0e-300)
+            max_asymmetry = float(np.max(np.abs(antisymmetric)))
             raise ValueError(
-                "MF must be complex symmetric when the heavy fermion is Majorana."
+                "MF must be complex symmetric when the heavy fermion is Majorana. "
+                f"||MF-MF.T||_F={asymmetry_norm:.17e}, "
+                f"relative={relative_asymmetry:.17e}, "
+                f"max|MF-MF.T|={max_asymmetry:.17e}, "
+                f"MF={mf.tolist()}"
             )
 
         return T3UVState(

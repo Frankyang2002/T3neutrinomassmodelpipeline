@@ -24,7 +24,7 @@ class NeutrinoObservables:
 def takagi_factorization(
     mass_matrix: np.ndarray,
 ) -> tuple[np.ndarray, np.ndarray, float]:
-    """
+    r"""
     Takagi-factorize a complex symmetric Majorana mass matrix.
 
     Returns U, masses, residual such that
@@ -32,6 +32,18 @@ def takagi_factorization(
         U.T @ M @ U ~= diag(masses),
 
     with non-negative masses sorted from smallest to largest.
+
+    Writing M = A + i B and u = x + i y, the Takagi equation
+
+        M u = sigma u*
+
+    is equivalent to the real symmetric eigenproblem
+
+        [[ A, -B],
+         [-B, -A]] [x, y]^T = sigma [x, y]^T.
+
+    Solving this problem directly avoids arbitrary singular-vector rotations
+    in degenerate or nearly-degenerate singular-value subspaces.
     """
 
     M = np.asarray(mass_matrix, dtype=complex)
@@ -42,24 +54,42 @@ def takagi_factorization(
     if not np.allclose(M, M.T, rtol=1e-9, atol=1e-18):
         raise ValueError("Neutrino mass matrix must be symmetric.")
 
-    # For a Takagi decomposition, the right singular vectors are the
-    # Takagi vectors up to column phases.
-    _, singular_values, vh = np.linalg.svd(M)
-    U = vh.conj().T
+    M = 0.5 * (M + M.T)
 
-    diagonal_candidate = U.T @ M @ U
+    A = M.real
+    B = M.imag
 
-    phases = np.ones(3, dtype=complex)
+    realified = np.block(
+        [
+            [A, -B],
+            [-B, -A],
+        ]
+    )
+    realified = 0.5 * (realified + realified.T)
 
-    for i in range(3):
-        value = diagonal_candidate[i, i]
+    eigenvalues, eigenvectors = np.linalg.eigh(realified)
 
-        if abs(value) > 0:
-            phases[i] = np.exp(-0.5j * np.angle(value))
+    # The six eigenvalues occur as +/- the three Takagi singular values.
+    # Select the three largest branches; this is robust even when the
+    # lightest mass is numerically close to zero.
+    positive = np.argsort(eigenvalues)[-3:]
+    positive = positive[np.argsort(eigenvalues[positive])]
 
-    U = U @ np.diag(phases)
+    vectors = eigenvectors[:, positive]
+    U = vectors[:3, :] + 1j * vectors[3:, :]
+
+    norms = np.linalg.norm(U, axis=0)
+    if np.any(norms <= 0.0):
+        raise RuntimeError("Takagi factorization produced a zero eigenvector.")
+    U = U / norms
+
     diagonalized = U.T @ M @ U
+    for i in range(3):
+        value = diagonalized[i, i]
+        if abs(value) > 0.0:
+            U[:, i] *= np.exp(-0.5j * np.angle(value))
 
+    diagonalized = U.T @ M @ U
     masses = np.abs(np.diag(diagonalized))
 
     order = np.argsort(masses)
@@ -69,16 +99,10 @@ def takagi_factorization(
     diagonalized = U.T @ M @ U
     target = np.diag(masses)
 
-    scale = max(
-        np.linalg.norm(M),
-        1.0e-30,
-    )
-    residual = float(
-        np.linalg.norm(diagonalized - target) / scale
-    )
+    scale = max(np.linalg.norm(M), 1.0e-30)
+    residual = float(np.linalg.norm(diagonalized - target) / scale)
 
     return U, masses, residual
-
 
 def _label_mass_eigenstates(
     U: np.ndarray,

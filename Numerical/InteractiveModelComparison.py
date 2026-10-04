@@ -60,9 +60,36 @@ def _model_name(path: Path, payload: dict[str, Any]) -> str:
     return model_dir.name
 
 
+def _is_canonical_optimal_diagnostic(study_dir: Path, path: Path) -> bool:
+    """Reject legacy short-path diagnostics when reading an optimal study.
+
+    Current optimal outputs live below representation-specific directories named
+    T3_dS1_*_dS2_*_dF_*_alpha_*.  Older runs may leave short aliases such as
+    optimal/T3_B_alpha_m1/data/running_diagnostics.json beside them.  Mixing the
+    two generations corrupts the common scale range in the aggregate dashboard.
+    """
+    study_dir = Path(study_dir)
+    if study_dir.name != "optimal":
+        return True
+
+    try:
+        relative = path.relative_to(study_dir)
+    except ValueError:
+        return False
+
+    if not relative.parts:
+        return False
+    return relative.parts[0].startswith("T3_dS1_")
+
+
 def collect(study_dir: Path) -> dict[str, Any]:
     result: dict[str, Any] = {"quantities": {}, "models": [], "scales": {}}
-    files = sorted(Path(study_dir).rglob("running_diagnostics.json"))
+    study_dir = Path(study_dir)
+    files = [
+        path
+        for path in sorted(study_dir.rglob("running_diagnostics.json"))
+        if _is_canonical_optimal_diagnostic(study_dir, path)
+    ]
     for path in files:
         try:
             payload = json.loads(path.read_text(encoding="utf-8"))

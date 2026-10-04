@@ -164,13 +164,48 @@ def _validate_save_scales(
     return np.log(scales)
 
 
+def _project_majorana_mf_vector(
+    y: np.ndarray,
+    layout: StateVectorLayout,
+) -> np.ndarray:
+    """Project the heavy-fermion mass block onto the Majorana symmetric manifold.
+
+    The ODE vector stores all entries of MF independently.  For a Majorana
+    representation, the exact RGE preserves MF.T == MF, but independent
+    floating-point integration of MF_ij and MF_ji can generate tiny
+    antisymmetric roundoff components.  Remove only that numerical component
+    before reconstructing and validating the physical state.
+    """
+    if not layout.representation.majorana_fermion:
+        return y
+
+    block = layout.block("MF")
+    if block.kind != "complex_matrix" or len(block.shape) != 2:
+        raise RuntimeError("MF block is not a complex matrix.")
+    if block.shape[0] != block.shape[1]:
+        raise RuntimeError("Majorana MF block must be square.")
+
+    result = np.asarray(y, dtype=float).copy()
+    n = int(np.prod(block.shape))
+    data = result[block.start:block.stop]
+
+    real = data[:n].reshape(block.shape)
+    imag = data[n:].reshape(block.shape)
+
+    real[:] = 0.5 * (real + real.T)
+    imag[:] = 0.5 * (imag + imag.T)
+
+    return result
+
+
 def _state_from_solver_vector(
     t: float,
     y: np.ndarray,
     layout: StateVectorLayout,
 ) -> UVState:
+    physical_y = _project_majorana_mf_vector(y, layout)
     return unpack_uv_state(
-        y,
+        physical_y,
         layout,
         mu_gev=float(np.exp(t)),
     )
@@ -286,6 +321,14 @@ def run_uv_segment(
         raise RuntimeError(
             "UV numerical RGE integration failed: "
             + str(solution.message)
+        )
+
+    if layout.representation.majorana_fermion:
+        solution.y = np.column_stack(
+            [
+                _project_majorana_mf_vector(solution.y[:, index], layout)
+                for index in range(solution.y.shape[1])
+            ]
         )
 
     mu_values = np.exp(solution.t)

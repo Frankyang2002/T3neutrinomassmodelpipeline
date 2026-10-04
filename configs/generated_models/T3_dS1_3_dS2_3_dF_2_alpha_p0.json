@@ -1,6 +1,6 @@
 {
   "kind": "t3_pipeline_numerical_results_v1",
-  "_comment": "Default ordinary-T3 numerical template. Missing compatible benchmarks are found with a bounded scrambled Sobol sample, then the best Sobol seeds are refined by the existing sensitivity-screened bounded least-squares optimizer.",
+  "_comment": "Default ordinary-T3 numerical template. New low-scale benchmark: UV=1e7 GeV, MF threshold=100 TeV, scalar threshold=1 TeV, low scale=100 GeV.",
   "representation": {
     "d_s1": 3,
     "d_s2": 3,
@@ -10,9 +10,9 @@
   },
   "ordering": "NO",
   "scales": {
-    "mu_fermion_threshold_gev": 10000000000.0,
-    "mu_scalar_threshold_gev": 7000000000.0,
-    "mu_low_gev": 1000.0
+    "mu_fermion_threshold_gev": 100000.0,
+    "mu_scalar_threshold_gev": 1000.0,
+    "mu_low_gev": 100.0
   },
   "numerical": {
     "vev_gev": 246.22,
@@ -21,7 +21,7 @@
     "n_scale_points": 120
   },
   "base_state": {
-    "mu_gev": 1000000000000.0,
+    "mu_gev": 10000000.0,
     "sm": {
       "gY": 0.36,
       "g2": 0.65,
@@ -140,19 +140,19 @@
       "y1": {
         "real": [
           [
-            0.072432276199906,
-            0.1588743617758155,
-            -0.03562378758199458
+            0.22322057545247542,
+            0.18497567530721426,
+            -0.3157028045979501
           ],
           [
-            -0.42377090930655265,
-            0.26547600235790014,
-            -0.2885796019306638
+            0.3825420517203233,
+            -0.3550869086767591,
+            0.020967580589679735
           ],
           [
-            -0.36660885717719793,
-            0.11941809579730034,
-            -0.029110382311046124
+            -0.26235463980088497,
+            0.1562822861596942,
+            -0.09795740619301796
           ]
         ],
         "imag": [
@@ -176,19 +176,19 @@
       "y2": {
         "real": [
           [
-            -0.36906546633690596,
-            -0.48048610519617796,
-            -0.34550992120057344
+            -0.09767414985330541,
+            -0.006382725258156807,
+            0.29928255280764615
           ],
           [
-            -0.4500751821324229,
-            -0.10779696144163609,
-            -0.25376380328089
+            -0.1849819408074504,
+            0.08044794397925914,
+            -0.23077688831835985
           ],
           [
-            -0.4515674989670515,
-            -0.12643333338201046,
-            0.3663807949051261
+            -0.30907684566803917,
+            0.08288782835006714,
+            -0.07494219858199358
           ]
         ],
         "imag": [
@@ -212,19 +212,19 @@
       "MF": {
         "real": [
           [
-            10000000000.0,
+            100000.0,
             0,
             0
           ],
           [
             0,
-            11000000000.0,
+            110000.0,
             0
           ],
           [
             0,
             0,
-            12000000000.0
+            120000.0
           ]
         ],
         "imag": [
@@ -245,15 +245,15 @@
           ]
         ]
       },
-      "mS1Sq": 6.4e+19,
-      "mS2Sq": 4.9e+19,
+      "mS1Sq": 1306122.448979592,
+      "mS2Sq": 1000000.0,
       "lambdaS1": 0.1,
       "lambdaS2": 0.12,
       "lambdaH1": 0.02,
       "lambdaH2": 0.03,
       "lambda12": 0.01,
       "lambdaT3": {
-        "real": 0.015140060983009022,
+        "real": 0.001131547575607522,
         "imag": 0.002
       },
       "lambdaH1Adj": 0.0,
@@ -273,7 +273,7 @@
     "keep_best": 10,
     "seed": 20260927,
     "oscillation_target": "configs/nufit_6_1_ic24_no.json",
-    "_parameter_profile": "Default profile: lambdaT3_real log-uniform in [1e-3,0.3]; all 18 real y1/y2 entries uniform in [-0.5,0.5]. All other UV inputs remain fixed to base_state.",
+    "_parameter_profile": "Default profile: lambdaT3_real log-uniform in [1e-3,1.0]; all 18 real y1/y2 entries uniform in [-0.5,0.5]. All other UV inputs remain fixed to base_state.",
     "local_refinement": {
       "enabled": true,
       "seed_count": 5,
@@ -288,7 +288,142 @@
         60
       ],
       "sensitivity_step": 0.02
-    }
+    },
+    "parameters": [
+      {
+        "name": "lambdaT3_real",
+        "binding": "ordinary.lambdaT3.real",
+        "low": 0.001,
+        "high": 1.0,
+        "scale": "log"
+      },
+      {
+        "name": "y1_11",
+        "binding": "ordinary.y1.real.0.0",
+        "low": -0.5,
+        "high": 0.5,
+        "scale": "linear"
+      },
+      {
+        "name": "y1_12",
+        "binding": "ordinary.y1.real.0.1",
+        "low": -0.5,
+        "high": 0.5,
+        "scale": "linear"
+      },
+      {
+        "name": "y1_13",
+        "binding": "ordinary.y1.real.0.2",
+        "low": -0.5,
+        "high": 0.5,
+        "scale": "linear"
+      },
+      {
+        "name": "y1_21",
+        "binding": "ordinary.y1.real.1.0",
+        "low": -0.5,
+        "high": 0.5,
+        "scale": "linear"
+      },
+      {
+        "name": "y1_22",
+        "binding": "ordinary.y1.real.1.1",
+        "low": -0.5,
+        "high": 0.5,
+        "scale": "linear"
+      },
+      {
+        "name": "y1_23",
+        "binding": "ordinary.y1.real.1.2",
+        "low": -0.5,
+        "high": 0.5,
+        "scale": "linear"
+      },
+      {
+        "name": "y1_31",
+        "binding": "ordinary.y1.real.2.0",
+        "low": -0.5,
+        "high": 0.5,
+        "scale": "linear"
+      },
+      {
+        "name": "y1_32",
+        "binding": "ordinary.y1.real.2.1",
+        "low": -0.5,
+        "high": 0.5,
+        "scale": "linear"
+      },
+      {
+        "name": "y1_33",
+        "binding": "ordinary.y1.real.2.2",
+        "low": -0.5,
+        "high": 0.5,
+        "scale": "linear"
+      },
+      {
+        "name": "y2_11",
+        "binding": "ordinary.y2.real.0.0",
+        "low": -0.5,
+        "high": 0.5,
+        "scale": "linear"
+      },
+      {
+        "name": "y2_12",
+        "binding": "ordinary.y2.real.0.1",
+        "low": -0.5,
+        "high": 0.5,
+        "scale": "linear"
+      },
+      {
+        "name": "y2_13",
+        "binding": "ordinary.y2.real.0.2",
+        "low": -0.5,
+        "high": 0.5,
+        "scale": "linear"
+      },
+      {
+        "name": "y2_21",
+        "binding": "ordinary.y2.real.1.0",
+        "low": -0.5,
+        "high": 0.5,
+        "scale": "linear"
+      },
+      {
+        "name": "y2_22",
+        "binding": "ordinary.y2.real.1.1",
+        "low": -0.5,
+        "high": 0.5,
+        "scale": "linear"
+      },
+      {
+        "name": "y2_23",
+        "binding": "ordinary.y2.real.1.2",
+        "low": -0.5,
+        "high": 0.5,
+        "scale": "linear"
+      },
+      {
+        "name": "y2_31",
+        "binding": "ordinary.y2.real.2.0",
+        "low": -0.5,
+        "high": 0.5,
+        "scale": "linear"
+      },
+      {
+        "name": "y2_32",
+        "binding": "ordinary.y2.real.2.1",
+        "low": -0.5,
+        "high": 0.5,
+        "scale": "linear"
+      },
+      {
+        "name": "y2_33",
+        "binding": "ordinary.y2.real.2.2",
+        "low": -0.5,
+        "high": 0.5,
+        "scale": "linear"
+      }
+    ]
   },
   "sensitivity": {
     "enabled": true,
@@ -302,8 +437,8 @@
     "source_template": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\configs\\generated_model_sets\\optimal\\input\\T3_dS1_3_dS2_3_dF_2_alpha_p0.json",
     "resolved_benchmark": true,
     "benchmark_cache": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\benchmarks\\T3_dS1_3_dS2_3_dF_2_alpha_p0\\sobol_benchmark.json",
-    "benchmark_status": "Accepted",
-    "benchmark_chi2": 1.7948335685749687e-20,
+    "benchmark_status": "BestAvailable",
+    "benchmark_chi2": 90701226112478.25,
     "benchmark_method": "sobol_plus_local_least_squares"
   }
 }

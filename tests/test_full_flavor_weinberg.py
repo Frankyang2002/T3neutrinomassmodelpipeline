@@ -3,24 +3,24 @@ from __future__ import annotations
 import unittest
 import numpy as np
 
-from Numerical.WeinbergRunning import (
+from Numerical.SMWeinbergEvolution import (
     LOOP,
-    SMInitialConditions,
+    SMWeinbergInitialConditions,
     _beta,
     _pack,
     _unpack,
-    neutrino_mass_matrix,
 )
-from Numerical.FinalSMBoundary import (
+from Numerical.ScalarThresholdBoundary import (
     FinalSMBoundaryState,
-    build_weinberg_initial_conditions,
+    build_sm_weinberg_initial_conditions,
 )
 from Numerical.State import SMNumericalState
-from Numerical.WeinbergTrajectory import charged_lepton_mass_basis_matrix
+from physics.NeutrinoMass import numerical_neutrino_mass_matrix
+from physics.NeutrinoTrajectory import charged_lepton_mass_basis_matrix
 
 
 class FullFlavorWeinbergTests(unittest.TestCase):
-    def _initial(self) -> SMInitialConditions:
+    def _initial(self) -> SMWeinbergInitialConditions:
         ye = np.array(
             [
                 [3.0e-6, 1.0e-5, 0.0],
@@ -39,7 +39,7 @@ class FullFlavorWeinbergTests(unittest.TestCase):
             ],
             dtype=complex,
         ) * 1.0e-14
-        return SMInitialConditions(
+        return SMWeinbergInitialConditions(
             gY=0.36,
             g2=0.64,
             g3=0.60,
@@ -65,7 +65,7 @@ class FullFlavorWeinbergTests(unittest.TestCase):
         yu = np.diag([1.0e-5, 7.0e-3, 0.75]).astype(complex)
         yd = np.diag([2.0e-5, 4.0e-4, 1.8e-2]).astype(complex)
         K = np.eye(3, dtype=complex) * 1.0e-14
-        initial = SMInitialConditions(
+        initial = SMWeinbergInitialConditions(
             0.36, 0.64, 0.60, 0.20, ye, yu, yd, K
         ).validated()
         derivative = _beta(0.0, _pack(initial))
@@ -121,7 +121,7 @@ class FullFlavorWeinbergTests(unittest.TestCase):
             mu_gev=1.0e9,
             sm=sm,
         ).validated()
-        built = build_weinberg_initial_conditions(
+        built = build_sm_weinberg_initial_conditions(
             boundary,
             initial.K,
         )
@@ -168,7 +168,7 @@ class FullFlavorWeinbergTests(unittest.TestCase):
 
     def test_project_neutrino_mass_normalisation(self) -> None:
         K = np.eye(3, dtype=complex) * 1.0e-14
-        m = neutrino_mass_matrix(K, vev_gev=246.22)
+        m = numerical_neutrino_mass_matrix(K, vev_gev=246.22)
         np.testing.assert_allclose(
             m,
             -(246.22**2 / 2.0) * K,

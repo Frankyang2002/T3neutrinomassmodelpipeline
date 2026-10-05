@@ -7,9 +7,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 CANONICAL_RUNNING = PROJECT_ROOT / "Numerical" / "SMWeinbergEvolution.py"
-HISTORICAL_RUNNING = PROJECT_ROOT / "Numerical" / "WeinbergRunning.py"
 CANONICAL_STAGE = PROJECT_ROOT / "Numerical" / "SMWeinbergStage.py"
-HISTORICAL_STAGE = PROJECT_ROOT / "Numerical" / "WeinbergStage.py"
 MASS = PROJECT_ROOT / "physics" / "NeutrinoMass.py"
 
 
@@ -34,11 +32,9 @@ def test_canonical_numerical_evolution_reexports_mass_helper_from_physics() -> N
     assert "def neutrino_mass_matrix(" not in source
 
 
-def test_historical_numerical_running_is_compatibility_only() -> None:
-    source = _source(HISTORICAL_RUNNING)
-
-    assert "from Numerical.SMWeinbergEvolution import" in source
-    assert "def neutrino_mass_matrix(" not in source
+def test_historical_numerical_modules_are_removed() -> None:
+    assert not (PROJECT_ROOT / "Numerical" / "WeinbergRunning.py").exists()
+    assert not (PROJECT_ROOT / "Numerical" / "WeinbergStage.py").exists()
 
 
 def test_canonical_numerical_stage_calls_physics_mass_conversion_directly() -> None:
@@ -47,10 +43,3 @@ def test_canonical_numerical_stage_calls_physics_mass_conversion_directly() -> N
     assert "from physics.NeutrinoMass import numerical_neutrino_mass_matrix" in source
     assert "mass_low = numerical_neutrino_mass_matrix(" in source
     assert "Numerical.WeinbergRunning" not in source
-
-
-def test_historical_numerical_stage_is_compatibility_only() -> None:
-    source = _source(HISTORICAL_STAGE)
-
-    assert "from Numerical.SMWeinbergStage import" in source
-    assert "def run_numerical_weinberg_stage(" not in source

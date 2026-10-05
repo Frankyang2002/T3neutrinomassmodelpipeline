@@ -7,8 +7,9 @@ Default mode
 Run the normalization-cleanup regression plus the mixed-C12 flavor-symmetry
 checks consolidated from ``RGE/running/C12FlavorSymmetryValidation.py``:
 
-* ``build_flavor_c5_matrix`` must produce the physical symmetric coefficient
-  C5 = A_pq + A_qp, giving 2*A_ordered in the one-generation symbolic test.
+* ``build_majorana_c5_flavor_matrix`` must produce the physical symmetric
+  coefficient C5 = A_pq + A_qp, giving 2*A_ordered in the one-generation
+  symbolic test.
 * The mixed C12 flavor kernel must be symmetric for non-diagonal complex
   Yukawas and equal 1/2(K + K^T), where K is the ordered y1* y2* kernel.
 * ``build_neutrino_mass_matrix`` must preserve the previous physical mass
@@ -17,10 +18,8 @@ checks consolidated from ``RGE/running/C12FlavorSymmetryValidation.py``:
 Optional Wilson-adapter mode
 ----------------------------
 If a Matchete EFT1 Wilson-seed JSON is supplied, also check that
-``EFT1TensorAdapters.build_eft1_wilson_tensor`` preserves an arbitrary outer
-numerical prefactor in every PL tree Wilson term.  This is the former
-``tests/check_wilson_prefactor_preservation.py`` regression, consolidated here
-without changing the adapter or any physics convention.
+``ScalarOnlyTensorAdapters.build_eft1_wilson_tensor`` preserves an arbitrary
+outer numerical prefactor in every PL tree Wilson term.
 """
 
 import argparse
@@ -35,9 +34,13 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from RGE.matching.FlavorC5Matching import build_flavor_c5_matrix
-from RGE.running.intermediate.ScalarOnlyTensorAdapters import build_eft1_wilson_tensor
-from RGE.running.weinberg.FlavorMatchedWeinbergStage import build_neutrino_mass_matrix
+from RGE.matching.WeinbergFlavorMatching import (
+    build_majorana_c5_flavor_matrix,
+)
+from RGE.running.intermediate.ScalarOnlyTensorAdapters import (
+    build_eft1_wilson_tensor,
+)
+from physics.NeutrinoMass import build_neutrino_mass_matrix
 
 
 def canonical_items(tensor) -> dict[tuple[int, ...], sp.Expr]:
@@ -203,13 +206,8 @@ def check_c12_flavor_symmetry() -> bool:
 
     ordered = _ordered_c12_kernel(y1, y2, masses)
 
-    # build_flavor_c5_matrix substitutes MF -> M_r inside the supplied
-    # kernel for each heavy generation.  Therefore use the explicit 1/MF
-    # kernel here so the result is the physical symmetric sum K + K^T.
-    # The mixed C12 convention itself is 1/2(K + K^T), so compare after the
-    # explicit factor of 1/2.
     MF = sp.Symbol("MF")
-    physical_c5 = build_flavor_c5_matrix(
+    physical_c5 = build_majorana_c5_flavor_matrix(
         1 / MF,
         y1,
         y2,
@@ -256,7 +254,7 @@ def check_weinberg_normalization_cleanup() -> bool:
     Y1 = sp.Matrix([[y1]])
     Y2 = sp.Matrix([[y2]])
 
-    C5 = build_flavor_c5_matrix(
+    C5 = build_majorana_c5_flavor_matrix(
         kernel,
         Y1,
         Y2,

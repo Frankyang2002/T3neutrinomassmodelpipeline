@@ -4,15 +4,15 @@ import unittest
 
 import numpy as np
 
-from Numerical.WeinbergTrajectory import (
+from Numerical.SMWeinbergEvolution import SMWeinbergInitialConditions
+from Numerical.WeinbergTrajectory import run_weinberg_trajectory
+from physics.NeutrinoTrajectory import (
     neutrino_mass_from_c5,
-    run_weinberg_trajectory,
     scale_dependent_neutrino_observables,
 )
-from Numerical.WeinbergRunning import SMInitialConditions
 
 
-def _initial() -> SMInitialConditions:
+def _initial() -> SMWeinbergInitialConditions:
     c5 = np.array(
         [
             [1.0e-15, 2.0e-16, 0.0],
@@ -22,7 +22,7 @@ def _initial() -> SMInitialConditions:
         dtype=complex,
     )
 
-    return SMInitialConditions(
+    return SMWeinbergInitialConditions(
         gY=0.36,
         g2=0.63,
         g3=0.90,

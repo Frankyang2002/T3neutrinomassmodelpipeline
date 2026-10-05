@@ -30,15 +30,9 @@ def test_numerical_weinberg_integration_lives_under_numerical() -> None:
     assert "run_sm_weinberg_numerical_stage" in stage.read_text(encoding="utf-8")
 
 
-def test_historical_numerical_module_names_are_compatibility_only() -> None:
-    runner = (NUMERICAL / "WeinbergRunning.py").read_text(encoding="utf-8")
-    stage = (NUMERICAL / "WeinbergStage.py").read_text(encoding="utf-8")
-
-    assert "from Numerical.SMWeinbergEvolution import" in runner
-    assert "solve_ivp" not in runner
-
-    assert "from Numerical.SMWeinbergStage import" in stage
-    assert "def run_numerical_weinberg_stage(" not in stage
+def test_historical_numerical_module_names_are_removed() -> None:
+    assert not (NUMERICAL / "WeinbergRunning.py").exists()
+    assert not (NUMERICAL / "WeinbergStage.py").exists()
 
 
 def test_old_mixed_rge_numerical_modules_are_removed() -> None:
@@ -56,13 +50,8 @@ def test_symbolic_flavor_stage_depends_on_rge_model_not_numerical_runner() -> No
     assert "Numerical.WeinbergRunning" not in source
 
 
-def test_historical_flavor_stage_is_compatibility_only() -> None:
-    source = (RGE_WEINBERG / "FlavorMatchedWeinbergStage.py").read_text(
-        encoding="utf-8"
-    )
-
-    assert "from RGE.running.weinberg.FullFlavorWeinbergStage import" in source
-    assert "beta_weinberg_matrix" not in source
+def test_historical_flavor_stage_is_removed() -> None:
+    assert not (RGE_WEINBERG / "FlavorMatchedWeinbergStage.py").exists()
 
 
 def test_low_energy_facade_calls_canonical_numerical_stage() -> None:

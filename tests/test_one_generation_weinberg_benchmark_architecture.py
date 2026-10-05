@@ -20,20 +20,6 @@ STAGE = (
     / "weinberg"
     / "OneGenerationWeinbergBenchmarkStage.py"
 )
-OLD_MODEL = (
-    PROJECT_ROOT
-    / "RGE"
-    / "running"
-    / "weinberg"
-    / "MatchedWeinbergRGE.py"
-)
-OLD_STAGE = (
-    PROJECT_ROOT
-    / "RGE"
-    / "running"
-    / "weinberg"
-    / "MatchedWeinbergStage.py"
-)
 LOW_ENERGY = PROJECT_ROOT / "physics" / "LowEnergyNeutrino.py"
 
 
@@ -59,18 +45,10 @@ def test_benchmark_stage_owns_output_contract() -> None:
     assert "calculate_complete_wilson_tensor_rge" not in source
 
 
-def test_historical_running_names_are_compatibility_only() -> None:
-    model_source = _source(OLD_MODEL)
-    stage_source = _source(OLD_STAGE)
-
-    assert "from RGE.running.weinberg.OneGenerationWeinbergBenchmark import" in model_source
-    assert "def calculate_matched_weinberg_rge(" not in model_source
-
-    assert (
-        "from RGE.running.weinberg.OneGenerationWeinbergBenchmarkStage import"
-        in stage_source
-    )
-    assert "def run_matched_weinberg_rge(" not in stage_source
+def test_historical_running_names_are_removed() -> None:
+    root = PROJECT_ROOT / "RGE" / "running" / "weinberg"
+    assert not (root / "MatchedWeinbergRGE.py").exists()
+    assert not (root / "MatchedWeinbergStage.py").exists()
 
 
 def test_low_energy_orchestration_uses_benchmark_name_directly() -> None:

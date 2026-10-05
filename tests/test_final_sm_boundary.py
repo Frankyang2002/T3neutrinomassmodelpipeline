@@ -8,9 +8,9 @@ from Numerical.IntermediateScalarState import (
     SharedT3IntermediateScalarState,
     T3IntermediateScalarState,
 )
-from Numerical.FinalSMBoundary import (
-    build_weinberg_initial_conditions,
-    project_after_scalar_threshold,
+from Numerical.ScalarThresholdBoundary import (
+    build_sm_weinberg_initial_conditions,
+    build_final_sm_boundary,
     scalar_threshold_masses,
 )
 from Numerical.State import (
@@ -110,7 +110,7 @@ class FinalSMBoundaryTests(unittest.TestCase):
 
     def test_projection_keeps_only_sm_boundary_data(self) -> None:
         state = _ordinary()
-        boundary = project_after_scalar_threshold(state)
+        boundary = build_final_sm_boundary(state)
 
         self.assertEqual(boundary.mu_gev, state.mu_gev)
         self.assertEqual(boundary.sm.gY, state.sm.gY)
@@ -121,13 +121,13 @@ class FinalSMBoundaryTests(unittest.TestCase):
         state = _ordinary()
 
         with self.assertRaisesRegex(ValueError, "must first be evolved"):
-            project_after_scalar_threshold(
+            build_final_sm_boundary(
                 state,
                 matching_scale_gev=5.0e9,
             )
 
     def test_build_weinberg_initial_conditions(self) -> None:
-        boundary = project_after_scalar_threshold(_ordinary())
+        boundary = build_final_sm_boundary(_ordinary())
 
         c5 = np.array(
             [
@@ -138,7 +138,7 @@ class FinalSMBoundaryTests(unittest.TestCase):
             dtype=complex,
         )
 
-        initial = build_weinberg_initial_conditions(boundary, c5)
+        initial = build_sm_weinberg_initial_conditions(boundary, c5)
 
         np.testing.assert_allclose(initial.K, c5)
         np.testing.assert_allclose(initial.yu, boundary.sm.yu)
@@ -176,8 +176,8 @@ class FinalSMBoundaryTests(unittest.TestCase):
             lambdaS2Adj=state.lambdaS2Adj,
         ).validated()
 
-        boundary = project_after_scalar_threshold(modified)
-        initial = build_weinberg_initial_conditions(
+        boundary = build_final_sm_boundary(modified)
+        initial = build_sm_weinberg_initial_conditions(
             boundary,
             np.eye(3, dtype=complex) * 1.0e-14,
         )

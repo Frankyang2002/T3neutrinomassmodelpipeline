@@ -13,13 +13,6 @@ RGE_STAGE = (
     / "weinberg"
     / "FullFlavorWeinbergStage.py"
 )
-RGE_COMPAT = (
-    PROJECT_ROOT
-    / "RGE"
-    / "running"
-    / "weinberg"
-    / "FlavorMatchedWeinbergStage.py"
-)
 MASS_PHYSICS = PROJECT_ROOT / "physics" / "NeutrinoMass.py"
 LOW_ENERGY = PROJECT_ROOT / "physics" / "LowEnergyNeutrino.py"
 
@@ -39,14 +32,15 @@ def test_full_flavor_rge_stage_contains_only_c5_rge_implementation() -> None:
     assert "neutrino_mass_matrix.txt" not in source
 
 
-def test_historical_full_flavor_stage_preserves_mass_compatibility_imports() -> None:
-    source = _source(RGE_COMPAT)
-
-    assert "from physics.NeutrinoMass import" in source
-    assert "from RGE.running.weinberg.FullFlavorWeinbergStage import" in source
-    assert "run_flavor_matched_weinberg_rge = run_full_flavor_weinberg_stage" in source
-    assert "def build_neutrino_mass_matrix(" not in source
-    assert "def run_symbolic_neutrino_mass_stage(" not in source
+def test_historical_full_flavor_stage_is_removed() -> None:
+    historical = (
+        PROJECT_ROOT
+        / "RGE"
+        / "running"
+        / "weinberg"
+        / "FlavorMatchedWeinbergStage.py"
+    )
+    assert not historical.exists()
 
 
 def test_symbolic_neutrino_mass_physics_owns_c5_to_mass_conversion() -> None:

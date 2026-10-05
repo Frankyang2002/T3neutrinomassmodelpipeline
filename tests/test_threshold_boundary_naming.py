@@ -7,9 +7,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 FERMION = PROJECT_ROOT / "Numerical" / "FermionThresholdBoundary.py"
-FERMION_COMPAT = PROJECT_ROOT / "Numerical" / "ThresholdMatching.py"
 SCALAR = PROJECT_ROOT / "Numerical" / "ScalarThresholdBoundary.py"
-SCALAR_COMPAT = PROJECT_ROOT / "Numerical" / "FinalSMBoundary.py"
 TRAJECTORY = PROJECT_ROOT / "Numerical" / "T3Trajectory.py"
 
 
@@ -33,16 +31,9 @@ def test_scalar_threshold_module_describes_final_sm_boundary() -> None:
     assert "def build_sm_weinberg_initial_conditions(" in source
 
 
-def test_historical_threshold_modules_are_compatibility_only() -> None:
-    fermion = _source(FERMION_COMPAT)
-    scalar = _source(SCALAR_COMPAT)
-
-    assert "from Numerical.FermionThresholdBoundary import" in fermion
-    assert "def project_after_fermion_threshold(" not in fermion
-
-    assert "from Numerical.ScalarThresholdBoundary import" in scalar
-    assert "def project_after_scalar_threshold(" not in scalar
-    assert "def build_weinberg_initial_conditions(" not in scalar
+def test_historical_threshold_modules_are_removed() -> None:
+    assert not (PROJECT_ROOT / "Numerical" / "ThresholdMatching.py").exists()
+    assert not (PROJECT_ROOT / "Numerical" / "FinalSMBoundary.py").exists()
 
 
 def test_t3_trajectory_uses_physical_boundary_names() -> None:

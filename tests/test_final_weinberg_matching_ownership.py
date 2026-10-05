@@ -12,13 +12,6 @@ MATCHING = (
     / "matching"
     / "FinalWeinbergCoefficient.py"
 )
-HISTORICAL = (
-    PROJECT_ROOT
-    / "RGE"
-    / "running"
-    / "weinberg"
-    / "FinalWeinbergCoefficient.py"
-)
 
 
 def _source(path: Path) -> str:
@@ -35,19 +28,12 @@ def test_final_weinberg_implementation_lives_under_matching() -> None:
     assert "fixed_order_one_loop_MSbar_hierarchical" in source
 
 
-def test_historical_running_module_is_compatibility_only() -> None:
-    source = _source(HISTORICAL)
-
-    assert "from RGE.matching.FinalWeinbergCoefficient import" in source
-    assert "def build_final_weinberg_coefficient(" not in source
-    assert "def normalize_pole_rge_consistency(" not in source
-    assert "def _build_msbar_hard_at_mf(" not in source
-    assert "def _build_physical_majorana_hard(" not in source
-
-
-def test_compatibility_path_preserves_cli_entrypoint() -> None:
-    source = _source(HISTORICAL)
-
-    assert '"main"' in source
-    assert 'if __name__ == "__main__":' in source
-    assert "raise SystemExit(main())" in source
+def test_historical_running_module_is_removed() -> None:
+    historical = (
+        PROJECT_ROOT
+        / "RGE"
+        / "running"
+        / "weinberg"
+        / "FinalWeinbergCoefficient.py"
+    )
+    assert not historical.exists()

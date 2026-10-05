@@ -30,6 +30,9 @@ from pathlib import Path
 
 from common.EFT import EFTRunningInterval
 from common.RunRecords import EFTStageRecord, RunRecord
+from RGE.matching.FinalWeinbergCoefficient import (
+    build_final_weinberg_coefficient,
+)
 from RGE.running.intermediate.DirectWeinbergRunning import (
     build_direct_weinberg_running,
     export_direct_weinberg_insertion,
@@ -45,9 +48,6 @@ from RGE.running.intermediate.ScalarOnlyWilsonRunning import (
 )
 from RGE.running.intermediate.ScalarThresholdMatching import (
     resume_scalar_threshold_with_running,
-)
-from RGE.running.weinberg.FinalWeinbergCoefficient import (
-    build_final_weinberg_coefficient,
 )
 
 
@@ -223,8 +223,6 @@ def _run_dimension_five_wilson_rge(
         0,
     )
 
-    # Mirror the calculation metadata onto the physical intermediate-stage record so
-    # stage-aware reporting can consume it without rediscovering files.
     if record.eft_stages:
         stage.summary.update(
             {
@@ -415,113 +413,76 @@ def _record_full_flavor_success(
     summary = record.summary
     combined = final_c5.get("combined", {})
 
-    # Every EFT-side stage after this point consumes the authoritative
-    # hierarchical full-flavor coefficient, never the preliminary C5 exported
-    # before the resumed threshold calculation.
-    summary["WeinbergCoefficientFile"] = (
+    summary["EFT1FullFlavorBridgeStatus"] = "Success"
+    summary["EFT1WilsonFlavorSeedFile"] = (
+        paths["flavor_seed"].relative_to(record.output_dir).as_posix()
+    )
+    summary["EFT1WilsonTransportFile"] = (
+        paths["flavor_transport"].relative_to(record.output_dir).as_posix()
+    )
+    summary["EFT1WilsonTransportStatus"] = flavor_transport["status"]
+    summary["EFT1WilsonTransportMuHigh"] = flavor_transport["mu_high"]
+    summary["EFT1WilsonTransportMuLow"] = flavor_transport["mu_low"]
+    summary["EFT1WilsonTransportLogRatio"] = flavor_transport["log_ratio"]
+    summary["EFT1WilsonTransportCorrectionCount"] = flavor_transport[
+        "correction_count"
+    ]
+    summary["EFT1WeinbergInsertionFile"] = (
+        paths["insertion"].relative_to(record.output_dir).as_posix()
+    )
+    summary["EFT1ThresholdResumeStatus"] = resume["status"]
+    summary["EFT1ThresholdResumeMode"] = resume.get("ThresholdStageMode")
+    summary["EFT1ThresholdResumeOutput"] = resume.get("OutputDirectory")
+    summary["EFT1FinalWeinbergStatus"] = final_c5["status"]
+    summary["FinalWeinbergCoefficientFile"] = (
         paths["final_c5"].relative_to(record.output_dir).as_posix()
     )
-
-    summary.update(
-        {
-            "EFT1FlavorSeedStatus": flavor_seed.get("status"),
-            "EFT1FlavorSeedFile": paths["flavor_seed"].relative_to(
-                record.output_dir
-            ).as_posix(),
-            "EFT1FlavorRGEStatus": "DiagnosticNotRequiredForOneLoopC5",
-            "EFT1FlavorRGEOneGenerationCheck": None,
-            "EFT1FlavorTransportStatus": flavor_transport.get("status"),
-            "EFT1FlavorTransportFile": paths["flavor_transport"].relative_to(
-                record.output_dir
-            ).as_posix(),
-            "EFT1FlavorRunningInsertionStatus": insertion.get("status"),
-            "EFT1FlavorRunningInsertionFile": paths["insertion"].relative_to(
-                record.output_dir
-            ).as_posix(),
-            "EFT1HeavySelfRunningIncludedInAuthoritativeC5": False,
-            "EFT1DirectWeinbergOnlyAtOneLoop": True,
-            "EFT1ThresholdResumeStatus": resume.get("status"),
-            "EFT1ThresholdResumeValidationMode": resume.get(
-                "validation_mode",
-                False,
-            ),
-            "EFT1ThresholdResumeResultFile": str(
-                Path(resume["result_path"]).resolve()
-            ),
-            "EFT1ThresholdResumeInsertionLoaded": resume.get(
-                "running_insertion_loaded"
-            ),
-            "EFT1ThresholdResumeInsertedInCOnly": resume.get(
-                "running_inserted_in_C_only"
-            ),
-            "EFT1ThresholdResumeDirectWeinbergCarried": resume.get(
-                "direct_weinberg_carried_separately"
-            ),
-            "EFT1ThresholdResumeDirectWeinbergEqualScaleCheck": resume.get(
-                "direct_weinberg_equal_scale_vanishes"
-            ),
-            "EFT1FullFlavorBridgeStatus": "Success",
-            "AuthoritativeThresholdC5File": paths["threshold_c5"].relative_to(
-                record.output_dir
-            ).as_posix(),
-            "AuthoritativeDirectRunningC5File": (
-                paths["direct_c5"].relative_to(record.output_dir).as_posix()
-                if paths["direct_c5"].is_file()
-                else ""
-            ),
-            "FinalWeinbergCoefficientFile": paths["final_c5"].relative_to(
-                record.output_dir
-            ).as_posix(),
-            "AuthoritativeFinalC5Status": "ReadyForDownstream",
-            "AuthoritativeFinalC5FullFlavorReady": combined.get(
-                "ready_for_full_flavor_numerics"
-            ),
-            "AuthoritativeFinalC5PhysicalMajoranaReady": combined.get(
-                "ready_for_physical_majorana_numerics"
-            ),
-            "AuthoritativeDownstreamC5File": paths["final_c5"].relative_to(
-                record.output_dir
-            ).as_posix(),
-        }
+    summary["FinalWeinbergDirectRunningTermCount"] = len(
+        final_c5.get("direct_running", {}).get("entries", [])
     )
+    summary["FinalWeinbergCombinedEntryCount"] = len(combined.get("entries", []))
+    summary["FinalWeinbergScheme"] = combined.get("scheme")
+    summary["FinalWeinbergSource"] = combined.get("source")
+    summary["FinalWeinbergMajoranaFermion"] = combined.get("majorana_fermion")
+    summary["FinalWeinbergReadyForPhysicalMajoranaNumerics"] = combined.get(
+        "ready_for_physical_majorana_numerics"
+    )
+    summary["FinalWeinbergPhysicalMajoranaReason"] = combined.get(
+        "physical_majorana_reason"
+    )
+
+    # These values are currently useful when diagnosing a failed run, so keep
+    # the already-established debug/provenance fields even though the final-C5
+    # construction itself is now delegated.
+    summary["EFT1FlavorSeedStatus"] = flavor_seed.get("status")
+    summary["EFT1WilsonFlavorSeedStatus"] = flavor_seed.get("status")
+    summary["EFT1WeinbergInsertionStatus"] = insertion.get("status")
 
 
 def _run_full_flavor_weinberg_matching(
     record: RunRecord,
-    stage: EFTStageRecord,
+    interval: EFTRunningInterval,
     *,
-    mu_high: str | float,
-    mu_low: str | float,
-    debug_reports: bool = False,
+    debug_reports: bool,
 ) -> bool:
-    """Build the authoritative fixed-one-loop hierarchical C5.
+    """Run the full-flavor Weinberg transport, scalar-threshold resume, and final C5."""
 
-    The tree LLSS Wilson boundary is O(hbar^0). Its direct mixing into O5 is
-    O(hbar^1). LLSS self-running is also O(hbar^1), so matching that corrected
-    heavy operator through the scalar loop would be O(hbar^2). Therefore only
-    the direct full-flavor C12 -> Weinberg running enters the authoritative
-    one-loop neutrino-mass calculation.
-    """
     paths = _production_paths(record)
     if not _require_full_flavor_inputs(record, paths):
-        stage.summary["FullFlavorThresholdBridgeStatus"] = "Failed"
         return False
 
-    print(
-        f"  {record.name}: starting fixed-one-loop direct Weinberg bridge "
-        f"{mu_high} -> {mu_low}...",
-        flush=True,
-    )
-
     try:
-        flavor_seed, flavor_transport, insertion, resume = (
-            _run_direct_weinberg_transport_and_resume(
-                record,
-                paths,
-                mu_high=mu_high,
-                mu_low=mu_low,
-                debug_reports=debug_reports,
-            )
+        (
+            flavor_seed,
+            flavor_transport,
+            insertion,
+            resume,
+        ) = _run_direct_weinberg_transport_and_resume(
+            record,
+            paths,
+            mu_high=interval.high_scale,
+            mu_low=interval.low_scale,
+            debug_reports=debug_reports,
         )
         final_c5 = _build_authoritative_threshold_c5(
             record,
@@ -529,7 +490,6 @@ def _run_full_flavor_weinberg_matching(
             flavor_transport=flavor_transport,
         )
     except Exception as exc:
-        stage.summary["FullFlavorThresholdBridgeStatus"] = "Failed"
         return _fail_full_flavor_matching(record, str(exc))
 
     _record_full_flavor_success(
@@ -542,13 +502,12 @@ def _run_full_flavor_weinberg_matching(
         final_c5=final_c5,
     )
 
-    stage.summary["FullFlavorThresholdBridgeStatus"] = "Success"
     print(
-        f"  {record.name}: direct one-loop Weinberg bridge=Success "
-        f"(heavy self-running excluded at O(hbar))",
-        flush=True,
+        f"  {record.name}: full-flavor scalar-EFT bridge=Success "
+        f"-> {paths['final_c5']}"
     )
     return True
+
 
 def run(
     record: RunRecord,
@@ -557,18 +516,11 @@ def run(
     *,
     debug_reports: bool = False,
 ) -> bool:
-    """Run the verified scalar-only intermediate EFT calculation.
+    """Run the verified scalar-only EFT interval after integrating out F."""
 
-    The order here is part of the retained production behaviour:
-
-    1. renormalisable RGBeta running for the active scalar theory;
-    2. dimension-five LLSS Wilson RGE;
-    3. direct full-flavor LLSS -> Weinberg running and the lower-threshold
-       matching needed to construct the authoritative one-loop ``C5``.
-    """
     if not supports(record, interval):
         raise ValueError(
-            "ScalarOnlyAfterFermion backend was called for incompatible EFT content."
+            "ScalarOnlyAfterFermion backend received unsupported EFT content."
         )
 
     if not _run_renormalisable_rge(record, stage):
@@ -579,8 +531,10 @@ def run(
 
     return _run_full_flavor_weinberg_matching(
         record,
-        stage,
-        mu_high=interval.high_scale,
-        mu_low=interval.low_scale,
+        interval,
         debug_reports=debug_reports,
     )
+
+
+# Descriptive alias retained for direct callers; dispatch uses ``run``.
+run_scalar_only_after_fermion = run

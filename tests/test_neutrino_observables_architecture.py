@@ -9,12 +9,6 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 PHYSICS_PATH = PROJECT_ROOT / "physics" / "NeutrinoObservables.py"
 LOW_ENERGY_PATH = PROJECT_ROOT / "physics" / "LowEnergyNeutrino.py"
-COMPAT_PATH = (
-    PROJECT_ROOT
-    / "RGE"
-    / "phenomenology"
-    / "NeutrinoObservables.py"
-)
 
 
 def _source(path: Path) -> str:
@@ -53,10 +47,11 @@ def test_low_energy_facade_imports_observables_from_physics() -> None:
     )
 
 
-def test_historical_rge_phenomenology_path_is_compatibility_only() -> None:
-    source = _source(COMPAT_PATH)
-
-    assert "from physics.NeutrinoObservables import" in source
-    assert "def takagi_factorization(" not in source
-    assert "def calculate_neutrino_observables(" not in source
-    assert "def run_neutrino_observables_stage(" not in source
+def test_historical_rge_phenomenology_path_is_removed() -> None:
+    historical = (
+        PROJECT_ROOT
+        / "RGE"
+        / "phenomenology"
+        / "NeutrinoObservables.py"
+    )
+    assert not historical.exists()

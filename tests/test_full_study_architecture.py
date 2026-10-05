@@ -1,11 +1,10 @@
-"""Regression tests for the ``--full`` study orchestrator."""
+"""Regression tests for the current ``--full`` numerical-study orchestrator."""
 
 from __future__ import annotations
 
 import argparse
 import json
 from pathlib import Path
-from types import SimpleNamespace
 
 from studies import FullT3Study
 
@@ -17,12 +16,25 @@ def _args(**overrides) -> argparse.Namespace:
         "numerical": None,
         "threshold": None,
         "threshold_scale": None,
+        "reset_numerical_configs": False,
     }
     values.update(overrides)
     return argparse.Namespace(**values)
 
 
-def test_forwarded_full_study_cli_contract_is_preserved() -> None:
+def test_full_study_grid_and_comparison_scenarios_are_current() -> None:
+    assert len(FullT3Study.MODELS) == 16
+    assert {item[0] for item in FullT3Study.MODELS} == {"A", "B", "C", "D", "E"}
+
+    assert FullT3Study.COMPARISON_SCENARIOS == {
+        "smallY_smallL": (0.005, 0.1),
+        "smallY_largeL": (0.005, 1.0),
+        "largeY_smallL": (0.5, 0.1),
+        "largeY_largeL": (0.5, 1.0),
+    }
+
+
+def test_common_cli_args_forward_only_shared_child_options() -> None:
     args = _args(
         debug_reports=True,
         force=True,
@@ -31,11 +43,9 @@ def test_forwarded_full_study_cli_contract_is_preserved() -> None:
         threshold_scale=["MF", "MS"],
     )
 
-    assert FullT3Study._forward_common_cli_args(args) == [
+    assert FullT3Study._common_args(args) == [
         "--debug-reports",
         "--force",
-        "--numerical",
-        "point.json",
         "--threshold",
         "F",
         "--threshold",
@@ -48,67 +58,117 @@ def test_forwarded_full_study_cli_contract_is_preserved() -> None:
     ]
 
 
-def test_full_study_runs_the_three_historical_child_modes(
+def test_full_study_runs_optimal_and_common_parameter_modes(
     tmp_path: Path,
     monkeypatch,
 ) -> None:
     project_root = tmp_path / "project"
-    output_root = project_root / "output"
-    report_root = project_root / "Reports" / "output"
+    output_root = project_root / "output" / "full"
+    report_root = project_root / "Reports" / "output" / "full"
+    config_root = project_root / "configs" / "generated_model_sets"
+    active_root = project_root / "configs" / "generated_models"
     pipeline_script = project_root / "pipeline.py"
-    project_root.mkdir()
+    template_path = project_root / "configs" / "template.json"
+
+    template_path.parent.mkdir(parents=True)
     pipeline_script.write_text("# test pipeline\n", encoding="utf-8")
+    template_path.write_text(
+        json.dumps(
+            {
+                "base_state": {
+                    "ordinary": {
+                        "y1": {
+                            "real": [[0.1, 0.0, 0.0]] * 3,
+                            "imag": [[0.0, 0.0, 0.0]] * 3,
+                        },
+                        "y2": {
+                            "real": [[0.1, 0.0, 0.0]] * 3,
+                            "imag": [[0.0, 0.0, 0.0]] * 3,
+                        },
+                        "lambdaT3": {"real": 0.1, "imag": 0.0},
+                    }
+                },
+                "benchmark_search": {},
+                "sensitivity": {},
+            }
+        ),
+        encoding="utf-8",
+    )
 
     monkeypatch.setattr(FullT3Study, "PROJECT_ROOT", project_root)
     monkeypatch.setattr(FullT3Study, "PIPELINE_SCRIPT", pipeline_script)
-    monkeypatch.setattr(FullT3Study, "OUTPUT_DIR", output_root)
-    monkeypatch.setattr(FullT3Study, "REPORT_OUTPUT_DIR", report_root)
+    monkeypatch.setattr(FullT3Study, "OUTPUT_ROOT", output_root)
+    monkeypatch.setattr(FullT3Study, "REPORT_ROOT", report_root)
+    monkeypatch.setattr(FullT3Study, "CONFIG_SET_ROOT", config_root)
+    monkeypatch.setattr(FullT3Study, "ACTIVE_CONFIG_DIR", active_root)
+    monkeypatch.setattr(
+        FullT3Study,
+        "MODELS",
+        (
+            ("A", 1, 3, 2, 0),
+            ("B", 2, 2, 1, -1),
+        ),
+    )
+    monkeypatch.setattr(
+        FullT3Study,
+        "COMPARISON_SCENARIOS",
+        {
+            "smallY_smallL": (0.005, 0.1),
+            "largeY_largeL": (0.5, 1.0),
+        },
+    )
 
     calls: list[list[str]] = []
+    monkeypatch.setattr(
+        FullT3Study,
+        "_run",
+        lambda command: calls.append(list(command)) or 0,
+    )
+    monkeypatch.setattr(
+        FullT3Study,
+        "_dashboard",
+        lambda *_args, **_kwargs: None,
+    )
+    monkeypatch.setattr(
+        FullT3Study,
+        "_snapshot_active",
+        lambda _dst: None,
+    )
+    monkeypatch.setattr(
+        FullT3Study,
+        "_restore_active",
+        lambda _src: None,
+    )
 
-    def fake_run(command, cwd):
-        assert cwd == project_root
-        calls.append(list(command))
-        study = command[command.index("--study") + 1].split("/")[-1]
-        aggregate = output_root / "full" / study / "t3_model_comparison.json"
-        aggregate.parent.mkdir(parents=True, exist_ok=True)
-        aggregate.write_text(
-            json.dumps(
-                [
-                    {"BuildStatus": "Success", "MatchingStatus": "Success"},
-                    {"BuildStatus": "Success", "MatchingStatus": "Failed"},
-                ]
-            ),
-            encoding="utf-8",
-        )
-        return SimpleNamespace(returncode=0)
-
-    clock = iter((0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0))
-    monkeypatch.setattr(FullT3Study.subprocess, "run", fake_run)
-    monkeypatch.setattr(FullT3Study.time, "time", lambda: next(clock))
-
-    status = FullT3Study.run_full_study(_args())
+    status = FullT3Study.run_full_study(
+        _args(numerical=template_path)
+    )
 
     assert status == 0
-    assert [call[2] for call in calls] == [
-        "--smoke",
-        "--hypercharge-comparison",
-        "--dimension-comparison",
+    assert len(calls) == 6
+
+    studies = [
+        call[call.index("--study") + 1]
+        for call in calls
     ]
-    assert [call[4] for call in calls] == [
-        "full/smoke",
-        "full/hypercharge",
-        "full/dimensions",
+    assert studies[:2] == [
+        "full/optimal/T3_dS1_1_dS2_3_dF_2_alpha_p0",
+        "full/optimal/T3_dS1_2_dS2_2_dF_1_alpha_m1",
+    ]
+    assert studies[2:] == [
+        "full/comparison/smallY_smallL/T3_dS1_1_dS2_3_dF_2_alpha_p0",
+        "full/comparison/smallY_smallL/T3_dS1_2_dS2_2_dF_1_alpha_m1",
+        "full/comparison/largeY_largeL/T3_dS1_1_dS2_3_dF_2_alpha_p0",
+        "full/comparison/largeY_largeL/T3_dS1_2_dS2_2_dF_1_alpha_m1",
     ]
 
-    summary = json.loads(
-        (output_root / "full" / "full_run_summary.json").read_text(encoding="utf-8")
-    )
-    assert summary["Status"] == "Success"
-    assert [item["Study"] for item in summary["Studies"]] == [
-        "smoke",
-        "hypercharge",
-        "dimensions",
+    summary_path = output_root / "full_numerical_summary.json"
+    summary = json.loads(summary_path.read_text(encoding="utf-8"))
+    assert summary["status"] == "Success"
+    assert summary["ordinary_model_count"] == 2
+    assert summary["shared_scalar_models_included"] is False
+    assert [item["mode"] for item in summary["results"]] == [
+        "optimal",
+        "comparison",
+        "comparison",
     ]
-    assert [item["SuccessfulModels"] for item in summary["Studies"]] == [1, 1, 1]
-    assert [item["TotalModels"] for item in summary["Studies"]] == [2, 2, 2]

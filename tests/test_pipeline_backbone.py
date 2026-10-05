@@ -1,8 +1,9 @@
 """Architecture regression checks for the central pipeline backbone.
 
 ``pipeline.py`` is intentionally the project map: it owns ordering and data
-flow, while CLI parsing, model selection, detailed RGEs, low-energy physics,
-validation, and reports live in specialised modules.
+flow, while CLI parsing, model selection, numerical-config bookkeeping,
+detailed RGEs, low-energy physics, validation, and reports live in specialised
+modules.
 """
 
 from __future__ import annotations
@@ -64,6 +65,18 @@ def test_pipeline_imports_configuration_helpers_instead_of_implementing_them() -
         ("study_name", "_study_name"),
     }
 
+    numerical_config_imports = [
+        node
+        for node in tree.body
+        if isinstance(node, ast.ImportFrom)
+        and node.module == "Numerical.NumericalConfig"
+    ]
+    assert len(numerical_config_imports) == 1
+    assert {(item.name, item.asname) for item in numerical_config_imports[0].names} == {
+        ("prepare_model_numerical_config", "_prepare_model_numerical_config"),
+        ("freeze_resolved_benchmark_config", "_freeze_resolved_benchmark_config"),
+    }
+
     function_names = {
         node.name for node in tree.body if isinstance(node, ast.FunctionDef)
     }
@@ -74,6 +87,8 @@ def test_pipeline_imports_configuration_helpers_instead_of_implementing_them() -
     assert "_build_run_records" not in function_names
     assert "_select_study_models" not in function_names
     assert "_build_and_match_t3_models" not in function_names
+    assert "_prepare_model_numerical_config" not in function_names
+    assert "_freeze_resolved_benchmark_config" not in function_names
 
 
 def test_main_keeps_complete_calculation_order_explicit() -> None:

@@ -9,7 +9,6 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 MATCHING = PROJECT_ROOT / "RGE" / "matching"
 FLAVOR = MATCHING / "WeinbergFlavorMatching.py"
 FINAL_ADAPTER = MATCHING / "FinalWeinbergAdapter.py"
-COMPAT = MATCHING / "FlavorC5Matching.py"
 
 
 def _source(path: Path) -> str:
@@ -34,21 +33,15 @@ def test_hierarchical_final_c5_adapter_is_separate() -> None:
     assert "def build_flavor_c5_from_matchete(" not in source
 
 
-def test_historical_mixed_module_is_compatibility_only() -> None:
-    source = _source(COMPAT)
-
-    assert "from RGE.matching.WeinbergFlavorMatching import" in source
-    assert "from RGE.matching.FinalWeinbergAdapter import" in source
-    assert "def build_flavor_c5_matrix(" not in source
-    assert "def load_final_weinberg_flavor_matrix(" not in source
+def test_historical_mixed_flavor_module_is_removed() -> None:
+    assert not (MATCHING / "FlavorC5Matching.py").exists()
 
 
-def test_core_callers_use_new_descriptive_interfaces() -> None:
+def test_core_callers_use_descriptive_interfaces() -> None:
     callers = (
-        PROJECT_ROOT / "RGE" / "running" / "weinberg" / "MatchedWeinbergStage.py",
-        PROJECT_ROOT / "RGE" / "running" / "weinberg" / "FlavorMatchedWeinbergStage.py",
-        PROJECT_ROOT / "Numerical" / "WeinbergStage.py",
+        PROJECT_ROOT / "RGE" / "running" / "weinberg" / "FullFlavorWeinbergStage.py",
         PROJECT_ROOT / "physics" / "NeutrinoMass.py",
+        PROJECT_ROOT / "physics" / "LowEnergyNeutrino.py",
     )
 
     for path in callers:

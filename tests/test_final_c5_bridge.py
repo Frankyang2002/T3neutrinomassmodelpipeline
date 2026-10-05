@@ -201,15 +201,19 @@ class FinalC5BridgeTests(unittest.TestCase):
         self.assertIn("lambdaT3", model)
         self.assertIn("hbar", model)
 
-    def test_offdiagonal_nonmajorana_MF_is_rejected_without_silent_rotation(self) -> None:
-        trajectory = _trajectory()
-        state = trajectory.uv_threshold_state
+    def test_offdiagonal_nonmajorana_MF_uses_svd_mass_basis(self) -> None:
+        state = _uv_state()
 
-        # Mutate only through construction of a replacement validated state.
-        mf = state.MF.copy()
-        mf[0, 1] = 1.0e6
+        mf = np.array(
+            [
+                [1.00e10 + 0.0j, 2.0e8 + 1.0e8j, -1.0e8],
+                [3.0e8 - 2.0e8j, 1.15e10 + 0.0j, 1.5e8j],
+                [0.5e8, -2.0e8j, 1.30e10 + 0.0j],
+            ],
+            dtype=complex,
+        )
 
-        broken_state = T3UVState(
+        rotated_state = T3UVState(
             mu_gev=state.mu_gev,
             representation=state.representation,
             sm=state.sm,
@@ -228,27 +232,43 @@ class FinalC5BridgeTests(unittest.TestCase):
             lambdaS2Adj=state.lambdaS2Adj,
         ).validated()
 
-        # Reuse the immutable trajectory container with a minimal UV-result
-        # proxy whose final_state property is the broken state.
-        class UVProxy:
-            @property
-            def final_state(self):
-                return broken_state
+        self.assertFalse(rotated_state.representation.majorana_fermion)
 
-        from dataclasses import replace
-        broken_trajectory = replace(
-            trajectory,
-            uv=UVProxy(),
+        basis = _heavy_mass_basis_data(
+            rotated_state,
+            offdiagonal_atol=1.0e-10,
+            imaginary_atol=1.0e-10,
+            takagi_residual_rtol=1.0e-10,
+            takagi_residual_atol=1.0e-10,
         )
 
-        with self.assertRaisesRegex(
-            ValueError,
-            "diagonal positive heavy-fermion mass basis",
-        ):
-            final_c5_inputs_from_trajectory(
-                broken_trajectory
-            )
+        self.assertIsNotNone(basis.right_rotation)
+        assert basis.right_rotation is not None
 
+        diagonalized = (
+            basis.rotation.conj().T
+            @ rotated_state.MF
+            @ basis.right_rotation
+        )
+
+        np.testing.assert_allclose(
+            diagonalized,
+            np.diag(basis.masses_gev),
+            rtol=1.0e-10,
+            atol=10.0,
+        )
+        np.testing.assert_allclose(
+            basis.y1,
+            rotated_state.y1 @ basis.rotation.conj(),
+            rtol=1.0e-12,
+            atol=1.0e-12,
+        )
+        np.testing.assert_allclose(
+            basis.y2,
+            rotated_state.y2 @ basis.right_rotation,
+            rtol=1.0e-12,
+            atol=1.0e-12,
+        )
 
     def test_majorana_takagi_rotation_diagonalizes_MF_and_rotates_yukawas(self) -> None:
         rng = np.random.default_rng(12345)

@@ -1,4 +1,4 @@
-"""Architecture contracts for the full-flavor Weinberg stage rename."""
+"""Architecture contracts for the canonical full-flavor Weinberg stage."""
 
 from __future__ import annotations
 
@@ -12,13 +12,6 @@ CANONICAL = (
     / "running"
     / "weinberg"
     / "FullFlavorWeinbergStage.py"
-)
-HISTORICAL = (
-    PROJECT_ROOT
-    / "RGE"
-    / "running"
-    / "weinberg"
-    / "FlavorMatchedWeinbergStage.py"
 )
 LOW_ENERGY = PROJECT_ROOT / "physics" / "LowEnergyNeutrino.py"
 
@@ -35,12 +28,15 @@ def test_canonical_full_flavor_stage_has_descriptive_name() -> None:
     assert "beta_weinberg_matrix" in source
 
 
-def test_historical_stage_is_compatibility_only() -> None:
-    source = _source(HISTORICAL)
-
-    assert "from RGE.running.weinberg.FullFlavorWeinbergStage import" in source
-    assert "run_flavor_matched_weinberg_rge = run_full_flavor_weinberg_stage" in source
-    assert "beta_weinberg_matrix" not in source
+def test_historical_full_flavor_stage_is_removed() -> None:
+    historical = (
+        PROJECT_ROOT
+        / "RGE"
+        / "running"
+        / "weinberg"
+        / "FlavorMatchedWeinbergStage.py"
+    )
+    assert not historical.exists()
 
 
 def test_low_energy_orchestration_uses_canonical_stage_name() -> None:

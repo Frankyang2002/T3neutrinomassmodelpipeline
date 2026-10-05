@@ -26,8 +26,10 @@ def test_default_config_uses_pipeline_numerical_schema() -> None:
         "alpha": -1,
         "shared_scalar": False,
     }
-    assert payload["scales"]["mu_fermion_threshold_gev"] == 1.0e10
-    assert payload["scales"]["mu_scalar_threshold_gev"] == 7.0e9
+    assert payload["base_state"]["mu_gev"] == 1.0e7
+    assert payload["scales"]["mu_fermion_threshold_gev"] == 1.0e5
+    assert payload["scales"]["mu_scalar_threshold_gev"] == 1.0e3
+    assert payload["scales"]["mu_low_gev"] == 1.0e2
     assert payload["numerical"]["n_scale_points"] >= 2
 
 

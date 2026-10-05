@@ -36,10 +36,10 @@ from typing import Any, Mapping
 
 import numpy as np
 
+from Numerical.core.RGBetaEvaluator import load_rgbeta_payload
 from Numerical.FinalC5TrajectoryAdapter import FinalC5TrajectoryEvaluator
 from Numerical.OscillationFit import OscillationFitTarget
 from Numerical.ParameterScan import make_t3_point_evaluator
-from Numerical.RGBetaEvaluator import load_rgbeta_payload
 from Numerical.ScanCLI import build_uv_state_from_config
 
 

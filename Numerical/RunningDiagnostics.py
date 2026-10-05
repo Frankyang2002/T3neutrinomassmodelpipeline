@@ -23,8 +23,8 @@ from typing import Any
 import numpy as np
 
 from Numerical.BestFitDiagnostics import load_optimizer_best_parameters
+from Numerical.core.RGBetaEvaluator import load_rgbeta_payload
 from Numerical.FinalC5TrajectoryAdapter import FinalC5TrajectoryEvaluator
-from Numerical.RGBetaEvaluator import load_rgbeta_payload
 from Numerical.ScalarThresholdBoundary import build_sm_weinberg_initial_conditions
 from Numerical.ScanCLI import (
     build_uv_state_from_config,

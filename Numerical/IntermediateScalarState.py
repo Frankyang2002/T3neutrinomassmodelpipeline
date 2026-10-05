@@ -22,7 +22,7 @@ from typing import Any
 
 import numpy as np
 
-from Numerical.State import (
+from Numerical.core.State import (
     N_SM_FLAVOR,
     SMNumericalState,
     T3Representation,

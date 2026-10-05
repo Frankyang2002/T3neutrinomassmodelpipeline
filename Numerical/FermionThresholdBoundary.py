@@ -16,13 +16,13 @@ from dataclasses import dataclass
 
 import numpy as np
 
+from Numerical.core.State import (
+    SharedT3UVState,
+    T3UVState,
+)
 from Numerical.IntermediateScalarState import (
     SharedT3IntermediateScalarState,
     T3IntermediateScalarState,
-)
-from Numerical.State import (
-    SharedT3UVState,
-    T3UVState,
 )
 
 

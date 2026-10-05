@@ -14,12 +14,12 @@ from dataclasses import dataclass
 
 import numpy as np
 
+from Numerical.core.State import SMNumericalState
 from Numerical.IntermediateScalarState import (
     SharedT3IntermediateScalarState,
     T3IntermediateScalarState,
 )
 from Numerical.SMWeinbergEvolution import SMWeinbergInitialConditions
-from Numerical.State import SMNumericalState
 
 
 IntermediateScalarState = T3IntermediateScalarState | SharedT3IntermediateScalarState

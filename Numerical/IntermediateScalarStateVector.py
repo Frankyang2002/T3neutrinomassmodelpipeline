@@ -8,7 +8,7 @@ ordinary T3:
 shared-scalar T3:
     SM + S
 
-The real ODE-vector convention matches ``Numerical.StateVector``: complex
+The real ODE-vector convention matches ``Numerical.core.StateVector``: complex
 matrices are stored as flattened real entries followed by flattened imaginary
 entries, and complex scalars as ``(Re, Im)``.
 """
@@ -17,11 +17,12 @@ from __future__ import annotations
 
 import numpy as np
 
+from Numerical.core.State import SMNumericalState
+from Numerical.core.StateVector import StateVectorLayout, VectorBlock
 from Numerical.IntermediateScalarState import (
     SharedT3IntermediateScalarState,
     T3IntermediateScalarState,
 )
-from Numerical.StateVector import StateVectorLayout, VectorBlock
 
 
 IntermediateScalarState = T3IntermediateScalarState | SharedT3IntermediateScalarState
@@ -189,8 +190,6 @@ def unpack_intermediate_scalar_state(
     mu_gev: float | None = None,
 ) -> IntermediateScalarState:
     """Reconstruct one validated scalar-only intermediate state."""
-
-    from Numerical.State import SMNumericalState
 
     vector = _check_vector(vector, layout)
     blocks = {block.name: block for block in layout.blocks}

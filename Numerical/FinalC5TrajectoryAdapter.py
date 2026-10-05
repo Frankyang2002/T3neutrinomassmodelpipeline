@@ -21,12 +21,12 @@ from typing import Mapping
 
 import numpy as np
 
+from Numerical.core.State import SharedT3UVState, T3UVState
 from Numerical.IntermediateScalarState import (
     SharedT3IntermediateScalarState,
     T3IntermediateScalarState,
 )
 from Numerical.SMWeinbergStage import evaluate_final_weinberg_json
-from Numerical.State import SharedT3UVState, T3UVState
 from Numerical.T3Trajectory import T3RenormalisableTrajectory
 
 
@@ -223,7 +223,6 @@ def _majorana_takagi_mass_basis(
     )
 
 
-
 def _vectorlike_svd_mass_basis(
     state: T3UVState,
     *,
@@ -261,8 +260,6 @@ def _vectorlike_svd_mass_basis(
     left_rotation, singular_values, vh = np.linalg.svd(matrix)
     right_rotation = vh.conj().T
 
-    # np.linalg.svd orders singular values from largest to smallest.  Use
-    # ascending masses to match the ordering convention of the Majorana path.
     order = np.argsort(singular_values)
     masses = np.asarray(singular_values[order], dtype=float)
     left_rotation = left_rotation[:, order]
@@ -340,6 +337,7 @@ def _vectorlike_svd_mass_basis(
         basis_residual=residual,
     )
 
+
 def _heavy_mass_basis_data(
     state: T3UVState,
     *,
@@ -416,6 +414,7 @@ def extract_final_c5_inputs(
         raise TypeError(
             "Expected an ordinary T3IntermediateScalarState at the scalar threshold."
         )
+
     heavy_basis = _heavy_mass_basis_data(
         uv_state,
         offdiagonal_atol=offdiagonal_mass_atol,

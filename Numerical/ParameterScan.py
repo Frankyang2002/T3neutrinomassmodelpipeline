@@ -35,6 +35,7 @@ from typing import Any, Callable, Iterable, Mapping, Sequence
 
 import numpy as np
 
+from Numerical.core.State import SharedT3UVState, T3UVState
 from Numerical.OscillationFit import (
     OscillationFitResult,
     OscillationFitTarget,
@@ -45,7 +46,6 @@ from Numerical.T3Trajectory import (
     continue_with_weinberg_running,
     run_renormalisable_t3_trajectory,
 )
-from Numerical.State import SharedT3UVState, T3UVState
 from physics.NeutrinoTrajectory import (
     charged_lepton_mass_basis_matrix,
     neutrino_mass_from_c5,

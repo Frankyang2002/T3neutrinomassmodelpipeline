@@ -19,6 +19,7 @@ from typing import Any, Mapping
 
 import numpy as np
 
+from Numerical.core.State import SharedT3UVState, T3UVState
 from Numerical.FermionThresholdBoundary import (
     FermionThresholdDiagnostic,
     build_intermediate_scalar_boundary,
@@ -43,7 +44,6 @@ from Numerical.SMWeinbergEvolution import (
     SMWeinbergEvolutionResult,
     evolve_sm_weinberg,
 )
-from Numerical.State import SharedT3UVState, T3UVState
 from Numerical.UVRunner import UVRunningResult, run_uv_segment
 
 

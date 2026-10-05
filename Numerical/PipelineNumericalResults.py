@@ -23,8 +23,8 @@ from typing import Any
 import numpy as np
 
 from common.RunRecords import RunRecord
+from Numerical.core.RGBetaEvaluator import load_rgbeta_payload
 from Numerical.FinalC5TrajectoryAdapter import FinalC5TrajectoryEvaluator
-from Numerical.RGBetaEvaluator import load_rgbeta_payload
 from Numerical.RunningDiagnostics import (
     _complex_matrix_payload,
     _intermediate_running_payload,

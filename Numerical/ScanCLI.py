@@ -37,6 +37,13 @@ from typing import Any, Mapping
 
 import numpy as np
 
+from Numerical.core.RGBetaEvaluator import load_rgbeta_payload
+from Numerical.core.State import (
+    SMNumericalState,
+    SharedT3UVState,
+    T3Representation,
+    T3UVState,
+)
 from Numerical.FinalC5TrajectoryAdapter import FinalC5TrajectoryEvaluator
 from Numerical.OscillationFit import OscillationFitTarget
 from Numerical.ParameterScan import (
@@ -47,13 +54,6 @@ from Numerical.ParameterScan import (
     random_parameter_points,
     run_parameter_scan,
     write_scan_result,
-)
-from Numerical.RGBetaEvaluator import load_rgbeta_payload
-from Numerical.State import (
-    SMNumericalState,
-    SharedT3UVState,
-    T3Representation,
-    T3UVState,
 )
 
 

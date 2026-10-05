@@ -18,11 +18,11 @@ from typing import Any
 
 from common.EFT import EFTRunningInterval
 from common.RunRecords import EFTStageRecord, RunRecord
+from RGE.matching.FinalWeinbergCoefficient import (
+    normalize_pole_rge_consistency,
+)
 from RGE.running.intermediate.ScalarOnlyWilsonFlow import (
     run_component_wilson_transport,
-)
-from RGE.running.weinberg.FinalWeinbergCoefficient import (
-    normalize_pole_rge_consistency,
 )
 
 

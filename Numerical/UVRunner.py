@@ -24,12 +24,13 @@ from typing import Any, Mapping
 import numpy as np
 from scipy.integrate import solve_ivp
 
-from Numerical.RGBetaEvaluator import (
+from Numerical.core.BetaVector import beta_values_to_derivative
+from Numerical.core.RGBetaEvaluator import (
     derivative_from_rgbeta_payload,
     evaluate_rgbeta_payload,
 )
-from Numerical.State import SharedT3UVState, T3UVState
-from Numerical.StateVector import (
+from Numerical.core.State import SharedT3UVState, T3UVState
+from Numerical.core.StateVector import (
     StateVectorLayout,
     pack_uv_state,
     unpack_uv_state,
@@ -224,11 +225,6 @@ def _rhs_factory(
         # the representation-dependent beta equations; only the numerical
         # couplings vary with t.
         evaluated = evaluate_rgbeta_payload(payload, state)
-
-        # derivative_from_rgbeta_payload would repack the state and return the
-        # same layout.  The explicit conversion below avoids an unnecessary
-        # second state pack in the hot ODE loop.
-        from Numerical.BetaVector import beta_values_to_derivative
 
         return beta_values_to_derivative(
             evaluated,

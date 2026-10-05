@@ -1,6 +1,6 @@
 """Evaluate renormalisable RGBeta beta functions in the scalar-only intermediate EFT.
 
-The parser itself is shared with ``Numerical.RGBetaEvaluator`` because the
+The parser itself is shared with ``Numerical.core.RGBetaEvaluator`` because the
 current UV and intermediate Wolfram runners serialise expressions using the
 same ``InputForm`` structures. This module supplies the intermediate scalar
 state environment and stage-specific metadata checks.
@@ -12,7 +12,8 @@ from typing import Any, Mapping
 
 import numpy as np
 
-from Numerical.BetaVector import beta_values_to_derivative, validate_beta_keys
+from Numerical.core.BetaVector import beta_values_to_derivative, validate_beta_keys
+from Numerical.core.RGBetaEvaluator import evaluate_inputform_expression
 from Numerical.IntermediateScalarState import (
     SharedT3IntermediateScalarState,
     T3IntermediateScalarState,
@@ -21,7 +22,6 @@ from Numerical.IntermediateScalarStateVector import (
     IntermediateScalarState,
     pack_intermediate_scalar_state,
 )
-from Numerical.RGBetaEvaluator import evaluate_inputform_expression
 
 
 EXPECTED_CONVENTION = (

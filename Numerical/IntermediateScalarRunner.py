@@ -21,7 +21,8 @@ from typing import Any, Mapping
 import numpy as np
 from scipy.integrate import solve_ivp
 
-from Numerical.BetaVector import beta_values_to_derivative
+from Numerical.core.BetaVector import beta_values_to_derivative
+from Numerical.core.StateVector import StateVectorLayout
 from Numerical.IntermediateScalarRGBetaEvaluator import (
     evaluate_intermediate_scalar_rgbeta_payload,
     intermediate_scalar_derivative_from_payload,
@@ -31,7 +32,6 @@ from Numerical.IntermediateScalarStateVector import (
     pack_intermediate_scalar_state,
     unpack_intermediate_scalar_state,
 )
-from Numerical.StateVector import StateVectorLayout
 
 
 @dataclass(frozen=True)

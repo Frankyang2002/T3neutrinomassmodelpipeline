@@ -4,7 +4,7 @@ from pathlib import Path
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-FIGURES = PROJECT_ROOT / "Numerical" / "RunningResultFigures.py"
+FIGURES = PROJECT_ROOT / "Numerical" / "plotting" / "RunningResultFigures.py"
 
 
 def test_default_generation_uses_focused_result_set() -> None:

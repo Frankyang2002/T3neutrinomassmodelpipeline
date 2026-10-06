@@ -3,7 +3,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from Numerical.PlotOptimizerResults import generate_plots
+from Numerical.plotting.PlotOptimizerResults import generate_plots
 
 
 class PlotOptimizerResultsTests(unittest.TestCase):
@@ -42,27 +42,9 @@ class PlotOptimizerResultsTests(unittest.TestCase):
                 "whitened_residual": [0.1, -0.1, 0.0, 0.0, 0.0],
             },
             "history": [
-                {
-                    "evaluation": 0,
-                    "phase": "least_squares",
-                    "status": "Success",
-                    "chi2": 10.0,
-                    "parameters": {"x": 0.5, "y": 0.5},
-                },
-                {
-                    "evaluation": 1,
-                    "phase": "least_squares",
-                    "status": "Success",
-                    "chi2": 1.0,
-                    "parameters": {"x": 0.2, "y": 0.3},
-                },
-                {
-                    "evaluation": 2,
-                    "phase": "least_squares",
-                    "status": "Success",
-                    "chi2": 0.01,
-                    "parameters": {"x": 0.1, "y": 0.2},
-                },
+                {"evaluation":0,"phase":"least_squares","status":"Success","chi2":10.0,"parameters":{"x":0.5,"y":0.5}},
+                {"evaluation":1,"phase":"least_squares","status":"Success","chi2":1.0,"parameters":{"x":0.2,"y":0.3}},
+                {"evaluation":2,"phase":"least_squares","status":"Success","chi2":0.01,"parameters":{"x":0.1,"y":0.2}},
             ],
         }
 
@@ -71,9 +53,7 @@ class PlotOptimizerResultsTests(unittest.TestCase):
             source = root / "optimizer.json"
             source.write_text(json.dumps(payload), encoding="utf-8")
             output = root / "plots"
-
             generate_plots(source, output)
-
             expected = [
                 "chi2_trajectory.png",
                 "best_chi2_trajectory.png",

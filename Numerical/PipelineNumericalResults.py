@@ -32,7 +32,7 @@ from Numerical.diagnostics.RunningDiagnostics import (
     _uv_running_payload,
     mixing_angles_from_pmns_abs,
 )
-from Numerical.RunningResultFigures import generate_running_result_figures
+from Numerical.plotting.RunningResultFigures import generate_running_result_figures
 from Numerical.diagnostics.IntermediateWeinbergDiagnostics import sample_intermediate_direct_weinberg
 from Numerical.fitting.SobolBenchmarkSearch import resolve_model_benchmark
 from Numerical.diagnostics.FinalC5ContributionDiagnostics import evaluate_final_c5_contributions

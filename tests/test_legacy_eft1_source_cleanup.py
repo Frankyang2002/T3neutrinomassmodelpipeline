@@ -113,7 +113,7 @@ def test_pipeline_imports_after_cleanup() -> None:
 
 
 def test_thesis_figure_generator_is_headless() -> None:
-    path = PROJECT_ROOT / "Numerical" / "ThesisResultFigures.py"
+    path = PROJECT_ROOT / "Numerical" / "plotting" / "ThesisResultFigures.py"
     source = path.read_text(encoding="utf-8")
     use_index = source.index('matplotlib.use("Agg")')
     pyplot_index = source.index("import matplotlib.pyplot as plt")

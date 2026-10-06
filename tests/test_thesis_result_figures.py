@@ -3,7 +3,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from Numerical.ThesisResultFigures import (
+from Numerical.plotting.ThesisResultFigures import (
     _table_rows,
     generate_thesis_results,
 )
@@ -63,15 +63,15 @@ class ThesisResultFiguresTests(unittest.TestCase):
                     [0.004, 0.009, 0.05],
                 ],
                 "c5_abs": [
-                    [[[1.0e-16, 2.0e-16, 3.0e-16],
-                      [2.0e-16, 4.0e-16, 5.0e-16],
-                      [3.0e-16, 5.0e-16, 6.0e-16]]][0],
-                    [[[9.0e-17, 1.8e-16, 2.7e-16],
-                      [1.8e-16, 3.6e-16, 4.5e-16],
-                      [2.7e-16, 4.5e-16, 5.4e-16]]][0],
-                    [[[8.0e-17, 1.6e-16, 2.4e-16],
-                      [1.6e-16, 3.2e-16, 4.0e-16],
-                      [2.4e-16, 4.0e-16, 4.8e-16]]][0],
+                    [[1.0e-16, 2.0e-16, 3.0e-16],
+                     [2.0e-16, 4.0e-16, 5.0e-16],
+                     [3.0e-16, 5.0e-16, 6.0e-16]],
+                    [[9.0e-17, 1.8e-16, 2.7e-16],
+                     [1.8e-16, 3.6e-16, 4.5e-16],
+                     [2.7e-16, 4.5e-16, 5.4e-16]],
+                    [[8.0e-17, 1.6e-16, 2.4e-16],
+                     [1.6e-16, 3.2e-16, 4.0e-16],
+                     [2.4e-16, 4.0e-16, 4.8e-16]],
                 ],
             },
         }

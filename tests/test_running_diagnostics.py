@@ -2,7 +2,7 @@ import unittest
 
 import numpy as np
 
-from Numerical.RunningDiagnostics import (
+from Numerical.diagnostics.RunningDiagnostics import (
     _log_save_scales,
     mixing_angles_from_pmns_abs,
 )

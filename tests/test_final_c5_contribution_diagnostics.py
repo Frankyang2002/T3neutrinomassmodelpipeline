@@ -3,7 +3,7 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from Numerical.FinalC5ContributionDiagnostics import (
+from Numerical.diagnostics.FinalC5ContributionDiagnostics import (
     FinalC5ContributionBreakdown,
 )
 

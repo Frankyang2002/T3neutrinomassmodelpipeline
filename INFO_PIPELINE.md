@@ -234,6 +234,10 @@ Numerical/running/FinalC5TrajectoryAdapter.py
 Numerical/fitting/
     oscillation targets, parameter scans, optimisation, Sobol benchmark search,
     sensitivity scans, and the scan CLI
+
+Numerical/diagnostics/
+    best-fit, running, intermediate-Weinberg, final-C5 contribution, and
+    numerical-configuration diagnostics
 ```
 
 The temporary root-level forwarding modules used during the `Numerical/running/` migration have been removed. Historical modules such as `Numerical/WeinbergRunning.py`, `Numerical/WeinbergStage.py`, `Numerical/ThresholdMatching.py`, `Numerical/FinalSMBoundary.py`, and `Numerical/FinalC5Bridge.py` remain compatibility-only where still required.

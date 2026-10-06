@@ -5,7 +5,7 @@ import unittest
 
 import numpy as np
 
-from Numerical.BestFitDiagnostics import (
+from Numerical.diagnostics.BestFitDiagnostics import (
     _complex_matrix_payload,
     _log_save_scales,
     load_optimizer_best_parameters,

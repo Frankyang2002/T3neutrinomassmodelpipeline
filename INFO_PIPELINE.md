@@ -195,29 +195,44 @@ physics/LowEnergyNeutrino.py
 
 ## 8. Numerical ownership
 
-Numerical ODE/state/trajectory work stays under `Numerical/`.
+Numerical ODE/state/trajectory work is split by responsibility under `Numerical/`.
 
 ```text
-Numerical/SMWeinbergEvolution.py
-    final SM+C5 state packing and solve_ivp evolution
+Numerical/core/
+    shared numerical state, state-vector, beta-vector and RGBeta evaluation
 
-Numerical/SMWeinbergStage.py
-    numerical C5 evaluation, integration-stage serialization
+Numerical/running/UVRunner.py
+    UV solve_ivp evolution
 
-Numerical/FermionThresholdBoundary.py
+Numerical/running/IntermediateScalarState.py
+Numerical/running/IntermediateScalarStateVector.py
+Numerical/running/IntermediateScalarRGBetaEvaluator.py
+Numerical/running/IntermediateScalarRunner.py
+    scalar-only intermediate numerical state and running
+
+Numerical/running/FermionThresholdBoundary.py
     UV -> scalar-only renormalisable boundary
 
-Numerical/ScalarThresholdBoundary.py
+Numerical/running/ScalarThresholdBoundary.py
     scalar-only -> final-SM boundary
 
-Numerical/T3Trajectory.py
+Numerical/running/T3Trajectory.py
     multi-segment UV/intermediate/final trajectory orchestration
 
-Numerical/FinalC5TrajectoryAdapter.py
+Numerical/running/SMWeinbergEvolution.py
+    final SM+C5 state packing and solve_ivp evolution
+
+Numerical/running/SMWeinbergStage.py
+    numerical C5 evaluation, integration-stage serialization
+
+Numerical/running/WeinbergTrajectory.py
+    retained final SM+Weinberg trajectory
+
+Numerical/running/FinalC5TrajectoryAdapter.py
     trajectory -> authoritative final-C5 numerical evaluator inputs
 ```
 
-Historical modules such as `Numerical/WeinbergRunning.py`, `Numerical/WeinbergStage.py`, `Numerical/ThresholdMatching.py`, `Numerical/FinalSMBoundary.py`, and `Numerical/FinalC5Bridge.py` are retained as compatibility surfaces.
+Root-level `Numerical/*.py` files with the same names are temporary compatibility surfaces during the package migration. Historical modules such as `Numerical/WeinbergRunning.py`, `Numerical/WeinbergStage.py`, `Numerical/ThresholdMatching.py`, `Numerical/FinalSMBoundary.py`, and `Numerical/FinalC5Bridge.py` remain compatibility-only where still required.
 
 ## 9. Validation and reports
 
@@ -242,8 +257,10 @@ Stable serialized names and historical summary keys are retained where downstrea
 | `RGE/running/intermediate/ScalarOnlyWilsonTensorRGE.py` | scalar-only dimension-five tensor RGE                   |
 | `RGE/matching/FinalWeinbergCoefficient.py`              | authoritative final-C5 construction                     |
 | `RGE/running/weinberg/WeinbergRGE.py`                   | final SM+Weinberg beta model                            |
-| `Numerical/IntermediateScalarState.py`                  | scalar-only numerical state                             |
-| `Numerical/SMWeinbergEvolution.py`                      | final SM+Weinberg numerical integration                 |
+| `Numerical/core/State.py`                               | canonical UV/SM numerical states                        |
+| `Numerical/running/IntermediateScalarState.py`          | scalar-only numerical state                             |
+| `Numerical/running/T3Trajectory.py`                     | numerical multi-threshold orchestration                 |
+| `Numerical/running/SMWeinbergEvolution.py`              | final SM+Weinberg numerical integration                 |
 | `physics/LowEnergyNeutrino.py`                          | post-matching neutrino orchestration                    |
 | `validation/`                                           | independent checks only                                 |
 | `Reports/PipelineReports.py`                            | report orchestration                                    |

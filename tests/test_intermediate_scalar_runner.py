@@ -4,8 +4,8 @@ import unittest
 
 import numpy as np
 
-from Numerical.IntermediateScalarRunner import run_intermediate_scalar_segment
-from Numerical.IntermediateScalarState import T3IntermediateScalarState
+from Numerical.running.IntermediateScalarRunner import run_intermediate_scalar_segment
+from Numerical.running.IntermediateScalarState import T3IntermediateScalarState
 from Numerical.core.State import (
     SMNumericalState,
     T3Representation,
@@ -39,7 +39,6 @@ def _state() -> T3IntermediateScalarState:
 
 
 def _payload(state: T3IntermediateScalarState) -> dict:
-    # Structural payload matching the exact current scalar-only RGBeta keys.
     betas = {
         "gY": "(43*gY^3)/6",
         "g2": "-2*g2^3",
@@ -86,7 +85,6 @@ class IntermediateScalarRunnerTests(unittest.TestCase):
     def test_short_downward_run_reaches_endpoint(self) -> None:
         state = _state()
         result = run_intermediate_scalar_segment(state, _payload(state), 9.0e9)
-
         self.assertTrue(result.solver_success)
         self.assertGreaterEqual(result.n_points, 2)
         self.assertEqual(result.mu_gev[0], 1.0e10)
@@ -95,27 +93,15 @@ class IntermediateScalarRunnerTests(unittest.TestCase):
     def test_requested_save_scales_are_retained(self) -> None:
         state = _state()
         scales = [1.0e10, 9.8e9, 9.5e9, 9.0e9]
-
         result = run_intermediate_scalar_segment(
-            state,
-            _payload(state),
-            9.0e9,
-            save_scales_gev=scales,
+            state, _payload(state), 9.0e9, save_scales_gev=scales
         )
-
-        np.testing.assert_allclose(
-            result.mu_gev,
-            np.asarray(scales),
-            rtol=0.0,
-            atol=0.0,
-        )
+        np.testing.assert_allclose(result.mu_gev, np.asarray(scales), rtol=0.0, atol=0.0)
 
     def test_final_state_reconstructs(self) -> None:
         state = _state()
         result = run_intermediate_scalar_segment(state, _payload(state), 9.0e9)
-
         final_state = result.final_state
-
         self.assertIsInstance(final_state, T3IntermediateScalarState)
         self.assertEqual(final_state.mu_gev, 9.0e9)
         self.assertTrue(np.isfinite(final_state.sm.gY))
@@ -125,28 +111,21 @@ class IntermediateScalarRunnerTests(unittest.TestCase):
     def test_running_changes_couplings(self) -> None:
         state = _state()
         result = run_intermediate_scalar_segment(state, _payload(state), 9.0e9)
-
         final_state = result.final_state
-
         self.assertNotEqual(final_state.sm.gY, state.sm.gY)
         self.assertNotEqual(final_state.lambdaS1, state.lambdaS1)
 
     def test_upward_running_is_supported(self) -> None:
         state = _state()
-
         result = run_intermediate_scalar_segment(
-            state,
-            _payload(state),
-            1.1e10,
+            state, _payload(state), 1.1e10,
             save_scales_gev=[1.0e10, 1.05e10, 1.1e10],
         )
-
         self.assertEqual(result.mu_gev[-1], 1.1e10)
         self.assertGreater(result.mu_gev[-1], result.mu_gev[0])
 
     def test_equal_scales_are_rejected(self) -> None:
         state = _state()
-
         with self.assertRaisesRegex(ValueError, "must be different"):
             run_intermediate_scalar_segment(state, _payload(state), state.mu_gev)
 

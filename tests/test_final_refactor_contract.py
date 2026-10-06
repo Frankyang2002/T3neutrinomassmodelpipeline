@@ -24,7 +24,7 @@ def test_central_documentation_matches_the_refactored_pipeline_boundaries() -> N
         "RGE/running/IntermediateEFTRunning.py",
         "RGE/running/backends/ScalarOnlyAfterFermion.py",
         "RGE/running/intermediate/ScalarOnlyWilsonTensorRGE.py",
-        "Numerical/IntermediateScalarState.py",
+        "Numerical/running/IntermediateScalarState.py",
         "validation/",
         "physics/LowEnergyNeutrino.py",
         "Reports/PipelineReports.py",

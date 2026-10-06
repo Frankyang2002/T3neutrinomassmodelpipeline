@@ -63,7 +63,7 @@ UV T3
 
 `RGE/running/UVRunning.py` is the production UV entry point and uses the RGBeta stack under `RGE/running/rgbeta/`.
 
-Numerically, the UV state and state-vector implementation live under `Numerical/core/State.py` and `Numerical/core/StateVector.py`, while `solve_ivp` integration is handled by `Numerical/UVRunner.py`.
+Numerically, the UV state and state-vector implementation live under `Numerical/core/State.py` and `Numerical/core/StateVector.py`, while `solve_ivp` integration is handled by `Numerical/running/UVRunner.py`.
 
 ## 4. Intermediate scalar-only EFT
 
@@ -158,12 +158,12 @@ Historical `MatchedWeinbergRGE.py`, `MatchedWeinbergStage.py`, and `FlavorMatche
 
 ## 7. Numerical final SM+Weinberg evolution
 
-The canonical numerical modules are
+The canonical numerical modules are now under `Numerical/running/`:
 
 ```text
-Numerical/SMWeinbergEvolution.py
-Numerical/SMWeinbergStage.py
-Numerical/WeinbergTrajectory.py
+Numerical/running/SMWeinbergEvolution.py
+Numerical/running/SMWeinbergStage.py
+Numerical/running/WeinbergTrajectory.py
 ```
 
 `SMWeinbergEvolution.py` owns state packing/unpacking and `solve_ivp`. It does not own the physical $C_5\to m_\nu$ interpretation.
@@ -171,19 +171,28 @@ Numerical/WeinbergTrajectory.py
 Threshold-state construction is split into
 
 ```text
-Numerical/FermionThresholdBoundary.py
-Numerical/ScalarThresholdBoundary.py
+Numerical/running/FermionThresholdBoundary.py
+Numerical/running/ScalarThresholdBoundary.py
 ```
 
-and `Numerical/T3Trajectory.py` connects UV, intermediate, and final segments.
+and `Numerical/running/T3Trajectory.py` connects UV, intermediate, and final segments.
+
+The scalar-only numerical interval is implemented by
+
+```text
+Numerical/running/IntermediateScalarState.py
+Numerical/running/IntermediateScalarStateVector.py
+Numerical/running/IntermediateScalarRGBetaEvaluator.py
+Numerical/running/IntermediateScalarRunner.py
+```
 
 The final-C5 numerical adapter is
 
 ```text
-Numerical/FinalC5TrajectoryAdapter.py
+Numerical/running/FinalC5TrajectoryAdapter.py
 ```
 
-which extracts the values at the correct threshold scales and calls the established final-C5 evaluator. `Numerical/FinalC5Bridge.py` remains a compatibility wrapper for historical callers and mocks.
+which extracts the values at the correct threshold scales and calls the established final-C5 evaluator. Root-level modules with the same names are temporary compatibility imports during the migration. `Numerical/FinalC5Bridge.py` remains a historical compatibility wrapper.
 
 ## 8. Neutrino physics ownership
 

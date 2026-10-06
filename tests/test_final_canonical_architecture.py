@@ -32,7 +32,7 @@ def test_scan_cli_uses_canonical_final_c5_trajectory_adapter() -> None:
 
 
 def test_t3_trajectory_exposes_descriptive_intermediate_aliases() -> None:
-    source = _text("Numerical/T3Trajectory.py")
+    source = _text("Numerical/running/T3Trajectory.py")
 
     assert "def intermediate_initial_state(" in source
     assert "def intermediate(" in source
@@ -49,8 +49,8 @@ def test_docs_use_current_canonical_ownership() -> None:
         "RGE/matching/FinalWeinbergCoefficient.py",
         "RGE/running/weinberg/WeinbergRGE.py",
         "RGE/running/weinberg/FullFlavorWeinbergStage.py",
-        "Numerical/SMWeinbergEvolution.py",
-        "Numerical/FinalC5TrajectoryAdapter.py",
+        "Numerical/running/SMWeinbergEvolution.py",
+        "Numerical/running/FinalC5TrajectoryAdapter.py",
         "physics/NeutrinoObservables.py",
     ):
         assert token in pipeline

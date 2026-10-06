@@ -15,7 +15,7 @@ from typing import Any
 from Numerical.running.FermionThresholdBoundary import (
     build_intermediate_scalar_boundary,
 )
-from Numerical.ScanCLI import build_uv_state_from_config
+from Numerical.fitting.ScanCLI import build_uv_state_from_config
 from studies.FullT3Study import (
     DEFAULT_TEMPLATE,
     MODELS,

@@ -13,8 +13,8 @@ def _text(relative: str) -> str:
 
 
 def test_internal_numerical_callers_use_physics_ownership_directly() -> None:
-    fit = _text("Numerical/OscillationFit.py")
-    scan = _text("Numerical/ParameterScan.py")
+    fit = _text("Numerical/fitting/OscillationFit.py")
+    scan = _text("Numerical/fitting/ParameterScan.py")
 
     assert "from physics.NeutrinoObservables import" in fit
     assert "RGE.phenomenology.NeutrinoObservables" not in fit
@@ -25,7 +25,7 @@ def test_internal_numerical_callers_use_physics_ownership_directly() -> None:
 
 
 def test_scan_cli_uses_canonical_final_c5_trajectory_adapter() -> None:
-    source = _text("Numerical/ScanCLI.py")
+    source = _text("Numerical/fitting/ScanCLI.py")
 
     assert (
         "from Numerical.running.FinalC5TrajectoryAdapter "

@@ -28,7 +28,7 @@ from Numerical.running.FinalC5TrajectoryAdapter import FinalC5TrajectoryEvaluato
 from Numerical.running.ScalarThresholdBoundary import (
     build_sm_weinberg_initial_conditions,
 )
-from Numerical.ScanCLI import (
+from Numerical.fitting.ScanCLI import (
     build_uv_state_from_config,
     load_scan_config,
     validate_scan_inputs,

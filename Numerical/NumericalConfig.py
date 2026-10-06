@@ -13,7 +13,7 @@ from pathlib import Path
 from typing import Any
 
 from common.RunRecords import RunRecord
-from Numerical.SobolBenchmarkSearch import (
+from Numerical.fitting.SobolBenchmarkSearch import (
     _parameters_from_config,
     apply_benchmark_parameters,
     model_benchmark_key,

@@ -34,11 +34,11 @@ from Numerical.RunningDiagnostics import (
 )
 from Numerical.RunningResultFigures import generate_running_result_figures
 from Numerical.IntermediateWeinbergDiagnostics import sample_intermediate_direct_weinberg
-from Numerical.SobolBenchmarkSearch import resolve_model_benchmark
+from Numerical.fitting.SobolBenchmarkSearch import resolve_model_benchmark
 from Numerical.FinalC5ContributionDiagnostics import evaluate_final_c5_contributions
-from Numerical.BenchmarkSensitivity import run_t3_sensitivity_scan
+from Numerical.fitting.BenchmarkSensitivity import run_t3_sensitivity_scan
 from Numerical.running.ScalarThresholdBoundary import build_sm_weinberg_initial_conditions
-from Numerical.ScanCLI import build_uv_state_from_config
+from Numerical.fitting.ScanCLI import build_uv_state_from_config
 from Numerical.running.T3Trajectory import run_renormalisable_t3_trajectory
 from Numerical.running.WeinbergTrajectory import run_weinberg_trajectory
 from physics.NeutrinoObservables import calculate_neutrino_observables
@@ -250,7 +250,7 @@ def _run_and_build_payload(
     # The default numerical file acts as a template when automatic
     # benchmark search is enabled.  Explicit fixed configs retain their
     # representation check because retargeting is opt-in.
-    from Numerical.SobolBenchmarkSearch import retarget_payload_to_record
+    from Numerical.fitting.SobolBenchmarkSearch import retarget_payload_to_record
 
     payload = retarget_payload_to_record(record, payload)
     _validate_record_against_config(record, payload)

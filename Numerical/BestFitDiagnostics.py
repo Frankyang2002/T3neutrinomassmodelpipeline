@@ -16,8 +16,8 @@ It produces:
 - standard thesis-ready plots.
 
 No matching formula or oscillation observable definition is duplicated here.
-The module reuses FinalC5Bridge, ScanCLI, T3Trajectory, WeinbergTrajectory and
-RGE.phenomenology.NeutrinoObservables.
+The module reuses FinalC5TrajectoryAdapter, ScanCLI, T3Trajectory,
+WeinbergTrajectory and physics.NeutrinoObservables.
 """
 
 from __future__ import annotations
@@ -284,23 +284,25 @@ def run_best_fit_diagnostics(
     """Recompute and characterize the best fitted T3 point."""
 
     # Lazy imports keep the pure parsing/plot helpers independently testable.
-    from Numerical.FinalC5Bridge import FinalC5TrajectoryBuilder
-    from Numerical.FinalSMBoundary import build_weinberg_initial_conditions
-    from Numerical.RGBetaEvaluator import load_rgbeta_payload
+    from Numerical.core.RGBetaEvaluator import load_rgbeta_payload
+    from Numerical.FinalC5TrajectoryAdapter import FinalC5TrajectoryEvaluator
+    from Numerical.ScalarThresholdBoundary import (
+        build_sm_weinberg_initial_conditions,
+    )
     from Numerical.ScanCLI import (
         build_uv_state_from_config,
         load_scan_config,
         validate_scan_inputs,
     )
     from Numerical.T3Trajectory import run_renormalisable_t3_trajectory
-    from Numerical.WeinbergTrajectory import (
+    from Numerical.WeinbergTrajectory import run_weinberg_trajectory
+    from physics.NeutrinoObservables import (
+        calculate_neutrino_observables,
+    )
+    from physics.NeutrinoTrajectory import (
         charged_lepton_mass_basis_matrix,
         neutrino_mass_from_c5,
-        run_weinberg_trajectory,
         scale_dependent_neutrino_observables,
-    )
-    from RGE.phenomenology.NeutrinoObservables import (
-        calculate_neutrino_observables,
     )
 
     config = load_scan_config(Path(scan_config_path))
@@ -343,7 +345,7 @@ def run_best_fit_diagnostics(
         atol=atol,
     )
 
-    c5_builder = FinalC5TrajectoryBuilder(
+    c5_builder = FinalC5TrajectoryEvaluator(
         config.final_weinberg_path
     )
     c5_threshold = np.asarray(
@@ -351,7 +353,7 @@ def run_best_fit_diagnostics(
         dtype=complex,
     )
 
-    initial = build_weinberg_initial_conditions(
+    initial = build_sm_weinberg_initial_conditions(
         renormalisable.final_sm_boundary,
         c5_threshold,
     )

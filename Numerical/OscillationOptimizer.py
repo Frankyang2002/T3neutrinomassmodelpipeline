@@ -690,10 +690,10 @@ def _build_project_evaluator(
 ) -> tuple[Any, Any]:
     """Construct exactly the same physical point evaluator used by ScanCLI."""
 
-    from Numerical.FinalC5Bridge import FinalC5TrajectoryBuilder
+    from Numerical.core.RGBetaEvaluator import load_rgbeta_payload
+    from Numerical.FinalC5TrajectoryAdapter import FinalC5TrajectoryEvaluator
     from Numerical.OscillationFit import OscillationFitTarget
     from Numerical.ParameterScan import make_t3_point_evaluator
-    from Numerical.RGBetaEvaluator import load_rgbeta_payload
     from Numerical.ScanCLI import (
         build_uv_state_from_config,
         load_scan_config,
@@ -718,7 +718,7 @@ def _build_project_evaluator(
     if not isinstance(numerical, dict):
         raise ValueError("numerical must be an object when supplied.")
 
-    c5_builder = FinalC5TrajectoryBuilder(
+    c5_builder = FinalC5TrajectoryEvaluator(
         config.final_weinberg_path
     )
 

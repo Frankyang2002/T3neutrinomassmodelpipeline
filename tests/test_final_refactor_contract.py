@@ -57,6 +57,25 @@ def test_numerical_running_root_forwarders_are_retired() -> None:
         assert (running / name).is_file()
 
 
+
+def test_numerical_fitting_root_forwarders_are_retired() -> None:
+    retired = (
+        "OscillationFit.py",
+        "ParameterScan.py",
+        "OscillationOptimizer.py",
+        "SobolBenchmarkSearch.py",
+        "BenchmarkSensitivity.py",
+        "ScanCLI.py",
+    )
+
+    numerical = PROJECT_ROOT / "Numerical"
+    fitting = numerical / "fitting"
+
+    for name in retired:
+        assert not (numerical / name).exists()
+        assert (fitting / name).is_file()
+
+
 def test_documentation_states_the_project_hypercharge_conversion_explicitly() -> None:
     for relative in ("INFO_PIPELINE.md", "INFO_LAGRANGIAN.md"):
         source = _text(relative)

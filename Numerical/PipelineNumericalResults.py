@@ -25,7 +25,7 @@ import numpy as np
 from common.RunRecords import RunRecord
 from Numerical.core.RGBetaEvaluator import load_rgbeta_payload
 from Numerical.running.FinalC5TrajectoryAdapter import FinalC5TrajectoryEvaluator
-from Numerical.RunningDiagnostics import (
+from Numerical.diagnostics.RunningDiagnostics import (
     _complex_matrix_payload,
     _intermediate_running_payload,
     _log_save_scales,
@@ -33,9 +33,9 @@ from Numerical.RunningDiagnostics import (
     mixing_angles_from_pmns_abs,
 )
 from Numerical.RunningResultFigures import generate_running_result_figures
-from Numerical.IntermediateWeinbergDiagnostics import sample_intermediate_direct_weinberg
+from Numerical.diagnostics.IntermediateWeinbergDiagnostics import sample_intermediate_direct_weinberg
 from Numerical.fitting.SobolBenchmarkSearch import resolve_model_benchmark
-from Numerical.FinalC5ContributionDiagnostics import evaluate_final_c5_contributions
+from Numerical.diagnostics.FinalC5ContributionDiagnostics import evaluate_final_c5_contributions
 from Numerical.fitting.BenchmarkSensitivity import run_t3_sensitivity_scan
 from Numerical.running.ScalarThresholdBoundary import build_sm_weinberg_initial_conditions
 from Numerical.fitting.ScanCLI import build_uv_state_from_config

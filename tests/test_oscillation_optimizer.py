@@ -5,7 +5,7 @@ import unittest
 
 import numpy as np
 
-from Numerical.OscillationOptimizer import (
+from Numerical.fitting.OscillationOptimizer import (
     EvaluationRecorder,
     OptimizerParameter,
     estimate_local_sensitivities,

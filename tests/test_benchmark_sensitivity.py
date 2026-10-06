@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from Numerical.BenchmarkSensitivity import (
+from Numerical.fitting.BenchmarkSensitivity import (
     leading_prefactor_scale,
     scaled_config_payload,
 )

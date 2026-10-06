@@ -212,7 +212,7 @@ physics/LowEnergyNeutrino.py
     orchestration only
 ```
 
-The oscillation-fit numerical layer imports the physical observables from `physics.NeutrinoObservables` directly.
+The oscillation-fit numerical layer under `Numerical/fitting/` imports the physical observables from `physics.NeutrinoObservables` directly.
 
 ## 9. Production versus validation
 

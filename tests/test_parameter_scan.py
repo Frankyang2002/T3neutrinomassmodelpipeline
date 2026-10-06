@@ -7,10 +7,10 @@ import unittest
 
 import numpy as np
 
-from Numerical.OscillationFit import (
+from Numerical.fitting.OscillationFit import (
     OscillationFitResult,
 )
-from Numerical.ParameterScan import (
+from Numerical.fitting.ParameterScan import (
     ScanParameter,
     grid_parameter_points,
     random_parameter_points,

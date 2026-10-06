@@ -4,11 +4,11 @@ from types import SimpleNamespace
 
 import numpy as np
 
-from Numerical.OscillationFit import OscillationFitResult
+from Numerical.fitting.OscillationFit import OscillationFitResult
 
 import numpy as np
 
-from Numerical.SobolBenchmarkSearch import (
+from Numerical.fitting.SobolBenchmarkSearch import (
     BenchmarkParameter,
     apply_benchmark_parameters,
     default_ordinary_t3_parameters,

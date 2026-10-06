@@ -7,7 +7,7 @@ import unittest
 
 import numpy as np
 
-from Numerical.ScanCLI import (
+from Numerical.fitting.ScanCLI import (
     _set_bound_value,
     _validate_rgbeta_payload_compatibility,
     build_scan_points,
@@ -309,7 +309,6 @@ class ScanCLITests(unittest.TestCase):
             ):
                 load_scan_config(path)
 
-
     def test_uv_payload_representation_mismatch_is_rejected(self) -> None:
         representation = T3Representation(
             d_s1=1,
@@ -379,7 +378,6 @@ class ScanCLITests(unittest.TestCase):
                 payload_name="EFT1 RGBeta payload",
                 eft1=True,
             )
-
 
 
 if __name__ == "__main__":

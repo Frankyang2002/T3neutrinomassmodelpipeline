@@ -7,7 +7,7 @@ import unittest
 
 import numpy as np
 
-from Numerical.OscillationFit import (
+from Numerical.fitting.OscillationFit import (
     OSCILLATION_OBSERVABLES,
     OscillationFitTarget,
     evaluate_mass_matrix_fit,
@@ -83,7 +83,6 @@ class OscillationFitTests(unittest.TestCase):
             for name, value in central.items()
         }
 
-        # Shift the target by exactly one sigma in one observable.
         central = dict(central)
         central["sin2_theta13"] += sigma["sin2_theta13"]
 

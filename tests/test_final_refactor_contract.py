@@ -33,6 +33,30 @@ def test_central_documentation_matches_the_refactored_pipeline_boundaries() -> N
         assert name in pipeline_doc
 
 
+def test_numerical_running_root_forwarders_are_retired() -> None:
+    retired = (
+        "UVRunner.py",
+        "T3Trajectory.py",
+        "IntermediateScalarState.py",
+        "IntermediateScalarStateVector.py",
+        "IntermediateScalarRGBetaEvaluator.py",
+        "IntermediateScalarRunner.py",
+        "FermionThresholdBoundary.py",
+        "ScalarThresholdBoundary.py",
+        "SMWeinbergEvolution.py",
+        "SMWeinbergStage.py",
+        "WeinbergTrajectory.py",
+        "FinalC5TrajectoryAdapter.py",
+    )
+
+    numerical = PROJECT_ROOT / "Numerical"
+    running = numerical / "running"
+
+    for name in retired:
+        assert not (numerical / name).exists()
+        assert (running / name).is_file()
+
+
 def test_documentation_states_the_project_hypercharge_conversion_explicitly() -> None:
     for relative in ("INFO_PIPELINE.md", "INFO_LAGRANGIAN.md"):
         source = _text(relative)

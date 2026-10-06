@@ -22,12 +22,12 @@ from typing import Mapping
 import numpy as np
 
 from Numerical.core.State import SharedT3UVState, T3UVState
-from Numerical.IntermediateScalarState import (
+from Numerical.running.IntermediateScalarState import (
     SharedT3IntermediateScalarState,
     T3IntermediateScalarState,
 )
 from Numerical.running.SMWeinbergStage import evaluate_final_weinberg_json
-from Numerical.T3Trajectory import T3RenormalisableTrajectory
+from Numerical.running.T3Trajectory import T3RenormalisableTrajectory
 
 
 @dataclass(frozen=True)

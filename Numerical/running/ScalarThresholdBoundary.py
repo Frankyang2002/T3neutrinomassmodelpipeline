@@ -15,7 +15,7 @@ from dataclasses import dataclass
 import numpy as np
 
 from Numerical.core.State import SMNumericalState
-from Numerical.IntermediateScalarState import (
+from Numerical.running.IntermediateScalarState import (
     SharedT3IntermediateScalarState,
     T3IntermediateScalarState,
 )

@@ -232,7 +232,7 @@ Numerical/running/FinalC5TrajectoryAdapter.py
     trajectory -> authoritative final-C5 numerical evaluator inputs
 ```
 
-Root-level `Numerical/*.py` files with the same names are temporary compatibility surfaces during the package migration. Historical modules such as `Numerical/WeinbergRunning.py`, `Numerical/WeinbergStage.py`, `Numerical/ThresholdMatching.py`, `Numerical/FinalSMBoundary.py`, and `Numerical/FinalC5Bridge.py` remain compatibility-only where still required.
+The temporary root-level forwarding modules used during the `Numerical/running/` migration have been removed. Historical modules such as `Numerical/WeinbergRunning.py`, `Numerical/WeinbergStage.py`, `Numerical/ThresholdMatching.py`, `Numerical/FinalSMBoundary.py`, and `Numerical/FinalC5Bridge.py` remain compatibility-only where still required.
 
 ## 9. Validation and reports
 

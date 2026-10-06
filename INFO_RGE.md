@@ -192,7 +192,7 @@ The final-C5 numerical adapter is
 Numerical/running/FinalC5TrajectoryAdapter.py
 ```
 
-which extracts the values at the correct threshold scales and calls the established final-C5 evaluator. Root-level modules with the same names are temporary compatibility imports during the migration. `Numerical/FinalC5Bridge.py` remains a historical compatibility wrapper.
+which extracts the values at the correct threshold scales and calls the established final-C5 evaluator. The temporary root-level forwarding modules used during the `Numerical/running/` migration have been removed. `Numerical/FinalC5Bridge.py` remains a historical compatibility wrapper.
 
 ## 8. Neutrino physics ownership
 

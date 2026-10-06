@@ -4,11 +4,11 @@ import unittest
 
 import numpy as np
 
-from Numerical.IntermediateScalarRGBetaEvaluator import (
+from Numerical.running.IntermediateScalarRGBetaEvaluator import (
     _validate_intermediate_scalar_metadata,
 )
 from Numerical.core.RGBetaEvaluator import _validate_payload_metadata
-from Numerical.IntermediateScalarState import T3IntermediateScalarState
+from Numerical.running.IntermediateScalarState import T3IntermediateScalarState
 from Numerical.core.State import (
     SMNumericalState,
     T3Representation,

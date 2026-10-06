@@ -13,7 +13,7 @@ from Numerical.ScalarThresholdBoundary import (
     build_final_sm_boundary,
     scalar_threshold_masses,
 )
-from Numerical.State import (
+from Numerical.core.State import (
     SMNumericalState,
     T3Representation,
 )

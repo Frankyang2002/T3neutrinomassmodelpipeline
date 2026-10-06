@@ -6,7 +6,7 @@ import numpy as np
 
 from Numerical.IntermediateScalarRunner import run_intermediate_scalar_segment
 from Numerical.IntermediateScalarState import T3IntermediateScalarState
-from Numerical.State import (
+from Numerical.core.State import (
     SMNumericalState,
     T3Representation,
 )

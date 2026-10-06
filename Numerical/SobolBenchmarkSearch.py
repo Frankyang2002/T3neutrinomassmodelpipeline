@@ -40,7 +40,7 @@ from Numerical.OscillationOptimizer import (
     unit_vector_from_parameters,
 )
 from Numerical.ParameterScan import make_t3_point_evaluator
-from Numerical.RGBetaEvaluator import load_rgbeta_payload
+from Numerical.core.RGBetaEvaluator import load_rgbeta_payload
 from Numerical.ScanCLI import build_uv_state_from_config
 
 

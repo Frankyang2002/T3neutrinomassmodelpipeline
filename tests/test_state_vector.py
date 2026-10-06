@@ -4,13 +4,13 @@ import unittest
 
 import numpy as np
 
-from Numerical.State import (
+from Numerical.core.State import (
     SMNumericalState,
     SharedT3UVState,
     T3Representation,
     T3UVState,
 )
-from Numerical.StateVector import (
+from Numerical.core.StateVector import (
     pack_uv_state,
     unpack_uv_state,
 )

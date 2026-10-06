@@ -63,7 +63,7 @@ UV T3
 
 `RGE/running/UVRunning.py` is the production UV entry point and uses the RGBeta stack under `RGE/running/rgbeta/`.
 
-Numerically, the UV state and `solve_ivp` integration live under `Numerical/State.py`, `Numerical/StateVector.py`, and `Numerical/UVRunner.py`.
+Numerically, the UV state and state-vector implementation live under `Numerical/core/State.py` and `Numerical/core/StateVector.py`, while `solve_ivp` integration is handled by `Numerical/UVRunner.py`.
 
 ## 4. Intermediate scalar-only EFT
 

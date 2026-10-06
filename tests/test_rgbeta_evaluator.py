@@ -5,19 +5,19 @@ import unittest
 
 import numpy as np
 
-from Numerical.BetaVector import LOOP_FACTOR
-from Numerical.RGBetaEvaluator import (
+from Numerical.core.BetaVector import LOOP_FACTOR
+from Numerical.core.RGBetaEvaluator import (
     derivative_from_rgbeta_payload,
     evaluate_inputform_expression,
     evaluate_rgbeta_payload,
     load_rgbeta_payload,
 )
-from Numerical.State import (
+from Numerical.core.State import (
     SMNumericalState,
     T3Representation,
     T3UVState,
 )
-from Numerical.StateVector import pack_uv_state
+from Numerical.core.StateVector import pack_uv_state
 
 
 FIXTURE = (

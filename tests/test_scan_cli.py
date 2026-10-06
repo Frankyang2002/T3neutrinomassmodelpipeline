@@ -14,7 +14,7 @@ from Numerical.ScanCLI import (
     build_uv_state_from_config,
     load_scan_config,
 )
-from Numerical.State import T3Representation
+from Numerical.core.State import T3Representation
 
 
 def _write_fixture_tree(root: Path) -> Path:

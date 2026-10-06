@@ -5,12 +5,12 @@ import unittest
 
 import numpy as np
 
-from Numerical.State import (
+from Numerical.core.State import (
     SMNumericalState,
     T3Representation,
     T3UVState,
 )
-from Numerical.RGBetaEvaluator import load_rgbeta_payload
+from Numerical.core.RGBetaEvaluator import load_rgbeta_payload
 from Numerical.UVRunner import run_uv_segment
 
 

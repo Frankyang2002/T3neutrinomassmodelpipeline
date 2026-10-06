@@ -7,9 +7,9 @@ import numpy as np
 from Numerical.IntermediateScalarRGBetaEvaluator import (
     _validate_intermediate_scalar_metadata,
 )
-from Numerical.RGBetaEvaluator import _validate_payload_metadata
+from Numerical.core.RGBetaEvaluator import _validate_payload_metadata
 from Numerical.IntermediateScalarState import T3IntermediateScalarState
-from Numerical.State import (
+from Numerical.core.State import (
     SMNumericalState,
     T3Representation,
     T3UVState,

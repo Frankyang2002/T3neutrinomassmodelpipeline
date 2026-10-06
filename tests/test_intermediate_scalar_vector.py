@@ -13,7 +13,7 @@ from Numerical.IntermediateScalarStateVector import (
     pack_intermediate_scalar_state,
     unpack_intermediate_scalar_state,
 )
-from Numerical.State import (
+from Numerical.core.State import (
     SMNumericalState,
     T3Representation,
 )

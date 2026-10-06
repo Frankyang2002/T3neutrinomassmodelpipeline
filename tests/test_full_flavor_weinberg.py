@@ -14,7 +14,7 @@ from Numerical.ScalarThresholdBoundary import (
     FinalSMBoundaryState,
     build_sm_weinberg_initial_conditions,
 )
-from Numerical.State import SMNumericalState
+from Numerical.core.State import SMNumericalState
 from physics.NeutrinoMass import numerical_neutrino_mass_matrix
 from physics.NeutrinoTrajectory import charged_lepton_mass_basis_matrix
 

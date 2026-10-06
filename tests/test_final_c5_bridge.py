@@ -12,7 +12,7 @@ from Numerical.FinalC5Bridge import (
     evaluate_final_c5_from_trajectory,
     final_c5_inputs_from_trajectory,
 )
-from Numerical.State import (
+from Numerical.core.State import (
     SMNumericalState,
     T3Representation,
     T3UVState,

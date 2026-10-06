@@ -4,7 +4,7 @@ import unittest
 
 import numpy as np
 
-from Numerical.State import (
+from Numerical.core.State import (
     SMNumericalState,
     T3Representation,
     T3UVState,

@@ -212,7 +212,7 @@ physics/LowEnergyNeutrino.py
     orchestration only
 ```
 
-The oscillation-fit numerical layer under `Numerical/fitting/` imports the physical observables from `physics.NeutrinoObservables` directly. Numerical trajectory and threshold diagnostics live under `Numerical/diagnostics/`.
+The oscillation-fit numerical layer under `Numerical/fitting/` imports the physical observables from `physics.NeutrinoObservables` directly. Numerical trajectory and threshold diagnostics live under `Numerical/diagnostics/`, while presentation-only figure/dashboard builders live under `Numerical/plotting/`.
 
 ## 9. Production versus validation
 

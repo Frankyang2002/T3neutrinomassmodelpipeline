@@ -4,7 +4,7 @@ from copy import deepcopy
 import argparse, json, shutil, subprocess, sys, time
 from pathlib import Path
 from typing import Any
-from Numerical.InteractiveModelComparison import write_dashboard
+from Numerical.plotting.InteractiveModelComparison import write_dashboard
 
 PROJECT_ROOT=Path(__file__).resolve().parents[1]
 PIPELINE_SCRIPT=PROJECT_ROOT/"pipeline.py"

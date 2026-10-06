@@ -238,6 +238,10 @@ Numerical/fitting/
 Numerical/diagnostics/
     best-fit, running, intermediate-Weinberg, final-C5 contribution, and
     numerical-configuration diagnostics
+
+Numerical/plotting/
+    running-result figures, scan/optimizer plots, thesis figures,
+    interactive model comparison, and display-output assembly
 ```
 
 The temporary root-level forwarding modules used during the `Numerical/running/` migration have been removed. Historical modules such as `Numerical/WeinbergRunning.py`, `Numerical/WeinbergStage.py`, `Numerical/ThresholdMatching.py`, `Numerical/FinalSMBoundary.py`, and `Numerical/FinalC5Bridge.py` remain compatibility-only where still required.

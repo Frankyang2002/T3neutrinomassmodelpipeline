@@ -94,6 +94,25 @@ def test_numerical_diagnostics_root_forwarders_are_retired() -> None:
         assert (diagnostics / name).is_file()
 
 
+
+def test_numerical_plotting_root_forwarders_are_retired() -> None:
+    retired = (
+        "RunningResultFigures.py",
+        "PlotOptimizerResults.py",
+        "PlotScanResults.py",
+        "ThesisResultFigures.py",
+        "InteractiveModelComparison.py",
+        "BuildDisplayResults.py",
+    )
+
+    numerical = PROJECT_ROOT / "Numerical"
+    plotting = numerical / "plotting"
+
+    for name in retired:
+        assert not (numerical / name).exists()
+        assert (plotting / name).is_file()
+
+
 def test_documentation_states_the_project_hypercharge_conversion_explicitly() -> None:
     for relative in ("INFO_PIPELINE.md", "INFO_LAGRANGIAN.md"):
         source = _text(relative)

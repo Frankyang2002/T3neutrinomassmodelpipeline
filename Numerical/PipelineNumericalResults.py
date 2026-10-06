@@ -24,7 +24,7 @@ import numpy as np
 
 from common.RunRecords import RunRecord
 from Numerical.core.RGBetaEvaluator import load_rgbeta_payload
-from Numerical.FinalC5TrajectoryAdapter import FinalC5TrajectoryEvaluator
+from Numerical.running.FinalC5TrajectoryAdapter import FinalC5TrajectoryEvaluator
 from Numerical.RunningDiagnostics import (
     _complex_matrix_payload,
     _intermediate_running_payload,
@@ -37,10 +37,10 @@ from Numerical.IntermediateWeinbergDiagnostics import sample_intermediate_direct
 from Numerical.SobolBenchmarkSearch import resolve_model_benchmark
 from Numerical.FinalC5ContributionDiagnostics import evaluate_final_c5_contributions
 from Numerical.BenchmarkSensitivity import run_t3_sensitivity_scan
-from Numerical.ScalarThresholdBoundary import build_sm_weinberg_initial_conditions
+from Numerical.running.ScalarThresholdBoundary import build_sm_weinberg_initial_conditions
 from Numerical.ScanCLI import build_uv_state_from_config
-from Numerical.T3Trajectory import run_renormalisable_t3_trajectory
-from Numerical.WeinbergTrajectory import run_weinberg_trajectory
+from Numerical.running.T3Trajectory import run_renormalisable_t3_trajectory
+from Numerical.running.WeinbergTrajectory import run_weinberg_trajectory
 from physics.NeutrinoObservables import calculate_neutrino_observables
 from physics.NeutrinoTrajectory import (
     charged_lepton_mass_basis_matrix,

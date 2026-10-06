@@ -285,8 +285,8 @@ def run_best_fit_diagnostics(
 
     # Lazy imports keep the pure parsing/plot helpers independently testable.
     from Numerical.core.RGBetaEvaluator import load_rgbeta_payload
-    from Numerical.FinalC5TrajectoryAdapter import FinalC5TrajectoryEvaluator
-    from Numerical.ScalarThresholdBoundary import (
+    from Numerical.running.FinalC5TrajectoryAdapter import FinalC5TrajectoryEvaluator
+    from Numerical.running.ScalarThresholdBoundary import (
         build_sm_weinberg_initial_conditions,
     )
     from Numerical.ScanCLI import (
@@ -294,8 +294,8 @@ def run_best_fit_diagnostics(
         load_scan_config,
         validate_scan_inputs,
     )
-    from Numerical.T3Trajectory import run_renormalisable_t3_trajectory
-    from Numerical.WeinbergTrajectory import run_weinberg_trajectory
+    from Numerical.running.T3Trajectory import run_renormalisable_t3_trajectory
+    from Numerical.running.WeinbergTrajectory import run_weinberg_trajectory
     from physics.NeutrinoObservables import (
         calculate_neutrino_observables,
     )

@@ -11,7 +11,7 @@ from Numerical.core.State import (
     T3UVState,
 )
 from Numerical.core.RGBetaEvaluator import load_rgbeta_payload
-from Numerical.UVRunner import run_uv_segment
+from Numerical.running.UVRunner import run_uv_segment
 
 
 FIXTURE = (

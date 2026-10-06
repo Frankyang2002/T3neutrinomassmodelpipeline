@@ -21,12 +21,16 @@ def test_internal_numerical_callers_use_physics_ownership_directly() -> None:
 
     assert "from physics.NeutrinoTrajectory import" in scan
     assert "from Numerical.WeinbergTrajectory import" not in scan
+    assert "from Numerical.running.T3Trajectory import" in scan
 
 
 def test_scan_cli_uses_canonical_final_c5_trajectory_adapter() -> None:
     source = _text("Numerical/ScanCLI.py")
 
-    assert "from Numerical.FinalC5TrajectoryAdapter import FinalC5TrajectoryEvaluator" in source
+    assert (
+        "from Numerical.running.FinalC5TrajectoryAdapter "
+        "import FinalC5TrajectoryEvaluator"
+    ) in source
     assert "FinalC5TrajectoryEvaluator(" in source
     assert "from Numerical.FinalC5Bridge import" not in source
 

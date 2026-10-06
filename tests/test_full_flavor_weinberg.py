@@ -3,14 +3,14 @@ from __future__ import annotations
 import unittest
 import numpy as np
 
-from Numerical.SMWeinbergEvolution import (
+from Numerical.running.SMWeinbergEvolution import (
     LOOP,
     SMWeinbergInitialConditions,
     _beta,
     _pack,
     _unpack,
 )
-from Numerical.ScalarThresholdBoundary import (
+from Numerical.running.ScalarThresholdBoundary import (
     FinalSMBoundaryState,
     build_sm_weinberg_initial_conditions,
 )

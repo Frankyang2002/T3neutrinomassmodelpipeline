@@ -12,7 +12,9 @@ from pathlib import Path
 from types import SimpleNamespace
 from typing import Any
 
-from Numerical.FermionThresholdBoundary import build_intermediate_scalar_boundary
+from Numerical.running.FermionThresholdBoundary import (
+    build_intermediate_scalar_boundary,
+)
 from Numerical.ScanCLI import build_uv_state_from_config
 from studies.FullT3Study import (
     DEFAULT_TEMPLATE,
@@ -24,8 +26,6 @@ from studies.FullT3Study import (
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 ACTIVE_CONFIG_DIR = PROJECT_ROOT / "configs" / "generated_models"
 
-# One comparison point is enough for the structural check: changing the
-# magnitudes does not change which representation-dependent couplings exist.
 CHECK_YUKAWA = 0.005
 CHECK_SCALAR = 0.01
 
@@ -47,8 +47,6 @@ def _check_payload(payload: dict[str, Any]) -> None:
     """Validate both UV and post-F numerical state construction."""
     uv = _state_from_payload(payload)
 
-    # build_intermediate_scalar_boundary requires the matching scale to equal
-    # the state's current scale.  No RGE integration is performed here.
     intermediate = build_intermediate_scalar_boundary(
         uv,
         matching_scale_gev=float(uv.mu_gev),

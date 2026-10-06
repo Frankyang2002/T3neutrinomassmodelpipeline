@@ -691,7 +691,7 @@ def _build_project_evaluator(
     """Construct exactly the same physical point evaluator used by ScanCLI."""
 
     from Numerical.core.RGBetaEvaluator import load_rgbeta_payload
-    from Numerical.FinalC5TrajectoryAdapter import FinalC5TrajectoryEvaluator
+    from Numerical.running.FinalC5TrajectoryAdapter import FinalC5TrajectoryEvaluator
     from Numerical.OscillationFit import OscillationFitTarget
     from Numerical.ParameterScan import make_t3_point_evaluator
     from Numerical.ScanCLI import (

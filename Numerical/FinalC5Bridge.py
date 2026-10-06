@@ -1,8 +1,8 @@
 """Compatibility surface for the historical final-C5 bridge module.
 
-The canonical numerical adapter lives in ``Numerical.FinalC5TrajectoryAdapter``.
-Thin wrappers are retained here because older tests and callers patch symbols on
-this historical module path.
+The canonical numerical adapter lives in
+``Numerical.running.FinalC5TrajectoryAdapter``. Thin wrappers are retained here
+because older tests and callers patch symbols on this historical module path.
 """
 
 from __future__ import annotations
@@ -13,7 +13,7 @@ from typing import Mapping
 
 import numpy as np
 
-from Numerical.FinalC5TrajectoryAdapter import (
+from Numerical.running.FinalC5TrajectoryAdapter import (
     FinalC5EvaluationInputs,
     FinalC5NumericalInputs,
     FinalC5TrajectoryEvaluator,
@@ -21,8 +21,8 @@ from Numerical.FinalC5TrajectoryAdapter import (
     _heavy_mass_basis_data,
     extract_final_c5_inputs,
 )
-from Numerical.SMWeinbergStage import evaluate_final_weinberg_json
-from Numerical.T3Trajectory import T3RenormalisableTrajectory
+from Numerical.running.SMWeinbergStage import evaluate_final_weinberg_json
+from Numerical.running.T3Trajectory import T3RenormalisableTrajectory
 
 
 def final_c5_inputs_from_trajectory(

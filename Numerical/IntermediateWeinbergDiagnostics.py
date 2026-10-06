@@ -23,12 +23,12 @@ from typing import Sequence
 import numpy as np
 import sympy as sp
 
-from Numerical.FinalC5TrajectoryAdapter import extract_final_c5_inputs
-from Numerical.SMWeinbergStage import (
+from Numerical.running.FinalC5TrajectoryAdapter import extract_final_c5_inputs
+from Numerical.running.SMWeinbergStage import (
     _hierarchical_scale_substitutions,
     _sympy_substitutions_from_config,
 )
-from Numerical.T3Trajectory import T3RenormalisableTrajectory
+from Numerical.running.T3Trajectory import T3RenormalisableTrajectory
 from RGE.matching.FinalWeinbergAdapter import (
     load_hierarchical_majorana_c5,
 )
@@ -114,8 +114,6 @@ def sample_intermediate_direct_weinberg(
     k_running = symbolic["K_running"]
 
     substitutions = _sympy_substitutions_from_config(config)
-    # Validate all non-running scale substitutions once.  The MS value is
-    # overwritten below at every requested scale.
     substitutions.update(_hierarchical_scale_substitutions(config))
     ms_symbol = sp.Symbol("MS")
 

@@ -30,7 +30,7 @@ import numpy as np
 from scipy.stats import qmc
 
 from common.RunRecords import RunRecord
-from Numerical.FinalC5TrajectoryAdapter import FinalC5TrajectoryEvaluator
+from Numerical.running.FinalC5TrajectoryAdapter import FinalC5TrajectoryEvaluator
 from Numerical.OscillationFit import OscillationFitTarget
 from Numerical.OscillationOptimizer import (
     EvaluationRecorder,

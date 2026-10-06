@@ -41,7 +41,7 @@ from Numerical.OscillationFit import (
     OscillationFitTarget,
     evaluate_mass_matrix_fit,
 )
-from Numerical.T3Trajectory import (
+from Numerical.running.T3Trajectory import (
     T3RenormalisableTrajectory,
     continue_with_weinberg_running,
     run_renormalisable_t3_trajectory,

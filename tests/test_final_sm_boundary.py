@@ -4,11 +4,11 @@ import unittest
 
 import numpy as np
 
-from Numerical.IntermediateScalarState import (
+from Numerical.running.IntermediateScalarState import (
     SharedT3IntermediateScalarState,
     T3IntermediateScalarState,
 )
-from Numerical.ScalarThresholdBoundary import (
+from Numerical.running.ScalarThresholdBoundary import (
     build_sm_weinberg_initial_conditions,
     build_final_sm_boundary,
     scalar_threshold_masses,

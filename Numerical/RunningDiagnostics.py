@@ -24,15 +24,17 @@ import numpy as np
 
 from Numerical.BestFitDiagnostics import load_optimizer_best_parameters
 from Numerical.core.RGBetaEvaluator import load_rgbeta_payload
-from Numerical.FinalC5TrajectoryAdapter import FinalC5TrajectoryEvaluator
-from Numerical.ScalarThresholdBoundary import build_sm_weinberg_initial_conditions
+from Numerical.running.FinalC5TrajectoryAdapter import FinalC5TrajectoryEvaluator
+from Numerical.running.ScalarThresholdBoundary import (
+    build_sm_weinberg_initial_conditions,
+)
 from Numerical.ScanCLI import (
     build_uv_state_from_config,
     load_scan_config,
     validate_scan_inputs,
 )
-from Numerical.T3Trajectory import run_renormalisable_t3_trajectory
-from Numerical.WeinbergTrajectory import run_weinberg_trajectory
+from Numerical.running.T3Trajectory import run_renormalisable_t3_trajectory
+from Numerical.running.WeinbergTrajectory import run_weinberg_trajectory
 from physics.NeutrinoObservables import calculate_neutrino_observables
 from physics.NeutrinoTrajectory import (
     charged_lepton_mass_basis_matrix,

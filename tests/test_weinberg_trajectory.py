@@ -4,8 +4,8 @@ import unittest
 
 import numpy as np
 
-from Numerical.SMWeinbergEvolution import SMWeinbergInitialConditions
-from Numerical.WeinbergTrajectory import run_weinberg_trajectory
+from Numerical.running.SMWeinbergEvolution import SMWeinbergInitialConditions
+from Numerical.running.WeinbergTrajectory import run_weinberg_trajectory
 from physics.NeutrinoTrajectory import (
     neutrino_mass_from_c5,
     scale_dependent_neutrino_observables,

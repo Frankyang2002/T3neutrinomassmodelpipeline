@@ -44,7 +44,7 @@ from Numerical.core.State import (
     T3Representation,
     T3UVState,
 )
-from Numerical.FinalC5TrajectoryAdapter import FinalC5TrajectoryEvaluator
+from Numerical.running.FinalC5TrajectoryAdapter import FinalC5TrajectoryEvaluator
 from Numerical.OscillationFit import OscillationFitTarget
 from Numerical.ParameterScan import (
     ParameterScanResult,

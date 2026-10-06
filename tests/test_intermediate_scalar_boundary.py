@@ -9,7 +9,7 @@ from Numerical.core.State import (
     T3Representation,
     T3UVState,
 )
-from Numerical.T3Trajectory import (
+from Numerical.running.T3Trajectory import (
     continue_with_weinberg_running,
     run_renormalisable_t3_trajectory,
 )

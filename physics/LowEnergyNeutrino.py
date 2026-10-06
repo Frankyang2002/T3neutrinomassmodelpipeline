@@ -30,7 +30,7 @@ import json
 from pathlib import Path
 
 from common.RunRecords import RunRecord
-from Numerical.SMWeinbergStage import (
+from Numerical.running.SMWeinbergStage import (
     run_sm_weinberg_numerical_stage as _run_sm_weinberg_numerical_stage,
 )
 from physics.NeutrinoMass import (

@@ -6,7 +6,12 @@ from pathlib import Path
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-CANONICAL = PROJECT_ROOT / "Numerical" / "FinalC5TrajectoryAdapter.py"
+CANONICAL = (
+    PROJECT_ROOT
+    / "Numerical"
+    / "running"
+    / "FinalC5TrajectoryAdapter.py"
+)
 HISTORICAL = PROJECT_ROOT / "Numerical" / "FinalC5Bridge.py"
 
 
@@ -21,7 +26,10 @@ def test_canonical_module_describes_trajectory_adapter_role() -> None:
     assert "def extract_final_c5_inputs(" in source
     assert "def evaluate_final_c5_on_trajectory(" in source
     assert "class FinalC5TrajectoryEvaluator:" in source
-    assert "from Numerical.SMWeinbergStage import evaluate_final_weinberg_json" in source
+    assert (
+        "from Numerical.running.SMWeinbergStage "
+        "import evaluate_final_weinberg_json"
+    ) in source
 
 
 def test_historical_bridge_contains_only_compatibility_wrappers() -> None:
@@ -32,8 +40,6 @@ def test_historical_bridge_contains_only_compatibility_wrappers() -> None:
     assert "def _majorana_takagi_mass_basis(" not in source
     assert "def extract_final_c5_inputs(" not in source
 
-    # These thin wrappers are intentional because older callers patch symbols
-    # on the historical module path.
     assert "def evaluate_final_c5_from_trajectory(" in source
     assert "class FinalC5TrajectoryBuilder:" in source
     assert "from Numerical.SMWeinbergStage import evaluate_final_weinberg_json" in source

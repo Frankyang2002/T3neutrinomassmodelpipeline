@@ -7,7 +7,9 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 FERMION = PROJECT_ROOT / "Numerical" / "FermionThresholdBoundary.py"
-SCALAR = PROJECT_ROOT / "Numerical" / "ScalarThresholdBoundary.py"
+SCALAR = (
+    PROJECT_ROOT / "Numerical" / "running" / "ScalarThresholdBoundary.py"
+)
 TRAJECTORY = PROJECT_ROOT / "Numerical" / "T3Trajectory.py"
 
 

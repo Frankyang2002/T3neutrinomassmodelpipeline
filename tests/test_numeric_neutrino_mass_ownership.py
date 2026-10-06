@@ -6,8 +6,12 @@ from pathlib import Path
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-CANONICAL_RUNNING = PROJECT_ROOT / "Numerical" / "SMWeinbergEvolution.py"
-CANONICAL_STAGE = PROJECT_ROOT / "Numerical" / "SMWeinbergStage.py"
+CANONICAL_RUNNING = (
+    PROJECT_ROOT / "Numerical" / "running" / "SMWeinbergEvolution.py"
+)
+CANONICAL_STAGE = (
+    PROJECT_ROOT / "Numerical" / "running" / "SMWeinbergStage.py"
+)
 MASS = PROJECT_ROOT / "physics" / "NeutrinoMass.py"
 
 

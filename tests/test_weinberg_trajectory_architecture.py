@@ -6,7 +6,9 @@ from pathlib import Path
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-NUMERICAL = PROJECT_ROOT / "Numerical" / "WeinbergTrajectory.py"
+NUMERICAL = (
+    PROJECT_ROOT / "Numerical" / "running" / "WeinbergTrajectory.py"
+)
 PHYSICS = PROJECT_ROOT / "physics" / "NeutrinoTrajectory.py"
 
 
@@ -37,6 +39,7 @@ def test_physics_trajectory_owns_physical_interpretation() -> None:
 
     assert "solve_ivp" not in source
     assert "Numerical.WeinbergTrajectory" not in source
+    assert "Numerical.running.WeinbergTrajectory" not in source
 
 
 def test_numerical_module_retains_legacy_import_surface() -> None:

@@ -8,6 +8,7 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 RGE_WEINBERG = PROJECT_ROOT / "RGE" / "running" / "weinberg"
 NUMERICAL = PROJECT_ROOT / "Numerical"
+NUMERICAL_RUNNING = NUMERICAL / "running"
 
 
 def test_final_eft_rge_model_stays_under_rge() -> None:
@@ -21,8 +22,8 @@ def test_final_eft_rge_model_stays_under_rge() -> None:
 
 
 def test_numerical_weinberg_integration_lives_under_numerical() -> None:
-    runner = NUMERICAL / "SMWeinbergEvolution.py"
-    stage = NUMERICAL / "SMWeinbergStage.py"
+    runner = NUMERICAL_RUNNING / "SMWeinbergEvolution.py"
+    stage = NUMERICAL_RUNNING / "SMWeinbergStage.py"
 
     assert runner.is_file()
     assert stage.is_file()
@@ -46,6 +47,7 @@ def test_symbolic_flavor_stage_depends_on_rge_model_not_numerical_runner() -> No
     )
 
     assert "RGE.running.weinberg.WeinbergRGE" in source
+    assert "Numerical.running.SMWeinbergEvolution" not in source
     assert "Numerical.SMWeinbergEvolution" not in source
     assert "Numerical.WeinbergRunning" not in source
 
@@ -59,6 +61,6 @@ def test_low_energy_facade_calls_canonical_numerical_stage() -> None:
         encoding="utf-8"
     )
 
-    assert "from Numerical.SMWeinbergStage import" in source
+    assert "from Numerical.running.SMWeinbergStage import" in source
     assert "_run_sm_weinberg_numerical_stage(" in source
     assert "RGE.running.weinberg.NumericalWeinbergStage" not in source

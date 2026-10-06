@@ -1,320 +1,490 @@
-python pipeline.py --dims 2 2 1 --alpha -1 --numerical --reset-numerical-configs
-python pipeline.py --full --numerical --reset-numerical-configs
+# T3 Neutrino-Mass Pipeline — Repository Map
 
-# T3 Neutrino-Mass Pipeline
+This document is the repository-wide map of the implemented T3 radiative neutrino-mass calculation.
 
-This file is the repository-wide map of the implemented T3 radiative neutrino-mass calculation. `pipeline.py` remains the authoritative execution backbone; detailed model construction, matching, running, numerical integration, neutrino physics, validation, and reporting are delegated to specialised modules.
+The purpose of this file is to answer:
 
-## 1. Physics scope and conventions
+1. **What problem is the pipeline solving?**
+2. **Which file owns each part of that problem?**
+3. **What is the execution order?**
+4. **Where should a future change be made?**
+
+Detailed file-by-file documentation is split into:
+
+```text
+INFO_LAGRANGIAN.md   UV model construction and Matchete matching
+INFO_RGE.md          RGEs, threshold transport, group factors and final C5
+INFO_NUMERICAL.md    numerical states, ODE running, fitting and plots
+INFO_TESTS.md        Python/Wolfram tests and what each protects
+```
+
+---
+
+## 1. Physics problem solved by the repository
+
+The project implements a multi-threshold T3 radiative neutrino-mass calculation.
+
+```text
+T3 representation
+    -> UV Lagrangian
+    -> UV matching/RGEs
+    -> heavy-fermion threshold
+    -> scalar-only intermediate EFT
+    -> scalar threshold
+    -> final Weinberg coefficient C5
+    -> SM + Weinberg running
+    -> neutrino mass matrix
+    -> masses / PMNS / oscillation observables
+    -> numerical fit and figures
+```
 
 The project uses
 
 $$
-Q=T_3+Y.
+Q=T_3+Y,
 $$
 
-For the Restrepo-Zapata-Yaguna T3 classification parameter $\alpha$,
+with
 
 $$
 Y(S_1)=\frac{\alpha}{2},\qquad
 Y(S_2)=\frac{\alpha+2}{2},\qquad
-Y(F)=\frac{\alpha+1}{2}.
+Y(F)=\frac{\alpha+1}{2},
 $$
 
-The classification convention is doubled:
+and therefore
 
 $$
 Y_{\rm RZY}=2Y.
 $$
 
-The project Weinberg-to-mass convention is
+The neutrino-mass convention is
 
 $$
-m_\nu=-v_{174}^2C_5=-\frac{v_{246}^2}{2}C_5.
+m_\nu=-\frac{v_{246}^2}{2}C_5=-v_{174}^2C_5.
 $$
 
-Ordinary T3 models have physical heavy fields
+Current production supports the common threshold or the verified fermion-first hierarchy
 
 ```text
-F, S1, S2
+ordinary:      F -> (S1,S2)
+shared scalar: F -> S
 ```
 
-while the shared-scalar/scotogenic branch has
+with EFT operators retained through dimension five.
+
+Scalar-first execution is deliberately outside production scope because the first scalar threshold can generate a leading dimension-six operator schematically
+
+$$
+\frac{y\lambda_{T3}}{M_S^2}LFHHS.
+$$
+
+A scalar-first calculation truncated at $d\le5$ would therefore omit a leading EFT path.
+
+---
+
+## 2. Authoritative execution backbone
+
+### `pipeline.py`
+
+**Problem solved:** the project needs one visible place that states the physical calculation order without also containing all of the detailed algebra.
+
+**What it does:**
+
+- parses one run through `common/PipelineCLI.py`;
+- obtains one `PipelinePlan`;
+- selects requested T3 model points;
+- calls the Lagrangian/matching boundary;
+- attaches threshold/EFT metadata;
+- runs UV RG evolution;
+- dispatches intermediate EFT running by physical field content;
+- runs independent intermediate-EFT validation;
+- organises the matched Weinberg coefficient;
+- runs low-energy Weinberg/neutrino stages;
+- optionally invokes the integrated numerical benchmark pipeline;
+- finishes with report generation and aggregate summaries.
+
+**Boundary:** model-building algebra, beta functions, numerical ODE implementations, detailed matching formulae and report formatting live elsewhere.
+
+---
+
+# 3. Common pipeline data model
+
+## `common/EFT.py`
+
+**Problem solved:** threshold sequences need one generic description independent of historical labels such as `EFT1`.
+
+**What it does:** defines `EFTContent`, `ThresholdStep`, `EFTTransition`, `EFTRunningInterval` and `EFTTruncation`.
+
+The rest of the pipeline can ask "which fields are active?" rather than "which numbered EFT is this?".
+
+## `common/PipelineCLI.py`
+
+**Problem solved:** command-line parsing should not obscure the physical calculation in `pipeline.py`.
+
+**What it does:** owns CLI options, ordinary/shared-scalar mode resolution, threshold-plan construction and study-directory naming.
+
+## `common/PipelinePlan.py`
+
+**Problem solved:** one run needs a single authoritative description of threshold order, scales and EFT truncation.
+
+**What it does:** combines threshold steps/scales into the physical execution plan and constructs running intervals and stage metadata.
+
+## `common/RunRecords.py`
+
+**Problem solved:** stages need to pass paths, status and metadata without depending on one another's implementation.
+
+**What it does:** defines `RunRecord` and `EFTStageRecord`. These are metadata containers, not physics calculators.
+
+## `common/T3Fields.py`
+
+**Problem solved:** the T3 topology uses formal `S1,S2` roles, but the shared-scalar/scotogenic branch contains one physical scalar.
+
+**What it does:** provides the authoritative translation between
 
 ```text
-F, S
+ordinary physical fields: F, S1, S2
+shared physical fields:   F, S
+formal matching roles:     F, S1, S2
 ```
 
-with one physical scalar `S` filling the formal topology roles `S1` and `S2` up to conjugation. `common/T3Fields.py` is the authoritative physical/formal translation. Expansion back to formal roles occurs only at the matching boundary.
+Threshold planning uses physical fields. Formal duplication is introduced only at the matching boundary.
 
-## 2. Central calculation order
+## `common/T3Model.py`
 
-`pipeline.py` owns the calculation order and failure propagation:
+**Problem solved:** representation-level checks must be possible before launching Matchete.
+
+**What it does:** implements topology/dimension validity, neutral-component tests, class identification, shared-scalar formal dimensions and the neutral model scan.
+
+## `common/Thresholds.py`
+
+**Problem solved:** threshold ordering and scales must be consistent before any matching/running starts.
+
+**What it does:** normalises threshold names, validates threshold groups, supplies defaults, resolves scales, converts physical plans to formal Wolfram roles and builds stage records.
+
+---
+
+# 4. Model/study selection
+
+## `model/T3Study.py`
+
+**Problem solved:** selecting which models to study should be separate from building their Lagrangians.
+
+**What it does:** defines `T3ModelRequest`, ordinary scan definitions, neutrality filtering and explicit `--dims` selection.
+
+It answers:
+
+> Which UV model points should this study calculate?
+
+## `studies/FullT3Study.py`
+
+**Problem solved:** the honours project needs a reproducible 16-model numerical study plus controlled common-parameter comparisons.
+
+**What it does:**
+
+- enumerates the 16 ordinary neutral-compatible models;
+- constructs per-model numerical configs;
+- runs optimal benchmark mode;
+- runs four common-parameter comparison scenarios;
+- snapshots/restores generated model configs;
+- builds aggregate interactive dashboards;
+- writes `full_numerical_summary.json`.
+
+This is study orchestration, not model physics.
+
+---
+
+# 5. Lagrangian and matching subsystem
+
+Detailed file map: `INFO_LAGRANGIAN.md`.
+
+The main Python route is
 
 ```text
-CLI/configuration
-    -> common/PipelinePlan.py
-    -> model/T3Study.py
+model/T3Study.py
     -> Lagrangian/T3ModelMatching.py
-    -> UV construction + threshold matching
-    -> UV RGE
-    -> implemented intermediate EFT interval(s)
-    -> validation/
-    -> authoritative final C5
-    -> final SM+Weinberg RGE
-    -> C5 -> m_nu
-    -> neutrino observables
-    -> reports
+    -> Lagrangian/Runner.py
 ```
 
-Detailed stage implementations should not be reintroduced into `pipeline.py`.
-
-## 3. Threshold plans and production scope
-
-`common/PipelinePlan.py` represents the ordered physical thresholds and derives the active-field `EFTRunningInterval` objects. New code identifies an intermediate theory by physical field content rather than ordinal labels such as `EFT1`.
-
-Supported production choices are
-
-```text
-common threshold:          (F,S1,S2) or (F,S)
-verified hierarchy:        F -> (S1,S2) or F -> S
-```
-
-Scalar-first orderings are outside current production scope. Integrating a scalar first can generate a leading intermediate dimension-six operator schematically
-
-$$
-\frac{y\lambda_{T3}}{M_S^2}LFHHS,
-$$
-
-so a scalar-first $d\le5$ truncation would omit the leading EFT path. The CLI therefore rejects unsupported scalar-first and partially split hierarchies before Wolfram/Matchete is launched.
-
-## 4. Lagrangian and matching architecture
-
-`model/T3Study.py` selects model requests. `Lagrangian/T3ModelMatching.py` is the compatibility-facing Python boundary into the matching stack.
-
-The Python matching responsibilities are split as follows:
+with responsibilities split between
 
 ```text
 Lagrangian/ModelValidation.py
-    T3 request validation, model naming, run specification
+    representation/request validation
 
 Lagrangian/WolframRunner.py
-    wolframscript process execution, streamed output, logs
+    external wolframscript execution
 
 Lagrangian/MatchingResults.py
-    summary loading/physicalisation, stage validation, RunRecord construction
-
-Lagrangian/Runner.py
-    thin orchestration and historical public entrypoints
+    matching-output ingestion and RunRecord construction
 ```
 
-The Wolfram model and matching definitions remain under `Lagrangian/model/`, `Lagrangian/interactions/`, `RunMatching.wl`, and `RunThresholdStage.wl`.
-
-## 5. UV and intermediate running
-
-`RGE/running/UVRunning.py` orchestrates the UV RGBeta stage.
-
-`RGE/running/IntermediateEFTRunning.py` dispatches each nonzero interval by active field content. The verified fermion-first scalar-only backend is
+Wolfram model building lives under
 
 ```text
-RGE/running/backends/ScalarOnlyAfterFermion.py
+Lagrangian/model/
+Lagrangian/interactions/
 ```
 
-and calls physically named interfaces under `RGE/running/intermediate/`, including
+with sequential execution controlled by
 
 ```text
-ScalarOnlyRenormalisableRunning.py
-ScalarOnlyWilsonTensorRGE.py
-ScalarOnlyWilsonFlow.py
-DirectWeinbergRunning.py
-ScalarThresholdMatching.py
+Lagrangian/RunModel.wl
+Lagrangian/RunMatching.wl
+Lagrangian/RunThresholdStage.wl
 ```
 
-Historical `EFT1...` filenames and JSON keys remain only where required by compatibility contracts.
+---
 
-## 6. Final C5 ownership
+# 6. RGE, intermediate EFT and final C5 subsystem
 
-The authoritative hierarchical final coefficient is matching/bookkeeping, not an RGE integrator.
+Detailed file map: `INFO_RGE.md`.
+
+The main production path is
+
+```text
+RGE/running/UVRunning.py
+    -> RGE/running/IntermediateEFTRunning.py
+    -> RGE/running/backends/ScalarOnlyAfterFermion.py
+    -> RGE/matching/FinalWeinbergCoefficient.py
+    -> RGE/running/weinberg/WeinbergRGE.py
+```
+
+The verified intermediate theory after removing the fermion is
+
+```text
+ordinary:      SM + S1 + S2 + dimension-five Wilson operators
+shared scalar: SM + S       + dimension-five Wilson operators
+```
+
+The authoritative final coefficient is matching/bookkeeping, not another RGE integrator:
 
 ```text
 RGE/matching/FinalWeinbergCoefficient.py
-    hard threshold + direct running combination
-    MSbar/pole bookkeeping
-    Majorana symmetrisation
-    final_weinberg_coefficient.json
+```
 
-RGE/matching/WeinbergFlavorMatching.py
-    one-generation Matchete coefficient -> full flavor
+and is adapted into a symbolic physical Majorana matrix by
 
+```text
 RGE/matching/FinalWeinbergAdapter.py
-    hierarchical final-C5 JSON -> symbolic physical Majorana C5
 ```
 
-Historical paths under `RGE/running/weinberg/` and `RGE/matching/FlavorC5Matching.py` are compatibility boundaries only.
+---
 
-## 7. Final SM+Weinberg RGE and neutrino physics
+# 7. Low-energy neutrino physics
 
-The analytic final-EFT beta model is
+## `physics/LowEnergyNeutrino.py`
 
-```text
-RGE/running/weinberg/WeinbergRGE.py
-```
+**Problem solved:** post-matching neutrino stages need one high-level facade while the actual physics remains in dedicated modules.
 
-and implements
+**What it does:** orchestrates the final-C5 location, one-generation benchmark, full-flavor Weinberg stage, symbolic mass construction and numerical neutrino-observable output.
+
+## `physics/NeutrinoMass.py`
+
+**Problem solved:** the $C_5\to m_\nu$ convention must have one owner.
+
+**What it does:** implements
 
 $$
-16\pi^2\frac{dC_5}{d\ln\mu}
-=
-(2\lambda_H-3g_2^2+2T)C_5
--\frac32\left[
-Y_eY_e^\dagger C_5+C_5(Y_eY_e^\dagger)^T
-\right].
+m_\nu=-\frac{v^2}{2}C_5
 $$
 
-The symbolic full-flavor output stage is
+for symbolic and numerical use.
+
+## `physics/NeutrinoObservables.py`
+
+**Problem solved:** a complex symmetric Majorana mass matrix must be converted into physical masses, mass splittings and PMNS information.
+
+**What it does:** performs Takagi factorisation and constructs physical neutrino observables.
+
+## `physics/NeutrinoTrajectory.py`
+
+**Problem solved:** a running $C_5(\mu)$ trajectory needs physical interpretation at every scale.
+
+**What it does:**
 
 ```text
-RGE/running/weinberg/FullFlavorWeinbergStage.py
+C5(mu)
+    -> m_nu(mu)
+    -> charged-lepton mass basis
+    -> scale-dependent observables
 ```
 
-and the one-generation tensor cross-check is explicitly named
+without performing ODE integration itself.
+
+---
+
+# 8. Numerical subsystem
+
+Detailed file map: `INFO_NUMERICAL.md`.
 
 ```text
-RGE/running/weinberg/OneGenerationWeinbergBenchmark.py
-RGE/running/weinberg/OneGenerationWeinbergBenchmarkStage.py
+Numerical/
+├── core/
+├── running/
+├── fitting/
+├── diagnostics/
+├── plotting/
+└── orchestration/
 ```
 
-Physical interpretation lives under `physics/`:
+Ownership:
 
 ```text
-physics/NeutrinoMass.py
-physics/NeutrinoObservables.py
-physics/NeutrinoTrajectory.py
-physics/LowEnergyNeutrino.py
+core/           state representation and beta evaluation
+running/        numerical EFT evolution and threshold boundaries
+fitting/        scans, chi-square, optimisation and benchmark search
+diagnostics/    retained physics information/checks
+plotting/       presentation only
+orchestration/  config persistence and integrated pipeline execution
 ```
 
-## 8. Numerical ownership
+---
 
-Numerical ODE/state/trajectory work is split by responsibility under `Numerical/`.
+# 9. Independent validation
+
+## `validation/IntermediateEFTValidation.py`
+
+**Problem solved:** production running and scientific validation should not be the same code path.
+
+**What it does:** dispatches independent checks for a completed intermediate-EFT interval by physical field content.
+
+## `validation/backends/ScalarOnlyAfterFermionValidation.py`
+
+**Problem solved:** the scalar-only production backend needs independent checks of component transport and pole/RGE consistency.
+
+**What it does:** owns those checks for the verified fermion-first scalar-only interval.
+
+## `validation/__init__.py`, `validation/backends/__init__.py`
+
+Package markers only.
+
+---
+
+# 10. Reports
+
+## `Reports/PipelineReports.py`
+
+**Problem solved:** report construction and aggregate output should not clutter `pipeline.py`.
+
+**What it does:** prints run summaries, orchestrates human-readable reports and preserves aggregate output schemas.
+
+## `Reports/ReportGeneration.py`
+
+**Problem solved:** all reports need shared LaTeX/paper notation and path rules.
+
+**What it does:** owns report preamble, notation conversion and output-path helpers.
+
+## `Reports/GroupFactorReports.py`
+
+**Problem solved:** representation/group-factor information needs compact cross-model reporting.
+
+**What it does:** constructs group-factor/RGE comparison tables from successful run records.
+
+## `Reports/RGEComparison.py`
+
+**Problem solved:** stored RGBeta/intermediate expressions are machine-oriented and need consistent report conversion.
+
+**What it does:** loads RGE payloads and rewrites symbolic structures into report-ready expressions.
+
+---
+
+# 11. Helper scripts
+
+## `scripts/run_comparison_study.py`
+
+**Problem solved:** debugging one common-parameter model/scenario should not require running all 16 models.
+
+**What it does:** builds one comparison config and launches the normal `pipeline.py` path.
+
+## `scripts/run_regression.py`
+
+**Problem solved:** the external smoke + Wolfram C5 validation needs a reproducible regression command.
+
+**What it does:** runs smoke matching and then `tests/wolfram/RegressionC5.wl`, preventing stale reports from masking a failed Wolfram run.
+
+---
+
+# 12. Tests
+
+Detailed file map: `INFO_TESTS.md`.
+
+The suite has four roles:
 
 ```text
-Numerical/core/
-    shared numerical state, state-vector, beta-vector and RGBeta evaluation
+unit/numerical tests
+    verify formulas, state packing and deterministic scan behaviour
 
-Numerical/running/UVRunner.py
-    UV solve_ivp evolution
+architecture tests
+    verify ownership boundaries and retired historical modules
 
-Numerical/running/IntermediateScalarState.py
-Numerical/running/IntermediateScalarStateVector.py
-Numerical/running/IntermediateScalarRGBetaEvaluator.py
-Numerical/running/IntermediateScalarRunner.py
-    scalar-only intermediate numerical state and running
+integration-style tests
+    verify multi-stage trajectories and output contracts
 
-Numerical/running/FermionThresholdBoundary.py
-    UV -> scalar-only renormalisable boundary
-
-Numerical/running/ScalarThresholdBoundary.py
-    scalar-only -> final-SM boundary
-
-Numerical/running/T3Trajectory.py
-    multi-segment UV/intermediate/final trajectory orchestration
-
-Numerical/running/SMWeinbergEvolution.py
-    final SM+C5 state packing and solve_ivp evolution
-
-Numerical/running/SMWeinbergStage.py
-    numerical C5 evaluation, integration-stage serialization
-
-Numerical/running/WeinbergTrajectory.py
-    retained final SM+Weinberg trajectory
-
-Numerical/running/FinalC5TrajectoryAdapter.py
-    trajectory -> authoritative final-C5 numerical evaluator inputs
-
-Numerical/fitting/
-    oscillation targets, parameter scans, optimisation, Sobol benchmark search,
-    sensitivity scans, and the scan CLI
-
-Numerical/diagnostics/
-    best-fit, running, intermediate-Weinberg, final-C5 contribution, and
-    numerical-configuration diagnostics
-
-Numerical/plotting/
-    running-result figures, scan/optimizer plots, thesis figures,
-    interactive model comparison, and display-output assembly
-
-Numerical/orchestration/
-    pipeline numerical-config persistence and integrated numerical-result execution
+Wolfram/reference tests
+    verify group theory, normalization, RGBeta and matched C5 conventions
 ```
 
-The temporary root-level forwarding modules used during the numerical package migrations have been removed. The retired historical numerical wrappers, including `Numerical/FinalC5Bridge.py`, are no longer part of the production source tree.
+The Python suite does not replace a real external Wolfram/Matchete/RGBeta run.
 
-## 9. Validation and reports
+---
 
-`validation/` contains independent scientific/regression checks only. `Reports/PipelineReports.py` owns report orchestration, while detailed report construction stays under `Reports/`.
+# 13. Where to make a change
 
-Stable serialized names and historical summary keys are retained where downstream tooling already depends on them.
+| Desired change | Primary owner |
+|---|---|
+| CLI option | `common/PipelineCLI.py` |
+| threshold plan | `common/Thresholds.py`, `common/PipelinePlan.py` |
+| shared scalar mapping | `common/T3Fields.py` |
+| representation validity | `common/T3Model.py` |
+| model selection | `model/T3Study.py` |
+| UV Lagrangian/invariant | `Lagrangian/model/`, `Lagrangian/interactions/` |
+| Matchete process execution | `Lagrangian/WolframRunner.py` |
+| UV RGBeta model/export | `RGE/running/rgbeta/` |
+| intermediate EFT equations | `RGE/running/intermediate/` |
+| final C5 construction | `RGE/matching/FinalWeinbergCoefficient.py` |
+| final SM+Weinberg beta | `RGE/running/weinberg/WeinbergRGE.py` |
+| $C_5\to m_\nu$ | `physics/NeutrinoMass.py` |
+| neutrino observables | `physics/NeutrinoObservables.py` |
+| numerical integration | `Numerical/running/` |
+| fit/scan | `Numerical/fitting/` |
+| plots only | `Numerical/plotting/` |
+| 16-model study | `studies/FullT3Study.py` |
+| reports | `Reports/` |
 
-## 10. Main repository map
+---
 
-| Area                                                    | Main responsibility                                     |
-| ------------------------------------------------------- | ------------------------------------------------------- |
-| `pipeline.py`                                           | authoritative calculation order and failure propagation |
-| `common/PipelinePlan.py`                                | thresholds and EFT intervals                            |
-| `common/T3Fields.py`                                    | physical/formal heavy-field identity                    |
-| `model/T3Study.py`                                      | requested model points                                  |
-| `Lagrangian/T3ModelMatching.py`                         | compatibility boundary into matching                    |
-| `Lagrangian/ModelValidation.py`                         | model validation/specification                          |
-| `Lagrangian/WolframRunner.py`                           | external Wolfram process execution                      |
-| `Lagrangian/MatchingResults.py`                         | matching outputs and RunRecord construction             |
-| `RGE/running/IntermediateEFTRunning.py`                 | intermediate-EFT dispatch                               |
-| `RGE/running/backends/ScalarOnlyAfterFermion.py`        | verified hierarchical backend                           |
-| `RGE/running/intermediate/ScalarOnlyWilsonTensorRGE.py` | scalar-only dimension-five tensor RGE                   |
-| `RGE/matching/FinalWeinbergCoefficient.py`              | authoritative final-C5 construction                     |
-| `RGE/running/weinberg/WeinbergRGE.py`                   | final SM+Weinberg beta model                            |
-| `Numerical/core/State.py`                               | canonical UV/SM numerical states                        |
-| `Numerical/running/IntermediateScalarState.py`          | scalar-only numerical state                             |
-| `Numerical/running/T3Trajectory.py`                     | numerical multi-threshold orchestration                 |
-| `Numerical/running/SMWeinbergEvolution.py`              | final SM+Weinberg numerical integration                 |
-| `physics/LowEnergyNeutrino.py`                          | post-matching neutrino orchestration                    |
-| `validation/`                                           | independent checks only                                 |
-| `Reports/PipelineReports.py`                            | report orchestration                                    |
+# 14. Overall pipeline overview
 
-## 11. Helper scripts
-
-Project-level executable helpers live under `scripts/`:
+Each layer answers one question:
 
 ```text
-scripts/run_comparison_study.py
-    run one model at one common comparison benchmark
+common/
+    What theory and threshold plan are we asking for?
 
-scripts/run_regression.py
-    run the smoke matching and Wolfram C5 regression gate
+model/
+    Which T3 model points should be calculated?
+
+Lagrangian/
+    What is the UV theory and what EFT coefficients are generated?
+
+RGE/
+    How do coefficients run and what is the authoritative final C5?
+
+physics/
+    What physical neutrino masses and observables follow from C5?
+
+Numerical/
+    What does that calculation give numerically for a benchmark or scan?
+
+validation/
+    Do independent checks support the production result?
+
+Reports/ and Numerical/plotting/
+    How are stored results presented without changing the physics?
+
+tests/
+    Which physics, numerical and architecture contracts must never regress?
 ```
 
-These are orchestration/debugging entry points; they do not own matching or RGE
-physics.
-
-## 12. Regression procedure
-
-Run the Python suite first:
-
-```powershell
-python -m pytest -q
-```
-
-Then exercise the actual external calculation:
-
-```powershell
-python pipeline.py --smoke
-```
-
-For the verified hierarchical benchmark also run
-
-```powershell
-python pipeline.py --dims 2 2 1 --alpha -1 `
-    --threshold F `
-    --threshold S1 S2
-```
-
-Python tests do not replace a real Wolfram/Matchete/RGBeta calculation.
+`pipeline.py` is deliberately the map connecting those questions, not the place where they are individually solved.

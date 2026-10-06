@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from Numerical.PipelineNumericalResults import (
+from Numerical.orchestration.PipelineNumericalResults import (
     PIPELINE_NUMERICAL_CONFIG_KIND,
     is_pipeline_numerical_results_config,
 )

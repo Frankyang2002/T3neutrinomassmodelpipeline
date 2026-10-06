@@ -35,11 +35,11 @@ from common.PipelineCLI import (
     study_name as _study_name,
 )
 from common.RunRecords import EFTStageRecord, RunRecord
-from Numerical.NumericalConfig import (
+from Numerical.orchestration.NumericalConfig import (
     freeze_resolved_benchmark_config as _freeze_resolved_benchmark_config,
     prepare_model_numerical_config as _prepare_model_numerical_config,
 )
-from Numerical.PipelineNumericalResults import (
+from Numerical.orchestration.PipelineNumericalResults import (
     is_pipeline_numerical_results_config,
     run_pipeline_numerical_results,
 )

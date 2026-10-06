@@ -6,7 +6,7 @@ from unittest.mock import patch
 
 import numpy as np
 
-from Numerical.FinalC5Bridge import (
+from Numerical.running.FinalC5TrajectoryAdapter import (
     FinalC5TrajectoryBuilder,
     _heavy_mass_basis_data,
     evaluate_final_c5_from_trajectory,
@@ -459,7 +459,7 @@ class FinalC5BridgeTests(unittest.TestCase):
         expected = np.eye(3, dtype=complex) * 1.0e-14
 
         with patch(
-            "Numerical.FinalC5Bridge.evaluate_final_weinberg_json",
+            "Numerical.running.FinalC5TrajectoryAdapter.evaluate_final_weinberg_json",
             return_value=expected,
         ) as mocked:
             result = evaluate_final_c5_from_trajectory(
@@ -485,7 +485,7 @@ class FinalC5BridgeTests(unittest.TestCase):
         )
 
         with patch(
-            "Numerical.FinalC5Bridge.evaluate_final_c5_from_trajectory",
+            "Numerical.running.FinalC5TrajectoryAdapter.evaluate_final_c5_on_trajectory",
             return_value=expected,
         ):
             result = builder(

@@ -69,7 +69,7 @@ def test_pipeline_imports_configuration_helpers_instead_of_implementing_them() -
         node
         for node in tree.body
         if isinstance(node, ast.ImportFrom)
-        and node.module == "Numerical.NumericalConfig"
+        and node.module == "Numerical.orchestration.NumericalConfig"
     ]
     assert len(numerical_config_imports) == 1
     assert {(item.name, item.asname) for item in numerical_config_imports[0].names} == {

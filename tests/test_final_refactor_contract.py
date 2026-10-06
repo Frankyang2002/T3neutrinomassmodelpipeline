@@ -113,6 +113,32 @@ def test_numerical_plotting_root_forwarders_are_retired() -> None:
         assert (plotting / name).is_file()
 
 
+
+
+def test_numerical_orchestration_root_forwarders_are_retired() -> None:
+    retired = (
+        "NumericalConfig.py",
+        "PipelineNumericalResults.py",
+    )
+
+    numerical = PROJECT_ROOT / "Numerical"
+    orchestration = numerical / "orchestration"
+
+    for name in retired:
+        assert not (numerical / name).exists()
+        assert (orchestration / name).is_file()
+
+
+def test_historical_final_c5_bridge_is_retired() -> None:
+    assert not (PROJECT_ROOT / "Numerical" / "FinalC5Bridge.py").exists()
+    assert (
+        PROJECT_ROOT
+        / "Numerical"
+        / "running"
+        / "FinalC5TrajectoryAdapter.py"
+    ).is_file()
+
+
 def test_documentation_states_the_project_hypercharge_conversion_explicitly() -> None:
     for relative in ("INFO_PIPELINE.md", "INFO_LAGRANGIAN.md"):
         source = _text(relative)

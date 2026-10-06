@@ -198,6 +198,16 @@ def test_shared_scalar_identity_is_documented_as_physical_s_not_parallel_archite
     assert "only at the matching boundary" in pipeline_doc
 
 
+
+def test_project_helper_scripts_are_not_root_level() -> None:
+    assert not (PROJECT_ROOT / "comparison_test.py").exists()
+    assert not (PROJECT_ROOT / "regression.py").exists()
+
+    scripts = PROJECT_ROOT / "scripts"
+    assert (scripts / "run_comparison_study.py").is_file()
+    assert (scripts / "run_regression.py").is_file()
+
+
 def test_docs_require_external_smoke_regression_after_python_tests() -> None:
     source = _text("INFO_PIPELINE.md")
     pytest_position = source.index("python -m pytest -q")

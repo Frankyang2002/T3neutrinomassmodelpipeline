@@ -247,7 +247,7 @@ Numerical/orchestration/
     pipeline numerical-config persistence and integrated numerical-result execution
 ```
 
-The temporary root-level forwarding modules used during the `Numerical/running/` migration have been removed. Historical modules such as `Numerical/WeinbergRunning.py`, `Numerical/WeinbergStage.py`, `Numerical/ThresholdMatching.py`, `Numerical/FinalSMBoundary.py`, and `Numerical/FinalC5Bridge.py` remain compatibility-only where still required.
+The temporary root-level forwarding modules used during the numerical package migrations have been removed. The retired historical numerical wrappers, including `Numerical/FinalC5Bridge.py`, are no longer part of the production source tree.
 
 ## 9. Validation and reports
 
@@ -280,7 +280,22 @@ Stable serialized names and historical summary keys are retained where downstrea
 | `validation/`                                           | independent checks only                                 |
 | `Reports/PipelineReports.py`                            | report orchestration                                    |
 
-## 11. Regression procedure
+## 11. Helper scripts
+
+Project-level executable helpers live under `scripts/`:
+
+```text
+scripts/run_comparison_study.py
+    run one model at one common comparison benchmark
+
+scripts/run_regression.py
+    run the smoke matching and Wolfram C5 regression gate
+```
+
+These are orchestration/debugging entry points; they do not own matching or RGE
+physics.
+
+## 12. Regression procedure
 
 Run the Python suite first:
 

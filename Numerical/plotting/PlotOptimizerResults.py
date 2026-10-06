@@ -3,10 +3,10 @@ Plot and summarize a T3 OscillationOptimizer result JSON.
 
 Usage
 -----
-python -m Numerical.PlotOptimizerResults OPTIMIZER_JSON
+python -m Numerical.plotting.PlotOptimizerResults OPTIMIZER_JSON
 
 Optional:
-python -m Numerical.PlotOptimizerResults OPTIMIZER_JSON --output-dir PATH
+python -m Numerical.plotting.PlotOptimizerResults OPTIMIZER_JSON --output-dir PATH
 
 Outputs
 -------
@@ -18,7 +18,7 @@ Outputs
 - summary.txt
 
 The script does not recompute the T3 physics. It visualizes quantities already
-stored by Numerical.OscillationOptimizer.
+stored by Numerical.fitting.OscillationOptimizer.
 """
 
 from __future__ import annotations

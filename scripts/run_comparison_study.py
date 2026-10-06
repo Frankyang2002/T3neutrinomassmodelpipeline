@@ -1,7 +1,7 @@
 """Run one full comparison-mode model/scenario for fast debugging.
 
 Example:
-    python comparison_test.py --dims 3 3 2 --alpha 0 \
+    python scripts/run_comparison_study.py --dims 3 3 2 --alpha 0 \
         --scenario largeY_largeL --threshold F --threshold S1 S2
 """
 from __future__ import annotations
@@ -11,10 +11,13 @@ import subprocess
 import sys
 from pathlib import Path
 
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
 from studies.FullT3Study import (
     COMPARISON_SCENARIOS,
     DEFAULT_TEMPLATE,
-    PROJECT_ROOT,
     _fixed_comparison_config,
     _load_json,
     _model_key,

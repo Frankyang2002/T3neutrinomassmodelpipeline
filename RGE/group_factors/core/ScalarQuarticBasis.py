@@ -227,7 +227,7 @@ def run_basis_map_cli():
 # Former source: ValidateScalarQuarticInvariantCompleteness.py
 # ---------------------------------------------------------------------------
 
-"""Validate completeness of mixed scalar-quartic invariant sectors in a Matchete seed.
+r"""Validate completeness of mixed scalar-quartic invariant sectors in a Matchete seed.
 
 For two SU(2) multiplets A and B with dimensions d_A and d_B, the quartics
 

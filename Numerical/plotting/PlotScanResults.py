@@ -3,7 +3,7 @@ Standard plotting/diagnostics for T3 numerical parameter-scan JSON output.
 
 Usage
 -----
-python -m Numerical.PlotScanResults SCAN_JSON --target TARGET_JSON
+python -m Numerical.plotting.PlotScanResults SCAN_JSON --target TARGET_JSON
 
 The target JSON is the Gaussianized oscillation-fit target used by
 Numerical.fitting.OscillationFit, with ``central_values`` and ``one_sigma_errors``.

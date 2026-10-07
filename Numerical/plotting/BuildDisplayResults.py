@@ -1,15 +1,16 @@
-"""Build a compact supervisor-facing copy of the full T3 study.
+"""Build a compact supervisor-facing copy of the comparison-only T3 study.
 
 Presentation-only: no physics is recomputed and no source results are modified.
 
-Inputs used by the current project layout:
-    output/full/          numerical JSON data
-    Reports/output/full/  generated reports, figures and dashboards
+Inputs:
+    output/full/comparison/
+    Reports/output/full/comparison/
 
 Default output:
     Reports/output/display/
 
-The display directory is recreated on each run.
+The display directory is recreated on each run.  Legacy ``optimal`` output and
+optimizer benchmark caches are deliberately ignored.
 """
 from __future__ import annotations
 
@@ -27,16 +28,18 @@ DEFAULT_OUTPUT = PROJECT_ROOT / "Reports" / "output" / "display"
 
 KEEP_FIGURES = (
     "uv_coupling_running.png",
+    "intermediate_direct_weinberg_running.png",
+    "c5_threshold_contributions.png",
     "c5_running.png",
     "neutrino_mass_splitting_running.png",
     "neutrino_mixing_running.png",
 )
 
 SCENARIOS = {
-    "smallY_smallL": (0.005, 0.01),
-    "smallY_largeL": (0.005, 0.25),
-    "largeY_smallL": (0.5, 0.01),
-    "largeY_largeL": (0.5, 0.25),
+    "smallY_smallL": (0.005, 0.1),
+    "smallY_largeL": (0.005, 1.0),
+    "largeY_smallL": (0.5, 0.1),
+    "largeY_largeL": (0.5, 1.0),
 }
 SCENARIO_ORDER = tuple(SCENARIOS)
 
@@ -63,7 +66,6 @@ def _last(value: Any) -> Any:
 
 
 def _summary_row(
-    mode: str,
     scenario: str,
     path: Path,
     payload: dict[str, Any],
@@ -76,7 +78,6 @@ def _summary_row(
         model = {}
 
     return {
-        "mode": mode,
         "scenario": scenario,
         "model": _model_name(path, payload),
         "dS1": model.get("d_s1", ""),
@@ -109,11 +110,12 @@ def _copy_dashboard(source: Path, destination: Path) -> bool:
 
 
 def _report_model_dirs(root: Path) -> list[Path]:
+    if not root.is_dir():
+        return []
     return sorted(
-        path
-        for path in root.iterdir()
+        path for path in root.iterdir()
         if path.is_dir() and path.name.startswith("T3_dS1_")
-    ) if root.is_dir() else []
+    )
 
 
 def _find_figures_dir(model_dir: Path) -> Path | None:
@@ -150,36 +152,28 @@ def _copy_report_section(source: Path, destination: Path) -> tuple[int, bool]:
 
 
 def _collect_rows(data_root: Path) -> list[dict[str, Any]]:
+    """Collect only the four comparison studies.
+
+    Any legacy ``output/full/optimal`` tree is intentionally ignored so stale
+    optimizer output cannot enter a newly generated standard display.
+    """
     rows: list[dict[str, Any]] = []
-    if not data_root.is_dir():
+    comparison = data_root / "comparison"
+    if not comparison.is_dir():
         return rows
 
-    comparison = data_root / "comparison"
-    if comparison.is_dir():
-        for scenario_dir in sorted(comparison.iterdir()):
-            if not scenario_dir.is_dir():
-                continue
-            for path in sorted(scenario_dir.rglob("running_diagnostics.json")):
-                try:
-                    payload = _load_json(path)
-                except (OSError, json.JSONDecodeError, ValueError):
-                    continue
-                if payload.get("status") == "Success":
-                    rows.append(
-                        _summary_row("comparison", scenario_dir.name, path, payload)
-                    )
-
-    optimal = data_root / "optimal"
-    if optimal.is_dir():
-        for path in sorted(optimal.rglob("running_diagnostics.json")):
+    for scenario_dir in sorted(comparison.iterdir()):
+        if not scenario_dir.is_dir():
+            continue
+        for path in sorted(scenario_dir.rglob("running_diagnostics.json")):
             try:
                 payload = _load_json(path)
             except (OSError, json.JSONDecodeError, ValueError):
                 continue
             if payload.get("status") == "Success":
-                rows.append(_summary_row("optimal", "", path, payload))
+                rows.append(_summary_row(scenario_dir.name, path, payload))
 
-    rows.sort(key=lambda row: (row["mode"], row["scenario"], row["model"]))
+    rows.sort(key=lambda row: (row["scenario"], row["model"]))
     return rows
 
 
@@ -200,204 +194,67 @@ def _write_readme(
     report_model_count: int,
 ) -> None:
     lines = [
-        "# T3 numerical study — supervisor display",
+        "# T3 numerical study — comparison display",
         "",
-        "This is a compact presentation copy of the full T3 study.",
+        "This is a compact presentation copy of the standard comparison-only T3 study.",
         "No numerical calculation has been rerun and the full output is unchanged.",
+        "Legacy optimal/optimizer outputs are not read or copied.",
         "",
         "## Included",
         "",
         "- Interactive cross-model comparison dashboards.",
-        "- Four selected figures for each model:",
+        "- Selected figures for each model, including:",
         "  - UV Yukawa / lambda_T3 running",
-        "  - Weinberg coefficient C5 running",
-        "  - neutrino mass-splitting running",
-        "  - neutrino mixing-angle running",
+        "  - one-loop operator-running overview across the EFT thresholds",
+        "  - direct intermediate LLSS -> Weinberg generation",
+        "  - hard/direct/combined C5 at the scalar threshold",
+        "  - final Weinberg coefficient C5 running",
+        "  - neutrino mass-splitting and mixing-angle running",
     ]
     if rows:
-        lines.append("- `model_summary.csv` with low-energy observables from the stored diagnostics.")
+        lines.append(
+            "- `model_summary.csv` with low-energy observables from comparison diagnostics."
+        )
 
-    lines.extend(
-        [
-            "",
-            "## Omitted from this display copy",
-            "",
-            "Group-factor derivations, full Lagrangian/RGE PDFs and TeX files,",
-            "LaTeX auxiliary/log files, and secondary debugging/intermediate plots.",
-            "These remain in the complete project output for reproducibility.",
-            "",
-            "## Common comparison benchmarks",
-            "",
-        ]
-    )
+    lines.extend([
+        "",
+        "## Operator-running convention",
+        "",
+        "The intermediate curve is the implemented direct O(hbar) LLSS -> Weinberg",
+        "contribution Delta C5^direct(mu). The final curve is C5(mu) in the",
+        "SM+Weinberg EFT. A numerical LLSS self-running trajectory is not inferred",
+        "or fabricated by the plotting layer. Feeding one-loop LLSS self-running",
+        "through the scalar loop would first modify C5 at O(hbar^2).",
+        "",
+        "## Common comparison benchmarks",
+        "",
+    ])
     for name in SCENARIO_ORDER:
         y, lam = SCENARIOS[name]
         lines.append(f"- `{name}`: Y = {y:g}, lambda_T3 = {lam:g}")
 
-    lines.extend(
-        [
-            "",
-            "The comparison mode uses the same normalized non-diagonal Yukawa",
-            "textures for every model, scaled by the common Y value. These are",
-            "controlled comparison benchmarks rather than oscillation-data fits.",
-            "",
-            f"Report model directories copied: {report_model_count}.",
-        ]
-    )
+    lines.extend([
+        "",
+        "The comparison mode uses the same fixed non-diagonal Yukawa textures for",
+        "every model, scaled by the common Y value. These are controlled comparison",
+        "benchmarks rather than oscillation-data fits.",
+        "",
+        f"Report model directories copied: {report_model_count}.",
+    ])
     if rows:
         lines.append(f"Successful numerical rows summarized: {len(rows)}.")
     else:
         lines.append(
-            "No numerical JSON directory was supplied/found, so model_summary.csv "
-            "was not generated."
+            "No comparison numerical JSON directory was supplied/found, so "
+            "model_summary.csv was not generated."
         )
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
-
-
-def _benchmark_model_key(path: Path, payload: dict[str, Any]) -> str:
-    compatibility = payload.get("compatibility", {})
-    model = compatibility.get("model", {}) if isinstance(compatibility, dict) else {}
-    if isinstance(model, dict):
-        try:
-            ds1 = int(model["d_s1"])
-            ds2 = int(model["d_s2"])
-            df = int(model["d_f"])
-            alpha = int(model["alpha"])
-            a = f"p{alpha}" if alpha >= 0 else f"m{abs(alpha)}"
-            return f"T3_dS1_{ds1}_dS2_{ds2}_dF_{df}_alpha_{a}"
-        except (KeyError, TypeError, ValueError):
-            pass
-    return path.parent.name
-
-
-def _benchmark_parameter_rows(benchmark_root: Path) -> tuple[list[dict[str, Any]], dict[str, Any]]:
-    """Read the authoritative cached optimal benchmarks.
-
-    The search varies Re(lambdaT3) plus the 18 real y1/y2 entries.  Complete
-    matrices are retained in JSON; the CSV uses compact Frobenius/max norms.
-    """
-    rows: list[dict[str, Any]] = []
-    full: dict[str, Any] = {}
-
-    if not benchmark_root.is_dir():
-        return rows, full
-
-    for path in sorted(benchmark_root.rglob("sobol_benchmark.json")):
-        try:
-            payload = _load_json(path)
-        except (OSError, json.JSONDecodeError, ValueError):
-            continue
-        best = payload.get("best", {})
-        params = best.get("parameters", {}) if isinstance(best, dict) else {}
-        if not isinstance(params, dict):
-            continue
-
-        def matrix(prefix: str) -> list[list[float]]:
-            return [
-                [float(params.get(f"{prefix}_{i}{j}", 0.0)) for j in range(1, 4)]
-                for i in range(1, 4)
-            ]
-
-        y1 = matrix("y1")
-        y2 = matrix("y2")
-
-        def frob(m: list[list[float]]) -> float:
-            return sum(x*x for row in m for x in row) ** 0.5
-
-        def maxabs(m: list[list[float]]) -> float:
-            return max(abs(x) for row in m for x in row)
-
-        key = _benchmark_model_key(path, payload)
-        compatibility = payload.get("compatibility", {})
-        model = compatibility.get("model", {}) if isinstance(compatibility, dict) else {}
-        prediction = best.get("prediction", {}) if isinstance(best, dict) else {}
-        if not isinstance(prediction, dict):
-            prediction = {}
-
-        row = {
-            "model": key,
-            "dS1": model.get("d_s1", "") if isinstance(model, dict) else "",
-            "dS2": model.get("d_s2", "") if isinstance(model, dict) else "",
-            "dF": model.get("d_f", "") if isinstance(model, dict) else "",
-            "alpha": model.get("alpha", "") if isinstance(model, dict) else "",
-            "chi2": best.get("chi2", ""),
-            "benchmark_status": payload.get("status", ""),
-            "lambdaT3_real": params.get("lambdaT3_real", ""),
-            "y1_frobenius": frob(y1),
-            "y1_max_abs": maxabs(y1),
-            "y2_frobenius": frob(y2),
-            "y2_max_abs": maxabs(y2),
-            "delta_m21_sq_eV2": prediction.get("delta_m21_sq_ev2", ""),
-            "delta_m3l_sq_eV2": prediction.get("delta_m3l_sq_ev2", ""),
-            "sin2_theta12": prediction.get("sin2_theta12", ""),
-            "sin2_theta13": prediction.get("sin2_theta13", ""),
-            "sin2_theta23": prediction.get("sin2_theta23", ""),
-        }
-        rows.append(row)
-        full[key] = {
-            "chi2": best.get("chi2"),
-            "benchmark_status": payload.get("status"),
-            "method": payload.get("method"),
-            "parameters": {
-                "lambdaT3_real": params.get("lambdaT3_real"),
-                "y1_real": y1,
-                "y2_real": y2,
-            },
-            "prediction": prediction,
-            "ordering": best.get("ordering"),
-            "source_cache": str(path),
-        }
-
-    rows.sort(key=lambda row: row["model"])
-    return rows, full
-
-
-def _write_rows_csv(rows: list[dict[str, Any]], path: Path) -> None:
-    if not rows:
-        return
-    with path.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=tuple(rows[0]))
-        writer.writeheader()
-        writer.writerows(rows)
-
-
-def _write_optimal_parameter_outputs(
-    benchmark_root: Path,
-    output: Path,
-) -> int:
-    rows, full = _benchmark_parameter_rows(benchmark_root)
-    if not rows:
-        return 0
-    optimal = output / "optimal"
-    optimal.mkdir(parents=True, exist_ok=True)
-    _write_rows_csv(rows, optimal / "optimal_parameters.csv")
-    (optimal / "optimal_parameters.json").write_text(
-        json.dumps(
-            {
-                "description": (
-                    "Per-model optimal benchmark selected by the configured "
-                    "oscillation chi-square search. CSV contains compact Yukawa "
-                    "norms; this JSON retains the full selected real y1/y2 matrices."
-                ),
-                "chi2_definition": (
-                    "Multivariate Gaussian chi-square of delta_m21_sq_ev2, "
-                    "delta_m3l_sq_ev2, sin2_theta12, sin2_theta13 and "
-                    "sin2_theta23 against the configured oscillation target."
-                ),
-                "models": full,
-            },
-            indent=2,
-        ) + "\n",
-        encoding="utf-8",
-    )
-    return len(rows)
 
 
 def build_display(
     data_input: Path,
     report_input: Path,
     output: Path,
-    benchmark_input: Path | None = None,
 ) -> Path:
     data_input = Path(data_input).resolve()
     report_input = Path(report_input).resolve()
@@ -413,15 +270,14 @@ def build_display(
     output.mkdir(parents=True, exist_ok=True)
 
     report_model_count = 0
-
     comparison = report_input / "comparison"
     if comparison.is_dir():
         scenario_dirs = sorted(
-            (p for p in comparison.iterdir() if p.is_dir()),
-            key=lambda p: (
-                SCENARIO_ORDER.index(p.name)
-                if p.name in SCENARIO_ORDER else len(SCENARIO_ORDER),
-                p.name,
+            (path for path in comparison.iterdir() if path.is_dir()),
+            key=lambda path: (
+                SCENARIO_ORDER.index(path.name)
+                if path.name in SCENARIO_ORDER else len(SCENARIO_ORDER),
+                path.name,
             ),
         )
         for source in scenario_dirs:
@@ -429,20 +285,8 @@ def build_display(
             _copy_report_section(source, destination)
             report_model_count += len(_report_model_dirs(source))
 
-    optimal = report_input / "optimal"
-    if optimal.is_dir():
-        _copy_report_section(optimal, output / "optimal")
-        report_model_count += len(_report_model_dirs(optimal))
-
     rows = _collect_rows(data_input)
     _write_csv(rows, output / "model_summary.csv")
-
-    if benchmark_input is None:
-        benchmark_input = PROJECT_ROOT / "output" / "benchmarks"
-    optimal_parameter_count = _write_optimal_parameter_outputs(
-        Path(benchmark_input).resolve(), output
-    )
-
     _write_readme(
         output / "README.md",
         rows=rows,
@@ -450,45 +294,27 @@ def build_display(
     )
 
     print(f"Display results written to: {output}")
-    print(f"Report model directories: {report_model_count}")
-    print(f"Numerical summary rows: {len(rows)}")
-    print(f"Optimal benchmark parameter rows: {optimal_parameter_count}")
+    print(f"Comparison report model directories: {report_model_count}")
+    print(f"Comparison numerical summary rows: {len(rows)}")
     return output
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        "--data-input",
-        type=Path,
-        default=DEFAULT_DATA_INPUT,
+        "--data-input", type=Path, default=DEFAULT_DATA_INPUT,
         help="numerical data root (default: output/full)",
     )
     parser.add_argument(
-        "--report-input",
-        type=Path,
-        default=DEFAULT_REPORT_INPUT,
+        "--report-input", type=Path, default=DEFAULT_REPORT_INPUT,
         help="report root (default: Reports/output/full)",
     )
     parser.add_argument(
-        "--output",
-        type=Path,
-        default=DEFAULT_OUTPUT,
+        "--output", type=Path, default=DEFAULT_OUTPUT,
         help="display root to recreate (default: Reports/output/display)",
     )
-    parser.add_argument(
-        "--benchmark-input",
-        type=Path,
-        default=PROJECT_ROOT / "output" / "benchmarks",
-        help="cached optimal benchmark root (default: output/benchmarks)",
-    )
     args = parser.parse_args()
-    build_display(
-        args.data_input,
-        args.report_input,
-        args.output,
-        args.benchmark_input,
-    )
+    build_display(args.data_input, args.report_input, args.output)
     return 0
 
 

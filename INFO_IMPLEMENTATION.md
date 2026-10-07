@@ -369,7 +369,7 @@ $$
 
 In one generation this introduces an ordered-to-physical factor of two.
 
-This is an important convention when comparing with papers or packages that define the Weinberg operator with a different symmetrisation or $1/2$ normalization.
+This is an important convention when comparing with papers or packages that define the Weinberg operator with a different symmetrisation or $1/2$ normalization. Norte that they are different objects so its based on definition.
 
 ---
 
@@ -402,6 +402,8 @@ $$
 This is effectively a heavy-mass eigenbasis treatment.
 
 A calculation that instead evolves a fully non-diagonal heavy mass matrix without diagonalizing into individual heavy eigenstates is not numerically identical at intermediate steps.
+
+AKA: Use one flavour to get structure of loop factors, then use it on the full flavour yukawas. Then we make it symmetric for majorana for Weinberg operator
 
 ---
 
@@ -618,7 +620,7 @@ The split between the two pieces depends on matching scheme and matching scale.
 
 Only the combined fixed-order result should be compared physically.
 
----
+The running and matching added becomes the final new matched value for continuity
 
 ## 2.13 Matching scale set to $M_F$
 
@@ -713,6 +715,8 @@ This removes small numerical violations of the Majorana symmetry condition.
 
 Large asymmetries should still be regarded as a bug or consistency failure rather than something that should be hidden by the projection.
 
+Small floating point errors may occur during process, so we enforced the symmetry
+
 ---
 
 ## 2.19 Fixed electroweak vev
@@ -806,6 +810,7 @@ m_{S_1}
 \approx1.143~{\rm TeV}.
 $$
 
+This value is just there so they are similar but not the same masses
 Both physical scalars are removed at
 
 $$
@@ -1260,20 +1265,42 @@ This can materially affect the final reported benchmark.
 
 ## 9.1 Unit-coordinate parameterization
 
-Every bounded parameter is mapped to
+$$
+10^{-3}
+\le
+{\rm Re}\,\lambda_{T3}
+\le
+1
+$$
+
+and
 
 $$
+-0.5
+\le
+y_{1,ij},\,y_{2,ij}
+\le
+0.5.
+$$ and other bounded parameters are mapped to
+Every bounded parameter is mapped to
+
+
+$$
+
 z_i\in[0,1].
+
 $$
 
 Linear parameters use
 
+
 $$
-x
-=
+
+x=
+
 x_{\min}
-+
-z(x_{\max}-x_{\min}),
+
+- z(x_{\max}-x_{\min}),
 $$
 
 while log-scaled parameters use
@@ -1482,129 +1509,3 @@ output/benchmarks/
 contents differ.
 
 ---
-
-# 13. Approximate importance of implementation effects
-
-The following ranking is useful when interpreting differences between model points or between this pipeline and another implementation.
-
-| Rank | Implementation effect                                                       | Expected importance                               |
-| ---: | --------------------------------------------------------------------------- | ------------------------------------------------- |
-|    1 | Restricted scan subspace: real Yukawas, fixed masses, fixed quartics/phases | Very high                                         |
-|    2 | 256-point Sobol search and early stopping at $\chi^2=10$                    | Very high                                         |
-|    3 | Reduced-dimensional local optimization using only 5/8/12 active variables   | Very high                                         |
-|    4 | Cached/frozen model-specific benchmarks                                     | Very high                                         |
-|    5 | Takagi branch, degeneracy and residual behaviour                            | High for failed/near-degenerate cases             |
-|    6 | Strict Majorana $M_F$ symmetry validation and projection                    | High for affected Majorana models                 |
-|    7 | Common fermion threshold for non-degenerate $M_{F_i}$                       | Moderate                                          |
-|    8 | Common scalar threshold for non-degenerate scalar masses                    | Moderate                                          |
-|    9 | Gaussianized and uncorrelated NuFIT likelihood                              | Moderate to high for best-fit location            |
-|   10 | Strict fixed-order treatment of LLSS self-running                           | Small to moderate, but conceptually important     |
-|   11 | Approximate SM UV inputs and fixed electroweak vev                          | Small to moderate                                 |
-|   12 | DOP853 and ODE tolerance choices                                            | Usually small                                     |
-|   13 | Explicit numerical matrix symmetrization                                    | Usually tiny unless masking another inconsistency |
-
----
-
-# 14. Known failure modes that should not automatically be interpreted physically
-
-## 14.1 Majorana $M_F$ symmetry validation
-
-For Majorana models, the implementation requires
-
-$$
-M_F=M_F^T
-$$
-
-to tight numerical tolerance.
-
-The UV runner also explicitly projects $M_F$ back onto the symmetric manifold.
-
-Therefore a failure caused by a small antisymmetric component should be interpreted first as a numerical/RGE consistency problem.
-
-It should not automatically be interpreted as evidence that the underlying T3 model has no viable solution.
-
----
-
-## 14.2 Takagi numerical failures
-
-A failed Takagi residual check means that the implemented decomposition did not reconstruct the supplied Majorana mass matrix to the required tolerance.
-
-It does not by itself imply that the T3 model cannot generate a physical neutrino spectrum.
-
-This distinction is especially important for:
-
-- nearly singular mass matrices;
-- nearly degenerate singular values;
-- very hierarchical matrix entries;
-- points close to eigenstate level crossings.
-
----
-
-# 15. Compact description of the implemented calculation
-
-A concise summary of the implementation is
-
-$$
-\boxed{
-\begin{array}{l}
-\text{one-loop, dimension-five-truncated EFT},\\
-\text{Matchete-generated SU(2) invariant/CG basis},\\
-\text{common threshold or fermion-first sequential matching only},\\
-\text{RGBeta-generated UV and intermediate RGEs},\\
-\text{strict fixed-order treatment of LLSS Wilson running},\\
-\text{common fermion and scalar decoupling scales},\\
-m_\nu=-\dfrac{v^2}{2}C_5,\quad v=246.22~{\rm GeV},\\
-\text{full-flavour final SM+Weinberg running},\\
-\text{custom Takagi factorisation and charged-lepton basis rotation},\\
-\text{Gaussian five-observable NuFIT benchmark likelihood},\\
-\text{restricted Sobol plus reduced local parameter optimization}.
-\end{array}
-}
-$$
-
-The physical model determines the field content and interactions, but the numerical result is additionally a function of
-
-$$
-R
-=
-R\!\left(
-\begin{array}{c}
-\text{operator basis},\\
-\text{CG convention},\\
-\text{matching scheme},\\
-\text{threshold scales},\\
-\text{loop/EFT truncation},\\
-\text{RGE basis},\\
-\text{ODE tolerances},\\
-\text{Takagi prescription},\\
-\text{fit likelihood},\\
-\text{scan bounds},\\
-\text{optimizer budget},\\
-\text{cached benchmark}
-\end{array}
-\right).
-$$
-
-This separation should be kept explicit when comparing numerical results between T3 models or against other implementations.
-
----
-
-# 16. Practical interpretation
-
-When quoting a benchmark result from this pipeline, the most precise description is not simply
-
-> “the T3 model predicts this point.”
-
-A more accurate statement is
-
-> “this is the benchmark found for the specified T3 representation within the implemented one-loop, dimension-five EFT treatment, threshold prescription, numerical conventions, restricted parameter scan, and Gaussianized oscillation-fit metric.”
-
-For most ordinary successful points, ODE discretization and floating-point details should be much smaller than the dominant implementation dependence from:
-
-1. threshold prescription;
-2. scan subspace;
-3. finite search budget;
-4. benchmark caching;
-5. Takagi handling near singular or degenerate spectra.
-
-These should therefore be checked first whenever two nominally identical calculations give noticeably different numerical results.

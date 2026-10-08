@@ -41,3 +41,48 @@ def test_class_c_label_uses_effective_lambda()->None:
 def test_scenario_values_are_current()->None:
     assert w.SCENARIOS=={"smallY_smallL":(0.005,0.1),"smallY_largeL":(0.005,1.0),
                          "largeY_smallL":(0.5,0.1),"largeY_largeL":(0.5,1.0)}
+
+
+def test_class_encoded_model_names_without_dimension_metadata() -> None:
+    # The actual regression: production diagnostics can use T3_A_alpha_m2
+    # without recording d_s1/d_s2/d_f in benchmark_search.model.
+    for model, expected_class, expected_factor in (
+        ("T3_A_alpha_m2", "A", 1.0),
+        ("T3_B_alpha_m1", "B", 1.0),
+        ("T3_C_alpha_p1", "C", math.sqrt(3.0)),
+        ("T3_D_alpha_p0", "D", 1.0),
+        ("T3_E_alpha_m2", "E", 1.0 / math.sqrt(2.0)),
+    ):
+        payload = {"benchmark_search": {"model": {"model_key": model}}}
+        ref, effective, factor, cls = w._lambda_values(
+            model, "smallY_smallL", payload
+        )
+        assert cls == expected_class
+        assert math.isclose(factor, expected_factor)
+        assert math.isclose(effective, ref * expected_factor)
+
+
+def test_build_report_from_class_encoded_model_key(tmp_path: Path) -> None:
+    # Test the real path through collect -> plotting -> README for the
+    # no-dimensions diagnostics responsible for the observed traceback.
+    model = "T3_A_alpha_m2"
+    source = tmp_path / "comparison"
+    for scenario in w.SCENARIO_ORDER:
+        path = source / scenario / model / "data" / "running_diagnostics.json"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        payload = _payload(model)
+        payload["benchmark_search"]["model"] = {"model_key": model}
+        path.write_text(json.dumps(payload), encoding="utf-8")
+
+    output = tmp_path / "reports"
+    w.build_within_model_comparisons(source, output)
+    report = output / model
+    for figure in (
+        "direct_weinberg_norm_comparison.png",
+        "c5_norm_comparison.png",
+        "dm21_comparison.png",
+        "dm3l_comparison.png",
+        "mixing_comparison.png",
+    ):
+        assert (report / figure).is_file()
+    assert "class=A" in (report / "README.md").read_text(encoding="utf-8")

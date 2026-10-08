@@ -86,6 +86,14 @@ def _model_class(model: str, payload: dict[str, Any] | None = None) -> str:
         dims=tuple(int(value) for value in match.groups())
         if dims in MODEL_CLASS_BY_DIMS:
             return MODEL_CLASS_BY_DIMS[dims]
+
+    # Some saved diagnostics use a class-based model key rather than dimensions,
+    # e.g. T3_A_alpha_m2.  The class is explicit in this legacy naming scheme;
+    # no representation dimensions or group factors need to be inferred.
+    class_match=re.fullmatch(r"T3_([A-E])_alpha_[mp]\d+",model)
+    if class_match:
+        return class_match.group(1)
+
     raise ValueError(f"Cannot determine T3 model class from {model!r}.")
 
 

@@ -2,11 +2,16 @@
 
 Presentation-only: neither RGEs nor matching are recomputed.
 
-A Weinberg view draws the *stored numerical* direct LLSS -> C5 contribution
-across the scalar-only EFT and the *stored numerical* full C5 after the scalar
-threshold.  Both are solid, with a vertical matching connector at the threshold
-when both endpoints are present.  The connector depicts a physical hard-matching
-jump, NOT smooth equality of two Wilson coefficients.
+Weinberg views show a threshold-anchored continuation |C5_hard(MS) +
+Delta_C5_direct(mu)| above MS, joined continuously to the stored final SM+
+Weinberg C5 below MS.  This continuation is a display reconstruction, not an
+intermediate-EFT Wilson coefficient.  Optional dotted overlays reveal each
+component separately; the hard term is held fixed at its MS value.
+
+Older benchmark outputs save only absolute intermediate matrices. The separate
+WeinbergMatchedContinuation module reconstructs their signed real one-loop
+trajectory only after stringent checks. Complex ambiguous cases are skipped.
+No artificial complex phase or running is introduced.
 
 An explicit LLSS selector draws only the universal fixed-order one-loop kernel
 eta(mu)=ln(mu/MF)/(16*pi**2).  It is not a numerical LLSS Wilson coefficient:
@@ -21,6 +26,12 @@ import math
 import shutil
 from pathlib import Path
 from typing import Any
+
+import numpy as np
+
+from Numerical.plotting.WeinbergMatchedContinuation import (
+    reconstruct_matched_continuation,
+)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 COMPARISON_SCENARIOS = (
@@ -46,7 +57,7 @@ for i in range(3):
     for j in range(i, 3):
         suffix = f"{i+1}{j+1}"
         QUANTITIES[f"c5_{suffix}"] = (
-            f"|C5^{{{suffix}}}| — across thresholds", "final_running",
+            f"|C5^{{{suffix}}}| — hard + direct continuation", "final_running",
             "c5_abs", "GeV⁻¹", (i, j),
         )
         QUANTITIES[f"direct_c5_{suffix}"] = (
@@ -54,7 +65,7 @@ for i in range(3):
             "delta_c5_abs", "GeV⁻¹", (i, j),
         )
 QUANTITIES["c5_norm"] = (
-    "||C5||F — across thresholds", "final_running", "c5_abs",
+    "||C5||F — hard + direct continuation", "final_running", "c5_abs",
     "GeV⁻¹", "frobenius",
 )
 QUANTITIES["direct_c5_norm"] = (
@@ -114,9 +125,11 @@ def _is_canonical_optimal_diagnostic(study_dir: Path, path: Path) -> bool:
 
 
 def collect(study_dir: Path) -> dict[str, Any]:
-    """Read stored curves; add intermediate C5 overlays to final C5 views."""
+    """Read stored curves and build validated matched-continuation views."""
     result: dict[str, Any] = {
-        "quantities": {}, "overlays": {}, "models": [], "scales": {},
+        "quantities": {}, "overlays": {}, "matched": {}, "components": {},
+        "continuation_methods": {}, "continuation_issues": {},
+        "models": [], "scales": {},
     }
     study_dir = Path(study_dir)
     files = [p for p in sorted(study_dir.rglob("running_diagnostics.json"))
@@ -164,6 +177,40 @@ def collect(study_dir: Path) -> dict[str, Any]:
                 pass
             else:
                 result["overlays"].setdefault("c5_norm", {})[name] = {"x": x, "y": y}
+
+        # The matched continuation must add COMPLEX coefficients before
+        # applying absolute values; summing |hard| + |direct| would be wrong.
+        # A skipped model remains visible below MS, with an explicit warning.
+        try:
+            matched = reconstruct_matched_continuation(payload)
+        except (KeyError, TypeError, ValueError, IndexError) as exc:
+            result["continuation_issues"][name] = str(exc)
+            continue
+        result["continuation_methods"][name] = matched.method
+        magnitudes = {
+            "total": np.abs(matched.combined),
+            "hard": np.broadcast_to(np.abs(matched.hard), matched.direct.shape),
+            "direct": np.abs(matched.direct),
+        }
+        for qkey in ("c5_norm",) + tuple(
+            f"c5_{i+1}{j+1}" for i in range(3) for j in range(i, 3)
+        ):
+            if name not in result["quantities"].get(qkey, {}):
+                continue
+            selector = QUANTITIES[qkey][4]
+            def values(matrix: np.ndarray) -> list[float]:
+                if selector == "frobenius":
+                    return np.sqrt(np.sum(matrix * matrix, axis=(1, 2))).tolist()
+                i, j = selector
+                return matrix[:, i, j].tolist()
+            x = matched.mu_gev.tolist()
+            result["matched"].setdefault(qkey, {})[name] = {
+                "x": x, "y": values(magnitudes["total"]),
+            }
+            result["components"].setdefault(qkey, {})[name] = {
+                "hard": {"x": x, "y": values(magnitudes["hard"])},
+                "direct": {"x": x, "y": values(magnitudes["direct"])},
+            }
     result["models"] = sorted(set(result["models"]))
     return result
 
@@ -235,12 +282,15 @@ label.model input{margin:0;accent-color:var(--accent)}
 .axis-controls select{width:auto;max-width:100%;padding:6px 8px;font-size:12px}
 .axis-help{font-size:11px;color:var(--muted)}
 .axis-title{font-size:13px;font-weight:600;color:var(--ink);margin:6px 0 5px 5px}
+.component-toggle{display:flex;align-items:center;gap:9px;width:fit-content;margin:0 0 12px;padding:9px 11px;border-radius:7px;border:1px solid #d5dfed;background:#f8fafc;color:#33465e;font-size:12px;cursor:pointer}
+.component-toggle input{accent-color:var(--accent);margin:0}
 canvas{width:100%;height:min(70vh,720px);min-height:420px;display:block}
 .legend{display:flex;gap:20px;flex-wrap:wrap;margin:12px 2px 2px;font-size:12px;color:var(--muted)}
 .legend span{display:inline-flex;gap:7px;align-items:center}
 .dot{width:12px;height:12px;border-radius:2px;display:inline-block;border:1px solid #c9d0d7}
 .line{width:24px;display:inline-block;border-top:2.5px solid var(--ink)}
 .line.thin{width:10px;border-top-width:1.2px}
+.line.dotted{border-top-style:dotted;border-top-width:2px}
 #caption{margin-top:12px;padding:11px 13px;background:#f5f8fc;border-left:3px solid #b6cce6;border-radius:4px}
 #status{font-size:12px;color:var(--muted);margin-top:9px}
 @media(max-width:830px){.layout{grid-template-columns:1fr}aside{border-right:0;border-bottom:1px solid var(--line)}.model-list{max-height:160px}main{padding:12px}.panel{padding:8px}header{padding:15px}.zoom{gap:5px}canvas{min-height:320px}}
@@ -274,6 +324,10 @@ canvas{width:100%;height:min(70vh,720px);min-height:420px;display:block}
       </select>
       <span class="axis-help" id="axisHelp">Auto resizes when models are shown or hidden.</span>
     </div>
+    <label class="component-toggle" id="componentControl" hidden>
+      <input id="showComponents" type="checkbox">
+      Show hard and direct components (dotted)
+    </label>
     <div class="axis-title" id="axisTitle"></div>
     <canvas id="plot" aria-label="Interactive scale dependence of T3 running observables"></canvas>
     <div class="legend" id="regionsLegend">
@@ -282,8 +336,8 @@ canvas{width:100%;height:min(70vh,720px);min-height:420px;display:block}
       <span><i class="dot" style="background:#e5f5e9"></i>SM + Weinberg</span>
     </div>
     <div class="legend" id="weinbergLegend" hidden>
-      <span><i class="line"></i>Solid coloured curve: saved coefficient</span>
-      <span><i class="line thin"></i>Vertical join at scalar threshold: hard matching</span>
+      <span><i class="line"></i>Solid: hard + direct continuation, then final C₅</span>
+      <span id="componentLegend" hidden><i class="line dotted"></i>Dotted: fixed hard at Mₛ and direct term</span>
     </div>
     <div id="caption" class="small"></div>
     <div id="status"></div>
@@ -305,6 +359,10 @@ const modelsDiv=document.getElementById('models');
 const modelControls=document.getElementById('modelControls');
 const modelNote=document.getElementById('modelNote');
 const yScaleMode=document.getElementById('yScaleMode');
+const showComponents=document.getElementById('showComponents');
+const componentControl=document.getElementById('componentControl');
+const componentLegend=document.getElementById('componentLegend');
+showComponents.onchange=draw;
 yScaleMode.onchange=draw;
 const regionColours={uv:'#eaf2ff',int:'#fff1cf',sm:'#e5f5e9'};
 DATA.models.forEach((m,i)=>{
@@ -348,19 +406,16 @@ function kernelCurve(){
  }
  return {x,y};
 }
-function matchedEndpoint(trace,scale){
- if(!trace||!(scale>0))return null;
- for(let i=0;i<trace.x.length;i++){
-  if(Math.abs(trace.x[i]/scale-1)<1e-5&&Number.isFinite(trace.y[i]))return trace.y[i];
- }
- return null;
-}
 function draw(){
  const q=select.value,weinberg=isWeinberg(q),llss=isLLSS(q);
- const traces=DATA.quantities[q]||{},intermediate=DATA.overlays[q]||{};
+ const traces=DATA.quantities[q]||{},matchedCurves=DATA.matched[q]||{};
+ const components=DATA.components[q]||{};
+ const showParts=weinberg&&showComponents.checked;
  const kernel=llss?kernelCurve():null;
  modelControls.hidden=llss;modelNote.hidden=!llss;
  document.getElementById('weinbergLegend').hidden=!weinberg;
+ componentControl.hidden=!weinberg;
+ componentLegend.hidden=!showParts;
  const dpr=window.devicePixelRatio||1,rect=canvas.getBoundingClientRect();
  const W=Math.max(520,rect.width),H=Math.max(360,rect.height);
  canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);
@@ -373,14 +428,18 @@ function draw(){
  const X=x=>L+(hi-Math.log10(x))/(hi-lo)*(right-L);
  // Fixed mode uses every model and every stored scale for this quantity.
  // Auto mode uses only enabled models inside the current horizontal viewport.
- // Both retain matching-stage intermediate data when displaying Weinberg C5.
+ // Weinberg range includes the verified complex hard+direct continuation.
+ // Optional hard/direct component overlays affect auto range only when visible.
  const fixedY=yScaleMode.value==='fixed';
  const allTraces=[];
  if(llss){if(kernel)allTraces.push(kernel)}
  else DATA.models.forEach(m=>{
   if(!fixedY&&!enabled[m])return;
   if(traces[m])allTraces.push(traces[m]);
-  if(weinberg&&intermediate[m])allTraces.push(intermediate[m]);
+  if(weinberg&&matchedCurves[m])allTraces.push(matchedCurves[m]);
+  if(showParts&&components[m]){
+   allTraces.push(components[m].hard,components[m].direct);
+  }
  });
  const visible=[];
  allTraces.forEach(tr=>{for(let i=0;i<tr.x.length;i++){
@@ -433,9 +492,10 @@ function draw(){
   ctx.font='11px system-ui';ctx.fillStyle='#536277';
   ctx.fillText(name+' threshold',Math.min(px+5,right-72),T-12);
  });
- function drawLine(tr,col,width){
+ function drawLine(tr,col,width,dash=[],opacity=1){
   if(!tr||tr.x.length<2)return;
   ctx.save();ctx.strokeStyle=col;ctx.lineWidth=width;ctx.lineJoin='round';ctx.lineCap='round';
+  ctx.setLineDash(dash);ctx.globalAlpha=opacity;
   ctx.beginPath();let started=false;
   for(let i=0;i<tr.x.length;i++){
    const x=tr.x[i],y=tr.y[i];
@@ -445,28 +505,25 @@ function draw(){
   }
   if(started)ctx.stroke();ctx.restore();
  }
- let matched=0;
+ let joined=0;
  ctx.save();ctx.beginPath();ctx.rect(L,T,right-L,bottom-T);ctx.clip();
  if(llss){if(kernel)drawLine(kernel,'#245c98',2.9)}
  else DATA.models.forEach((m,i)=>{
   if(!enabled[m])return;
   const col=COLORS[i%COLORS.length];
   if(weinberg){
-   const direct=intermediate[m],final=traces[m];
-   drawLine(direct,col,2.3);
-   const scale=s.mu_scalar_threshold,atDirect=matchedEndpoint(direct,scale),atFinal=matchedEndpoint(final,scale);
-   if(atDirect!==null&&atFinal!==null){
-    // A vertical *matching jump* joins the two plotted quantities at MS.
-    // No fake interpolation across EFT scales and no claim of C5 continuity.
-    ctx.save();ctx.strokeStyle=col;ctx.globalAlpha=.72;ctx.lineWidth=1.35;
-    ctx.beginPath();ctx.moveTo(X(scale),Y(atDirect));ctx.lineTo(X(scale),Y(atFinal));ctx.stroke();
-    ctx.globalAlpha=1;
-    for(const value of [atDirect,atFinal]){
-     ctx.beginPath();ctx.arc(X(scale),Y(value),2.7,0,2*Math.PI);ctx.fillStyle=col;ctx.fill();
-    }
-    ctx.restore();matched++;
+   const continuation=matchedCurves[m],final=traces[m],parts=components[m];
+   // The optional hard component is a fixed MS matching anchor, NOT an
+   // intermediate-EFT hard Wilson coefficient with its own beta function.
+   if(showParts&&parts){
+    drawLine(parts.hard,col,1.5,[2,5],.45);
+    drawLine(parts.direct,col,1.7,[2,4],.75);
    }
-   drawLine(final,col,2.3);
+   // The two solid segments meet at MS because Python validated complex
+   // C5_hard + C5_direct = C5_final before taking magnitudes.
+   drawLine(continuation,col,2.6);
+   drawLine(final,col,2.6);
+   if(continuation&&final)joined++;
   }else drawLine(traces[m],col,2.3);
  });
  ctx.restore();
@@ -478,7 +535,12 @@ function draw(){
   caption.textContent='LLSS intermediate EFT: η(μ)=ln(μ/MF)/(16π²). Fixed-order C_LLSS(μ)=C_LLSS(MF)+η(μ)β^(1). This blue line is the universal dimensionless kernel, NOT a numerically evaluated LLSS Wilson coefficient.';
  }else if(weinberg){
   const count=DATA.models.filter(m=>enabled[m]&&traces[m]).length;
-  caption.textContent=count+' model(s) shown. Yellow: stored direct ΔC5 from LLSS mixing. Green: matched full C5. The solid vertical join at the scalar threshold marks the hard-matching jump (C5 hard + direct), not equality of the two coefficients. '+matched+' model(s) have both threshold endpoints.';
+  const missing=DATA.models.filter(m=>enabled[m]&&traces[m]&&!matchedCurves[m]);
+  const methods=new Set(DATA.models.filter(m=>enabled[m]&&matchedCurves[m]).map(m=>DATA.continuation_methods[m]));
+  caption.textContent=count+' model(s) shown. Yellow: threshold-anchored |C₅hard(Mₛ) + ΔC₅direct(μ)| (NOT an intermediate-EFT Wilson coefficient). Green: final evolved |C₅(μ)|. '+joined+' continuity checks passed. '+
+   (methods.has('validated_real_log_affine_reconstruction')?'Legacy real-only trajectories reconstructed and checked against every saved intermediate magnitude. ':'')+
+   (showParts?'Dotted: individual |hard(Mₛ)| and |direct(μ)| magnitudes; they must not be summed as magnitudes. ':'')+
+   (missing.length?missing.length+' model(s) lack a verified complex reconstruction: '+missing.map(m=>m+' ('+(DATA.continuation_issues[m]||'missing')+')').join('; '):'');
  }else{
   caption.textContent=DATA.models.filter(m=>enabled[m]&&traces[m]).length+' model(s) shown. Curves are taken from saved diagnostics.';
  }

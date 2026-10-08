@@ -7,8 +7,11 @@
 *)
 
 ClearAll["Global`*"];
-
-If[Length[$ScriptCommandLine] < 6,
+Print["Script arguments: ", InputForm[$ScriptCommandLine]];
+(* Depending on the WolframScript version and invocation, the script filename
+   may or may not appear in $ScriptCommandLine.  Read the last five positional
+   arguments, rather than assuming a fixed leading filename argument. *)
+If[Length[$ScriptCommandLine] < 5,
   Print[
     "Usage: wolframscript -file ExportUVCGRegistry.wl ",
     "dS1 dS2 dF alpha output.json"
@@ -16,14 +19,16 @@ If[Length[$ScriptCommandLine] < 6,
   Exit[2];
 ];
 
-scriptDirectory = DirectoryName @ ExpandFileName[$InputFileName];
-projectRoot = DirectoryName[scriptDirectory];
+{dS1Arg, dS2Arg, dFArg, alphaArg, outputArg} = Take[$ScriptCommandLine, -5];
 
-dS1 = ToExpression[$ScriptCommandLine[[2]]];
-dS2 = ToExpression[$ScriptCommandLine[[3]]];
-dF  = ToExpression[$ScriptCommandLine[[4]]];
-alpha = ToExpression[$ScriptCommandLine[[5]]];
-outputPath = ExpandFileName[$ScriptCommandLine[[6]]];
+dS1 = ToExpression[dS1Arg];
+dS2 = ToExpression[dS2Arg];
+dF  = ToExpression[dFArg];
+alpha = ToExpression[alphaArg];
+outputPath = ExpandFileName[outputArg];
+
+scriptDirectory = DirectoryName @ ExpandFileName[$InputFileName];
+projectRoot = DirectoryName[DirectoryName[scriptDirectory]];
 
 If[!DirectoryQ[DirectoryName[outputPath]],
   CreateDirectory[DirectoryName[outputPath], CreateIntermediateDirectories -> True]

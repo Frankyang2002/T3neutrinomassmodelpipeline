@@ -421,12 +421,13 @@ def _record_full_flavor_success(
         paths["flavor_transport"].relative_to(record.output_dir).as_posix()
     )
     summary["EFT1WilsonTransportStatus"] = flavor_transport["status"]
-    summary["EFT1WilsonTransportMuHigh"] = flavor_transport["mu_high"]
-    summary["EFT1WilsonTransportMuLow"] = flavor_transport["mu_low"]
-    summary["EFT1WilsonTransportLogRatio"] = flavor_transport["log_ratio"]
-    summary["EFT1WilsonTransportCorrectionCount"] = flavor_transport[
-        "correction_count"
-    ]
+    scales = flavor_transport["scales"]
+    summary["EFT1WilsonTransportMuHigh"] = scales["mu_high"]
+    summary["EFT1WilsonTransportMuLow"] = scales["mu_low"]
+    summary["EFT1WilsonTransportLogRatio"] = scales["log_ratio"]
+    summary["EFT1WilsonTransportCorrectionCount"] = len(
+        flavor_transport["running_corrections"]["Weinberg"]["terms"]
+    )
     summary["EFT1WeinbergInsertionFile"] = (
         paths["insertion"].relative_to(record.output_dir).as_posix()
     )

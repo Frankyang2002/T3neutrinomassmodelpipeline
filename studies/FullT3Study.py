@@ -4,6 +4,7 @@ from __future__ import annotations
 from copy import deepcopy
 import argparse
 import json
+import math
 import shutil
 import subprocess
 import sys
@@ -37,6 +38,23 @@ COMPARISON_SCENARIOS = {
     "largeY_smallL": (0.5, 0.1),
     "largeY_largeL": (0.5, 1.0),
 }
+
+# Exact |G_rep| ratios for the implemented direct LLSS -> Weinberg mixing,
+# normalized to the common A/B/D factor |G_ref|=4*sqrt(3)/3.
+#
+# This changes only benchmark initialization. Physical group factors in the
+# matching/RGE machinery remain untouched.
+LAMBDA_T3_NORMALISATION = {
+    "A": 1.0,
+    "B": 1.0,
+    "C": math.sqrt(3.0),
+    "D": 1.0,
+    "E": 1.0 / math.sqrt(2.0),
+}
+LAMBDA_T3_NORMALISATION_BASIS = (
+    "direct LLSS->Weinberg representation factor: "
+    "|G_ref|/|G_rep| with |G_ref|=4*sqrt(3)/3 (classes A/B/D)"
+)
 
 OPTIONAL_REAL_QUARTICS = (
     "lambdaH1Adj", "lambdaH2Adj", "lambdaS1Adj", "lambdaS2Adj",
@@ -77,10 +95,7 @@ def _load_json(path: Path) -> dict[str, Any]:
 def _write_json(path: Path, value: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_name(path.name + ".tmp")
-    temporary.write_text(
-        json.dumps(value, indent=2) + "\n",
-        encoding="utf-8",
-    )
+    temporary.write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8")
     temporary.replace(path)
 
 
@@ -101,25 +116,15 @@ def _common_args(args: argparse.Namespace) -> list[str]:
 
 def _run(command: list[str]) -> int:
     print("\n> " + " ".join(command), flush=True)
-    return int(
-        subprocess.run(
-            command,
-            cwd=PROJECT_ROOT,
-        ).returncode
-    )
+    return int(subprocess.run(command, cwd=PROJECT_ROOT).returncode)
 
 
 def _normalise_representation_quartics(
-    ordinary: dict[str, Any],
-    ds1: int,
-    ds2: int,
-    alpha: int,
+    ordinary: dict[str, Any], ds1: int, ds2: int, alpha: int
 ) -> None:
     required = {
-        "lambdaH1Adj": ds1 > 1,
-        "lambdaH2Adj": ds2 > 1,
-        "lambdaS1Adj": ds1 == 3,
-        "lambdaS2Adj": ds2 == 3,
+        "lambdaH1Adj": ds1 > 1, "lambdaH2Adj": ds2 > 1,
+        "lambdaS1Adj": ds1 == 3, "lambdaS2Adj": ds2 == 3,
         "lambda12Adj": ds1 > 1 and ds2 > 1,
         "lambda12Cross": ds1 == 3 and ds2 == 3,
     }
@@ -138,50 +143,42 @@ def _normalise_representation_quartics(
 
 
 def _retarget_config(
-    template: dict[str, Any],
-    ds1: int,
-    ds2: int,
-    df: int,
-    alpha: int,
+    template: dict[str, Any], ds1: int, ds2: int, df: int, alpha: int
 ) -> dict[str, Any]:
     config = deepcopy(template)
     config["representation"] = {
-        "d_s1": ds1,
-        "d_s2": ds2,
-        "d_f": df,
-        "alpha": alpha,
-        "shared_scalar": False,
+        "d_s1": ds1, "d_s2": ds2, "d_f": df,
+        "alpha": alpha, "shared_scalar": False,
     }
-
     base_state = config.get("base_state")
     if not isinstance(base_state, dict):
         raise ValueError("Numerical config requires base_state object.")
-
     ordinary = base_state.get("ordinary")
     if not isinstance(ordinary, dict):
         raise ValueError("Numerical config requires base_state.ordinary object.")
-
-    _normalise_representation_quartics(
-        ordinary,
-        ds1,
-        ds2,
-        alpha,
-    )
+    _normalise_representation_quartics(ordinary, ds1, ds2, alpha)
     return config
 
 
 def _scaled_real_texture(
-    texture: tuple[tuple[float, ...], ...],
-    scale: float,
+    texture: tuple[tuple[float, ...], ...], scale: float
 ) -> list[list[float]]:
-    return [
-        [scale * float(value) for value in row]
-        for row in texture
-    ]
+    return [[scale * float(value) for value in row] for row in texture]
+
+
+def _lambda_t3_effective(model_class: str, reference: float) -> tuple[float, float]:
+    try:
+        factor = LAMBDA_T3_NORMALISATION[model_class]
+    except KeyError as exc:
+        raise ValueError(
+            f"No lambdaT3 representation normalization for class {model_class!r}."
+        ) from exc
+    return float(reference) * factor, factor
 
 
 def _fixed_comparison_config(
     template: dict[str, Any],
+    model_class: str,
     ds1: int,
     ds2: int,
     df: int,
@@ -189,42 +186,30 @@ def _fixed_comparison_config(
     yukawa: float,
     scalar: float,
 ) -> dict[str, Any]:
-    config = _retarget_config(
-        template,
-        ds1,
-        ds2,
-        df,
-        alpha,
-    )
+    config = _retarget_config(template, ds1, ds2, df, alpha)
     ordinary = config["base_state"]["ordinary"]
+    effective_scalar, normalisation_factor = _lambda_t3_effective(
+        model_class, scalar
+    )
 
-    ordinary["y1"]["real"] = _scaled_real_texture(
-        COMPARISON_Y1_TEXTURE,
-        yukawa,
-    )
-    ordinary["y2"]["real"] = _scaled_real_texture(
-        COMPARISON_Y2_TEXTURE,
-        yukawa,
-    )
+    ordinary["y1"]["real"] = _scaled_real_texture(COMPARISON_Y1_TEXTURE, yukawa)
+    ordinary["y2"]["real"] = _scaled_real_texture(COMPARISON_Y2_TEXTURE, yukawa)
     ordinary["y1"]["imag"] = [[0.0] * 3 for _ in range(3)]
     ordinary["y2"]["imag"] = [[0.0] * 3 for _ in range(3)]
-    ordinary["lambdaT3"] = {
-        "real": scalar,
-        "imag": 0.0,
-    }
+    ordinary["lambdaT3"] = {"real": effective_scalar, "imag": 0.0}
 
-    # The full study is deliberately comparison-only.  The automatic Sobol +
-    # local least-squares benchmark search remains available elsewhere, but it
-    # is never invoked by this orchestrator.
     search = config.setdefault("benchmark_search", {})
     search["enabled"] = False
     search["use_current_model_representation"] = False
-
     config.setdefault("sensitivity", {})["enabled"] = False
 
     config["comparison_point"] = {
         "yukawa_scale": yukawa,
-        "lambdaT3_real": scalar,
+        "lambdaT3_reference": scalar,
+        "lambdaT3_effective": effective_scalar,
+        "normalisation_factor": normalisation_factor,
+        "normalisation_basis": LAMBDA_T3_NORMALISATION_BASIS,
+        "model_class": model_class,
         "representation_specific_extra_quartics":
             "required optional quartics fixed to 0",
         "texture": (
@@ -237,17 +222,9 @@ def _fixed_comparison_config(
     return config
 
 
-def _dashboard(
-    raw: Path,
-    report: Path,
-    title: str,
-) -> str | None:
+def _dashboard(raw: Path, report: Path, title: str) -> str | None:
     try:
-        path = write_dashboard(
-            raw,
-            report / "interactive_comparison.html",
-            title,
-        )
+        path = write_dashboard(raw, report / "interactive_comparison.html", title)
         print(f"Interactive comparison: {path}")
         return str(path)
     except FileNotFoundError as exc:
@@ -256,18 +233,8 @@ def _dashboard(
 
 
 def run_full_study(args: argparse.Namespace) -> int:
-    """Run the standard full study using only fixed comparison benchmarks.
-
-    Optimisation is intentionally detached from this workflow.  The optimizer
-    and Sobol benchmark-search modules are preserved and can still be invoked
-    explicitly, but ``pipeline.py --full`` no longer runs them.
-    """
-
-    template_path = (
-        Path(args.numerical)
-        if getattr(args, "numerical", None)
-        else DEFAULT_TEMPLATE
-    )
+    """Run the standard full study using four representation-normalized benchmarks."""
+    template_path = Path(args.numerical) if getattr(args, "numerical", None) else DEFAULT_TEMPLATE
     if not template_path.is_absolute():
         template_path = PROJECT_ROOT / template_path
 
@@ -284,15 +251,15 @@ def run_full_study(args: argparse.Namespace) -> int:
     print("=" * 72)
     print("FULL 16-MODEL T3 COMPARISON STUDY")
     print("=" * 72)
-    print("Mode: four fixed common-parameter comparison benchmarks")
+    print("Mode: four fixed representation-normalized comparison benchmarks")
     print("Automatic optimal/Sobol benchmark search: detached from --full")
-    print("Comparison scales: Y={0.005,0.5}, lambdaT3={0.1,1.0}")
+    print("Reference scales: Y={0.005,0.5}, lambdaT3_ref={0.1,1.0}")
+    print("lambdaT3 normalization: |G_ref|/|G_rep| from direct LLSS->Weinberg mixing")
     print("Mass thresholds: MF=100 TeV, MS=1 TeV; UV=1e7 GeV; low=100 GeV")
 
     for scenario, (yukawa, scalar) in COMPARISON_SCENARIOS.items():
         scenario_started = time.time()
         scenario_rc = 0
-
         input_dir = comparison_store / scenario / "input"
         resolved_dir = comparison_store / scenario / "resolved"
 
@@ -301,32 +268,25 @@ def run_full_study(args: argparse.Namespace) -> int:
                 shutil.rmtree(directory)
             directory.mkdir(parents=True, exist_ok=True)
 
-        for _, ds1, ds2, df, alpha in MODELS:
+        effective_by_class: dict[str, float] = {}
+        for model_class, ds1, ds2, df, alpha in MODELS:
             key = _model_key(ds1, ds2, df, alpha)
             config_path = input_dir / f"{key}.json"
-
-            _write_json(
-                config_path,
-                _fixed_comparison_config(
-                    template,
-                    ds1,
-                    ds2,
-                    df,
-                    alpha,
-                    yukawa,
-                    scalar,
-                ),
+            config = _fixed_comparison_config(
+                template, model_class, ds1, ds2, df, alpha, yukawa, scalar
             )
+            effective_by_class[model_class] = config["comparison_point"][
+                "lambdaT3_effective"
+            ]
+            _write_json(config_path, config)
 
             command = [
-                sys.executable,
-                str(PIPELINE_SCRIPT),
+                sys.executable, str(PIPELINE_SCRIPT),
                 "--dims", str(ds1), str(ds2), str(df),
                 "--alpha", str(alpha),
                 "--study", f"full/comparison/{scenario}/{key}",
                 "--numerical", str(config_path),
-                "--reset-numerical-configs",
-                *common,
+                "--reset-numerical-configs", *common,
             ]
             rc = _run(command)
             scenario_rc = max(scenario_rc, rc)
@@ -334,30 +294,23 @@ def run_full_study(args: argparse.Namespace) -> int:
 
             generated = ACTIVE_CONFIG_DIR / f"{key}.json"
             if generated.is_file():
-                shutil.copy2(
-                    generated,
-                    resolved_dir / generated.name,
-                )
+                shutil.copy2(generated, resolved_dir / generated.name)
 
         dashboard = _dashboard(
             OUTPUT_ROOT / "comparison" / scenario,
             REPORT_ROOT / "comparison" / scenario,
-            (
-                f"T3 common-parameter comparison: {scenario} "
-                f"(Y={yukawa:g}, λT3={scalar:g})"
-            ),
+            f"T3 normalized comparison: {scenario} (Y={yukawa:g}, λT3_ref={scalar:g})",
         )
-        results.append(
-            {
-                "mode": "comparison",
-                "scenario": scenario,
-                "yukawa": yukawa,
-                "lambdaT3": scalar,
-                "return_code": scenario_rc,
-                "runtime_seconds": time.time() - scenario_started,
-                "dashboard": dashboard,
-            }
-        )
+        results.append({
+            "mode": "comparison",
+            "scenario": scenario,
+            "yukawa": yukawa,
+            "lambdaT3_reference": scalar,
+            "lambdaT3_effective_by_class": effective_by_class,
+            "return_code": scenario_rc,
+            "runtime_seconds": time.time() - scenario_started,
+            "dashboard": dashboard,
+        })
 
     summary = {
         "status": "Success" if status == 0 else "Failed",
@@ -366,17 +319,17 @@ def run_full_study(args: argparse.Namespace) -> int:
         "ordinary_model_count": len(MODELS),
         "shared_scalar_models_included": False,
         "comparison_definition": {
-            "yukawa_texture":
-                "fixed real non-diagonal y1/y2 textures scaled by common Y",
-            "scalar_parameter":
-                "Re(lambdaT3), Im(lambdaT3)=0",
+            "yukawa_texture": "fixed real non-diagonal y1/y2 textures scaled by common Y",
+            "scalar_parameter": "representation-normalized Re(lambdaT3), Im(lambdaT3)=0",
+            "lambdaT3_normalisation": {
+                "basis": LAMBDA_T3_NORMALISATION_BASIS,
+                "factors_by_class": LAMBDA_T3_NORMALISATION,
+                "physical_group_factors_modified": False,
+            },
             "representation_specific_extra_quartics":
                 "required optional quartics fixed to 0",
             "scenarios": {
-                key: {
-                    "yukawa": values[0],
-                    "lambdaT3": values[1],
-                }
+                key: {"yukawa": values[0], "lambdaT3_reference": values[1]}
                 for key, values in COMPARISON_SCENARIOS.items()
             },
         },

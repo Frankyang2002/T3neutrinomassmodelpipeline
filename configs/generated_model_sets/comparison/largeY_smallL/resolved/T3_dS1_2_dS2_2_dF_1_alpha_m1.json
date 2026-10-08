@@ -140,72 +140,72 @@
       "y1": {
         "real": [
           [
-            0.5,
-            0.1,
-            -0.05
+            -0.13184748217463493,
+            0.3555699549615383,
+            0.47336491849273443
           ],
           [
-            0.1,
-            0.4,
-            0.15
+            0.3151235319674015,
+            -0.05379894655197859,
+            -0.281871703453362
           ],
           [
-            -0.05,
-            0.15,
-            0.3
+            0.08340837716420157,
+            0.10999664640734597,
+            0.07215506124627102
           ]
         ],
         "imag": [
           [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ],
           [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ],
           [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         ]
       },
       "y2": {
         "real": [
           [
-            0.35,
-            -0.15,
-            0.1
+            -0.17776278685765523,
+            -0.2304221754893952,
+            0.0919950604437465
           ],
           [
-            0.2,
-            0.5,
-            -0.1
+            -0.08882204908877611,
+            0.23437401279812087,
+            -0.10251776528272066
           ],
           [
-            0.05,
-            0.15,
-            0.4
+            -0.1545035436733158,
+            0.3956037489697337,
+            -0.3692290047183633
           ]
         ],
         "imag": [
           [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ],
           [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ],
           [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         ]
       },
@@ -253,8 +253,8 @@
       "lambdaH2": 0.03,
       "lambda12": 0.01,
       "lambdaT3": {
-        "real": 0.1,
-        "imag": 0.0
+        "real": 0.0012846641591183151,
+        "imag": 0.002
       },
       "lambdaH1Adj": 0.0,
       "lambdaH2Adj": 0.0,
@@ -447,55 +447,19 @@
     ]
   },
   "sensitivity": {
-    "enabled": false,
+    "enabled": true,
     "gamma_min": 0.95,
     "gamma_max": 1.05,
     "n_points": 11,
     "oscillation_target": "configs/nufit_6_1_ic24_no.json"
   },
-  "comparison_point": {
-    "yukawa_scale": 0.5,
-    "lambdaT3_real": 0.1,
-    "representation_specific_extra_quartics": "required optional quartics fixed to 0",
-    "texture": "fixed real non-diagonal y1/y2 textures scaled by common Y; Im(y1)=Im(y2)=0; Im(lambdaT3)=0",
-    "y1_texture": [
-      [
-        1,
-        0.2,
-        -0.1
-      ],
-      [
-        0.2,
-        0.8,
-        0.3
-      ],
-      [
-        -0.1,
-        0.3,
-        0.6
-      ]
-    ],
-    "y2_texture": [
-      [
-        0.7,
-        -0.3,
-        0.2
-      ],
-      [
-        0.4,
-        1,
-        -0.2
-      ],
-      [
-        0.1,
-        0.3,
-        0.8
-      ]
-    ]
-  },
   "generated_config": {
     "model_key": "T3_dS1_2_dS2_2_dF_1_alpha_m1",
-    "source_template": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\configs\\generated_model_sets\\comparison\\largeY_smallL\\input\\T3_dS1_2_dS2_2_dF_1_alpha_m1.json",
-    "resolved_benchmark": false
+    "source_template": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\configs\\generated_model_sets\\optimal\\input\\T3_dS1_2_dS2_2_dF_1_alpha_m1.json",
+    "resolved_benchmark": true,
+    "benchmark_cache": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\benchmarks\\T3_dS1_2_dS2_2_dF_1_alpha_m1\\sobol_benchmark.json",
+    "benchmark_status": "BestAvailable",
+    "benchmark_chi2": 4.948532012743723e+21,
+    "benchmark_method": "sobol_plus_local_least_squares"
   }
 }

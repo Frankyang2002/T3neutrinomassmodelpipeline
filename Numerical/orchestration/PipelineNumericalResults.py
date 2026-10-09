@@ -1,4 +1,4 @@
-"""Pipeline-integrated numerical running and figure generation.
+﻿"""Pipeline-integrated numerical running and figure generation.
 
 A config with
 
@@ -51,7 +51,7 @@ from physics.NeutrinoTrajectory import (
 
 PIPELINE_NUMERICAL_CONFIG_KIND = "t3_pipeline_numerical_results_v1"
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 RAW_OUTPUT_ROOT = PROJECT_ROOT / "output"
 REPORT_OUTPUT_ROOT = PROJECT_ROOT / "Reports" / "output"
 
@@ -634,3 +634,4 @@ def run_pipeline_numerical_results(
         flush=True,
     )
     return True
+

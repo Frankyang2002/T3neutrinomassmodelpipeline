@@ -4,7 +4,6 @@ from __future__ import annotations
 from copy import deepcopy
 import argparse
 import json
-import math
 import shutil
 import subprocess
 import sys
@@ -39,21 +38,23 @@ COMPARISON_SCENARIOS = {
     "largeY_largeL": (0.5, 1.0),
 }
 
-# Exact |G_rep| ratios for the implemented direct LLSS -> Weinberg mixing,
-# normalized to the common A/B/D factor |G_ref|=4*sqrt(3)/3.
-#
-# This changes only benchmark initialization. Physical group factors in the
-# matching/RGE machinery remain untouched.
+# Divide only by the number of equal-weight internal charge channels.
+# The two class-E channels have identical CG coefficients. Their loop
+# functions are equal within the benchmark's unbroken-SU(2) multiplet-mass
+# approximation. Do not interpret this as an all-representation CG rescaling
+# or a verified broken-electroweak-phase mass-spectrum statement.
+# Matching and RGE group factors are not modified here.
 LAMBDA_T3_NORMALISATION = {
     "A": 1.0,
     "B": 1.0,
-    "C": math.sqrt(3.0),
+    "C": 1.0,
     "D": 1.0,
-    "E": 1.0 / math.sqrt(2.0),
+    "E": 0.5,
 }
 LAMBDA_T3_NORMALISATION_BASIS = (
-    "direct LLSS->Weinberg representation factor: "
-    "|G_ref|/|G_rep| with |G_ref|=4*sqrt(3)/3 (classes A/B/D)"
+    "charge-channel multiplicity only: lambdaT3_ref/N_equiv; "
+    "N_equiv=1 (A-D), 2 (E); equal loop functions assumed in the "
+    "unbroken-SU(2) multiplet-mass benchmark; representation CGs retained"
 )
 
 OPTIONAL_REAL_QUARTICS = (
@@ -233,7 +234,7 @@ def _dashboard(raw: Path, report: Path, title: str) -> str | None:
 
 
 def run_full_study(args: argparse.Namespace) -> int:
-    """Run the standard full study using four representation-normalized benchmarks."""
+    """Run the standard full study with four multiplicity-normalized benchmarks."""
     template_path = Path(args.numerical) if getattr(args, "numerical", None) else DEFAULT_TEMPLATE
     if not template_path.is_absolute():
         template_path = PROJECT_ROOT / template_path
@@ -251,10 +252,10 @@ def run_full_study(args: argparse.Namespace) -> int:
     print("=" * 72)
     print("FULL 16-MODEL T3 COMPARISON STUDY")
     print("=" * 72)
-    print("Mode: four fixed representation-normalized comparison benchmarks")
+    print("Mode: four fixed charge-multiplicity-normalized comparison benchmarks")
     print("Automatic optimal/Sobol benchmark search: detached from --full")
     print("Reference scales: Y={0.005,0.5}, lambdaT3_ref={0.1,1.0}")
-    print("lambdaT3 normalization: |G_ref|/|G_rep| from direct LLSS->Weinberg mixing")
+    print("lambdaT3 normalization: 1/N_equiv (A-D:1, E:2), unbroken-SU(2) benchmark")
     print("Mass thresholds: MF=100 TeV, MS=1 TeV; UV=1e7 GeV; low=100 GeV")
 
     for scenario, (yukawa, scalar) in COMPARISON_SCENARIOS.items():
@@ -299,7 +300,7 @@ def run_full_study(args: argparse.Namespace) -> int:
         dashboard = _dashboard(
             OUTPUT_ROOT / "comparison" / scenario,
             REPORT_ROOT / "comparison" / scenario,
-            f"T3 normalized comparison: {scenario} (Y={yukawa:g}, λT3_ref={scalar:g})",
+            f"T3 multiplicity-only comparison: {scenario} (Y={yukawa:g}, λT3_ref={scalar:g})",
         )
         results.append({
             "mode": "comparison",
@@ -320,7 +321,7 @@ def run_full_study(args: argparse.Namespace) -> int:
         "shared_scalar_models_included": False,
         "comparison_definition": {
             "yukawa_texture": "fixed real non-diagonal y1/y2 textures scaled by common Y",
-            "scalar_parameter": "representation-normalized Re(lambdaT3), Im(lambdaT3)=0",
+            "scalar_parameter": "charge-multiplicity-normalized Re(lambdaT3), Im(lambdaT3)=0",
             "lambdaT3_normalisation": {
                 "basis": LAMBDA_T3_NORMALISATION_BASIS,
                 "factors_by_class": LAMBDA_T3_NORMALISATION,

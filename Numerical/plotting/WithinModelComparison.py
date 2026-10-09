@@ -1,384 +1,134 @@
-"""Build within-model comparisons of the four fixed T3 benchmark scenarios.
+"""Four-scenario, within-model plots from saved T3 numerical diagnostics only.
 
-Presentation-only. This module reads existing ``running_diagnostics.json``
-files below ``output/full/comparison`` and never recomputes matching or RGEs.
-
-The scenario lambda value is the common reference value. The actual initialized
-mixing quartic is representation-normalized,
-
-    lambdaT3_eff = f_R * lambdaT3_ref,
-
-with f_R = (1, 1, sqrt(3), 1, 1/sqrt(2)) for classes A--E.
+The dashed intermediate 'hard + direct' C5 is a threshold-anchored display
+reconstruction, NOT an intermediate-EFT Weinberg Wilson coefficient.
 """
 from __future__ import annotations
 
-import argparse
-import json
-import math
-import re
 from pathlib import Path
-from typing import Any
+from typing import Mapping
 
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = PROJECT_ROOT / "output" / "full" / "comparison"
-DEFAULT_OUTPUT = PROJECT_ROOT / "Reports" / "output" / "full" / "within_model_comparison"
+from Numerical.plotting.RunningTrajectoryData import (
+    QUANTITIES, SCENARIOS, SavedRun, extract_trajectory,
+)
+from Numerical.plotting.WeinbergMatchedContinuation import reconstruct_matched_continuation
 
-SCENARIOS = {
-    "smallY_smallL": (0.005, 0.1),
-    "smallY_largeL": (0.005, 1.0),
-    "largeY_smallL": (0.5, 0.1),
-    "largeY_largeL": (0.5, 1.0),
-}
-SCENARIO_ORDER = tuple(SCENARIOS)
-
-MODEL_CLASS_BY_DIMS = {
-    (1, 3, 2): "A",
-    (2, 2, 1): "B",
-    (2, 2, 3): "C",
-    (3, 1, 2): "D",
-    (3, 3, 2): "E",
-}
-LAMBDA_T3_NORMALISATION = {
-    "A": 1.0,
-    "B": 1.0,
-    "C": math.sqrt(3.0),
-    "D": 1.0,
-    "E": 1.0 / math.sqrt(2.0),
+COLORS = {"smallY": "tab:blue", "largeY": "tab:orange"}
+STYLE = {"smallL": "-", "largeL": "--"}
+LABELS = {
+    "smallY_smallL": "Y=0.005, lambda(ref)=0.1",
+    "smallY_largeL": "Y=0.005, lambda(ref)=1.0",
+    "largeY_smallL": "Y=0.5, lambda(ref)=0.1",
+    "largeY_largeL": "Y=0.5, lambda(ref)=1.0",
 }
 
 
-def _load(path: Path) -> dict[str, Any]:
-    payload=json.loads(path.read_text(encoding="utf-8"))
-    if not isinstance(payload,dict) or payload.get("status")!="Success":
-        raise ValueError("diagnostics must be a successful JSON object")
-    return payload
+def _style(scenario: str) -> dict[str, object]:
+    y, lam = scenario.split("_")
+    return {"color": COLORS[y], "linestyle": STYLE[lam], "linewidth": 1.8,
+            "label": LABELS[scenario]}
 
 
-def _model_name(path: Path,payload: dict[str,Any]) -> str:
-    rep=payload.get("benchmark_search",{}).get("model")
-    if isinstance(rep,dict) and rep.get("model_key"):
-        return str(rep["model_key"])
-    for part in reversed(path.parts):
-        if part.startswith("T3_dS1_"):
-            return part
-    return path.parent.parent.name
-
-
-def _model_class(model: str, payload: dict[str, Any] | None = None) -> str:
-    if payload is not None:
-        rep=payload.get("benchmark_search",{}).get("model")
-        if isinstance(rep,dict):
-            try:
-                dims=(int(rep["d_s1"]),int(rep["d_s2"]),int(rep["d_f"]))
-            except (KeyError,TypeError,ValueError):
-                pass
-            else:
-                if dims in MODEL_CLASS_BY_DIMS:
-                    return MODEL_CLASS_BY_DIMS[dims]
-
-    match=re.search(r"T3_dS1_(\d+)_dS2_(\d+)_dF_(\d+)_",model)
-    if match:
-        dims=tuple(int(value) for value in match.groups())
-        if dims in MODEL_CLASS_BY_DIMS:
-            return MODEL_CLASS_BY_DIMS[dims]
-
-    # Some saved diagnostics use a class-based model key rather than dimensions,
-    # e.g. T3_A_alpha_m2.  The class is explicit in this legacy naming scheme;
-    # no representation dimensions or group factors need to be inferred.
-    class_match=re.fullmatch(r"T3_([A-E])_alpha_[mp]\d+",model)
-    if class_match:
-        return class_match.group(1)
-
-    raise ValueError(f"Cannot determine T3 model class from {model!r}.")
-
-
-def _lambda_values(
-    model: str,
-    scenario: str,
-    payload: dict[str, Any] | None = None,
-) -> tuple[float,float,float,str]:
-    _,reference=SCENARIOS[scenario]
-    model_class=_model_class(model,payload)
-    factor=LAMBDA_T3_NORMALISATION[model_class]
-    return reference,reference*factor,factor,model_class
-
-
-def collect(input_root: Path) -> dict[str,dict[str,dict[str,Any]]]:
-    """Return model -> scenario -> successful diagnostic payload."""
-    result: dict[str,dict[str,dict[str,Any]]]={}
-    root=Path(input_root)
-    for scenario in SCENARIO_ORDER:
-        directory=root/scenario
-        if not directory.is_dir():
-            continue
-        for path in sorted(directory.rglob("running_diagnostics.json")):
-            try:
-                payload=_load(path)
-            except (OSError,json.JSONDecodeError,ValueError):
-                continue
-            model=_model_name(path,payload)
-            if scenario in result.setdefault(model,{}):
-                raise RuntimeError(
-                    f"Duplicate successful diagnostic for {model} / {scenario}"
-                )
-            result[model][scenario]=payload
-    return result
-
-
-def _save(path: Path) -> None:
-    path.parent.mkdir(parents=True,exist_ok=True)
-    plt.tight_layout()
-    plt.savefig(path,dpi=220,bbox_inches="tight")
-    plt.close()
-
-
-def _label(model: str, scenario: str, payload: dict[str,Any]) -> str:
-    y,_=SCENARIOS[scenario]
-    reference,effective,_,_=_lambda_values(model,scenario,payload)
-    return (
-        rf"$Y={y:g},\ \lambda_{{T3}}^{{ref}}={reference:g},"
-        rf"\ \lambda_{{T3}}^{{eff}}={effective:.4g}$"
-    )
-
-
-def _plot_final_scalar(
-    model: str,
-    scenarios: dict[str,dict[str,Any]],
-    *,
-    key: str,
-    ylabel: str,
-    title: str,
-    output: Path,
-    absolute: bool=False,
-    logy: bool=False,
-) -> None:
-    plt.figure(figsize=(7.8,4.9))
-    plotted=False
-    all_positive=True
-    for scenario in SCENARIO_ORDER:
-        payload=scenarios.get(scenario)
-        if payload is None:
-            continue
-        block=payload["final_running"]
-        mu=np.asarray(block["mu_gev"],dtype=float)
-        values=np.asarray(block[key],dtype=float)
-        if absolute:
-            values=np.abs(values)
-        if values.shape!=(mu.size,):
-            raise ValueError(f"final_running.{key} has unexpected shape")
-        all_positive &= bool(np.all(values>0.0))
-        plt.plot(mu,values,label=_label(model,scenario,payload),linewidth=1.35)
-        plotted=True
-    if not plotted:
-        plt.close()
-        return
-    plt.xscale("log")
-    if logy and all_positive:
-        plt.yscale("log")
-    plt.xlabel(r"Renormalisation scale $\mu$ [GeV]")
-    plt.ylabel(ylabel)
-    plt.title(title)
-    plt.grid(True,alpha=0.25)
-    plt.legend(fontsize=7.5)
-    _save(output)
-
-
-def _plot_c5_norm(
-    model: str, scenarios: dict[str,dict[str,Any]], output: Path
-) -> None:
-    plt.figure(figsize=(7.8,4.9))
-    plotted=False
-    positive=True
-    for scenario in SCENARIO_ORDER:
-        payload=scenarios.get(scenario)
-        if payload is None:
-            continue
-        block=payload["final_running"]
-        mu=np.asarray(block["mu_gev"],dtype=float)
-        c5=np.asarray(block["c5_abs"],dtype=float)
-        if c5.shape!=(mu.size,3,3):
-            raise ValueError("final_running.c5_abs has unexpected shape")
-        norm=np.sqrt(np.sum(c5*c5,axis=(1,2)))
-        positive &= bool(np.all(norm>0.0))
-        plt.plot(mu,norm,label=_label(model,scenario,payload),linewidth=1.35)
-        plotted=True
-    if not plotted:
-        plt.close()
-        return
-    plt.xscale("log")
-    if positive:
-        plt.yscale("log")
-    plt.xlabel(r"Renormalisation scale $\mu$ [GeV]")
-    plt.ylabel(r"$\|C_5\|_F$ [GeV$^{-1}$]")
-    plt.title(r"Within-model Weinberg-coefficient comparison")
-    plt.grid(True,alpha=0.25)
-    plt.legend(fontsize=7.5)
-    _save(output)
-
-
-def _plot_direct_c5_norm(
-    model: str, scenarios: dict[str,dict[str,Any]], output: Path
-) -> None:
-    plt.figure(figsize=(7.8,4.9))
-    plotted=False
-    for scenario in SCENARIO_ORDER:
-        payload=scenarios.get(scenario)
-        if payload is None:
-            continue
-        block=payload.get("intermediate_direct_weinberg")
-        if not isinstance(block,dict):
-            continue
-        mu=np.asarray(block["mu_gev"],dtype=float)
-        c5=np.asarray(block["delta_c5_abs"],dtype=float)
-        if c5.shape!=(mu.size,3,3):
-            raise ValueError(
-                "intermediate_direct_weinberg.delta_c5_abs has unexpected shape"
-            )
-        norm=np.sqrt(np.sum(c5*c5,axis=(1,2)))
-        positive=norm>0.0
-        if not np.any(positive):
-            continue
-        plt.plot(mu[positive],norm[positive],
-                 label=_label(model,scenario,payload),linewidth=1.35)
-        plotted=True
-    if not plotted:
-        plt.close()
-        return
-    plt.xscale("log")
-    plt.yscale("log")
-    plt.xlabel(r"Renormalisation scale $\mu$ [GeV]")
-    plt.ylabel(r"$\|\Delta C_5^{\rm direct}\|_F$ [GeV$^{-1}$]")
-    plt.title("Within-model direct intermediate Weinberg generation")
-    plt.grid(True,alpha=0.25)
-    plt.legend(fontsize=7.5)
-    _save(output)
-
-
-def _plot_mixing(
-    model: str, scenarios: dict[str,dict[str,Any]], output: Path
-) -> None:
-    fig,axes=plt.subplots(3,1,figsize=(7.8,9.0),sharex=True)
-    keys=(
-        ("sin2_theta12",r"$\sin^2\theta_{12}$"),
-        ("sin2_theta13",r"$\sin^2\theta_{13}$"),
-        ("sin2_theta23",r"$\sin^2\theta_{23}$"),
-    )
-    plotted=False
-    for scenario in SCENARIO_ORDER:
-        payload=scenarios.get(scenario)
-        if payload is None:
-            continue
-        block=payload["final_running"]
-        mu=np.asarray(block["mu_gev"],dtype=float)
-        for ax,(key,label) in zip(axes,keys):
-            values=np.asarray(block[key],dtype=float)
-            ax.plot(mu,values,label=_label(model,scenario,payload),linewidth=1.2)
-            ax.set_ylabel(label)
-            ax.grid(True,alpha=0.25)
-        plotted=True
-    if not plotted:
-        plt.close(fig)
-        return
-    axes[-1].set_xscale("log")
-    axes[-1].set_xlabel(r"Renormalisation scale $\mu$ [GeV]")
-    axes[0].legend(fontsize=7.5,ncol=2)
-    fig.suptitle("Within-model neutrino mixing comparison")
-    output.parent.mkdir(parents=True,exist_ok=True)
-    fig.tight_layout(rect=(0,0,1,0.97))
-    fig.savefig(output,dpi=220,bbox_inches="tight")
+def _finish(ax, output: Path, *, log_y: bool = True, threshold: float | None = None) -> None:
+    ax.set_xscale("log")
+    if log_y:
+        ax.set_yscale("log")
+    if threshold is not None:
+        ax.axvline(threshold, color="0.4", alpha=0.5, lw=1, ls=":")
+    ax.set_xlabel(r"Renormalisation scale $\mu$ [GeV]")
+    ax.grid(True, alpha=0.2)
+    ax.legend(fontsize=8, ncol=2)
+    fig = ax.figure
+    fig.tight_layout()
+    output.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(output, dpi=210, bbox_inches="tight")
     plt.close(fig)
 
 
-def write_model_report(
-    model: str,
-    scenarios: dict[str,dict[str,Any]],
-    output_dir: Path,
-) -> Path:
-    output=Path(output_dir)/model
-    output.mkdir(parents=True,exist_ok=True)
-
-    _plot_direct_c5_norm(model,scenarios,output/"direct_weinberg_norm_comparison.png")
-    _plot_c5_norm(model,scenarios,output/"c5_norm_comparison.png")
-    _plot_final_scalar(
-        model,scenarios,key="delta_m21_sq_ev2",
-        ylabel=r"$\Delta m_{21}^2$ [eV$^2$]",
-        title="Within-model solar splitting comparison",
-        output=output/"dm21_comparison.png",logy=True,
-    )
-    _plot_final_scalar(
-        model,scenarios,key="delta_m3l_sq_ev2",
-        ylabel=r"$|\Delta m_{3\ell}^2|$ [eV$^2$]",
-        title="Within-model atmospheric splitting comparison",
-        output=output/"dm3l_comparison.png",absolute=True,logy=True,
-    )
-    _plot_mixing(model,scenarios,output/"mixing_comparison.png")
-
-    lines=[
-        f"# {model} — four-benchmark comparison","",
-        "Presentation-only comparison of existing diagnostics. No physics was recomputed.","",
-        "The scenario value is lambda_T3^ref. The actual initialized coupling is",
-        "lambda_T3^eff = f_R lambda_T3^ref, using the verified direct",
-        "LLSS -> Weinberg representation-factor normalization.","",
-        "## Available scenarios","",
-    ]
-    for scenario in SCENARIO_ORDER:
-        y,_=SCENARIOS[scenario]
-        payload=scenarios.get(scenario)
-        status="available" if payload is not None else "missing"
-        if payload is not None:
-            ref,eff,factor,model_class=_lambda_values(model,scenario,payload)
-            lines.append(
-                f"- `{scenario}`: Y={y:g}, lambda_T3^ref={ref:g}, "
-                f"lambda_T3^eff={eff:.8g}, f_R={factor:.8g}, "
-                f"class={model_class} — {status}"
-            )
-        else:
-            ref=SCENARIOS[scenario][1]
-            lines.append(
-                f"- `{scenario}`: Y={y:g}, lambda_T3^ref={ref:g} — {status}"
-            )
-    lines += [
-        "",
-        "The C5 norm is the Frobenius norm reconstructed from the stored absolute",
-        "matrix entries. The direct intermediate norm uses the stored full-flavor",
-        "Delta C5^direct trajectory. These plots do not use the symbolic LLSS",
-        "self-running diagnostic and do not modify the authoritative final C5.",
-    ]
-    (output/"README.md").write_text("\n".join(lines)+"\n",encoding="utf-8")
-    return output
+def plot_comparison(runs: Mapping[str, SavedRun], quantity: str, output: Path) -> None:
+    fig, ax = plt.subplots(figsize=(8, 4.8))
+    positives = []
+    for scenario in SCENARIOS:
+        if scenario not in runs:
+            continue
+        mu, value = extract_trajectory(runs[scenario].payload, quantity)
+        # A zero is meaningful but cannot be put on a logarithmic ordinate.
+        positive = value > 0
+        positives.append(bool(np.all(positive)))
+        ax.plot(mu, np.where(positive, value, np.nan), **_style(scenario))
+    ax.set_ylabel(QUANTITIES[quantity][3])
+    ax.set_title(f"{quantity}: four benchmarks for {next(iter(runs.values())).model_key}")
+    _finish(ax, output, log_y=all(positives))
 
 
-def build_within_model_comparisons(
-    input_root: Path=DEFAULT_INPUT,
-    output_root: Path=DEFAULT_OUTPUT,
-) -> Path:
-    data=collect(Path(input_root))
-    if not data:
-        raise FileNotFoundError(
-            f"No successful comparison diagnostics found under {input_root}"
-        )
-    output=Path(output_root)
-    output.mkdir(parents=True,exist_ok=True)
-    for model in sorted(data):
-        write_model_report(model,data[model],output)
-    print(f"Within-model comparisons written to: {output}")
-    print(f"Models: {len(data)}")
-    return output
+def plot_weinberg_eft(runs: Mapping[str, SavedRun], output: Path) -> list[str]:
+    """Join checked display reconstructions with stored final C5, when possible."""
+    fig, ax = plt.subplots(figsize=(8.6, 5.1))
+    issues: list[str] = []
+    scalar_thresholds = []
+    for scenario in SCENARIOS:
+        if scenario not in runs:
+            continue
+        run = runs[scenario]
+        mu, final = extract_trajectory(run.payload, "c5")
+        style = _style(scenario)
+        ax.plot(mu, np.where(final > 0, final, np.nan), **style)
+        scalar_thresholds.append(float(run.payload["scales_gev"]["mu_scalar_threshold"]))
+        try:
+            matched = reconstruct_matched_continuation(run.payload)
+        except (KeyError, ValueError, TypeError, IndexError) as exc:
+            issues.append(f"{scenario}: no checked intermediate continuation ({exc})")
+            continue
+        intermediate = np.linalg.norm(matched.combined.reshape(len(matched.mu_gev), 9), axis=1)
+        ax.plot(matched.mu_gev, np.where(intermediate > 0, intermediate, np.nan),
+                color=style["color"], linewidth=1.25, linestyle=":", alpha=0.8)
+    if scalar_thresholds and np.allclose(scalar_thresholds, scalar_thresholds[0]):
+        ax.axvline(scalar_thresholds[0], lw=1, ls="-.", alpha=0.5, color="0.5")
+    ax.set_ylabel(r"$\Vert C_5\Vert_F$ [GeV$^{-1}$]")
+    ax.set_title("Solid/dashed: final SM+Weinberg; dotted: checked display continuation")
+    _finish(ax, output)
+    return issues
 
 
-def main() -> int:
-    parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--input",type=Path,default=DEFAULT_INPUT)
-    parser.add_argument("--output",type=Path,default=DEFAULT_OUTPUT)
-    args=parser.parse_args()
-    build_within_model_comparisons(args.input,args.output)
-    return 0
+def plot_threshold_components(runs: Mapping[str, SavedRun], output: Path) -> None:
+    fig, ax = plt.subplots(figsize=(8, 4.6))
+    names = ("hard", "direct_running", "combined")
+    x = np.arange(len(names))
+    for index, scenario in enumerate(SCENARIOS):
+        if scenario not in runs:
+            continue
+        data = runs[scenario].payload["c5_threshold_contributions"]
+        magnitudes = [float(np.linalg.norm(np.asarray(data[name]["abs"], dtype=float)))
+                      for name in names]
+        ax.bar(x + (index - 1.5) * 0.19, magnitudes, width=0.18,
+               color=_style(scenario)["color"], alpha=0.5 if "largeL" in scenario else 0.95,
+               label=LABELS[scenario])
+    ax.set_xticks(x, ["Hard at $M_S$", "Direct at $M_S$", "Combined at $M_S$"])
+    ax.set_ylabel(r"Frobenius norm [GeV$^{-1}$]")
+    ax.set_title("Scalar-threshold matching contributions (magnitudes)")
+    ax.grid(axis="y", alpha=0.2)
+    ax.legend(fontsize=8, ncol=2)
+    fig.tight_layout()
+    output.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(output, dpi=210, bbox_inches="tight")
+    plt.close(fig)
 
 
-if __name__=="__main__":
-    raise SystemExit(main())
+def generate_model_figures(runs: Mapping[str, SavedRun], figure_dir: Path) -> tuple[list[str], list[str]]:
+    figures: list[str] = []
+    for name in ("y1", "y2", "lambda", "direct", "c5", "dm21", "dm3l", "m1", "m2", "m3"):
+        target = figure_dir / f"{name}_comparison.png"
+        plot_comparison(runs, name, target)
+        figures.append(target.name)
+    target = figure_dir / "weinberg_eft_comparison.png"
+    issues = plot_weinberg_eft(runs, target)
+    figures.append(target.name)
+    target = figure_dir / "c5_threshold_components.png"
+    plot_threshold_components(runs, target)
+    figures.append(target.name)
+    return figures, issues

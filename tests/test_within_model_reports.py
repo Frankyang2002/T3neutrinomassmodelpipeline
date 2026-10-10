@@ -1,4 +1,4 @@
-"""Synthetic fixture tests: no calls to matching or RGE code."""
+"""Synthetic fixture tests for the shared cross-/within-model HTML renderer."""
 from __future__ import annotations
 
 import json
@@ -49,7 +49,7 @@ def test_extraction_norm_includes_off_diagonals():
     assert norm[0] == pytest.approx(np.sqrt(3*(1.2e-12)**2 + (3e-12)**2))
 
 
-def test_four_scenarios_generate_without_physics(tmp_path: Path):
+def test_four_scenarios_generate_with_shared_dashboard(tmp_path: Path):
     input_root, out = tmp_path / "raw", tmp_path / "reports"
     for index, scenario in enumerate(SCENARIOS):
         path = input_root / scenario / MODEL / "T3_E_alpha_m2" / "data" / "running_diagnostics.json"
@@ -60,10 +60,16 @@ def test_four_scenarios_generate_without_physics(tmp_path: Path):
     result = build_reports(input_root, out, strict=True)
     assert len(result["models"]) == 1
     assert (out / MODEL / "comparison_report.html").is_file()
-    interactive = (out / MODEL / "interactive_comparison.html")
+    interactive = out / MODEL / "interactive_comparison.html"
     assert interactive.is_file()
-    assert "smallY_largeL" in interactive.read_text(encoding="utf-8")
-    assert "pointerdown" in interactive.read_text(encoding="utf-8")
+    page = interactive.read_text(encoding="utf-8")
+    assert "smallY_largeL" in page
+    # These controls belong to InteractiveModelComparison's canonical renderer.
+    assert 'id="zoomInt"' in page
+    assert 'id="zoomUV"' in page
+    assert 'id="zoomFinal"' in page
+    assert 'id="showComponents"' in page
+    assert "Show all scenarios" in page
     assert (out / MODEL / "figures" / "weinberg_eft_comparison.png").is_file()
     assert not result["models"][MODEL]["reconstruction_warnings"]
 

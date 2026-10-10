@@ -1,9 +1,8 @@
-"""Migrate repeated symbolic T3 PDFs/TEX into Reports/output/models/.
+"""Move repeated symbolic report PDFs/TeX to Reports/output/models.
 
-Examples (project root):
- python scripts/MigrateModelReports.py
- python scripts/MigrateModelReports.py --apply
- python scripts/MigrateModelReports.py --apply --prune-duplicates
+  python scripts/MigrateModelReports.py                # dry-run
+  python scripts/MigrateModelReports.py --apply        # copy+verify+remove originals
+  python scripts/MigrateModelReports.py --apply --keep-originals
 """
 from __future__ import annotations
 
@@ -19,16 +18,16 @@ from Numerical.orchestration.ModelReportLayout import migrate
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--report-root', type=Path, default=PROJECT_ROOT / 'Reports' / 'output')
-    parser.add_argument('--apply', action='store_true', help='Copy verified reports to shared model directory')
-    parser.add_argument('--prune-duplicates', action='store_true',
-                        help='After copying and hash verification, delete only original TEX/PDF duplicates')
+    parser.add_argument("--report-root", type=Path,
+                        default=PROJECT_ROOT / "Reports" / "output")
+    parser.add_argument("--apply", action="store_true")
+    parser.add_argument("--keep-originals", action="store_true",
+                        help="Copy only; do not remove verified source files")
     args = parser.parse_args(argv)
-    if args.prune_duplicates and not args.apply:
-        parser.error('--prune-duplicates requires --apply')
-    report = migrate(args.report_root, execute=args.apply, prune=args.prune_duplicates)
+    report = migrate(args.report_root, execute=args.apply, prune=not args.keep_originals)
     print(json.dumps(report, indent=2))
-    return 2 if report['conflicts'] else 0
+    return 2 if report["conflicts"] else 0
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     raise SystemExit(main())

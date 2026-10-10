@@ -1,0 +1,52 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=2.0cm]{geometry}
+\usepackage{amsmath,amssymb,booktabs,longtable,array}
+\usepackage[T1]{fontenc}
+\setlength{\parindent}{0pt}
+\renewcommand{\arraystretch}{1.18}
+\begin{document}
+\section*{T3: physical symmetric Weinberg coefficient $C_5$}
+The physical coefficient is displayed without the redundant ordered Matchete column.
+For all 16 models the saved ordered coefficients have the same mass-dependent
+structure after removing the flavour tensor and exact class prefactor:
+\[
+ C_{5,m}^{ij}=\kappa_m\,\mathcal F_{\rm match}(M_F,m_1,m_2,\bar\mu,\epsilon)\,
+ \left(\overline{y_{1,i,r}}\,\overline{y_{2,j,r}}+
+ \overline{y_{1,j,r}}\,\overline{y_{2,i,r}}\right).
+\]
+The repeated fermion index $r$ is summed as in the saved output.
+The common factor $\mathcal F_{\rm match}$ includes $\lambda_5$, $\hbar$, the
+Matchete integral $I_3$, and its original mass and regulator dependence.
+It is defined exactly by the common kernel in
+\texttt{C5\_common\_kernel.txt}; no loop-integral simplification or
+renormalisation has been assumed here.
+\medskip
+\begin{longtable}{@{}lllc@{}}
+\toprule
+Model & Class & $(d_{S_1},d_{S_2},d_F)$ & $\kappa_m$ \\
+\midrule\endfirsthead
+\toprule
+Model & Class & $(d_{S_1},d_{S_2},d_F)$ & $\kappa_m$ \\
+\midrule\endhead
+T3-A-m4 & A & $(1,3,2)$ & $\frac{2\sqrt{3}}{3}$ \\
+T3-A-m2 & A & $(1,3,2)$ & $\frac{2\sqrt{3}}{3}$ \\
+T3-A-p0 & A & $(1,3,2)$ & $\frac{2\sqrt{3}}{3}$ \\
+T3-B-m3 & B & $(2,2,1)$ & $\frac{2\sqrt{3}}{3}$ \\
+T3-B-m1 & B & $(2,2,1)$ & $\frac{2\sqrt{3}}{3}$ \\
+T3-B-p1 & B & $(2,2,1)$ & $\frac{2\sqrt{3}}{3}$ \\
+T3-C-m3 & C & $(2,2,3)$ & $-\frac{2}{3}$ \\
+T3-C-m1 & C & $(2,2,3)$ & $-\frac{2}{3}$ \\
+T3-C-p1 & C & $(2,2,3)$ & $-\frac{2}{3}$ \\
+T3-D-m2 & D & $(3,1,2)$ & $\frac{2\sqrt{3}}{3}$ \\
+T3-D-p0 & D & $(3,1,2)$ & $\frac{2\sqrt{3}}{3}$ \\
+T3-D-p2 & D & $(3,1,2)$ & $\frac{2\sqrt{3}}{3}$ \\
+T3-E-m4 & E & $(3,3,2)$ & $-\frac{2\sqrt{6}}{3}$ \\
+T3-E-m2 & E & $(3,3,2)$ & $-\frac{2\sqrt{6}}{3}$ \\
+T3-E-p0 & E & $(3,3,2)$ & $-\frac{2\sqrt{6}}{3}$ \\
+T3-E-p2 & E & $(3,3,2)$ & $-\frac{2\sqrt{6}}{3}$ \\
+\bottomrule\end{longtable}
+\paragraph{Scope.} The prefactors and common kernel are obtained
+by literal factor extraction from the previously generated Matchete
+expressions, not from an independent matching calculation.
+The full original expression remains preserved separately.
+\end{document}

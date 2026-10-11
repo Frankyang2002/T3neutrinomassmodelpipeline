@@ -22,6 +22,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from common.RunRecords import RunRecord
+from scripts.AnalyticalReportHousekeeping import clean
 
 MODELS = (
     ("A", 1, 3, 2, -4), ("A", 1, 3, 2, -2), ("A", 1, 3, 2, 0),
@@ -148,7 +149,11 @@ def main(argv: list[str] | None = None) -> int:
         print(f"  {record.name}: {record.output_dir}")
     if args.check:
         return 0
+    # Existing finished PDFs remain available while new reports compile.
+    # Archive build trash and presentation duplicates only after generation.
     result = generate(records, args.output)
+    cleanup = clean(args.output, apply=True)
+    print(f"Automatic report cleanup: {cleanup['archived']} archived to {cleanup['archive']}")
     print(f"Combined analytical report files: {len(result['report_tex_files'])} in {args.output}")
     return 0
 

@@ -1,6 +1,6 @@
 \documentclass[9pt]{article}
 \usepackage[a4paper,margin=1.15cm]{geometry}
-\usepackage{amsmath,amssymb,booktabs,longtable,array}
+\usepackage{amsmath,amssymb,booktabs,longtable,array,adjustbox}
 \usepackage[T1]{fontenc}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.45em}
@@ -53,52 +53,76 @@ T3-E-p2 & $(3,1)$ & $(3,2)$ & $(2,\frac{3}{2})$ & S1, S2 & none \\
 \section*{Decoupling statement}
 All dependence on the original $S_1$, $S_2$ and $F$ representations is contained in the matched boundary value $C_5(\mu_{\mathrm{th}})$.  The one-loop running below the final threshold is common to all T3 classes.
 \subsection*{$ \beta_{C_5} $}
-\textit{Run block 1: T3-A-m4--T3-B-m1}
-\begin{longtable}{@{}p{0.31\linewidth}ccccc@{}}
+\textit{Run block 1: T3-A-m4--T3-A-p0}
+\begin{longtable}{@{}p{0.37\linewidth}p{0.19\linewidth}p{0.19\linewidth}p{0.19\linewidth}@{}}
 \toprule
-$\mathcal{S}$ & $ \mathrm{T3-A-m4}\;(\alpha=-4) $ & $ \mathrm{T3-A-m2}\;(\alpha=-2) $ & $ \mathrm{T3-A-p0}\;(\alpha=0) $ & $ \mathrm{T3-B-m3}\;(\alpha=-3) $ & $ \mathrm{T3-B-m1}\;(\alpha=-1) $ \\
+\adjustbox{max width=\linewidth}{$\mathcal{S}$} & \adjustbox{max width=\linewidth}{$ \mathrm{T3-A-m4}\;(\alpha=-4) $} & \adjustbox{max width=\linewidth}{$ \mathrm{T3-A-m2}\;(\alpha=-2) $} & \adjustbox{max width=\linewidth}{$ \mathrm{T3-A-p0}\;(\alpha=0) $} \\
 \midrule
-$ \lambda_1\,C_5 $ & $ 2 $ & $ 2 $ & $ 2 $ & $ 2 $ & $ 2 $ \\
-$ g_2^2\,C_5 $ & $ -3 $ & $ -3 $ & $ -3 $ & $ -3 $ & $ -3 $ \\
-$ T\,C_5 $ & $ 2 $ & $ 2 $ & $ 2 $ & $ 2 $ & $ 2 $ \\
-$ (Y_e^\dagger Y_e)^T C_5 $ & $ - \frac{3}{2} $ & $ - \frac{3}{2} $ & $ - \frac{3}{2} $ & $ - \frac{3}{2} $ & $ - \frac{3}{2} $ \\
-$ C_5(Y_e^\dagger Y_e) $ & $ - \frac{3}{2} $ & $ - \frac{3}{2} $ & $ - \frac{3}{2} $ & $ - \frac{3}{2} $ & $ - \frac{3}{2} $ \\
+\adjustbox{max width=\linewidth}{$ \lambda_1\,C_5 $} & \adjustbox{max width=\linewidth}{$ 2 $} & \adjustbox{max width=\linewidth}{$ 2 $} & \adjustbox{max width=\linewidth}{$ 2 $} \\
+\adjustbox{max width=\linewidth}{$ g_2^2\,C_5 $} & \adjustbox{max width=\linewidth}{$ -3 $} & \adjustbox{max width=\linewidth}{$ -3 $} & \adjustbox{max width=\linewidth}{$ -3 $} \\
+\adjustbox{max width=\linewidth}{$ T\,C_5 $} & \adjustbox{max width=\linewidth}{$ 2 $} & \adjustbox{max width=\linewidth}{$ 2 $} & \adjustbox{max width=\linewidth}{$ 2 $} \\
+\adjustbox{max width=\linewidth}{$ (Y_e^\dagger Y_e)^T C_5 $} & \adjustbox{max width=\linewidth}{$ - \frac{3}{2} $} & \adjustbox{max width=\linewidth}{$ - \frac{3}{2} $} & \adjustbox{max width=\linewidth}{$ - \frac{3}{2} $} \\
+\adjustbox{max width=\linewidth}{$ C_5(Y_e^\dagger Y_e) $} & \adjustbox{max width=\linewidth}{$ - \frac{3}{2} $} & \adjustbox{max width=\linewidth}{$ - \frac{3}{2} $} & \adjustbox{max width=\linewidth}{$ - \frac{3}{2} $} \\
 \bottomrule
 \end{longtable}
-\textit{Run block 2: T3-B-p1--T3-D-m2}
-\begin{longtable}{@{}p{0.31\linewidth}ccccc@{}}
+\textit{Run block 2: T3-B-m3--T3-B-p1}
+\begin{longtable}{@{}p{0.37\linewidth}p{0.19\linewidth}p{0.19\linewidth}p{0.19\linewidth}@{}}
 \toprule
-$\mathcal{S}$ & $ \mathrm{T3-B-p1}\;(\alpha=1) $ & $ \mathrm{T3-C-m3}\;(\alpha=-3) $ & $ \mathrm{T3-C-m1}\;(\alpha=-1) $ & $ \mathrm{T3-C-p1}\;(\alpha=1) $ & $ \mathrm{T3-D-m2}\;(\alpha=-2) $ \\
+\adjustbox{max width=\linewidth}{$\mathcal{S}$} & \adjustbox{max width=\linewidth}{$ \mathrm{T3-B-m3}\;(\alpha=-3) $} & \adjustbox{max width=\linewidth}{$ \mathrm{T3-B-m1}\;(\alpha=-1) $} & \adjustbox{max width=\linewidth}{$ \mathrm{T3-B-p1}\;(\alpha=1) $} \\
 \midrule
-$ \lambda_1\,C_5 $ & $ 2 $ & $ 2 $ & $ 2 $ & $ 2 $ & $ 2 $ \\
-$ g_2^2\,C_5 $ & $ -3 $ & $ -3 $ & $ -3 $ & $ -3 $ & $ -3 $ \\
-$ T\,C_5 $ & $ 2 $ & $ 2 $ & $ 2 $ & $ 2 $ & $ 2 $ \\
-$ (Y_e^\dagger Y_e)^T C_5 $ & $ - \frac{3}{2} $ & $ - \frac{3}{2} $ & $ - \frac{3}{2} $ & $ - \frac{3}{2} $ & $ - \frac{3}{2} $ \\
-$ C_5(Y_e^\dagger Y_e) $ & $ - \frac{3}{2} $ & $ - \frac{3}{2} $ & $ - \frac{3}{2} $ & $ - \frac{3}{2} $ & $ - \frac{3}{2} $ \\
+\adjustbox{max width=\linewidth}{$ \lambda_1\,C_5 $} & \adjustbox{max width=\linewidth}{$ 2 $} & \adjustbox{max width=\linewidth}{$ 2 $} & \adjustbox{max width=\linewidth}{$ 2 $} \\
+\adjustbox{max width=\linewidth}{$ g_2^2\,C_5 $} & \adjustbox{max width=\linewidth}{$ -3 $} & \adjustbox{max width=\linewidth}{$ -3 $} & \adjustbox{max width=\linewidth}{$ -3 $} \\
+\adjustbox{max width=\linewidth}{$ T\,C_5 $} & \adjustbox{max width=\linewidth}{$ 2 $} & \adjustbox{max width=\linewidth}{$ 2 $} & \adjustbox{max width=\linewidth}{$ 2 $} \\
+\adjustbox{max width=\linewidth}{$ (Y_e^\dagger Y_e)^T C_5 $} & \adjustbox{max width=\linewidth}{$ - \frac{3}{2} $} & \adjustbox{max width=\linewidth}{$ - \frac{3}{2} $} & \adjustbox{max width=\linewidth}{$ - \frac{3}{2} $} \\
+\adjustbox{max width=\linewidth}{$ C_5(Y_e^\dagger Y_e) $} & \adjustbox{max width=\linewidth}{$ - \frac{3}{2} $} & \adjustbox{max width=\linewidth}{$ - \frac{3}{2} $} & \adjustbox{max width=\linewidth}{$ - \frac{3}{2} $} \\
 \bottomrule
 \end{longtable}
-\textit{Run block 3: T3-D-p0--T3-E-p0}
-\begin{longtable}{@{}p{0.31\linewidth}ccccc@{}}
+\textit{Run block 3: T3-C-m3--T3-C-p1}
+\begin{longtable}{@{}p{0.37\linewidth}p{0.19\linewidth}p{0.19\linewidth}p{0.19\linewidth}@{}}
 \toprule
-$\mathcal{S}$ & $ \mathrm{T3-D-p0}\;(\alpha=0) $ & $ \mathrm{T3-D-p2}\;(\alpha=2) $ & $ \mathrm{T3-E-m4}\;(\alpha=-4) $ & $ \mathrm{T3-E-m2}\;(\alpha=-2) $ & $ \mathrm{T3-E-p0}\;(\alpha=0) $ \\
+\adjustbox{max width=\linewidth}{$\mathcal{S}$} & \adjustbox{max width=\linewidth}{$ \mathrm{T3-C-m3}\;(\alpha=-3) $} & \adjustbox{max width=\linewidth}{$ \mathrm{T3-C-m1}\;(\alpha=-1) $} & \adjustbox{max width=\linewidth}{$ \mathrm{T3-C-p1}\;(\alpha=1) $} \\
 \midrule
-$ \lambda_1\,C_5 $ & $ 2 $ & $ 2 $ & $ 2 $ & $ 2 $ & $ 2 $ \\
-$ g_2^2\,C_5 $ & $ -3 $ & $ -3 $ & $ -3 $ & $ -3 $ & $ -3 $ \\
-$ T\,C_5 $ & $ 2 $ & $ 2 $ & $ 2 $ & $ 2 $ & $ 2 $ \\
-$ (Y_e^\dagger Y_e)^T C_5 $ & $ - \frac{3}{2} $ & $ - \frac{3}{2} $ & $ - \frac{3}{2} $ & $ - \frac{3}{2} $ & $ - \frac{3}{2} $ \\
-$ C_5(Y_e^\dagger Y_e) $ & $ - \frac{3}{2} $ & $ - \frac{3}{2} $ & $ - \frac{3}{2} $ & $ - \frac{3}{2} $ & $ - \frac{3}{2} $ \\
+\adjustbox{max width=\linewidth}{$ \lambda_1\,C_5 $} & \adjustbox{max width=\linewidth}{$ 2 $} & \adjustbox{max width=\linewidth}{$ 2 $} & \adjustbox{max width=\linewidth}{$ 2 $} \\
+\adjustbox{max width=\linewidth}{$ g_2^2\,C_5 $} & \adjustbox{max width=\linewidth}{$ -3 $} & \adjustbox{max width=\linewidth}{$ -3 $} & \adjustbox{max width=\linewidth}{$ -3 $} \\
+\adjustbox{max width=\linewidth}{$ T\,C_5 $} & \adjustbox{max width=\linewidth}{$ 2 $} & \adjustbox{max width=\linewidth}{$ 2 $} & \adjustbox{max width=\linewidth}{$ 2 $} \\
+\adjustbox{max width=\linewidth}{$ (Y_e^\dagger Y_e)^T C_5 $} & \adjustbox{max width=\linewidth}{$ - \frac{3}{2} $} & \adjustbox{max width=\linewidth}{$ - \frac{3}{2} $} & \adjustbox{max width=\linewidth}{$ - \frac{3}{2} $} \\
+\adjustbox{max width=\linewidth}{$ C_5(Y_e^\dagger Y_e) $} & \adjustbox{max width=\linewidth}{$ - \frac{3}{2} $} & \adjustbox{max width=\linewidth}{$ - \frac{3}{2} $} & \adjustbox{max width=\linewidth}{$ - \frac{3}{2} $} \\
 \bottomrule
 \end{longtable}
-\textit{Run block 4: T3-E-p2--T3-E-p2}
-\begin{longtable}{@{}p{0.31\linewidth}c@{}}
+\textit{Run block 4: T3-D-m2--T3-D-p2}
+\begin{longtable}{@{}p{0.37\linewidth}p{0.19\linewidth}p{0.19\linewidth}p{0.19\linewidth}@{}}
 \toprule
-$\mathcal{S}$ & $ \mathrm{T3-E-p2}\;(\alpha=2) $ \\
+\adjustbox{max width=\linewidth}{$\mathcal{S}$} & \adjustbox{max width=\linewidth}{$ \mathrm{T3-D-m2}\;(\alpha=-2) $} & \adjustbox{max width=\linewidth}{$ \mathrm{T3-D-p0}\;(\alpha=0) $} & \adjustbox{max width=\linewidth}{$ \mathrm{T3-D-p2}\;(\alpha=2) $} \\
 \midrule
-$ \lambda_1\,C_5 $ & $ 2 $ \\
-$ g_2^2\,C_5 $ & $ -3 $ \\
-$ T\,C_5 $ & $ 2 $ \\
-$ (Y_e^\dagger Y_e)^T C_5 $ & $ - \frac{3}{2} $ \\
-$ C_5(Y_e^\dagger Y_e) $ & $ - \frac{3}{2} $ \\
+\adjustbox{max width=\linewidth}{$ \lambda_1\,C_5 $} & \adjustbox{max width=\linewidth}{$ 2 $} & \adjustbox{max width=\linewidth}{$ 2 $} & \adjustbox{max width=\linewidth}{$ 2 $} \\
+\adjustbox{max width=\linewidth}{$ g_2^2\,C_5 $} & \adjustbox{max width=\linewidth}{$ -3 $} & \adjustbox{max width=\linewidth}{$ -3 $} & \adjustbox{max width=\linewidth}{$ -3 $} \\
+\adjustbox{max width=\linewidth}{$ T\,C_5 $} & \adjustbox{max width=\linewidth}{$ 2 $} & \adjustbox{max width=\linewidth}{$ 2 $} & \adjustbox{max width=\linewidth}{$ 2 $} \\
+\adjustbox{max width=\linewidth}{$ (Y_e^\dagger Y_e)^T C_5 $} & \adjustbox{max width=\linewidth}{$ - \frac{3}{2} $} & \adjustbox{max width=\linewidth}{$ - \frac{3}{2} $} & \adjustbox{max width=\linewidth}{$ - \frac{3}{2} $} \\
+\adjustbox{max width=\linewidth}{$ C_5(Y_e^\dagger Y_e) $} & \adjustbox{max width=\linewidth}{$ - \frac{3}{2} $} & \adjustbox{max width=\linewidth}{$ - \frac{3}{2} $} & \adjustbox{max width=\linewidth}{$ - \frac{3}{2} $} \\
+\bottomrule
+\end{longtable}
+\textit{Run block 5: T3-E-m4--T3-E-p0}
+\begin{longtable}{@{}p{0.37\linewidth}p{0.19\linewidth}p{0.19\linewidth}p{0.19\linewidth}@{}}
+\toprule
+\adjustbox{max width=\linewidth}{$\mathcal{S}$} & \adjustbox{max width=\linewidth}{$ \mathrm{T3-E-m4}\;(\alpha=-4) $} & \adjustbox{max width=\linewidth}{$ \mathrm{T3-E-m2}\;(\alpha=-2) $} & \adjustbox{max width=\linewidth}{$ \mathrm{T3-E-p0}\;(\alpha=0) $} \\
+\midrule
+\adjustbox{max width=\linewidth}{$ \lambda_1\,C_5 $} & \adjustbox{max width=\linewidth}{$ 2 $} & \adjustbox{max width=\linewidth}{$ 2 $} & \adjustbox{max width=\linewidth}{$ 2 $} \\
+\adjustbox{max width=\linewidth}{$ g_2^2\,C_5 $} & \adjustbox{max width=\linewidth}{$ -3 $} & \adjustbox{max width=\linewidth}{$ -3 $} & \adjustbox{max width=\linewidth}{$ -3 $} \\
+\adjustbox{max width=\linewidth}{$ T\,C_5 $} & \adjustbox{max width=\linewidth}{$ 2 $} & \adjustbox{max width=\linewidth}{$ 2 $} & \adjustbox{max width=\linewidth}{$ 2 $} \\
+\adjustbox{max width=\linewidth}{$ (Y_e^\dagger Y_e)^T C_5 $} & \adjustbox{max width=\linewidth}{$ - \frac{3}{2} $} & \adjustbox{max width=\linewidth}{$ - \frac{3}{2} $} & \adjustbox{max width=\linewidth}{$ - \frac{3}{2} $} \\
+\adjustbox{max width=\linewidth}{$ C_5(Y_e^\dagger Y_e) $} & \adjustbox{max width=\linewidth}{$ - \frac{3}{2} $} & \adjustbox{max width=\linewidth}{$ - \frac{3}{2} $} & \adjustbox{max width=\linewidth}{$ - \frac{3}{2} $} \\
+\bottomrule
+\end{longtable}
+\textit{Run block 6: T3-E-p2--T3-E-p2}
+\begin{longtable}{@{}p{0.37\linewidth}p{0.19\linewidth}@{}}
+\toprule
+\adjustbox{max width=\linewidth}{$\mathcal{S}$} & \adjustbox{max width=\linewidth}{$ \mathrm{T3-E-p2}\;(\alpha=2) $} \\
+\midrule
+\adjustbox{max width=\linewidth}{$ \lambda_1\,C_5 $} & \adjustbox{max width=\linewidth}{$ 2 $} \\
+\adjustbox{max width=\linewidth}{$ g_2^2\,C_5 $} & \adjustbox{max width=\linewidth}{$ -3 $} \\
+\adjustbox{max width=\linewidth}{$ T\,C_5 $} & \adjustbox{max width=\linewidth}{$ 2 $} \\
+\adjustbox{max width=\linewidth}{$ (Y_e^\dagger Y_e)^T C_5 $} & \adjustbox{max width=\linewidth}{$ - \frac{3}{2} $} \\
+\adjustbox{max width=\linewidth}{$ C_5(Y_e^\dagger Y_e) $} & \adjustbox{max width=\linewidth}{$ - \frac{3}{2} $} \\
 \bottomrule
 \end{longtable}
 \section*{Flavor form}

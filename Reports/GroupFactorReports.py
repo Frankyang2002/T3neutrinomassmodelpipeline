@@ -67,7 +67,7 @@ from Reports.RGEComparison import (
 )
 
 
-MAX_RUN_COLUMNS = 5
+MAX_RUN_COLUMNS = 3
 
 
 def _latex_expression(value: object) -> str:
@@ -265,6 +265,10 @@ def _compact_trace_group_factors(values: Mapping[str, object]) -> dict[str, obje
     return result
 
 
+def _fit_group_factor_math(latex: str) -> str:
+    """Fit an inline mathematical table entry within its fixed-width column."""
+    return rf"\adjustbox{{max width=\linewidth}}{{{latex}}}"
+
 def _comparison_table(
     beta_tex: str,
     records: Sequence[RunRecord],
@@ -288,13 +292,13 @@ def _comparison_table(
                 rf"{latex_escape_text(chunk[0].name)}--{latex_escape_text(chunk[-1].name)}}}"
             )
 
-        colspec = "@{}p{0.31\\linewidth}" + "c" * len(chunk) + "@{}"
+        colspec = "@{}p{0.37\\linewidth}" + "p{0.19\\linewidth}" * len(chunk) + "@{}"
         lines.append(rf"\begin{{longtable}}{{{colspec}}}")
         lines.append(r"\toprule")
         header = [r"$\mathcal{S}$"] + [
             rf"$ {_model_column_label(record)} $" for record in chunk
         ]
-        lines.append(" & ".join(header) + r" \\")
+        lines.append(" & ".join(_fit_group_factor_math(cell) for cell in header) + r" \\")
         lines.append(r"\midrule")
 
         for key in all_keys:
@@ -305,7 +309,7 @@ def _comparison_table(
                     row.append(rf"$ {_latex_expression(values[key])} $")
                 else:
                     row.append(r"$0$")
-            lines.append(" & ".join(row) + r" \\")
+            lines.append(" & ".join(_fit_group_factor_math(cell) for cell in row) + r" \\")
 
         lines.append(r"\bottomrule")
         lines.append(r"\end{longtable}")
@@ -420,7 +424,7 @@ def _comparison_table_yukawa(
 
     lines = [rf"\subsection*{{$ \beta_{{{beta_name}}} $}}"]
     for chunk in _chunk_records(records):
-        colspec = "@{}p{0.31\\linewidth}" + "c" * len(chunk) + "@{}"
+        colspec = "@{}p{0.37\\linewidth}" + "p{0.19\\linewidth}" * len(chunk) + "@{}"
         lines.extend([
             rf"\begin{{longtable}}{{{colspec}}}",
             r"\toprule",
@@ -454,13 +458,13 @@ def _fermion_mass_comparison_table(
         if len(records) > MAX_RUN_COLUMNS:
             lines.append(rf"\textit{{Run block {chunk_index}}}")
 
-        colspec = "@{}p{0.31\\linewidth}" + "c" * len(chunk) + "@{}"
+        colspec = "@{}p{0.37\\linewidth}" + "p{0.19\\linewidth}" * len(chunk) + "@{}"
         lines.append(rf"\begin{{longtable}}{{{colspec}}}")
         lines.append(r"\toprule")
         header = [r"$\mathcal{S}$"] + [
             rf"$ {_model_column_label(record)} $" for record in chunk
         ]
-        lines.append(" & ".join(header) + r" \\")
+        lines.append(" & ".join(_fit_group_factor_math(cell) for cell in header) + r" \\")
         lines.append(r"\midrule")
 
         for key in all_keys:
@@ -470,7 +474,7 @@ def _fermion_mass_comparison_table(
                 row.append(
                     rf"$ {_latex_expression(values[key])} $" if key in values else r"$0$"
                 )
-            lines.append(" & ".join(row) + r" \\")
+            lines.append(" & ".join(_fit_group_factor_math(cell) for cell in row) + r" \\")
 
         lines.append(r"\bottomrule")
         lines.append(r"\end{longtable}")
@@ -740,7 +744,7 @@ def _direct_weinberg_comparison(records: Sequence[RunRecord]) -> list[str]:
     ]
 
     for chunk in _chunk_records(records):
-        colspec = "@{}l" + "c" * len(chunk) + "@{}"
+        colspec = "@{}p{0.37\\linewidth}" + "p{0.19\\linewidth}" * len(chunk) + "@{}"
         lines.append(rf"\begin{{longtable}}{{{colspec}}}")
         lines.append(r"\toprule")
         header = [r"$\mathcal{S}$"] + [
@@ -974,7 +978,7 @@ def _saved_rge_term_table(
     lines = [rf"\subsection*{{$ {beta_tex} $}}"]
 
     for chunk in _chunk_records(records):
-        colspec = "@{}p{0.38\\linewidth}" + "c" * len(chunk) + "@{}"
+        colspec = "@{}p{0.37\\linewidth}" + "p{0.19\\linewidth}" * len(chunk) + "@{}"
         lines.extend([
             rf"\begin{{longtable}}{{{colspec}}}",
             r"\toprule",
@@ -990,7 +994,7 @@ def _saved_rge_term_table(
             for record in chunk:
                 value = per_run.get(_run_key(record), {}).get(structure)
                 row.append(r"$0$" if value is None else rf"$ {_latex_expression(value)} $")
-            lines.append(" & ".join(row) + r" \\")
+            lines.append(" & ".join(_fit_group_factor_math(cell) for cell in row) + r" \\")
 
         lines.extend([r"\bottomrule", r"\end{longtable}"])
 
@@ -1257,7 +1261,7 @@ def _group_factor_document_header(title: str, stage_text: str) -> list[str]:
         *latex_document_preamble(
             "9pt",
             "a4paper,margin=1.15cm",
-            "amsmath,amssymb,booktabs,longtable,array",
+            "amsmath,amssymb,booktabs,longtable,array,adjustbox",
             r"\setlength{\parindent}{0pt}",
             r"\setlength{\parskip}{0.45em}",
             r"\setlength{\tabcolsep}{3.5pt}",

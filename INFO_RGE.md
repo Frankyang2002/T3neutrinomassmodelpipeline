@@ -1,4 +1,4 @@
-# T3 RGE, Threshold Transport and Final C5 — File-by-File Guide
+﻿# T3 RGE, Threshold Transport and Final C5 — File-by-File Guide
 
 This document explains every implementation file under `RGE/`.
 
@@ -483,3 +483,47 @@ physics/
 The main architectural distinction is:
 
 > `RGE/` owns equations, symbolic tensor transport and matching bookkeeping; `Numerical/` owns benchmark substitution, state vectors and ODE integration.
+
+## LLSS fixed-order diagnostic and power counting
+
+The component Wilson implementation in
+`RGE/running/intermediate/ScalarOnlyWilsonFlow.py` transports the
+dimension-five scalar-lepton coefficient between the fermion and scalar
+thresholds at fixed-order leading-log accuracy:
+
+\[
+C_{\rm LLSS}(\mu)
+=
+C_{\rm LLSS}^{(0)}
++
+\frac{1}{16\pi^2}\ln\!\left(\frac{\mu}{M_F}\right)
+\beta^{(1)}[C_{\rm LLSS}^{(0)}]
++\mathcal O(\hbar^2).
+\]
+
+`Numerical/diagnostics/IntermediateWilsonDiagnostics.py` samples this
+same symbolic expression at intermediate scales. It neither defines a
+new beta function nor solves an RG-improved Wilson-coefficient ODE.
+
+**Flavor scope:** the component expression is a symbolic
+one-generation/group-theory diagnostic. Production neutrino calculations
+use full complex \(3\times3\) lepton-heavy Yukawa matrices. The diagnostic
+does not substitute an arbitrary scalar, matrix element, trace, or norm
+for a Yukawa matrix. A numerical LLSS norm requires a separately
+verified full-flavor lift of the component Wilson RGE.
+
+**Power counting:** LLSS self-running is a one-loop correction,
+\(\delta C_{\rm LLSS}^{(1)}=\mathcal O(\hbar)\). Feeding that correction
+through an additional scalar loop produces
+\(\delta C_5\sim\hbar\,\delta C_{\rm LLSS}^{(1)}
+=\mathcal O(\hbar^2)\). It is therefore excluded from the
+authoritative one-loop final matching result,
+
+\[
+C_5(M_S)=C_{5,\rm hard}+\Delta C_{5,\rm direct}.
+\]
+
+The numerical plot `intermediate_direct_weinberg_running.png` instead
+shows the full-flavor direct one-loop \(LLSS\to O_5\) contribution that
+enters the final \(C_5\). Do not label the symbolic LLSS fixed-order
+diagnostic as the physical Weinberg coefficient.

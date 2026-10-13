@@ -1,30 +1,17 @@
-# Automatic analytical-report cleanup; I3 investigation
+# Fitted sensitivity comparison
 
-## Project files
-- `scripts/BuildCombinedAnalyticalReports.py` — full replacement of saved 16-model combined report entrypoint; archives disposable files automatically after successful generation.
-- `scripts/AnalyticalReportHousekeeping.py` — safe archive policy; keeps finished `.pdf`/`.tex` outputs and original raw data.
-- `scripts/FindI3Definition.py` — read-only source scan for a mathematical implementation of the matching master integral `I3`.
-- `tests/test_analytical_housekeeping_auto.py` — tests.
+Add `Numerical/orchestration/RunFittedSensitivityComparison.py` to the project.
 
-## Commands (PowerShell, repository root)
+Prerequisites: existing local `output/full/comparison/smallY_smallL` RGE/Weinberg artifacts and all three fit result directories in `Reports/output/full/` (`fit_feasibility`, `fit_feasibility_retry`, `fit_feasibility_focused`). It chooses the smallest reported chi2 for each model, independently evaluates gamma=1 through the existing model-specific numerical evaluator, then scans T1/T2/T3. No multiplicity factor is added to Class E.
 
-```powershell
-python -m pytest -q tests/test_analytical_housekeeping_auto.py
-python scripts/BuildCombinedAnalyticalReports.py --check
-python scripts/BuildCombinedAnalyticalReports.py
-python scripts/FindI3Definition.py .
+PowerShell from repository root:
+
+```
+python -m Numerical.orchestration.RunFittedSensitivityComparison
+python -m Numerical.orchestration.RunFittedSensitivityComparison --run --limit 2
+python -m Numerical.orchestration.RunFittedSensitivityComparison --run
 ```
 
-The report generator now archives known LaTeX byproducts/backups and clearly superseded standalone C5 presentation assets to `Reports/report_cleanup_archive/<timestamp>/`, *automatically after a successful report-generation run*. It preserves `Reports/output/analytical/**/*.tex` and `/**/*.pdf`, aside from the specifically named superseded `C5_original_matchete.*` and `C5_original.*`. It never touches the main `output/` physics calculations.
+Output: `Reports/output/full/fitted_sensitivity/smallY_smallL/comparison_summary.csv`, per-model `sensitivity_diagnostics.json`, and 10 PNG observable-pair plots under `plots/`. `--force` recomputes the fitted sensitivity outputs only.
 
-If the combined report generator fails, it does not clean, so source/diagnostic output remains available. To inspect what would be archived before generation:
-
-```powershell
-python -c "from pathlib import Path; from scripts.AnalyticalReportHousekeeping import clean; print(clean(Path('Reports/output/analytical'), apply=False))"
-```
-
-## Critical remaining I3 issue
-
-The checked repository report writer copies `i_3` from the saved Matchete expression and renames it to `I_3` for display; it does not implement the integral. The upstream publication verifies the general one-loop method but does not uniquely identify `i_3` in this saved T3 expression. No mathematically unjustified substitution is made here. Use `FindI3Definition.py` against your locally installed Matchete/associated Mathematica packages if needed; provide the matching definition for exact insertion in the C5 generator.
-
-This ZIP intentionally does not claim to resolve `I3`, and does not change the C5 physics formula.
+The scan uses 11 gamma points in [0.95,1.05] by default, ensuring gamma=1 is sampled. Baseline verification threshold is chi2 <=0.01. This is not a new optimisation and does not certify the coupling-regime labels.

@@ -1,4 +1,4 @@
-# T3 charge-channel multiplicity and benchmark convention
+﻿# T3 charge-channel multiplicity and benchmark convention
 
 This records the 16-model charge-channel audit and the resulting **benchmark-only** `lambdaT3` convention. It does not replace physical SU(2) Clebsch–Gordan factors or matching/RGE coefficients.
 
@@ -67,3 +67,51 @@ The current four full-study reference scenarios remain `Y=(0.005, 0.5)` and `lam
 - Re-run the 64-case study to verify numerical continuity and obtain updated outputs. This documentation records the intended code update, **not** a completed new 64-case run.
 - The 16/16 covariance and charge weights are vertex/group-theory diagnostics, not an independently verified electroweak-broken one-loop mass spectrum.
 - In a nondegenerate mass calculation, use a channel sum `sum_q w_q I_q`, not `N_equiv` times a single `I`.
+
+## Benchmark validation and reproduction
+
+The fixed comparison grid in `studies/FullT3Study.py` uses
+`Y = 0.005` or `0.5` and `lambdaT3_reference = 0.1` or `1.0`.
+The benchmark-only factors are:
+
+```python
+LAMBDA_T3_NORMALISATION = {"A": 1.0, "B": 1.0, "C": 1.0, "D": 1.0, "E": 0.5}
+```
+
+Hence A窶泥 use `lambdaT3_effective = 0.1` or `1.0`, while E uses
+`0.05` or `0.5`. This compensates only the two equal-weight E charge
+channels in the unbroken-SU(2) multiplet-mass benchmark; it does not
+equalize the full representation-dependent Clebsch窶敵ordan coefficients.
+
+### Validation commands (PowerShell, repository root)
+
+```powershell
+python -m pytest -q tests/test_t3_multiplicity_benchmark.py
+python -m pytest -q tests/test_full_study_architecture.py
+python -m pytest -q
+python pipeline.py --help
+python pipeline.py --full
+```
+
+The full pipeline invokes symbolic/RGE stages and may take considerable time.
+Unit-test success does not establish a completed 64-case end-to-end run.
+
+### Output ownership and interpretation
+
+Generated comparison inputs are stored under
+`configs/generated_model_sets/comparison/<scenario>/input/`.
+The full-study summary is `output/full/full_numerical_summary.json`.
+The study records `comparison_point.lambdaT3_reference`,
+`comparison_point.lambdaT3_effective`, `.normalisation_factor` and
+`.normalisation_basis`, and summary normalization metadata.
+
+The multiplicity-only initialization belongs to `studies/FullT3Study.py`.
+It does not require modifying the physical RGE, Lagrangian, numerical
+running, or Matchete group factors. Existing generated results should not
+be assumed to reflect revised input settings until checked or regenerated.
+
+Historical note: the original benchmark-validation runbook described the
+64-case rerun as pending. Later run/recovery notes record numerical jobs,
+but do not by themselves establish that every stored scenario used the
+intended benchmark inputs. Verify the generated `input` configurations
+and scenario-specific diagnostics before interpreting the results.

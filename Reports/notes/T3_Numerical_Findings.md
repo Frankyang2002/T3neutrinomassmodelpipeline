@@ -7,7 +7,7 @@ Updated: 2026-10-15. Scenario: `smallY_smallL`. Local pipeline, **fermion-first 
 - Fitted 16-model sensitivity comparison: user-provided comparison summary and embedded saved trajectories in `fitted_model_envelopes_all.html`.
 - Fermion threshold scan: reviewed previous user-uploaded `smallY_smallL.zip` (60 successful model/factor points, 4 unavailable fitted cases), as described in the previous numerical analysis.
 - Final SM+Weinberg comparison: **rechecked directly** against the most recent user-uploaded `smallY_smallL.zip`, containing `scan.csv`, `scan.json`, and five `weinberg_running_*.png` figures.
-- The *staged* UV/EFT1/Weinberg decomposition below is **implemented but not run on the user's local numerical artifacts yet**; do not quote stage contributions until its output is checked.
+- Staged UV/EFT1/Weinberg decomposition: **verified directly** against the latest user-uploaded `smallY_smallL.zip` (60 successful numerical points, 4 missing-artifact cases), with `scan.csv`, `scan.json`, and five `staged_rg_*.png` figures. The staged results below supersede the earlier pending status.
 
 ## Model and EFT structure
 
@@ -158,6 +158,21 @@ The solar EFT1 increment spans **-4.438% to +23.420%** over the 12 fitted models
 5. Perturbativity and the relationship between running masses and fixed matching scales were not independently revalidated from the archived output; the scan enforces explicit scale ordering.
 6. `000` is **not** a fully consistent all-betas-zero renormalisation scheme: the charged-lepton basis is held fixed to the `111` endpoint. Treat the stage contributions as comparative diagnostics.
 
+## Additional findings and interpretation checks (2026-10-15)
+
+1. **Cancellation is essential to the final result.** At `r=1`, the median UV enhancement of solar splitting (+19.951%) is partly offset by final Weinberg evolution (-12.336%); the median combined effect versus frozen stages is only +6.268%. These independently computed medians do not sum to the total. For **each individual model**, compare products of ratios or the additive logarithmic contributions instead.
+2. **The intermediate stage is not uniformly negligible.** Its median solar effect at `r=1` is +0.549%, but individual fitted models range from -4.438% to +23.420%. Quoting only the median would conceal this heterogeneity.
+3. **The final-EFT effect is stable across the heavy-fermion scan**, approximately -12.350% to -12.322% in the median solar splitting as `mu_F/mu_S` runs from 50 to 200. The final stage interval was unchanged, whereas UV/EFT1 intervals and their threshold states change.
+4. **Relative mass corrections are much larger than mixing corrections.** At `r=1`, the UV stage median `sin²θ13` change is +0.1974% while the final Weinberg increment is +0.000214%. The intermediate stage mixing changes are at numerical-noise level in this dataset, despite some substantial mass-splitting corrections.
+5. **The only refitted point in each curve is `r=1`.** For `r≠1`, UV heavy masses and the fermion integration scale were changed but the fitted couplings were not refitted. Off-baseline points can consequently have large chi-squared and should be interpreted as *parameter sensitivities*, not alternative successful fits. The staged CSV contains `000_chi2`, `100_chi2`, `110_chi2`, and `111_chi2` to audit this.
+6. **Twelve is a data-coverage limit, not a theoretical exclusion.** The four omitted fitted models have no compatible exported symbolic artifacts in the user's present local calculation sets; numerical non-coverage must not be interpreted as physical failure.
+7. **No claim of universal RG factors is justified.** The ~-12.34% final-stage correction is consistent across this particular benchmark set and running interval. Changing the scalar threshold, low-energy endpoint, couplings, or charged-lepton prescription could change it.
+8. **The staged decomposition is convention-dependent.** UV and EFT1 ablations hold their couplings fixed across a scale interval while retaining the standard matching functions, and the final comparisons retain the fully evolved charged-lepton basis. This answers a precise *conditional sensitivity to beta-function evolution*, not how much of the neutrino mass is uniquely attributable to quantum loops in a scheme-independent sense.
+
+### Recording and reproduction caveat
+
+This log is a compact record of the **numerical findings, validation and interpretation**, not a verbatim transcript of every command, debugging step, or intermediate failed run. The dry-run discovery failures (`output/full/comparison` absent), subsequently fixed `KeyError: 'scan'`/CSV `representation` errors, and successful metadata-based artifact discovery were workflow fixes, not physics results. They are worth remembering for reproducibility but do not change the numerical conclusions. Original `scan.csv`, `scan.json`, plots, and per-model fitted configurations should be retained as the authoritative detailed numerical record.
+
 ## Figure and project paths
 
 - Numerical script: `Numerical/orchestration/RunFittedStagedRGComparison.py`.
@@ -175,3 +190,26 @@ python -m Numerical.orchestration.RunFittedStagedRGComparison --run
 ## Next numerical step
 
 No additional RGE computation is required for rough results. The next useful analysis is to select representative rows/plots and compare the staged corrections by representation, with controlled benchmark caveats. If a truly *all-running-off* reference is later required, define its charged-lepton and matching-scale conventions separately rather than relabelling this fixed-basis diagnostic.
+
+
+## Representation comparison from the staged scan (2026-10-15)
+
+**Source and reproducibility.** Reanalysed the user-uploaded `smallY_smallL.zip` containing the staged `scan.csv`: 64 total rows, including 60 successful calculations and four explicit missing-artifact entries. Selected the 12 successful `factor=1` rows. The project-relative derived files are under `Reports/output/full/representation_comparison/smallY_smallL/`. No additional physics evaluations were performed.
+
+**Selection.** Only `r=1` is the independently fitted baseline for each model. The 12 models group into five representation classes with counts: (1, 3, 2): 2, (2, 2, 1): 2, (2, 2, 3): 2, (3, 1, 2): 3, (3, 3, 2): 3.
+
+**Baseline solar splitting stage increments by representation (medians within each class; %, rounded):**
+
+| `(dS1,dS2,dF)` | n | UV | EFT1 | Weinberg | Total |
+|:--|--:|--:|--:|--:|--:|
+| `(1, 3, 2)` | 2 | +19.907 | +0.422 | -12.335 | +5.561 |
+| `(2, 2, 1)` | 2 | +16.329 | -0.314 | -12.206 | +1.888 |
+| `(2, 2, 3)` | 2 | +16.427 | -2.914 | -12.455 | -0.953 |
+| `(3, 1, 2)` | 3 | +19.961 | +0.576 | -12.334 | +5.771 |
+| `(3, 3, 2)` | 3 | +36.216 | +14.643 | -12.404 | +36.791 |
+
+**Extremes of the intermediate-stage response:** `(2,2,3), alpha=-1` has EFT1 solar increment -4.438%; `(3,3,2), alpha=+2` has +23.420%. These are independently fitted points, so the contrast conflates representation, hypercharge and fitted couplings.
+
+**Figure selection:** `baseline_solar_stage_contributions.png` displays every fitted model and all four increments; `baseline_eft1_by_model.png` reveals the EFT1 outliers; `uv_by_representation_vs_mass_ratio.png`, `eft1_by_representation_vs_mass_ratio.png` and `weinberg_by_representation_vs_mass_ratio.png` illustrate the mass-ratio sensitivities using median within each class. Class sizes are two or three, so these medians should not be interpreted as statistical populations.
+
+**Important:** the plotted incremental percentages do not add to the total. The exact additive quantity is the per-model log ratio, as checked in the staged scan. The staged ablation remains a fixed-charged-lepton-basis, order-dependent conditional running comparison.

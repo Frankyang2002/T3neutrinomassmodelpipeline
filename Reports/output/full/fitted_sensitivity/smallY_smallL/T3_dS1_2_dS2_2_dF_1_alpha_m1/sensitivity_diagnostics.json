@@ -1,69 +1,161 @@
 {
   "status": "Success",
-  "gamma_min": 0.95,
-  "gamma_max": 1.05,
-  "n_points": 11,
+  "gamma_min": 0.001,
+  "gamma_max": 1000.0,
+  "n_points": 25,
+  "spacing": "log",
+  "n_failed_points": 14,
   "directions": {
     "T1": {
       "definition": "lambdaT3 -> gamma lambdaT3; y1,y2 -> gamma^(-1/2) y1,y2",
       "points": [
         {
-          "gamma": 0.95,
-          "chi2": 0.0022307272219167368,
+          "gamma": 0.001,
+          "status": "Success",
+          "chi2": 0.2361189932250485,
           "prediction": {
-            "delta_m21_sq_ev2": 7.534545909059057e-05,
-            "delta_m3l_sq_ev2": 0.0025101824015175763,
-            "sin2_theta12": 0.3088000000286168,
-            "sin2_theta13": 0.022479999990111573,
-            "sin2_theta23": 0.4700000000005779
+            "delta_m21_sq_ev2": 7.511845182541169e-05,
+            "delta_m3l_sq_ev2": 0.0025025758255336652,
+            "sin2_theta12": 0.3088005957211682,
+            "sin2_theta13": 0.022479810153163443,
+            "sin2_theta23": 0.4699994263456258
           }
         },
         {
-          "gamma": 0.96,
-          "chi2": 0.0014424926448603974,
+          "gamma": 0.0017782794100389228,
+          "status": "Success",
+          "chi2": 0.23498181197901424,
           "prediction": {
-            "delta_m21_sq_ev2": 7.535026558595498e-05,
-            "delta_m3l_sq_ev2": 0.0025103425334812076,
-            "sin2_theta12": 0.3088000000220777,
-            "sin2_theta13": 0.022479999992195385,
-            "sin2_theta23": 0.47000000000687464
+            "delta_m21_sq_ev2": 7.511865042192293e-05,
+            "delta_m3l_sq_ev2": 0.002502601580034868,
+            "sin2_theta12": 0.3088003347377983,
+            "sin2_theta13": 0.02247989332417635,
+            "sin2_theta23": 0.46999967767487966
           }
         },
         {
-          "gamma": 0.97,
-          "chi2": 0.0008197872446313196,
+          "gamma": 0.0031622776601683794,
+          "status": "Success",
+          "chi2": 0.23434114409843745,
           "prediction": {
-            "delta_m21_sq_ev2": 7.535512290886477e-05,
-            "delta_m3l_sq_ev2": 0.0025105043587873343,
-            "sin2_theta12": 0.3088000000156738,
-            "sin2_theta13": 0.02247999999423621,
-            "sin2_theta23": 0.4700000000130421
+            "delta_m21_sq_ev2": 7.511876350720545e-05,
+            "delta_m3l_sq_ev2": 0.0025026161098899947,
+            "sin2_theta12": 0.30880018797512915,
+            "sin2_theta13": 0.022479940094895477,
+            "sin2_theta23": 0.46999981900795895
           }
         },
         {
-          "gamma": 0.98,
-          "chi2": 0.0003680965491839607,
+          "gamma": 0.005623413251903491,
+          "status": "Success",
+          "chi2": 0.23397303980994405,
           "prediction": {
-            "delta_m21_sq_ev2": 7.536003107495504e-05,
-            "delta_m3l_sq_ev2": 0.002510667877957161,
-            "sin2_theta12": 0.3088000000093991,
-            "sin2_theta13": 0.02247999999623524,
-            "sin2_theta23": 0.4700000000190828
+            "delta_m21_sq_ev2": 7.511883155099985e-05,
+            "delta_m3l_sq_ev2": 0.0025026244289829097,
+            "sin2_theta12": 0.30880010544411945,
+            "sin2_theta13": 0.0224799663960737,
+            "sin2_theta23": 0.46999989848546986
           }
         },
         {
-          "gamma": 0.99,
-          "chi2": 9.296579167227009e-05,
+          "gamma": 0.01,
+          "status": "Success",
+          "chi2": 0.23373999085229155,
           "prediction": {
-            "delta_m21_sq_ev2": 7.536499010002659e-05,
-            "delta_m3l_sq_ev2": 0.0025108330915173823,
-            "sin2_theta12": 0.3088000000032541,
-            "sin2_theta13": 0.02247999999819411,
-            "sin2_theta23": 0.47000000002500175
+            "delta_m21_sq_ev2": 7.511888389295891e-05,
+            "delta_m3l_sq_ev2": 0.002502629576192345,
+            "sin2_theta12": 0.30880005903342794,
+            "sin2_theta13": 0.02247998118633521,
+            "sin2_theta23": 0.46999994317898436
+          }
+        },
+        {
+          "gamma": 0.01778279410038923,
+          "status": "Success",
+          "chi2": 0.23352617843804033,
+          "prediction": {
+            "delta_m21_sq_ev2": 7.511895784702955e-05,
+            "delta_m3l_sq_ev2": 0.0025026339538992155,
+            "sin2_theta12": 0.30880003293474956,
+            "sin2_theta13": 0.022479989503517653,
+            "sin2_theta23": 0.4699999683120024
+          }
+        },
+        {
+          "gamma": 0.03162277660168379,
+          "status": "Success",
+          "chi2": 0.23314425810133238,
+          "prediction": {
+            "delta_m21_sq_ev2": 7.511914021992741e-05,
+            "delta_m3l_sq_ev2": 0.0025026411060236104,
+            "sin2_theta12": 0.3088000182583748,
+            "sin2_theta13": 0.022479994180615255,
+            "sin2_theta23": 0.4699999824453394
+          }
+        },
+        {
+          "gamma": 0.05623413251903491,
+          "status": "Success",
+          "chi2": 0.2321033033504543,
+          "prediction": {
+            "delta_m21_sq_ev2": 7.511968798235645e-05,
+            "delta_m3l_sq_ev2": 0.002502659960301591,
+            "sin2_theta12": 0.30880001000523977,
+            "sin2_theta13": 0.022479996810741105,
+            "sin2_theta23": 0.46999999039309936
+          }
+        },
+        {
+          "gamma": 0.1,
+          "status": "Success",
+          "chi2": 0.22891877162556024,
+          "prediction": {
+            "delta_m21_sq_ev2": 7.512140391744538e-05,
+            "delta_m3l_sq_ev2": 0.002502717468119281,
+            "sin2_theta12": 0.308800005364159,
+            "sin2_theta13": 0.02247999828976989,
+            "sin2_theta23": 0.46999999486245386
+          }
+        },
+        {
+          "gamma": 0.1778279410038923,
+          "status": "Success",
+          "chi2": 0.21904303790320723,
+          "prediction": {
+            "delta_m21_sq_ev2": 7.512682143485515e-05,
+            "delta_m3l_sq_ev2": 0.0025028981475748537,
+            "sin2_theta12": 0.3088000027542882,
+            "sin2_theta13": 0.022479999121488903,
+            "sin2_theta23": 0.4699999973757561
+          }
+        },
+        {
+          "gamma": 0.31622776601683794,
+          "status": "Success",
+          "chi2": 0.1892658202808852,
+          "prediction": {
+            "delta_m21_sq_ev2": 7.514395208805005e-05,
+            "delta_m3l_sq_ev2": 0.002503468973913723,
+            "sin2_theta12": 0.30880000128665014,
+            "sin2_theta13": 0.02247999958919889,
+            "sin2_theta23": 0.46999999878909077
+          }
+        },
+        {
+          "gamma": 0.5623413251903491,
+          "status": "Success",
+          "chi2": 0.10937160587870234,
+          "prediction": {
+            "delta_m21_sq_ev2": 7.519816218372731e-05,
+            "delta_m3l_sq_ev2": 0.002505275078617079,
+            "sin2_theta12": 0.3088000004613399,
+            "sin2_theta13": 0.022479999852210178,
+            "sin2_theta23": 0.4699999995838677
           }
         },
         {
           "gamma": 1.0,
+          "status": "Success",
           "chi2": 4.1649873131668185e-18,
           "prediction": {
             "delta_m21_sq_ev2": 7.537000000004718e-05,
@@ -74,59 +166,99 @@
           }
         },
         {
-          "gamma": 1.01,
-          "chi2": 9.486408751368027e-05,
+          "gamma": 1.7782794100389228,
+          "status": "Success",
+          "chi2": 1.110481586509321,
           "prediction": {
-            "delta_m21_sq_ev2": 7.537506079114797e-05,
-            "delta_m3l_sq_ev2": 0.002511168603943443,
-            "sin2_theta12": 0.30879999999132624,
-            "sin2_theta13": 0.022480000001995244,
-            "sin2_theta23": 0.47000000003648823
+            "delta_m21_sq_ev2": 7.591754982707596e-05,
+            "delta_m3l_sq_ev2": 0.0025292419938108134,
+            "sin2_theta12": 0.3087999997362426,
+            "sin2_theta13": 0.022480000083285927,
+            "sin2_theta23": 0.4700000002821327
           }
         },
         {
-          "gamma": 1.02,
-          "chi2": 0.00038328294452053186,
+          "gamma": 3.1622776601683795,
+          "status": "Success",
+          "chi2": 19.96330537422403,
           "prediction": {
-            "delta_m21_sq_ev2": 7.538017248962932e-05,
-            "delta_m3l_sq_ev2": 0.00251133890389026,
-            "sin2_theta12": 0.3087999999855378,
-            "sin2_theta13": 0.022480000003839956,
-            "sin2_theta23": 0.4700000000420617
+            "delta_m21_sq_ev2": 7.769158396190058e-05,
+            "delta_m3l_sq_ev2": 0.0025883450929957133,
+            "sin2_theta12": 0.3087999995894776,
+            "sin2_theta13": 0.022480000130057156,
+            "sin2_theta23": 0.4700000004234657
           }
         },
         {
-          "gamma": 1.03,
-          "chi2": 0.0008710415308138997,
+          "gamma": 5.623413251903491,
+          "status": "Success",
+          "chi2": 260.814128282857,
           "prediction": {
-            "delta_m21_sq_ev2": 7.53853351119539e-05,
-            "delta_m3l_sq_ev2": 0.002511510900389465,
-            "sin2_theta12": 0.30879999997986146,
-            "sin2_theta13": 0.022480000005648763,
-            "sin2_theta23": 0.47000000004752773
+            "delta_m21_sq_ev2": 8.376138806800307e-05,
+            "delta_m3l_sq_ev2": 0.0027905645277994237,
+            "sin2_theta12": 0.3087999995069457,
+            "sin2_theta13": 0.02248000015635856,
+            "sin2_theta23": 0.4700000005029435
           }
         },
         {
-          "gamma": 1.04,
-          "chi2": 0.0015639849693367645,
+          "gamma": 10.0,
+          "status": "Success",
+          "chi2": 4182.847511799329,
           "prediction": {
-            "delta_m21_sq_ev2": 7.539054867475339e-05,
-            "delta_m3l_sq_ev2": 0.002511684593995375,
-            "sin2_theta12": 0.30879999997429464,
-            "sin2_theta13": 0.022480000007422753,
-            "sin2_theta23": 0.47000000005288944
+            "delta_m21_sq_ev2": 0.0001089750305112757,
+            "delta_m3l_sq_ev2": 0.0036305732508551147,
+            "sin2_theta12": 0.30879999946053455,
+            "sin2_theta13": 0.022480000171148814,
+            "sin2_theta23": 0.4700000005476368
           }
         },
         {
-          "gamma": 1.05,
-          "chi2": 0.002468018640644679,
+          "gamma": 17.78279410038923,
+          "status": "Success",
+          "chi2": 410885.14674366446,
           "prediction": {
-            "delta_m21_sq_ev2": 7.539581319482592e-05,
-            "delta_m3l_sq_ev2": 0.00251185998526782,
-            "sin2_theta12": 0.30879999996883445,
-            "sin2_theta13": 0.02248000000916322,
-            "sin2_theta23": 0.4700000000581477
+            "delta_m21_sq_ev2": 0.0004084346249614827,
+            "delta_m3l_sq_ev2": 0.013607262308486108,
+            "sin2_theta12": 0.3087999994344354,
+            "sin2_theta13": 0.022480000179466175,
+            "sin2_theta23": 0.4700000005727708
           }
+        },
+        {
+          "gamma": 31.622776601683793,
+          "status": "Failed",
+          "message": "RuntimeError: Intermediate scalar numerical RGE integration failed: Required step size is less than spacing between numbers."
+        },
+        {
+          "gamma": 56.23413251903491,
+          "status": "Failed",
+          "message": "RuntimeError: UV numerical RGE integration failed: Required step size is less than spacing between numbers."
+        },
+        {
+          "gamma": 100.0,
+          "status": "Failed",
+          "message": "RuntimeError: UV numerical RGE integration failed: Required step size is less than spacing between numbers."
+        },
+        {
+          "gamma": 177.82794100389228,
+          "status": "Failed",
+          "message": "RuntimeError: UV numerical RGE integration failed: Required step size is less than spacing between numbers."
+        },
+        {
+          "gamma": 316.22776601683796,
+          "status": "Failed",
+          "message": "RuntimeError: UV numerical RGE integration failed: Required step size is less than spacing between numbers."
+        },
+        {
+          "gamma": 562.341325190349,
+          "status": "Failed",
+          "message": "RuntimeError: UV numerical RGE integration failed: Required step size is less than spacing between numbers."
+        },
+        {
+          "gamma": 1000.0,
+          "status": "Failed",
+          "message": "RuntimeError: UV numerical RGE integration failed: Required step size is less than spacing between numbers."
         }
       ]
     },
@@ -134,62 +266,152 @@
       "definition": "lambdaT3 -> gamma lambdaT3; y2 -> gamma^(-1) y2",
       "points": [
         {
-          "gamma": 0.95,
-          "chi2": 0.002230722479130006,
+          "gamma": 0.001,
+          "status": "Success",
+          "chi2": 1.9525670185281083,
           "prediction": {
-            "delta_m21_sq_ev2": 7.534545910841409e-05,
-            "delta_m3l_sq_ev2": 0.002510182402497535,
-            "sin2_theta12": 0.3088000000021762,
-            "sin2_theta13": 0.022479999995853067,
-            "sin2_theta23": 0.4699999999873725
+            "delta_m21_sq_ev2": 7.506126763433656e-05,
+            "delta_m3l_sq_ev2": 0.0024831487275258444,
+            "sin2_theta12": 0.30884557364187454,
+            "sin2_theta13": 0.022440681069642678,
+            "sin2_theta23": 0.46959916398015555
           }
         },
         {
-          "gamma": 0.96,
-          "chi2": 0.0014424895961023887,
+          "gamma": 0.0017782794100389228,
+          "status": "Success",
+          "chi2": 0.5814719707806864,
           "prediction": {
-            "delta_m21_sq_ev2": 7.535026560009201e-05,
-            "delta_m3l_sq_ev2": 0.0025103425342660572,
-            "sin2_theta12": 0.30880000000112606,
-            "sin2_theta13": 0.022479999996758666,
-            "sin2_theta23": 0.46999999999660463
+            "delta_m21_sq_ev2": 7.510101428169983e-05,
+            "delta_m3l_sq_ev2": 0.0024964460928254078,
+            "sin2_theta12": 0.30881445958827963,
+            "sin2_theta13": 0.02246754045702613,
+            "sin2_theta23": 0.4698729933596128
           }
         },
         {
-          "gamma": 0.97,
-          "chi2": 0.0008197855225117305,
+          "gamma": 0.0031622776601683794,
+          "status": "Success",
+          "chi2": 0.3237694381050301,
           "prediction": {
-            "delta_m21_sq_ev2": 7.535512291937722e-05,
-            "delta_m3l_sq_ev2": 0.002510504359376485,
-            "sin2_theta12": 0.3088000000001074,
-            "sin2_theta13": 0.022479999997636446,
-            "sin2_theta23": 0.47000000000555225
+            "delta_m21_sq_ev2": 7.511328272915303e-05,
+            "delta_m3l_sq_ev2": 0.002500675017093563,
+            "sin2_theta12": 0.30880457730662697,
+            "sin2_theta13": 0.02247605738276682,
+            "sin2_theta23": 0.4699598120474946
           }
         },
         {
-          "gamma": 0.98,
-          "chi2": 0.0003680957807300188,
+          "gamma": 0.005623413251903491,
+          "status": "Success",
+          "chi2": 0.2600669739272355,
           "prediction": {
-            "delta_m21_sq_ev2": 7.536003108190479e-05,
-            "delta_m3l_sq_ev2": 0.0025106678783501702,
-            "sin2_theta12": 0.30879999999911895,
-            "sin2_theta13": 0.02247999999848757,
-            "sin2_theta23": 0.4700000000142266
+            "delta_m21_sq_ev2": 7.51171367244097e-05,
+            "delta_m3l_sq_ev2": 0.00250201488414439,
+            "sin2_theta12": 0.30880144792051256,
+            "sin2_theta13": 0.022478753002680846,
+            "sin2_theta23": 0.4699872892248388
           }
         },
         {
-          "gamma": 0.99,
-          "chi2": 9.296559881782167e-05,
+          "gamma": 0.01,
+          "status": "Success",
+          "chi2": 0.24168051673773602,
           "prediction": {
-            "delta_m21_sq_ev2": 7.536499010347293e-05,
-            "delta_m3l_sq_ev2": 0.002510833091713968,
-            "sin2_theta12": 0.30879999999816,
-            "sin2_theta13": 0.022479999999312942,
-            "sin2_theta23": 0.4700000000226405
+            "delta_m21_sq_ev2": 7.511836780715856e-05,
+            "delta_m3l_sq_ev2": 0.0025024393410134353,
+            "sin2_theta12": 0.3088004578877061,
+            "sin2_theta13": 0.0224796056659288,
+            "sin2_theta23": 0.46999598054336245
+          }
+        },
+        {
+          "gamma": 0.01778279410038923,
+          "status": "Success",
+          "chi2": 0.2359544297808484,
+          "prediction": {
+            "delta_m21_sq_ev2": 7.511880555401571e-05,
+            "delta_m3l_sq_ev2": 0.0025025752142887546,
+            "sin2_theta12": 0.30880014476842194,
+            "sin2_theta13": 0.02247987532506863,
+            "sin2_theta23": 0.4699987292068881
+          }
+        },
+        {
+          "gamma": 0.03162277660168379,
+          "status": "Success",
+          "chi2": 0.23387512950338293,
+          "prediction": {
+            "delta_m21_sq_ev2": 7.511909805692683e-05,
+            "delta_m3l_sq_ev2": 0.0025026233177336717,
+            "sin2_theta12": 0.308800045747067,
+            "sin2_theta13": 0.02247996060111081,
+            "sin2_theta23": 0.46999959843334627
+          }
+        },
+        {
+          "gamma": 0.05623413251903491,
+          "status": "Success",
+          "chi2": 0.23231490028482066,
+          "prediction": {
+            "delta_m21_sq_ev2": 7.511967790031326e-05,
+            "delta_m3l_sq_ev2": 0.002502654765961628,
+            "sin2_theta12": 0.3088000144333316,
+            "sin2_theta13": 0.0224799875679966,
+            "sin2_theta23": 0.4699998733091603
+          }
+        },
+        {
+          "gamma": 0.1,
+          "status": "Success",
+          "chi2": 0.2289752179389468,
+          "prediction": {
+            "delta_m21_sq_ev2": 7.512140243825434e-05,
+            "delta_m3l_sq_ev2": 0.002502716056047036,
+            "sin2_theta12": 0.3088000045310161,
+            "sin2_theta13": 0.022479996095698035,
+            "sin2_theta23": 0.46999996023275215
+          }
+        },
+        {
+          "gamma": 0.1778279410038923,
+          "status": "Success",
+          "chi2": 0.2190555158164935,
+          "prediction": {
+            "delta_m21_sq_ev2": 7.512682180955094e-05,
+            "delta_m3l_sq_ev2": 0.002502897818938343,
+            "sin2_theta12": 0.308800001399618,
+            "sin2_theta13": 0.022479998792397884,
+            "sin2_theta23": 0.469999987720427
+          }
+        },
+        {
+          "gamma": 0.31622776601683794,
+          "status": "Success",
+          "chi2": 0.1892673612911727,
+          "prediction": {
+            "delta_m21_sq_ev2": 7.5143952561798e-05,
+            "delta_m3l_sq_ev2": 0.002503468924566552,
+            "sin2_theta12": 0.3088000004093902,
+            "sin2_theta13": 0.022479999645167326,
+            "sin2_theta23": 0.4699999964127967
+          }
+        },
+        {
+          "gamma": 0.5623413251903491,
+          "status": "Success",
+          "chi2": 0.1093714296338628,
+          "prediction": {
+            "delta_m21_sq_ev2": 7.519816241486447e-05,
+            "delta_m3l_sq_ev2": 0.002505275081987167,
+            "sin2_theta12": 0.3088000000962539,
+            "sin2_theta13": 0.02247999991483675,
+            "sin2_theta23": 0.4699999991615658
           }
         },
         {
           "gamma": 1.0,
+          "status": "Success",
           "chi2": 4.1649873131668185e-18,
           "prediction": {
             "delta_m21_sq_ev2": 7.537000000004718e-05,
@@ -200,59 +422,99 @@
           }
         },
         {
-          "gamma": 1.01,
-          "chi2": 9.48638932856874e-05,
+          "gamma": 1.7782794100389228,
+          "status": "Success",
+          "chi2": 1.110480314140622,
           "prediction": {
-            "delta_m21_sq_ev2": 7.53750607877589e-05,
-            "delta_m3l_sq_ev2": 0.002511168603746819,
-            "sin2_theta12": 0.30879999999632846,
-            "sin2_theta13": 0.02248000000089083,
-            "sin2_theta23": 0.4700000000387236
+            "delta_m21_sq_ev2": 7.591754966498467e-05,
+            "delta_m3l_sq_ev2": 0.0025292419813277875,
+            "sin2_theta12": 0.30879999996591695,
+            "sin2_theta13": 0.022480000027080553,
+            "sin2_theta23": 0.47000000030567957
           }
         },
         {
-          "gamma": 1.02,
-          "chi2": 0.0003832821649868618,
+          "gamma": 3.1622776601683795,
+          "status": "Success",
+          "chi2": 19.96329538619716,
           "prediction": {
-            "delta_m21_sq_ev2": 7.538017248290474e-05,
-            "delta_m3l_sq_ev2": 0.0025113389034970915,
-            "sin2_theta12": 0.308799999995452,
-            "sin2_theta13": 0.022480000001645097,
-            "sin2_theta23": 0.47000000004641274
+            "delta_m21_sq_ev2": 7.769158368959931e-05,
+            "delta_m3l_sq_ev2": 0.002588345069511643,
+            "sin2_theta12": 0.30879999995601365,
+            "sin2_theta13": 0.02248000003560828,
+            "sin2_theta23": 0.4700000003926027
           }
         },
         {
-          "gamma": 1.03,
-          "chi2": 0.0008710397712947419,
+          "gamma": 5.623413251903491,
+          "status": "Success",
+          "chi2": 260.81407706761456,
           "prediction": {
-            "delta_m21_sq_ev2": 7.538533510194898e-05,
-            "delta_m3l_sq_ev2": 0.002511510899799934,
-            "sin2_theta12": 0.3087999999946003,
-            "sin2_theta13": 0.022480000002377577,
-            "sin2_theta23": 0.47000000005387926
+            "delta_m21_sq_ev2": 8.37613876921626e-05,
+            "delta_m3l_sq_ev2": 0.0027905644943439696,
+            "sin2_theta12": 0.3087999999528827,
+            "sin2_theta13": 0.022480000038304998,
+            "sin2_theta23": 0.4700000004200902
           }
         },
         {
-          "gamma": 1.04,
-          "chi2": 0.001563981831724293,
+          "gamma": 10.0,
+          "status": "Success",
+          "chi2": 4182.84718627205,
           "prediction": {
-            "delta_m21_sq_ev2": 7.539054866152032e-05,
-            "delta_m3l_sq_ev2": 0.0025116845932097445,
-            "sin2_theta12": 0.3087999999937757,
-            "sin2_theta13": 0.022480000003089116,
-            "sin2_theta23": 0.47000000006113013
+            "delta_m21_sq_ev2": 0.0001089750298803223,
+            "delta_m3l_sq_ev2": 0.003630573198218027,
+            "sin2_theta12": 0.3087999999518924,
+            "sin2_theta13": 0.022480000039157743,
+            "sin2_theta23": 0.4700000004287826
           }
         },
         {
-          "gamma": 1.05,
-          "chi2": 0.002468013723888291,
+          "gamma": 17.78279410038923,
+          "status": "Success",
+          "chi2": 410885.12615184573,
           "prediction": {
-            "delta_m21_sq_ev2": 7.539581317841609e-05,
-            "delta_m3l_sq_ev2": 0.002511859984286479,
-            "sin2_theta12": 0.3087999999929729,
-            "sin2_theta13": 0.022480000003780223,
-            "sin2_theta23": 0.47000000006817616
+            "delta_m21_sq_ev2": 0.00040843461936041305,
+            "delta_m3l_sq_ev2": 0.013607261993638809,
+            "sin2_theta12": 0.30879999995157953,
+            "sin2_theta13": 0.022480000039427465,
+            "sin2_theta23": 0.47000000043153234
           }
+        },
+        {
+          "gamma": 31.622776601683793,
+          "status": "Failed",
+          "message": "RuntimeError: Intermediate scalar numerical RGE integration failed: Required step size is less than spacing between numbers."
+        },
+        {
+          "gamma": 56.23413251903491,
+          "status": "Failed",
+          "message": "RuntimeError: UV numerical RGE integration failed: Required step size is less than spacing between numbers."
+        },
+        {
+          "gamma": 100.0,
+          "status": "Failed",
+          "message": "RuntimeError: UV numerical RGE integration failed: Required step size is less than spacing between numbers."
+        },
+        {
+          "gamma": 177.82794100389228,
+          "status": "Failed",
+          "message": "RuntimeError: UV numerical RGE integration failed: Required step size is less than spacing between numbers."
+        },
+        {
+          "gamma": 316.22776601683796,
+          "status": "Failed",
+          "message": "RuntimeError: UV numerical RGE integration failed: Required step size is less than spacing between numbers."
+        },
+        {
+          "gamma": 562.341325190349,
+          "status": "Failed",
+          "message": "RuntimeError: UV numerical RGE integration failed: Required step size is less than spacing between numbers."
+        },
+        {
+          "gamma": 1000.0,
+          "status": "Failed",
+          "message": "RuntimeError: UV numerical RGE integration failed: Required step size is less than spacing between numbers."
         }
       ]
     },
@@ -260,62 +522,152 @@
       "definition": "y1 -> gamma y1; y2 -> gamma^(-1) y2",
       "points": [
         {
-          "gamma": 0.95,
-          "chi2": 8.500220365627596e-15,
+          "gamma": 0.001,
+          "status": "Success",
+          "chi2": 0.9203212766160492,
           "prediction": {
-            "delta_m21_sq_ev2": 7.537000003277015e-05,
-            "delta_m3l_sq_ev2": 0.002511000001709894,
-            "sin2_theta12": 0.30879999994850066,
-            "sin2_theta13": 0.022480000010536537,
-            "sin2_theta23": 0.47000000000416836
+            "delta_m21_sq_ev2": 7.531162791151671e-05,
+            "delta_m3l_sq_ev2": 0.002491431078093946,
+            "sin2_theta12": 0.3088455730933448,
+            "sin2_theta13": 0.022440681219901445,
+            "sin2_theta23": 0.46959916415193054
           }
         },
         {
-          "gamma": 0.96,
-          "chi2": 5.744133757748492e-15,
+          "gamma": 0.0017782794100389228,
+          "status": "Success",
+          "chi2": 0.09280721342127198,
           "prediction": {
-            "delta_m21_sq_ev2": 7.537000002646234e-05,
-            "delta_m3l_sq_ev2": 0.002511000001410436,
-            "sin2_theta12": 0.30879999995796353,
-            "sin2_theta13": 0.02248000000856572,
-            "sin2_theta23": 0.4700000000101094
+            "delta_m21_sq_ev2": 7.535187830628846e-05,
+            "delta_m3l_sq_ev2": 0.002504785134172732,
+            "sin2_theta12": 0.3088144590383839,
+            "sin2_theta13": 0.02246754060751739,
+            "sin2_theta23": 0.4698729935317182
           }
         },
         {
-          "gamma": 0.97,
-          "chi2": 3.4058086251160456e-15,
+          "gamma": 0.0031622776601683794,
+          "status": "Success",
+          "chi2": 0.009305089933618907,
           "prediction": {
-            "delta_m21_sq_ev2": 7.537000002003416e-05,
-            "delta_m3l_sq_ev2": 0.002511000001089184,
-            "sin2_theta12": 0.3087999999675707,
-            "sin2_theta13": 0.02248000000653699,
-            "sin2_theta23": 0.4700000000157325
+            "delta_m21_sq_ev2": 7.536430372100282e-05,
+            "delta_m3l_sq_ev2": 0.002509032046051343,
+            "sin2_theta12": 0.30880457675630135,
+            "sin2_theta13": 0.02247605753333091,
+            "sin2_theta23": 0.46995981221970456
           }
         },
         {
-          "gamma": 0.98,
-          "chi2": 1.5945981738420311e-15,
+          "gamma": 0.005623413251903491,
+          "status": "Success",
+          "chi2": 0.0009311718877377945,
           "prediction": {
-            "delta_m21_sq_ev2": 7.537000001348824e-05,
-            "delta_m3l_sq_ev2": 0.002511000000746711,
-            "sin2_theta12": 0.3087999999773176,
-            "sin2_theta13": 0.022480000004451304,
-            "sin2_theta23": 0.4700000000210478
+            "delta_m21_sq_ev2": 7.536820239938564e-05,
+            "delta_m3l_sq_ev2": 0.0025103774501432806,
+            "sin2_theta12": 0.3088014473700636,
+            "sin2_theta13": 0.022478753153264995,
+            "sin2_theta23": 0.4699872893970784
           }
         },
         {
-          "gamma": 0.99,
-          "chi2": 4.225419076313835e-16,
+          "gamma": 0.01,
+          "status": "Success",
+          "chi2": 9.310375344487132e-05,
           "prediction": {
-            "delta_m21_sq_ev2": 7.537000000682511e-05,
-            "delta_m3l_sq_ev2": 0.0025110000003835645,
-            "sin2_theta12": 0.3087999999872044,
-            "sin2_theta13": 0.02248000000230987,
-            "sin2_theta23": 0.47000000002606823
+            "delta_m21_sq_ev2": 7.536943219313495e-05,
+            "delta_m3l_sq_ev2": 0.0025108031456762625,
+            "sin2_theta12": 0.3088004573372518,
+            "sin2_theta13": 0.022479605816510127,
+            "sin2_theta23": 0.46999598071560006
+          }
+        },
+        {
+          "gamma": 0.01778279410038923,
+          "status": "Success",
+          "chi2": 9.298899743221537e-06,
+          "prediction": {
+            "delta_m21_sq_ev2": 7.53698207970287e-05,
+            "delta_m3l_sq_ev2": 0.00251093778713665,
+            "sin2_theta12": 0.3088001442180729,
+            "sin2_theta13": 0.022479875475619582,
+            "sin2_theta23": 0.4699987293790926
+          }
+        },
+        {
+          "gamma": 0.03162277660168379,
+          "status": "Success",
+          "chi2": 9.260664013921966e-07,
+          "prediction": {
+            "delta_m21_sq_ev2": 7.536994364683454e-05,
+            "delta_m3l_sq_ev2": 0.002510980366680495,
+            "sin2_theta12": 0.30880004519709076,
+            "sin2_theta13": 0.02247996075155962,
+            "sin2_theta23": 0.46999959860543367
+          }
+        },
+        {
+          "gamma": 0.05623413251903491,
+          "status": "Success",
+          "chi2": 9.13992353560059e-08,
+          "prediction": {
+            "delta_m21_sq_ev2": 7.536998249035596e-05,
+            "delta_m3l_sq_ev2": 0.0025109938316414935,
+            "sin2_theta12": 0.30880001388454303,
+            "sin2_theta13": 0.02247998771812003,
+            "sin2_theta23": 0.4699998734808752
+          }
+        },
+        {
+          "gamma": 0.1,
+          "status": "Success",
+          "chi2": 8.76552824793337e-09,
+          "prediction": {
+            "delta_m21_sq_ev2": 7.536999477066504e-05,
+            "delta_m3l_sq_ev2": 0.0025109980894069957,
+            "sin2_theta12": 0.308800003985991,
+            "sin2_theta13": 0.02247999624479178,
+            "sin2_theta23": 0.4699999604032894
+          }
+        },
+        {
+          "gamma": 0.1778279410038923,
+          "status": "Success",
+          "chi2": 7.654613158063476e-10,
+          "prediction": {
+            "delta_m21_sq_ev2": 7.536999864636652e-05,
+            "delta_m3l_sq_ev2": 0.00251099943507103,
+            "sin2_theta12": 0.30880000086650367,
+            "sin2_theta13": 0.022479998938233655,
+            "sin2_theta23": 0.46999998788724057
+          }
+        },
+        {
+          "gamma": 0.31622776601683794,
+          "status": "Success",
+          "chi2": 4.8076692633191864e-11,
+          "prediction": {
+            "delta_m21_sq_ev2": 7.536999984747555e-05,
+            "delta_m3l_sq_ev2": 0.002510999858186878,
+            "sin2_theta12": 0.3087999999139111,
+            "sin2_theta13": 0.022479999780707843,
+            "sin2_theta23": 0.4699999965678306
+          }
+        },
+        {
+          "gamma": 0.5623413251903491,
+          "status": "Success",
+          "chi2": 6.130857794867639e-13,
+          "prediction": {
+            "delta_m21_sq_ev2": 7.537000014973959e-05,
+            "delta_m3l_sq_ev2": 0.0025109999843293362,
+            "sin2_theta12": 0.3087999997198135,
+            "sin2_theta13": 0.022480000017813275,
+            "sin2_theta23": 0.46999999927935177
           }
         },
         {
           "gamma": 1.0,
+          "status": "Success",
           "chi2": 4.1649873131668185e-18,
           "prediction": {
             "delta_m21_sq_ev2": 7.537000000004718e-05,
@@ -326,58 +678,147 @@
           }
         },
         {
-          "gamma": 1.01,
-          "chi2": 4.562878934609825e-16,
+          "gamma": 1.7782794100389228,
+          "status": "Success",
+          "chi2": 1.3233722806834166e-11,
           "prediction": {
-            "delta_m21_sq_ev2": 7.536999999315517e-05,
-            "delta_m3l_sq_ev2": 0.002510999999597221,
-            "sin2_theta12": 0.3088000000073934,
-            "sin2_theta13": 0.02247999999786368,
-            "sin2_theta23": 0.4700000000352608
+            "delta_m21_sq_ev2": 7.536999917707653e-05,
+            "delta_m3l_sq_ev2": 0.0025109999283690577,
+            "sin2_theta12": 0.30880000115631173,
+            "sin2_theta13": 0.02247999970144302,
+            "sin2_theta23": 0.4699999999332038
           }
         },
         {
-          "gamma": 1.02,
-          "chi2": 1.897675829699881e-15,
+          "gamma": 3.1622776601683795,
+          "status": "Success",
+          "chi2": 2.885943069743846e-10,
           "prediction": {
-            "delta_m21_sq_ev2": 7.536999998615104e-05,
-            "delta_m3l_sq_ev2": 0.002510999999174987,
-            "sin2_theta12": 0.3088000000176934,
-            "sin2_theta13": 0.02247999999556083,
-            "sin2_theta23": 0.47000000003945375
+            "delta_m21_sq_ev2": 7.53699964640639e-05,
+            "delta_m3l_sq_ev2": 0.0025109996635288207,
+            "sin2_theta12": 0.3088000049107814,
+            "sin2_theta13": 0.02247999868021152,
+            "sin2_theta23": 0.46999999884225957
           }
         },
         {
-          "gamma": 1.03,
-          "chi2": 4.449016039740016e-15,
+          "gamma": 5.623413251903491,
+          "status": "Success",
+          "chi2": 3.5753045679547903e-09,
           "prediction": {
-            "delta_m21_sq_ev2": 7.536999997903572e-05,
-            "delta_m3l_sq_ev2": 0.0025109999987339504,
-            "sin2_theta12": 0.30880000002812885,
-            "sin2_theta13": 0.022479999993206094,
-            "sin2_theta23": 0.470000000043388
+            "delta_m21_sq_ev2": 7.536998784983156e-05,
+            "delta_m3l_sq_ev2": 0.002510998813912946,
+            "sin2_theta12": 0.30880001681163244,
+            "sin2_theta13": 0.022479995426524436,
+            "sin2_theta23": 0.46999999514500107
           }
         },
         {
-          "gamma": 1.04,
-          "chi2": 8.232480813705631e-15,
+          "gamma": 10.0,
+          "status": "Success",
+          "chi2": 3.815909703970837e-08,
           "prediction": {
-            "delta_m21_sq_ev2": 7.53699999718098e-05,
-            "delta_m3l_sq_ev2": 0.002510999998274553,
-            "sin2_theta12": 0.30880000003869845,
-            "sin2_theta13": 0.022479999990799984,
-            "sin2_theta23": 0.47000000004707415
+            "delta_m21_sq_ev2": 7.536996059838972e-05,
+            "delta_m3l_sq_ev2": 0.0025109961233690734,
+            "sin2_theta12": 0.30880005445432357,
+            "sin2_theta13": 0.02247998512979259,
+            "sin2_theta23": 0.4699999833750101
           }
         },
         {
-          "gamma": 1.05,
-          "chi2": 1.3371737094961285e-14,
+          "gamma": 17.78279410038923,
+          "status": "Success",
+          "chi2": 3.8943393493858846e-07,
           "prediction": {
-            "delta_m21_sq_ev2": 7.536999996447566e-05,
-            "delta_m3l_sq_ev2": 0.002510999997797181,
-            "sin2_theta12": 0.3088000000494028,
-            "sin2_theta13": 0.0224799999883437,
-            "sin2_theta23": 0.47000000005052
+            "delta_m21_sq_ev2": 7.536987441855417e-05,
+            "delta_m3l_sq_ev2": 0.002510987613947489,
+            "sin2_theta12": 0.3088001734935751,
+            "sin2_theta13": 0.02247995256629315,
+            "sin2_theta23": 0.46999994613028157
+          }
+        },
+        {
+          "gamma": 31.622776601683793,
+          "status": "Success",
+          "chi2": 3.919338609061129e-06,
+          "prediction": {
+            "delta_m21_sq_ev2": 7.536960189149424e-05,
+            "delta_m3l_sq_ev2": 0.0025109607046398027,
+            "sin2_theta12": 0.3088005499275829,
+            "sin2_theta13": 0.022479849591224798,
+            "sin2_theta23": 0.4699998283441929
+          }
+        },
+        {
+          "gamma": 56.23413251903491,
+          "status": "Success",
+          "chi2": 3.927097460427193e-05,
+          "prediction": {
+            "delta_m21_sq_ev2": 7.536874008754371e-05,
+            "delta_m3l_sq_ev2": 0.002510875612658046,
+            "sin2_theta12": 0.3088017402962347,
+            "sin2_theta13": 0.022479523960483958,
+            "sin2_theta23": 0.4699994558684582
+          }
+        },
+        {
+          "gamma": 100.0,
+          "status": "Success",
+          "chi2": 0.00039289997897812995,
+          "prediction": {
+            "delta_m21_sq_ev2": 7.536601486992847e-05,
+            "delta_m3l_sq_ev2": 0.0025106065572149824,
+            "sin2_theta12": 0.30880550436765475,
+            "sin2_theta13": 0.022478494278187384,
+            "sin2_theta23": 0.4699982779865571
+          }
+        },
+        {
+          "gamma": 177.82794100389228,
+          "status": "Success",
+          "chi2": 0.003927791446832879,
+          "prediction": {
+            "delta_m21_sq_ev2": 7.53573977031046e-05,
+            "delta_m3l_sq_ev2": 0.002509756028729766,
+            "sin2_theta12": 0.30881740535852187,
+            "sin2_theta13": 0.02247523866271471,
+            "sin2_theta23": 0.46999455310250726
+          }
+        },
+        {
+          "gamma": 316.22776601683796,
+          "status": "Success",
+          "chi2": 0.039217384584802006,
+          "prediction": {
+            "delta_m21_sq_ev2": 7.533015449329255e-05,
+            "delta_m3l_sq_ev2": 0.0025070693930470535,
+            "sin2_theta12": 0.3088550191290078,
+            "sin2_theta13": 0.022464948758206146,
+            "sin2_theta23": 0.469982773045343
+          }
+        },
+        {
+          "gamma": 562.341325190349,
+          "status": "Success",
+          "chi2": 0.39019734752079016,
+          "prediction": {
+            "delta_m21_sq_ev2": 7.52440711875303e-05,
+            "delta_m3l_sq_ev2": 0.0024986031354319862,
+            "sin2_theta12": 0.3089737600927436,
+            "sin2_theta13": 0.02243246167865897,
+            "sin2_theta23": 0.4699455119126
+          }
+        },
+        {
+          "gamma": 1000.0,
+          "status": "Success",
+          "chi2": 3.84019380001929,
+          "prediction": {
+            "delta_m21_sq_ev2": 7.497252916271228e-05,
+            "delta_m3l_sq_ev2": 0.002472123595939876,
+            "sin2_theta12": 0.3093472238404766,
+            "sin2_theta13": 0.02233024992195368,
+            "sin2_theta23": 0.4698275909573987
           }
         }
       ]
@@ -437,7 +878,7 @@
       ]
     ],
     "source": "NuFIT 6.1 (2025), IC24 with SK-atm, Normal Ordering; Gaussianized 1sigma approximation",
-    "note": "The configured target is a Gaussian approximation. The plotted 1sigma/3sigma regions are Gaussianized regions, not official Delta-chi2 contours."
+    "note": "Gaussian approximation; 1sigma/3sigma regions are not official Delta-chi2 contours."
   },
   "selection": {
     "source_config": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\Reports\\output\\full\\fit_feasibility_retry\\smallY_smallL\\T3_dS1_2_dS2_2_dF_1_alpha_m1\\fitted_candidate_config.json",

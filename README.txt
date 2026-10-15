@@ -1,9 +1,5 @@
-Replace Numerical/orchestration/RunFourBenchmarkCorrelations.py in the project root.
-
-Rebuild display from existing CSV:
-python -m Numerical.orchestration.RunFourBenchmarkCorrelations --display-only
-
-Retry failed LH/HH and other failed cases, then rebuild display:
-python -m Numerical.orchestration.RunFourBenchmarkCorrelations --run --retry-failed
-
-If LH/HH still fail, the HTML status line displays the actual Python exception. Check lambdaT3=5 against model validation and numerical integration limits before changing the physics.
+Replace: Numerical/plotting/BuildFittedModelEnvelopes.py
+Run: python -m Numerical.plotting.BuildFittedModelEnvelopes --scenario smallY_smallL --output Reports/output/display/fitted_model_envelopes_all.html
+Open: Start-Process "Reports/output/display/fitted_model_envelopes_all.html"
+Controls: Fit trajectories; Fit trajectories + ovals; independent X/Y padding, X/Y zoom; gamma min/max.
+Saved numerical data unchanged.

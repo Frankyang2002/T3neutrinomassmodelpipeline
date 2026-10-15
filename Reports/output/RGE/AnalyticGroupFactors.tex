@@ -1,0 +1,128 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=1.8cm]{geometry}
+\usepackage{amsmath,amssymb,booktabs,longtable,array}
+\usepackage[T1]{fontenc}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+\begin{document}
+\section*{T3 analytic one-loop group factors}
+This report presents the validated analytic representation-dependent group factors used by the T3 RGE pipeline.  Model dimensions are read from \texttt{common.T3Model.T3\_CLASSES} and model-specific coefficients are evaluated from the analytic group-factor implementations, not copied from RGBeta comparison tables.
+\subsection*{Representation conventions}
+\[
+j=\frac{d-1}{2},\qquad
+C_2(d)=\frac{d^2-1}{4},\qquad
+T(d)=\frac{d(d^2-1)}{12}.
+\]
+For each Yukawa vertex define
+\[
+G_S=\frac{d_>}{d_S},\qquad
+G_L=\frac{d_>}{2},\qquad
+G_F=\frac{d_>}{d_F},\qquad
+d_>=\max(d_S,d_F).
+\]
+\subsection*{Yukawa beta functions}
+\[
+\begin{aligned}
+16\pi^2\beta_{y_1}={}&
+G_{S_1}\operatorname{Tr}(y_1y_1^\dagger)y_1
++\frac12(G_{L_1}+G_{F_1})y_1y_1^\dagger y_1\\
+&+\frac12G_{L_2}y_2y_2^\dagger y_1
++\frac12Y_eY_e^\dagger y_1\\
+&-3g_2^2[C_2(L)+C_2(F)]y_1
+-3g_Y^2[Y_L^2+Y_F^2]y_1 .
+\end{aligned}
+\]
+\[
+\begin{aligned}
+16\pi^2\beta_{y_2}={}&
+G_{S_2}\operatorname{Tr}(y_2y_2^\dagger)y_2
++\frac12(G_{L_2}+G_{F_2})y_2y_2^\dagger y_2\\
+&+\frac12G_{L_1}y_1y_1^\dagger y_2
++\frac12Y_eY_e^\dagger y_2\\
+&-3g_2^2[C_2(L)+C_2(F)]y_2
+-3g_Y^2[Y_L^2+Y_F^2]y_2\\
+&+\delta_{\rm SC}\left[
+G_{S_2}\operatorname{Tr}(y_2y_1^\dagger)y_1
++\frac12G_{F_2}y_2y_1^\dagger y_1
+\right].
+\end{aligned}
+\]
+Here $\delta_{\rm SC}=1$ only for the physical self-conjugate branch $Y_F=0$ with odd $d_F$; otherwise it is zero.
+\subsection*{Fermion mass}
+\[
+16\pi^2\beta_{M_F}
+=
+\frac12G_{F_1}(y_1^Ty_1^*)M_F
++\frac12G_{F_2}M_F(y_2^\dagger y_2)
+-6g_2^2C_2(F)M_F
+-6g_Y^2Y_F^2M_F .
+\]
+\subsection*{Heavy scalar masses}
+\[
+\begin{aligned}
+16\pi^2\beta_{m_{S_1}^2}={}&
+2G_{S_1}m_{S_1}^2\operatorname{Tr}(y_1y_1^\dagger)
++\Xi_F\,G_{S_1}\operatorname{Tr}(M_FM_F^\dagger y_1^Ty_1^*)\\
+&+2(d_{S_1}+1)\lambda_{S_1}m_{S_1}^2
+-6C_2(S_1)g_2^2m_{S_1}^2
+-6Y_{S_1}^2g_Y^2m_{S_1}^2\\
+&+2d_{S_2}\lambda_{12}m_{S_2}^2+\cdots ,
+\end{aligned}
+\]
+with $\Xi_F=-4$ on the vector-like branch and $\Xi_F=-16$ on the physical self-conjugate branch.  The $S_2$ equation follows by $1\leftrightarrow2$.
+\subsection*{Direct Weinberg mixing}
+\[
+16\pi^2\beta_\kappa=R_W\,\lambda_{T3}\,C_{12},
+\]
+\[
+R_W=
+\frac43\,\eta_F\sqrt{3d_{S_1}d_{S_2}d_F}
+\begin{Bmatrix}
+\frac12&\frac12&1\\
+j_{S_2}&j_{S_1}&j_F
+\end{Bmatrix},
+\qquad
+\eta_F=(+1,+1,-1)\;\text{for}\;d_F=(1,2,3).
+\]
+\subsection*{Representation summary}
+\begin{center}
+\small
+\begin{longtable}{@{}lcccccccccc@{}}
+\toprule
+Model & $d_{S_1}$ & $d_{S_2}$ & $d_F$ & $G_{S_1}$ & $c_{11}$ & $c_{21}$ & $G_{S_2}$ & $c_{22}$ & $c_{12}$ & $R_W$ \\
+\midrule
+\endfirsthead
+\toprule
+Model & $d_{S_1}$ & $d_{S_2}$ & $d_F$ & $G_{S_1}$ & $c_{11}$ & $c_{21}$ & $G_{S_2}$ & $c_{22}$ & $c_{12}$ & $R_W$ \\
+\midrule
+\endhead
+T3-A & 1 & 3 & 2 & \ensuremath{2} & \ensuremath{1} & \ensuremath{\frac{3}{4}} & \ensuremath{1} & \ensuremath{\frac{3}{2}} & \ensuremath{\frac{1}{2}} & \ensuremath{\frac{4 \sqrt{3}}{3}} \\
+T3-B & 2 & 2 & 1 & \ensuremath{1} & \ensuremath{\frac{3}{2}} & \ensuremath{\frac{1}{2}} & \ensuremath{1} & \ensuremath{\frac{3}{2}} & \ensuremath{\frac{1}{2}} & \ensuremath{\frac{4 \sqrt{3}}{3}} \\
+T3-C & 2 & 2 & 3 & \ensuremath{\frac{3}{2}} & \ensuremath{\frac{5}{4}} & \ensuremath{\frac{3}{4}} & \ensuremath{\frac{3}{2}} & \ensuremath{\frac{5}{4}} & \ensuremath{\frac{3}{4}} & \ensuremath{- \frac{4}{3}} \\
+T3-D & 3 & 1 & 2 & \ensuremath{1} & \ensuremath{\frac{3}{2}} & \ensuremath{\frac{1}{2}} & \ensuremath{2} & \ensuremath{1} & \ensuremath{\frac{3}{4}} & \ensuremath{\frac{4 \sqrt{3}}{3}} \\
+T3-E & 3 & 3 & 2 & \ensuremath{1} & \ensuremath{\frac{3}{2}} & \ensuremath{\frac{3}{4}} & \ensuremath{1} & \ensuremath{\frac{3}{2}} & \ensuremath{\frac{3}{4}} & \ensuremath{- \frac{4 \sqrt{6}}{3}} \\
+\bottomrule
+\end{longtable}
+\end{center}
+$c_{11}=\frac12(G_{L_1}+G_{F_1})$, $c_{21}=\frac12G_{L_2}$, $c_{22}=\frac12(G_{L_2}+G_{F_2})$, $c_{12}=\frac12G_{L_1}$.
+\subsection*{Scalar-mass coefficient check at $\alpha=0$}
+\begin{center}
+\small
+\begin{longtable}{@{}lrrrrrrrr@{}}
+\toprule
+Model & $2G_{S_1}$ & $-4G_{S_1}$ & $2(d_{S_1}+1)$ & $2d_{S_2}$ & $2G_{S_2}$ & $-4G_{S_2}$ & $2(d_{S_2}+1)$ & $2d_{S_1}$ \\
+\midrule
+\endfirsthead
+\toprule
+Model & $2G_{S_1}$ & $-4G_{S_1}$ & $2(d_{S_1}+1)$ & $2d_{S_2}$ & $2G_{S_2}$ & $-4G_{S_2}$ & $2(d_{S_2}+1)$ & $2d_{S_1}$ \\
+\midrule
+\endhead
+T3-A & \ensuremath{4} & \ensuremath{-8} & \ensuremath{4} & \ensuremath{6} & \ensuremath{2} & \ensuremath{-4} & \ensuremath{8} & \ensuremath{2} \\
+T3-B & \ensuremath{2} & \ensuremath{-4} & \ensuremath{6} & \ensuremath{4} & \ensuremath{2} & \ensuremath{-4} & \ensuremath{6} & \ensuremath{4} \\
+T3-C & \ensuremath{3} & \ensuremath{-6} & \ensuremath{6} & \ensuremath{4} & \ensuremath{3} & \ensuremath{-6} & \ensuremath{6} & \ensuremath{4} \\
+T3-D & \ensuremath{2} & \ensuremath{-4} & \ensuremath{8} & \ensuremath{2} & \ensuremath{4} & \ensuremath{-8} & \ensuremath{4} & \ensuremath{6} \\
+T3-E & \ensuremath{2} & \ensuremath{-4} & \ensuremath{8} & \ensuremath{6} & \ensuremath{2} & \ensuremath{-4} & \ensuremath{8} & \ensuremath{6} \\
+\bottomrule
+\end{longtable}
+\end{center}
+\end{document}

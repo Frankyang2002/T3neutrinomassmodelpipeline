@@ -1,0 +1,76 @@
+\documentclass[9pt]{article}
+\usepackage[a4paper,margin=1.15cm]{geometry}
+\usepackage{amsmath,amssymb,booktabs,longtable,array}
+\usepackage[T1]{fontenc}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\tabcolsep}{3.5pt}
+\renewcommand{\arraystretch}{1.16}
+\begin{document}
+\section*{T3 group factors: EFT\_1\_after\_S1}
+Threshold-order-aware EFT stage.  Active heavy-field content: F, S2.
+\[j=\frac{d-1}{2},\qquad C_2(d)=\frac{d^2-1}{4},\qquad T(d)=\frac{d(d^2-1)}{12}.\]
+In every comparison table, $\mathcal{S}$ denotes the RGE structure multiplying the displayed group factor in $16\pi^2\beta$.
+\section*{Notation key}
+\begin{longtable}{@{}p{0.23\linewidth}p{0.69\linewidth}@{}}
+\toprule
+symbol & interaction / definition \\
+\midrule
+$g_1,g_2,g_3$ & SM gauge interactions \\
+$Y_u,Y_d,Y_e$ & SM Yukawa interactions \\
+$T$ & $\operatorname{Tr}(Y_e^\dagger Y_e+3Y_u^\dagger Y_u+3Y_d^\dagger Y_d)$ \\
+$m_1^2,m_2^2$ & $m_1^2S_1^\dagger S_1,\ m_2^2S_2^\dagger S_2$ \\
+$\lambda_1$ & $\frac12\lambda_1(H^\dagger H)^2$ \\
+$\lambda_{S_i}^{(1)}$ & $\frac12\lambda_{S_i}^{(1)}(S_i^\dagger S_i)^2$ \\
+$\lambda_{HS_i}^{(1)}$ & $(H^\dagger H)(S_i^\dagger S_i)$ \\
+$\lambda_{HS_i}^{(A)}$ & $(H^\dagger T^AH)(S_i^\dagger T^AS_i)$ \\
+$\lambda_5$ & $HHS_1S_2^\dagger+\mathrm{h.c.}$ \\
+$\lambda_{12}^{(1)}$ & $(S_1^\dagger S_1)(S_2^\dagger S_2)$ \\
+$\lambda_{12}^{(A)}$ & $(S_1^\dagger T^AS_1)(S_2^\dagger T^AS_2)$ \\
+$\lambda_{12}^{(\times)}$ & $(S_1^\dagger S_2)(S_2^\dagger S_1)$ \\
+$C_{LLS_1S_2}^{ij;AB}$ & $L_iL_jS_1^AS_2^B$ \\
+$C_{ijab}$ & $L_iL_j\phi_a\phi_b$ \\
+$C_5^{ij}$ & $(L_i^TCL_j)HH$ \\
+$R_W$ & $16\pi^2\beta_{C_5}\supset R_W\lambda_5C_{LLS_1S_2}$ \\
+\bottomrule
+\end{longtable}
+\section*{Stage field content}
+\begin{longtable}{@{}lccc p{0.20\linewidth}p{0.20\linewidth}@{}}
+\toprule
+run & $S_1$ & $S_2$ & $F$ & integrated at this stage & active after matching \\
+\midrule
+T3-B & $(2,- \frac{1}{2})$ & $(2,\frac{1}{2})$ & $(1,0)$ & S1 & F, S2 \\
+\bottomrule
+\end{longtable}
+\section*{Active renormalisable T3 quantities}
+$g_1$, $g_2$, $g_3$, $Y_u$, $Y_d$, $Y_e$ and the SM Higgs couplings remain active at every stage.
+\begin{longtable}{@{}p{0.45\linewidth}c@{}}
+\toprule
+quantity & $ \mathrm{T3-B}\;(\alpha=-1) $ \\
+\midrule
+$y_1$ & $-$ \\
+$y_2$ & $\checkmark$ \\
+$M_F$ & $\checkmark$ \\
+$m_1^2$ & $-$ \\
+$m_2^2$ & $\checkmark$ \\
+$\lambda_{S_1}^{(1)}$ & $-$ \\
+$\lambda_{S_2}^{(1)}$ & $\checkmark$ \\
+$\lambda_{HS_1}^{(1)},\,\lambda_{HS_1}^{(A)}$ & $-$ \\
+$\lambda_{HS_2}^{(1)},\,\lambda_{HS_2}^{(A)}$ & $\checkmark$ \\
+$\lambda_5,\,\lambda_{12}^{(1)},\,\lambda_{12}^{(A)},\,\lambda_{12}^{(\times)}$ & $-$ \\
+\bottomrule
+\end{longtable}
+\section*{Stage-specific group-factor status}
+The threshold ordering at this stage is supported by the report layer, so a PDF is produced for it.  A dedicated analytic renormalisable-RGE group-factor module is not currently available for this reduced heavy-field content.  Coefficients from the UV theory or from the special $F$-first EFT are therefore not reused here, because doing so would assign beta-function coefficients from the wrong dynamical theory.
+\section*{Representation invariants}
+\subsection*{Field representations}
+\begin{longtable}{@{}lcccc@{}}
+\toprule
+run & $S_1$ & $S_2$ & $F$ & $\alpha$ \\
+\midrule
+$\mathrm{T3-B}$ & $(2,- \frac{1}{2})$ & $(2,\frac{1}{2})$ & $(1,0)$ & $-1$ \\
+\bottomrule
+\end{longtable}
+\section*{Next threshold}
+The next GroupFactors PDF is generated from the next serialized EFT-stage label in the threshold plan, independent of which field is removed next.
+\end{document}

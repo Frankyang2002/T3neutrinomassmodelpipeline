@@ -7,12 +7,14 @@ from pathlib import Path
 import numpy as np
 import pytest
 
+from Numerical.orchestration.ModelNames import shorten
 from Numerical.plotting.RunningTrajectoryData import (
     SCENARIOS, discover_saved_runs, extract_trajectory,
 )
 from Numerical.orchestration.BuildComparisonReports import build_reports
 
 MODEL = "T3_dS1_3_dS2_3_dF_2_alpha_m2"
+SHORT_MODEL = shorten(MODEL)
 
 
 def fixture_payload(factor: float) -> dict:
@@ -56,22 +58,21 @@ def test_four_scenarios_generate_with_shared_dashboard(tmp_path: Path):
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(fixture_payload(index + 1)), encoding="utf-8")
     found = discover_saved_runs(input_root)
-    assert len(found[MODEL]) == 4
+    assert len(found[SHORT_MODEL]) == 4
     result = build_reports(input_root, out, strict=True)
     assert len(result["models"]) == 1
-    assert (out / MODEL / "comparison_report.html").is_file()
-    interactive = out / MODEL / "interactive_comparison.html"
+    assert (out / SHORT_MODEL / "comparison_report.html").is_file()
+    interactive = out / SHORT_MODEL / "interactive_comparison.html"
     assert interactive.is_file()
     page = interactive.read_text(encoding="utf-8")
     assert "smallY_largeL" in page
-    # These controls belong to InteractiveModelComparison's canonical renderer.
     assert 'id="zoomInt"' in page
     assert 'id="zoomUV"' in page
     assert 'id="zoomFinal"' in page
     assert 'id="showComponents"' in page
     assert "Show all scenarios" in page
-    assert (out / MODEL / "figures" / "weinberg_eft_comparison.png").is_file()
-    assert not result["models"][MODEL]["reconstruction_warnings"]
+    assert (out / SHORT_MODEL / "figures" / "weinberg_eft_comparison.png").is_file()
+    assert not result["models"][SHORT_MODEL]["reconstruction_warnings"]
 
 
 def test_strict_rejects_missing_scenario(tmp_path: Path):

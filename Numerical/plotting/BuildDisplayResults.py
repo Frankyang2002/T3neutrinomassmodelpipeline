@@ -9,7 +9,6 @@ from __future__ import annotations
 import argparse
 import csv
 import json
-import math
 import re
 import shutil
 from pathlib import Path
@@ -17,6 +16,7 @@ from typing import Any
 
 from Numerical.plotting.InteractiveModelComparison import write_dashboard
 from Numerical.plotting.RunningResultFigures import generate_running_result_figures
+from studies.FullT3Study import LAMBDA_T3_NORMALISATION
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_DATA_INPUT = PROJECT_ROOT / 'output' / 'full'
@@ -36,10 +36,6 @@ SCENARIO_ORDER = tuple(SCENARIOS)
 MODEL_CLASS_BY_DIMS = {
     (1, 3, 2): 'A', (2, 2, 1): 'B', (2, 2, 3): 'C',
     (3, 1, 2): 'D', (3, 3, 2): 'E',
-}
-LAMBDA_T3_NORMALISATION = {
-    'A': 1.0, 'B': 1.0, 'C': math.sqrt(3.0),
-    'D': 1.0, 'E': 1.0 / math.sqrt(2.0),
 }
 
 
@@ -160,8 +156,8 @@ def _write_readme(path: Path, *, rows: list[dict[str, Any]], report_model_count:
         'contribution. No LLSS self-running Wilson trajectory is inferred.', '',
         '## Comparison benchmark normalisation', '',
         'lambda_T3^eff = f_R lambda_T3^ref, with',
-        'f_R(A,B,C,D,E) = (1, 1, sqrt(3), 1, 1/sqrt(2)).',
-        'This acts on benchmark inputs, not physical matching group factors.',
+        'f_R(A,B,C,D,E) = (1, 1, 1, 1, 0.5).',
+        'This acts on benchmark inputs; physical matching group factors are unchanged.',
         'The fixed comparison textures are not oscillation-data fits.', '',
     ]
     for scenario, (y, lam) in SCENARIOS.items():

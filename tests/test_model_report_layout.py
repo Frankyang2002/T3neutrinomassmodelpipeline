@@ -1,7 +1,11 @@
+"""Collision-safe migration of symbolic reports to canonical short model labels."""
 from pathlib import Path
+
+from Numerical.orchestration.ModelNames import shorten
 from Numerical.orchestration.ModelReportLayout import migrate
 
 MODEL = "T3_dS1_2_dS2_2_dF_1_alpha_m1"
+SHORT_MODEL = shorten(MODEL)
 
 
 def report(root: Path, scenario: str, name: str, content: bytes) -> Path:
@@ -25,7 +29,7 @@ def test_identical_reports_move_to_one_destination(tmp_path):
     assert summary["status"] == "Complete"
     assert summary["removed_source_files"] == 2
     assert not a.exists() and not b.exists()
-    assert (tmp_path / "models" / MODEL / "RGE" / "UV.pdf").read_bytes() == b"a"
+    assert (tmp_path / "models" / SHORT_MODEL / "RGE" / "UV.pdf").read_bytes() == b"a"
     assert (tmp_path / "models" / "report_migration_manifest.json").exists()
 
 
@@ -34,8 +38,8 @@ def test_differing_reports_preserved_as_variant(tmp_path):
     report(tmp_path, "largeY_largeL", "UV.pdf", b"variant")
     summary = migrate(tmp_path, execute=True)
     assert len(summary["different_content_variants"]) == 1
-    assert (tmp_path / "models" / MODEL / "RGE" / "UV.pdf").read_bytes() == b"canonical"
-    assert (tmp_path / "models" / MODEL / "_scenario_variants" / "largeY_largeL" / "RGE" / "UV.pdf").read_bytes() == b"variant"
+    assert (tmp_path / "models" / SHORT_MODEL / "RGE" / "UV.pdf").read_bytes() == b"canonical"
+    assert (tmp_path / "models" / SHORT_MODEL / "_scenario_variants" / "largeY_largeL" / "RGE" / "UV.pdf").read_bytes() == b"variant"
 
 
 def test_numerical_figure_untouched(tmp_path):

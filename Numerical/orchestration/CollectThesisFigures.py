@@ -1,12 +1,14 @@
-"""Copy selected existing T3 numerical figures into a review folder.
+"""Index selected T3 thesis figures without creating duplicate PNG files.
 
-Run from anywhere with:
+This is a presentation-only file locator, not a plot generator. The existing
+representation-comparison plots must be generated separately from saved study
+results. By default no figures are copied; use --copy for a thesis export.
+
+From the repository root:
     python -m Numerical.orchestration.CollectThesisFigures
     python -m Numerical.orchestration.CollectThesisFigures --all
-
-No plotting, fitting, RG running, or matching is performed.
+    python -m Numerical.orchestration.CollectThesisFigures --copy
 """
-
 from __future__ import annotations
 
 import argparse
@@ -37,64 +39,81 @@ FIGURES = (
 )
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--all', action='store_true',
-                        help='Also include the two supporting RG figures.')
-    parser.add_argument('--destination', type=Path,
-                        default=Path('Reports/figure_review'),
-                        help='Destination (relative paths are resolved from the project root).')
-    args = parser.parse_args()
+def build_index(*, include_all: bool = False, copy: bool = False,
+                destination: Path = Path('Reports/figure_review'),
+                root: Path = PROJECT_ROOT) -> int:
+    """Index canonical figure paths; copy only with explicit permission.
 
-    destination = args.destination
+    Never deletes source files or existing destination figures. An unavailable
+    source is reported as missing rather than silently substituted.
+    """
+    root = Path(root).resolve()
+    destination = Path(destination)
     if not destination.is_absolute():
-        destination = PROJECT_ROOT / destination
+        destination = root / destination
+    destination = destination.resolve()
     destination.mkdir(parents=True, exist_ok=True)
 
-    selected = [item for item in FIGURES if args.all or item[1] == 'primary']
-    copied = []
+    selected = [item for item in FIGURES if include_all or item[1] == 'primary']
+    lines = [
+        '# T3 numerical figure review', '',
+        'This index references existing plots. It does not recalculate RGEs, fits, or plots.',
+        'Use `--copy` only when a separate export of PNGs is required.', '',
+        '| Priority | Figure | Purpose | Source |',
+        '|---|---|---|---|',
+    ]
     missing = []
+    available = 0
     for filename, priority, title, note in selected:
-        candidates = [PROJECT_ROOT / COMPARISON / filename,
-                      PROJECT_ROOT / DRAFT / filename]
-        source = next((path for path in candidates if path.is_file()), None)
+        candidates = (root / COMPARISON / filename, root / DRAFT / filename)
+        source = next((p for p in candidates if p.is_file()), None)
         if source is None:
             missing.append((filename, candidates))
             print(f'MISSING: {filename}')
             continue
-        target = destination / filename
-        # Avoid accidentally copying a file onto itself.
-        if source.resolve() != target.resolve():
-            shutil.copy2(source, target)
-        copied.append((filename, priority, title, note, source.relative_to(PROJECT_ROOT)))
-        print(f'COPIED: {source.relative_to(PROJECT_ROOT)} -> {target}')
+        available += 1
+        if copy:
+            target = destination / filename
+            if source.resolve() != target.resolve():
+                shutil.copy2(source, target)
+            print(f'COPIED: {source.relative_to(root)} -> {target}')
+        else:
+            print(f'FOUND: {source.relative_to(root)}')
+        lines.append(f'| {priority} | `{filename}` | {title} | `{source.relative_to(root).as_posix()}` |')
 
-    lines = [
-        '# T3 numerical figure review', '',
-        'These are copies of existing figures, not regenerated calculations.', '',
-        '| Priority | Figure | Purpose | Source |',
-        '|---|---|---|---|',
-    ]
-    for filename, priority, title, note, source in copied:
-        lines.append(f'| {priority} | `{filename}` | {title} | `{source.as_posix()}` |')
     lines.extend(['', '## Interpretation notes', ''])
-    for filename, _priority, _title, note, _source in copied:
+    for filename, _priority, _title, note in selected:
         lines.append(f'- **{filename}:** {note}')
-    lines.extend(['',
-                  'All staged percentages are conditional, order-dependent comparisons, '
-                  'not scheme-independent diagrammatic contributions.',
-                  'Across independently fitted models, differences cannot be assigned '
-                  'to representation alone.', ''])
+    lines.extend([
+        '',
+        'All staged percentages are conditional, order-dependent comparisons, '
+        'not scheme-independent diagrammatic contributions.',
+        'Across independently fitted models, differences cannot be assigned '
+        'to representation alone.', '',
+    ])
     if missing:
         lines.extend(['## Missing requested figures', ''])
         for filename, candidates in missing:
-            lines.append(f'- `{filename}`: searched ' + ' and '.join(
-                f'`{p.relative_to(PROJECT_ROOT).as_posix()}`' for p in candidates))
+            locations = ' and '.join(f'`{p.relative_to(root).as_posix()}`' for p in candidates)
+            lines.append(f'- `{filename}`: searched {locations}')
         lines.append('')
-    (destination / 'FIGURE_INDEX.md').write_text('\n'.join(lines), encoding='utf-8')
-    print(f'\nCopied {len(copied)}/{len(selected)} figures to: {destination}')
-    print(f'Index: {destination / "FIGURE_INDEX.md"}')
+    index = destination / 'FIGURE_INDEX.md'
+    index.write_text('\n'.join(lines), encoding='utf-8')
+    print(f'\nIndexed {available}/{len(selected)} figures: {index}')
     return 1 if missing else 0
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--all', action='store_true',
+                        help='Include the two supporting RG figures')
+    parser.add_argument('--copy', action='store_true',
+                        help='Copy selected PNGs to the destination (off by default)')
+    parser.add_argument('--destination', type=Path,
+                        default=Path('Reports/figure_review'),
+                        help='Index/export location relative to the project root')
+    args = parser.parse_args(argv)
+    return build_index(include_all=args.all, copy=args.copy, destination=args.destination)
 
 
 if __name__ == '__main__':

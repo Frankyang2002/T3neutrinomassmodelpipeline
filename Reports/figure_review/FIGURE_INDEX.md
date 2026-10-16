@@ -1,6 +1,7 @@
 # T3 numerical figure review
 
-These are copies of existing figures, not regenerated calculations.
+This index references existing plots. It does not recalculate RGEs, fits, or plots.
+Use `--copy` only when a separate export of PNGs is required.
 
 | Priority | Figure | Purpose | Source |
 |---|---|---|---|

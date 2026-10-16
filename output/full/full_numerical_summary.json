@@ -1,0 +1,108 @@
+{
+  "status": "Success",
+  "study_mode": "comparison_only",
+  "optimizer_in_full_study": false,
+  "ordinary_model_count": 16,
+  "shared_scalar_models_included": false,
+  "comparison_definition": {
+    "yukawa_texture": "fixed real non-diagonal y1/y2 textures scaled by common Y",
+    "scalar_parameter": "charge-multiplicity-normalized Re(lambdaT3), Im(lambdaT3)=0",
+    "lambdaT3_normalisation": {
+      "basis": "charge-channel multiplicity only: lambdaT3_ref/N_equiv; N_equiv=1 (A-D), 2 (E); equal loop functions assumed in the unbroken-SU(2) multiplet-mass benchmark; representation CGs retained",
+      "factors_by_class": {
+        "A": 1.0,
+        "B": 1.0,
+        "C": 1.0,
+        "D": 1.0,
+        "E": 0.5
+      },
+      "physical_group_factors_modified": false
+    },
+    "representation_specific_extra_quartics": "required optional quartics fixed to 0",
+    "scenarios": {
+      "smallY_smallL": {
+        "yukawa": 0.005,
+        "lambdaT3_reference": 0.1
+      },
+      "smallY_largeL": {
+        "yukawa": 0.005,
+        "lambdaT3_reference": 1.0
+      },
+      "largeY_smallL": {
+        "yukawa": 0.5,
+        "lambdaT3_reference": 0.1
+      },
+      "largeY_largeL": {
+        "yukawa": 0.5,
+        "lambdaT3_reference": 1.0
+      }
+    }
+  },
+  "results": [
+    {
+      "mode": "comparison",
+      "scenario": "smallY_smallL",
+      "yukawa": 0.005,
+      "lambdaT3_reference": 0.1,
+      "lambdaT3_effective_by_class": {
+        "A": 0.1,
+        "B": 0.1,
+        "C": 0.1,
+        "D": 0.1,
+        "E": 0.05
+      },
+      "return_code": 0,
+      "runtime_seconds": 3786.2899878025055,
+      "dashboard": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\Reports\\output\\full\\comparison\\smallY_smallL\\interactive_comparison.html"
+    },
+    {
+      "mode": "comparison",
+      "scenario": "smallY_largeL",
+      "yukawa": 0.005,
+      "lambdaT3_reference": 1.0,
+      "lambdaT3_effective_by_class": {
+        "A": 1.0,
+        "B": 1.0,
+        "C": 1.0,
+        "D": 1.0,
+        "E": 0.5
+      },
+      "return_code": 0,
+      "runtime_seconds": 3807.279608488083,
+      "dashboard": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\Reports\\output\\full\\comparison\\smallY_largeL\\interactive_comparison.html"
+    },
+    {
+      "mode": "comparison",
+      "scenario": "largeY_smallL",
+      "yukawa": 0.5,
+      "lambdaT3_reference": 0.1,
+      "lambdaT3_effective_by_class": {
+        "A": 0.1,
+        "B": 0.1,
+        "C": 0.1,
+        "D": 0.1,
+        "E": 0.05
+      },
+      "return_code": 0,
+      "runtime_seconds": 3801.4586811065674,
+      "dashboard": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\Reports\\output\\full\\comparison\\largeY_smallL\\interactive_comparison.html"
+    },
+    {
+      "mode": "comparison",
+      "scenario": "largeY_largeL",
+      "yukawa": 0.5,
+      "lambdaT3_reference": 1.0,
+      "lambdaT3_effective_by_class": {
+        "A": 1.0,
+        "B": 1.0,
+        "C": 1.0,
+        "D": 1.0,
+        "E": 0.5
+      },
+      "return_code": 0,
+      "runtime_seconds": 3785.1685614585876,
+      "dashboard": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\Reports\\output\\full\\comparison\\largeY_largeL\\interactive_comparison.html"
+    }
+  ],
+  "runtime_seconds": 15180.196838855743
+}

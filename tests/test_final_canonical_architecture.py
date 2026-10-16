@@ -1,4 +1,4 @@
-"""Canonical ownership assertions based on live module paths, not prose inventories."""
+"""Canonical ownership assertions based on live module paths and consolidated docs."""
 from __future__ import annotations
 
 from pathlib import Path
@@ -35,12 +35,13 @@ def test_t3_trajectory_exposes_descriptive_intermediate_aliases() -> None:
 
 
 def test_docs_use_current_canonical_ownership() -> None:
-    pipeline = _text("INFO_PIPELINE.md")
-    rge = _text("INFO_RGE.md")
-    lagrangian = _text("INFO_LAGRANGIAN.md")
-    assert "pipeline.py" in pipeline
-    assert "Weinberg" in pipeline and "Weinberg" in rge
-    assert "Matchete" in lagrangian
+    overview = _text("README.md")
+    physics = _text("docs/PHYSICS.md")
+    numerical = _text("docs/NUMERICAL.md")
+    assert "pipeline.py" in overview
+    assert "Weinberg" in overview and "Weinberg" in physics
+    assert "Matchete" in physics
+    assert "Numerical/" in numerical
     for relative in (
         "RGE/matching/FinalWeinbergCoefficient.py",
         "RGE/running/weinberg/WeinbergRGE.py",

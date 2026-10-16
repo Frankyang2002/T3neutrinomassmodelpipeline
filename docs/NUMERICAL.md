@@ -91,3 +91,7 @@ Archived incident notes document (i) threshold ordering producing no intermediat
 ## Source notes
 
 `INFO_NUMERICAL.md`, `INFO_IMPLEMENTATION.md`, `INFO_TESTS.md`, `INFO_T3_BENCHMARK_SELECTION_AND_NUFIT_FEASIBILITY.md`, `README.txt`, `README_GammaControls.txt`, `README_INSTALL.txt`, `README_StudyA_RG_controls.txt`, `README_StudyB.txt`, `docs/archive/INFO_T3_NUMERICAL_RESUME.md`, `docs/archive/INFO_T3_NUMERICAL_SCENARIO_FIX.md`.
+
+## External smoke regression
+
+Passing `python -m pytest -q` checks Python-level contracts but does not establish that Matchete and RGBeta still work. Run `python pipeline.py --smoke` as an additional external smoke regression when the external symbolic toolchain is available.

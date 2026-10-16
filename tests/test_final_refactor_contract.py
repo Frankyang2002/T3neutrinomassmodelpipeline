@@ -1,4 +1,4 @@
-"""Architecture and documentation contracts for the current physical-stage refactor."""
+"""Architecture contracts using canonical source ownership and consolidated docs."""
 from __future__ import annotations
 
 from pathlib import Path
@@ -11,13 +11,13 @@ def _text(relative: str) -> str:
 
 
 def test_central_documentation_matches_the_refactored_pipeline_boundaries() -> None:
-    pipeline_doc = _text("INFO_PIPELINE.md")
-    assert "pipeline.py" in pipeline_doc
-    assert "scalar-only intermediate EFT" in pipeline_doc
-    assert "Weinberg" in pipeline_doc
-    assert "numerical" in pipeline_doc.lower()
-    # Ownership is checked against code, rather than requiring an exhaustive
-    # path listing in a human-facing overview document.
+    overview = _text("README.md")
+    physics = _text("docs/PHYSICS.md")
+    numerical = _text("docs/NUMERICAL.md")
+    assert "pipeline.py" in overview
+    assert "scalar-only intermediate EFT" in physics
+    assert "Weinberg" in physics
+    assert "numerical" in numerical.lower()
     for relative in (
         "common/PipelinePlan.py", "common/T3Fields.py", "model/T3Study.py",
         "Lagrangian/T3ModelMatching.py", "RGE/running/IntermediateEFTRunning.py",
@@ -81,20 +81,19 @@ def test_historical_final_c5_bridge_is_retired() -> None:
 
 
 def test_documentation_states_the_project_hypercharge_conversion_explicitly() -> None:
-    for relative in ("INFO_PIPELINE.md", "INFO_LAGRANGIAN.md"):
-        source = _text(relative).replace(" ", "")
-        assert "Q=T_3+Y" in source
-        assert "Y_{\\rmRZY}=2Y" in source
-        assert "Y(S_1)=\\frac{\\alpha}{2}" in source
-        assert "Y(F)=\\frac{\\alpha+1}{2}" in source
+    source = _text("docs/PHYSICS.md").replace(" ", "")
+    assert "Q=T_3+Y" in source
+    assert "Y_{\\rmRZY}=2Y" in source
+    assert "Y(S_1)=\\frac{\\alpha}{2}" in source
+    assert "Y(F)=\\frac{\\alpha+1}{2}" in source
 
 
 def test_scalar_first_is_documented_as_outside_production_scope() -> None:
-    pipeline = _text("INFO_PIPELINE.md").lower()
-    assert "scalar-first" in pipeline
-    assert "dimension-six" in pipeline
-    assert "production" in pipeline
-    for relative in ("INFO_PIPELINE.md", "INFO_RGE.md", "INFO_LAGRANGIAN.md"):
+    physics = _text("docs/PHYSICS.md").lower()
+    assert "scalar-first" in physics
+    assert "dimension-six" in physics
+    assert "production" in physics
+    for relative in ("README.md", "docs/PHYSICS.md", "docs/NUMERICAL.md"):
         source = _text(relative)
         assert "--allow-truncated-scalar-first" not in source
         assert "--eft-max-dimension" not in source
@@ -119,11 +118,11 @@ def test_historical_eft1_implementation_package_is_retired() -> None:
 
 def test_shared_scalar_identity_is_documented_as_physical_s_not_parallel_architecture() -> None:
     fields = _text("common/T3Fields.py")
-    pipeline_doc = _text("INFO_PIPELINE.md")
+    physics = _text("docs/PHYSICS.md")
     assert 'SHARED_SCALAR_FIELDS: tuple[str, ...] = ("S",)' in fields
-    assert "F, S" in pipeline_doc
-    assert "shared-scalar" in pipeline_doc.lower()
-    assert "one physical scalar" in pipeline_doc.lower()
+    assert "F, S" in physics
+    assert "shared-scalar" in physics.lower()
+    assert "one physical scalar" in physics.lower()
 
 
 def test_project_helper_scripts_are_not_root_level() -> None:
@@ -134,11 +133,10 @@ def test_project_helper_scripts_are_not_root_level() -> None:
 
 
 def test_docs_require_external_smoke_regression_after_python_tests() -> None:
-    """The actual smoke CLI must exist; docs may link to INFO_TESTS instead."""
     from common.PipelineCLI import build_argument_parser
     parser = build_argument_parser()
     option_strings = {o for a in parser._actions for o in a.option_strings}
     assert "--smoke" in option_strings
-    info = _text("INFO_TESTS.md")
+    info = _text("README.md") + "\n" + _text("docs/NUMERICAL.md")
     assert "pytest" in info.lower()
     assert "smoke" in info.lower()

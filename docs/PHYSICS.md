@@ -130,3 +130,24 @@ That halves Class-E **initial** \(\lambda_{T3}\) relative to the reference to co
 ## Source notes
 
 `INFO_PIPELINE.md`, `INFO_LAGRANGIAN.md`, `INFO_RGE.md`, `INFO_T3_MULTIPLICITY.md`, `INFO_IMPLEMENTATION.md`, `docs/archive/INFO_LLSS_DIAGNOSTIC.md`, `docs/archive/INFO_T3_BENCHMARK_VALIDATION.md`.
+
+
+## Production-scope architecture contracts
+
+The production pipeline implements the **fermion-first** threshold sequence.
+**Scalar-first** threshold orders are outside **production** scope: the
+potential **dimension-six** intermediate operator treatment required for those
+orders is not provided as a standard production path. This is a limitation of
+implemented EFT coverage, not a claim that such models are physically forbidden.
+
+For the **shared-scalar** branch, the physical field inventory is **F, S**:
+there is **one physical scalar** `S`, not an independent pair of physical
+`S1` and `S2` multiplets. The formal `S1`/`S2` topology roles are introduced
+at the matching boundary and must not be interpreted as a parallel physical
+architecture.
+
+The default supported low-energy treatment uses the scalar-only intermediate
+EFT and the final Weinberg coefficient. Exotic scalar-first truncation flags
+are not part of the documented production CLI.
+
+The canonical production stage is a **scalar-only intermediate EFT** between the fermion and scalar thresholds.

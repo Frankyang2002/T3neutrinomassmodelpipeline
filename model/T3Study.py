@@ -1,11 +1,10 @@
-"""Select the T3 model points requested by one pipeline study.
+"""
+This just converts a study into request objects,
+eg: if we requires to study a class B with alpha = -1, 
+the file identifies models and packages the information for model building
 
-This module answers only *which* UV models should be calculated.  It keeps the
-T3-A...E scan definitions, neutral-state filtering, and direct ``--dims``
-selection separate from the Lagrangian/matching implementation.
-
-The selected models are represented by :class:`T3ModelRequest`.  The actual UV
-construction and EFT matching are performed by ``Lagrangian.T3ModelMatching``.
+So we are just making sure all inputs are done nicely,
+sorting info from class, dimensions or shared dimensions
 """
 
 from __future__ import annotations

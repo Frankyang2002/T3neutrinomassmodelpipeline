@@ -1,352 +1,160 @@
-"""Complete 16-model comparison-only numerical T3 study."""
+"""Run the 16 ordinary T3 models using their frozen fitted-reference inputs.
+
+The fitted numerical configurations are authoritative. This module does not
+construct new Yukawa textures, alter fitted couplings, or perform optimisation.
+The normal pipeline owns model construction, matching and numerical evolution.
+"""
 from __future__ import annotations
 
-from copy import deepcopy
 import argparse
+import hashlib
 import json
-import shutil
 import subprocess
 import sys
 import time
 from pathlib import Path
 from typing import Any
 
-from Numerical.plotting.InteractiveModelComparison import write_dashboard
-
-
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 PIPELINE_SCRIPT = PROJECT_ROOT / "pipeline.py"
-OUTPUT_ROOT = PROJECT_ROOT / "output" / "full"
-REPORT_ROOT = PROJECT_ROOT / "Reports" / "output" / "full"
-DEFAULT_TEMPLATE = PROJECT_ROOT / "configs" / "t3_numerical_default_B_alpha_m1.json"
-ACTIVE_CONFIG_DIR = PROJECT_ROOT / "configs" / "generated_models"
-CONFIG_SET_ROOT = PROJECT_ROOT / "configs" / "generated_model_sets"
-
-MODELS = (
-    ("A", 1, 3, 2, -4), ("A", 1, 3, 2, -2), ("A", 1, 3, 2, 0),
-    ("B", 2, 2, 1, -3), ("B", 2, 2, 1, -1), ("B", 2, 2, 1, 1),
-    ("C", 2, 2, 3, -3), ("C", 2, 2, 3, -1), ("C", 2, 2, 3, 1),
-    ("D", 3, 1, 2, -2), ("D", 3, 1, 2, 0), ("D", 3, 1, 2, 2),
-    ("E", 3, 3, 2, -4), ("E", 3, 3, 2, -2), ("E", 3, 3, 2, 0),
-    ("E", 3, 3, 2, 2),
-)
-
-COMPARISON_SCENARIOS = {
-    "smallY_smallL": (0.005, 0.1),
-    "smallY_largeL": (0.005, 1.0),
-    "largeY_smallL": (0.5, 0.1),
-    "largeY_largeL": (0.5, 1.0),
-}
-
-# Divide only by the number of equal-weight internal charge channels.
-# The two class-E channels have identical CG coefficients. Their loop
-# functions are equal within the benchmark's unbroken-SU(2) multiplet-mass
-# approximation. Do not interpret this as an all-representation CG rescaling
-# or a verified broken-electroweak-phase mass-spectrum statement.
-# Matching and RGE group factors are not modified here.
-LAMBDA_T3_NORMALISATION = {
-    "A": 1.0,
-    "B": 1.0,
-    "C": 1.0,
-    "D": 1.0,
-    "E": 0.5,
-}
-LAMBDA_T3_NORMALISATION_BASIS = (
-    "charge-channel multiplicity only: lambdaT3_ref/N_equiv; "
-    "N_equiv=1 (A-D), 2 (E); equal loop functions assumed in the "
-    "unbroken-SU(2) multiplet-mass benchmark; representation CGs retained"
-)
-
-OPTIONAL_REAL_QUARTICS = (
-    "lambdaH1Adj", "lambdaH2Adj", "lambdaS1Adj", "lambdaS2Adj",
-    "lambda12Adj", "lambda12Cross",
-)
-SPECIAL_DOUBLET_COMPLEX_QUARTICS = (
-    "lambdaHHdagS2S2",
-    "lambdaHHdagS1barS1bar",
-    "lambdaS1bar2S2bar2",
-    "lambdaS1barS2S2bar2",
-    "lambdaS1S1bar2S2bar",
-    "lambdaHHdagS1barS2barCross",
-)
-COMPARISON_Y1_TEXTURE = (
-    (1, .2, -.1),
-    (.2, .8, .3),
-    (-.1, .3, .6),
-)
-COMPARISON_Y2_TEXTURE = (
-    (.7, -.3, .2),
-    (.4, 1, -.2),
-    (.1, .3, .8),
-)
+BENCHMARK_ROOT = PROJECT_ROOT / "Numerical" / "benchmarks" / "fitted_reference"
+MANIFEST_PATH = BENCHMARK_ROOT / "benchmark_manifest.json"
+OUTPUT_ROOT = PROJECT_ROOT / "output" / "full" / "fitted_reference"
+REPORT_ROOT = PROJECT_ROOT / "Reports" / "output" / "full" / "fitted_reference"
 
 
-def _model_key(ds1: int, ds2: int, df: int, alpha: int) -> str:
-    a = f"p{alpha}" if alpha >= 0 else f"m{abs(alpha)}"
-    return f"T3_dS1_{ds1}_dS2_{ds2}_dF_{df}_alpha_{a}"
+def _read_object(path: Path) -> dict[str, Any]:
+    obj = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(obj, dict):
+        raise ValueError(f"Expected a JSON object in {path}")
+    return obj
 
 
-def _load_json(path: Path) -> dict[str, Any]:
-    value = json.loads(path.read_text(encoding="utf-8"))
-    if not isinstance(value, dict):
-        raise ValueError(f"{path} must contain a JSON object")
-    return value
-
-
-def _write_json(path: Path, value: dict[str, Any]) -> None:
+def _write_object(path: Path, obj: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_name(path.name + ".tmp")
-    temporary.write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8")
+    temporary.write_text(json.dumps(obj, indent=2) + "\n", encoding="utf-8")
     temporary.replace(path)
 
 
+def _sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _load_models() -> list[tuple[str, tuple[int, int, int, int], Path]]:
+    manifest = _read_object(MANIFEST_PATH)
+    rows = manifest.get("models")
+    if not isinstance(rows, list) or len(rows) != 16:
+        raise ValueError("Expected exactly 16 model entries in fitted-reference manifest")
+    models: list[tuple[str, tuple[int, int, int, int], Path]] = []
+    seen: set[str] = set()
+    for row in rows:
+        if not isinstance(row, dict):
+            raise ValueError("Malformed model entry in fitted-reference manifest")
+        name = str(row["model"])
+        if name in seen:
+            raise ValueError(f"Duplicate model in manifest: {name}")
+        seen.add(name)
+        rep = row["representation"]
+        dims = (int(rep["d_s1"]), int(rep["d_s2"]), int(rep["d_f"]), int(rep["alpha"]))
+        if rep.get("shared_scalar", False):
+            raise ValueError(f"Unexpected shared-scalar model: {name}")
+        config_relative = Path(str(row["config_path"]))
+        if config_relative.is_absolute() or ".." in config_relative.parts:
+            raise ValueError(f"Unsafe config path in manifest: {config_relative}")
+        config_path = PROJECT_ROOT / config_relative
+        if not config_path.is_file():
+            raise FileNotFoundError(f"Missing frozen config for {name}: {config_path}")
+        expected_hash = row.get("sha256")
+        if expected_hash and _sha256(config_path) != expected_hash:
+            raise ValueError(f"Frozen configuration hash mismatch: {config_path}")
+        payload = _read_object(config_path)
+        actual = payload.get("representation", {})
+        if tuple(actual.get(k) for k in ("d_s1", "d_s2", "d_f", "alpha")) != dims:
+            raise ValueError(f"Representation mismatch in {config_path}")
+        if payload.get("benchmark_search", {}).get("enabled", False):
+            raise ValueError(f"Frozen benchmark unexpectedly enables a search: {config_path}")
+        if payload.get("sensitivity", {}).get("enabled", False):
+            raise ValueError(f"Frozen benchmark unexpectedly enables sensitivity: {config_path}")
+        models.append((name, dims, config_path))
+    return models
+
+
 def _common_args(args: argparse.Namespace) -> list[str]:
-    result: list[str] = []
+    values: list[str] = []
     if getattr(args, "debug_reports", False):
-        result.append("--debug-reports")
+        values.append("--debug-reports")
     if getattr(args, "force", False):
-        result.append("--force")
-    if getattr(args, "threshold", None):
-        for group in args.threshold:
-            result += ["--threshold", *group]
-    if getattr(args, "threshold_scale", None):
-        for value in args.threshold_scale:
-            result += ["--threshold-scale", str(value)]
-    return result
-
-
-def _run(command: list[str]) -> int:
-    print("\n> " + " ".join(command), flush=True)
-    return int(subprocess.run(command, cwd=PROJECT_ROOT).returncode)
-
-
-def _normalise_representation_quartics(
-    ordinary: dict[str, Any], ds1: int, ds2: int, alpha: int
-) -> None:
-    required = {
-        "lambdaH1Adj": ds1 > 1, "lambdaH2Adj": ds2 > 1,
-        "lambdaS1Adj": ds1 == 3, "lambdaS2Adj": ds2 == 3,
-        "lambda12Adj": ds1 > 1 and ds2 > 1,
-        "lambda12Cross": ds1 == 3 and ds2 == 3,
-    }
-    for name in OPTIONAL_REAL_QUARTICS:
-        if required[name]:
-            ordinary.setdefault(name, 0.0)
-        else:
-            ordinary.pop(name, None)
-
-    special = ds1 == 2 and ds2 == 2 and alpha == -1
-    for name in SPECIAL_DOUBLET_COMPLEX_QUARTICS:
-        if special:
-            ordinary.setdefault(name, {"real": 0.0, "imag": 0.0})
-        else:
-            ordinary.pop(name, None)
-
-
-def _retarget_config(
-    template: dict[str, Any], ds1: int, ds2: int, df: int, alpha: int
-) -> dict[str, Any]:
-    config = deepcopy(template)
-    config["representation"] = {
-        "d_s1": ds1, "d_s2": ds2, "d_f": df,
-        "alpha": alpha, "shared_scalar": False,
-    }
-    base_state = config.get("base_state")
-    if not isinstance(base_state, dict):
-        raise ValueError("Numerical config requires base_state object.")
-    ordinary = base_state.get("ordinary")
-    if not isinstance(ordinary, dict):
-        raise ValueError("Numerical config requires base_state.ordinary object.")
-    _normalise_representation_quartics(ordinary, ds1, ds2, alpha)
-    return config
-
-
-def _scaled_real_texture(
-    texture: tuple[tuple[float, ...], ...], scale: float
-) -> list[list[float]]:
-    return [[scale * float(value) for value in row] for row in texture]
-
-
-def _lambda_t3_effective(model_class: str, reference: float) -> tuple[float, float]:
-    try:
-        factor = LAMBDA_T3_NORMALISATION[model_class]
-    except KeyError as exc:
-        raise ValueError(
-            f"No lambdaT3 representation normalization for class {model_class!r}."
-        ) from exc
-    return float(reference) * factor, factor
-
-
-def _fixed_comparison_config(
-    template: dict[str, Any],
-    model_class: str,
-    ds1: int,
-    ds2: int,
-    df: int,
-    alpha: int,
-    yukawa: float,
-    scalar: float,
-) -> dict[str, Any]:
-    config = _retarget_config(template, ds1, ds2, df, alpha)
-    ordinary = config["base_state"]["ordinary"]
-    effective_scalar, normalisation_factor = _lambda_t3_effective(
-        model_class, scalar
-    )
-
-    ordinary["y1"]["real"] = _scaled_real_texture(COMPARISON_Y1_TEXTURE, yukawa)
-    ordinary["y2"]["real"] = _scaled_real_texture(COMPARISON_Y2_TEXTURE, yukawa)
-    ordinary["y1"]["imag"] = [[0.0] * 3 for _ in range(3)]
-    ordinary["y2"]["imag"] = [[0.0] * 3 for _ in range(3)]
-    ordinary["lambdaT3"] = {"real": effective_scalar, "imag": 0.0}
-
-    search = config.setdefault("benchmark_search", {})
-    search["enabled"] = False
-    search["use_current_model_representation"] = False
-    config.setdefault("sensitivity", {})["enabled"] = False
-
-    config["comparison_point"] = {
-        "yukawa_scale": yukawa,
-        "lambdaT3_reference": scalar,
-        "lambdaT3_effective": effective_scalar,
-        "normalisation_factor": normalisation_factor,
-        "normalisation_basis": LAMBDA_T3_NORMALISATION_BASIS,
-        "model_class": model_class,
-        "representation_specific_extra_quartics":
-            "required optional quartics fixed to 0",
-        "texture": (
-            "fixed real non-diagonal y1/y2 textures scaled by common Y; "
-            "Im(y1)=Im(y2)=0; Im(lambdaT3)=0"
-        ),
-        "y1_texture": [list(row) for row in COMPARISON_Y1_TEXTURE],
-        "y2_texture": [list(row) for row in COMPARISON_Y2_TEXTURE],
-    }
-    return config
-
-
-def _dashboard(raw: Path, report: Path, title: str) -> str | None:
-    try:
-        path = write_dashboard(raw, report / "interactive_comparison.html", title)
-        print(f"Interactive comparison: {path}")
-        return str(path)
-    except FileNotFoundError as exc:
-        print(f"Interactive comparison skipped: {exc}")
-        return None
+        values.append("--force")
+    groups = getattr(args, "threshold", None)
+    scales = getattr(args, "threshold_scale", None)
+    if groups:
+        for group in groups:
+            values.extend(("--threshold", *group))
+    else:
+        # The numerical backend uses the fermion-first intermediate scalar EFT.
+        values.extend(("--threshold", "F", "--threshold", "S1", "S2"))
+    if scales:
+        for scale in scales:
+            values.extend(("--threshold-scale", str(scale)))
+    return values
 
 
 def run_full_study(args: argparse.Namespace) -> int:
-    """Run the standard full study with four multiplicity-normalized benchmarks."""
-    template_path = Path(args.numerical) if getattr(args, "numerical", None) else DEFAULT_TEMPLATE
-    if not template_path.is_absolute():
-        template_path = PROJECT_ROOT / template_path
-
-    template = _load_json(template_path)
+    """Execute one full pipeline run per frozen, individually fitted model."""
+    if getattr(args, "numerical", None) is not None:
+        raise ValueError(
+            "--full uses the 16 frozen files in Numerical/benchmarks/fitted_reference; "
+            "do not also supply --numerical. Run an individual model for a custom config."
+        )
+    models = _load_models()  # Validate every input before launching a costly run.
     OUTPUT_ROOT.mkdir(parents=True, exist_ok=True)
     REPORT_ROOT.mkdir(parents=True, exist_ok=True)
-
-    comparison_store = CONFIG_SET_ROOT / "comparison"
-    common = _common_args(args)
+    common_args = _common_args(args)
     started = time.time()
     results: list[dict[str, Any]] = []
     status = 0
-
-    print("=" * 72)
-    print("FULL 16-MODEL T3 COMPARISON STUDY")
-    print("=" * 72)
-    print("Mode: four fixed charge-multiplicity-normalized comparison benchmarks")
-    print("Automatic optimal/Sobol benchmark search: detached from --full")
-    print("Reference scales: Y={0.005,0.5}, lambdaT3_ref={0.1,1.0}")
-    print("lambdaT3 normalization: 1/N_equiv (A-D:1, E:2), unbroken-SU(2) benchmark")
-    print("Mass thresholds: MF=100 TeV, MS=1 TeV; UV=1e7 GeV; low=100 GeV")
-
-    for scenario, (yukawa, scalar) in COMPARISON_SCENARIOS.items():
-        scenario_started = time.time()
-        scenario_rc = 0
-        input_dir = comparison_store / scenario / "input"
-        resolved_dir = comparison_store / scenario / "resolved"
-
-        for directory in (input_dir, resolved_dir):
-            if directory.exists():
-                shutil.rmtree(directory)
-            directory.mkdir(parents=True, exist_ok=True)
-
-        effective_by_class: dict[str, float] = {}
-        for model_class, ds1, ds2, df, alpha in MODELS:
-            key = _model_key(ds1, ds2, df, alpha)
-            config_path = input_dir / f"{key}.json"
-            config = _fixed_comparison_config(
-                template, model_class, ds1, ds2, df, alpha, yukawa, scalar
-            )
-            effective_by_class[model_class] = config["comparison_point"][
-                "lambdaT3_effective"
-            ]
-            _write_json(config_path, config)
-
-            command = [
-                sys.executable, str(PIPELINE_SCRIPT),
-                "--dims", str(ds1), str(ds2), str(df),
-                "--alpha", str(alpha),
-                "--study", f"full/comparison/{scenario}/{key}",
-                "--numerical", str(config_path),
-                "--reset-numerical-configs", *common,
-            ]
-            rc = _run(command)
-            scenario_rc = max(scenario_rc, rc)
-            status = max(status, rc)
-
-            generated = ACTIVE_CONFIG_DIR / f"{key}.json"
-            if generated.is_file():
-                shutil.copy2(generated, resolved_dir / generated.name)
-
-        dashboard = _dashboard(
-            OUTPUT_ROOT / "comparison" / scenario,
-            REPORT_ROOT / "comparison" / scenario,
-            f"T3 multiplicity-only comparison: {scenario} (Y={yukawa:g}, λT3_ref={scalar:g})",
-        )
+    print(f"FULL FITTED-REFERENCE T3 STUDY ({len(models)} models)", flush=True)
+    for name, (ds1, ds2, df, alpha), config_path in models:
+        command = [
+            sys.executable, str(PIPELINE_SCRIPT),
+            "--dims", str(ds1), str(ds2), str(df),
+            "--alpha", str(alpha),
+            "--study", f"full/fitted_reference/{name}",
+            "--numerical", str(config_path),
+            # Avoid silently reusing an older generated_models config.
+            "--reset-numerical-configs",
+            *common_args,
+        ]
+        print("\n> " + " ".join(command), flush=True)
+        run_started = time.time()
+        return_code = int(subprocess.run(command, cwd=PROJECT_ROOT, check=False).returncode)
+        status = max(status, return_code)
         results.append({
-            "mode": "comparison",
-            "scenario": scenario,
-            "yukawa": yukawa,
-            "lambdaT3_reference": scalar,
-            "lambdaT3_effective_by_class": effective_by_class,
-            "return_code": scenario_rc,
-            "runtime_seconds": time.time() - scenario_started,
-            "dashboard": dashboard,
+            "model": name,
+            "config_path": str(config_path.relative_to(PROJECT_ROOT)),
+            "config_sha256": _sha256(config_path),
+            "return_code": return_code,
+            "runtime_seconds": time.time() - run_started,
         })
-
-    summary = {
+    summary_path = OUTPUT_ROOT / "full_fitted_reference_summary.json"
+    _write_object(summary_path, {
         "status": "Success" if status == 0 else "Failed",
-        "study_mode": "comparison_only",
+        "study_mode": "fitted_reference",
         "optimizer_in_full_study": False,
-        "ordinary_model_count": len(MODELS),
-        "shared_scalar_models_included": False,
-        "comparison_definition": {
-            "yukawa_texture": "fixed real non-diagonal y1/y2 textures scaled by common Y",
-            "scalar_parameter": "charge-multiplicity-normalized Re(lambdaT3), Im(lambdaT3)=0",
-            "lambdaT3_normalisation": {
-                "basis": LAMBDA_T3_NORMALISATION_BASIS,
-                "factors_by_class": LAMBDA_T3_NORMALISATION,
-                "physical_group_factors_modified": False,
-            },
-            "representation_specific_extra_quartics":
-                "required optional quartics fixed to 0",
-            "scenarios": {
-                key: {"yukawa": values[0], "lambdaT3_reference": values[1]}
-                for key, values in COMPARISON_SCENARIOS.items()
-            },
-        },
+        "model_count": len(models),
+        "manifest_path": str(MANIFEST_PATH.relative_to(PROJECT_ROOT)),
         "results": results,
         "runtime_seconds": time.time() - started,
-    }
-
-    summary_path = OUTPUT_ROOT / "full_numerical_summary.json"
-    _write_json(summary_path, summary)
-
-    print("\n" + "=" * 72)
-    print("FULL NUMERICAL SUMMARY")
-    print("=" * 72)
-    print(f"Status: {summary['status']}")
-    print(f"Models: {len(MODELS)} ordinary neutral-compatible")
-    print("Optimal benchmark search: not run by --full")
-    print(f"Summary: {summary_path}")
-    print(f"Interactive reports: {REPORT_ROOT}")
+    })
+    print(f"Fitted reference study summary: {summary_path}", flush=True)
+    # Study-level postprocessing: group frozen fitted inputs only after all runs.
+    # No fitted file or generated numerical config is overwritten.
+    try:
+        from Numerical.orchestration.RunYukawaGrouping import run_grouping
+        grouping = run_grouping()
+        print(f"Yukawa grouping: {len(grouping['groups'])} groups", flush=True)
+    except Exception as exc:
+        print(f"Yukawa grouping failed: {type(exc).__name__}: {exc}", flush=True)
+        status = max(status, 1)
     return status

@@ -11,7 +11,7 @@ from Numerical.orchestration.ModelNames import shorten
 from Numerical.plotting.RunningTrajectoryData import (
     SCENARIOS, discover_saved_runs, extract_trajectory,
 )
-from Numerical.orchestration.BuildComparisonReports import build_reports
+from Numerical.orchestration.archive_candidates.BuildComparisonReports import build_reports
 
 MODEL = "T3_dS1_3_dS2_3_dF_2_alpha_m2"
 SHORT_MODEL = shorten(MODEL)

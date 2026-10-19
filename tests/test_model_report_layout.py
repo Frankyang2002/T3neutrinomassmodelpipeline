@@ -2,7 +2,7 @@
 from pathlib import Path
 
 from Numerical.orchestration.ModelNames import shorten
-from Numerical.orchestration.ModelReportLayout import migrate
+from Numerical.orchestration.archive_candidates.ModelReportLayout import migrate
 
 MODEL = "T3_dS1_2_dS2_2_dF_1_alpha_m1"
 SHORT_MODEL = shorten(MODEL)

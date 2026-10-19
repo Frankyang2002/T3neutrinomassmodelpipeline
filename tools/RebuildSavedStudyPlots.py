@@ -49,9 +49,9 @@ def main(argv: list[str] | None = None) -> int:
 
     # Import plotting functions only after verifying that saved data exists.
     if module == "RunFittedStagedRGComparison":
-        from Numerical.orchestration.RunFittedStagedRGComparison import write_plots
+        from Numerical.orchestration.studies.fitted_rge.RunFittedStagedRGComparison import write_plots
     else:
-        from Numerical.orchestration.RunFittedWeinbergRunningComparison import write_plots
+        from Numerical.orchestration.studies.fitted_rge.RunFittedWeinbergRunningComparison import write_plots
     destination.mkdir(parents=True, exist_ok=True)
     write_plots(rows, destination)
     print(f"Input (read only): {source}")

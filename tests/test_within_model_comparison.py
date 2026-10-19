@@ -13,7 +13,7 @@ import pytest
 from Numerical.orchestration.ModelNames import shorten
 from Numerical.plotting.RunningTrajectoryData import SCENARIOS, discover_saved_runs
 from Numerical.plotting.WithinModelComparison import LABELS
-from Numerical.orchestration.BuildComparisonReports import build_reports
+from Numerical.orchestration.archive_candidates.BuildComparisonReports import build_reports
 from studies.FullT3Study import COMPARISON_SCENARIOS, LAMBDA_T3_NORMALISATION
 
 

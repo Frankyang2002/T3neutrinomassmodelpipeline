@@ -50,9 +50,9 @@ def _run_study(study: str, *, scenario: str, output_root: Path,
     dest = output_root / "rebuilt_studies" / source_name / scenario
     dest.mkdir(parents=True, exist_ok=True)
     if study == "staged-rg":
-        from Numerical.orchestration.RunFittedStagedRGComparison import write_plots
+        from Numerical.orchestration.studies.fitted_rge.RunFittedStagedRGComparison import write_plots
     else:
-        from Numerical.orchestration.RunFittedWeinbergRunningComparison import write_plots
+        from Numerical.orchestration.studies.fitted_rge.RunFittedWeinbergRunningComparison import write_plots
     write_plots(rows, dest)
     print(f"Rebuilt {study} plots from {source} into {dest}")
 

@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from Numerical.orchestration.ResumePipelineNumericalResults import (
+from Numerical.orchestration.support.ResumePipelineNumericalResults import (
     REQUIRED, discover_cases, parse_model_key, resume,
 )
 

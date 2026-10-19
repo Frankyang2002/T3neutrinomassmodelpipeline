@@ -15,6 +15,18 @@ import time
 from pathlib import Path
 from typing import Any
 
+# Legacy four-scenario comparison constants retained for report/test compatibility.
+# They do not control the 16-model fitted-reference full-study execution.
+COMPARISON_SCENARIOS = {
+    "smallY_smallL": (0.005, 0.1),
+    "smallY_largeL": (0.005, 1.0),
+    "largeY_smallL": (0.5, 0.1),
+    "largeY_largeL": (0.5, 1.0),
+}
+LAMBDA_T3_NORMALISATION = {
+    "A": 1.0, "B": 1.0, "C": 1.0, "D": 1.0, "E": 0.5,
+}
+
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 PIPELINE_SCRIPT = PROJECT_ROOT / "pipeline.py"
 BENCHMARK_ROOT = PROJECT_ROOT / "Numerical" / "benchmarks" / "fitted_reference"

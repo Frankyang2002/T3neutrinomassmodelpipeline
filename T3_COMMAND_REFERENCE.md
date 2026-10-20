@@ -1,10 +1,5 @@
 # T3 neutrino-mass model pipeline — complete command reference
 
-**Repository:** [Frankyang2002/T3neutrinomassmodelpipeline](https://github.com/Frankyang2002/T3neutrinomassmodelpipeline)  
-**Audited revision:** [`7969f23e782549913d3bff640bdbc62179e3db51`](https://github.com/Frankyang2002/T3neutrinomassmodelpipeline/commit/7969f23e782549913d3bff640bdbc62179e3db51), `main`, committed 2026-10-19 22:34 UTC.  
-**Intended location in your local project:** `docs/COMMAND_REFERENCE.md`  
-**Basis:** Read-only inspection of the GitHub tree, current Python entry points, command-line parser definitions, and repository documentation on 2026-10-20. **Commands are source-verified, not runtime-tested on your Windows machine.** GitHub was not modified.
-
 > **Important:** The current `pipeline.py --full` runs **16 frozen fitted-reference models** (`studies/FullT3Study.py`), not the former four-scenario 16×4 fixed-input sweep. Historical fixed comparison outputs may still exist under `output/full/comparison/`. `--full --numerical ...` is rejected. Some old README/PowerShell snippets point to modules that have been moved; see [Legacy pitfalls](#14-legacy-paths-and-known-pitfalls).
 
 ## Contents

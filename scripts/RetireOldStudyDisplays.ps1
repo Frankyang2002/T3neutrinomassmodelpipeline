@@ -1,43 +1,54 @@
 <#
-Retire obsolete/generated display folders after the new figures have been built.
+Preview or remove ONLY known superseded generated report displays.
 Project path: scripts/RetireOldStudyDisplays.ps1
 
-PowerShell from the project root:
-    .\scripts\RetireOldStudyDisplays.ps1        # Preview only
-    .\scripts\RetireOldStudyDisplays.ps1 -Apply # Actually delete
+From project root:
+  .\scripts\RetireOldStudyDisplays.ps1         # Preview, never deletes
+  .\scripts\RetireOldStudyDisplays.ps1 -Apply  # Delete after both new figure sets exist
+  .\scripts\RetireOldStudyDisplays.ps1 -Apply -WhatIf
 
-Does not delete or alter saved numerical scan.json or scan.csv files.
+Saved scan JSON/CSV, numerical benchmarks, and symbolic artifacts are protected.
 #>
-[CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium')]
+[CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'Medium')]
 param(
     [switch]$Apply,
+    [ValidatePattern('^[A-Za-z0-9_-]+$')]
     [string]$Scenario = 'smallY_smallL'
 )
 
 $ErrorActionPreference = 'Stop'
 $ProjectRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..')).Path
 if (-not (Test-Path -LiteralPath (Join-Path $ProjectRoot 'pipeline.py') -PathType Leaf)) {
-    throw 'Not a T3 repository root: pipeline.py is missing.'
+    throw 'Refusing cleanup: missing pipeline.py (invalid T3 project root).'
 }
-if ($Scenario -notmatch '^[A-Za-z0-9_-]+$') {
-    throw 'Invalid scenario directory identifier.'
-}
-
 $ReportRoot = Join-Path $ProjectRoot 'Reports\output'
 $NewStage = Join-Path $ReportRoot ("display\fermion_threshold_variation\{0}" -f $Scenario)
 $NewWeinberg = Join-Path $ReportRoot ("display\weinberg_running\{0}" -f $Scenario)
+$Observables = @('delta_m21_sq_ev2', 'delta_m3l_sq_ev2',
+                 'sin2_theta12', 'sin2_theta13', 'sin2_theta23')
 
-function Get-FigureCount([string]$Path, [string]$Pattern) {
-    if (-not (Test-Path -LiteralPath $Path -PathType Container)) { return 0 }
-    return @(Get-ChildItem -LiteralPath $Path -Filter $Pattern -File).Count
-}
-$StageCount = Get-FigureCount $NewStage 'fermion_threshold_running_effect_*.png'
-$WeinbergCount = Get-FigureCount $NewWeinberg 'weinberg_running_*.png'
-Write-Host ("New figures found: fermion-threshold={0}/5; Weinberg={1}/5" -f $StageCount, $WeinbergCount)
-if ($Apply -and ($StageCount -lt 5 -or $WeinbergCount -lt 5)) {
-    throw 'Refusing to remove old plots: first regenerate the 5 new figures in each study.'
+function Assert-NewFigures([string]$Folder, [string]$Prefix) {
+    foreach ($Observable in $Observables) {
+        $Image = Join-Path $Folder ("{0}{1}.png" -f $Prefix, $Observable)
+        if (-not (Test-Path -LiteralPath $Image -PathType Leaf)) {
+            throw "Refusing cleanup: regenerated figure is missing: $Image"
+        }
+        if ((Get-Item -LiteralPath $Image).Length -lt 1024) {
+            throw "Refusing cleanup: regenerated figure is too small: $Image"
+        }
+    }
 }
 
+Write-Host 'Retired display cleanup - preview by default.'
+if ($Apply) {
+    Assert-NewFigures $NewStage 'fermion_threshold_running_effect_'
+    Assert-NewFigures $NewWeinberg 'weinberg_running_'
+    Write-Host 'Verified 5 new fermion-threshold and 5 new Weinberg PNGs.'
+} else {
+    Write-Host 'Use -Apply only after verifying the newly rendered plots.'
+}
+
+# Delete ONLY these generated directories. Never traverse numerical data roots.
 $OldDirectories = @(
     (Join-Path $ReportRoot 'display\study_comparisons'),
     (Join-Path $ReportRoot 'display\rebuilt_studies'),
@@ -47,32 +58,46 @@ $OldPlots = @(
     @{ Folder = (Join-Path $ReportRoot ("full\staged_rg_comparison\{0}" -f $Scenario)); Pattern = 'staged_rg_*.png' },
     @{ Folder = (Join-Path $ReportRoot ("full\weinberg_running_comparison\{0}" -f $Scenario)); Pattern = 'weinberg_running_*.png' }
 )
-$OldHtml = Join-Path $ReportRoot 'display\interactive_correlations.html'
+$OldHtml = @(
+    (Join-Path $ReportRoot 'display\interactive_correlations.html'),
+    (Join-Path $ReportRoot 'display_stage5\interactive_correlations.html')
+)
 
-foreach ($dir in $OldDirectories) {
-    if (-not (Test-Path -LiteralPath $dir -PathType Container)) { continue }
-    Write-Host "[RETIRE FOLDER] $dir"
-    if ($Apply -and $PSCmdlet.ShouldProcess($dir, 'Delete retired generated display directory')) {
-        Remove-Item -LiteralPath $dir -Force -Recurse
+$Candidates = New-Object System.Collections.Generic.List[System.IO.FileSystemInfo]
+foreach ($Dir in $OldDirectories) {
+    if (-not (Test-Path -LiteralPath $Dir -PathType Container)) { continue }
+    $Protected = @(Get-ChildItem -LiteralPath $Dir -Recurse -File | Where-Object {
+        $_.Name -match '^(scan|comparison_summary)\.(json|csv)$'
+    })
+    if ($Protected.Count -ne 0) {
+        throw "Refusing to retire $Dir because saved numerical scan/summary data was found inside it."
+    }
+    $Candidates.Add((Get-Item -LiteralPath $Dir))
+}
+foreach ($Spec in $OldPlots) {
+    if (-not (Test-Path -LiteralPath $Spec.Folder -PathType Container)) { continue }
+    foreach ($File in @(Get-ChildItem -LiteralPath $Spec.Folder -File -Filter $Spec.Pattern)) {
+        $Candidates.Add($File)
     }
 }
-foreach ($entry in $OldPlots) {
-    if (-not (Test-Path -LiteralPath $entry.Folder -PathType Container)) { continue }
-    foreach ($item in @(Get-ChildItem -LiteralPath $entry.Folder -File -Filter $entry.Pattern)) {
-        Write-Host "[RETIRE OLD PLOT] $($item.FullName)"
-        if ($Apply -and $PSCmdlet.ShouldProcess($item.FullName, 'Delete old rendered PNG only')) {
-            Remove-Item -LiteralPath $item.FullName -Force
-        }
+foreach ($File in $OldHtml) {
+    if (Test-Path -LiteralPath $File -PathType Leaf) {
+        $Candidates.Add((Get-Item -LiteralPath $File))
     }
 }
-if (Test-Path -LiteralPath $OldHtml -PathType Leaf) {
-    Write-Host "[RETIRE HTML] $OldHtml"
-    if ($Apply -and $PSCmdlet.ShouldProcess($OldHtml, 'Delete retired correlation HTML')) {
-        Remove-Item -LiteralPath $OldHtml -Force
+
+if ($Candidates.Count -eq 0) {
+    Write-Host 'Nothing retired remains. No files changed.'
+    return
+}
+foreach ($Item in $Candidates) {
+    Write-Host ("[RETIRE {0}] {1}" -f $(if ($Item.PSIsContainer) {'DIRECTORY'} else {'FILE'}), $Item.FullName)
+    if ($Apply -and $PSCmdlet.ShouldProcess($Item.FullName, 'Remove known obsolete generated display')) {
+        Remove-Item -LiteralPath $Item.FullName -Recurse -Force
     }
 }
 if (-not $Apply) {
-    Write-Host 'Preview only. Re-run with -Apply after rebuilding the plots.'
+    Write-Host ("Preview: {0} candidates. Nothing was deleted. Re-run with -Apply." -f $Candidates.Count)
 } else {
-    Write-Host 'Retired generated displays removed. Original numerical scan JSON/CSV retained.'
+    Write-Host 'Cleanup complete (subject to -WhatIf/-Confirm). Source scan JSON/CSV was not touched.'
 }

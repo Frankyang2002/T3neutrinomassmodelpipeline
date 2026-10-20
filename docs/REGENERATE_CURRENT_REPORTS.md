@@ -1,100 +1,94 @@
-# Current T3 reports: rebuild and retirement guide
+# T3 saved-data report rebuild — 20 October 2026
 
-Checked against public GitHub `main` commit `b75a1408307fe738b0dca25412011788b836eec0` (2026-10-20). This ZIP provides **local replacement files**, not changes to GitHub. Existing fitted and A-m2 source data is preserved.
+Source inspected: GitHub `main` at `b3ae6d1ca812554a16a1fd450f01a0c895e9b90e`. This package is for **local installation only**; it does not change GitHub. Inspect local edits with `git status`/`git diff` before overwriting local files.
 
-## 1. Install
+## Installation from PowerShell
 
-Place the accompanying ZIP at the project root and execute in PowerShell:
+From `C:\thesistemp\T3neutrinomassmodelpipeline`:
 
 ```powershell
-Expand-Archive -LiteralPath .\T3_FERMION_THRESHOLD_REPORT_RENAME.zip -DestinationPath . -Force
+# Refuse to overwrite a newer checkout or changed local versions.
+$expected = 'b3ae6d1'
+if ((git rev-parse --short=7 HEAD).Trim() -ne $expected) {
+    throw 'Local HEAD differs from b3ae6d1. Inspect latest local files before installation.'
+}
+$targets = @(
+    'Numerical/plotting/FermionThresholdVariationFigures.py',
+    'Numerical/plotting/DisplayModelLabels.py',
+    'tools/RebuildCurrentReports.py',
+    'tools/PlotDisplayWrapper.py',
+    'scripts/RetireOldStudyDisplays.ps1',
+    'docs/REGENERATE_CURRENT_REPORTS.md'
+)
+if (git status --porcelain -- $targets) {
+    throw 'Some target files have local modifications. Review or back them up first.'
+}
+Expand-Archive -LiteralPath .\T3_REPORT_DISPLAY_FIX_b3ae6d1.zip -DestinationPath . -Force
+python -m compileall -q Numerical\plotting\FermionThresholdVariationFigures.py Numerical\plotting\DisplayModelLabels.py tools\RebuildCurrentReports.py tools\PlotDisplayWrapper.py
 ```
 
-Project paths installed:
+Only install over a matching source: any modifications to these files in your **local** checkout should be reviewed first. The archive contains no numerical data and no symbolic artifacts.
 
-- `Numerical/plotting/FermionThresholdVariationFigures.py` — **new** read-only plot renderer
-- `tools/RebuildCurrentReports.py` — complete replacement for the prior provided local helper
-- `tools/RebuildReports.py` — complete replacement for the GitHub and previously supplied helper
-- `tools/RebuildSavedStudyPlots.py` — complete replacement for the GitHub helper
-- `tools/LabelSensitivityDirections.py` — complete replacement from the previous sensitivity-label package (bundled for standalone installation)
-- `scripts/RetireOldStudyDisplays.ps1` — **new**, safe preview-then-apply removal tool
-- `docs/REGENERATE_CURRENT_REPORTS.md` — this guide
-
-## 2. Regenerate the renamed plots and other displays
+## Rebuild using existing JSON (no physics reruns)
 
 ```powershell
-# New presentation: read saved scan.json, no numerical reruns
 python -m tools.RebuildReports --study fermion-threshold --study weinberg
-
-# (Optional) Rebuild the separately fitted heavy-fermion mass scan too
 python -m tools.RebuildReports --study fitted-mass
-
-# Rebuild all supported HTML dashboards and static figures
+# Optional: rebuild all available current static figures and interactive reports
 python -m tools.RebuildCurrentReports
 ```
 
-You may alternatively use:
+`tools.RebuildCurrentReports --only plots` regenerates static PNGs only; `--only displays` regenerates HTML only. Missing optional saved datasets may cause `[SKIP]` messages; use `--strict` if missing datasets should be errors.
+
+The two primary figure sets are stored at:
+
+- `Reports/output/display/fermion_threshold_variation/smallY_smallL/fermion_threshold_running_effect_*.png`
+- `Reports/output/display/weinberg_running/smallY_smallL/weinberg_running_*.png`
+
+The existing fitted mass figures continue to be written to `Reports/output/full/fermion_scale/smallY_smallL/fermion_scale_*.png` to preserve the current project output convention. These are generated PNGs, not inputs.
+
+The unchanged numerical sources are, respectively:
+
+- `Reports/output/full/staged_rg_comparison/smallY_smallL/scan.json`
+- `Reports/output/full/weinberg_running_comparison/smallY_smallL/scan.json`
+- `Reports/output/full/fermion_scale/smallY_smallL/scan.json`
+
+Their directory names remain historical because the numerical runners write there. They are **not** renamed, modified or deleted. The source rows have 60 successful points and four model-level `MissingArtifacts` rows without `mass_ratio` for each study in GitHub commit `b3ae6d1`. The new renderer excludes such model-level records from the ratio sort; numerical failure points with ratios still break plotted curves.
+
+## What the figures mean
+
+**Fermion-threshold variation — RGE running versus frozen segments** uses the horizontal variable `μ_F/μ_S` with both `M_F` and `μ_F` varied and `μ_S` fixed. It is **not** an energy-running trajectory.
+
+For each observable at the final low-energy endpoint, the plotted incremental percentages are exactly the existing saved definitions:
+
+- UV running enabled vs frozen: `000 → 100`, `100 × (O100/O000 − 1)`.
+- EFT1 running enabled vs frozen: `100 → 110`, `100 × (O110/O100 − 1)`.
+- Weinberg running enabled vs frozen: `110 → 111`, `100 × (O111/O110 − 1)`.
+
+Matching remains in both compared calculations; no percentages are energy derivatives. The separate Weinberg scan compares evolved with frozen `C5` in the final EFT; the separately fitted fermion-scale scan compares against the same model's mass-factor-one benchmark, **not** against frozen RGEs.
+
+Legend labels follow `Numerical/orchestration/ModelNames.py`: e.g. `T3A-m2`, `T3B-m1`, `T3E-p0`. The original keys, scan data, file/directory names and numerical array values are unchanged. Other static figures rebuilt through `tools.RebuildCurrentReports` have plot **text artists only** relabelled on save (also in the separate fitted sensitivity thesis plotting subprocess). Fitted and common-input envelope HTML plot selectors are also normalised to the same short spelling without modifying their numerical payload keys. Other HTML dashboards already have readable model names.
+
+## Preview, apply and verify retirement
 
 ```powershell
-python -m tools.RebuildCurrentReports --only displays
-python -m tools.RebuildCurrentReports --only plots
-python -m tools.RebuildSavedStudyPlots --study fermion-threshold
-python -m tools.RebuildSavedStudyPlots --study weinberg
-```
-
-**Note:** `--only displays` does not rebuild static PNGs; run the plot command as well after replacing the files.
-
-## 3. Output locations
-
-| New presentation output | Source saved numerical data (unchanged) |
-|---|---|
-| `Reports/output/display/fermion_threshold_variation/smallY_smallL/fermion_threshold_running_effect_*.png` | `Reports/output/full/staged_rg_comparison/smallY_smallL/scan.json` |
-| `Reports/output/display/weinberg_running/smallY_smallL/weinberg_running_*.png` | `Reports/output/full/weinberg_running_comparison/smallY_smallL/scan.json` |
-| `Reports/output/full/fermion_scale/smallY_smallL/fermion_scale_*.png` | `Reports/output/full/fermion_scale/smallY_smallL/scan.json` |
-
-The historical *numerical source* folder name `staged_rg_comparison` is retained intentionally; moving it would break the older numerical runner. The **user-facing report title, PNG filename, plot folder, and supported CLI name** are all renamed.
-
-Every model legend now uses `T3A-m2`, `T3B-p0`, etc. The underlying canonical project short-name format is `T3-A-m2` (with a hyphen after T3); removing that extra hyphen is **presentation only** to match the requested style. All physical model identifiers remain unchanged.
-
-### Correct physics labels
-
-The three panels correspond to:
-
-- UV: `000 → 100`, percentage `(O100/O000 - 1) × 100`;
-- EFT1: `100 → 110`, percentage `(O110/O100 - 1) × 100`;
-- Weinberg: `110 → 111`, percentage `(O111/O110 - 1) × 100`.
-
-Each pair compares the **same final low-energy observable** with the stated segment switched on versus frozen. In all panels, matching is retained. In the scan, both the heavy fermion mass matrix `M_F` and the threshold `mu_F` vary, while `mu_S` remains fixed; therefore the horizontal axis `mu_F/mu_S` is a **threshold variation**, not an RGE time coordinate. The percentages are not a rate of change or a per-energy-step derivative.
-
-The separate Weinberg figure compares evolved versus frozen `C5` in the final EFT. The fitted mass-scan panel instead compares to the same model's baseline at mass factor one; **it is not** an RGE switch-off test.
-
-## 4. Retire old generated outputs after successful rebuild
-
-```powershell
-# Preview what will be removed
 .\scripts\RetireOldStudyDisplays.ps1
-
-# Apply after both sets of five replacement figures have been created
+.\scripts\RetireOldStudyDisplays.ps1 -Apply -WhatIf
 .\scripts\RetireOldStudyDisplays.ps1 -Apply
+
+# Confirm new outputs and check that removed files stay retired
+Get-ChildItem .\Reports\output\display\fermion_threshold_variation\smallY_smallL\*.png
+Get-ChildItem .\Reports\output\display\weinberg_running\smallY_smallL\*.png
+Test-Path .\Reports\output\display\study_comparisons
+Test-Path .\Reports\output\display\rebuilt_studies
+Test-Path .\Reports\output\display\interactive_correlations.html
+
+# Confirm numerical sources are still intact
+Get-Item .\Reports\output\full\staged_rg_comparison\smallY_smallL\scan.json
+Get-Item .\Reports\output\full\weinberg_running_comparison\smallY_smallL\scan.csv
+Get-Item .\Reports\output\full\fermion_scale\smallY_smallL\scan.json
 ```
 
-This retires:
+Deletion is confined to old generated `study_comparisons/`, `rebuilt_studies/`, `display_stage5/rebuilt_studies/`, old `staged_rg_*.png` and duplicate source-folder `weinberg_running_*.png`, plus `interactive_correlations.html` in the retired display roots. The script verifies all 10 replacement PNGs exist and are nontrivial before `-Apply`, and refuses to delete old display directories if numerical scans unexpectedly appear inside them. Default invocation is **preview only**. Standalone archived physics study generators might still generate their own historical PNGs if explicitly run with `--run`; they are deliberately **not** invoked by the report rebuild and should not be run for plot-only changes.
 
-- `Reports/output/display/study_comparisons/` (Study A/B interactive HTMLs);
-- `Reports/output/display/rebuilt_studies/` (misleading old folder name, including old staged/Weinberg figures);
-- `Reports/output/display_stage5/rebuilt_studies/` if present;
-- `Reports/output/full/staged_rg_comparison/smallY_smallL/staged_rg_*.png` (old titled/labelled images **only**);
-- `Reports/output/full/weinberg_running_comparison/smallY_smallL/weinberg_running_*.png` (old titled/labelled images **only**);
-- retired `Reports/output/display/interactive_correlations.html` if still present.
-
-**It preserves** `Reports/output/full/staged_rg_comparison/smallY_smallL/scan.json`, `scan.csv`, and all underlying fitted benchmark / symbolic / numerical artifacts.
-
-The retirement script defaults to preview mode, refuses `-Apply` until five files exist in **each** renamed plot folder, and does not delete arbitrary report directories.
-
-## 5. What is retired, and what is not
-
-The supported rebuild wrappers **no longer call** `Numerical.plotting.BuildStudyABInteractive` and no longer produce the Study A/B interactive HTML files. The original standalone historical generator remains in the repository because removing research source code is not needed to retire generated reports. Do not run it if you want the HTML retired.
-
-Similarly, the old physics study runners `RunFittedStagedRGComparison.py` and `RunFittedWeinbergRunningComparison.py` are **not modified** by this plotting-only package. They still write source studies in the historical `Reports/output/full/` directories and may emit old-style PNGs if explicitly rerun with `--run`. To refresh the renamed figure presentation, use the supported `tools.RebuildReports` or `tools.RebuildCurrentReports` commands after any numerical rerun. No numerical study is re-executed by the new plot utilities.
-
-The separate `fitted_model_envelopes_all.html` and `common_input_model_envelopes_all.html` retain their T1/T2/T3 parameter-deformation labels. They are unrelated to this threshold-variation renaming.
+Study A/B HTML generation is not called by the current rebuild. The historical source generator is retained, and numerical inputs under `Reports/output/full/common_scalar_rg_controls/` and `heavy_fermion_scale_comparison/` are untouched.

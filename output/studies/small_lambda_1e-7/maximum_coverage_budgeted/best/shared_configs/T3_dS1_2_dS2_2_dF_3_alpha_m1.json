@@ -1,0 +1,308 @@
+{
+  "kind": "t3_pipeline_numerical_results_v1",
+  "_comment": "Default ordinary-T3 numerical template. New low-scale benchmark: UV=1e7 GeV, MF threshold=100 TeV, scalar threshold=1 TeV, low scale=100 GeV. SM gauge and Yukawa reference values at 1e7 GeV from Antusch, Hinze and Saad (2026), arXiv:2510.01312, Table II; gY=sqrt(3/5)*g1. SM-only running reference, not T3 threshold-matched.",
+  "representation": {
+    "d_s1": 2,
+    "d_s2": 2,
+    "d_f": 3,
+    "alpha": -1,
+    "shared_scalar": false
+  },
+  "ordering": "NO",
+  "scales": {
+    "mu_fermion_threshold_gev": 100000.0,
+    "mu_scalar_threshold_gev": 1000.0,
+    "mu_low_gev": 100.0
+  },
+  "numerical": {
+    "vev_gev": 246.22,
+    "rtol": 1e-08,
+    "atol": 1e-11,
+    "n_scale_points": 120
+  },
+  "base_state": {
+    "mu_gev": 10000000.0,
+    "sm": {
+      "gY": 0.38265,
+      "g2": 0.59493,
+      "g3": 0.7649,
+      "lambdaH": 0.25,
+      "yu": {
+        "real": [
+          [
+            4.39e-06,
+            0,
+            0
+          ],
+          [
+            0,
+            0.00222,
+            0
+          ],
+          [
+            0,
+            0,
+            0.6462
+          ]
+        ],
+        "imag": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "yd": {
+        "real": [
+          [
+            9.7e-06,
+            0,
+            0
+          ],
+          [
+            0,
+            0.000193,
+            0
+          ],
+          [
+            0,
+            0,
+            0.00961
+          ]
+        ],
+        "imag": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "ye": {
+        "real": [
+          [
+            2.8681e-06,
+            0,
+            0
+          ],
+          [
+            0,
+            0.00060421,
+            0
+          ],
+          [
+            0,
+            0,
+            0.010264
+          ]
+        ],
+        "imag": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      }
+    },
+    "ordinary": {
+      "y1": {
+        "real": [
+          [
+            -0.026161997540609147,
+            0.03576784957034605,
+            0.04242721857166993
+          ],
+          [
+            -0.09653477045840896,
+            0.06328682778084538,
+            -0.0746335526255658
+          ],
+          [
+            -0.05728174780016597,
+            0.02765979604003081,
+            -0.028427564416764965
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "y2": {
+        "real": [
+          [
+            0.09913316224230766,
+            0.07940076224958978,
+            -0.021165834204174627
+          ],
+          [
+            -0.0109797789786263,
+            0.0005442832911788042,
+            0.10624228739577203
+          ],
+          [
+            0.03621812610342915,
+            -0.10906401913658868,
+            0.04512030102238547
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "MF": {
+        "real": [
+          [
+            100000.0,
+            0,
+            0
+          ],
+          [
+            0,
+            110000.0,
+            0
+          ],
+          [
+            0,
+            0,
+            120000.0
+          ]
+        ],
+        "imag": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "mS1Sq": 1306122.448979592,
+      "mS2Sq": 1000000.0,
+      "lambdaS1": 0.1,
+      "lambdaS2": 0.12,
+      "lambdaH1": 0.02,
+      "lambdaH2": 0.03,
+      "lambda12": 0.01,
+      "lambdaT3": {
+        "real": 1e-07,
+        "imag": 0.0
+      },
+      "lambdaH1Adj": 0.0,
+      "lambdaH2Adj": 0.0,
+      "lambda12Adj": 0.0,
+      "lambdaHHdagS2S2": {
+        "real": 0.0,
+        "imag": 0.0
+      },
+      "lambdaHHdagS1barS1bar": {
+        "real": 0.0,
+        "imag": 0.0
+      },
+      "lambdaS1bar2S2bar2": {
+        "real": 0.0,
+        "imag": 0.0
+      },
+      "lambdaS1barS2S2bar2": {
+        "real": 0.0,
+        "imag": 0.0
+      },
+      "lambdaS1S1bar2S2bar": {
+        "real": 0.0,
+        "imag": 0.0
+      },
+      "lambdaHHdagS1barS2barCross": {
+        "real": 0.0,
+        "imag": 0.0
+      }
+    }
+  },
+  "benchmark_search": {
+    "enabled": false
+  },
+  "sensitivity": {
+    "enabled": false
+  },
+  "small_lambda_study": {
+    "source": "Numerical\\benchmarks\\fitted_reference\\T3_dS1_2_dS2_2_dF_3_alpha_m1.json",
+    "source_sha256": "782c261c88e364b2db70791ed97d8fa067cf255449900668155b821ba636f03c",
+    "original_lambda": 0.1,
+    "lambdaT3": 1e-07,
+    "yukawa_initial_scale_factor": 1000.0000000000001,
+    "status": "Numerically optimised",
+    "chi2": 1.4509764220102834e-14,
+    "max_nfev": 300
+  },
+  "maximum_coverage_study": {
+    "source": "trial_001 donor=T3_dS1_1_dS2_3_dF_2_alpha_p0 fraction=0.15",
+    "screening_cutoff": 11.070497693516351
+  }
+}

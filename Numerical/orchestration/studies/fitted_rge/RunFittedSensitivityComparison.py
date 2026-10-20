@@ -2,6 +2,7 @@
 
 Log-spaced sampling includes gamma=1 exactly. Non-baseline numerical failures
 are saved per point and do not invalidate the remaining points.
+The authoritative fit input is Reports/output/full/fitted_benchmarks/<scenario>/<model>.
 """
 from __future__ import annotations
 import argparse
@@ -14,7 +15,7 @@ from Numerical.orchestration.support.ResumePipelineNumericalResults import PROJE
 from Numerical.fitting.BenchmarkSensitivity import run_t3_sensitivity_scan, gamma_grid
 
 SCENARIO = 'smallY_smallL'
-STAGES = ('fit_feasibility', 'fit_feasibility_retry', 'fit_feasibility_focused')
+STAGES = ('fitted_benchmarks',)  # Stable API for existing model discovery.
 OBS = ('delta_m21_sq_ev2', 'delta_m3l_sq_ev2', 'sin2_theta12', 'sin2_theta13', 'sin2_theta23')
 
 
@@ -23,20 +24,27 @@ def read_json(path):
 
 
 def best_candidate(scenario, model):
-    candidates = []
-    for stage in STAGES:
-        folder = PROJECT_ROOT / 'Reports' / 'output' / 'full' / stage / scenario / model
-        summary = folder / 'feasibility_summary.json'
-        config = folder / 'fitted_candidate_config.json'
-        if not (summary.is_file() and config.is_file()):
-            continue
-        try:
-            chi2 = float(read_json(summary)['best']['chi2'])
-            if math.isfinite(chi2):
-                candidates.append((chi2, stage, config, summary))
-        except (ValueError, KeyError, TypeError):
-            continue
-    return min(candidates, key=lambda x: x[0]) if candidates else None
+    """Read the canonical fit only; fail closed on a missing/invalid manifest."""
+    folder = PROJECT_ROOT / 'Reports' / 'output' / 'full' / 'fitted_benchmarks' / scenario
+    manifest = folder / 'selection_manifest.json'
+    summary = folder / model / 'feasibility_summary.json'
+    config = folder / model / 'fitted_candidate_config.json'
+    if not manifest.is_file() or not (summary.is_file() and config.is_file()):
+        return None
+    rows = read_json(manifest)
+    record = rows.get(model)
+    if not isinstance(record, dict):
+        return None
+    chi2 = float(read_json(summary)['best']['chi2'])
+    if not math.isfinite(chi2) or chi2 != float(record['chi2']):
+        raise RuntimeError(f'Canonical fit/manifest chi2 mismatch for {model}')
+    import hashlib
+    for filename, path in (('feasibility_summary.json', summary), ('fitted_candidate_config.json', config)):
+        actual = hashlib.sha256(path.read_bytes()).hexdigest()
+        if actual != record['sha256'][filename]:
+            raise RuntimeError(f'Canonical fit SHA256 mismatch for {model}: {filename}')
+    # Return the original winning stage label to preserve report provenance.
+    return chi2, str(record['fit_stage']), config, summary
 
 
 def model_class(model):
@@ -69,9 +77,6 @@ def plot_comparison(rows, output):
         for i, row in enumerate(valid):
             scan = read_json(Path(row['scan_json']))
             for direction, style in [('T1', '-'), ('T2', '--'), ('T3', ':')]:
-                points = [p for p in scan['directions'][direction]['points'] if p.get('status', 'Success') == 'Success' and 'prediction' in p]
-                # Do not join across missing gamma samples, as this could suggest
-                # a valid continuous trajectory through a failed RGE region.
                 runs = []
                 segment = []
                 for p in scan['directions'][direction]['points']:
@@ -153,7 +158,14 @@ def main(argv=None):
                     try:
                         if destination.is_file() and not args.force:
                             scan = read_json(destination)
-                            if (scan.get('selection', {}).get('source_config') != str(config)
+                            # Before migration, saved provenance refers to the historic
+                            # stage path. Physics inputs are byte-identical, so either
+                            # source path is acceptable if it matches the manifest.
+                            recorded = scan.get('selection', {}).get('source_config')
+                            manifest_record = read_json(PROJECT_ROOT / 'Reports' / 'output' / 'full' / 'fitted_benchmarks' / args.scenario / 'selection_manifest.json')[model]
+                            original = PROJECT_ROOT / Path(manifest_record['source_folder']) / 'fitted_candidate_config.json'
+                            allowed = {str(config), str(original)}
+                            if (recorded not in allowed
                                 or scan.get('n_points') != args.points
                                 or scan.get('gamma_min') != args.gamma_min
                                 or scan.get('gamma_max') != args.gamma_max
@@ -188,7 +200,7 @@ def main(argv=None):
                         if verified > args.max_baseline_chi2:
                             row.update(status='VerificationWarning', message='gamma=1 chi2 exceeds threshold')
                         else:
-                            row['status'] = 'Success'  # Baseline verified; point failures tracked separately for the unchanged HTML generator
+                            row['status'] = 'Success'
                             if n_failed:
                                 row['message'] = f'{n_failed} non-baseline gamma points failed; successful points retained'
                     except Exception as exc:

@@ -17,6 +17,7 @@ import subprocess
 import sys
 from collections.abc import Callable
 
+from tools.RedirectStudyFigures import redirect_matplotlib_saves
 from tools.LabelSensitivityDirections import label_html
 from Numerical.plotting.DisplayModelLabels import (
     presentation_labels_on_save, presentation_envelope_labels,
@@ -55,7 +56,7 @@ def rebuild_running_figures(scenario: str) -> None:
     for kind in ('fitted_rge', 'common_input_rge'):
         folder = FULL / kind / scenario
         for diagnostic in successful_diagnostics(folder):
-            generate_running_result_figures(diagnostic, diagnostic.parent / 'figures')
+            generate_running_result_figures(diagnostic, DISPLAY / 'full_studies' / kind / scenario / diagnostic.parent.name / 'figures')
             total += 1
     if not total:
         raise FileNotFoundError('No successful saved fitted/common-input RGE diagnostics')
@@ -121,7 +122,7 @@ def fitted_sensitivity_thesis_plots(scenario: str) -> None:
     # A separate Python process would otherwise bypass the figure-label context.
     subprocess.run([sys.executable, '-m', 'tools.PlotDisplayWrapper',
                     'Numerical.plotting.PlotFittedSensitivityFigures',
-                    '--input', str(folder), '--output', str(folder / 'thesis_figures')],
+                    '--input', str(folder), '--output', str(DISPLAY / 'full_studies' / 'fitted_sensitivity' / scenario / 'thesis_figures')],
                    cwd=ROOT, check=True)
 
 
@@ -262,7 +263,8 @@ def main(argv: list[str] | None = None) -> int:
             # Applies to any static plot produced by the current rebuild workflow.
             # A no-op for HTML builders; it changes only figure text on save.
             with presentation_labels_on_save():
-                action()
+                with redirect_matplotlib_saves():
+                    action()
             print('[OK]', name, flush=True)
             ok += 1
         except FileNotFoundError as exc:
@@ -276,7 +278,7 @@ def main(argv: list[str] | None = None) -> int:
         print('Missing input:', '; '.join(missing))
     if failed:
         print('Failures:', '; '.join(failed))
-    print('Output locations: Reports/output/full/ and Reports/output/display/')
+    print('Numerical source: Reports/output/full/; figures: Reports/output/display/full_studies/')
     print('No physics calculations or symbolic generators were executed.')
     return 1 if failed or args.strict and missing else 0
 

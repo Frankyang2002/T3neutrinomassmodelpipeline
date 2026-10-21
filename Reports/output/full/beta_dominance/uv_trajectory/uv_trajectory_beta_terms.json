@@ -1,0 +1,3994 @@
+{
+  "method": "full UV ODE reintegration + grouped RGBeta terms",
+  "beta_convention": "16*pi^2*dX/dln(mu) = beta1",
+  "samples_per_case": 21,
+  "models": [
+    "T3_dS1_1_dS2_3_dF_2_alpha_m2"
+  ],
+  "scenarios": [
+    "smallY_smallL"
+  ],
+  "cases": [
+    {
+      "model": "T3_dS1_1_dS2_3_dF_2_alpha_m2",
+      "scenario": "smallY_smallL",
+      "config": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\configs\\generated_model_sets\\comparison\\smallY_smallL\\input\\T3_dS1_1_dS2_3_dF_2_alpha_m2.json",
+      "rgbeta": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\full\\comparison\\smallY_smallL\\T3_dS1_1_dS2_3_dF_2_alpha_m2\\T3_A_alpha_m2\\data\\uv_rgbeta_rge.json",
+      "uv_initial_gev": 10000000.0,
+      "fermion_threshold_gev": 100000.0,
+      "solver_nfev": 47,
+      "samples": [
+        {
+          "mu_gev": 10000000.0,
+          "betas": {
+            "y1": {
+              "full_norm_16pi2_beta": 0.013681818348707412,
+              "sum_group_norms": 0.01368436577390566,
+              "cancellation_ratio": 0.999813844116685,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.013683087439373139,
+                  "dominance": 0.9999065843055029
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.2783345325224722e-06,
+                  "dominance": 9.341569449715332e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.012024905722796058
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.00165818171657708
+                },
+                {
+                  "expression": "+ 2*Tr[y1 . Trans[Bar[y1]]]*Matrix[y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 8.606811256208655e-07
+                },
+                {
+                  "expression": "+ Matrix[y1, Trans[Bar[y1]], y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 2.114898047188091e-07
+                },
+                {
+                  "expression": "+ (3*Matrix[y2, Trans[Bar[y2]], y1][gen[$i], heavy[$j]])/4",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.3329641253143312e-07
+                },
+                {
+                  "expression": "+ Matrix[ye, Trans[Bar[ye]], y1][gen[$i], heavy[$j]]/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.786308957774425e-07
+                }
+              ]
+            },
+            "y2": {
+              "full_norm_16pi2_beta": 0.014497950347714339,
+              "sum_group_norms": 0.014499972739460845,
+              "cancellation_ratio": 0.9998605244449184,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.014498953646399998,
+                  "dominance": 0.999929717587808
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.019093060847166e-06,
+                  "dominance": 7.028241219197348e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.012741901376399996
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.00175705227
+                },
+                {
+                  "expression": "+ Tr[y2 . Trans[Bar[y2]]]*Matrix[y2][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.12e-07
+                },
+                {
+                  "expression": "+ (Matrix[y1, Trans[Bar[y1]], y2][gen[$i], heavy[$j]] + 3*Matrix[y2, Trans[Bar[y2]], y2][gen[$i], heavy[$j]] + Matrix[ye, Trans[Bar[ye]], y2][gen[$i], heavy[$j]])/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.22796025780977e-07
+                }
+              ]
+            },
+            "lambdaT3": {
+              "full_norm_16pi2_beta": 0.11488625259779273,
+              "sum_group_norms": 0.7601702479422072,
+              "cancellation_ratio": 0.15113226663210197,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.43752825027,
+                  "dominance": 0.575566133316051
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.07200000000000001,
+                  "dominance": 0.09471562481550039
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.25064199767220724,
+                  "dominance": 0.3297182418684486
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-21*g2^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.37163879014499995
+                },
+                {
+                  "expression": "- (9*gY^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.06588946012500001
+                },
+                {
+                  "expression": "+ 2*lambda12*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.002
+                },
+                {
+                  "expression": "+ 2*lambdaH*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.05
+                },
+                {
+                  "expression": "+ 4*lambdaH1*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.008
+                },
+                {
+                  "expression": "+ 4*lambdaH2*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.012
+                },
+                {
+                  "expression": "+ lambdaT3*(4*lambdaH2Adj + 2*Tr[y1 . Trans[Bar[y1]]] + Tr[y2 . Trans[Bar[y2]]] + 6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]])",
+                  "category": "mixed",
+                  "norm_16pi2_beta": 0.25064199767220724
+                }
+              ]
+            }
+          }
+        },
+        {
+          "mu_gev": 7943282.3472428275,
+          "betas": {
+            "y1": {
+              "full_norm_16pi2_beta": 0.013717755992175947,
+              "sum_group_norms": 0.013720322791696883,
+              "cancellation_ratio": 0.9998129198882632,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.013719034774299064,
+                  "dominance": 0.9999061233895605
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.2880173978200337e-06,
+                  "dominance": 9.387661043947903e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.012062947912206788
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0016560868620922756
+                },
+                {
+                  "expression": "+ 2*Tr[y1 . Trans[Bar[y1]]]*Matrix[y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 8.675310232091767e-07
+                },
+                {
+                  "expression": "+ Matrix[y1, Trans[Bar[y1]], y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 2.1317298815540022e-07
+                },
+                {
+                  "expression": "+ (3*Matrix[y2, Trans[Bar[y2]], y1][gen[$i], heavy[$j]])/4",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.343572919269742e-07
+                },
+                {
+                  "expression": "+ Matrix[ye, Trans[Bar[ye]], y1][gen[$i], heavy[$j]]/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.7914754999870922e-07
+                }
+              ]
+            },
+            "y2": {
+              "full_norm_16pi2_beta": 0.014536034617206449,
+              "sum_group_norms": 0.014538071736293096,
+              "cancellation_ratio": 0.9998598769407939,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.014537045280392106,
+                  "dominance": 0.9999293953201216
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.0264559009892089e-06,
+                  "dominance": 7.060467987833259e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.012782212662896395
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0017548326174957097
+                },
+                {
+                  "expression": "+ Tr[y2 . Trans[Bar[y2]]]*Matrix[y2][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.160749478936514e-07
+                },
+                {
+                  "expression": "+ (Matrix[y1, Trans[Bar[y1]], y2][gen[$i], heavy[$j]] + 3*Matrix[y2, Trans[Bar[y2]], y2][gen[$i], heavy[$j]] + Matrix[ye, Trans[Bar[ye]], y2][gen[$i], heavy[$j]])/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.261064765340276e-07
+                }
+              ]
+            },
+            "lambdaT3": {
+              "full_norm_16pi2_beta": 0.11261916353508833,
+              "sum_group_norms": 0.7637586246924251,
+              "cancellation_ratio": 0.14745386813856465,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.4381888941137567,
+                  "dominance": 0.5737269340692823
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.07171345983156213,
+                  "dominance": 0.09389545009778713
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.25385627074710626,
+                  "dominance": 0.3323776158329306
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-21*g2^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.37244746362156017
+                },
+                {
+                  "expression": "- (9*gY^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.06574143049219655
+                },
+                {
+                  "expression": "+ 2*lambda12*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.002001840324654551
+                },
+                {
+                  "expression": "+ 2*lambdaH*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.05025443262732334
+                },
+                {
+                  "expression": "+ 4*lambdaH1*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.007883578335832173
+                },
+                {
+                  "expression": "+ 4*lambdaH2*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.011573608543752077
+                },
+                {
+                  "expression": "+ lambdaT3*(4*lambdaH2Adj + 2*Tr[y1 . Trans[Bar[y1]]] + Tr[y2 . Trans[Bar[y2]]] + 6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]])",
+                  "category": "mixed",
+                  "norm_16pi2_beta": 0.25385627074710626
+                }
+              ]
+            }
+          }
+        },
+        {
+          "mu_gev": 6309573.444801926,
+          "betas": {
+            "y1": {
+              "full_norm_16pi2_beta": 0.01375384430981977,
+              "sum_group_norms": 0.013756430627086376,
+              "cancellation_ratio": 0.9998119921266848,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.013755132855415502,
+                  "dominance": 0.9999056607265319
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.2977716708740891e-06,
+                  "dominance": 9.433927346813207e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.012101113132308248
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0016540197231072551
+                },
+                {
+                  "expression": "+ 2*Tr[y1 . Trans[Bar[y1]]]*Matrix[y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 8.744353185235215e-07
+                },
+                {
+                  "expression": "+ Matrix[y1, Trans[Bar[y1]], y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 2.148695384045024e-07
+                },
+                {
+                  "expression": "+ (3*Matrix[y2, Trans[Bar[y2]], y1][gen[$i], heavy[$j]])/4",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.3542659636870397e-07
+                },
+                {
+                  "expression": "+ Matrix[ye, Trans[Bar[ye]], y1][gen[$i], heavy[$j]]/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.79657353168979e-07
+                }
+              ]
+            },
+            "y2": {
+              "full_norm_16pi2_beta": 0.014574278580383572,
+              "sum_group_norms": 0.014576330527955157,
+              "cancellation_ratio": 0.9998592274257468,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.014575296659044194,
+                  "dominance": 0.9999290720727703
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.033868910963923e-06,
+                  "dominance": 7.092792722977306e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.012822654325625585
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0017526423334186072
+                },
+                {
+                  "expression": "+ Tr[y2 . Trans[Bar[y2]]]*Matrix[y2][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.201822578886536e-07
+                },
+                {
+                  "expression": "+ (Matrix[y1, Trans[Bar[y1]], y2][gen[$i], heavy[$j]] + 3*Matrix[y2, Trans[Bar[y2]], y2][gen[$i], heavy[$j]] + Matrix[ye, Trans[Bar[ye]], y2][gen[$i], heavy[$j]])/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.294340727049105e-07
+                }
+              ]
+            },
+            "lambdaT3": {
+              "full_norm_16pi2_beta": 0.11027737244094732,
+              "sum_group_norms": 0.767396281990318,
+              "cancellation_ratio": 0.14370329258689146,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.43883682721563266,
+                  "dominance": 0.5718516462934458
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.07143007530141227,
+                  "dominance": 0.09308108076331999
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.2571293794732731,
+                  "dominance": 0.3350672729432343
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-21*g2^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.37324447313956355
+                },
+                {
+                  "expression": "- (9*gY^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.06559235407606913
+                },
+                {
+                  "expression": "+ 2*lambda12*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.002003660870304923
+                },
+                {
+                  "expression": "+ 2*lambdaH*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.05051579015925071
+                },
+                {
+                  "expression": "+ 4*lambdaH1*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.007766513900654688
+                },
+                {
+                  "expression": "+ 4*lambdaH2*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.011144110371201946
+                },
+                {
+                  "expression": "+ lambdaT3*(4*lambdaH2Adj + 2*Tr[y1 . Trans[Bar[y1]]] + Tr[y2 . Trans[Bar[y2]]] + 6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]])",
+                  "category": "mixed",
+                  "norm_16pi2_beta": 0.2571293794732731
+                }
+              ]
+            }
+          }
+        },
+        {
+          "mu_gev": 5011872.336272722,
+          "betas": {
+            "y1": {
+              "full_norm_16pi2_beta": 0.01379008356872338,
+              "sum_group_norms": 0.013792689548231714,
+              "cancellation_ratio": 0.9998110608160055,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.0137913819503464,
+                  "dominance": 0.999905196308469
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.3075978853127765e-06,
+                  "dominance": 9.480369153095428e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.012139401924661874
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0016519800256845258
+                },
+                {
+                  "expression": "+ 2*Tr[y1 . Trans[Bar[y1]]]*Matrix[y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 8.813944713724393e-07
+                },
+                {
+                  "expression": "+ Matrix[y1, Trans[Bar[y1]], y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 2.1657956845155042e-07
+                },
+                {
+                  "expression": "+ (3*Matrix[y2, Trans[Bar[y2]], y1][gen[$i], heavy[$j]])/4",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.365043970734563e-07
+                },
+                {
+                  "expression": "+ Matrix[ye, Trans[Bar[ye]], y1][gen[$i], heavy[$j]]/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.8016009402854746e-07
+                }
+              ]
+            },
+            "y2": {
+              "full_norm_16pi2_beta": 0.014612682520606154,
+              "sum_group_norms": 0.014614749398453166,
+              "cancellation_ratio": 0.9998585758954422,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.014613708066042442,
+                  "dominance": 0.9999287478435426
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.0413324107240282e-06,
+                  "dominance": 7.125215645738294e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.012863226938537987
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0017504811275044553
+                },
+                {
+                  "expression": "+ Tr[y2 . Trans[Bar[y2]]]*Matrix[y2][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.243222035503207e-07
+                },
+                {
+                  "expression": "+ (Matrix[y1, Trans[Bar[y1]], y2][gen[$i], heavy[$j]] + 3*Matrix[y2, Trans[Bar[y2]], y2][gen[$i], heavy[$j]] + Matrix[ye, Trans[Bar[ye]], y2][gen[$i], heavy[$j]])/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.32778852857886e-07
+                }
+              ]
+            },
+            "lambdaT3": {
+              "full_norm_16pi2_beta": 0.10785844138465006,
+              "sum_group_norms": 0.7710846776991729,
+              "cancellation_ratio": 0.13987885442943454,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.43947155954191147,
+                  "dominance": 0.5699394272147172
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.07115008281028116,
+                  "dominance": 0.09227272291622335
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.26046303534698023,
+                  "dominance": 0.33778784986905935
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-21*g2^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.37402938860328794
+                },
+                {
+                  "expression": "- (9*gY^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.06544217093862352
+                },
+                {
+                  "expression": "+ 2*lambda12*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.002005460619190367
+                },
+                {
+                  "expression": "+ 2*lambdaH*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.05078427642401813
+                },
+                {
+                  "expression": "+ 4*lambdaH1*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.007648816558087121
+                },
+                {
+                  "expression": "+ 4*lambdaH2*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.010711529208985543
+                },
+                {
+                  "expression": "+ lambdaT3*(4*lambdaH2Adj + 2*Tr[y1 . Trans[Bar[y1]]] + Tr[y2 . Trans[Bar[y2]]] + 6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]])",
+                  "category": "mixed",
+                  "norm_16pi2_beta": 0.26046303534698023
+                }
+              ]
+            }
+          }
+        },
+        {
+          "mu_gev": 3981071.705534969,
+          "betas": {
+            "y1": {
+              "full_norm_16pi2_beta": 0.013826474042025505,
+              "sum_group_norms": 0.013829099829350027,
+              "cancellation_ratio": 0.9998101259404499,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.013827782332772648,
+                  "dominance": 0.999904730127511
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.3174965773789723e-06,
+                  "dominance": 9.526987248893807e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.012177814832578028
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0016499675001946212
+                },
+                {
+                  "expression": "+ 2*Tr[y1 . Trans[Bar[y1]]]*Matrix[y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 8.884089455954712e-07
+                },
+                {
+                  "expression": "+ Matrix[y1, Trans[Bar[y1]], y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 2.1830319227247637e-07
+                },
+                {
+                  "expression": "+ (3*Matrix[y2, Trans[Bar[y2]], y1][gen[$i], heavy[$j]])/4",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.3759076588243196e-07
+                },
+                {
+                  "expression": "+ Matrix[ye, Trans[Bar[ye]], y1][gen[$i], heavy[$j]]/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.8065555500893779e-07
+                }
+              ]
+            },
+            "y2": {
+              "full_norm_16pi2_beta": 0.014651246727653944,
+              "sum_group_norms": 0.014653328638212126,
+              "cancellation_ratio": 0.9998579223458653,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.014652279791492157,
+                  "dominance": 0.9999284226303891
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.0488467199692666e-06,
+                  "dominance": 7.157736961103452e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.012903931077438245
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.001748348714053913
+                },
+                {
+                  "expression": "+ Tr[y2 . Trans[Bar[y2]]]*Matrix[y2][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.284950608424823e-07
+                },
+                {
+                  "expression": "+ (Matrix[y1, Trans[Bar[y1]], y2][gen[$i], heavy[$j]] + 3*Matrix[y2, Trans[Bar[y2]], y2][gen[$i], heavy[$j]] + Matrix[ye, Trans[Bar[ye]], y2][gen[$i], heavy[$j]])/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.361408528407158e-07
+                }
+              ]
+            },
+            "lambdaT3": {
+              "full_norm_16pi2_beta": 0.10535983094471757,
+              "sum_group_norms": 0.7748253394849364,
+              "cancellation_ratio": 0.1359788142896247,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.44009258521482697,
+                  "dominance": 0.5679894071448124
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.07087373023967204,
+                  "dominance": 0.09147058908370913
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.2638590240304373,
+                  "dominance": 0.34054000377147847
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-21*g2^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.37480176550465255
+                },
+                {
+                  "expression": "- (9*gY^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0652908197101744
+                },
+                {
+                  "expression": "+ 2*lambda12*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.0020072385297986274
+                },
+                {
+                  "expression": "+ 2*lambdaH*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.05106010326598398
+                },
+                {
+                  "expression": "+ 4*lambdaH1*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.007530496860630206
+                },
+                {
+                  "expression": "+ 4*lambdaH2*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.01027589158325923
+                },
+                {
+                  "expression": "+ lambdaT3*(4*lambdaH2Adj + 2*Tr[y1 . Trans[Bar[y1]]] + Tr[y2 . Trans[Bar[y2]]] + 6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]])",
+                  "category": "mixed",
+                  "norm_16pi2_beta": 0.2638590240304373
+                }
+              ]
+            }
+          }
+        },
+        {
+          "mu_gev": 3162277.6601683795,
+          "betas": {
+            "y1": {
+              "full_norm_16pi2_beta": 0.013863016008856885,
+              "sum_group_norms": 0.013865661750655683,
+              "cancellation_ratio": 0.9998091874844218,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.013864334282369812,
+                  "dominance": 0.9999042621758887
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.3274682858715743e-06,
+                  "dominance": 9.573782411133753e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.012216352401134544
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.00164798188123527
+                },
+                {
+                  "expression": "+ 2*Tr[y1 . Trans[Bar[y1]]]*Matrix[y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 8.95479209101223e-07
+                },
+                {
+                  "expression": "+ Matrix[y1, Trans[Bar[y1]], y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 2.2004052484306195e-07
+                },
+                {
+                  "expression": "+ (3*Matrix[y2, Trans[Bar[y2]], y1][gen[$i], heavy[$j]])/4",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.3868577526709464e-07
+                },
+                {
+                  "expression": "+ Matrix[ye, Trans[Bar[ye]], y1][gen[$i], heavy[$j]]/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.8114351199294893e-07
+                }
+              ]
+            },
+            "y2": {
+              "full_norm_16pi2_beta": 0.014689971497660183,
+              "sum_group_norms": 0.014692068544009815,
+              "cancellation_ratio": 0.9998572667733375,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.014691012131851795,
+                  "dominance": 0.9999280964314279
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.0564121580204739e-06,
+                  "dominance": 7.190356857211843e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.012944767320004902
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0017462448118468923
+                },
+                {
+                  "expression": "+ Tr[y2 . Trans[Bar[y2]]]*Matrix[y2][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.327011081501372e-07
+                },
+                {
+                  "expression": "+ (Matrix[y1, Trans[Bar[y1]], y2][gen[$i], heavy[$j]] + 3*Matrix[y2, Trans[Bar[y2]], y2][gen[$i], heavy[$j]] + Matrix[ye, Trans[Bar[ye]], y2][gen[$i], heavy[$j]])/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.395201056365379e-07
+                }
+              ]
+            },
+            "lambdaT3": {
+              "full_norm_16pi2_beta": 0.10277889474275859,
+              "sum_group_norms": 0.7786198690519508,
+              "cancellation_ratio": 0.13200137683090774,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.4406993818973547,
+                  "dominance": 0.5660006884154538
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.07060127755389367,
+                  "dominance": 0.09067489844544802
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.26731920960070243,
+                  "dominance": 0.3433244131390981
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-21*g2^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.3755611443700111
+                },
+                {
+                  "expression": "- (9*gY^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.06513823752734361
+                },
+                {
+                  "expression": "+ 2*lambda12*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.0020089935354531494
+                },
+                {
+                  "expression": "+ 2*lambdaH*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.05134349097956414
+                },
+                {
+                  "expression": "+ 4*lambdaH1*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.007411566073082664
+                },
+                {
+                  "expression": "+ 4*lambdaH2*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.00983722696579372
+                },
+                {
+                  "expression": "+ lambdaT3*(4*lambdaH2Adj + 2*Tr[y1 . Trans[Bar[y1]]] + Tr[y2 . Trans[Bar[y2]]] + 6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]])",
+                  "category": "mixed",
+                  "norm_16pi2_beta": 0.26731920960070243
+                }
+              ]
+            }
+          }
+        },
+        {
+          "mu_gev": 2511886.431509583,
+          "betas": {
+            "y1": {
+              "full_norm_16pi2_beta": 0.013899709754279873,
+              "sum_group_norms": 0.013902375598299705,
+              "cancellation_ratio": 0.9998082454325175,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.013901038084747649,
+                  "dominance": 0.9999037924459314
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.3375135520557336e-06,
+                  "dominance": 9.62075540686237e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.012255015177195183
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0016460229075524672
+                },
+                {
+                  "expression": "+ 2*Tr[y1 . Trans[Bar[y1]]]*Matrix[y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 9.026057339057847e-07
+                },
+                {
+                  "expression": "+ Matrix[y1, Trans[Bar[y1]], y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 2.217916821483787e-07
+                },
+                {
+                  "expression": "+ (3*Matrix[y2, Trans[Bar[y2]], y1][gen[$i], heavy[$j]])/4",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.3978949833512212e-07
+                },
+                {
+                  "expression": "+ Matrix[ye, Trans[Bar[ye]], y1][gen[$i], heavy[$j]]/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.8162373401452892e-07
+                }
+              ]
+            },
+            "y2": {
+              "full_norm_16pi2_beta": 0.014728857133047666,
+              "sum_group_norms": 0.014730969418912528,
+              "cancellation_ratio": 0.9998566091745361,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.014729905389868882,
+                  "dominance": 0.9999277692449569
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.0640290436462255e-06,
+                  "dominance": 7.223075504319216e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.012985736245809962
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0017441691440589183
+                },
+                {
+                  "expression": "+ Tr[y2 . Trans[Bar[y2]]]*Matrix[y2][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.369406263023155e-07
+                },
+                {
+                  "expression": "+ (Matrix[y1, Trans[Bar[y1]], y2][gen[$i], heavy[$j]] + 3*Matrix[y2, Trans[Bar[y2]], y2][gen[$i], heavy[$j]] + Matrix[ye, Trans[Bar[ye]], y2][gen[$i], heavy[$j]])/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.429166411628706e-07
+                }
+              ]
+            },
+            "lambdaT3": {
+              "full_norm_16pi2_beta": 0.10011287336383734,
+              "sum_group_norms": 0.7824699466395808,
+              "cancellation_ratio": 0.12794468821938162,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.4412914100017091,
+                  "dominance": 0.5639723441096908
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.07033299740678328,
+                  "dominance": 0.08988587703443117
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.27084553923108845,
+                  "dominance": 0.346141778855878
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-21*g2^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.3763070500551435
+                },
+                {
+                  "expression": "- (9*gY^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.06498435994656558
+                },
+                {
+                  "expression": "+ 2*lambda12*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.0020107245424390123
+                },
+                {
+                  "expression": "+ 2*lambdaH*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.05163466875216897
+                },
+                {
+                  "expression": "+ 4*lambdaH1*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.007292036192978975
+                },
+                {
+                  "expression": "+ 4*lambdaH2*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.009395567919196334
+                },
+                {
+                  "expression": "+ lambdaT3*(4*lambdaH2Adj + 2*Tr[y1 . Trans[Bar[y1]]] + Tr[y2 . Trans[Bar[y2]]] + 6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]])",
+                  "category": "mixed",
+                  "norm_16pi2_beta": 0.27084553923108845
+                }
+              ]
+            }
+          }
+        },
+        {
+          "mu_gev": 1995262.31496888,
+          "betas": {
+            "y1": {
+              "full_norm_16pi2_beta": 0.013936555569229696,
+              "sum_group_norms": 0.013939241664310872,
+              "cancellation_ratio": 0.9998072997695382,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.01393789403139129,
+                  "dominance": 0.9999033209300738
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.347632919582672e-06,
+                  "dominance": 9.667906992624023e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.012293803709428001
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0016440903219632898
+                },
+                {
+                  "expression": "+ 2*Tr[y1 . Trans[Bar[y1]]]*Matrix[y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 9.097889961715221e-07
+                },
+                {
+                  "expression": "+ Matrix[y1, Trans[Bar[y1]], y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 2.235567811923194e-07
+                },
+                {
+                  "expression": "+ (3*Matrix[y2, Trans[Bar[y2]], y1][gen[$i], heavy[$j]])/4",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.409020088364153e-07
+                },
+                {
+                  "expression": "+ Matrix[ye, Trans[Bar[ye]], y1][gen[$i], heavy[$j]]/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.820959829733472e-07
+                }
+              ]
+            },
+            "y2": {
+              "full_norm_16pi2_beta": 0.014767903942466623,
+              "sum_group_norms": 0.014770031572212624,
+              "cancellation_ratio": 0.9998559495465126,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.01476895987451772,
+                  "dominance": 0.9999274410694612
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.0716976949039376e-06,
+                  "dominance": 7.25589305387918e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.013026838436338372
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0017421214381793477
+                },
+                {
+                  "expression": "+ Tr[y2 . Trans[Bar[y2]]]*Matrix[y2][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.412138985951656e-07
+                },
+                {
+                  "expression": "+ (Matrix[y1, Trans[Bar[y1]], y2][gen[$i], heavy[$j]] + 3*Matrix[y2, Trans[Bar[y2]], y2][gen[$i], heavy[$j]] + Matrix[ye, Trans[Bar[ye]], y2][gen[$i], heavy[$j]])/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.463304860881232e-07
+                }
+              ]
+            },
+            "lambdaT3": {
+              "full_norm_16pi2_beta": 0.0973588879888918,
+              "sum_group_norms": 0.786377335913985,
+              "cancellation_ratio": 0.12380683361853788,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.4418681119514384,
+                  "dominance": 0.5619034168092689
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.07006917581418738,
+                  "dominance": 0.08910375797230713
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.2744400481483592,
+                  "dominance": 0.34899282521842395
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-21*g2^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.3770389910839745
+                },
+                {
+                  "expression": "- (9*gY^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.06482912086746391
+                },
+                {
+                  "expression": "+ 2*lambda12*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.0020124304281721166
+                },
+                {
+                  "expression": "+ 2*lambdaH*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.05193387515581306
+                },
+                {
+                  "expression": "+ 4*lambdaH1*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.007171919974124244
+                },
+                {
+                  "expression": "+ 4*lambdaH2*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.008950950256077958
+                },
+                {
+                  "expression": "+ lambdaT3*(4*lambdaH2Adj + 2*Tr[y1 . Trans[Bar[y1]]] + Tr[y2 . Trans[Bar[y2]]] + 6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]])",
+                  "category": "mixed",
+                  "norm_16pi2_beta": 0.2744400481483592
+                }
+              ]
+            }
+          }
+        },
+        {
+          "mu_gev": 1584893.1924611153,
+          "betas": {
+            "y1": {
+              "full_norm_16pi2_beta": 0.013973553750457422,
+              "sum_group_norms": 0.013976260246538533,
+              "cancellation_ratio": 0.9998063504805027,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.013974902419604128,
+                  "dominance": 0.9999028476208619
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.3578269344048259e-06,
+                  "dominance": 9.71523791381257e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.012332718548323685
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.001642183871280444
+                },
+                {
+                  "expression": "+ 2*Tr[y1 . Trans[Bar[y1]]]*Matrix[y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 9.170294762462424e-07
+                },
+                {
+                  "expression": "+ Matrix[y1, Trans[Bar[y1]], y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 2.253359400072216e-07
+                },
+                {
+                  "expression": "+ (3*Matrix[y2, Trans[Bar[y2]], y1][gen[$i], heavy[$j]])/4",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.4202338116916498e-07
+                },
+                {
+                  "expression": "+ Matrix[ye, Trans[Bar[ye]], y1][gen[$i], heavy[$j]]/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.8256001333767234e-07
+                }
+              ]
+            },
+            "y2": {
+              "full_norm_16pi2_beta": 0.014807112240734336,
+              "sum_group_norms": 0.014809255319367843,
+              "cancellation_ratio": 0.9998552878867106,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.01480817590093887,
+                  "dominance": 0.9999271119036242
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.0794184289737371e-06,
+                  "dominance": 7.288809637592323e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.013068074475007452
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0017401014259314181
+                },
+                {
+                  "expression": "+ Tr[y2 . Trans[Bar[y2]]]*Matrix[y2][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.455212108152618e-07
+                },
+                {
+                  "expression": "+ (Matrix[y1, Trans[Bar[y1]], y2][gen[$i], heavy[$j]] + 3*Matrix[y2, Trans[Bar[y2]], y2][gen[$i], heavy[$j]] + Matrix[ye, Trans[Bar[ye]], y2][gen[$i], heavy[$j]])/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.497616636410413e-07
+                }
+              ]
+            },
+            "lambdaT3": {
+              "full_norm_16pi2_beta": 0.09451393361552424,
+              "sum_group_norms": 0.7903438892167415,
+              "cancellation_ratio": 0.11958583460320148,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.4424289114161329,
+                  "dominance": 0.5597929173016007
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.06981011286995056,
+                  "dominance": 0.08832878171441906
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.27810486493065806,
+                  "dominance": 0.3518783009839802
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-21*g2^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.37775645896211846
+                },
+                {
+                  "expression": "- (9*gY^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.06467245245401441
+                },
+                {
+                  "expression": "+ 2*lambda12*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.002014110039243281
+                },
+                {
+                  "expression": "+ 2*lambdaH*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.05224135867231454
+                },
+                {
+                  "expression": "+ 4*lambdaH1*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.007051230951226326
+                },
+                {
+                  "expression": "+ 4*lambdaH2*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.008503413207166423
+                },
+                {
+                  "expression": "+ lambdaT3*(4*lambdaH2Adj + 2*Tr[y1 . Trans[Bar[y1]]] + Tr[y2 . Trans[Bar[y2]]] + 6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]])",
+                  "category": "mixed",
+                  "norm_16pi2_beta": 0.27810486493065806
+                }
+              ]
+            }
+          }
+        },
+        {
+          "mu_gev": 1258925.4117941654,
+          "betas": {
+            "y1": {
+              "full_norm_16pi2_beta": 0.014010704600474502,
+              "sum_group_norms": 0.014013431648596957,
+              "cancellation_ratio": 0.9998053975506614,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.014012063552452277,
+                  "dominance": 0.9999023725109604
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.3680961446805394e-06,
+                  "dominance": 9.762748903959687e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.012371760246213767
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0016403033062385105
+                },
+                {
+                  "expression": "+ 2*Tr[y1 . Trans[Bar[y1]]]*Matrix[y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 9.243276587027336e-07
+                },
+                {
+                  "expression": "+ Matrix[y1, Trans[Bar[y1]], y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 2.2712927766358276e-07
+                },
+                {
+                  "expression": "+ (3*Matrix[y2, Trans[Bar[y2]], y1][gen[$i], heavy[$j]])/4",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.4315369038597645e-07
+                },
+                {
+                  "expression": "+ Matrix[ye, Trans[Bar[ye]], y1][gen[$i], heavy[$j]]/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.8301557182467724e-07
+                }
+              ]
+            },
+            "y2": {
+              "full_norm_16pi2_beta": 0.014846482348776526,
+              "sum_group_norms": 0.0148486409819423,
+              "cancellation_ratio": 0.9998546241929885,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.014847553790380323,
+                  "dominance": 0.9999267817463363
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.0871915619762975e-06,
+                  "dominance": 7.321825366364847e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.013109444947186228
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0017381088431940954
+                },
+                {
+                  "expression": "+ Tr[y2 . Trans[Bar[y2]]]*Matrix[y2][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.49862851263136e-07
+                },
+                {
+                  "expression": "+ (Matrix[y1, Trans[Bar[y1]], y2][gen[$i], heavy[$j]] + 3*Matrix[y2, Trans[Bar[y2]], y2][gen[$i], heavy[$j]] + Matrix[ye, Trans[Bar[ye]], y2][gen[$i], heavy[$j]])/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.532101934032025e-07
+                }
+              ]
+            },
+            "lambdaT3": {
+              "full_norm_16pi2_beta": 0.091574871773548,
+              "sum_group_norms": 0.7943715531995668,
+              "cancellation_ratio": 0.1152796464131968,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.44297321248655736,
+                  "dominance": 0.5576398232065983
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.06955612350378362,
+                  "dominance": 0.0875611962986662
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.28184221720922575,
+                  "dominance": 0.3547989804947354
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-21*g2^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.37845892743768655
+                },
+                {
+                  "expression": "- (9*gY^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0645142850488708
+                },
+                {
+                  "expression": "+ 2*lambda12*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.002015762189254331
+                },
+                {
+                  "expression": "+ 2*lambdaH*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.05255737825231571
+                },
+                {
+                  "expression": "+ 4*lambdaH1*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.006929983464915932
+                },
+                {
+                  "expression": "+ 4*lambdaH2*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.00805299959729765
+                },
+                {
+                  "expression": "+ lambdaT3*(4*lambdaH2Adj + 2*Tr[y1 . Trans[Bar[y1]]] + Tr[y2 . Trans[Bar[y2]]] + 6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]])",
+                  "category": "mixed",
+                  "norm_16pi2_beta": 0.28184221720922575
+                }
+              ]
+            }
+          }
+        },
+        {
+          "mu_gev": 999999.9999999995,
+          "betas": {
+            "y1": {
+              "full_norm_16pi2_beta": 0.014048008427498947,
+              "sum_group_norms": 0.014050756179811299,
+              "cancellation_ratio": 0.9998044409655119,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.014049377738710631,
+                  "dominance": 0.9999018955931605
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.3784411006680414e-06,
+                  "dominance": 9.810440683958647e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.012410929357288792
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0016384483814218399
+                },
+                {
+                  "expression": "+ 2*Tr[y1 . Trans[Bar[y1]]]*Matrix[y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 9.316840323786846e-07
+                },
+                {
+                  "expression": "+ Matrix[y1, Trans[Bar[y1]], y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 2.2893691427986907e-07
+                },
+                {
+                  "expression": "+ (3*Matrix[y2, Trans[Bar[y2]], y1][gen[$i], heavy[$j]])/4",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.4429301220005346e-07
+                },
+                {
+                  "expression": "+ Matrix[ye, Trans[Bar[ye]], y1][gen[$i], heavy[$j]]/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.8346239705749198e-07
+                }
+              ]
+            },
+            "y2": {
+              "full_norm_16pi2_beta": 0.014886014593570362,
+              "sum_group_norms": 0.014888188887549121,
+              "cancellation_ratio": 0.9998539584636398,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.014887093870140347,
+                  "dominance": 0.9999264505967083
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.095017408774274e-06,
+                  "dominance": 7.354940329176161e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.013150950440214675
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0017361434299256711
+                },
+                {
+                  "expression": "+ Tr[y2 . Trans[Bar[y2]]]*Matrix[y2][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.542391107770337e-07
+                },
+                {
+                  "expression": "+ (Matrix[y1, Trans[Bar[y1]], y2][gen[$i], heavy[$j]] + 3*Matrix[y2, Trans[Bar[y2]], y2][gen[$i], heavy[$j]] + Matrix[ye, Trans[Bar[ye]], y2][gen[$i], heavy[$j]])/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.56676091084263e-07
+                }
+              ]
+            },
+            "lambdaT3": {
+              "full_norm_16pi2_beta": 0.08853842268543677,
+              "sum_group_norms": 0.7984623748933327,
+              "cancellation_ratio": 0.1108861550267346,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.44350039878938474,
+                  "dominance": 0.5554430775133673
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0693075382878599,
+                  "dominance": 0.08680125760104695
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.28565443781608807,
+                  "dominance": 0.35775566488558574
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-21*g2^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.37914585170846915
+                },
+                {
+                  "expression": "- (9*gY^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.06435454708091562
+                },
+                {
+                  "expression": "+ 2*lambda12*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.0020173856564328196
+                },
+                {
+                  "expression": "+ 2*lambdaH*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.052882203913916154
+                },
+                {
+                  "expression": "+ 4*lambdaH1*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.006808192687280637
+                },
+                {
+                  "expression": "+ 4*lambdaH2*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.007599756030230294
+                },
+                {
+                  "expression": "+ lambdaT3*(4*lambdaH2Adj + 2*Tr[y1 . Trans[Bar[y1]]] + Tr[y2 . Trans[Bar[y2]]] + 6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]])",
+                  "category": "mixed",
+                  "norm_16pi2_beta": 0.28565443781608807
+                }
+              ]
+            }
+          }
+        },
+        {
+          "mu_gev": 794328.2347242819,
+          "betas": {
+            "y1": {
+              "full_norm_16pi2_beta": 0.014085465545403027,
+              "sum_group_norms": 0.014088234155165087,
+              "cancellation_ratio": 0.9998034807108139,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.014086845292810478,
+                  "dominance": 0.9999014168603877
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.3888623546084712e-06,
+                  "dominance": 9.858313961223314e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.012450226437616408
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.001636618855194069
+                },
+                {
+                  "expression": "+ 2*Tr[y1 . Trans[Bar[y1]]]*Matrix[y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 9.390990904169877e-07
+                },
+                {
+                  "expression": "+ Matrix[y1, Trans[Bar[y1]], y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 2.3075897103241805e-07
+                },
+                {
+                  "expression": "+ (3*Matrix[y2, Trans[Bar[y2]], y1][gen[$i], heavy[$j]])/4",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.4544142299144085e-07
+                },
+                {
+                  "expression": "+ Matrix[ye, Trans[Bar[ye]], y1][gen[$i], heavy[$j]]/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.8390021919834777e-07
+                }
+              ]
+            },
+            "y2": {
+              "full_norm_16pi2_beta": 0.01492570930808921,
+              "sum_group_norms": 0.014927899369794755,
+              "cancellation_ratio": 0.9998532906974187,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.014926796473511998,
+                  "dominance": 0.9999261184540814
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.1028962827569988e-06,
+                  "dominance": 7.388154591855093e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.013192591543422918
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0017342049300890796
+                },
+                {
+                  "expression": "+ Tr[y2 . Trans[Bar[y2]]]*Matrix[y2][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.586502827569001e-07
+                },
+                {
+                  "expression": "+ (Matrix[y1, Trans[Bar[y1]], y2][gen[$i], heavy[$j]] + 3*Matrix[y2, Trans[Bar[y2]], y2][gen[$i], heavy[$j]] + Matrix[ye, Trans[Bar[ye]], y2][gen[$i], heavy[$j]])/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.601593682796994e-07
+                }
+              ]
+            },
+            "lambdaT3": {
+              "full_norm_16pi2_beta": 0.08540115682025445,
+              "sum_group_norms": 0.8026185082611559,
+              "cancellation_ratio": 0.10640317403752997,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.4440098325407052,
+                  "dominance": 0.553201587018765
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.06906470429881954,
+                  "dominance": 0.0860492296003063
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.2895439714216312,
+                  "dominance": 0.3607491833809287
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-21*g2^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.3798166675746079
+                },
+                {
+                  "expression": "- (9*gY^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.06419316496609727
+                },
+                {
+                  "expression": "+ 2*lambda12*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.0020189791810111993
+                },
+                {
+                  "expression": "+ 2*lambdaH*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.053216117386537795
+                },
+                {
+                  "expression": "+ 4*lambdaH1*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.006685874648037543
+                },
+                {
+                  "expression": "+ 4*lambdaH2*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.007143733083233006
+                },
+                {
+                  "expression": "+ lambdaT3*(4*lambdaH2Adj + 2*Tr[y1 . Trans[Bar[y1]]] + Tr[y2 . Trans[Bar[y2]]] + 6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]])",
+                  "category": "mixed",
+                  "norm_16pi2_beta": 0.2895439714216312
+                }
+              ]
+            }
+          }
+        },
+        {
+          "mu_gev": 630957.344480193,
+          "betas": {
+            "y1": {
+              "full_norm_16pi2_beta": 0.014123076273662494,
+              "sum_group_norms": 0.01412586589524918,
+              "cancellation_ratio": 0.999802516772609,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.014124466534788582,
+                  "dominance": 0.9999009363057122
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.3993604605977345e-06,
+                  "dominance": 9.90636942878219e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.01248965204515938
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0016348144896292016
+                },
+                {
+                  "expression": "+ 2*Tr[y1 . Trans[Bar[y1]]]*Matrix[y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 9.465733303064288e-07
+                },
+                {
+                  "expression": "+ Matrix[y1, Trans[Bar[y1]], y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 2.325955701654367e-07
+                },
+                {
+                  "expression": "+ (3*Matrix[y2, Trans[Bar[y2]], y1][gen[$i], heavy[$j]])/4",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.4659899981332794e-07
+                },
+                {
+                  "expression": "+ Matrix[ye, Trans[Bar[ye]], y1][gen[$i], heavy[$j]]/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.8432875955717063e-07
+                }
+              ]
+            },
+            "y2": {
+              "full_norm_16pi2_beta": 0.014965566831248904,
+              "sum_group_norms": 0.014967772768224797,
+              "cancellation_ratio": 0.9998526208935657,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.01496666193972919,
+                  "dominance": 0.9999257853180424
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.1108284956081162e-06,
+                  "dominance": 7.421468195764589e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.01323436884815032
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0017322930915788675
+                },
+                {
+                  "expression": "+ Tr[y2 . Trans[Bar[y2]]]*Matrix[y2][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.630966631885967e-07
+                },
+                {
+                  "expression": "+ (Matrix[y1, Trans[Bar[y1]], y2][gen[$i], heavy[$j]] + 3*Matrix[y2, Trans[Bar[y2]], y2][gen[$i], heavy[$j]] + Matrix[ye, Trans[Bar[ye]], y2][gen[$i], heavy[$j]])/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.636600322108196e-07
+                }
+              ]
+            },
+            "lambdaT3": {
+              "full_norm_16pi2_beta": 0.0821594857880586,
+              "sum_group_norms": 0.8068422212868873,
+              "cancellation_ratio": 0.10182844132402598,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.444500853537473,
+                  "dominance": 0.550914220662013
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.06882798604165591,
+                  "dominance": 0.08530538465361603
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.2935133817077585,
+                  "dominance": 0.363780394684371
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-21*g2^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.38047079053586147
+                },
+                {
+                  "expression": "- (9*gY^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.06403006300161153
+                },
+                {
+                  "expression": "+ 2*lambda12*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.0020205414623553496
+                },
+                {
+                  "expression": "+ 2*lambdaH*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.05355941280543727
+                },
+                {
+                  "expression": "+ 4*lambdaH1*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.006563046261467833
+                },
+                {
+                  "expression": "+ 4*lambdaH2*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.0066849855123954464
+                },
+                {
+                  "expression": "+ lambdaT3*(4*lambdaH2Adj + 2*Tr[y1 . Trans[Bar[y1]]] + Tr[y2 . Trans[Bar[y2]]] + 6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]])",
+                  "category": "mixed",
+                  "norm_16pi2_beta": 0.2935133817077585
+                }
+              ]
+            }
+          }
+        },
+        {
+          "mu_gev": 501187.2336272726,
+          "betas": {
+            "y1": {
+              "full_norm_16pi2_beta": 0.014160840937307307,
+              "sum_group_norms": 0.014163651726212236,
+              "cancellation_ratio": 0.999801549137238,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.01416224179023779,
+                  "dominance": 0.9999004539223569
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.40993597444698e-06,
+                  "dominance": 9.954607764307384e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.01252920673979357
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.001633035050444221
+                },
+                {
+                  "expression": "+ 2*Tr[y1 . Trans[Bar[y1]]]*Matrix[y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 9.541072539227717e-07
+                },
+                {
+                  "expression": "+ Matrix[y1, Trans[Bar[y1]], y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 2.3444683500109605e-07
+                },
+                {
+                  "expression": "+ (3*Matrix[y2, Trans[Bar[y2]], y1][gen[$i], heavy[$j]])/4",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.4776582039841215e-07
+                },
+                {
+                  "expression": "+ Matrix[ye, Trans[Bar[ye]], y1][gen[$i], heavy[$j]]/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.8474773017501178e-07
+                }
+              ]
+            },
+            "y2": {
+              "full_norm_16pi2_beta": 0.015005587507855663,
+              "sum_group_norms": 0.015007809428271405,
+              "cancellation_ratio": 0.9998519490518345,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.01500669061391435,
+                  "dominance": 0.9999254511884361
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.1188143570558712e-06,
+                  "dominance": 7.454881156394961e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.013276282947764558
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0017304076661497927
+                },
+                {
+                  "expression": "+ Tr[y2 . Trans[Bar[y2]]]*Matrix[y2][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.675785506683494e-07
+                },
+                {
+                  "expression": "+ (Matrix[y1, Trans[Bar[y1]], y2][gen[$i], heavy[$j]] + 3*Matrix[y2, Trans[Bar[y2]], y2][gen[$i], heavy[$j]] + Matrix[ye, Trans[Bar[ye]], y2][gen[$i], heavy[$j]])/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.671780854468697e-07
+                }
+              ]
+            },
+            "lambdaT3": {
+              "full_norm_16pi2_beta": 0.07880965252021377,
+              "sum_group_norms": 0.8111359036518975,
+              "cancellation_ratio": 0.0971596155038839,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.4449727780860556,
+                  "dominance": 0.5485798077519419
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.06859776644171597,
+                  "dominance": 0.08457000378466172
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.29756535912412585,
+                  "dominance": 0.3668501884633963
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-21*g2^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.3811076148325708
+                },
+                {
+                  "expression": "- (9*gY^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.06386516325348487
+                },
+                {
+                  "expression": "+ 2*lambda12*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.002022071155826422
+                },
+                {
+                  "expression": "+ 2*lambdaH*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.05391239746204178
+                },
+                {
+                  "expression": "+ 4*lambdaH1*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.006439725354234528
+                },
+                {
+                  "expression": "+ 4*lambdaH2*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.006223572469613248
+                },
+                {
+                  "expression": "+ lambdaT3*(4*lambdaH2Adj + 2*Tr[y1 . Trans[Bar[y1]]] + Tr[y2 . Trans[Bar[y2]]] + 6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]])",
+                  "category": "mixed",
+                  "norm_16pi2_beta": 0.29756535912412585
+                }
+              ]
+            }
+          }
+        },
+        {
+          "mu_gev": 398107.17055349716,
+          "betas": {
+            "y1": {
+              "full_norm_16pi2_beta": 0.014198759866873783,
+              "sum_group_norms": 0.01420159197971256,
+              "cancellation_ratio": 0.9998005777913614,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.01420017139025903,
+                  "dominance": 0.9998999697037092
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.420589453531519e-06,
+                  "dominance": 0.00010003029629078752
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.012568891083325838
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0016312803069331908
+                },
+                {
+                  "expression": "+ 2*Tr[y1 . Trans[Bar[y1]]]*Matrix[y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 9.617013675702372e-07
+                },
+                {
+                  "expression": "+ Matrix[y1, Trans[Bar[y1]], y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 2.3631288994972304e-07
+                },
+                {
+                  "expression": "+ (3*Matrix[y2, Trans[Bar[y2]], y1][gen[$i], heavy[$j]])/4",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.489419631653246e-07
+                },
+                {
+                  "expression": "+ Matrix[ye, Trans[Bar[ye]], y1][gen[$i], heavy[$j]]/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.8515683338172553e-07
+                }
+              ]
+            },
+            "y2": {
+              "full_norm_16pi2_beta": 0.01504577168855552,
+              "sum_group_norms": 0.015048009701202202,
+              "cancellation_ratio": 0.999851275172523,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.015046882847027595,
+                  "dominance": 0.9999251160653813
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.1268541746058098e-06,
+                  "dominance": 7.488393461866151e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.013318334437680601
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.001728548409346994
+                },
+                {
+                  "expression": "+ Tr[y2 . Trans[Bar[y2]]]*Matrix[y2][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.720962464274375e-07
+                },
+                {
+                  "expression": "+ (Matrix[y1, Trans[Bar[y1]], y2][gen[$i], heavy[$j]] + 3*Matrix[y2, Trans[Bar[y2]], y2][gen[$i], heavy[$j]] + Matrix[ye, Trans[Bar[ye]], y2][gen[$i], heavy[$j]])/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.707135256091088e-07
+                }
+              ]
+            },
+            "lambdaT3": {
+              "full_norm_16pi2_beta": 0.07534772067948226,
+              "sum_group_norms": 0.8155020750545935,
+              "cancellation_ratio": 0.09239427217207036,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.4454248978670379,
+                  "dominance": 0.5461971360860352
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.06837444791076226,
+                  "dominance": 0.0838433769848899
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.30170272927679337,
+                  "dominance": 0.36995948692907493
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-21*g2^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.3817265124294228
+                },
+                {
+                  "expression": "- (9*gY^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.06369838543761507
+                },
+                {
+                  "expression": "+ 2*lambda12*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.0020235668693589738
+                },
+                {
+                  "expression": "+ 2*lambdaH*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.05427539261500677
+                },
+                {
+                  "expression": "+ 4*lambdaH1*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.006315930694202328
+                },
+                {
+                  "expression": "+ 4*lambdaH2*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.005759557732194196
+                },
+                {
+                  "expression": "+ lambdaT3*(4*lambdaH2Adj + 2*Tr[y1 . Trans[Bar[y1]]] + Tr[y2 . Trans[Bar[y2]]] + 6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]])",
+                  "category": "mixed",
+                  "norm_16pi2_beta": 0.30170272927679337
+                }
+              ]
+            }
+          }
+        },
+        {
+          "mu_gev": 316227.7660168382,
+          "betas": {
+            "y1": {
+              "full_norm_16pi2_beta": 0.014236833398358118,
+              "sum_group_norms": 0.014239686992871304,
+              "cancellation_ratio": 0.999799602721983,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.014238255671414676,
+                  "dominance": 0.9998994836433311
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.4313214566280195e-06,
+                  "dominance": 0.00010051635666883479
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.01260870563951188
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0016295500319027947
+                },
+                {
+                  "expression": "+ 2*Tr[y1 . Trans[Bar[y1]]]*Matrix[y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 9.693561820233833e-07
+                },
+                {
+                  "expression": "+ Matrix[y1, Trans[Bar[y1]], y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 2.3819386052009066e-07
+                },
+                {
+                  "expression": "+ (3*Matrix[y2, Trans[Bar[y2]], y1][gen[$i], heavy[$j]])/4",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.501275072251172e-07
+                },
+                {
+                  "expression": "+ Matrix[ye, Trans[Bar[ye]], y1][gen[$i], heavy[$j]]/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.855557613273367e-07
+                }
+              ]
+            },
+            "y2": {
+              "full_norm_16pi2_beta": 0.015086119729785193,
+              "sum_group_norms": 0.01508837394407058,
+              "cancellation_ratio": 0.9998505992565041,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.015087238995817326,
+                  "dominance": 0.9999247799492866
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.1349482532556555e-06,
+                  "dominance": 7.522005071339491e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.013360523915379634
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0017267150804376914
+                },
+                {
+                  "expression": "+ Tr[y2 . Trans[Bar[y2]]]*Matrix[y2][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.76650054357115e-07
+                },
+                {
+                  "expression": "+ (Matrix[y1, Trans[Bar[y1]], y2][gen[$i], heavy[$j]] + 3*Matrix[y2, Trans[Bar[y2]], y2][gen[$i], heavy[$j]] + Matrix[ye, Trans[Bar[ye]], y2][gen[$i], heavy[$j]])/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.742663450567672e-07
+                }
+              ]
+            },
+            "lambdaT3": {
+              "full_norm_16pi2_beta": 0.07176956324222966,
+              "sum_group_norms": 0.819943394228631,
+              "cancellation_ratio": 0.08752989992650348,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.44585647873543033,
+                  "dominance": 0.5437649499632518
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.06815845349271304,
+                  "dominance": 0.08312580352797855
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.3059284620004877,
+                  "dominance": 0.37310924650876975
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-21*g2^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.38232683194110845
+                },
+                {
+                  "expression": "- (9*gY^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.06352964679432187
+                },
+                {
+                  "expression": "+ 2*lambda12*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.0020250271597372603
+                },
+                {
+                  "expression": "+ 2*lambdaH*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.0546487343665731
+                },
+                {
+                  "expression": "+ 4*lambdaH1*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.006191682020375532
+                },
+                {
+                  "expression": "+ 4*lambdaH2*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.005293009946027154
+                },
+                {
+                  "expression": "+ lambdaT3*(4*lambdaH2Adj + 2*Tr[y1 . Trans[Bar[y1]]] + Tr[y2 . Trans[Bar[y2]]] + 6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]])",
+                  "category": "mixed",
+                  "norm_16pi2_beta": 0.3059284620004877
+                }
+              ]
+            }
+          }
+        },
+        {
+          "mu_gev": 251188.643150958,
+          "betas": {
+            "y1": {
+              "full_norm_16pi2_beta": 0.014275061873171326,
+              "sum_group_norms": 0.014277937108227088,
+              "cancellation_ratio": 0.9997986239164686,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.014276494975683347,
+                  "dominance": 0.9998989957349714
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.4421325437398497e-06,
+                  "dominance": 0.00010100426502851583
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.012648650974074058
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0016278440016092891
+                },
+                {
+                  "expression": "+ 2*Tr[y1 . Trans[Bar[y1]]]*Matrix[y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 9.770722125693933e-07
+                },
+                {
+                  "expression": "+ Matrix[y1, Trans[Bar[y1]], y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 2.400898733298089e-07
+                },
+                {
+                  "expression": "+ (3*Matrix[y2, Trans[Bar[y2]], y1][gen[$i], heavy[$j]])/4",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.5132253238781354e-07
+                },
+                {
+                  "expression": "+ Matrix[ye, Trans[Bar[ye]], y1][gen[$i], heavy[$j]]/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.8594419548657475e-07
+                }
+              ]
+            },
+            "y2": {
+              "full_norm_16pi2_beta": 0.015126631993724505,
+              "sum_group_norms": 0.015128902519667529,
+              "cancellation_ratio": 0.9998499213052584,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.015127759422772337,
+                  "dominance": 0.9999244428408667
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.1430968951922038e-06,
+                  "dominance": 7.555715913339922e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.013402851980427956
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0017249074423443798
+                },
+                {
+                  "expression": "+ Tr[y2 . Trans[Bar[y2]]]*Matrix[y2][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.812402810337807e-07
+                },
+                {
+                  "expression": "+ (Matrix[y1, Trans[Bar[y1]], y2][gen[$i], heavy[$j]] + 3*Matrix[y2, Trans[Bar[y2]], y2][gen[$i], heavy[$j]] + Matrix[ye, Trans[Bar[ye]], y2][gen[$i], heavy[$j]])/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.778365305548734e-07
+                }
+              ]
+            },
+            "lambdaT3": {
+              "full_norm_16pi2_beta": 0.06807085019357051,
+              "sum_group_norms": 0.8244626687172878,
+              "cancellation_ratio": 0.08256389619129297,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.44626675945542915,
+                  "dominance": 0.5412819480956464
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.06795022809429933,
+                  "dominance": 0.08241759229683181
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.3102456811675593,
+                  "dominance": 0.3763004596075217
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-21*g2^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.38290789749896836
+                },
+                {
+                  "expression": "- (9*gY^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0633588619564608
+                },
+                {
+                  "expression": "+ 2*lambda12*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.002026450528550442
+                },
+                {
+                  "expression": "+ 2*lambdaH*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.05503277460843607
+                },
+                {
+                  "expression": "+ 4*lambdaH1*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.006067000074066594
+                },
+                {
+                  "expression": "+ 4*lambdaH2*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.004824002883246239
+                },
+                {
+                  "expression": "+ lambdaT3*(4*lambdaH2Adj + 2*Tr[y1 . Trans[Bar[y1]]] + Tr[y2 . Trans[Bar[y2]]] + 6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]])",
+                  "category": "mixed",
+                  "norm_16pi2_beta": 0.3102456811675593
+                }
+              ]
+            }
+          }
+        },
+        {
+          "mu_gev": 199526.23149688778,
+          "betas": {
+            "y1": {
+              "full_norm_16pi2_beta": 0.014313445638095487,
+              "sum_group_norms": 0.014316342673691853,
+              "cancellation_ratio": 0.9997976413625744,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.014314889650415942,
+                  "dominance": 0.9998985059725777
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.4530232759104475e-06,
+                  "dominance": 0.00010149402742228063
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.012688727654719133
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0016261619956968105
+                },
+                {
+                  "expression": "+ 2*Tr[y1 . Trans[Bar[y1]]]*Matrix[y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 9.84849979050773e-07
+                },
+                {
+                  "expression": "+ Matrix[y1, Trans[Bar[y1]], y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 2.4200105611581496e-07
+                },
+                {
+                  "expression": "+ (3*Matrix[y2, Trans[Bar[y2]], y1][gen[$i], heavy[$j]])/4",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.5252711916902236e-07
+                },
+                {
+                  "expression": "+ Matrix[ye, Trans[Bar[ye]], y1][gen[$i], heavy[$j]]/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.863218061360871e-07
+                }
+              ]
+            },
+            "y2": {
+              "full_norm_16pi2_beta": 0.015167308848250117,
+              "sum_group_norms": 0.01516959579647472,
+              "cancellation_ratio": 0.9998492413209101,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.01516844449607525,
+                  "dominance": 0.9999241047411601
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.1513003994700842e-06,
+                  "dominance": 7.589525883989844e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.013445319234495793
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0017231252615794565
+                },
+                {
+                  "expression": "+ Tr[y2 . Trans[Bar[y2]]]*Matrix[y2][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.858672357443861e-07
+                },
+                {
+                  "expression": "+ (Matrix[y1, Trans[Bar[y1]], y2][gen[$i], heavy[$j]] + 3*Matrix[y2, Trans[Bar[y2]], y2][gen[$i], heavy[$j]] + Matrix[ye, Trans[Bar[ye]], y2][gen[$i], heavy[$j]])/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.814240629239808e-07
+                }
+              ]
+            },
+            "lambdaT3": {
+              "full_norm_16pi2_beta": 0.06424703527480202,
+              "sum_group_norms": 0.8290628654629262,
+              "cancellation_ratio": 0.07749356285416091,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.4466549503688641,
+                  "dominance": 0.5387467814270804
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0677502398054423,
+                  "dominance": 0.08171906212155866
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.31465767528861976,
+                  "dominance": 0.37953415645136085
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-21*g2^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.38346900755771446
+                },
+                {
+                  "expression": "- (9*gY^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.06318594281114966
+                },
+                {
+                  "expression": "+ 2*lambda12*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.0020278354178062293
+                },
+                {
+                  "expression": "+ 2*lambdaH*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.05542788204092135
+                },
+                {
+                  "expression": "+ 4*lambdaH1*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.0059419066314038696
+                },
+                {
+                  "expression": "+ 4*lambdaH2*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.00435261571531085
+                },
+                {
+                  "expression": "+ lambdaT3*(4*lambdaH2Adj + 2*Tr[y1 . Trans[Bar[y1]]] + Tr[y2 . Trans[Bar[y2]]] + 6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]])",
+                  "category": "mixed",
+                  "norm_16pi2_beta": 0.31465767528861976
+                }
+              ]
+            }
+          }
+        },
+        {
+          "mu_gev": 158489.31924611135,
+          "betas": {
+            "y1": {
+              "full_norm_16pi2_beta": 0.014351985045241275,
+              "sum_group_norms": 0.014354904042508028,
+              "cancellation_ratio": 0.9997966550484693,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.014353440048293004,
+                  "dominance": 0.9998980143503091
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.4639942150246446e-06,
+                  "dominance": 0.00010198564969082591
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.012728936251156002
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0016245037971370023
+                },
+                {
+                  "expression": "+ 2*Tr[y1 . Trans[Bar[y1]]]*Matrix[y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 9.926900059084628e-07
+                },
+                {
+                  "expression": "+ Matrix[y1, Trans[Bar[y1]], y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 2.439275377449669e-07
+                },
+                {
+                  "expression": "+ (3*Matrix[y2, Trans[Bar[y2]], y1][gen[$i], heavy[$j]])/4",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.5374134879661614e-07
+                },
+                {
+                  "expression": "+ Matrix[ye, Trans[Bar[ye]], y1][gen[$i], heavy[$j]]/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.8668825180388977e-07
+                }
+              ]
+            },
+            "y2": {
+              "full_norm_16pi2_beta": 0.015208150666890711,
+              "sum_group_norms": 0.015210454148619035,
+              "cancellation_ratio": 0.9998485593062628,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.015209294589557363,
+                  "dominance": 0.9999237656515484
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.1595590616723137e-06,
+                  "dominance": 7.62343484515609e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.013487926281376109
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.001721368308181255
+                },
+                {
+                  "expression": "+ Tr[y2 . Trans[Bar[y2]]]*Matrix[y2][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.905312305120959e-07
+                },
+                {
+                  "expression": "+ (Matrix[y1, Trans[Bar[y1]], y2][gen[$i], heavy[$j]] + 3*Matrix[y2, Trans[Bar[y2]], y2][gen[$i], heavy[$j]] + Matrix[ye, Trans[Bar[ye]], y2][gen[$i], heavy[$j]])/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.850289166719015e-07
+                }
+              ]
+            },
+            "lambdaT3": {
+              "full_norm_16pi2_beta": 0.06029334172105266,
+              "sum_group_norms": 0.8337471222718844,
+              "cancellation_ratio": 0.07231610174168739,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.4470202319964685,
+                  "dominance": 0.5361580508708437
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.06755898131366245,
+                  "dominance": 0.0810305421259751
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.3191679089617534,
+                  "dominance": 0.38281140700318117
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-21*g2^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.3840094336413116
+                },
+                {
+                  "expression": "- (9*gY^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0630107983551569
+                },
+                {
+                  "expression": "+ 2*lambda12*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.002029180205181217
+                },
+                {
+                  "expression": "+ 2*lambdaH*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.055834443268792625
+                },
+                {
+                  "expression": "+ 4*lambdaH1*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.005816424537282435
+                },
+                {
+                  "expression": "+ 4*lambdaH2*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.0038789333024061646
+                },
+                {
+                  "expression": "+ lambdaT3*(4*lambdaH2Adj + 2*Tr[y1 . Trans[Bar[y1]]] + Tr[y2 . Trans[Bar[y2]]] + 6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]])",
+                  "category": "mixed",
+                  "norm_16pi2_beta": 0.3191679089617534
+                }
+              ]
+            }
+          }
+        },
+        {
+          "mu_gev": 125892.54117941663,
+          "betas": {
+            "y1": {
+              "full_norm_16pi2_beta": 0.014390680452006758,
+              "sum_group_norms": 0.0143936215732069,
+              "cancellation_ratio": 0.9997956649627626,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.014392146527283302,
+                  "dominance": 0.9998975208625505
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.475045923597891e-06,
+                  "dominance": 0.0001024791374495787
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.012769277335113375
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0016228691921699263
+                },
+                {
+                  "expression": "+ 2*Tr[y1 . Trans[Bar[y1]]]*Matrix[y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.0005928222253699e-06
+                },
+                {
+                  "expression": "+ Matrix[y1, Trans[Bar[y1]], y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 2.4586944822473947e-07
+                },
+                {
+                  "expression": "+ (3*Matrix[y2, Trans[Bar[y2]], y1][gen[$i], heavy[$j]])/4",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.5496530321747428e-07
+                },
+                {
+                  "expression": "+ Matrix[ye, Trans[Bar[ye]], y1][gen[$i], heavy[$j]]/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.870431786906573e-07
+                }
+              ]
+            },
+            "y2": {
+              "full_norm_16pi2_beta": 0.015249157828783493,
+              "sum_group_norms": 0.015251477955828341,
+              "cancellation_ratio": 0.9998478752648388,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.015250310082654789,
+                  "dominance": 0.9999234255737749
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.1678731735525906e-06,
+                  "dominance": 7.657442622511799e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.013530673727003357
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0017196363556514313
+                },
+                {
+                  "expression": "+ Tr[y2 . Trans[Bar[y2]]]*Matrix[y2][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.952325801221951e-07
+                },
+                {
+                  "expression": "+ (Matrix[y1, Trans[Bar[y1]], y2][gen[$i], heavy[$j]] + 3*Matrix[y2, Trans[Bar[y2]], y2][gen[$i], heavy[$j]] + Matrix[ye, Trans[Bar[ye]], y2][gen[$i], heavy[$j]])/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.886510596076153e-07
+                }
+              ]
+            },
+            "lambdaT3": {
+              "full_norm_16pi2_beta": 0.056204746925705484,
+              "sum_group_norms": 0.8385187602164959,
+              "cancellation_ratio": 0.06702860996359111,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.4473617535711007,
+                  "dominance": 0.5335143049817956
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.06737697141627434,
+                  "dominance": 0.080352372079163
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.32378003522912085,
+                  "dominance": 0.38613332293904146
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-21*g2^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.3845284190271013
+                },
+                {
+                  "expression": "- (9*gY^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.06283333454399942
+                },
+                {
+                  "expression": "+ 2*lambda12*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.002030483198884768
+                },
+                {
+                  "expression": "+ 2*lambdaH*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.05625286397648401
+                },
+                {
+                  "expression": "+ 4*lambdaH1*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.005690577740856568
+                },
+                {
+                  "expression": "+ 4*lambdaH2*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.0034030465000490008
+                },
+                {
+                  "expression": "+ lambdaT3*(4*lambdaH2Adj + 2*Tr[y1 . Trans[Bar[y1]]] + Tr[y2 . Trans[Bar[y2]]] + 6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]])",
+                  "category": "mixed",
+                  "norm_16pi2_beta": 0.32378003522912085
+                }
+              ]
+            }
+          }
+        },
+        {
+          "mu_gev": 100000.0,
+          "betas": {
+            "y1": {
+              "full_norm_16pi2_beta": 0.014429532221037399,
+              "sum_group_norms": 0.014432495629568193,
+              "cancellation_ratio": 0.9997946710945318,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.01443100945060364,
+                  "dominance": 0.9998970255039255
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.4861789645533696e-06,
+                  "dominance": 0.00010297449607458047
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.01280975148035743
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y1][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.001621257970246209
+                },
+                {
+                  "expression": "+ 2*Tr[y1 . Trans[Bar[y1]]]*Matrix[y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.0085589617703276e-06
+                },
+                {
+                  "expression": "+ Matrix[y1, Trans[Bar[y1]], y1][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 2.478269187140253e-07
+                },
+                {
+                  "expression": "+ (3*Matrix[y2, Trans[Bar[y2]], y1][gen[$i], heavy[$j]])/4",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.5619906510429247e-07
+                },
+                {
+                  "expression": "+ Matrix[ye, Trans[Bar[ye]], y1][gen[$i], heavy[$j]]/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 1.873862200625096e-07
+                }
+              ]
+            },
+            "y2": {
+              "full_norm_16pi2_beta": 0.01529033071863194,
+              "sum_group_norms": 0.015292667603388503,
+              "cancellation_ratio": 0.9998471892009184,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.015291491360365844,
+                  "dominance": 0.9999230845099648
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 1.1762430226593606e-06,
+                  "dominance": 7.691549003515463e-05
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-9*g2^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.013573562179472184
+                },
+                {
+                  "expression": "- (3*gY^2*Matrix[y2][gen[$i], heavy[$j]])/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.0017179291808936594
+                },
+                {
+                  "expression": "+ Tr[y2 . Trans[Bar[y2]]]*Matrix[y2][gen[$i], heavy[$j]]",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.999716021482507e-07
+                },
+                {
+                  "expression": "+ (Matrix[y1, Trans[Bar[y1]], y2][gen[$i], heavy[$j]] + 3*Matrix[y2, Trans[Bar[y2]], y2][gen[$i], heavy[$j]] + Matrix[ye, Trans[Bar[ye]], y2][gen[$i], heavy[$j]])/2",
+                  "category": "yukawa",
+                  "norm_16pi2_beta": 5.922904524376087e-07
+                }
+              ]
+            },
+            "lambdaT3": {
+              "full_norm_16pi2_beta": 0.05197596596687104,
+              "sum_group_norms": 0.8433812970372083,
+              "cancellation_ratio": 0.06162807516536374,
+              "categories": {
+                "gauge": {
+                  "norm_16pi2_beta": 0.4476786315020397,
+                  "dominance": 0.5308140375826819
+                },
+                "yukawa": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "scalar": {
+                  "norm_16pi2_beta": 0.06720475663349286,
+                  "dominance": 0.07968490274752668
+                },
+                "mixed": {
+                  "norm_16pi2_beta": 0.3284979089016758,
+                  "dominance": 0.3895010596697915
+                },
+                "mass": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                },
+                "other": {
+                  "norm_16pi2_beta": 0.0,
+                  "dominance": 0.0
+                }
+              },
+              "terms": [
+                {
+                  "expression": "(-21*g2^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.38502517736724395
+                },
+                {
+                  "expression": "- (9*gY^2*lambdaT3)/2",
+                  "category": "gauge",
+                  "norm_16pi2_beta": 0.06265345413479573
+                },
+                {
+                  "expression": "+ 2*lambda12*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.002031742632111855
+                },
+                {
+                  "expression": "+ 2*lambdaH*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.05668357018495473
+                },
+                {
+                  "expression": "+ 4*lambdaH1*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.0055643913326664535
+                },
+                {
+                  "expression": "+ 4*lambdaH2*lambdaT3",
+                  "category": "scalar",
+                  "norm_16pi2_beta": 0.002925052483759818
+                },
+                {
+                  "expression": "+ lambdaT3*(4*lambdaH2Adj + 2*Tr[y1 . Trans[Bar[y1]]] + Tr[y2 . Trans[Bar[y2]]] + 6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]])",
+                  "category": "mixed",
+                  "norm_16pi2_beta": 0.3284979089016758
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

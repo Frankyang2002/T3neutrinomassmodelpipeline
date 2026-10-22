@@ -26,7 +26,7 @@ import math
 import shutil
 from pathlib import Path
 from typing import Any
-
+from Numerical.orchestration.ModelNames import shorten
 import numpy as np
 
 from Numerical.plotting.WeinbergMatchedContinuation import (
@@ -104,12 +104,20 @@ def _extract(payload: dict[str, Any], spec: tuple[Any, ...]) -> tuple[list[float
 
 
 def _model_name(path: Path, payload: dict[str, Any]) -> str:
-    model_dir = path.parent.parent
     search = payload.get("benchmark_search")
     rep = search.get("model") if isinstance(search, dict) else None
+
     if isinstance(rep, dict) and rep.get("model_key"):
-        return str(rep["model_key"])
-    return model_dir.name
+        name = str(rep["model_key"])
+    else:
+        name = path.parent.name
+        if name == "data":
+            name = path.parent.parent.name
+
+    try:
+        return shorten(name)
+    except ValueError:
+        return name
 
 
 def _is_canonical_optimal_diagnostic(study_dir: Path, path: Path) -> bool:

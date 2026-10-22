@@ -1,0 +1,22 @@
+{
+  "status": "Success",
+  "source_file": "input_cg_registry.wxf",
+  "purpose": "Exact CG tensors needed by the scalar-first T3-B psi2phi3 boundary",
+  "CGRegistry": [
+    {
+      "Name": "T3Y1CG",
+      "RepsInputForm": "{SU2L[fund], Bar[T3BSMd2]}",
+      "TensorInputForm": "SparseArray[Automatic, {2, 2}, 0, {1, {{0, 1, 2}, {{1}, {2}}}, {1, 1}}]"
+    },
+    {
+      "Name": "T3Y2CG",
+      "RepsInputForm": "{SU2L[fund], T3BSMd2}",
+      "TensorInputForm": "SparseArray[Automatic, {2, 2}, 0, {1, {{0, 1, 2}, {{2}, {1}}}, {1, -1}}]"
+    },
+    {
+      "Name": "eps[SU2L]",
+      "RepsInputForm": "{SU2L[fund], SU2L[fund]}",
+      "TensorInputForm": "SparseArray[Automatic, {2, 2}, 0, {1, {{0, 1, 2}, {{2}, {1}}}, {1, -1}}]"
+    }
+  ]
+}

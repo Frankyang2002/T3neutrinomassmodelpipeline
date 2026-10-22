@@ -1,0 +1,77 @@
+{
+  "status": "ResidualFailure",
+  "seed": "output\\full\\dimensions\\T3_E_alpha_p0\\data\\eft1_after_F_scalar_quartic_seed.json",
+  "rgbeta": "output\\full\\dimensions\\T3_E_alpha_p0\\data\\eft1_rgbeta_rge.json",
+  "dimensions": {
+    "dS1": 3,
+    "dS2": 3
+  },
+  "definition": "PhysicalTensor[alpha]=sum_i A[i,alpha] MatcheteTensor[i]; lambda_M=A lambda_P; R_P=R_M A.",
+  "sectors": {
+    "H1": {
+      "matchete_basis": [
+        "lambdaH1Inv2"
+      ],
+      "physical_basis": [
+        "Singlet",
+        "Adj"
+      ],
+      "matchete_rank": 1,
+      "physical_rank": 2,
+      "error": "Basis dimensions differ: 1 Matchete vs 2 physical.",
+      "note": null
+    },
+    "H2": {
+      "matchete_basis": [
+        "lambdaH2Inv2"
+      ],
+      "physical_basis": [
+        "Singlet",
+        "Adj"
+      ],
+      "matchete_rank": 1,
+      "physical_rank": 2,
+      "error": "Basis dimensions differ: 1 Matchete vs 2 physical.",
+      "note": null
+    },
+    "12": {
+      "status": "ResidualFailure",
+      "matchete_basis": [
+        "lambda12Inv1",
+        "lambda12Inv2",
+        "lambda12Inv3"
+      ],
+      "physical_basis": [
+        "Singlet",
+        "Adj",
+        "CrossExchangeCandidate"
+      ],
+      "matchete_rank": 3,
+      "physical_rank": 3,
+      "A_rows_matchete_cols_physical": [
+        [
+          "-1/2",
+          "-3/10",
+          "-1/2"
+        ],
+        [
+          "-sqrt(33)/6",
+          "sqrt(33)/270",
+          "-sqrt(33)/18"
+        ],
+        [
+          "0",
+          "-11*sqrt(69)/135",
+          "-sqrt(69)/9"
+        ]
+      ],
+      "det_A": "sqrt(253)/270",
+      "coordinate_residual_nonzero_components": {
+        "Singlet": 0,
+        "Adj": 76,
+        "CrossExchangeCandidate": 0
+      },
+      "note": "CrossExchangeCandidate=(S1^dagger S2)(S2^dagger S1); identify with RGBeta Cross only after convention check."
+    }
+  }
+}

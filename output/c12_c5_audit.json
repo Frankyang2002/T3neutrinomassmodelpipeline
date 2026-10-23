@@ -1,0 +1,123 @@
+{
+  "status": "AuditComplete",
+  "scope": "one-generation component-level audit, not a full-flavor RGE",
+  "c12_seed_components": 48,
+  "c5_seed_components": 24,
+  "mixing": {
+    "C12_only": {
+      "C5_HH": {
+        "source": "C12_only",
+        "nonzero_target_components": 10,
+        "generated_components": {
+          "1,1,3,3": "2*sqrt(3)*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "1,1,3,4": "2*sqrt(3)*I*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "1,1,4,4": "-2*sqrt(3)*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "1,2,1,3": "-sqrt(3)*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "1,2,1,4": "-sqrt(3)*I*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "1,2,2,3": "-sqrt(3)*I*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "1,2,2,4": "sqrt(3)*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "2,2,1,1": "2*sqrt(3)*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "2,2,1,2": "2*sqrt(3)*I*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "2,2,2,2": "-2*sqrt(3)*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)"
+        },
+        "reference_tensor_component_count": 10,
+        "proportionality_factor": "4*sqrt(3)*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF*kappa)",
+        "proportionality_residual_count": 0,
+        "proportionality_residuals": {}
+      },
+      "LLSS": {
+        "source": "C12_only",
+        "nonzero_target_components": 16,
+        "generated_components": {
+          "1,1,5,11": "-(9*g2**2 + 4*sqrt(3)*lambda12Inv2 - 3*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(12*MF)",
+          "1,1,5,12": "-I*(9*g2**2 + 4*sqrt(3)*lambda12Inv2 - 3*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(12*MF)",
+          "1,1,6,11": "I*(9*g2**2 + 4*sqrt(3)*lambda12Inv2 - 3*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(12*MF)",
+          "1,1,6,12": "-(9*g2**2 + 4*sqrt(3)*lambda12Inv2 - 3*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(12*MF)",
+          "1,2,5,9": "(9*g2**2 + 4*sqrt(3)*lambda12Inv2 - 3*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)",
+          "1,2,5,10": "I*(9*g2**2 + 4*sqrt(3)*lambda12Inv2 - 3*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)",
+          "1,2,6,9": "-I*(9*g2**2 + 4*sqrt(3)*lambda12Inv2 - 3*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)",
+          "1,2,6,10": "(9*g2**2 + 4*sqrt(3)*lambda12Inv2 - 3*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)",
+          "1,2,7,11": "-(9*g2**2 + 4*sqrt(3)*lambda12Inv2 - 3*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)",
+          "1,2,7,12": "-I*(9*g2**2 + 4*sqrt(3)*lambda12Inv2 - 3*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)",
+          "1,2,8,11": "I*(9*g2**2 + 4*sqrt(3)*lambda12Inv2 - 3*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)",
+          "1,2,8,12": "-(9*g2**2 + 4*sqrt(3)*lambda12Inv2 - 3*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)",
+          "2,2,7,9": "(9*g2**2 + 4*sqrt(3)*lambda12Inv2 - 3*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(12*MF)",
+          "2,2,7,10": "I*(9*g2**2 + 4*sqrt(3)*lambda12Inv2 - 3*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(12*MF)",
+          "2,2,8,9": "-I*(9*g2**2 + 4*sqrt(3)*lambda12Inv2 - 3*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(12*MF)",
+          "2,2,8,10": "(9*g2**2 + 4*sqrt(3)*lambda12Inv2 - 3*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(12*MF)"
+        },
+        "reference_tensor_component_count": 16,
+        "proportionality_factor": "-3*g2**2 - 4*sqrt(3)*lambda12Inv2/3 + ye*conjugate(ye)",
+        "proportionality_residual_count": 0,
+        "proportionality_residuals": {}
+      },
+      "mixed_HS": {
+        "source": "C12_only",
+        "nonzero_target_components": 0,
+        "generated_components": {},
+        "reference_tensor_component_count": 0,
+        "proportionality_factor": null,
+        "proportionality_residual_count": 0,
+        "proportionality_residuals": {}
+      }
+    },
+    "C5_only": {
+      "C5_HH": {
+        "source": "C5_only",
+        "nonzero_target_components": 10,
+        "generated_components": {
+          "1,1,3,3": "-kappa*(3*g2**2 - 6*yd*conjugate(yd) + ye*conjugate(ye) - 6*yu*conjugate(yu) - 2*\u03bb)/2",
+          "1,1,3,4": "-I*kappa*(3*g2**2 - 6*yd*conjugate(yd) + ye*conjugate(ye) - 6*yu*conjugate(yu) - 2*\u03bb)/2",
+          "1,1,4,4": "kappa*(3*g2**2 - 6*yd*conjugate(yd) + ye*conjugate(ye) - 6*yu*conjugate(yu) - 2*\u03bb)/2",
+          "1,2,1,3": "kappa*(3*g2**2 - 6*yd*conjugate(yd) + ye*conjugate(ye) - 6*yu*conjugate(yu) - 2*\u03bb)/4",
+          "1,2,1,4": "I*kappa*(3*g2**2 - 6*yd*conjugate(yd) + ye*conjugate(ye) - 6*yu*conjugate(yu) - 2*\u03bb)/4",
+          "1,2,2,3": "I*kappa*(3*g2**2 - 6*yd*conjugate(yd) + ye*conjugate(ye) - 6*yu*conjugate(yu) - 2*\u03bb)/4",
+          "1,2,2,4": "-kappa*(3*g2**2 - 6*yd*conjugate(yd) + ye*conjugate(ye) - 6*yu*conjugate(yu) - 2*\u03bb)/4",
+          "2,2,1,1": "-kappa*(3*g2**2 - 6*yd*conjugate(yd) + ye*conjugate(ye) - 6*yu*conjugate(yu) - 2*\u03bb)/2",
+          "2,2,1,2": "-I*kappa*(3*g2**2 - 6*yd*conjugate(yd) + ye*conjugate(ye) - 6*yu*conjugate(yu) - 2*\u03bb)/2",
+          "2,2,2,2": "kappa*(3*g2**2 - 6*yd*conjugate(yd) + ye*conjugate(ye) - 6*yu*conjugate(yu) - 2*\u03bb)/2"
+        },
+        "reference_tensor_component_count": 10,
+        "proportionality_factor": "-3*g2**2 + 6*yd*conjugate(yd) - ye*conjugate(ye) + 6*yu*conjugate(yu) + 2*\u03bb",
+        "proportionality_residual_count": 0,
+        "proportionality_residuals": {}
+      },
+      "LLSS": {
+        "source": "C5_only",
+        "nonzero_target_components": 16,
+        "generated_components": {
+          "1,1,5,11": "2*sqrt(3)*kappa*conjugate(lambdaT3)/3",
+          "1,1,5,12": "2*sqrt(3)*I*kappa*conjugate(lambdaT3)/3",
+          "1,1,6,11": "-2*sqrt(3)*I*kappa*conjugate(lambdaT3)/3",
+          "1,1,6,12": "2*sqrt(3)*kappa*conjugate(lambdaT3)/3",
+          "1,2,5,9": "-sqrt(3)*kappa*conjugate(lambdaT3)/3",
+          "1,2,5,10": "-sqrt(3)*I*kappa*conjugate(lambdaT3)/3",
+          "1,2,6,9": "sqrt(3)*I*kappa*conjugate(lambdaT3)/3",
+          "1,2,6,10": "-sqrt(3)*kappa*conjugate(lambdaT3)/3",
+          "1,2,7,11": "sqrt(3)*kappa*conjugate(lambdaT3)/3",
+          "1,2,7,12": "sqrt(3)*I*kappa*conjugate(lambdaT3)/3",
+          "1,2,8,11": "-sqrt(3)*I*kappa*conjugate(lambdaT3)/3",
+          "1,2,8,12": "sqrt(3)*kappa*conjugate(lambdaT3)/3",
+          "2,2,7,9": "-2*sqrt(3)*kappa*conjugate(lambdaT3)/3",
+          "2,2,7,10": "-2*sqrt(3)*I*kappa*conjugate(lambdaT3)/3",
+          "2,2,8,9": "2*sqrt(3)*I*kappa*conjugate(lambdaT3)/3",
+          "2,2,8,10": "-2*sqrt(3)*kappa*conjugate(lambdaT3)/3"
+        },
+        "reference_tensor_component_count": 16,
+        "proportionality_factor": "8*sqrt(3)*MF*kappa*conjugate(lambdaT3)/(3*conjugate(y1)*conjugate(y2))",
+        "proportionality_residual_count": 0,
+        "proportionality_residuals": {}
+      },
+      "mixed_HS": {
+        "source": "C5_only",
+        "nonzero_target_components": 0,
+        "generated_components": {},
+        "reference_tensor_component_count": 0,
+        "proportionality_factor": null,
+        "proportionality_residual_count": 0,
+        "proportionality_residuals": {}
+      }
+    }
+  },
+  "warning": "An LLSS component need not lie in the one-dimensional C12 subspace. Check proportionality residuals before interpreting the entries as a closed 2x2 anomalous-dimension matrix."
+}

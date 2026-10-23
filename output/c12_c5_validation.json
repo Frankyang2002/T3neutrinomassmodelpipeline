@@ -1,0 +1,39 @@
+{
+  "status": "ChecksPassed",
+  "scope": "one-generation algebraic/source consistency only",
+  "anomalous_dimension_matrix": {
+    "gamma_12_12": "-3*g2**2 - 4*sqrt(3)*lambda12Inv2/3 + ye*conjugate(ye)",
+    "gamma_12_5": "8*sqrt(3)*conjugate(lambdaT3)/3",
+    "gamma_5_12": "4*sqrt(3)*lambdaT3/3",
+    "gamma_5_5": "-3*g2**2 + 6*yd*conjugate(yd) - ye*conjugate(ye) + 6*yu*conjugate(yu) + 2*\u03bb"
+  },
+  "checks": {
+    "forward_lambdaT3": true,
+    "reverse_conjugate_lambdaT3": true,
+    "offdiagonal_factor_two": true,
+    "both_offdiagonal_nonzero": true,
+    "all_audit_proportionality_residuals_zero": true,
+    "no_mixed_HS_outputs": true,
+    "production_forward_matches_audit": true
+  },
+  "production_comparison": {
+    "status": "checked",
+    "production_beta_kappa": "4*sqrt(3)*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)",
+    "audit_beta_kappa": "4*sqrt(3)*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)"
+  },
+  "scalar_symbols": [
+    "g2",
+    "lambda12Inv2",
+    "lambdaT3",
+    "yd",
+    "ye",
+    "yu",
+    "\u03bb"
+  ],
+  "higgs_quartic_mapping": {
+    "status": "requires_explicit_mapping",
+    "note": "The quartic tensor adapter uses original Matchete coupling names. Do not identify \u03bb with lambdaH without checking the model/exported seed and numerical RGBeta dictionary."
+  },
+  "independent_physics_normalization_verified": false,
+  "full_flavor_closure_verified": false
+}

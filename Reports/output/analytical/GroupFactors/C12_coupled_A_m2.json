@@ -1,0 +1,486 @@
+{
+  "status": "Success",
+  "kind": "symbolic_operator_mixing_blocks",
+  "convention": "16*pi^2 dC/dln(mu) = beta[C]",
+  "normalisation": "C5 template kappa=1; C12 template is the Matchete PL seed including its symbolic Yukawa/MF prefactor",
+  "limitations": "The C12 input is a one-generation matched direction, not an independently normalised complete LLSS operator basis. Residuals identify non-closure.",
+  "metadata": {
+    "SharedScalar": false,
+    "dS": null,
+    "dS1": 1,
+    "dS2": 3,
+    "dF": 2,
+    "alpha": -2,
+    "YS1": "-1",
+    "YS2": "0",
+    "YS": "Null",
+    "IntegratedField": "F",
+    "ActiveBSMFields": [
+      "S1",
+      "S2"
+    ],
+    "ReportBetaConvention": "16*pi^2*dX/dln(mu); gauge BetaTerm divided by 2*g"
+  },
+  "input_templates": {
+    "C5": {
+      "1,1,3,3": "1/2",
+      "1,1,3,4": "I/2",
+      "1,1,4,4": "-1/2",
+      "1,2,1,3": "-1/4",
+      "1,2,1,4": "-I/4",
+      "1,2,2,3": "-I/4",
+      "1,2,2,4": "1/4",
+      "2,2,1,1": "1/2",
+      "2,2,1,2": "I/2",
+      "2,2,2,2": "-1/2"
+    },
+    "C12": {
+      "1,1,5,7": "3**(3/4)*conjugate(y1)*conjugate(y2)/(12*MF)",
+      "1,1,5,8": "3**(3/4)*I*conjugate(y1)*conjugate(y2)/(12*MF)",
+      "1,1,5,11": "3**(3/4)*I*conjugate(y1)*conjugate(y2)/(12*MF)",
+      "1,1,5,12": "-3**(3/4)*conjugate(y1)*conjugate(y2)/(12*MF)",
+      "1,1,6,7": "-3**(3/4)*I*conjugate(y1)*conjugate(y2)/(12*MF)",
+      "1,1,6,8": "3**(3/4)*conjugate(y1)*conjugate(y2)/(12*MF)",
+      "1,1,6,11": "3**(3/4)*conjugate(y1)*conjugate(y2)/(12*MF)",
+      "1,1,6,12": "3**(3/4)*I*conjugate(y1)*conjugate(y2)/(12*MF)",
+      "1,2,5,9": "-3**(3/4)*conjugate(y1)*conjugate(y2)/(12*MF)",
+      "1,2,5,10": "-3**(3/4)*I*conjugate(y1)*conjugate(y2)/(12*MF)",
+      "1,2,6,9": "3**(3/4)*I*conjugate(y1)*conjugate(y2)/(12*MF)",
+      "1,2,6,10": "-3**(3/4)*conjugate(y1)*conjugate(y2)/(12*MF)",
+      "2,2,5,7": "-3**(3/4)*conjugate(y1)*conjugate(y2)/(12*MF)",
+      "2,2,5,8": "-3**(3/4)*I*conjugate(y1)*conjugate(y2)/(12*MF)",
+      "2,2,5,11": "3**(3/4)*I*conjugate(y1)*conjugate(y2)/(12*MF)",
+      "2,2,5,12": "-3**(3/4)*conjugate(y1)*conjugate(y2)/(12*MF)",
+      "2,2,6,7": "3**(3/4)*I*conjugate(y1)*conjugate(y2)/(12*MF)",
+      "2,2,6,8": "-3**(3/4)*conjugate(y1)*conjugate(y2)/(12*MF)",
+      "2,2,6,11": "3**(3/4)*conjugate(y1)*conjugate(y2)/(12*MF)",
+      "2,2,6,12": "3**(3/4)*I*conjugate(y1)*conjugate(y2)/(12*MF)"
+    }
+  },
+  "blocks": {
+    "C5": {
+      "beta_components": {
+        "1,1,3,3": {
+          "scalar_pair": "-(g1**2 + g2**2 - 4*\u03bb)/4",
+          "mixed_yukawa_gauge": "2*(g1**2 + 2*g2**2 - ye*conjugate(ye))",
+          "scalar_anomalous_dimension": "-g1**2 - 3*g2**2 + 3*yd*conjugate(yd) + ye*conjugate(ye) + 3*yu*conjugate(yu)",
+          "fermion_anomalous_dimension": "-(3*g1**2 + 9*g2**2 - 2*ye*conjugate(ye))/4",
+          "total": "-(3*g2**2 - 6*yd*conjugate(yd) + ye*conjugate(ye) - 6*yu*conjugate(yu) - 2*\u03bb)/2"
+        },
+        "1,1,3,4": {
+          "scalar_pair": "-I*(g1**2 + g2**2 - 4*\u03bb)/4",
+          "mixed_yukawa_gauge": "2*I*(g1**2 + 2*g2**2 - ye*conjugate(ye))",
+          "scalar_anomalous_dimension": "-I*(g1**2 + 3*g2**2 - 3*yd*conjugate(yd) - ye*conjugate(ye) - 3*yu*conjugate(yu))",
+          "fermion_anomalous_dimension": "-I*(3*g1**2 + 9*g2**2 - 2*ye*conjugate(ye))/4",
+          "total": "-I*(3*g2**2 - 6*yd*conjugate(yd) + ye*conjugate(ye) - 6*yu*conjugate(yu) - 2*\u03bb)/2"
+        },
+        "1,1,4,4": {
+          "scalar_pair": "(g1**2 + g2**2 - 4*\u03bb)/4",
+          "mixed_yukawa_gauge": "-2*(g1**2 + 2*g2**2 - ye*conjugate(ye))",
+          "scalar_anomalous_dimension": "g1**2 + 3*g2**2 - 3*yd*conjugate(yd) - ye*conjugate(ye) - 3*yu*conjugate(yu)",
+          "fermion_anomalous_dimension": "(3*g1**2 + 9*g2**2 - 2*ye*conjugate(ye))/4",
+          "total": "(3*g2**2 - 6*yd*conjugate(yd) + ye*conjugate(ye) - 6*yu*conjugate(yu) - 2*\u03bb)/2"
+        },
+        "1,1,5,7": {
+          "scalar_pair": "3**(3/4)*conjugate(lambdaT3)/3",
+          "total": "3**(3/4)*conjugate(lambdaT3)/3"
+        },
+        "1,1,5,8": {
+          "scalar_pair": "3**(3/4)*I*conjugate(lambdaT3)/3",
+          "total": "3**(3/4)*I*conjugate(lambdaT3)/3"
+        },
+        "1,1,5,11": {
+          "scalar_pair": "3**(3/4)*I*conjugate(lambdaT3)/3",
+          "total": "3**(3/4)*I*conjugate(lambdaT3)/3"
+        },
+        "1,1,5,12": {
+          "scalar_pair": "-3**(3/4)*conjugate(lambdaT3)/3",
+          "total": "-3**(3/4)*conjugate(lambdaT3)/3"
+        },
+        "1,1,6,7": {
+          "scalar_pair": "-3**(3/4)*I*conjugate(lambdaT3)/3",
+          "total": "-3**(3/4)*I*conjugate(lambdaT3)/3"
+        },
+        "1,1,6,8": {
+          "scalar_pair": "3**(3/4)*conjugate(lambdaT3)/3",
+          "total": "3**(3/4)*conjugate(lambdaT3)/3"
+        },
+        "1,1,6,11": {
+          "scalar_pair": "3**(3/4)*conjugate(lambdaT3)/3",
+          "total": "3**(3/4)*conjugate(lambdaT3)/3"
+        },
+        "1,1,6,12": {
+          "scalar_pair": "3**(3/4)*I*conjugate(lambdaT3)/3",
+          "total": "3**(3/4)*I*conjugate(lambdaT3)/3"
+        },
+        "1,2,1,3": {
+          "scalar_pair": "(g1**2 + g2**2 - 4*\u03bb)/8",
+          "mixed_yukawa_gauge": "-g1**2 - 2*g2**2 + ye*conjugate(ye)",
+          "scalar_anomalous_dimension": "(g1**2 + 3*g2**2 - 3*yd*conjugate(yd) - ye*conjugate(ye) - 3*yu*conjugate(yu))/2",
+          "fermion_anomalous_dimension": "(3*g1**2 + 9*g2**2 - 2*ye*conjugate(ye))/8",
+          "total": "(3*g2**2 - 6*yd*conjugate(yd) + ye*conjugate(ye) - 6*yu*conjugate(yu) - 2*\u03bb)/4"
+        },
+        "1,2,1,4": {
+          "scalar_pair": "I*(g1**2 + g2**2 - 4*\u03bb)/8",
+          "mixed_yukawa_gauge": "-I*(g1**2 + 2*g2**2 - ye*conjugate(ye))",
+          "scalar_anomalous_dimension": "I*(g1**2 + 3*g2**2 - 3*yd*conjugate(yd) - ye*conjugate(ye) - 3*yu*conjugate(yu))/2",
+          "fermion_anomalous_dimension": "I*(3*g1**2 + 9*g2**2 - 2*ye*conjugate(ye))/8",
+          "total": "I*(3*g2**2 - 6*yd*conjugate(yd) + ye*conjugate(ye) - 6*yu*conjugate(yu) - 2*\u03bb)/4"
+        },
+        "1,2,2,3": {
+          "scalar_pair": "I*(g1**2 + g2**2 - 4*\u03bb)/8",
+          "mixed_yukawa_gauge": "-I*(g1**2 + 2*g2**2 - ye*conjugate(ye))",
+          "scalar_anomalous_dimension": "I*(g1**2 + 3*g2**2 - 3*yd*conjugate(yd) - ye*conjugate(ye) - 3*yu*conjugate(yu))/2",
+          "fermion_anomalous_dimension": "I*(3*g1**2 + 9*g2**2 - 2*ye*conjugate(ye))/8",
+          "total": "I*(3*g2**2 - 6*yd*conjugate(yd) + ye*conjugate(ye) - 6*yu*conjugate(yu) - 2*\u03bb)/4"
+        },
+        "1,2,2,4": {
+          "scalar_pair": "-(g1**2 + g2**2 - 4*\u03bb)/8",
+          "mixed_yukawa_gauge": "g1**2 + 2*g2**2 - ye*conjugate(ye)",
+          "scalar_anomalous_dimension": "-(g1**2 + 3*g2**2 - 3*yd*conjugate(yd) - ye*conjugate(ye) - 3*yu*conjugate(yu))/2",
+          "fermion_anomalous_dimension": "-(3*g1**2 + 9*g2**2 - 2*ye*conjugate(ye))/8",
+          "total": "-(3*g2**2 - 6*yd*conjugate(yd) + ye*conjugate(ye) - 6*yu*conjugate(yu) - 2*\u03bb)/4"
+        },
+        "1,2,5,9": {
+          "scalar_pair": "-3**(3/4)*conjugate(lambdaT3)/3",
+          "total": "-3**(3/4)*conjugate(lambdaT3)/3"
+        },
+        "1,2,5,10": {
+          "scalar_pair": "-3**(3/4)*I*conjugate(lambdaT3)/3",
+          "total": "-3**(3/4)*I*conjugate(lambdaT3)/3"
+        },
+        "1,2,6,9": {
+          "scalar_pair": "3**(3/4)*I*conjugate(lambdaT3)/3",
+          "total": "3**(3/4)*I*conjugate(lambdaT3)/3"
+        },
+        "1,2,6,10": {
+          "scalar_pair": "-3**(3/4)*conjugate(lambdaT3)/3",
+          "total": "-3**(3/4)*conjugate(lambdaT3)/3"
+        },
+        "2,2,1,1": {
+          "scalar_pair": "-(g1**2 + g2**2 - 4*\u03bb)/4",
+          "mixed_yukawa_gauge": "2*(g1**2 + 2*g2**2 - ye*conjugate(ye))",
+          "scalar_anomalous_dimension": "-g1**2 - 3*g2**2 + 3*yd*conjugate(yd) + ye*conjugate(ye) + 3*yu*conjugate(yu)",
+          "fermion_anomalous_dimension": "-(3*g1**2 + 9*g2**2 - 2*ye*conjugate(ye))/4",
+          "total": "-(3*g2**2 - 6*yd*conjugate(yd) + ye*conjugate(ye) - 6*yu*conjugate(yu) - 2*\u03bb)/2"
+        },
+        "2,2,1,2": {
+          "scalar_pair": "-I*(g1**2 + g2**2 - 4*\u03bb)/4",
+          "mixed_yukawa_gauge": "2*I*(g1**2 + 2*g2**2 - ye*conjugate(ye))",
+          "scalar_anomalous_dimension": "-I*(g1**2 + 3*g2**2 - 3*yd*conjugate(yd) - ye*conjugate(ye) - 3*yu*conjugate(yu))",
+          "fermion_anomalous_dimension": "-I*(3*g1**2 + 9*g2**2 - 2*ye*conjugate(ye))/4",
+          "total": "-I*(3*g2**2 - 6*yd*conjugate(yd) + ye*conjugate(ye) - 6*yu*conjugate(yu) - 2*\u03bb)/2"
+        },
+        "2,2,2,2": {
+          "scalar_pair": "(g1**2 + g2**2 - 4*\u03bb)/4",
+          "mixed_yukawa_gauge": "-2*(g1**2 + 2*g2**2 - ye*conjugate(ye))",
+          "scalar_anomalous_dimension": "g1**2 + 3*g2**2 - 3*yd*conjugate(yd) - ye*conjugate(ye) - 3*yu*conjugate(yu)",
+          "fermion_anomalous_dimension": "(3*g1**2 + 9*g2**2 - 2*ye*conjugate(ye))/4",
+          "total": "(3*g2**2 - 6*yd*conjugate(yd) + ye*conjugate(ye) - 6*yu*conjugate(yu) - 2*\u03bb)/2"
+        },
+        "2,2,5,7": {
+          "scalar_pair": "-3**(3/4)*conjugate(lambdaT3)/3",
+          "total": "-3**(3/4)*conjugate(lambdaT3)/3"
+        },
+        "2,2,5,8": {
+          "scalar_pair": "-3**(3/4)*I*conjugate(lambdaT3)/3",
+          "total": "-3**(3/4)*I*conjugate(lambdaT3)/3"
+        },
+        "2,2,5,11": {
+          "scalar_pair": "3**(3/4)*I*conjugate(lambdaT3)/3",
+          "total": "3**(3/4)*I*conjugate(lambdaT3)/3"
+        },
+        "2,2,5,12": {
+          "scalar_pair": "-3**(3/4)*conjugate(lambdaT3)/3",
+          "total": "-3**(3/4)*conjugate(lambdaT3)/3"
+        },
+        "2,2,6,7": {
+          "scalar_pair": "3**(3/4)*I*conjugate(lambdaT3)/3",
+          "total": "3**(3/4)*I*conjugate(lambdaT3)/3"
+        },
+        "2,2,6,8": {
+          "scalar_pair": "-3**(3/4)*conjugate(lambdaT3)/3",
+          "total": "-3**(3/4)*conjugate(lambdaT3)/3"
+        },
+        "2,2,6,11": {
+          "scalar_pair": "3**(3/4)*conjugate(lambdaT3)/3",
+          "total": "3**(3/4)*conjugate(lambdaT3)/3"
+        },
+        "2,2,6,12": {
+          "scalar_pair": "3**(3/4)*I*conjugate(lambdaT3)/3",
+          "total": "3**(3/4)*I*conjugate(lambdaT3)/3"
+        },
+        "3,3,1,1": {
+          "crossed_yukawa": "-ye**2/2",
+          "total": "-ye**2/2"
+        },
+        "3,3,2,2": {
+          "crossed_yukawa": "-ye**2/2",
+          "total": "-ye**2/2"
+        },
+        "3,3,3,3": {
+          "crossed_yukawa": "-ye**2/2",
+          "total": "-ye**2/2"
+        },
+        "3,3,4,4": {
+          "crossed_yukawa": "-ye**2/2",
+          "total": "-ye**2/2"
+        }
+      },
+      "projections": {
+        "C5": {
+          "reference_component": [
+            1,
+            1,
+            3,
+            3
+          ],
+          "coefficient": "-3*g2**2 + 6*yd*conjugate(yd) - ye*conjugate(ye) + 6*yu*conjugate(yu) + 2*\u03bb",
+          "closed": false,
+          "residual_component_count": 4,
+          "residuals": {
+            "3,3,1,1": "-ye**2/2",
+            "3,3,2,2": "-ye**2/2",
+            "3,3,3,3": "-ye**2/2",
+            "3,3,4,4": "-ye**2/2"
+          }
+        },
+        "C12": {
+          "reference_component": [
+            1,
+            1,
+            5,
+            7
+          ],
+          "coefficient": "4*MF*conjugate(lambdaT3)/(conjugate(y1)*conjugate(y2))",
+          "closed": true,
+          "residual_component_count": 0,
+          "residuals": {}
+        }
+      }
+    },
+    "C12": {
+      "beta_components": {
+        "1,1,3,3": {
+          "scalar_pair": "2*sqrt(3)*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "total": "2*sqrt(3)*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)"
+        },
+        "1,1,3,4": {
+          "scalar_pair": "2*sqrt(3)*I*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "total": "2*sqrt(3)*I*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)"
+        },
+        "1,1,4,4": {
+          "scalar_pair": "-2*sqrt(3)*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "total": "-2*sqrt(3)*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)"
+        },
+        "1,1,5,7": {
+          "scalar_pair": "-3**(3/4)*lambda12Inv1*conjugate(y1)*conjugate(y2)/(6*MF)",
+          "mixed_yukawa_gauge": "3**(3/4)*(g1 - g2)*(g1 + g2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "scalar_anomalous_dimension": "-3**(3/4)*(g1**2 + 2*g2**2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "fermion_anomalous_dimension": "-3**(3/4)*(3*g1**2 + 9*g2**2 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)",
+          "total": "-3**(3/4)*(3*g1**2 + 33*g2**2 + 4*lambda12Inv1 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)"
+        },
+        "1,1,5,8": {
+          "scalar_pair": "-3**(3/4)*I*lambda12Inv1*conjugate(y1)*conjugate(y2)/(6*MF)",
+          "mixed_yukawa_gauge": "3**(3/4)*I*(g1 - g2)*(g1 + g2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "scalar_anomalous_dimension": "-3**(3/4)*I*(g1**2 + 2*g2**2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "fermion_anomalous_dimension": "-3**(3/4)*I*(3*g1**2 + 9*g2**2 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)",
+          "total": "-3**(3/4)*I*(3*g1**2 + 33*g2**2 + 4*lambda12Inv1 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)"
+        },
+        "1,1,5,11": {
+          "scalar_pair": "-3**(3/4)*I*lambda12Inv1*conjugate(y1)*conjugate(y2)/(6*MF)",
+          "mixed_yukawa_gauge": "3**(3/4)*I*(g1**2 + g2**2 - sqrt(2)*I*g2**2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "scalar_anomalous_dimension": "-3**(3/4)*I*(g1**2 + 2*g2**2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "fermion_anomalous_dimension": "-3**(3/4)*I*(3*g1**2 + 9*g2**2 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)",
+          "total": "-3**(3/4)*I*(3*g1**2 + 17*g2**2 + 8*sqrt(2)*I*g2**2 + 4*lambda12Inv1 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)"
+        },
+        "1,1,5,12": {
+          "scalar_pair": "3**(3/4)*lambda12Inv1*conjugate(y1)*conjugate(y2)/(6*MF)",
+          "mixed_yukawa_gauge": "-3**(3/4)*(g1**2 + g2**2 - sqrt(2)*I*g2**2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "scalar_anomalous_dimension": "3**(3/4)*(g1**2 + 2*g2**2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "fermion_anomalous_dimension": "3**(3/4)*(3*g1**2 + 9*g2**2 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)",
+          "total": "3**(3/4)*(3*g1**2 + 17*g2**2 + 8*sqrt(2)*I*g2**2 + 4*lambda12Inv1 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)"
+        },
+        "1,1,6,7": {
+          "scalar_pair": "3**(3/4)*I*lambda12Inv1*conjugate(y1)*conjugate(y2)/(6*MF)",
+          "mixed_yukawa_gauge": "-3**(3/4)*I*(g1 - g2)*(g1 + g2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "scalar_anomalous_dimension": "3**(3/4)*I*(g1**2 + 2*g2**2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "fermion_anomalous_dimension": "3**(3/4)*I*(3*g1**2 + 9*g2**2 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)",
+          "total": "3**(3/4)*I*(3*g1**2 + 33*g2**2 + 4*lambda12Inv1 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)"
+        },
+        "1,1,6,8": {
+          "scalar_pair": "-3**(3/4)*lambda12Inv1*conjugate(y1)*conjugate(y2)/(6*MF)",
+          "mixed_yukawa_gauge": "3**(3/4)*(g1 - g2)*(g1 + g2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "scalar_anomalous_dimension": "-3**(3/4)*(g1**2 + 2*g2**2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "fermion_anomalous_dimension": "-3**(3/4)*(3*g1**2 + 9*g2**2 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)",
+          "total": "-3**(3/4)*(3*g1**2 + 33*g2**2 + 4*lambda12Inv1 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)"
+        },
+        "1,1,6,11": {
+          "scalar_pair": "-3**(3/4)*lambda12Inv1*conjugate(y1)*conjugate(y2)/(6*MF)",
+          "mixed_yukawa_gauge": "3**(3/4)*(g1**2 + g2**2 - sqrt(2)*I*g2**2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "scalar_anomalous_dimension": "-3**(3/4)*(g1**2 + 2*g2**2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "fermion_anomalous_dimension": "-3**(3/4)*(3*g1**2 + 9*g2**2 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)",
+          "total": "-3**(3/4)*(3*g1**2 + 17*g2**2 + 8*sqrt(2)*I*g2**2 + 4*lambda12Inv1 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)"
+        },
+        "1,1,6,12": {
+          "scalar_pair": "-3**(3/4)*I*lambda12Inv1*conjugate(y1)*conjugate(y2)/(6*MF)",
+          "mixed_yukawa_gauge": "3**(3/4)*I*(g1**2 + g2**2 - sqrt(2)*I*g2**2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "scalar_anomalous_dimension": "-3**(3/4)*I*(g1**2 + 2*g2**2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "fermion_anomalous_dimension": "-3**(3/4)*I*(3*g1**2 + 9*g2**2 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)",
+          "total": "-3**(3/4)*I*(3*g1**2 + 17*g2**2 + 8*sqrt(2)*I*g2**2 + 4*lambda12Inv1 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)"
+        },
+        "1,2,1,3": {
+          "scalar_pair": "-sqrt(3)*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "total": "-sqrt(3)*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)"
+        },
+        "1,2,1,4": {
+          "scalar_pair": "-sqrt(3)*I*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "total": "-sqrt(3)*I*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)"
+        },
+        "1,2,2,3": {
+          "scalar_pair": "-sqrt(3)*I*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "total": "-sqrt(3)*I*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)"
+        },
+        "1,2,2,4": {
+          "scalar_pair": "sqrt(3)*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "total": "sqrt(3)*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)"
+        },
+        "1,2,5,9": {
+          "scalar_pair": "3**(3/4)*lambda12Inv1*conjugate(y1)*conjugate(y2)/(6*MF)",
+          "mixed_yukawa_gauge": "-3**(3/4)*I*(1 - I)*(g1**2*(1 - I) + sqrt(2)*I*g2**2)*conjugate(y1)*conjugate(y2)/(6*MF)",
+          "scalar_anomalous_dimension": "3**(3/4)*(g1**2 + 2*g2**2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "fermion_anomalous_dimension": "3**(3/4)*(3*g1**2 + 9*g2**2 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)",
+          "total": "3**(3/4)*(3*g1**2 + 25*g2**2 + sqrt(2)*g2**2*(4 - 4*I) + 4*lambda12Inv1 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)"
+        },
+        "1,2,5,10": {
+          "scalar_pair": "3**(3/4)*I*lambda12Inv1*conjugate(y1)*conjugate(y2)/(6*MF)",
+          "mixed_yukawa_gauge": "3**(3/4)*(1 - I)*(g1**2*(1 - I) + sqrt(2)*I*g2**2)*conjugate(y1)*conjugate(y2)/(6*MF)",
+          "scalar_anomalous_dimension": "3**(3/4)*I*(g1**2 + 2*g2**2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "fermion_anomalous_dimension": "3**(3/4)*I*(3*g1**2 + 9*g2**2 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)",
+          "total": "3**(3/4)*I*(3*g1**2 + 25*g2**2 + sqrt(2)*g2**2*(4 - 4*I) + 4*lambda12Inv1 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)"
+        },
+        "1,2,6,9": {
+          "scalar_pair": "-3**(3/4)*I*lambda12Inv1*conjugate(y1)*conjugate(y2)/(6*MF)",
+          "mixed_yukawa_gauge": "-3**(3/4)*(1 - I)*(g1**2*(1 - I) + sqrt(2)*I*g2**2)*conjugate(y1)*conjugate(y2)/(6*MF)",
+          "scalar_anomalous_dimension": "-3**(3/4)*I*(g1**2 + 2*g2**2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "fermion_anomalous_dimension": "-3**(3/4)*I*(3*g1**2 + 9*g2**2 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)",
+          "total": "-3**(3/4)*I*(3*g1**2 + 25*g2**2 + sqrt(2)*g2**2*(4 - 4*I) + 4*lambda12Inv1 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)"
+        },
+        "1,2,6,10": {
+          "scalar_pair": "3**(3/4)*lambda12Inv1*conjugate(y1)*conjugate(y2)/(6*MF)",
+          "mixed_yukawa_gauge": "-3**(3/4)*I*(1 - I)*(g1**2*(1 - I) + sqrt(2)*I*g2**2)*conjugate(y1)*conjugate(y2)/(6*MF)",
+          "scalar_anomalous_dimension": "3**(3/4)*(g1**2 + 2*g2**2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "fermion_anomalous_dimension": "3**(3/4)*(3*g1**2 + 9*g2**2 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)",
+          "total": "3**(3/4)*(3*g1**2 + 25*g2**2 + sqrt(2)*g2**2*(4 - 4*I) + 4*lambda12Inv1 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)"
+        },
+        "2,2,1,1": {
+          "scalar_pair": "2*sqrt(3)*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "total": "2*sqrt(3)*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)"
+        },
+        "2,2,1,2": {
+          "scalar_pair": "2*sqrt(3)*I*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "total": "2*sqrt(3)*I*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)"
+        },
+        "2,2,2,2": {
+          "scalar_pair": "-2*sqrt(3)*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "total": "-2*sqrt(3)*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)"
+        },
+        "2,2,5,7": {
+          "scalar_pair": "3**(3/4)*lambda12Inv1*conjugate(y1)*conjugate(y2)/(6*MF)",
+          "mixed_yukawa_gauge": "-3**(3/4)*(g1**2 - sqrt(2)*g2**2 + g2**2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "scalar_anomalous_dimension": "3**(3/4)*(g1**2 + 2*g2**2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "fermion_anomalous_dimension": "3**(3/4)*(3*g1**2 + 9*g2**2 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)",
+          "total": "3**(3/4)*(3*g1**2 + 8*sqrt(2)*g2**2 + 17*g2**2 + 4*lambda12Inv1 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)"
+        },
+        "2,2,5,8": {
+          "scalar_pair": "3**(3/4)*I*lambda12Inv1*conjugate(y1)*conjugate(y2)/(6*MF)",
+          "mixed_yukawa_gauge": "-3**(3/4)*I*(g1**2 - sqrt(2)*g2**2 + g2**2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "scalar_anomalous_dimension": "3**(3/4)*I*(g1**2 + 2*g2**2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "fermion_anomalous_dimension": "3**(3/4)*I*(3*g1**2 + 9*g2**2 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)",
+          "total": "3**(3/4)*I*(3*g1**2 + 8*sqrt(2)*g2**2 + 17*g2**2 + 4*lambda12Inv1 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)"
+        },
+        "2,2,5,11": {
+          "scalar_pair": "-3**(3/4)*I*lambda12Inv1*conjugate(y1)*conjugate(y2)/(6*MF)",
+          "mixed_yukawa_gauge": "3**(3/4)*I*(g1 - g2)*(g1 + g2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "scalar_anomalous_dimension": "-3**(3/4)*I*(g1**2 + 2*g2**2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "fermion_anomalous_dimension": "-3**(3/4)*I*(3*g1**2 + 9*g2**2 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)",
+          "total": "-3**(3/4)*I*(3*g1**2 + 33*g2**2 + 4*lambda12Inv1 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)"
+        },
+        "2,2,5,12": {
+          "scalar_pair": "3**(3/4)*lambda12Inv1*conjugate(y1)*conjugate(y2)/(6*MF)",
+          "mixed_yukawa_gauge": "-3**(3/4)*(g1 - g2)*(g1 + g2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "scalar_anomalous_dimension": "3**(3/4)*(g1**2 + 2*g2**2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "fermion_anomalous_dimension": "3**(3/4)*(3*g1**2 + 9*g2**2 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)",
+          "total": "3**(3/4)*(3*g1**2 + 33*g2**2 + 4*lambda12Inv1 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)"
+        },
+        "2,2,6,7": {
+          "scalar_pair": "-3**(3/4)*I*lambda12Inv1*conjugate(y1)*conjugate(y2)/(6*MF)",
+          "mixed_yukawa_gauge": "3**(3/4)*I*(g1**2 - sqrt(2)*g2**2 + g2**2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "scalar_anomalous_dimension": "-3**(3/4)*I*(g1**2 + 2*g2**2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "fermion_anomalous_dimension": "-3**(3/4)*I*(3*g1**2 + 9*g2**2 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)",
+          "total": "-3**(3/4)*I*(3*g1**2 + 8*sqrt(2)*g2**2 + 17*g2**2 + 4*lambda12Inv1 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)"
+        },
+        "2,2,6,8": {
+          "scalar_pair": "3**(3/4)*lambda12Inv1*conjugate(y1)*conjugate(y2)/(6*MF)",
+          "mixed_yukawa_gauge": "-3**(3/4)*(g1**2 - sqrt(2)*g2**2 + g2**2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "scalar_anomalous_dimension": "3**(3/4)*(g1**2 + 2*g2**2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "fermion_anomalous_dimension": "3**(3/4)*(3*g1**2 + 9*g2**2 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)",
+          "total": "3**(3/4)*(3*g1**2 + 8*sqrt(2)*g2**2 + 17*g2**2 + 4*lambda12Inv1 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)"
+        },
+        "2,2,6,11": {
+          "scalar_pair": "-3**(3/4)*lambda12Inv1*conjugate(y1)*conjugate(y2)/(6*MF)",
+          "mixed_yukawa_gauge": "3**(3/4)*(g1 - g2)*(g1 + g2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "scalar_anomalous_dimension": "-3**(3/4)*(g1**2 + 2*g2**2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "fermion_anomalous_dimension": "-3**(3/4)*(3*g1**2 + 9*g2**2 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)",
+          "total": "-3**(3/4)*(3*g1**2 + 33*g2**2 + 4*lambda12Inv1 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)"
+        },
+        "2,2,6,12": {
+          "scalar_pair": "-3**(3/4)*I*lambda12Inv1*conjugate(y1)*conjugate(y2)/(6*MF)",
+          "mixed_yukawa_gauge": "3**(3/4)*I*(g1 - g2)*(g1 + g2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "scalar_anomalous_dimension": "-3**(3/4)*I*(g1**2 + 2*g2**2)*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "fermion_anomalous_dimension": "-3**(3/4)*I*(3*g1**2 + 9*g2**2 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)",
+          "total": "-3**(3/4)*I*(3*g1**2 + 33*g2**2 + 4*lambda12Inv1 - 2*ye*conjugate(ye))*conjugate(y1)*conjugate(y2)/(24*MF)"
+        }
+      },
+      "projections": {
+        "C5": {
+          "reference_component": [
+            1,
+            1,
+            3,
+            3
+          ],
+          "coefficient": "4*sqrt(3)*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)",
+          "closed": true,
+          "residual_component_count": 0,
+          "residuals": {}
+        },
+        "C12": {
+          "reference_component": [
+            1,
+            1,
+            5,
+            7
+          ],
+          "coefficient": "-(3*g1**2 + 33*g2**2 + 4*lambda12Inv1 - 2*ye*conjugate(ye))/2",
+          "closed": false,
+          "residual_component_count": 12,
+          "residuals": {
+            "1,1,5,11": "3**(3/4)*g2**2*(sqrt(2) + 2*I)*conjugate(y1)*conjugate(y2)/(3*MF)",
+            "1,1,5,12": "3**(3/4)*I*g2**2*(sqrt(2) + 2*I)*conjugate(y1)*conjugate(y2)/(3*MF)",
+            "1,1,6,11": "-3**(3/4)*I*g2**2*(sqrt(2) + 2*I)*conjugate(y1)*conjugate(y2)/(3*MF)",
+            "1,1,6,12": "3**(3/4)*g2**2*(sqrt(2) + 2*I)*conjugate(y1)*conjugate(y2)/(3*MF)",
+            "1,2,5,9": "3**(3/4)*g2**2*(1 - I)*(-1 + sqrt(2) - I)*conjugate(y1)*conjugate(y2)/(6*MF)",
+            "1,2,5,10": "3**(3/4)*I*g2**2*(1 - I)*(-1 + sqrt(2) - I)*conjugate(y1)*conjugate(y2)/(6*MF)",
+            "1,2,6,9": "-3**(3/4)*I*g2**2*(1 - I)*(-1 + sqrt(2) - I)*conjugate(y1)*conjugate(y2)/(6*MF)",
+            "1,2,6,10": "3**(3/4)*g2**2*(1 - I)*(-1 + sqrt(2) - I)*conjugate(y1)*conjugate(y2)/(6*MF)",
+            "2,2,5,7": "3**(3/4)*g2**2*(-2 + sqrt(2))*conjugate(y1)*conjugate(y2)/(3*MF)",
+            "2,2,5,8": "3**(3/4)*I*g2**2*(-2 + sqrt(2))*conjugate(y1)*conjugate(y2)/(3*MF)",
+            "2,2,6,7": "-3**(3/4)*I*g2**2*(-2 + sqrt(2))*conjugate(y1)*conjugate(y2)/(3*MF)",
+            "2,2,6,8": "3**(3/4)*g2**2*(-2 + sqrt(2))*conjugate(y1)*conjugate(y2)/(3*MF)"
+          }
+        }
+      }
+    }
+  }
+}\n

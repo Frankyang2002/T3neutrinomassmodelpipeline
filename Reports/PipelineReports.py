@@ -28,6 +28,7 @@ from Reports.RGEComparison import (
 from Reports.GroupFactorReports import (
     write_and_compile_stage_group_factor_reports,
 )
+from Reports.C12GroupFactorPDF import refresh_stage_group_factor_pdfs
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -186,6 +187,7 @@ def _print_generated_report_summary(
 
     print("\n".join(lines))
 
+
 def finish_pipeline_run(
     records: list[RunRecord],
     debug_reports: bool = False,
@@ -251,6 +253,11 @@ def finish_pipeline_run(
         records,
         report_root=study_report_dir,
     )
+
+    # Insert exact, representation-specific C12 projection factors into the
+    # existing F-first GroupFactors TeX, then recompile its same-stem PDF.
+    # This leaves other stages and fixed-order numerical outputs unchanged.
+    refresh_stage_group_factor_pdfs(records, group_factor_tex)
 
     _print_generated_report_summary(
         records,

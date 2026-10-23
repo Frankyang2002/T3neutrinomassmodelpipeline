@@ -105,6 +105,7 @@ def generate(records: list[RunRecord], destination: Path) -> dict:
         write_and_compile_final_eft_rge_comparison,
     )
     from Reports.GroupFactorReports import write_and_compile_stage_group_factor_reports
+    from Reports.C12GroupFactorPDF import refresh_stage_group_factor_pdfs
 
     destination.mkdir(parents=True, exist_ok=True)
     created = []
@@ -120,12 +121,16 @@ def generate(records: list[RunRecord], destination: Path) -> dict:
         write_and_compile_eft1_rge_comparison(records, report_root=destination),
         write_and_compile_final_eft_rge_comparison(records, report_root=destination),
     ))
-    created.extend(str(p) for p in write_and_compile_stage_group_factor_reports(
+    group_factor_tex = write_and_compile_stage_group_factor_reports(
         records, report_root=destination,
-    ))
+    )
+    # Preserve the existing GroupFactors TeX/PDF names. Project each model's
+    # own saved Wilson tensor and insert the C12 section before recompilation.
+    c12_pdf_reports = refresh_stage_group_factor_pdfs(records, group_factor_tex)
+    created.extend(str(p) for p in group_factor_tex)
     result = {"status": "Complete", "models": [r.name for r in records],
               "source_runs": [str(r.output_dir) for r in records],
-              "report_tex_files": created}
+              "report_tex_files": created, "c12_group_factor_pdf_updates": c12_pdf_reports}
     (destination / "combined_analytical_manifest.json").write_text(
         json.dumps(result, indent=2) + "\n", encoding="utf-8")
     return result

@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Group factors — EFT_1_after_F</title>
+<style>
+:root {color-scheme:light dark; font-family: system-ui, 'Segoe UI', Arial, sans-serif;}
+body {margin:0; background:#f6f7fa; color:#1f2937; line-height:1.6;}
+main {max-width:1050px; margin:38px auto; padding:32px 42px; background:white;
+      border:1px solid #dbe1e8; border-radius:12px;}
+h1 {margin:0 0 8px; font-size:1.8rem;} h2 {margin-top:31px; border-bottom:1px solid #e5e7eb;
+      padding-bottom:7px; font-size:1.3rem;} h3 {font-size:1rem;}
+.subtitle,.muted {color:#526174;} .equation {background:#f7f8fb; border-left:3px solid #506990;
+      padding:16px 19px; margin:15px 0; overflow-x:auto; font-family:'Cambria Math', Georgia,serif;
+      font-size:1.11rem; white-space:nowrap;}
+table {border-collapse:collapse; width:100%; font-size:.96rem;}
+th,td {border-bottom:1px solid #dfe3e9; padding:10px 12px; text-align:left; vertical-align:top;}
+th {background:#f2f4f8;} code,pre {font-family:Consolas,monospace;}
+pre {white-space:pre-wrap; background:#f3f4f6; border-radius:6px; padding:14px; overflow-wrap:anywhere;}
+a {color:#1959a7;} .links a {margin-right:18px;}
+.label {font-size:.76rem; letter-spacing:.06em; text-transform:uppercase; font-weight:700; color:#526174;}
+@media (prefers-color-scheme:dark) {body{background:#0d1320;color:#d9e3f3;}main{background:#151e2d;
+ border-color:#38465b;}th{background:#243247;}td,th{border-color:#39475b;}.equation{background:#1d293a;}
+ pre{background:#243247;}.subtitle,.muted,.label{color:#b4c1d2;}a{color:#91c2ff;}}
+@media print {body{background:white;}main{border:0;margin:0;max-width:none;} }
+</style></head><body><main>
+
+<h1>Group factors — EFT_1_after_F</h1><p class="subtitle">Stage-aware group factors and Wilson-operator mixing.</p><p class="links"><a href="GF_EFT_1_after_F.pdf">Full group-factors PDF</a><a href="GF_EFT_1_after_F.tex">LaTeX source</a></p><p class="muted">The linked PDF contains the complete representation and renormalisable group-factor tables. The equations below summarise the Wilson mixing sector where verified.</p>
+
+<section id="c12-c5-rge">
+<h2>Coupled dimension-five RGEs: T3-B (F-first EFT)</h2>
+<p><span class="label">Scope: T3-B, &alpha; = &minus;1</span></p>
+<p>Applicable records: T3-B alpha=-1 (explicit CLI selection).</p>
+<p>All three heavy fermions are integrated out together at &mu;<sub>F</sub>.
+The remaining theory is SM + S<sub>1</sub> + S<sub>2</sub>.
+The flavour-symmetric matrices C<sub>12</sub> and C<sub>5</sub>
+are evolved simultaneously in the <strong>retained two-operator sector</strong>.</p>
+<h3>One-loop anomalous-dimension system</h3>
+<div class="equation">
+16&pi;<sup>2</sup> dC<sub>12</sub>/dln&mu; =
+(&minus;3g<sub>2</sub><sup>2</sup> + 2&lambda;<sub>12</sub> &minus; &frac12;&lambda;<sub>12Adj</sub>) C<sub>12</sub>
++ &frac12;(EC<sub>12</sub> + C<sub>12</sub>E<sup>T</sup>)
++ (8&radic;3/3)&lambda;<sub>T3</sub><sup>*</sup> C<sub>5</sub>
+</div>
+<div class="equation">
+16&pi;<sup>2</sup> dC<sub>5</sub>/dln&mu; =
+(&minus;3g<sub>2</sub><sup>2</sup> + 2&lambda;<sub>H</sub> + 2T) C<sub>5</sub>
+&minus; (3/2)(EC<sub>5</sub> + C<sub>5</sub>E<sup>T</sup>)
++ (4&radic;3/3)&lambda;<sub>T3</sub> C<sub>12</sub>
+</div>
+<p>Here E = Y<sub>e</sub>Y<sub>e</sub><sup>&dagger;</sup> and
+T = Tr(E + 3Y<sub>u</sub>Y<sub>u</sub><sup>&dagger;</sup>
++ 3Y<sub>d</sub>Y<sub>d</sub><sup>&dagger;</sup>).
+In this intermediate-EFT system, C<sub>5</sub> denotes the
+<strong>ordered Wilson-tensor convention</strong>; the physical Majorana
+coefficient uses the matching layer's factor-of-two conversion.</p>
+<h3>Group factors in 16&pi;<sup>2</sup>&beta;</h3>
+<table>
+<thead><tr><th>Source structure</th><th>&beta;<sub>C12</sub></th><th>&beta;<sub>C5</sub></th></tr></thead>
+<tbody>
+<tr><td>SU(2)<sub>L</sub> gauge</td><td>&minus;3g<sub>2</sub><sup>2</sup>C<sub>12</sub></td>
+<td>&minus;3g<sub>2</sub><sup>2</sup>C<sub>5</sub></td></tr>
+<tr><td>Scalar self/mixed quartics</td><td>(2&lambda;<sub>12</sub> &minus; &frac12;&lambda;<sub>12Adj</sub>)C<sub>12</sub></td>
+<td>2&lambda;<sub>H</sub>C<sub>5</sub></td></tr>
+<tr><td>Yukawa traces</td><td>&mdash;</td><td>2TC<sub>5</sub></td></tr>
+<tr><td>Lepton flavour (left + transpose right)</td>
+<td>+&frac12;(EC<sub>12</sub> + C<sub>12</sub>E<sup>T</sup>)</td>
+<td>&minus;(3/2)(EC<sub>5</sub> + C<sub>5</sub>E<sup>T</sup>)</td></tr>
+<tr><td><strong>C<sub>5</sub> &rarr; C<sub>12</sub></strong></td>
+<td>+(8&radic;3/3)&lambda;<sub>T3</sub><sup>*</sup>C<sub>5</sub></td><td>&mdash;</td></tr>
+<tr><td><strong>C<sub>12</sub> &rarr; C<sub>5</sub></strong></td><td>&mdash;</td>
+<td>+(4&radic;3/3)&lambda;<sub>T3</sub>C<sub>12</sub></td></tr>
+</tbody></table>
+<details><summary>Copyable LaTeX equations</summary>
+<pre>16\pi^2 \frac{dC_{12}}{d\ln\mu}=
+(-3g_2^2+2\lambda_{12}-\tfrac12\lambda_{12Adj})C_{12}
++\tfrac12(EC_{12}+C_{12}E^T)
++\frac{8\sqrt3}{3}\lambda_{T3}^* C_5
+
+16\pi^2 \frac{dC_5}{d\ln\mu}=
+(-3g_2^2+2\lambda_H+2T)C_5
+-\tfrac32(EC_5+C_5E^T)
++\frac{4\sqrt3}{3}\lambda_{T3} C_{12}</pre></details>
+<h3>Boundary, power counting and validation</h3>
+<p>The common matching point is &mu;<sub>F</sub>. Individual heavy masses M<sub>r</sub>
+appear in matched coefficients and ln(&mu;<sub>F</sub>/M<sub>r</sub>),
+while both Wilson matrices evolve down to the scalar threshold &mu;<sub>S</sub>.
+Fixed-order production contains the O((16&pi;<sup>2</sup>)<sup>&minus;1</sup>)
+forward contribution. The coupled solver is an <strong>opt-in leading-log
+resummation</strong>; its first corrections and reverse feedback are higher-order
+Wilson-running effects, not a complete NLO matching result.</p>
+<p><strong>Evidence:</strong> scalar basis and operator mixing from
+<code>RGE/general/WilsonTensorRGE.py</code>; charged-lepton flavour action from
+<code>RGE/general/AnomalousDimensions.py</code>; diagonal Weinberg matrix action
+from <code>RGE/running/weinberg/WeinbergRGE.py</code>.
+The numerical benchmark's retained two-operator sector has passed one-generation
+checks, but complete three-generation operator closure and higher-order
+matching are not established.</p>
+</section>
+
+
+<!-- T3-C12-REPRESENTATION-GROUP-FACTORS:BEGIN -->
+<section id="c12-representation-group-factors" style="margin-top:2rem;padding-top:1rem;border-top:2px solid #888">
+<h2>Representation-specific C<sub>12</sub> group factors</h2>
+<p><strong>T3-B alpha=-1</strong>: dS1=2, dS2=2, dF=1, alpha=-1. Scalar-only F-first EFT, with all heavy fermions removed together.</p>
+<p>Derived from saved <code>C_ijab</code> matching tensors and the complete one-loop <code>psi² phi²</code> master RGE, isolating the mixed <code>conjugate(y1)*conjugate(y2)</code> matching channel. All listed coefficients multiply <code>C12</code> in <code>16*pi²*beta_C12</code>.</p>
+<p>Independent matched tensor components checked: <strong>16</strong>. Verified proportionality for the total beta on the C12 matching-tensor support.</p>
+<div style="overflow-x:auto"><table><thead><tr><th>Master RGE contribution</th><th>Group-factor coefficient (RGBeta tensor basis)</th><th>Collinear?</th></tr></thead><tbody>
+<tr><th scope="row">Total projected C12 beta</th><td><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mrow><mo>-</mo><mn>3</mn><mo>&InvisibleTimes;</mo><msup><msub><mi>g</mi><mi>2</mi></msub><mn>2</mn></msup></mrow><mo>-</mo><mrow><mfrac><mrow><mn>4</mn><mo>&InvisibleTimes;</mo><msqrt><mn>3</mn></msqrt><mo>&InvisibleTimes;</mo><mi>lambda12Inv2</mi></mrow><mn>3</mn></mfrac></mrow><mo>+</mo><mrow><mi>ye</mi><mo>&InvisibleTimes;</mo><menclose notation="top"><mi>ye</mi></menclose></mrow></mrow></math></td><td>yes</td></tr>
+<tr><th scope="row">Scalar-pair gauge + quartic tensor action</th><td><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mrow><mo>-</mo><mfrac><msup><msub><mi>g</mi><mi>1</mi></msub><mn>2</mn></msup><mn>2</mn></mfrac></mrow><mo>-</mo><mrow><mfrac><msup><msub><mi>g</mi><mi>2</mi></msub><mn>2</mn></msup><mn>2</mn></mfrac></mrow><mo>-</mo><mrow><mfrac><mrow><mn>4</mn><mo>&InvisibleTimes;</mo><msqrt><mn>3</mn></msqrt><mo>&InvisibleTimes;</mo><mi>lambda12Inv2</mi></mrow><mn>3</mn></mfrac></mrow></mrow></math></td><td>yes</td></tr>
+<tr><th scope="row">Mixed Yukawa / gauge tensor action</th><td><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mrow><mn>4</mn><mo>&InvisibleTimes;</mo><msup><msub><mi>g</mi><mi>1</mi></msub><mn>2</mn></msup></mrow><mo>+</mo><mrow><mn>8</mn><mo>&InvisibleTimes;</mo><msup><msub><mi>g</mi><mi>2</mi></msub><mn>2</mn></msup></mrow></mrow></math></td><td>yes</td></tr>
+<tr><th scope="row">Scalar anomalous dimensions</th><td><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mrow><mo>-</mo><mn>2</mn><mo>&InvisibleTimes;</mo><msup><msub><mi>g</mi><mi>1</mi></msub><mn>2</mn></msup></mrow><mo>-</mo><mrow><mn>6</mn><mo>&InvisibleTimes;</mo><msup><msub><mi>g</mi><mi>2</mi></msub><mn>2</mn></msup></mrow></mrow></math></td><td>yes</td></tr>
+<tr><th scope="row">Lepton anomalous dimensions</th><td><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mrow><mo>-</mo><mfrac><mrow><mn>3</mn><mo>&InvisibleTimes;</mo><msup><msub><mi>g</mi><mi>1</mi></msub><mn>2</mn></msup></mrow><mn>2</mn></mfrac></mrow><mo>-</mo><mrow><mfrac><mrow><mn>9</mn><mo>&InvisibleTimes;</mo><msup><msub><mi>g</mi><mi>2</mi></msub><mn>2</mn></msup></mrow><mn>2</mn></mfrac></mrow><mo>+</mo><mrow><mi>ye</mi><mo>&InvisibleTimes;</mo><menclose notation="top"><mi>ye</mi></menclose></mrow></mrow></math></td><td>yes</td></tr>
+<tr><th scope="row">Yukawa wavefunction tensor term</th><td><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>0</mn></math></td><td>yes</td></tr>
+<tr><th scope="row">Crossed Yukawa tensor term</th><td><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>0</mn></math></td><td>yes</td></tr>
+<tr><th scope="row">Conjugate-Wilson / Yukawa tensor term</th><td><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>0</mn></math></td><td>yes</td></tr>
+</tbody></table></div>
+<h3>Paper quartic basis (T3-B only)</h3><p><code>lambda12Inv1 = -lambda12/2 - 3*lambda12Adj/8</code>; <code>lambda12Inv2 = -sqrt(3)*lambda12/2 + sqrt(3)*lambda12Adj/8</code>.</p><p>16π² β<sub>C12</sub> |<sub>diagonal, 1 generation</sub> = <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mrow><mo>-</mo><mn>3</mn><mo>&InvisibleTimes;</mo><msup><msub><mi>g</mi><mi>2</mi></msub><mn>2</mn></msup></mrow><mo>+</mo><mrow><mn>2</mn><mo>&InvisibleTimes;</mo><msub><mi>&#955;</mi><mi>12</mi></msub></mrow><mo>-</mo><mrow><mfrac><mi>lambda12Adj</mi><mn>2</mn></mfrac></mrow><mo>+</mo><mrow><mi>ye</mi><mo>&InvisibleTimes;</mo><menclose notation="top"><mi>ye</mi></menclose></mrow></mrow></math> C<sub>12</sub>.</p><p>Independent two-operator diagonal coefficient check: <strong>passed</strong>.</p>
+<p>10 mixed-yukawa beta components lie outside the C12 matching seed support. These include operator mixing; this seed-support projection is not a full operator-closure proof.</p>
+<p><strong>Scope:</strong> This table concerns the diagonal action on the matched C12 channel. It does not derive the reverse C5 → C12 factor or establish full three-generation closure. The standard fixed-order coefficient and the exploratory resummed numerical result remain separate.</p>
+<details><summary>Exact extraction metadata / residuals</summary><pre>{
+  &quot;projection_method&quot;: &quot;exact mixed-yukawa coefficient; per-component seed-support collinearity&quot;,
+  &quot;seed_support_component_count&quot;: 16,
+  &quot;reference_component&quot;: [
+    1,
+    1,
+    5,
+    11
+  ],
+  &quot;sectors&quot;: {
+    &quot;yukawa_wavefunction&quot;: {
+      &quot;collinear_on_c12_seed_support&quot;: true,
+      &quot;coefficient&quot;: &quot;0&quot;,
+      &quot;coefficient_latex&quot;: &quot;0&quot;,
+      &quot;noncollinear_component_count&quot;: 0,
+      &quot;failures&quot;: []
+    },
+    &quot;scalar_pair&quot;: {
+      &quot;collinear_on_c12_seed_support&quot;: true,
+      &quot;coefficient&quot;: &quot;-(3*g1**2 + 3*g2**2 + 8*sqrt(3)*lambda12Inv2)/6&quot;,
+      &quot;coefficient_latex&quot;: &quot;- \\frac{3 g_{1}^{2} + 3 g_{2}^{2} + 8 \\sqrt{3} lambda12Inv2}{6}&quot;,
+      &quot;noncollinear_component_count&quot;: 0,
+      &quot;failures&quot;: []
+    },
+    &quot;mixed_yukawa_gauge&quot;: {
+      &quot;collinear_on_c12_seed_support&quot;: true,
+      &quot;coefficient&quot;: &quot;4*(g1**2 + 2*g2**2)&quot;,
+      &quot;coefficient_latex&quot;: &quot;4 \\left(g_{1}^{2} + 2 g_{2}^{2}\\right)&quot;,
+      &quot;noncollinear_component_count&quot;: 0,
+      &quot;failures&quot;: []
+    },
+    &quot;crossed_yukawa&quot;: {
+      &quot;collinear_on_c12_seed_support&quot;: true,
+      &quot;coefficient&quot;: &quot;0&quot;,
+      &quot;coefficient_latex&quot;: &quot;0&quot;,
+      &quot;noncollinear_component_count&quot;: 0,
+      &quot;failures&quot;: []
+    },
+    &quot;conjugate_coefficient_yukawa&quot;: {
+      &quot;collinear_on_c12_seed_support&quot;: true,
+      &quot;coefficient&quot;: &quot;0&quot;,
+      &quot;coefficient_latex&quot;: &quot;0&quot;,
+      &quot;noncollinear_component_count&quot;: 0,
+      &quot;failures&quot;: []
+    },
+    &quot;scalar_anomalous_dimension&quot;: {
+      &quot;collinear_on_c12_seed_support&quot;: true,
+      &quot;coefficient&quot;: &quot;-2*(g1**2 + 3*g2**2)&quot;,
+      &quot;coefficient_latex&quot;: &quot;- 2 \\left(g_{1}^{2} + 3 g_{2}^{2}\\right)&quot;,
+      &quot;noncollinear_component_count&quot;: 0,
+      &quot;failures&quot;: []
+    },
+    &quot;fermion_anomalous_dimension&quot;: {
+      &quot;collinear_on_c12_seed_support&quot;: true,
+      &quot;coefficient&quot;: &quot;-(3*g1**2 + 9*g2**2 - 2*ye*conjugate(ye))/2&quot;,
+      &quot;coefficient_latex&quot;: &quot;- \\frac{3 g_{1}^{2} + 9 g_{2}^{2} - 2 ye \\overline{ye}}{2}&quot;,
+      &quot;noncollinear_component_count&quot;: 0,
+      &quot;failures&quot;: []
+    },
+    &quot;total&quot;: {
+      &quot;collinear_on_c12_seed_support&quot;: true,
+      &quot;coefficient&quot;: &quot;-(9*g2**2 + 4*sqrt(3)*lambda12Inv2 - 3*ye*conjugate(ye))/3&quot;,
+      &quot;coefficient_latex&quot;: &quot;- \\frac{9 g_{2}^{2} + 4 \\sqrt{3} lambda12Inv2 - 3 ye \\overline{ye}}{3}&quot;,
+      &quot;noncollinear_component_count&quot;: 0,
+      &quot;failures&quot;: []
+    }
+  },
+  &quot;c12_seed_support_is_invariant_under_projected_beta&quot;: true,
+  &quot;generated_mixed_components_outside_c12_seed_support&quot;: [
+    [
+      1,
+      1,
+      3,
+      3
+    ],
+    [
+      1,
+      1,
+      3,
+      4
+    ],
+    [
+      1,
+      1,
+      4,
+      4
+    ],
+    [
+      1,
+      2,
+      1,
+      3
+    ],
+    [
+      1,
+      2,
+      1,
+      4
+    ],
+    [
+      1,
+      2,
+      2,
+      3
+    ],
+    [
+      1,
+      2,
+      2,
+      4
+    ],
+    [
+      2,
+      2,
+      1,
+      1
+    ],
+    [
+      2,
+      2,
+      1,
+      2
+    ],
+    [
+      2,
+      2,
+      2,
+      2
+    ]
+  ],
+  &quot;full_operator_closure_verified&quot;: false,
+  &quot;representation&quot;: {
+    &quot;dS1&quot;: 2,
+    &quot;dS2&quot;: 2,
+    &quot;dF&quot;: 1,
+    &quot;alpha&quot;: -1,
+    &quot;shared_scalar&quot;: false
+  },
+  &quot;sources&quot;: {
+    &quot;matched_wilson_seed&quot;: &quot;output\\single\\T3_B_alpha_m1\\data\\eft1_after_F_wilson_seed.json&quot;,
+    &quot;rgbeta_representation_metadata&quot;: &quot;output\\single\\T3_B_alpha_m1\\data\\eft1_rgbeta_rge.json&quot;,
+    &quot;master_wilson_beta&quot;: &quot;output\\single\\T3_B_alpha_m1\\data\\eft1_wilson_rge.json&quot;
+  },
+  &quot;t3b_paper_basis&quot;: {
+    &quot;coefficient&quot;: &quot;-(6*g2**2 - 4*lambda12 + lambda12Adj - 2*ye*conjugate(ye))/2&quot;,
+    &quot;coefficient_latex&quot;: &quot;- \\frac{6 g_{2}^{2} - 4 \\lambda_{12} + lambda12Adj - 2 ye \\overline{ye}}{2}&quot;,
+    &quot;matches_previous_two_operator_diagonal_coefficient&quot;: true,
+    &quot;basis_mapping&quot;: {
+      &quot;lambda12Inv1&quot;: &quot;-lambda12/2 - 3*lambda12Adj/8&quot;,
+      &quot;lambda12Inv2&quot;: &quot;-sqrt(3)*lambda12/2 + sqrt(3)*lambda12Adj/8&quot;
+    }
+  }
+}</pre></details>
+<details><summary>Saved physics inputs</summary><ul><li>matched_wilson_seed: <code>output\single\T3_B_alpha_m1\data\eft1_after_F_wilson_seed.json</code></li><li>rgbeta_representation_metadata: <code>output\single\T3_B_alpha_m1\data\eft1_rgbeta_rge.json</code></li><li>master_wilson_beta: <code>output\single\T3_B_alpha_m1\data\eft1_wilson_rge.json</code></li></ul></details>
+</section>
+<!-- T3-C12-REPRESENTATION-GROUP-FACTORS:END -->
+</main></body></html>

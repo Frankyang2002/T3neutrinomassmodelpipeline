@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Group factors — EFT_1_after_F_with_C12</title>
+<style>
+:root {color-scheme:light dark; font-family: system-ui, 'Segoe UI', Arial, sans-serif;}
+body {margin:0; background:#f6f7fa; color:#1f2937; line-height:1.6;}
+main {max-width:1050px; margin:38px auto; padding:32px 42px; background:white;
+      border:1px solid #dbe1e8; border-radius:12px;}
+h1 {margin:0 0 8px; font-size:1.8rem;} h2 {margin-top:31px; border-bottom:1px solid #e5e7eb;
+      padding-bottom:7px; font-size:1.3rem;} h3 {font-size:1rem;}
+.subtitle,.muted {color:#526174;} .equation {background:#f7f8fb; border-left:3px solid #506990;
+      padding:16px 19px; margin:15px 0; overflow-x:auto; font-family:'Cambria Math', Georgia,serif;
+      font-size:1.11rem; white-space:nowrap;}
+table {border-collapse:collapse; width:100%; font-size:.96rem;}
+th,td {border-bottom:1px solid #dfe3e9; padding:10px 12px; text-align:left; vertical-align:top;}
+th {background:#f2f4f8;} code,pre {font-family:Consolas,monospace;}
+pre {white-space:pre-wrap; background:#f3f4f6; border-radius:6px; padding:14px; overflow-wrap:anywhere;}
+a {color:#1959a7;} .links a {margin-right:18px;}
+.label {font-size:.76rem; letter-spacing:.06em; text-transform:uppercase; font-weight:700; color:#526174;}
+@media (prefers-color-scheme:dark) {body{background:#0d1320;color:#d9e3f3;}main{background:#151e2d;
+ border-color:#38465b;}th{background:#243247;}td,th{border-color:#39475b;}.equation{background:#1d293a;}
+ pre{background:#243247;}.subtitle,.muted,.label{color:#b4c1d2;}a{color:#91c2ff;}}
+@media print {body{background:white;}main{border:0;margin:0;max-width:none;} }
+</style></head><body><main>
+
+<h1>Group factors — EFT_1_after_F_with_C12</h1><p class="subtitle">Stage-aware group factors and Wilson-operator mixing.</p><p class="links"><a href="GF_EFT_1_after_F_with_C12.pdf">Full group-factors PDF</a><a href="GF_EFT_1_after_F_with_C12.tex">LaTeX source</a></p><p class="muted">The linked PDF contains the complete representation and renormalisable group-factor tables. The equations below summarise the Wilson mixing sector where verified.</p>
+
+<section id="c12-c5-rge">
+<h2>Coupled dimension-five RGEs: T3-B (F-first EFT)</h2>
+<p><span class="label">Scope: T3-B, &alpha; = &minus;1</span></p>
+<p>Applicable records: T3-B alpha=-1 (explicit CLI selection).</p>
+<p>All three heavy fermions are integrated out together at &mu;<sub>F</sub>.
+The remaining theory is SM + S<sub>1</sub> + S<sub>2</sub>.
+The flavour-symmetric matrices C<sub>12</sub> and C<sub>5</sub>
+are evolved simultaneously in the <strong>retained two-operator sector</strong>.</p>
+<h3>One-loop anomalous-dimension system</h3>
+<div class="equation">
+16&pi;<sup>2</sup> dC<sub>12</sub>/dln&mu; =
+(&minus;3g<sub>2</sub><sup>2</sup> + 2&lambda;<sub>12</sub> &minus; &frac12;&lambda;<sub>12Adj</sub>) C<sub>12</sub>
++ &frac12;(EC<sub>12</sub> + C<sub>12</sub>E<sup>T</sup>)
++ (8&radic;3/3)&lambda;<sub>T3</sub><sup>*</sup> C<sub>5</sub>
+</div>
+<div class="equation">
+16&pi;<sup>2</sup> dC<sub>5</sub>/dln&mu; =
+(&minus;3g<sub>2</sub><sup>2</sup> + 2&lambda;<sub>H</sub> + 2T) C<sub>5</sub>
+&minus; (3/2)(EC<sub>5</sub> + C<sub>5</sub>E<sup>T</sup>)
++ (4&radic;3/3)&lambda;<sub>T3</sub> C<sub>12</sub>
+</div>
+<p>Here E = Y<sub>e</sub>Y<sub>e</sub><sup>&dagger;</sup> and
+T = Tr(E + 3Y<sub>u</sub>Y<sub>u</sub><sup>&dagger;</sup>
++ 3Y<sub>d</sub>Y<sub>d</sub><sup>&dagger;</sup>).
+In this intermediate-EFT system, C<sub>5</sub> denotes the
+<strong>ordered Wilson-tensor convention</strong>; the physical Majorana
+coefficient uses the matching layer's factor-of-two conversion.</p>
+<h3>Group factors in 16&pi;<sup>2</sup>&beta;</h3>
+<table>
+<thead><tr><th>Source structure</th><th>&beta;<sub>C12</sub></th><th>&beta;<sub>C5</sub></th></tr></thead>
+<tbody>
+<tr><td>SU(2)<sub>L</sub> gauge</td><td>&minus;3g<sub>2</sub><sup>2</sup>C<sub>12</sub></td>
+<td>&minus;3g<sub>2</sub><sup>2</sup>C<sub>5</sub></td></tr>
+<tr><td>Scalar self/mixed quartics</td><td>(2&lambda;<sub>12</sub> &minus; &frac12;&lambda;<sub>12Adj</sub>)C<sub>12</sub></td>
+<td>2&lambda;<sub>H</sub>C<sub>5</sub></td></tr>
+<tr><td>Yukawa traces</td><td>&mdash;</td><td>2TC<sub>5</sub></td></tr>
+<tr><td>Lepton flavour (left + transpose right)</td>
+<td>+&frac12;(EC<sub>12</sub> + C<sub>12</sub>E<sup>T</sup>)</td>
+<td>&minus;(3/2)(EC<sub>5</sub> + C<sub>5</sub>E<sup>T</sup>)</td></tr>
+<tr><td><strong>C<sub>5</sub> &rarr; C<sub>12</sub></strong></td>
+<td>+(8&radic;3/3)&lambda;<sub>T3</sub><sup>*</sup>C<sub>5</sub></td><td>&mdash;</td></tr>
+<tr><td><strong>C<sub>12</sub> &rarr; C<sub>5</sub></strong></td><td>&mdash;</td>
+<td>+(4&radic;3/3)&lambda;<sub>T3</sub>C<sub>12</sub></td></tr>
+</tbody></table>
+<details><summary>Copyable LaTeX equations</summary>
+<pre>16\pi^2 \frac{dC_{12}}{d\ln\mu}=
+(-3g_2^2+2\lambda_{12}-\tfrac12\lambda_{12Adj})C_{12}
++\tfrac12(EC_{12}+C_{12}E^T)
++\frac{8\sqrt3}{3}\lambda_{T3}^* C_5
+
+16\pi^2 \frac{dC_5}{d\ln\mu}=
+(-3g_2^2+2\lambda_H+2T)C_5
+-\tfrac32(EC_5+C_5E^T)
++\frac{4\sqrt3}{3}\lambda_{T3} C_{12}</pre></details>
+<h3>Boundary, power counting and validation</h3>
+<p>The common matching point is &mu;<sub>F</sub>. Individual heavy masses M<sub>r</sub>
+appear in matched coefficients and ln(&mu;<sub>F</sub>/M<sub>r</sub>),
+while both Wilson matrices evolve down to the scalar threshold &mu;<sub>S</sub>.
+Fixed-order production contains the O((16&pi;<sup>2</sup>)<sup>&minus;1</sup>)
+forward contribution. The coupled solver is an <strong>opt-in leading-log
+resummation</strong>; its first corrections and reverse feedback are higher-order
+Wilson-running effects, not a complete NLO matching result.</p>
+<p><strong>Evidence:</strong> scalar basis and operator mixing from
+<code>RGE/general/WilsonTensorRGE.py</code>; charged-lepton flavour action from
+<code>RGE/general/AnomalousDimensions.py</code>; diagonal Weinberg matrix action
+from <code>RGE/running/weinberg/WeinbergRGE.py</code>.
+The numerical benchmark's retained two-operator sector has passed one-generation
+checks, but complete three-generation operator closure and higher-order
+matching are not established.</p>
+</section>
+
+</main></body></html>

@@ -22,6 +22,7 @@ from Numerical.orchestration import RunSmallLambdaRefit as base
 from Numerical.fitting.BenchmarkSensitivity import gamma_grid, scaled_config_payload
 from Numerical.fitting.ParameterScan import neutrino_mass_from_c5, charged_lepton_mass_basis_matrix
 from Numerical.fitting.OscillationFit import evaluate_mass_matrix_fit
+from physics.NeutrinoObservables import calculate_neutrino_observables
 from Numerical.plotting.InteractiveModelComparison import write_dashboard
 from Numerical.plotting.BuildFittedModelEnvelopes import build as build_ovals
 from Numerical.running.ScalarThresholdBoundary import build_sm_weinberg_initial_conditions
@@ -98,12 +99,19 @@ def rge_one(case, mode, model, mapping, n_scales):
         raise RuntimeError(f'Weinberg trajectory failed: {solution.message}')
     curves = {k: [] for k in OBS}
     c5_abs = []
+    masses_ev = []
     for col in solution.y.T:
         _, _, _, _, ye, _, _, K = _unpack(col)
         K = (K + K.T) / 2
         mass = neutrino_mass_from_c5(K, vev_gev=ev.vev)
         flavour = charged_lepton_mass_basis_matrix(mass, ye)
         fitted = evaluate_mass_matrix_fit(flavour, ev.target)
+        # Use the same Takagi / mass-ordering routine as the canonical pipeline.
+        physical = calculate_neutrino_observables(flavour, ordering=ev.target.ordering)
+        mass_eigenvalues = np.asarray(physical.masses_ev, dtype=float)
+        if mass_eigenvalues.shape != (3,) or not np.all(np.isfinite(mass_eigenvalues)):
+            raise ValueError(f"{model}: invalid neutrino mass eigenvalues at sampled scale")
+        masses_ev.append(mass_eigenvalues.tolist())
         p = prediction(fitted)
         for k in OBS:
             curves[k].append(p[k])
@@ -153,6 +161,7 @@ def rge_one(case, mode, model, mapping, n_scales):
                   'c5_threshold_contributions': contributions.as_json_dict(),
                   'scalar_threshold': {'c5': {'abs': np.abs(full.c5_at_scalar_threshold).tolist()}},
                   'final_running': {'mu_gev': list(map(float, mu)),
+                                    'masses_ev': masses_ev,
                                     'c5_abs': c5_abs, **curves},
                   'low_energy': {'chi2': float(fit.chi2), 'prediction': prediction(fit)},
                   'notes': {'uv_running': 'Disabled: no UV curve exists',

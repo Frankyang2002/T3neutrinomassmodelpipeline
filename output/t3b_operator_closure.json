@@ -1,0 +1,88 @@
+{
+  "status": "AdditionalTensorComponentsGenerated",
+  "scope": "llec",
+  "scope_complete_one_generation_L_eC_psi2phi2": true,
+  "full_three_generation_closure_verified": false,
+  "other_EFT_operator_classes_checked": false,
+  "one_loop_tensor_subspace_closed": false,
+  "scan_component_count": 468,
+  "templates": {
+    "C12": 16,
+    "C5": 10
+  },
+  "feedback_requested": false,
+  "results": {
+    "C12": {
+      "nonzero_beta_components": 26,
+      "pivot_coefficients": {
+        "C12": "-(9*g2**2 + 4*sqrt(3)*lambda12Inv2 - 3*ye*conjugate(ye))/3",
+        "C5": "4*sqrt(3)*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF*kappa)"
+      },
+      "residual": {
+        "component_count": 0,
+        "component_counts_by_class": {},
+        "examples": [],
+        "examples_truncated": false
+      },
+      "closed_in_scanned_sector": true
+    },
+    "C5": {
+      "nonzero_beta_components": 30,
+      "pivot_coefficients": {
+        "C12": "8*sqrt(3)*MF*kappa*conjugate(lambdaT3)/(3*conjugate(y1)*conjugate(y2))",
+        "C5": "-3*g2**2 + 6*yd*conjugate(yd) - ye*conjugate(ye) + 6*yu*conjugate(yu) + 2*\u03bb"
+      },
+      "residual": {
+        "component_count": 4,
+        "component_counts_by_class": {
+          "has_eC_external": 4
+        },
+        "examples": [
+          {
+            "component": [
+              3,
+              3,
+              1,
+              1
+            ],
+            "class": "has_eC_external",
+            "expression": "-kappa*ye**2/2"
+          },
+          {
+            "component": [
+              3,
+              3,
+              2,
+              2
+            ],
+            "class": "has_eC_external",
+            "expression": "-kappa*ye**2/2"
+          },
+          {
+            "component": [
+              3,
+              3,
+              3,
+              3
+            ],
+            "class": "has_eC_external",
+            "expression": "-kappa*ye**2/2"
+          },
+          {
+            "component": [
+              3,
+              3,
+              4,
+              4
+            ],
+            "class": "has_eC_external",
+            "expression": "-kappa*ye**2/2"
+          }
+        ],
+        "examples_truncated": false
+      },
+      "closed_in_scanned_sector": false
+    }
+  },
+  "interpretation": "The retained two-template span fails under the tested one-loop tensor map; a two-operator-only evolution needs an extended basis or justified truncation."
+}

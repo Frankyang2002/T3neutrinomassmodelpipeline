@@ -1,0 +1,215 @@
+{
+  "status": "ExploratoryLowEnergyComparisonComplete",
+  "model": "T3-B alpha=-1",
+  "mu_fermion_threshold_gev": 100000.0,
+  "mu_scalar_threshold_gev": 1000.0,
+  "mu_low_gev": 100.0,
+  "vev_gev": 246.22,
+  "ordering_requested": "NO",
+  "source_inputs": {
+    "config": "Numerical\\benchmarks\\fitted_reference\\T3_dS1_2_dS2_2_dF_1_alpha_m1.json",
+    "control": "output\\t3b_fitted_fixed_order_control.json",
+    "coupled": "output\\t3b_fitted_common_scale_threshold.json"
+  },
+  "threshold_scheme": "common_scale_log_boundary",
+  "ms_input_checks": {
+    "fixed_order_decomposition_residual": 0.0,
+    "coupled_decomposition_residual": 0.0,
+    "relative_c5_change_at_ms": 0.024925034125116444,
+    "ms_background_residuals": {
+      "g2": 0.0,
+      "lambdaH": 0.0,
+      "lambda12": 0.0,
+      "lambda12Adj": 0.0,
+      "lambdaT3": 0.0,
+      "ye": 0.0,
+      "yu": 0.0,
+      "yd": 0.0
+    }
+  },
+  "relative_c5_difference_at_ms": 0.024925034125116444,
+  "relative_c5_difference_at_low_scale": 0.024925034010049238,
+  "fixed_order": {
+    "observables": {
+      "ordering": "NO",
+      "masses_ev": [
+        0.004505160867182971,
+        0.009780924007436312,
+        0.05031199135831766
+      ],
+      "delta_m21_sq_ev2": 7.537000000004718e-05,
+      "delta_m31_sq_ev2": 0.0025110000000002344,
+      "delta_m32_sq_ev2": 0.002435630000000187,
+      "pmns_abs": [
+        [
+          0.8219865108398248,
+          0.5494162138099467,
+          0.1499333185123096
+        ],
+        [
+          0.31909681879445595,
+          0.6623766452745762,
+          0.677815904232157
+        ],
+        [
+          0.4717153762944652,
+          0.5093122851429576,
+          0.7197816335318856
+        ]
+      ],
+      "mixing_angles": {
+        "sin2_theta12": 0.30879999999722985,
+        "sin2_theta13": 0.02248000000011368,
+        "sin2_theta23": 0.47000000003080245,
+        "theta12_deg": 33.75878818394725,
+        "theta13_deg": 8.623062290058055,
+        "theta23_deg": 43.28009361801043
+      },
+      "takagi_residual": 2.849585923070976e-16
+    },
+    "solver_nfev": 38,
+    "c5_at_low_scale": {
+      "real": [
+        [
+          -4.033125746155713e-17,
+          -3.2509142189760255e-16,
+          3.120344140147367e-17
+        ],
+        [
+          -3.2509142189760255e-16,
+          -6.361304316158875e-16,
+          8.962650436343457e-16
+        ],
+        [
+          3.120344140147367e-17,
+          8.962650436343457e-16,
+          -8.092869904258794e-16
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "frobenius_norm": 1.6973898199305822e-15
+    }
+  },
+  "exploratory_coupled": {
+    "observables": {
+      "ordering": "NO",
+      "masses_ev": [
+        0.004368977936225369,
+        0.009548349703829445,
+        0.04905830361285371
+      ],
+      "delta_m21_sq_ev2": 7.208301385939578e-05,
+      "delta_m31_sq_ev2": 0.0023876291851637112,
+      "delta_m32_sq_ev2": 0.0023155461713043157,
+      "pmns_abs": [
+        [
+          0.8217002036645938,
+          0.549802399637271,
+          0.15008696362663826
+        ],
+        [
+          0.3193571735955179,
+          0.6623084619623936,
+          0.6777599109464139
+        ],
+        [
+          0.47203789145644565,
+          0.5089841083630287,
+          0.7198023384674751
+        ]
+      ],
+      "mixing_angles": {
+        "sin2_theta12": 0.30924884808803904,
+        "sin2_theta13": 0.022526096650663834,
+        "sin2_theta23": 0.4699445123926978,
+        "theta12_deg": 33.78661504975561,
+        "theta13_deg": 8.631966259905758,
+        "theta23_deg": 43.27690866181255
+      },
+      "takagi_residual": 1.5470553678049902e-16
+    },
+    "solver_nfev": 38,
+    "c5_at_low_scale": {
+      "real": [
+        [
+          -3.8555072748193006e-17,
+          -3.171589471072797e-16,
+          3.0789147341235564e-17
+        ],
+        [
+          -3.171589471072797e-16,
+          -6.199669916449174e-16,
+          8.740200790638198e-16
+        ],
+        [
+          3.0789147341235564e-17,
+          8.740200790638198e-16,
+          -7.890473175594086e-16
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "frobenius_norm": 1.6550948521379112e-15
+    }
+  },
+  "differences": {
+    "mass_differences_ev": [
+      -0.00013618293095760126,
+      -0.00023257430360686636,
+      -0.0012536877454639508
+    ],
+    "relative_mass_differences": [
+      -0.030228206044672273,
+      -0.02377835707853809,
+      -0.024918269216085982
+    ],
+    "mass_squared_splitting_differences_ev2": {
+      "delta_m21_sq_ev2": -3.2869861406514058e-06,
+      "delta_m31_sq_ev2": -0.00012337081483652316,
+      "delta_m32_sq_ev2": -0.00012008382869587147
+    },
+    "mixing_angle_differences_deg": {
+      "theta12_deg": 0.02782686580835758,
+      "theta13_deg": 0.008903969847702697,
+      "theta23_deg": -0.003184956197884503
+    }
+  },
+  "validated_physical_prediction_available": false,
+  "limitations": [
+    "Coupled intermediate-EFT result is exploratory; full three-generation operator closure not established",
+    "Common-scale heavy matching logs are not complete sequential heavy-fermion decoupling",
+    "No complete higher-order scalar-threshold subtraction/matching proof",
+    "SM+Weinberg unbroken-phase running is extended to the configured low scale; electroweak threshold matching is not added"
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "description": "Instantaneous UV RGBeta term-level scaling breaking; separate term norms are not additive",
+  "gamma_values": [
+    0.5,
+    0.9,
+    1.1,
+    2.0
+  ],
+  "rows": 384,
+  "symbolic_term_rows": 6384,
+  "errors": [],
+  "summary": [
+    {
+      "mode": "optimised",
+      "direction": "T1",
+      "count": 64,
+      "largest_breaking": 0.2690343078161443,
+      "largest_model": "T3_dS1_2_dS2_2_dF_3_alpha_m1",
+      "gamma": 0.5,
+      "gauge_at_largest": 2.9135721858784656e-18,
+      "yukawa_at_largest": 0.18955274085941123,
+      "scalar_at_largest": 6.639050815828048e-19,
+      "mixed_at_largest": 0.08061661535694438,
+      "other_at_largest": 0.0
+    },
+    {
+      "mode": "optimised",
+      "direction": "T2",
+      "count": 64,
+      "largest_breaking": 0.23814159081908046,
+      "largest_model": "T3_dS1_2_dS2_2_dF_3_alpha_m1",
+      "gamma": 0.5,
+      "gauge_at_largest": 0.0,
+      "yukawa_at_largest": 0.17434148729085025,
+      "scalar_at_largest": 0.0,
+      "mixed_at_largest": 0.06604054470224696,
+      "other_at_largest": 0.0
+    },
+    {
+      "mode": "optimised",
+      "direction": "T3",
+      "count": 64,
+      "largest_breaking": 0.521002005703406,
+      "largest_model": "T3_dS1_2_dS2_2_dF_3_alpha_m1",
+      "gamma": 2.0,
+      "gauge_at_largest": 0.0,
+      "yukawa_at_largest": 0.36704215006689894,
+      "scalar_at_largest": 0.0,
+      "mixed_at_largest": 0.15929916519302426,
+      "other_at_largest": 0.0
+    },
+    {
+      "mode": "shared_a_m2",
+      "direction": "T1",
+      "count": 64,
+      "largest_breaking": 0.05115059637555698,
+      "largest_model": "T3_dS1_2_dS2_2_dF_3_alpha_m1",
+      "gamma": 0.5,
+      "gauge_at_largest": 2.7658505755633533e-18,
+      "yukawa_at_largest": 0.037543235764536165,
+      "scalar_at_largest": 6.766665198860964e-19,
+      "mixed_at_largest": 0.013855787637096505,
+      "other_at_largest": 0.0
+    },
+    {
+      "mode": "shared_a_m2",
+      "direction": "T2",
+      "count": 64,
+      "largest_breaking": 0.09235593100182442,
+      "largest_model": "T3_dS1_2_dS2_2_dF_3_alpha_m1",
+      "gamma": 0.5,
+      "gauge_at_largest": 0.0,
+      "yukawa_at_largest": 0.06761382190880996,
+      "scalar_at_largest": 0.0,
+      "mixed_at_largest": 0.025219002949968917,
+      "other_at_largest": 0.0
+    },
+    {
+      "mode": "shared_a_m2",
+      "direction": "T3",
+      "count": 64,
+      "largest_breaking": 0.07722730125715338,
+      "largest_model": "T3_dS1_2_dS2_2_dF_3_alpha_m1",
+      "gamma": 0.5,
+      "gauge_at_largest": 0.0,
+      "yukawa_at_largest": 0.05655862346686193,
+      "scalar_at_largest": 0.0,
+      "mixed_at_largest": 0.02113191295963878,
+      "other_at_largest": 0.0
+    }
+  ],
+  "category_definition": {
+    "gauge": "term contains gauge coupling and no other nontrivial coupling family",
+    "yukawa": "term contains Yukawa coupling and no other nontrivial coupling family",
+    "scalar": "term contains scalar quartic(s) besides lambdaT3 only",
+    "mixed": "term contains multiple coupling families",
+    "other": "no nontrivial gauge, Yukawa or extra scalar factor"
+  },
+  "caution": "The lambdaT3 prefactor is excluded when categorising beta_lambdaT3 terms; norms of matrices do not add linearly."
+}

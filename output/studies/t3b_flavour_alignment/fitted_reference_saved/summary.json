@@ -1,0 +1,113 @@
+{
+  "status": "ReadOnlyAlignmentDiagnosticComplete",
+  "source_inputs": {
+    "source_config": "Numerical\\benchmarks\\fitted_reference\\T3_dS1_2_dS2_2_dF_1_alpha_m1.json",
+    "coupled": "/mnt/data/t3b_alignment_package/output/studies/t3b_flavour_alignment/fitted_reference_saved/source_excerpts/coupled_excerpt.json",
+    "low_energy": "/mnt/data/t3b_alignment_package/output/studies/t3b_flavour_alignment/fitted_reference_saved/source_excerpts/low_energy_excerpt.json",
+    "control": "/mnt/data/t3b_alignment_package/output/studies/t3b_flavour_alignment/fitted_reference_saved/source_excerpts/control_excerpt.json",
+    "sha256": {
+      "/mnt/data/t3b_alignment_package/output/studies/t3b_flavour_alignment/fitted_reference_saved/source_excerpts/coupled_excerpt.json": "565203021405f536a9b673eceb8dbe9068f8d5773664dca05c89bceb27ab9b67",
+      "/mnt/data/t3b_alignment_package/output/studies/t3b_flavour_alignment/fitted_reference_saved/source_excerpts/low_energy_excerpt.json": "796147c578de5294427d8e063a53f9efa9167a9448a19c8299ffc4d4b4cc5d59",
+      "/mnt/data/t3b_alignment_package/output/studies/t3b_flavour_alignment/fitted_reference_saved/source_excerpts/control_excerpt.json": "d204c12aa59a07d41b7dd3c7d51b7c744aa7b2d0cdb911032298d282f2d64ac3"
+    }
+  },
+  "scope": "Saved matrices only. No new dynamics or validated higher-order predictions.",
+  "ms": {
+    "mu_gev": 1000.0,
+    "delta_relative_to_fixed": 0.024925034125116444,
+    "c12_vs_fixed": {
+      "alpha_real": -0.011451453043746557,
+      "alpha_imag": 0.0,
+      "shape_residual_fraction_of_candidate": 0.009315365997773202,
+      "orthogonal_fraction_of_reference": 0.00010667910500456766,
+      "frobenius_cosine": 0.9999566110368627
+    },
+    "c12_vs_direct": {
+      "alpha_real": -0.012852472539810542,
+      "alpha_imag": 0.0,
+      "shape_residual_fraction_of_candidate": 0.008299911992051042,
+      "orthogonal_fraction_of_reference": 0.00010667806547200515,
+      "frobenius_cosine": 0.9999655551372378
+    },
+    "c12_vs_hard": {
+      "alpha_real": 0.0014010194960639851,
+      "alpha_imag": 0.0,
+      "shape_residual_fraction_of_candidate": 1.244541206827688e-06,
+      "orthogonal_fraction_of_reference": 1.7436264944219417e-09,
+      "frobenius_cosine": 0.9999999999992254
+    },
+    "delta_vs_fixed": {
+      "alpha_real": -0.02491783545903399,
+      "alpha_imag": 0.0,
+      "shape_residual_fraction_of_candidate": 0.024032102727166264,
+      "orthogonal_fraction_of_reference": 0.0005990009805729231,
+      "frobenius_cosine": 0.9997111873128713
+    }
+  },
+  "low_energy": {
+    "mu_gev": 100.0,
+    "delta_relative_to_fixed": 0.024925034010049238,
+    "delta_vs_fixed": {
+      "alpha_real": -0.024917835367167365,
+      "alpha_imag": 0.0,
+      "shape_residual_fraction_of_candidate": 0.02403206406166892,
+      "orthogonal_fraction_of_reference": 0.0005990000140687798,
+      "frobenius_cosine": 0.9997111882423525
+    },
+    "mass_basis": {
+      "pmns_abs_reconstruction_max_error": 3.3385577635769437e-10,
+      "signed_fixed_eigenvalues": [
+        -1.486256081871957e-16,
+        3.2267344543169293e-16,
+        -1.6597965167478206e-15
+      ],
+      "offdiagonal_norm_relative_to_fixed": 0.0003092791594716964,
+      "offdiagonal_norm_relative_to_delta": 0.012408374622357653,
+      "mass_basis_delta_over_fixed_norm": [
+        [
+          0.002646877665223984,
+          -0.00013361340902070013,
+          8.571099268521745e-05
+        ],
+        [
+          -0.0001336134090206997,
+          -0.0045203465230402706,
+          -0.00015042566903471333
+        ],
+        [
+          8.571099268521665e-05,
+          -0.00015042566903471474,
+          0.02436641485201721
+        ]
+      ],
+      "first_order_signed_eigenvector_rotations": {
+        "12": {
+          "signed_eigenvalue_gap": 4.712990536188886e-16,
+          "first_order_rotation_radians": -0.0004812104724940785,
+          "first_order_rotation_degrees": -0.027571329131406887
+        },
+        "13": {
+          "signed_eigenvalue_gap": -1.511170908560625e-15,
+          "first_order_rotation_radians": -9.627300632633649e-05,
+          "first_order_rotation_degrees": -0.005516036943535355
+        },
+        "23": {
+          "signed_eigenvalue_gap": -1.9824699621795135e-15,
+          "first_order_rotation_radians": 0.0001287943848566867,
+          "first_order_rotation_degrees": 0.00737937467727179
+        }
+      },
+      "warning": "Perturbative signed-eigenvalue rotations are diagnostic only; saved exact PMNS differences take precedence."
+    },
+    "saved_angle_differences_deg": {
+      "theta12_deg": 0.02782686580835758,
+      "theta13_deg": 0.008903969847702697,
+      "theta23_deg": -0.003184956197884503
+    }
+  },
+  "limitations": [
+    "The historical saved reference used its original running prescription; no UV freeze is retroactively imposed",
+    "Exploratory 2-operator C12/C5 closure and higher-order matching are unverified",
+    "Real-symmetric CP-conserving eigenbasis shortcut verified against saved |PMNS|"
+  ]
+}

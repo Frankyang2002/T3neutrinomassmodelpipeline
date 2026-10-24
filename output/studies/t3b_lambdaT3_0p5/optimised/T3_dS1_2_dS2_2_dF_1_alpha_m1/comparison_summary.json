@@ -1,0 +1,244 @@
+{
+  "status": "IntegratedFixedAndExploratoryCoupledComplete",
+  "model": "T3_dS1_2_dS2_2_dF_1_alpha_m1",
+  "mode": "optimised",
+  "old_lambdaT3": {
+    "real": 5e-09,
+    "imag": 0.0
+  },
+  "new_lambdaT3": 0.5,
+  "fixed_uv_yukawas_and_masses": true,
+  "fixed_order_and_coupled_consistent_inputs": true,
+  "exploratory_coupled": true,
+  "relative_c5_change_scalar_threshold": 0.03660523729427632,
+  "relative_c5_change_low_energy": 0.036605239027557815,
+  "relative_reverse_feedback": 0.00031759053946632933,
+  "low_energy_observable_differences": {
+    "masses_ev": [
+      -33711.633557410445,
+      -50679.637245107675,
+      -191863.81112286914
+    ],
+    "relative_masses": [
+      -0.037092135407697846,
+      -0.03960195064548921,
+      -0.0363889232510297
+    ],
+    "delta_m21_sq_ev2": -67001677828.17969,
+    "delta_m31_sq_ev2": -1926284077580.164,
+    "theta12_deg": 0.37688918046385567,
+    "theta13_deg": -0.0096483964237013,
+    "theta23_deg": 0.029947628766457512
+  },
+  "matching_checks": {
+    "production_fixed_c5_residual": 0.0,
+    "unfitted_direct_leading_log_residual": 5.691475708100697e-17
+  },
+  "perturbative_accuracy": {
+    "scope": "one-loop Wilson RGE leading-log resummation; not complete NLO",
+    "bookkeeping": {
+      "status": "PerturbativeLLBookkeepingComplete",
+      "truncated_series_convergence_diagnostic_passed": true,
+      "truncated_series_convergence_tolerance": 1e-05,
+      "scheme": "common_scale_simultaneous_fermion_matching",
+      "powers_counted": "Wilson loop factor hbar=1/(16*pi^2), with one-loop renormalisable backgrounds held fixed",
+      "max_wilson_loop_order": 4,
+      "one_loop_frozen_direct_production_residual": 5.691475708100697e-17,
+      "order1_vs_production_direct_relative_to_direct": 0.0021856533555884477,
+      "order1_background_effect": "Difference arises from evaluating running lambdaT3(t) rather than freezing it at MS; higher order in renormalisable running",
+      "terms": {
+        "order_1": {
+          "c5_physical_majorana": {
+            "real": [
+              [
+                3.4735843884552504e-08,
+                -3.071863640746696e-08,
+                2.1271458597213642e-08
+              ],
+              [
+                -3.071863640746696e-08,
+                -7.813598497023537e-08,
+                1.2410851826582206e-07
+              ],
+              [
+                2.1271458597213642e-08,
+                1.2410851826582206e-07,
+                -7.873108210706549e-08
+              ]
+            ],
+            "imag": [
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ]
+            ],
+            "frobenius_norm": 2.1704483879337094e-07
+          },
+          "norm_relative_to_fixed_c5": 1.1216561553296625,
+          "norm_relative_to_order1": 1.0,
+          "partial_sum_relative_to_full_coupled": 0.031404245277134896,
+          "reverse_contribution_relative_to_order1": 0.0
+        },
+        "order_2": {
+          "c5_physical_majorana": {
+            "real": [
+              [
+                -1.0674994256042454e-09,
+                1.0060358569178745e-09,
+                -6.956804690632483e-10
+              ],
+              [
+                1.0060358569178745e-09,
+                2.217447787237038e-09,
+                -4.02849628228635e-09
+              ],
+              [
+                -6.956804690632483e-10,
+                -4.02849628228635e-09,
+                2.513485805542956e-09
+              ]
+            ],
+            "imag": [
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ]
+            ],
+            "frobenius_norm": 6.9154872656324604e-09
+          },
+          "norm_relative_to_fixed_c5": 0.0357382322552489,
+          "norm_relative_to_order1": 0.031862021249056655,
+          "partial_sum_relative_to_full_coupled": 0.0014576336381958556,
+          "reverse_contribution_relative_to_order1": 0.0
+        },
+        "order_3": {
+          "c5_physical_majorana": {
+            "real": [
+              [
+                4.7778642865391465e-11,
+                -4.613038756797274e-11,
+                3.1883067255051336e-11
+              ],
+              [
+                -4.613038756797274e-11,
+                -9.597782067440759e-11,
+                1.8411709679695322e-10
+              ],
+              [
+                3.1883067255051336e-11,
+                1.8411709679695322e-10,
+                -1.1416564689578591e-10
+              ]
+            ],
+            "imag": [
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ]
+            ],
+            "frobenius_norm": 3.140312590205009e-10
+          },
+          "norm_relative_to_fixed_c5": 0.0016228678673239501,
+          "norm_relative_to_order1": 0.001446849695972094,
+          "partial_sum_relative_to_full_coupled": 3.4634761193709173e-05,
+          "reverse_contribution_relative_to_order1": 0.0003174886068479555
+        },
+        "order_4": {
+          "c5_physical_majorana": {
+            "real": [
+              [
+                -1.0890764229565046e-12,
+                1.112373908905487e-12,
+                -7.679511760641671e-13
+              ],
+              [
+                1.112373908905487e-12,
+                2.0072530723711805e-12,
+                -4.407294611470271e-12
+              ],
+              [
+                -7.679511760641671e-13,
+                -4.407294611470271e-12,
+                2.6945232198593835e-12
+              ]
+            ],
+            "imag": [
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ]
+            ],
+            "frobenius_norm": 7.41473861728102e-12
+          },
+          "norm_relative_to_fixed_c5": 3.831829061897887e-05,
+          "norm_relative_to_order1": 3.416224342629926e-05,
+          "partial_sum_relative_to_full_coupled": 6.004863688104689e-07,
+          "reverse_contribution_relative_to_order1": 9.725031077514842e-06
+        }
+      },
+      "resummed_c5_reconstruction_residual": 6.004863688104689e-07,
+      "order1_plus_order2_vs_resummed_relative_to_full": 0.0014576336381958556,
+      "reverse_can_affect_c5_first_at_wilson_order": 3,
+      "reverse_numerical_difference_at_orders_1_and_2": [
+        0.0,
+        0.0
+      ],
+      "order2_complete_nlo_matching": false,
+      "validated_physical_prediction_available": false,
+      "production_replacement_allowed": false,
+      "missing_at_same_formal_second_order": [
+        "One-loop corrections to C12 threshold matching (then one-loop C12->C5)",
+        "Running of the one-loop hard C5 matching term below MF",
+        "Two-loop C12->C5 anomalous dimension and finite scalar-threshold terms",
+        "Consistent matching-scale dependence and boundary coupling convention at higher order",
+        "Complete three-generation closure beyond the retained two-operator system"
+      ],
+      "interpretation": "One-loop Wilson anomalous dimensions with leading logarithms resummed; not a complete O(hbar**2) fixed-order or NLO neutrino-mass prediction"
+    }
+  },
+  "production_unchanged": true
+}

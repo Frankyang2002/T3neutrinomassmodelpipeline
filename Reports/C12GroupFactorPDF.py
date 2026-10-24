@@ -1,4 +1,4 @@
-"""Insert representation-specific C12 factors and C12/C5 mixing into GroupFactors PDF.
+"""Insert representation-specific C12 factors and reverse C5->C12 mixing into GroupFactors PDF.
 
 Uses the actual Matchete-CG tensor and saved one-loop Wilson tensor beta.
 Does not regenerate EFT physics or create a separate report family.
@@ -151,7 +151,7 @@ def _comparison_table(block: list[dict], idx: int) -> list[str]:
     heads = [_model_header(item["model"], item["representation"]) for item in block]
     n = len(block)
     title = _latex_escape(block[0]["model"] + " -- " + block[-1]["model"])
-    colspec = "p{0.26\\linewidth}" + "".join([rf"p{{{0.68/n:.4f}\linewidth}}" for _ in block])
+    colspec = "p{0.25\\linewidth}" + "".join([rf"p{{{0.65/n:.4f}\linewidth}}" for _ in block])
     rows = sorted({key for item in block for key in item["terms"]}, key=_sort_structure)
     lines = [
         rf"\paragraph*{{Run block {idx}: {title}}}",
@@ -168,15 +168,14 @@ def _comparison_table(block: list[dict], idx: int) -> list[str]:
             else:
                 cells.append("$" + sp.latex(item["terms"].get(key, sp.S.Zero)) + "$")
         lines.append("$" + _group_structure_latex(key) + "$ & " + " & ".join(cells) + r" \\")
-    # Keep one structure-by-model table per run block (as in C5), with a
-    # visibly separate subsection for the off-diagonal anomalous dimensions.
+    # Keep one structure-by-model table per run block (as in C5).
+    # Forward C12->C5 mixing is already in the Weinberg/R_W section.
     lines.append(r"\midrule")
     lines.append(
-        rf"\multicolumn{{{n+1}}}{{@{{}}l}}{{\textit{{Off-diagonal "
-        r"$C_{12}\leftrightarrow C_5$ mixing}} \\"
+        rf"\multicolumn{{{n+1}}}{{@{{}}l}}{{\textit{{Reverse "
+        r"$C_5\to C_{12}$ mixing}} \\"
     )
     for structure, factor_fn in (
-        (r"$\lambda_5 C_{12}\to\beta_{C_5}$", _forward_mixing_factor),
         (r"$\lambda_5^* C_5\to\beta_{C_{12}}$", _reverse_mixing_factor),
     ):
         cells = []
@@ -219,14 +218,22 @@ def _forward_mixing_factor(item: dict) -> sp.Expr | None:
 
 
 def _reverse_mixing_factor(item: dict) -> sp.Expr | None:
-    """T3-B alpha=-1 reverse coefficient previously checked in tensor RGE.
+    """Read a validated C5-seeded projection, or the established T3-B-m1 factor.
 
-    Other representations have not passed a comparable C5-seeded projection.
-    Missing results are *unknown*, not zero.
+    Other representations remain unknown until their saved projection passes
+    the exact all-LLSS-component alignment check.
     """
     if item["status"] != "Projected":
         return None
+    from RGE.group_factors.validation.C12ReverseMixingGroupFactors import (
+        validate_cached_projection,
+    )
     rep = item["representation"]
+    data_dir = item.get("data_dir")
+    if data_dir is not None:
+        audit = validate_cached_projection(Path(data_dir), rep)
+        if audit is not None:
+            return sp.sympify(str(audit["factor"]), locals={"sqrt": sp.sqrt})
     dimensions = tuple(int(rep[key]) for key in ("dS1", "dS2", "dF", "alpha"))
     if dimensions == (2, 2, 1, -1) and not rep.get("shared_scalar", False):
         return 8 * sp.sqrt(3) / 3
@@ -283,6 +290,7 @@ def render_c12_pdf_section(model_data: Sequence[tuple[str, Path]]) -> tuple[str,
             terms = _factor_terms(sp.sstr(sp.expand(aligned)))
         items.append({"model": label, "status": "Projected",
                       "representation": rep, "terms": terms,
+                      "data_dir": str(data_dir),
                       "total_collinear": collinear,
                       "seed_support_component_count": result["seed_support_component_count"],
                       "generated_outside_support": len(result["generated_mixed_components_outside_c12_seed_support"])})
@@ -293,14 +301,13 @@ def render_c12_pdf_section(model_data: Sequence[tuple[str, Path]]) -> tuple[str,
         lines.extend(_comparison_table(block, idx))
     lines.extend([
         r"\paragraph{Mixing conventions.} All factors are defined in",
-        r"$16\pi^2\,dC/d\ln\mu$. The $C_{12}\to C_5$ row displays",
-        r"the existing analytic $R_W$ factor (repeated from the Weinberg section);",
-        r"its representation-dependent phase/normalisation validation remains",
-        r"a separate issue. The $C_5\to C_{12}$ row uses the independently",
-        r"checked T3-B, $\alpha=-1$ coefficient in the retained",
-        r"ordered-tensor two-operator convention. This is not an additional",
-        r"contribution to the earlier Weinberg table.",
-        r"\textit{Not verified} means no validated reverse projection is",
+        r"$16\pi^2\,dC/d\ln\mu$. The forward $C_{12}\to C_5$ term",
+        r"appears only in the existing Weinberg $R_W$ comparison table",
+        r"and is not duplicated here. The reverse $C_5\to C_{12}$ factor",
+        r"is obtained from a separate pure-$C_5$ tensor insertion and",
+        r"verified proportionality in the $\lambda_5^*$ LLSS channel",
+        r"(or the previously checked T3-B, $\alpha=-1$ benchmark).",
+        r"\textit{Not verified} means no passing reverse projection is",
         r"available for that representation; it does not imply vanishing mixing.",
         r"In the numerical neutrino-mass construction a convention-dependent",
         r"factor of two relates the ordered $C_5$ tensor to the physical",

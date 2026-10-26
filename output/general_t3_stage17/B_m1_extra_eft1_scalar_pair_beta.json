@@ -1,0 +1,63 @@
+{
+  "status": "ExtraEFT1ScalarPairMixingDerived",
+  "model": "B_m1",
+  "source": "Matchete EFT1 PL tree seed plus RGBeta potential invariants and project master psi2phi2 tensor RGE",
+  "operator": "PL two-lepton/two-real-scalar tensor C_ijab; i,j represent the two SU(2) components of one lepton generation",
+  "quartic_potential": "lambda_abcd real scalar fourth derivatives of V4; V4=-L4",
+  "source_convention": "lambda_Matchete=-lambda_RGBeta, same named scalar field basis",
+  "master_rge_term": "delta_beta_ijab^(1) = (1/2) sum_swap(a,b),c,d delta_lambda_abcd C_ijcd",
+  "quartic_real_nonzero_components": 68,
+  "pl_wilson_seed_terms": 3,
+  "nonzero_weinberg_real_components": 4,
+  "components": [
+    {
+      "higgs_real_indices": [
+        1,
+        3
+      ],
+      "beta_16pi2_expression": "-(conjugate(lambdaHHdagS1barS1bar)*conjugate(y1)**2 + conjugate(lambdaHHdagS2S2)*conjugate(y2)**2)/(2*MF)",
+      "yukawa_families": [
+        "y1",
+        "y2"
+      ]
+    },
+    {
+      "higgs_real_indices": [
+        1,
+        4
+      ],
+      "beta_16pi2_expression": "-I*(conjugate(lambdaHHdagS1barS1bar)*conjugate(y1)**2 + conjugate(lambdaHHdagS2S2)*conjugate(y2)**2)/(2*MF)",
+      "yukawa_families": [
+        "y1",
+        "y2"
+      ]
+    },
+    {
+      "higgs_real_indices": [
+        2,
+        3
+      ],
+      "beta_16pi2_expression": "-I*(conjugate(lambdaHHdagS1barS1bar)*conjugate(y1)**2 + conjugate(lambdaHHdagS2S2)*conjugate(y2)**2)/(2*MF)",
+      "yukawa_families": [
+        "y1",
+        "y2"
+      ]
+    },
+    {
+      "higgs_real_indices": [
+        2,
+        4
+      ],
+      "beta_16pi2_expression": "(conjugate(lambdaHHdagS1barS1bar)*conjugate(y1)**2 + conjugate(lambdaHHdagS2S2)*conjugate(y2)**2)/(2*MF)",
+      "yukawa_families": [
+        "y1",
+        "y2"
+      ]
+    }
+  ],
+  "full_eft1_wilson_running_implemented": false,
+  "scalar_threshold_extra_matching_implemented": false,
+  "extra_low_energy_neutrino_mass": null,
+  "complete_two_loop_result": false,
+  "limitation": "Only extra quartic-dependent scalar-pair anomalous-dimension term. No full flavor Wilson ODE or scalar-threshold finite matching is included."
+}

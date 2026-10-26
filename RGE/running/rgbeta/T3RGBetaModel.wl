@@ -564,8 +564,8 @@ T3RGBetaAddRGClosedQuartics[
             lambdaHHdagS1barS1bar,
             {Bar @ H, Bar @ H, Bar @ S1, Bar @ S1},
             GroupInvariant -> (
-                delS2[SU2L, a, #1, #2] *
-                delS2[SU2L, a, #3, #4] &
+                (eps[SU2L @ fund, #1, #4] * eps[SU2L @ fund, #2, #3] +
+                 eps[SU2L @ fund, #1, #3] * eps[SU2L @ fund, #2, #4]) / 2 &
             ),
             SelfConjugate -> False
         ];
@@ -574,8 +574,8 @@ T3RGBetaAddRGClosedQuartics[
             lambdaS1bar2S2bar2,
             {Bar @ S1, Bar @ S1, Bar @ S2, Bar @ S2},
             GroupInvariant -> (
-                delS2[SU2L, a, #1, #2] *
-                delS2[SU2L, a, #3, #4] &
+                (eps[SU2L @ fund, #1, #4] * eps[SU2L @ fund, #2, #3] +
+                 eps[SU2L @ fund, #1, #3] * eps[SU2L @ fund, #2, #4]) / 2 &
             ),
             SelfConjugate -> False
         ];
@@ -585,8 +585,8 @@ T3RGBetaAddRGClosedQuartics[
             lambdaS1barS2S2bar2,
             {Bar @ S1, S2, Bar @ S2, Bar @ S2},
             GroupInvariant -> (
-                delS2[SU2L, a, #1, #2] *
-                delS2[SU2L, a, #3, #4] &
+                (eps[SU2L @ fund, #1, #4] * del[SU2L @ fund, #2, #3] +
+                 eps[SU2L @ fund, #1, #3] * del[SU2L @ fund, #2, #4]) / 2 &
             ),
             SelfConjugate -> False
         ];
@@ -595,8 +595,8 @@ T3RGBetaAddRGClosedQuartics[
             lambdaS1S1bar2S2bar,
             {S1, Bar @ S1, Bar @ S1, Bar @ S2},
             GroupInvariant -> (
-                delS2[SU2L, a, #1, #4] *
-                delS2[SU2L, a, #2, #3] &
+                (del[SU2L @ fund, #1, #3] * eps[SU2L @ fund, #2, #4] +
+                 del[SU2L @ fund, #1, #2] * eps[SU2L @ fund, #3, #4]) / 2 &
             ),
             SelfConjugate -> False
         ];

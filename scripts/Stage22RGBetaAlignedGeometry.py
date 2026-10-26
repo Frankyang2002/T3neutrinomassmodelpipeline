@@ -193,7 +193,7 @@ def analyze(mats, invariants, declarations):
         'matchete_source_calibration':CALIBRATION,
         'triplet_symmetric_cg_component_basis':[ [[_plain(CG[a][i,j]) for j in range(2)] for i in range(2)] for a in range(3)],
         'triplet_calibration_scale':_plain(CG_SCALE),
-        'doublet_reindexing':'J=[[0,1],[-1,0]], applied to S1 and S1dag ONLY in B_-1/C_-1 four listed blocks; NOT a verified global basis',
+        'doublet_reindexing':'Historical B/C J candidate is not a verified global basis; Stage24 replacements must match directly',
         'models':{}, 'totals':defaultdict(int),
     }
     for model in sorted(mats['models']):
@@ -233,11 +233,26 @@ def analyze(mats, invariants, declarations):
                                      'reason':'Historical reused epsilon-epsilon invariant has no common I/J alignment.',
                                      'exhaustive_witness':witness})
                 elif model in TWIST_MODELS and code in TWIST_BLOCKS:
-                    expanded=[reindexed_doublet_tensor(t,mat_block[0]) for t in inv_block]
-                    ans=solve_basis(mat_block,expanded)
-                    base.update({'status':'PseudorealReindexCandidate',
-                                 'component_rotation_applied':list(FUNDAMENTAL_REINDEX),
-                                 'geometric':ans})
+                    # Historical source used delS2 x delS2, necessitating a
+                    # provisional per-block J rotation.  Stage24 repairs the
+                    # four registered GroupInvariants.  The corrected native
+                    # tensors must now match Matchete directly, with no J.
+                    if len(inv_block) != 1:
+                        raise ValueError('Unexpected B/C reused quartet multiplicity')
+                    expr = inv_block[0]['native_invariant_expression_inputform']
+                    if 'delS2[' in expr:
+                        expanded=[reindexed_doublet_tensor(t,mat_block[0]) for t in inv_block]
+                        ans=solve_basis(mat_block,expanded)
+                        base.update({'status':'PseudorealReindexCandidate',
+                                     'component_rotation_applied':list(FUNDAMENTAL_REINDEX),
+                                     'geometric':ans})
+                    else:
+                        expanded=[reconstructed_tensor(t,mat_block[0]) for t in inv_block]
+                        ans=solve_basis(mat_block,expanded)
+                        if ans['r_in_m'] != [['1']]:
+                            raise ValueError('Stage24 B/C corrected native tensor must match Matchete exactly')
+                        base.update({'status':'CorrectedBCReusedInvariantCandidate',
+                                     'geometric':ans})
                 elif any('delS2[' in t['native_invariant_expression_inputform'] for t in inv_block):
                     tensors, sources=zip(*(triplet_tensor(t,mat_block[0]) for t in inv_block))
                     ans=solve_basis(mat_block,tensors)
@@ -260,8 +275,13 @@ def analyze(mats, invariants, declarations):
           'CalibratedTripletCGCandidate':6,'slots':50,'blocks':46}
     expected_before={**core,'IncompatibleNativePair':4}
     expected_after={**core,'CorrectedReusedInvariantCandidate':4}
-    if report['totals'] not in (expected_before, expected_after):
-        raise ValueError(f'Unexpected totals {report["totals"]!r}; expected pre/post corrected pair')
+    expected_stage24={'DirectGeometryCandidate':32,
+        'CorrectedBCReusedInvariantCandidate':8,
+        'CalibratedTripletCGCandidate':6,
+        'CorrectedReusedInvariantCandidate':4,
+        'slots':50,'blocks':46}
+    if report['totals'] not in (expected_before,expected_after,expected_stage24):
+        raise ValueError(f'Unexpected totals {report["totals"]!r}; expected a reviewed whole-model source phase')
     return report
 
 

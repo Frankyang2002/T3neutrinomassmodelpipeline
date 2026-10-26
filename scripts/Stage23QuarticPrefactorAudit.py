@@ -27,6 +27,13 @@ EXPECTED_CLASSES = {
     'CalibratedTripletCGCandidate': 6,
     'CorrectedReusedInvariantCandidate': 4,
 }
+POST_STAGE24_CLASSES = {
+    'DirectGeometryCandidate': 32,
+    'CorrectedBCReusedInvariantCandidate': 8,
+    'CalibratedTripletCGCandidate': 6,
+    'CorrectedReusedInvariantCandidate': 4,
+}
+VALID_CLASS_PROFILES = (EXPECTED_CLASSES, POST_STAGE24_CLASSES)
 CORRECTED = 'del[SU2L[fund],t3i1,t3i3]*eps[SU2L[fund],t3i2,t3i4]'
 CORRECTED_FUNCTION = 'del[SU2L[fund],#1,#3]*eps[SU2L[fund],#2,#4]&'
 PREFIX = '6*Matrix[{}][##1]&'
@@ -111,8 +118,10 @@ def calculate(data):
     models = mat.get('models', {})
     if set(models) != set(dec.get('models', {})) or set(models) != set(inv.get('models', {})) or set(models) != set(geo.get('models', {})) or len(models) != 16:
         fail('Missing or inconsistent model keys')
-    if geo.get('totals') != {'slots': 50, 'blocks': 46, **EXPECTED_CLASSES}:
-        fail('Aligned geometry has not been regenerated after the B/C correction')
+    profile = next((p for p in VALID_CLASS_PROFILES
+                    if geo.get('totals') == {'slots': 50, 'blocks': 46, **p}), None)
+    if profile is None:
+        fail('Aligned geometry is not a reviewed pre/post Stage24 whole-model class profile')
     if geo.get('physical_coupling_map_certified') is not False or geo.get('physical_prefactors_verified') is not False:
         fail('Geometry certification fields inconsistent with conditional pipeline')
     status_counts = Counter()
@@ -151,7 +160,7 @@ def calculate(data):
         used_m, used_r = set(), set()
         for block in gg:
             cls = block['status']
-            if cls not in EXPECTED_CLASSES:
+            if cls not in profile:
                 fail('Unrecognised provisional geometry class')
             status_counts[cls] += len(block['rgbeta_symbols'])
             msyms = block['matchete_symbols']
@@ -188,7 +197,7 @@ def calculate(data):
             })
         if used_m != set(mby) or used_r != set(dby):
             fail('Geometric blocks do not exhaust native coupling slots in ' + model)
-    if status_counts != Counter(EXPECTED_CLASSES) or len(coupled_symbols) != 50 or len(rows) != 46:
+    if status_counts != Counter(profile) or len(coupled_symbols) != 50 or len(rows) != 46:
         fail('Unexpected 16-model slot/block total')
     return {
         'format': 'stage23-exact-source-prefactors-conditional-signed-maps-v1',
@@ -208,9 +217,10 @@ def calculate(data):
         'conditional_assumptions': [
             'The physical Matchete interaction uses +lambda_M multiplied by the exported invariant in the Lagrangian',
             'RGBeta defines quartic interactions in the Lagrangian with the conventional -V sign and V=Lam real-scalar quartic/24',
-            'A single global conjugate-doublet component transformation justifies the Stage22 eight B/C reindexing candidates',
+            'A single global conjugate-doublet component transformation must be justified if the historical Stage22 B/C J reindexing profile is used',
             'The symmetric-doublet triplet CG has the same physical normalisation as RGBeta native delS2 for all six cases',
-            'The corrected native B/C invariant is used in live RGBeta (source exports must be fresh)',
+            'The corrected native B/C 110101 invariant is used in live RGBeta (source exports must be fresh)',
+            'Stage24 remaining four reused invariants use their reviewed exact component tensors when the Stage24 corrected profile is active',
         ],
         'source_prefactors_verified': True,
         'global_su2_component_basis_verified': False,

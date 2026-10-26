@@ -1,0 +1,1036 @@
+{
+  "stage": 22,
+  "certification_status": "Uncertified",
+  "production_modified": false,
+  "normalisation_certified": false,
+  "errors": [
+    "Static audit is NOT a coupling normalisation proof"
+  ],
+  "static_audit": {
+    "status": "SourceStructureOnly",
+    "totals": {
+      "models": 16,
+      "new_vertices": 38,
+      "reused_vertices": 12,
+      "total_slots": 50,
+      "quadratics_still_blocked": 8,
+      "blocks": 46
+    },
+    "hashes": {
+      "RGE/general/generated/general_rgbeta_quartic_registry.json": "86a096410384641efa8f751b2aa98e8fee4bb6d3cccb4cfd116c559b71182eea",
+      "docs/general_scalar_trial_operator_manifest.json": "25e07dec41a681d38b461272d136d41e2becd378b5bac4ded86832ea02d70582",
+      "RGE/running/rgbeta/T3RGBetaModel.wl": "b7544e21f93d557a9ba9697260fe4b86d7cfe078a185663764d8d5eb2557da52",
+      "Lagrangian/interactions/GeneralScalarOperators.wl": "45d0bdf6fc1565b5601abd74b0f68649ffa78a8eeda6328e0c2f94cbcdb8b470",
+      "Lagrangian/interactions/GeneralScalarVerifiedQuartics.wl": "ca9f0a88cb29a22abcca4b7079b69923a6a6a2ab4a5d9429d9c2ccbfb78e3d3a",
+      "RGE/general/generated/A_+0_extra_quartics.wl": "629216465a4f27d64645ad9a66db1425199dd155f350ac63100f49076ab1af7e",
+      "RGE/general/generated/A_-2_extra_quartics.wl": "5fe6f8609a5f7ea776e6da19d75805f82e7d8b18a7f40e808fcbc251ca5c7faa",
+      "RGE/general/generated/A_-4_extra_quartics.wl": "c413f91e7ba192d59490c94e5063870954159c20104660fee8c963c12f2aabd3",
+      "RGE/general/generated/B_+1_extra_quartics.wl": "bec6692e18e63b3095cddf4609e0843129823a20111067ca90e781925837901e",
+      "RGE/general/generated/B_-1_extra_quartics.wl": "46c95e65a8084e3decacc12c0f8b0394d1b27f9e742da89257acfd72a7d59412",
+      "RGE/general/generated/B_-3_extra_quartics.wl": "b2fd5a9bc80d416c9ee28af0b1546011b013167dab84512e3fe7fbdbc6d7a74b",
+      "RGE/general/generated/C_+1_extra_quartics.wl": "54b099dbda431c09f3307195b077768c9903733d8a27bbb5eaaf87a244798c70",
+      "RGE/general/generated/C_-1_extra_quartics.wl": "0df24a20a8a55c38ed75df125c13b6c185936751df09a5fe606694e55c5c4966",
+      "RGE/general/generated/C_-3_extra_quartics.wl": "60fd15271de41a99e3872509c013dd539057c27637eafd550f8f2762a8305c34",
+      "RGE/general/generated/D_+0_extra_quartics.wl": "233b2fd12648b5e0ea3af5b0fe86dad5ed246d204ccc9e919aeda02eef0b1322",
+      "RGE/general/generated/D_+2_extra_quartics.wl": "7192d27fede57489ae0b02e957fdd088dcd0c87672f0beb9582178ac05372365",
+      "RGE/general/generated/D_-2_extra_quartics.wl": "c7b4a6aa96d685eeb35529c9fe6656102e0f3941869f8025fc75d694320e5a4d",
+      "RGE/general/generated/E_+0_extra_quartics.wl": "2e33158a0c16a21895171b46ab82bddf755657b8da978ba24e287e701344d8ce",
+      "RGE/general/generated/E_+2_extra_quartics.wl": "9a23c51b742997999321bf8912f7db031bf3897469d33f5893e9d23488552bc1",
+      "RGE/general/generated/E_-2_extra_quartics.wl": "2d85b7c3b382c3a8ca7a1e607ee9cf3859bc6a537ee35f11d52f05e6f4240cd8",
+      "RGE/general/generated/E_-4_extra_quartics.wl": "045f7a1341500b91eeda2fddd26390bc25a334bcaf42bca397eaa3e2b0a093c0"
+    },
+    "expected_rgbeta_symbols_by_block": {
+      "A_+0": {
+        "000211": [
+          "lambdaT3GeneralQ000211I1"
+        ],
+        "000400": [
+          "lambdaT3GeneralQ000400I1"
+        ],
+        "001300": [
+          "lambdaT3GeneralQ001300I1"
+        ],
+        "021010": [
+          "lambdaT3GeneralQ021010I1"
+        ],
+        "110200": [
+          "lambdaT3GeneralQ110200I1"
+        ]
+      },
+      "A_-2": {
+        "000004": [
+          "lambdaT3GeneralQ000004I1"
+        ],
+        "000013": [
+          "lambdaT3GeneralQ000013I1"
+        ],
+        "001102": [
+          "lambdaT3GeneralQ001102I1"
+        ],
+        "020101": [
+          "lambdaT3GeneralQ020101I1"
+        ],
+        "110002": [
+          "lambdaT3GeneralQ110002I1"
+        ]
+      },
+      "A_-4": {},
+      "B_+1": {
+        "022000": [
+          "lambdaT3GeneralQ022000I1"
+        ]
+      },
+      "B_-1": {
+        "000112": [
+          "lambdaS1barS2S2bar2"
+        ],
+        "000202": [
+          "lambdaS1bar2S2bar2"
+        ],
+        "001201": [
+          "lambdaS1S1bar2S2bar"
+        ],
+        "020020": [
+          "lambdaHHdagS2S2"
+        ],
+        "020200": [
+          "lambdaHHdagS1barS1bar"
+        ],
+        "110101": [
+          "lambdaT3GeneralQ110101I1",
+          "lambdaHHdagS1barS2barCross"
+        ]
+      },
+      "B_-3": {
+        "020002": [
+          "lambdaT3GeneralQ020002I1"
+        ]
+      },
+      "C_+1": {
+        "022000": [
+          "lambdaT3GeneralQ022000I1"
+        ]
+      },
+      "C_-1": {
+        "000112": [
+          "lambdaS1barS2S2bar2"
+        ],
+        "000202": [
+          "lambdaS1bar2S2bar2"
+        ],
+        "001201": [
+          "lambdaS1S1bar2S2bar"
+        ],
+        "020020": [
+          "lambdaHHdagS2S2"
+        ],
+        "020200": [
+          "lambdaHHdagS1barS1bar"
+        ],
+        "110101": [
+          "lambdaT3GeneralQ110101I1",
+          "lambdaHHdagS1barS2barCross"
+        ]
+      },
+      "C_-3": {
+        "020002": [
+          "lambdaT3GeneralQ020002I1"
+        ]
+      },
+      "D_+0": {
+        "000211": [
+          "lambdaT3GeneralQ000211I1"
+        ],
+        "000400": [
+          "lambdaT3GeneralQ000400I1"
+        ],
+        "001300": [
+          "lambdaT3GeneralQ001300I1"
+        ],
+        "021010": [
+          "lambdaT3GeneralQ021010I1"
+        ],
+        "110200": [
+          "lambdaT3GeneralQ110200I1"
+        ]
+      },
+      "D_+2": {},
+      "D_-2": {
+        "000004": [
+          "lambdaT3GeneralQ000004I1"
+        ],
+        "000013": [
+          "lambdaT3GeneralQ000013I1"
+        ],
+        "001102": [
+          "lambdaT3GeneralQ001102I1"
+        ],
+        "020101": [
+          "lambdaT3GeneralQ020101I1"
+        ],
+        "110002": [
+          "lambdaT3GeneralQ110002I1"
+        ]
+      },
+      "E_+0": {
+        "000211": [
+          "lambdaT3GeneralQ000211I1",
+          "lambdaT3GeneralQ000211I2"
+        ],
+        "000400": [
+          "lambdaT3GeneralQ000400I1"
+        ],
+        "001300": [
+          "lambdaT3GeneralQ001300I1"
+        ],
+        "021010": [
+          "lambdaT3GeneralQ021010I1"
+        ],
+        "110200": [
+          "lambdaT3GeneralQ110200I1"
+        ]
+      },
+      "E_+2": {},
+      "E_-2": {
+        "000004": [
+          "lambdaT3GeneralQ000004I1"
+        ],
+        "000013": [
+          "lambdaT3GeneralQ000013I1"
+        ],
+        "001102": [
+          "lambdaT3GeneralQ001102I1",
+          "lambdaT3GeneralQ001102I2"
+        ],
+        "020101": [
+          "lambdaT3GeneralQ020101I1"
+        ],
+        "110002": [
+          "lambdaT3GeneralQ110002I1"
+        ]
+      },
+      "E_-4": {}
+    }
+  },
+  "native_rgbeta_declarations": {
+    "status": "NativeRGBetaDeclarationsVerifiedNoCommonBasisComponents",
+    "coupling_slots_checked": 50,
+    "sha256": "445a6c6f6b8bbd71e9b8b9ef26930a2a1feaa7a58e411933cd1164d537f0b5b6",
+    "component_normalisation_certified": false
+  },
+  "native_matchete": {
+    "status": "MatcheteNativeComponentsAndRanksVerified",
+    "models_checked": 16,
+    "tensor_slots_checked": 50,
+    "field_content_blocks_checked": 46,
+    "rgbeta_tensor_alignment_verified": false,
+    "matchete_rgbeta_normalisation_certified": false,
+    "sha256": "72e3af99beced8497a419c03f1f543dd80f071e950ca72cc65892d69f16eba0f"
+  },
+  "native_rgbeta_invariant_expressions": {
+    "status": "RGBetaNativeInvariantExpressionsVerifiedNotComponents",
+    "models_checked": 16,
+    "quartic_slots_checked": 50,
+    "component_tensors_exported": false,
+    "matchete_rgbeta_normalisation_certified": false,
+    "sha256": "d3d2d43e6a7a984e29cccc42d2ff50e4a0fa6384304481ead181f71e9938e0e1"
+  },
+  "native_rgbeta_coherence": {
+    "status": "TwoNativeRGBetaDiagnosticChannelsAgree",
+    "coupling_slots_checked": 50,
+    "native_tensor_components_certified": false,
+    "matchete_rgbeta_coupling_mapping_certified": false
+  },
+  "certification": {
+    "models": {
+      "A_+0": {
+        "status": "Uncertified",
+        "slots": 5,
+        "blocks": [
+          {
+            "counts": [
+              0,
+              0,
+              0,
+              2,
+              1,
+              1
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ000211I1"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              0,
+              0,
+              0,
+              4,
+              0,
+              0
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ000400I1"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              0,
+              0,
+              1,
+              3,
+              0,
+              0
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ001300I1"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              0,
+              2,
+              1,
+              0,
+              1,
+              0
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ021010I1"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              1,
+              1,
+              0,
+              2,
+              0,
+              0
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ110200I1"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          }
+        ]
+      },
+      "A_-2": {
+        "status": "Uncertified",
+        "slots": 5,
+        "blocks": [
+          {
+            "counts": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              4
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ000004I1"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              3
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ000013I1"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              0,
+              0,
+              1,
+              1,
+              0,
+              2
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ001102I1"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              0,
+              2,
+              0,
+              1,
+              0,
+              1
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ020101I1"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              1,
+              1,
+              0,
+              0,
+              0,
+              2
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ110002I1"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          }
+        ]
+      },
+      "A_-4": {
+        "status": "Uncertified",
+        "slots": 0,
+        "blocks": []
+      },
+      "B_+1": {
+        "status": "Uncertified",
+        "slots": 1,
+        "blocks": [
+          {
+            "counts": [
+              0,
+              2,
+              2,
+              0,
+              0,
+              0
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ022000I1"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          }
+        ]
+      },
+      "B_-1": {
+        "status": "Uncertified",
+        "slots": 7,
+        "blocks": [
+          {
+            "counts": [
+              0,
+              0,
+              0,
+              1,
+              1,
+              2
+            ],
+            "symbols": [
+              "lambdaS1barS2S2bar2"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              0,
+              0,
+              0,
+              2,
+              0,
+              2
+            ],
+            "symbols": [
+              "lambdaS1bar2S2bar2"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              0,
+              0,
+              1,
+              2,
+              0,
+              1
+            ],
+            "symbols": [
+              "lambdaS1S1bar2S2bar"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              0,
+              2,
+              0,
+              0,
+              2,
+              0
+            ],
+            "symbols": [
+              "lambdaHHdagS2S2"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              0,
+              2,
+              0,
+              2,
+              0,
+              0
+            ],
+            "symbols": [
+              "lambdaHHdagS1barS1bar"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              1,
+              1,
+              0,
+              1,
+              0,
+              1
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ110101I1",
+              "lambdaHHdagS1barS2barCross"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          }
+        ]
+      },
+      "B_-3": {
+        "status": "Uncertified",
+        "slots": 1,
+        "blocks": [
+          {
+            "counts": [
+              0,
+              2,
+              0,
+              0,
+              0,
+              2
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ020002I1"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          }
+        ]
+      },
+      "C_+1": {
+        "status": "Uncertified",
+        "slots": 1,
+        "blocks": [
+          {
+            "counts": [
+              0,
+              2,
+              2,
+              0,
+              0,
+              0
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ022000I1"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          }
+        ]
+      },
+      "C_-1": {
+        "status": "Uncertified",
+        "slots": 7,
+        "blocks": [
+          {
+            "counts": [
+              0,
+              0,
+              0,
+              1,
+              1,
+              2
+            ],
+            "symbols": [
+              "lambdaS1barS2S2bar2"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              0,
+              0,
+              0,
+              2,
+              0,
+              2
+            ],
+            "symbols": [
+              "lambdaS1bar2S2bar2"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              0,
+              0,
+              1,
+              2,
+              0,
+              1
+            ],
+            "symbols": [
+              "lambdaS1S1bar2S2bar"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              0,
+              2,
+              0,
+              0,
+              2,
+              0
+            ],
+            "symbols": [
+              "lambdaHHdagS2S2"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              0,
+              2,
+              0,
+              2,
+              0,
+              0
+            ],
+            "symbols": [
+              "lambdaHHdagS1barS1bar"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              1,
+              1,
+              0,
+              1,
+              0,
+              1
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ110101I1",
+              "lambdaHHdagS1barS2barCross"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          }
+        ]
+      },
+      "C_-3": {
+        "status": "Uncertified",
+        "slots": 1,
+        "blocks": [
+          {
+            "counts": [
+              0,
+              2,
+              0,
+              0,
+              0,
+              2
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ020002I1"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          }
+        ]
+      },
+      "D_+0": {
+        "status": "Uncertified",
+        "slots": 5,
+        "blocks": [
+          {
+            "counts": [
+              0,
+              0,
+              0,
+              2,
+              1,
+              1
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ000211I1"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              0,
+              0,
+              0,
+              4,
+              0,
+              0
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ000400I1"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              0,
+              0,
+              1,
+              3,
+              0,
+              0
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ001300I1"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              0,
+              2,
+              1,
+              0,
+              1,
+              0
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ021010I1"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              1,
+              1,
+              0,
+              2,
+              0,
+              0
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ110200I1"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          }
+        ]
+      },
+      "D_+2": {
+        "status": "Uncertified",
+        "slots": 0,
+        "blocks": []
+      },
+      "D_-2": {
+        "status": "Uncertified",
+        "slots": 5,
+        "blocks": [
+          {
+            "counts": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              4
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ000004I1"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              3
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ000013I1"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              0,
+              0,
+              1,
+              1,
+              0,
+              2
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ001102I1"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              0,
+              2,
+              0,
+              1,
+              0,
+              1
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ020101I1"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              1,
+              1,
+              0,
+              0,
+              0,
+              2
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ110002I1"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          }
+        ]
+      },
+      "E_+0": {
+        "status": "Uncertified",
+        "slots": 6,
+        "blocks": [
+          {
+            "counts": [
+              0,
+              0,
+              0,
+              2,
+              1,
+              1
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ000211I1",
+              "lambdaT3GeneralQ000211I2"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              0,
+              0,
+              0,
+              4,
+              0,
+              0
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ000400I1"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              0,
+              0,
+              1,
+              3,
+              0,
+              0
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ001300I1"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              0,
+              2,
+              1,
+              0,
+              1,
+              0
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ021010I1"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              1,
+              1,
+              0,
+              2,
+              0,
+              0
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ110200I1"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          }
+        ]
+      },
+      "E_+2": {
+        "status": "Uncertified",
+        "slots": 0,
+        "blocks": []
+      },
+      "E_-2": {
+        "status": "Uncertified",
+        "slots": 6,
+        "blocks": [
+          {
+            "counts": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              4
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ000004I1"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              3
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ000013I1"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              0,
+              0,
+              1,
+              1,
+              0,
+              2
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ001102I1",
+              "lambdaT3GeneralQ001102I2"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              0,
+              2,
+              0,
+              1,
+              0,
+              1
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ020101I1"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          },
+          {
+            "counts": [
+              1,
+              1,
+              0,
+              0,
+              0,
+              2
+            ],
+            "symbols": [
+              "lambdaT3GeneralQ110002I1"
+            ],
+            "status": "Uncertified",
+            "reason": "Static data only; exact native tensors not supplied"
+          }
+        ]
+      },
+      "E_-4": {
+        "status": "Uncertified",
+        "slots": 0,
+        "blocks": []
+      }
+    },
+    "exact_algebra_slots": 0,
+    "uncertified_slots": 50
+  }
+}

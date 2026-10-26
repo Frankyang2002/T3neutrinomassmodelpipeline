@@ -1,0 +1,78 @@
+{
+  "status": "SourceLagrangianConventionDerived",
+  "scope": "ordinary split-scalar B/C(alpha=-1), two C5-active quartics only",
+  "matchete_lagrangian_term": "+lambda_mat * Q + H.c.",
+  "rgbeta_model_builder_lagrangian_term": "-lambda_rgb * Q + H.c. with overall minus on the quartic sector",
+  "reference": "https://doi.org/10.1140/epjc/s10052-021-09142-4",
+  "reference_equation": "Equation (2.3): L contains - sum_couplings lambda_abcd phi_a phi_b phi_c phi_d",
+  "matchete_source_sha256": "45d0bdf6fc1565b5601abd74b0f68649ffa78a8eeda6328e0c2f94cbcdb8b470",
+  "rgbeta_model_source_sha256": "0a9f79868d5fa82ad0c0d021e8fcb7a413e01b0b68cd37e93fa59edd43250c1c",
+  "tensor_report_status": "DoubletGroupTensorRatiosVerified",
+  "source_checks_passed": true,
+  "results": [
+    {
+      "model": "B_m1",
+      "matchete_coupling": "lambdaT3ExtraQ020020I1",
+      "rgbeta_coupling": "lambdaHHdagS2S2",
+      "field_monomial": [
+        "Hdag",
+        "Hdag",
+        "S2",
+        "S2"
+      ],
+      "rgbeta_over_matchete_tensor_factor": 1,
+      "matchete_in_terms_of_rgbeta": "negative",
+      "relative_sign": -1,
+      "requires_complex_conjugation": false
+    },
+    {
+      "model": "B_m1",
+      "matchete_coupling": "lambdaT3ExtraQ020200I1",
+      "rgbeta_coupling": "lambdaHHdagS1barS1bar",
+      "field_monomial": [
+        "Hdag",
+        "Hdag",
+        "S1dag",
+        "S1dag"
+      ],
+      "rgbeta_over_matchete_tensor_factor": 1,
+      "matchete_in_terms_of_rgbeta": "negative",
+      "relative_sign": -1,
+      "requires_complex_conjugation": false
+    },
+    {
+      "model": "C_m1",
+      "matchete_coupling": "lambdaT3ExtraQ020020I1",
+      "rgbeta_coupling": "lambdaHHdagS2S2",
+      "field_monomial": [
+        "Hdag",
+        "Hdag",
+        "S2",
+        "S2"
+      ],
+      "rgbeta_over_matchete_tensor_factor": 1,
+      "matchete_in_terms_of_rgbeta": "negative",
+      "relative_sign": -1,
+      "requires_complex_conjugation": false
+    },
+    {
+      "model": "C_m1",
+      "matchete_coupling": "lambdaT3ExtraQ020200I1",
+      "rgbeta_coupling": "lambdaHHdagS1barS1bar",
+      "field_monomial": [
+        "Hdag",
+        "Hdag",
+        "S1dag",
+        "S1dag"
+      ],
+      "rgbeta_over_matchete_tensor_factor": 1,
+      "matchete_in_terms_of_rgbeta": "negative",
+      "relative_sign": -1,
+      "requires_complex_conjugation": false
+    }
+  ],
+  "same_field_basis_assumed": true,
+  "full_threshold_matching_verified": false,
+  "physical_rg_improved_prediction": false,
+  "disclaimer": "The sign/conjugation map follows the two source Lagrangian conventions and independently verified SU(2) tensor ratios in the same named scalar-field basis. This is not a threshold-consistent coupled matching validation or a check of all T3 quartics."
+}

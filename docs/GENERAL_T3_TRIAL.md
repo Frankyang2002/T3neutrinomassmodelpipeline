@@ -314,3 +314,140 @@ these distinctions and checks that the six known special RGBeta coupling
 names are actually defined in the local source. This is the next needed
 input to a fully general RGE state extension. The quadratic scalar mixing
 terms are still prototypes, not a working generalized matching formalism.
+
+## Batch 6: formal C5 response, Matchete tensor normalisation, and RG source terms
+
+The complete 16/16 Matchete scalar-quartic audit and 16-model zero-extra C5
+proof have passed **on the user's Windows environment**. Batch 6 does not
+rerun those expensive matching calculations. It adds the next diagnostics;
+**it is not a numerical neutrino-mass implementation**.
+
+From the project root, after extracting the full Batch 6 ZIP:
+
+```powershell
+python -m pytest -q tests\python\test_general_scalar_trial.py tests\python\test_scalar_quadratic_prototype.py tests\python\test_general_scalar_c5_proof.py tests\python\test_general_rgbeta_coverage.py tests\python\test_general_t3_stage6.py
+powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3Stage6.ps1
+```
+
+This uses the **existing**
+`output/general_t3_trial/c5_algebraic_report.json` and matching artifacts,
+and the **existing** RGBeta JSON exports
+`output/T3_B_alpha_m1/data/uv_rgbeta_rge.json` and
+`output/T3_C_alpha_m1/data/uv_rgbeta_rge.json`.
+
+Outputs:
+
+- `output/general_c5_response.json`: validates the independent, linear
+  coupling derivatives in the formal B/C(-1) \(\Delta C_5\); labels whether
+  their coefficient expressions include poles and logarithms. A failure is
+  never interpreted as a proven identity.
+- `output/general_rgbeta_source_proof.json`: substitutes zero for all six
+  special B/C(-1) RGBeta quartics and records the formal one-loop beta-function
+  source for the two C5-active quartics. Demonstrates whether setting all
+  these couplings to zero is RG-invariant.
+- `output/general_t3_trial/matchete_active_quartic_tensors.json`: computes
+  Matchete SU(2) tensors for the two C5-active quartics and compares them to
+  a **defined** delta/epsilon symmetrised reference tensor. It reports the
+  proportionality factor and an exact component-by-component residual.
+
+**Normalisation limitation:** This last step determines only a Matchete-to-
+canonical-index factor. In RGBeta the same operator is written using
+`delS2` and RGBeta's own invariant conventions, and `AddQuartic` applies no
+implicit combinatorial normalisation. A separate RGBeta-to-canonical check
+and Lagrangian sign/factor check are required before identifying numerical
+values of `lambdaT3ExtraQ020020I1` with `lambdaHHdagS2S2`, or
+`lambdaT3ExtraQ020200I1` with `lambdaHHdagS1barS1bar`. Do **not** feed an
+unverified transformation into the production neutrino-mass pipeline.
+
+If the existing RGBeta output files are absent, run the script with `-SkipRGE`
+and inspect the Matchete proof separately. If Matchete fails a canonical tensor
+check, its JSON preserves the raw tensor to help diagnose SU(2) index
+orientation rather than silently declaring a unit conversion.
+
+The one-loop RGBeta normalisations and the missing 38 structurally independent
+quartic couplings outside the existing RGBeta set remain unimplemented.
+Quadratic scalar mass mixing remains catalogued but is not enabled in matching
+or RG evolution. Shared-scalar matching is also a separate physical model.
+
+## Stage 9 tensor exporter regression fix (26 October 2026)
+
+See `docs/GENERAL_T3_STAGE9_STATUS.md`. `LoadModel["SM"]` must run after
+`ResetAll[]` in the standalone tensor exporter before BSM representations
+are defined. For a targeted rerun only:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3Stage6.ps1 -TensorOnly
+```
+
+This does not claim that RGBeta's scalar coupling convention has yet been mapped.
+
+## Stage 10 (experimental numerical pilots)
+
+See `docs/GENERAL_T3_STAGE10_STATUS.md` for the two independent numerical probes and their strict limitations. Run `scripts/RunGeneralT3Stage10.ps1` after the successful Stage 8/9 formal-C5, RGBeta and tensor diagnostics. Stage 10 adds no new production numerics or RGBeta-to-Matchete coupling identification.
+
+## Stage 11 — finite scalar mass-ratio logarithms
+
+See `docs/GENERAL_T3_STAGE11_STATUS.md`. The experimental Matchete hard-C5
+pilot now retains finite physical mass-ratio logarithms after applying
+`μbar2 = MF^2` (instead of refusing any surviving `Log`). The toy input now
+supplies positive `MS1`, `MS2` in GeV. Unrecognized symbolic scales and
+unsubtracted UV poles still block evaluation and generate a diagnostic JSON.
+The PowerShell runner always attempts all four independent B/C probes before
+reporting failure. No production RGE or matching code was changed.
+
+## Stage 12 extra-only mass-matrix/phase diagnostics
+
+After the successful Stage 11 numerical pilots, run:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3Stage12.ps1
+```
+
+This reuses the stored two-model Matchete `delta_c5` matrices and reports the additional contribution to `m_nu = -(v^2/2) C5`, the three extra-only Takagi singular values and a 16-point quartic phase scan. No further symbolic matching is performed. Full details and limitations: `docs/GENERAL_T3_STAGE12_STATUS.md`.
+
+## Stage 13: coupled RGBeta UV numerical evolution and SU(2) tensor mapping
+
+See `docs/GENERAL_T3_STAGE13_STATUS.md`. After the Stage 9 tensor audit and
+Stage 8 RGBeta-source proof have succeeded, run:
+
+```powershell
+python -m pytest -q tests\python\test_general_t3_stage13.py
+powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3Stage13.ps1
+```
+
+This uses real one-loop coupled RGBeta beta functions for B/C(-1) **above the
+heavy-fermion thresholds**, including the six complex scalar quartics already
+registered in RGBeta. It is an isolated experiment, not a replacement for the
+production hierarchical numerical neutrino-mass pipeline. Group tensor ratios
+are checked, but no unverified equality of complex Matchete and RGBeta
+couplings is asserted.
+
+
+## Stage 14 (conditional UV-induced C5 sensitivity)
+
+See `docs/GENERAL_T3_STAGE14_STATUS.md`. After Stage 11 and Stage 13
+outputs exist, use `python -m pytest -q tests\python\test_general_t3_stage14.py`
+then `powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3Stage14.ps1`.
+This uses hypothetical sign/conjugation maps, **not** a proven Matchete/RGBeta
+Lagrangian coupling conversion, and never modifies production files. One-loop
+RGE-generated quartics inserted into one-loop C5 are formally of order hbar^2.
+
+## Stage 15 — source-convention map for B/C(-1)
+
+Stage 14's 16 hypothetical sign/conjugation scenarios are narrowed to the
+source-derived convention \(\lambda_{\mathrm{Matchete}}=-\lambda_{\mathrm{RGBeta}}\)
+for the two C5-active B/C(-1) quartics *in the same named scalar basis*.
+This follows the RGBeta MBL quartic sign (Thomsen, EPJC 81 (2021) 408,
+Eq. 2.3), the experimental Matchete positive `PlusHc` interactions, and the
+previously verified +1 SU(2) tensor factors. The source checker fails closed
+on field-word, tensor, or interaction-definition changes; the numerical
+calculation must reproduce Stage 14's `negative/negative` case.
+
+```powershell
+python -m pytest -q tests\python\test_general_t3_stage15.py
+powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3Stage15.ps1
+```
+
+Results are written under `output/general_t3_stage15/`; no production modules
+are modified. **Still not threshold-consistent matching or a complete two-loop
+calculation**. See `docs/GENERAL_T3_STAGE15_STATUS.md`.

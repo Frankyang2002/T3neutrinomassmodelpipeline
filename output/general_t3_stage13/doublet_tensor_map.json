@@ -1,0 +1,54 @@
+{
+  "status": "DoubletGroupTensorRatiosVerified",
+  "scope": "ordinary split-scalar B/C(-1) only",
+  "source_rgbeta_project_model": "RGE\\running\\rgbeta\\T3RGBetaModel.wl",
+  "matchete_reference": "output\\general_t3_trial\\matchete_active_quartic_tensors.json",
+  "rgbeta_projector_identity": "delS2(a,i,j) delS2(a,k,l) = (delta_ik delta_jl+delta_il delta_jk)/2, from aethomsen/RGBeta Package/GroupsAndIndices.m",
+  "delta_projector_residual": 0.0,
+  "epsilon_projector_residual": 0.0,
+  "tensor_ratio_only": true,
+  "full_lagrangian_coupling_identification_verified": false,
+  "caveat": "The RGBeta index contraction factor is verified from its documented/source SU(2) projector. Relative phases or signs and scalar potential versus interaction Lagrangian conventions still need a vertex-level check before inserting RGBeta values into Matchete C5.",
+  "mappings": [
+    {
+      "model": "B_m1",
+      "matchete_coupling": "lambdaT3ExtraQ020020I1",
+      "rgbeta_coupling": "lambdaHHdagS2S2",
+      "rgbeta_over_canonical_tensor_factor": 1.0,
+      "matchete_over_canonical_tensor_factor": 1,
+      "rgbeta_over_matchete_tensor_factor": 1.0,
+      "relative_phase_convention": "epsilon_12 = +1; two epsilon conversions applied for the all-bar structure",
+      "full_lagrangian_coupling_identification_verified": false
+    },
+    {
+      "model": "B_m1",
+      "matchete_coupling": "lambdaT3ExtraQ020200I1",
+      "rgbeta_coupling": "lambdaHHdagS1barS1bar",
+      "rgbeta_over_canonical_tensor_factor": 1.0,
+      "matchete_over_canonical_tensor_factor": 1,
+      "rgbeta_over_matchete_tensor_factor": 1.0,
+      "relative_phase_convention": "epsilon_12 = +1; two epsilon conversions applied for the all-bar structure",
+      "full_lagrangian_coupling_identification_verified": false
+    },
+    {
+      "model": "C_m1",
+      "matchete_coupling": "lambdaT3ExtraQ020020I1",
+      "rgbeta_coupling": "lambdaHHdagS2S2",
+      "rgbeta_over_canonical_tensor_factor": 1.0,
+      "matchete_over_canonical_tensor_factor": 1,
+      "rgbeta_over_matchete_tensor_factor": 1.0,
+      "relative_phase_convention": "epsilon_12 = +1; two epsilon conversions applied for the all-bar structure",
+      "full_lagrangian_coupling_identification_verified": false
+    },
+    {
+      "model": "C_m1",
+      "matchete_coupling": "lambdaT3ExtraQ020200I1",
+      "rgbeta_coupling": "lambdaHHdagS1barS1bar",
+      "rgbeta_over_canonical_tensor_factor": 1.0,
+      "matchete_over_canonical_tensor_factor": 1,
+      "rgbeta_over_matchete_tensor_factor": 1.0,
+      "relative_phase_convention": "epsilon_12 = +1; two epsilon conversions applied for the all-bar structure",
+      "full_lagrangian_coupling_identification_verified": false
+    }
+  ]
+}

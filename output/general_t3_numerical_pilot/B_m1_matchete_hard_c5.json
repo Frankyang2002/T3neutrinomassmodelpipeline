@@ -1,0 +1,142 @@
+{
+  "status": "ExperimentalHardBoundaryC5",
+  "matrix_dimension": 3,
+  "units": "GeV^-1",
+  "contributions": {
+    "lambdaT3ExtraQ020020I1": {
+      "real": [
+        [
+          1.1117475942558809e-17,
+          9.050564650905313e-18,
+          9.356743752524112e-18
+        ],
+        [
+          9.050564650905313e-18,
+          1.0521161851690947e-17,
+          9.157972388901491e-18
+        ],
+        [
+          9.356743752524112e-18,
+          9.157972388901491e-18,
+          1.143969915654734e-17
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "frobenius_norm": 2.952658970636732e-17
+    },
+    "lambdaT3ExtraQ020200I1": {
+      "real": [
+        [
+          -1.793820221423553e-17,
+          -1.5243614779735122e-17,
+          -1.530806201043007e-17
+        ],
+        [
+          -1.5243614779735122e-17,
+          -1.857803860543733e-17,
+          -1.5521340807497334e-17
+        ],
+        [
+          -1.530806201043007e-17,
+          -1.5521340807497334e-17,
+          -1.877138029752217e-17
+        ]
+      ],
+      "imag": [
+        [
+          -5.9794007380785105e-18,
+          -5.081204926578373e-18,
+          -5.102687336810023e-18
+        ],
+        [
+          -5.081204926578373e-18,
+          -6.192679535145776e-18,
+          -5.173780269165778e-18
+        ],
+        [
+          -5.102687336810023e-18,
+          -5.173780269165778e-18,
+          -6.257126765840724e-18
+        ]
+      ],
+      "frobenius_norm": 5.2009833305714135e-17
+    }
+  },
+  "delta_c5": {
+    "real": [
+      [
+        -6.8207262716767214e-18,
+        -6.193050128829809e-18,
+        -5.951318257905957e-18
+      ],
+      [
+        -6.193050128829809e-18,
+        -8.056876753746381e-18,
+        -6.363368418595843e-18
+      ],
+      [
+        -5.951318257905957e-18,
+        -6.363368418595843e-18,
+        -7.331681140974831e-18
+      ]
+    ],
+    "imag": [
+      [
+        -5.9794007380785105e-18,
+        -5.081204926578373e-18,
+        -5.102687336810023e-18
+      ],
+      [
+        -5.081204926578373e-18,
+        -6.192679535145776e-18,
+        -5.173780269165778e-18
+      ],
+      [
+        -5.102687336810023e-18,
+        -5.173780269165778e-18,
+        -6.257126765840724e-18
+      ]
+    ],
+    "frobenius_norm": 2.577247421905154e-17
+  },
+  "matching_scale_convention": "\u03bcbar^2 = MF_r^2 separately for each heavy mass eigenstate",
+  "finite_mass_ratio_logs_preserved": true,
+  "scalar_masses_gev": {
+    "MS1": 1350.0,
+    "MS2": 1780.0
+  },
+  "warning": "Experimental fixed-order Matchete response at the selected MF matching scale, retaining physical mass-ratio logs. NOT renormalised hierarchical final C5, not RG evolved, and the Matchete-to-RGBeta map has NOT been verified.",
+  "model": "B_m1",
+  "atom_source": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_t3_trial\\B_m1\\general_c5_algebraic\\delta_c5_atoms.json",
+  "input_file": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\docs\\general_c5_toy_benchmark.json",
+  "kernels": [
+    {
+      "coupling": "lambdaT3ExtraQ020020I1",
+      "conjugated": true,
+      "yukawa": "y2",
+      "finite_hard_kernel": "MF*hbar*(MF**2*log(MF**2/MS2**2) - MF**2 + MS2**2)/((MF - MS2)**2*(MF + MS2)**2)"
+    },
+    {
+      "coupling": "lambdaT3ExtraQ020200I1",
+      "conjugated": true,
+      "yukawa": "y1",
+      "finite_hard_kernel": "MF*hbar*(MF**2*log(MF**2/MS1**2) - MF**2 + MS1**2)/((MF - MS1)**2*(MF + MS1)**2)"
+    }
+  ]
+}

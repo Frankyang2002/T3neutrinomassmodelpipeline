@@ -1,0 +1,64 @@
+{
+	"status":"OneLoopSourcesVerified",
+	"one_loop_beta_convention":"16*pi^2*dX\/dln(mu) = beta^(1)",
+	"set_zero":[
+		"lambdaHHdagS2S2",
+		"lambdaHHdagS1barS1bar",
+		"lambdaS1bar2S2bar2",
+		"lambdaS1barS2S2bar2",
+		"lambdaS1S1bar2S2bar",
+		"lambdaHHdagS1barS2barCross"
+	],
+	"remaining_general":[
+		"lambdaT3",
+		"y1",
+		"y2",
+		"SM and ordinary quartics"
+	],
+	"matchete_rgbeta_coupling_map_verified":false,
+	"note":"A nonzero source under this substitution means boundary zeros are not RG-closed. A generated coupling inserted into one-loop matching enters at formally higher perturbative order.",
+	"results":[
+		{
+			"model":"B_m1",
+			"path":"C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\T3_B_alpha_m1\\data\\uv_rgbeta_rge.json",
+			"status":"Analyzed",
+			"couplings":[
+				{
+					"coupling":"lambdaHHdagS2S2",
+					"status":"Analyzed",
+					"nonzero_formal_source":true,
+					"source_at_zero_special_quartics_inputform":"Bar[lambdaT3]*Tr[y1 . Trans[Bar[y2]]]",
+					"source_independent_of_special_quartics":true
+				},
+				{
+					"coupling":"lambdaHHdagS1barS1bar",
+					"status":"Analyzed",
+					"nonzero_formal_source":true,
+					"source_at_zero_special_quartics_inputform":"Bar[lambdaT3]*Tr[y2 . Trans[Bar[y1]]]",
+					"source_independent_of_special_quartics":true
+				}
+			]
+		},
+		{
+			"model":"C_m1",
+			"path":"C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\T3_C_alpha_m1\\data\\uv_rgbeta_rge.json",
+			"status":"Analyzed",
+			"couplings":[
+				{
+					"coupling":"lambdaHHdagS2S2",
+					"status":"Analyzed",
+					"nonzero_formal_source":true,
+					"source_at_zero_special_quartics_inputform":"(3*Bar[lambdaT3]*Tr[y1 . Trans[Bar[y2]]])\/2",
+					"source_independent_of_special_quartics":true
+				},
+				{
+					"coupling":"lambdaHHdagS1barS1bar",
+					"status":"Analyzed",
+					"nonzero_formal_source":true,
+					"source_at_zero_special_quartics_inputform":"(3*Bar[lambdaT3]*Tr[y2 . Trans[Bar[y1]]])\/2",
+					"source_independent_of_special_quartics":true
+				}
+			]
+		}
+	]
+}

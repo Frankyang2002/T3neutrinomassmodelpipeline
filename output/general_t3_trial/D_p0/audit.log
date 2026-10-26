@@ -1,0 +1,40 @@
+﻿by Javier Fuentes-Marti'n, Matthias Ko"nig, Julie Page`s, Anders Eller Thomsen, and Felix Wilsch 
+Contributors:   Lukas Born, Luis Hourtz, Tamilarasan Ketheeswaran, Javier Lo'pez Miras, Adria'n Moreno-Sa'nchez, and Philip Weber 
+Reference:      Hyperlink[arXiv:2212.04510, https://arxiv.org/abs/2212.04510]
+Documentation:  Hyperlink[open, paclet:Matchete/guide/Matchete]
+Website:        Hyperlink[https://matchete.gitlab.io, https://matchete.gitlab.io]
+Model database: Hyperlink[https://gitlab.com/matchete/model-database, https://gitlab.com/matchete/model-database]
+Repository:     Hyperlink[https://gitlab.com/matchete/matchete, https://gitlab.com/matchete/matchete]
+Front-end connected during validation: True
+  Defined BSM SU(2) representation T3BSMd2 with d=2, Dynkin={1}
+  Defined BSM SU(2) representation T3BSMd3 with d=3, Dynkin={2}
+  CG T3Y1CG: dims={2, 2, 3}, oriented algebra reps=InputForm[{CRep[{1}], CRep[{1}], {2}}], CG reps=InputForm[{SU2L[fund], T3BSMd2, T3BSMd3}], symmetric positions={}
+    InvariantTensors result head: List, count=1
+    DefineCG result: InputForm[T3Y1CG]
+  CG T3Y2CG: dims={2, 2, 1}, oriented algebra reps=InputForm[{CRep[{1}], {1}}], CG reps=InputForm[{SU2L[fund], Bar[T3BSMd2]}], symmetric positions={}
+    InvariantTensors result head: List, count=1
+    DefineCG result: InputForm[T3Y2CG]
+  CG T3MixCG: dims={2, 2, 3, 1}, oriented algebra reps=InputForm[{{1}, {1}, {2}}], CG reps=InputForm[{Bar[SU2L[fund]], Bar[SU2L[fund]], T3BSMd3}], symmetric positions={1, 2}
+    InvariantTensors result head: List, count=1
+    DefineCG result: InputForm[T3MixCG]
+  lambdaS1: raw SU(2) invariants=3, physical invariants=2
+  lambdaS2: raw SU(2) invariants=1, physical invariants=1
+  lambdaH1: raw SU(2) invariants=2, physical invariants=2
+  lambdaH2: raw SU(2) invariants=1, physical invariants=1
+  lambda12: raw SU(2) invariants=1, physical invariants=1
+Baseline full Lagrangian valid: InputForm[True]
+Checking candidate: T3ExtraQ_0_0_0_2_1_1_1
+  result: InputForm[True]
+Checking candidate: T3ExtraQ_0_0_0_4_0_0_1
+  result: InputForm[True]
+Checking candidate: T3ExtraQ_0_0_1_3_0_0_1
+  result: InputForm[True]
+Checking candidate: T3ExtraQ_0_2_1_0_1_0_1
+  result: InputForm[True]
+Checking candidate: T3ExtraQ_1_1_0_2_0_0_1
+  result: InputForm[True]
+General scalar audit written to C:\thesistemp\T3neutrinomassmodelpipeline\output\general_t3_trial\D_p0\audit.json
+Status: Success
+Extra quartic candidates: 5
+Accepted: 5
+Combined Lagrangian valid: True

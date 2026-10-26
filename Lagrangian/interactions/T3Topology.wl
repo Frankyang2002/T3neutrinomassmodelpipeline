@@ -2,6 +2,9 @@
    Builds the two lepton-fermion-scalar Yukawa vertices, the HH S1 S2^dagger
    mixing quartic, and combines them with the general scalar potential. *)
 
+(* Experimental general quartic extension, normally disabled. *)
+Get[FileNameJoin[{DirectoryName @ ExpandFileName[$InputFileName], "GeneralScalarOperators.wl"}]];
+
 (* Build the topology Yukawa with the generic Matchete-generated CG. Remember its yukawa 
 1. We load whichever scalar is being used for yukawa here
 2. Load its dimensions, whether its conjugated or how it is contracted etc and its couplings
@@ -32,7 +35,7 @@ BuildT3YukawaCandidates[model_Association, which_Integer] := Module[
     If[useCConj, CConj[NewFermion[j, r]], NewFermion[j, r]]
   ];
 
-  (* Create new scalar that becomes conjugated based on scalar choice for yukawa *)
+  (* Create new scalar that becomes conjugated based on which scalar we use *)
   scalar = If[dS === 1,
     ScalarFieldValue[which, scalarBar],
     ScalarFieldValue[which, scalarBar, k]
@@ -79,10 +82,18 @@ BuildT3MixingCandidates[model_Association] := Module[
   }
 ];
 
-(* Assemble all interaction candidates without validating them. *)
+(* Assemble all interaction candidates without validating them.  The
+   experimental extra quartics remain OFF unless explicitly requested. *)
 BuildT3InteractionCandidates[model_Association] := Join[
   BuildT3YukawaCandidates[model, 1],
   BuildT3YukawaCandidates[model, 2],
   BuildGeneralScalarPotentialCandidates[model],
-  BuildT3MixingCandidates[model]
+  BuildT3MixingCandidates[model],
+  If[
+    TrueQ[T3ExperimentalGeneralQuarticsQ[]],
+    Print["EXPERIMENTAL: building symmetry-allowed extra scalar quartics; " <>
+      "downstream RGBeta/numerical evolution is NOT extended."];
+    T3ExtendedBuildExtraQuarticCandidates[model],
+    {}
+  ]
 ];

@@ -1,0 +1,144 @@
+﻿Loading Matchete...
+by Javier Fuentes-Marti'n, Matthias Ko"nig, Julie Page`s, Anders Eller Thomsen, and Felix Wilsch 
+Contributors:   Lukas Born, Luis Hourtz, Tamilarasan Ketheeswaran, Javier Lo'pez Miras, Adria'n Moreno-Sa'nchez, and Philip Weber 
+Reference:      Hyperlink[arXiv:2212.04510, https://arxiv.org/abs/2212.04510]
+Documentation:  Hyperlink[open, paclet:Matchete/guide/Matchete]
+Website:        Hyperlink[https://matchete.gitlab.io, https://matchete.gitlab.io]
+Model database: Hyperlink[https://gitlab.com/matchete/model-database, https://gitlab.com/matchete/model-database]
+Repository:     Hyperlink[https://gitlab.com/matchete/matchete, https://gitlab.com/matchete/matchete]
+Matchete loaded successfully.
+Model: T3-E, alpha = 0
+Scalar1 (d,Y) = {3, 0}
+Scalar2 (d,Y) = {3, 1}
+Fermion (d,Y) = {2, 1/2}
+Threshold plan: {{F, S1, S2}}
+Threshold group count: 1
+Build stage 1/4: load SM
+  LoadModel result: OK
+Build stage 2/4: define BSM fields
+  Defined BSM SU(2) representation T3BSMd2 with d=2, Dynkin={1}
+  Defined BSM SU(2) representation T3BSMd3 with d=3, Dynkin={2}
+  field definition result: True
+Build stage 3/4: define couplings
+  coupling definition result: True
+Build stage 4/4: define SU(2) CG tensors
+  CG T3Y1CG: dims={2, 2, 3}, oriented algebra reps=InputForm[{CRep[{1}], CRep[{1}], {2}}], CG reps=InputForm[{SU2L[fund], T3BSMd2, T3BSMd3}], symmetric positions={}
+    InvariantTensors result head: List, count=1
+    DefineCG result: InputForm[T3Y1CG]
+  CG T3Y2CG: dims={2, 2, 3}, oriented algebra reps=InputForm[{CRep[{1}], {1}, {2}}], CG reps=InputForm[{SU2L[fund], Bar[T3BSMd2], T3BSMd3}], symmetric positions={}
+    InvariantTensors result head: List, count=1
+    DefineCG result: InputForm[T3Y2CG]
+  CG T3MixCG: dims={2, 2, 3, 3}, oriented algebra reps=InputForm[{{1}, {1}, {2}, {2}}], CG reps=InputForm[{Bar[SU2L[fund]], Bar[SU2L[fund]], T3BSMd3, T3BSMd3}], symmetric positions={1, 2}
+    InvariantTensors result head: List, count=1
+    DefineCG result: InputForm[T3MixCG]
+  CG definition result: InputForm[<|Yukawa1 -> T3Y1CG, Yukawa2 -> T3Y2CG, Mixing -> T3MixCG|>]
+  lambdaS1: raw SU(2) invariants=3, physical invariants=2
+  lambdaS2: raw SU(2) invariants=3, physical invariants=2
+  lambdaH1: raw SU(2) invariants=2, physical invariants=2
+  lambdaH2: raw SU(2) invariants=2, physical invariants=2
+  lambda12: raw SU(2) invariants=3, physical invariants=3
+Checking candidate: Yukawa1_GenericCG
+  result: InputForm[True]
+Checking candidate: Yukawa2_GenericCG
+  result: InputForm[True]
+Checking candidate: Scalar1SelfInv1
+  result: InputForm[True]
+Checking candidate: Scalar1SelfInv2
+  result: InputForm[True]
+Checking candidate: Scalar2SelfInv1
+  result: InputForm[True]
+Checking candidate: Scalar2SelfInv2
+  result: InputForm[True]
+Checking candidate: HiggsPortal1Inv1
+  result: InputForm[True]
+Checking candidate: HiggsPortal1Inv2
+  result: InputForm[True]
+Checking candidate: HiggsPortal2Inv1
+  result: InputForm[True]
+Checking candidate: HiggsPortal2Inv2
+  result: InputForm[True]
+Checking candidate: ScalarCrossPortalInv1
+  result: InputForm[True]
+Checking candidate: ScalarCrossPortalInv2
+  result: InputForm[True]
+Checking candidate: ScalarCrossPortalInv3
+  result: InputForm[True]
+Checking candidate: T3ScalarMix_GenericCG
+  result: InputForm[True]
+Accepted interactions: {Yukawa1_GenericCG, Yukawa2_GenericCG, Scalar1SelfInv1, Scalar1SelfInv2, Scalar2SelfInv1, Scalar2SelfInv2, HiggsPortal1Inv1, HiggsPortal1Inv2, HiggsPortal2Inv1, HiggsPortal2Inv2, ScalarCrossPortalInv1, ScalarCrossPortalInv2, ScalarCrossPortalInv3, T3ScalarMix_GenericCG}
+T3 ingredients present: True
+
+=== Threshold stage 1: integrating F, S1, S2 ===
+
+  [A] Tree matching of the tree-level EFT
+
+Running Matchete matching...
+EFT order: 5; loop order: 0
+Running Match...
+
+FrontEndObject::notavail: A front end is not available; certain operations require a front end.
+
+FrontEndObject::notavail: A front end is not available; certain operations require a front end.
+
+FrontEndObject::notavail: A front end is not available; certain operations require a front end.
+
+General::stop: Further output of FrontEndObject::notavail will be suppressed during this calculation.
+  Match result head: Times
+Running GreensSimplify...
+  GreensSimplify result head: Plus
+Running EOMSimplify...
+  EOMSimplify result head: Plus
+Running EvaluateLoopFunctions...
+  EvaluateLoopFunctions result head: Plus
+Running ReplaceEffectiveCouplings...
+  ReplaceEffectiveCouplings result head: Plus
+Matching pipeline completed successfully.
+
+  [B] One-loop matching of the tree-level EFT
+
+Running Matchete matching...
+EFT order: 5; loop order: 1
+Running Match...
+  Match result head: Times
+Running GreensSimplify...
+  GreensSimplify result head: Plus
+Running EOMSimplify...
+>> The Lagrangian contains terms of lower power than dimension 4. Defining effective couplings and assuming these terms to be dimension 4. Use 'PrintEffectiveCouplings' and 'ReplaceEffectiveCouplings' to recover explicit expressions.
+  EOMSimplify result head: Plus
+Running EvaluateLoopFunctions...
+  EvaluateLoopFunctions result head: Plus
+Running ReplaceEffectiveCouplings...
+  ReplaceEffectiveCouplings result head: Plus
+Matching pipeline completed successfully.
+  Perturbative-stage diagnostics: C:\thesistemp\T3neutrinomassmodelpipeline\output\general_t3_trial\E_p0\baseline\debug\perturbative_stage_1.json
+  Intermediate EFT Wilson seed: 0 tree-level psi^2 phi^2 term(s), 0 CG definition(s) -> C:\thesistemp\T3neutrinomassmodelpipeline\output\general_t3_trial\E_p0\baseline\data\eft1_after_F_S1_S2_wilson_seed.json
+  Intermediate EFT scalar-quartic seed: 1 tree-level scalar quartic term(s), 0 CG definition(s) -> C:\thesistemp\T3neutrinomassmodelpipeline\output\general_t3_trial\E_p0\baseline\data\eft1_after_F_S1_S2_scalar_quartic_seed.json
+  Intermediate EFT RGE export: C:\thesistemp\T3neutrinomassmodelpipeline\output\general_t3_trial\E_p0\baseline\data\eft1_after_F_S1_S2_rge_export.json
+Sequential matching completed with 1 stage(s).
+
+Starting pure-SM baseline matching...
+
+Running Matchete matching...
+EFT order: 5; loop order: 1
+Running Match...
+  Match result head: Times
+Running GreensSimplify...
+  GreensSimplify result head: Plus
+Running EOMSimplify...
+  EOMSimplify result head: Plus
+Running EvaluateLoopFunctions...
+  EvaluateLoopFunctions result head: Plus
+Running ReplaceEffectiveCouplings...
+  ReplaceEffectiveCouplings result head: Plus
+Matching pipeline completed successfully.
+Running GreensSimplifyDifference...
+Skipping EOMSimplifyDifference: full and SM EFTs were already EOM-canonicalised before subtraction.
+Running EvaluateLoopFunctionsDifference...
+Running ReplaceEffectiveCouplingsDifference...
+Matched EFT difference constructed successfully.
+Weinberg operator present: True
+Weinberg contributions isolated: 8
+C5 extraction: Success (holomorphic terms: 4; HC terms: 4)
+Pure-SM matching status: Success
+BSM EFT difference status: Success
+BSM EFT conversion success: True

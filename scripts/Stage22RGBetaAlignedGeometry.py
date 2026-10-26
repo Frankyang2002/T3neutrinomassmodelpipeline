@@ -210,12 +210,28 @@ def analyze(mats, invariants, declarations):
                   'physical_mapping_certified':False}
             try:
                 if model in TWIST_MODELS and code==BAD_BLOCK:
-                    witness=_span_witness(mat_block,inv_block)
-                    if witness['consistent_I_or_J_alignment_exists']:
-                        raise ValueError('110101 suddenly has a common alignment; investigate before classifying')
-                    base.update({'status':'IncompatibleNativePair',
-                                 'reason':'No common component reindexing (I or epsilon J per field) aligns both native quartics with Matchete span.',
-                                 'exhaustive_witness':witness})
+                    if [t['symbol'] for t in inv_block] != ['lambdaT3GeneralQ110101I1', 'lambdaHHdagS1barS2barCross']:
+                        raise ValueError('Unexpected 110101 native symbol order')
+                    compact = [''.join(t['native_invariant_expression_inputform'].split()) for t in inv_block]
+                    fixed_first = 'del[SU2L[fund],t3i1,t3i4]*eps[SU2L[fund],t3i2,t3i3]'
+                    old_second = 'eps[SU2L[fund],t3i1,t3i3]*eps[SU2L[fund],t3i2,t3i4]'
+                    fixed_second = 'del[SU2L[fund],t3i1,t3i3]*eps[SU2L[fund],t3i2,t3i4]'
+                    if compact[0] != fixed_first or compact[1] not in (old_second,fixed_second):
+                        raise ValueError('110101 source changed outside reviewed contraction; refuse inference')
+                    if compact[1] == fixed_second:
+                        expanded=[reconstructed_tensor(t,mat_block[0]) for t in inv_block]
+                        ans=solve_basis(mat_block,expanded)
+                        if ans['r_in_m'] != [['1/2','1'],['-sqrt(3)/2','0']]:
+                            raise ValueError('Corrected 110101 tensor geometry changed')
+                        base.update({'status':'CorrectedReusedInvariantCandidate',
+                                     'geometric':ans})
+                    else:
+                        witness=_span_witness(mat_block,inv_block)
+                        if witness['consistent_I_or_J_alignment_exists']:
+                            raise ValueError('Historical 110101 unexpectedly has a common alignment')
+                        base.update({'status':'IncompatibleNativePair',
+                                     'reason':'Historical reused epsilon-epsilon invariant has no common I/J alignment.',
+                                     'exhaustive_witness':witness})
                 elif model in TWIST_MODELS and code in TWIST_BLOCKS:
                     expanded=[reindexed_doublet_tensor(t,mat_block[0]) for t in inv_block]
                     ans=solve_basis(mat_block,expanded)
@@ -240,10 +256,12 @@ def analyze(mats, invariants, declarations):
             report['totals']['blocks']+=1
         report['models'][model]=blocks
     report['totals']=dict(report['totals'])
-    expected={'DirectGeometryCandidate':32,'PseudorealReindexCandidate':8,
-              'CalibratedTripletCGCandidate':6,'IncompatibleNativePair':4,'slots':50,'blocks':46}
-    if report['totals']!=expected:
-        raise ValueError(f'Unexpected totals {report["totals"]!r}; expected {expected!r}')
+    core={'DirectGeometryCandidate':32,'PseudorealReindexCandidate':8,
+          'CalibratedTripletCGCandidate':6,'slots':50,'blocks':46}
+    expected_before={**core,'IncompatibleNativePair':4}
+    expected_after={**core,'CorrectedReusedInvariantCandidate':4}
+    if report['totals'] not in (expected_before, expected_after):
+        raise ValueError(f'Unexpected totals {report["totals"]!r}; expected pre/post corrected pair')
     return report
 
 

@@ -68,9 +68,10 @@ def test_triple_triplet_e_model_prediction_has_exact_zero_residual():
 def test_full_evidence_conditional_status_and_doublet_geometry():
     inputs=_actual()
     out=analyze(*inputs)
-    assert out['totals']=={'DirectGeometryCandidate':32,'PseudorealReindexCandidate':8,
-                            'CalibratedTripletCGCandidate':6,'IncompatibleNativePair':4,
-                            'slots':50,'blocks':46}
+    core={'DirectGeometryCandidate':32,'PseudorealReindexCandidate':8,
+          'CalibratedTripletCGCandidate':6,'slots':50,'blocks':46}
+    assert out['totals'] in ({**core,'IncompatibleNativePair':4},
+                             {**core,'CorrectedReusedInvariantCandidate':4})
     assert out['physical_coupling_map_certified'] is False
     assert out['native_rgbeta_component_basis_verified'] is False
     for model in ('B_-1','C_-1'):
@@ -85,12 +86,15 @@ def test_110101_blocks_exhaustive_incompatible_rotation_witness():
     report=analyze(*_actual())
     for model in ('B_-1','C_-1'):
         b=next(b for b in report['models'][model] if b['block']=='110101')
-        assert b['status']=='IncompatibleNativePair'
-        w=b['exhaustive_witness']
-        assert w['rotation_choices_exhausted']==16
-        assert w['consistent_I_or_J_alignment_exists'] is False
-        assert w['common_full_rank_rotations']==[]
-        assert all(len(v)>0 for v in w['native_coupling_rotation_witnesses'].values())
+        assert b['status'] in ('IncompatibleNativePair','CorrectedReusedInvariantCandidate')
+        if b['status']=='IncompatibleNativePair':
+            w=b['exhaustive_witness']
+            assert w['rotation_choices_exhausted']==16
+            assert w['consistent_I_or_J_alignment_exists'] is False
+            assert w['common_full_rank_rotations']==[]
+            assert all(len(v)>0 for v in w['native_coupling_rotation_witnesses'].values())
+        else:
+            assert b['geometric']['r_in_m']==[['1/2','1'],['-sqrt(3)/2','0']]
 
 
 def test_tampered_e_triplet_expression_fails_closed():
@@ -100,3 +104,22 @@ def test_tampered_e_triplet_expression_fails_closed():
     t['native_invariant_expression_inputform']=t['native_invariant_expression_inputform'].replace(')/2',')/3',1)
     with pytest.raises(ValueError,match='Unknown native triplet'):
         triplet_tensor(t,m)
+
+
+def test_postfix_synthetic_aligned_geometry_all_50_slots():
+    mat, inv, dec = _actual()
+    inv,dec=copy.deepcopy(inv),copy.deepcopy(dec)
+    for model in ('B_-1','C_-1'):
+        r=next(v for v in inv['models'][model]['invariants'] if v['symbol']=='lambdaHHdagS1barS2barCross')
+        d=next(v for v in dec['models'][model]['declarations'] if v['symbol']==r['symbol'])
+        r['native_invariant_expression_inputform']='del[SU2L[fund],t3i1,t3i3]*eps[SU2L[fund],t3i2,t3i4]'
+        r['native_invariant_function_inputform']='del[SU2L[fund], #1, #3]*eps[SU2L[fund], #2, #4] & '
+        d['invariant_inputform']=r['native_invariant_function_inputform']
+    out=analyze(mat,inv,dec)
+    assert out['totals']=={'DirectGeometryCandidate':32,'PseudorealReindexCandidate':8,
+         'CalibratedTripletCGCandidate':6,'CorrectedReusedInvariantCandidate':4,
+         'slots':50,'blocks':46}
+    assert out['physical_coupling_map_certified'] is False
+    for model in ('B_-1','C_-1'):
+        b=next(v for v in out['models'][model] if v['block']=='110101')
+        assert b['geometric']['r_in_m']==[['1/2','1'],['-sqrt(3)/2','0']]

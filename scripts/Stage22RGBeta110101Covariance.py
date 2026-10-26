@@ -33,6 +33,7 @@ EXPECTED = {
     ORIGINAL_REUSED: 'eps[SU2L[fund],t3i1,t3i3]*eps[SU2L[fund],t3i2,t3i4]',
 }
 PROPOSED = 'del[SU2L[fund],t3i1,t3i3]*eps[SU2L[fund],t3i2,t3i4]'
+# Post-fix exports must match PROPOSED exactly, not a loose tensor equivalent.
 _SIGMA = (
     sp.Matrix([[0, 1], [1, 0]]),
     sp.Matrix([[0, -sp.I], [sp.I, 0]]),
@@ -108,9 +109,10 @@ def analyze(matchete: dict, invariants: dict, declarations: dict) -> dict:
         'potential_prefactors_verified':False,
         'physical_coupling_mapping_certified':False,
         'production_modified':False,
-        'proposed_source_change':'Only lambdaHHdagS1barS2barCross invariant; requires independent RGBeta convention checks',
+        'source_transition':'Pre-fix epsilon-epsilon OR post-fix delta-epsilon; checked explicitly',
         'models':{},
     }
+    phases = []
     for label in MODELS:
         mt = [t for t in matchete['models'][label]['tensors'] if tuple(t['counts'])==COUNTS]
         nt = [t for t in invariants['models'][label]['invariants']
@@ -119,12 +121,17 @@ def analyze(matchete: dict, invariants: dict, declarations: dict) -> dict:
             raise ValueError(f'{label}: 110101 block inventory unexpected')
         nt = sorted(nt,key=lambda t:[ORIGINAL_FIRST,ORIGINAL_REUSED].index(t['symbol']))
         for t in nt:
-            current=t['native_invariant_expression_inputform']
-            if ''.join(current.split()) != EXPECTED[t['symbol']]:
-                raise ValueError(f'{label}/{t["symbol"]}: source invariant changed; inspect before trusting old diagnosis')
+            current=''.join(t['native_invariant_expression_inputform'].split())
+            options = {EXPECTED[t['symbol']]}
+            if t['symbol'] == ORIGINAL_REUSED:
+                options.add(PROPOSED)
+            if current not in options:
+                raise ValueError(f'{label}/{t["symbol"]}: source invariant changed; inspect before trusting diagnosis')
+        phase = ('PostFix' if ''.join(nt[1]['native_invariant_expression_inputform'].split()) == PROPOSED else 'PreFix')
+        phases.append(phase)
         c0,c1=(covariance(t['native_invariant_expression_inputform']) for t in nt)
         cp=covariance(PROPOSED)
-        if not c0['su2_covariant'] or c1['su2_covariant'] or not cp['su2_covariant']:
+        if not c0['su2_covariant'] or c1['su2_covariant'] != (phase=='PostFix') or not cp['su2_covariant']:
             raise ValueError(f'{label}: native SU2 covariance result differs from verified case')
         original_records=[_native_tensor(t,mt[0],t['native_invariant_expression_inputform']) for t in nt]
         proposed_records=[original_records[0],_native_tensor(nt[1],mt[0],PROPOSED)]
@@ -133,8 +140,9 @@ def analyze(matchete: dict, invariants: dict, declarations: dict) -> dict:
         old_M=sp.Matrix.hstack(*(sp.Matrix([exact(v) for v in x['components']]) for x in mt))
         old_R=sp.Matrix.hstack(*(sp.Matrix([exact(v) for v in x['components']]) for x in original_records))
         old_column_in_mat_span=[old_M.row_join(old_R[:,i]).rank()==old_M.rank() for i in range(2)]
-        if old_column_in_mat_span != [True,False]:
-            raise ValueError(f'{label}: old native geometry status changed')
+        expected_span = [True, True] if phase == 'PostFix' else [True, False]
+        if old_column_in_mat_span != expected_span:
+            raise ValueError(f'{label}: native geometry status changed')
         new_map=solve_basis(mt,proposed_records)
         expect=[['1/2','1'],['-sqrt(3)/2','0']]
         A=sp.Matrix([[exact(x) for x in row] for row in new_map['r_in_m']])
@@ -144,6 +152,7 @@ def analyze(matchete: dict, invariants: dict, declarations: dict) -> dict:
         if sp.simplify(A.det()-sp.sqrt(3)/2)!=0:
             raise ValueError(f'{label}: candidate determinant changed')
         result['models'][label]={
+            'native_source_phase':phase,
             'block':'110101', 'matchete_symbols':[t['symbol'] for t in mt],
             'registered_rgbeta_symbols':[t['symbol'] for t in nt],
             'native_first':c0,
@@ -154,8 +163,13 @@ def analyze(matchete: dict, invariants: dict, declarations: dict) -> dict:
             'proposed_matrix_determinant':str(sp.simplify(A.det())),
             'physical_mapping_certified':False,
         }
+    if len(set(phases)) != 1:
+        raise ValueError('B_-1 and C_-1 native source versions differ; refuse mixed-phase certification')
+    result['native_source_phase'] = phases[0]
     result['counts']={'models_checked':2,'native_symbols_checked':4,
-                      'native_pass':2,'native_fail':2,'proposed_pass':2,
+                      'native_pass':4 if phases[0]=='PostFix' else 2,
+                      'native_fail':0 if phases[0]=='PostFix' else 2,
+                      'proposed_pass':2,
                       'proposed_full_rank_geometry_blocks':2}
     return result
 
@@ -173,7 +187,8 @@ def main():
     output.parent.mkdir(parents=True,exist_ok=True)
     output.write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
     print('Stage 22 native-expression SU2 covariance:', report['counts'])
-    print('Proposed 110101 basis transformation:',report['models']['B_-1']['proposed_exact_geometry']['r_in_m'])
+    print('RGBeta source phase:',report['native_source_phase'])
+    print('110101 basis transformation (conditional geometry):',report['models']['B_-1']['proposed_exact_geometry']['r_in_m'])
     print('Physical coupling mapping: UNCERTIFIED; production unchanged')
     print('Report:',output)
 

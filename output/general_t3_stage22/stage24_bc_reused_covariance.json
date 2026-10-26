@@ -1,0 +1,655 @@
+{
+  "format": "stage24-bc-reused-quartic-su2-covariance-v1",
+  "status": "AdditionalReusedInvariantCovarianceFailuresAndConditionalRepairCandidates",
+  "source_phase": "after 110101 fix, before four additional native fixes",
+  "field_convention": "fundamental U; conjugate fields conjugate(U); epsilon[0,1]=+1",
+  "models": {
+    "B_-1": {
+      "quartics": [
+        {
+          "symbol": "lambdaS1barS2S2bar2",
+          "block": "000112",
+          "native": {
+            "su2_covariant": false,
+            "nonzero_residuals_T1_T2_T3": [
+              6,
+              0,
+              6
+            ],
+            "first_counterexamples_T1_T2_T3": [
+              {
+                "indices_0_based": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "exact_residual": "-1/2"
+              },
+              null,
+              {
+                "indices_0_based": [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "exact_residual": "-1"
+              }
+            ]
+          },
+          "proposed": {
+            "su2_covariant": true,
+            "nonzero_residuals_T1_T2_T3": [
+              0,
+              0,
+              0
+            ],
+            "first_counterexamples_T1_T2_T3": [
+              null,
+              null,
+              null
+            ]
+          },
+          "proposed_invariant_expression": "(eps[SU2L[fund],t3i1,t3i4]*del[SU2L[fund],t3i2,t3i3]+eps[SU2L[fund],t3i1,t3i3]*del[SU2L[fund],t3i2,t3i4])/2",
+          "exact_matchete_geometry_r_in_m": [
+            [
+              "1"
+            ]
+          ],
+          "physical_coupling_certified": false
+        },
+        {
+          "symbol": "lambdaS1bar2S2bar2",
+          "block": "000202",
+          "native": {
+            "su2_covariant": false,
+            "nonzero_residuals_T1_T2_T3": [
+              8,
+              0,
+              2
+            ],
+            "first_counterexamples_T1_T2_T3": [
+              {
+                "indices_0_based": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "exact_residual": "-1"
+              },
+              null,
+              {
+                "indices_0_based": [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "exact_residual": "-2"
+              }
+            ]
+          },
+          "proposed": {
+            "su2_covariant": true,
+            "nonzero_residuals_T1_T2_T3": [
+              0,
+              0,
+              0
+            ],
+            "first_counterexamples_T1_T2_T3": [
+              null,
+              null,
+              null
+            ]
+          },
+          "proposed_invariant_expression": "(eps[SU2L[fund],t3i1,t3i4]*eps[SU2L[fund],t3i2,t3i3]+eps[SU2L[fund],t3i1,t3i3]*eps[SU2L[fund],t3i2,t3i4])/2",
+          "exact_matchete_geometry_r_in_m": [
+            [
+              "1"
+            ]
+          ],
+          "physical_coupling_certified": false
+        },
+        {
+          "symbol": "lambdaS1S1bar2S2bar",
+          "block": "001201",
+          "native": {
+            "su2_covariant": false,
+            "nonzero_residuals_T1_T2_T3": [
+              6,
+              0,
+              6
+            ],
+            "first_counterexamples_T1_T2_T3": [
+              {
+                "indices_0_based": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "exact_residual": "-1"
+              },
+              null,
+              {
+                "indices_0_based": [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "exact_residual": "-1"
+              }
+            ]
+          },
+          "proposed": {
+            "su2_covariant": true,
+            "nonzero_residuals_T1_T2_T3": [
+              0,
+              0,
+              0
+            ],
+            "first_counterexamples_T1_T2_T3": [
+              null,
+              null,
+              null
+            ]
+          },
+          "proposed_invariant_expression": "(del[SU2L[fund],t3i1,t3i3]*eps[SU2L[fund],t3i2,t3i4]+del[SU2L[fund],t3i1,t3i2]*eps[SU2L[fund],t3i3,t3i4])/2",
+          "exact_matchete_geometry_r_in_m": [
+            [
+              "1"
+            ]
+          ],
+          "physical_coupling_certified": false
+        },
+        {
+          "symbol": "lambdaHHdagS1barS1bar",
+          "block": "020200",
+          "native": {
+            "su2_covariant": false,
+            "nonzero_residuals_T1_T2_T3": [
+              8,
+              0,
+              2
+            ],
+            "first_counterexamples_T1_T2_T3": [
+              {
+                "indices_0_based": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "exact_residual": "-1"
+              },
+              null,
+              {
+                "indices_0_based": [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "exact_residual": "-2"
+              }
+            ]
+          },
+          "proposed": {
+            "su2_covariant": true,
+            "nonzero_residuals_T1_T2_T3": [
+              0,
+              0,
+              0
+            ],
+            "first_counterexamples_T1_T2_T3": [
+              null,
+              null,
+              null
+            ]
+          },
+          "proposed_invariant_expression": "(eps[SU2L[fund],t3i1,t3i4]*eps[SU2L[fund],t3i2,t3i3]+eps[SU2L[fund],t3i1,t3i3]*eps[SU2L[fund],t3i2,t3i4])/2",
+          "exact_matchete_geometry_r_in_m": [
+            [
+              "1"
+            ]
+          ],
+          "physical_coupling_certified": false
+        }
+      ],
+      "global_basis_scan": {
+        "choices": 8,
+        "maximum_aligned_blocks": 5,
+        "common_global_basis_exists": false,
+        "witnesses": [
+          {
+            "rotated_species": [],
+            "aligned_blocks": [
+              "020020",
+              "110101"
+            ]
+          },
+          {
+            "rotated_species": [
+              "S2",
+              "S2dag"
+            ],
+            "aligned_blocks": [
+              "000112",
+              "000202",
+              "001201"
+            ]
+          },
+          {
+            "rotated_species": [
+              "S1",
+              "S1dag"
+            ],
+            "aligned_blocks": [
+              "000112",
+              "000202",
+              "001201",
+              "020020",
+              "020200"
+            ]
+          },
+          {
+            "rotated_species": [
+              "S1",
+              "S1dag",
+              "S2",
+              "S2dag"
+            ],
+            "aligned_blocks": [
+              "020200"
+            ]
+          },
+          {
+            "rotated_species": [
+              "H",
+              "Hdag"
+            ],
+            "aligned_blocks": [
+              "020200"
+            ]
+          },
+          {
+            "rotated_species": [
+              "H",
+              "Hdag",
+              "S2",
+              "S2dag"
+            ],
+            "aligned_blocks": [
+              "000112",
+              "000202",
+              "001201",
+              "020020",
+              "020200"
+            ]
+          },
+          {
+            "rotated_species": [
+              "H",
+              "Hdag",
+              "S1",
+              "S1dag"
+            ],
+            "aligned_blocks": [
+              "000112",
+              "000202",
+              "001201"
+            ]
+          },
+          {
+            "rotated_species": [
+              "H",
+              "Hdag",
+              "S1",
+              "S1dag",
+              "S2",
+              "S2dag"
+            ],
+            "aligned_blocks": [
+              "020020",
+              "110101"
+            ]
+          }
+        ]
+      }
+    },
+    "C_-1": {
+      "quartics": [
+        {
+          "symbol": "lambdaS1barS2S2bar2",
+          "block": "000112",
+          "native": {
+            "su2_covariant": false,
+            "nonzero_residuals_T1_T2_T3": [
+              6,
+              0,
+              6
+            ],
+            "first_counterexamples_T1_T2_T3": [
+              {
+                "indices_0_based": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "exact_residual": "-1/2"
+              },
+              null,
+              {
+                "indices_0_based": [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "exact_residual": "-1"
+              }
+            ]
+          },
+          "proposed": {
+            "su2_covariant": true,
+            "nonzero_residuals_T1_T2_T3": [
+              0,
+              0,
+              0
+            ],
+            "first_counterexamples_T1_T2_T3": [
+              null,
+              null,
+              null
+            ]
+          },
+          "proposed_invariant_expression": "(eps[SU2L[fund],t3i1,t3i4]*del[SU2L[fund],t3i2,t3i3]+eps[SU2L[fund],t3i1,t3i3]*del[SU2L[fund],t3i2,t3i4])/2",
+          "exact_matchete_geometry_r_in_m": [
+            [
+              "1"
+            ]
+          ],
+          "physical_coupling_certified": false
+        },
+        {
+          "symbol": "lambdaS1bar2S2bar2",
+          "block": "000202",
+          "native": {
+            "su2_covariant": false,
+            "nonzero_residuals_T1_T2_T3": [
+              8,
+              0,
+              2
+            ],
+            "first_counterexamples_T1_T2_T3": [
+              {
+                "indices_0_based": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "exact_residual": "-1"
+              },
+              null,
+              {
+                "indices_0_based": [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "exact_residual": "-2"
+              }
+            ]
+          },
+          "proposed": {
+            "su2_covariant": true,
+            "nonzero_residuals_T1_T2_T3": [
+              0,
+              0,
+              0
+            ],
+            "first_counterexamples_T1_T2_T3": [
+              null,
+              null,
+              null
+            ]
+          },
+          "proposed_invariant_expression": "(eps[SU2L[fund],t3i1,t3i4]*eps[SU2L[fund],t3i2,t3i3]+eps[SU2L[fund],t3i1,t3i3]*eps[SU2L[fund],t3i2,t3i4])/2",
+          "exact_matchete_geometry_r_in_m": [
+            [
+              "1"
+            ]
+          ],
+          "physical_coupling_certified": false
+        },
+        {
+          "symbol": "lambdaS1S1bar2S2bar",
+          "block": "001201",
+          "native": {
+            "su2_covariant": false,
+            "nonzero_residuals_T1_T2_T3": [
+              6,
+              0,
+              6
+            ],
+            "first_counterexamples_T1_T2_T3": [
+              {
+                "indices_0_based": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "exact_residual": "-1"
+              },
+              null,
+              {
+                "indices_0_based": [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "exact_residual": "-1"
+              }
+            ]
+          },
+          "proposed": {
+            "su2_covariant": true,
+            "nonzero_residuals_T1_T2_T3": [
+              0,
+              0,
+              0
+            ],
+            "first_counterexamples_T1_T2_T3": [
+              null,
+              null,
+              null
+            ]
+          },
+          "proposed_invariant_expression": "(del[SU2L[fund],t3i1,t3i3]*eps[SU2L[fund],t3i2,t3i4]+del[SU2L[fund],t3i1,t3i2]*eps[SU2L[fund],t3i3,t3i4])/2",
+          "exact_matchete_geometry_r_in_m": [
+            [
+              "1"
+            ]
+          ],
+          "physical_coupling_certified": false
+        },
+        {
+          "symbol": "lambdaHHdagS1barS1bar",
+          "block": "020200",
+          "native": {
+            "su2_covariant": false,
+            "nonzero_residuals_T1_T2_T3": [
+              8,
+              0,
+              2
+            ],
+            "first_counterexamples_T1_T2_T3": [
+              {
+                "indices_0_based": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "exact_residual": "-1"
+              },
+              null,
+              {
+                "indices_0_based": [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "exact_residual": "-2"
+              }
+            ]
+          },
+          "proposed": {
+            "su2_covariant": true,
+            "nonzero_residuals_T1_T2_T3": [
+              0,
+              0,
+              0
+            ],
+            "first_counterexamples_T1_T2_T3": [
+              null,
+              null,
+              null
+            ]
+          },
+          "proposed_invariant_expression": "(eps[SU2L[fund],t3i1,t3i4]*eps[SU2L[fund],t3i2,t3i3]+eps[SU2L[fund],t3i1,t3i3]*eps[SU2L[fund],t3i2,t3i4])/2",
+          "exact_matchete_geometry_r_in_m": [
+            [
+              "1"
+            ]
+          ],
+          "physical_coupling_certified": false
+        }
+      ],
+      "global_basis_scan": {
+        "choices": 8,
+        "maximum_aligned_blocks": 5,
+        "common_global_basis_exists": false,
+        "witnesses": [
+          {
+            "rotated_species": [],
+            "aligned_blocks": [
+              "020020",
+              "110101"
+            ]
+          },
+          {
+            "rotated_species": [
+              "S2",
+              "S2dag"
+            ],
+            "aligned_blocks": [
+              "000112",
+              "000202",
+              "001201"
+            ]
+          },
+          {
+            "rotated_species": [
+              "S1",
+              "S1dag"
+            ],
+            "aligned_blocks": [
+              "000112",
+              "000202",
+              "001201",
+              "020020",
+              "020200"
+            ]
+          },
+          {
+            "rotated_species": [
+              "S1",
+              "S1dag",
+              "S2",
+              "S2dag"
+            ],
+            "aligned_blocks": [
+              "020200"
+            ]
+          },
+          {
+            "rotated_species": [
+              "H",
+              "Hdag"
+            ],
+            "aligned_blocks": [
+              "020200"
+            ]
+          },
+          {
+            "rotated_species": [
+              "H",
+              "Hdag",
+              "S2",
+              "S2dag"
+            ],
+            "aligned_blocks": [
+              "000112",
+              "000202",
+              "001201",
+              "020020",
+              "020200"
+            ]
+          },
+          {
+            "rotated_species": [
+              "H",
+              "Hdag",
+              "S1",
+              "S1dag"
+            ],
+            "aligned_blocks": [
+              "000112",
+              "000202",
+              "001201"
+            ]
+          },
+          {
+            "rotated_species": [
+              "H",
+              "Hdag",
+              "S1",
+              "S1dag",
+              "S2",
+              "S2dag"
+            ],
+            "aligned_blocks": [
+              "020020",
+              "110101"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "totals": {
+    "models": 2,
+    "old_non_covariant_slots": 8,
+    "proposed_covariant_slots": 8,
+    "proposed_exact_matchete_1d_matches": 8,
+    "restricted_global_I_or_J_basis_exists": false
+  },
+  "global_su2_component_basis_verified": false,
+  "live_wolfram_candidate_covariance_checked": false,
+  "physical_coupling_mapping_certified": false,
+  "production_modified": false,
+  "input_sha256": {
+    "matchete_tensors.json": "72e3af99beced8497a419c03f1f543dd80f071e950ca72cc65892d69f16eba0f",
+    "rgbeta_native_invariants.json": "d7c11c9f30390547ff4e57f064031df8d72ffd7cac18d9662e85597131bf1e66"
+  }
+}

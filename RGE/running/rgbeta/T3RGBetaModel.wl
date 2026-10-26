@@ -605,7 +605,7 @@ T3RGBetaAddRGClosedQuartics[
             lambdaHHdagS1barS2barCross,
             {H, Bar @ H, Bar @ S1, Bar @ S2},
             GroupInvariant -> (
-                eps[SU2L @ fund, #1, #3] *
+                del[SU2L @ fund, #1, #3] *
                 eps[SU2L @ fund, #2, #4] &
             ),
             SelfConjugate -> False

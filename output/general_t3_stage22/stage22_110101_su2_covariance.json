@@ -1,0 +1,447 @@
+{
+  "format": "stage22-su2-110101-native-covariance-diagnostic-v1",
+  "status": "NativeExpressionSU2CovarianceAndProposedGeometryNotPhysicalCertification",
+  "source": "Wolfram-exported native RGBeta invariant expressions and Matchete tensors",
+  "component_convention": "Fundamental H transforms U; Bar[H], Bar[S1], Bar[S2] transform conjugate(U); epsilon[1,2]=+1",
+  "native_wolfram_runtime_covariance_checked": false,
+  "native_rgbeta_component_basis_verified": false,
+  "potential_prefactors_verified": false,
+  "physical_coupling_mapping_certified": false,
+  "production_modified": false,
+  "proposed_source_change": "Only lambdaHHdagS1barS2barCross invariant; requires independent RGBeta convention checks",
+  "models": {
+    "B_-1": {
+      "block": "110101",
+      "matchete_symbols": [
+        "lambdaT3ExtraQ110101I1",
+        "lambdaT3ExtraQ110101I2"
+      ],
+      "registered_rgbeta_symbols": [
+        "lambdaT3GeneralQ110101I1",
+        "lambdaHHdagS1barS2barCross"
+      ],
+      "native_first": {
+        "su2_covariant": true,
+        "generator_checks": {
+          "T1": {
+            "nonzero_residual_components": 0,
+            "first_nonzero": []
+          },
+          "T2": {
+            "nonzero_residual_components": 0,
+            "first_nonzero": []
+          },
+          "T3": {
+            "nonzero_residual_components": 0,
+            "first_nonzero": []
+          }
+        },
+        "field_transformations": [
+          "U",
+          "conjugate(U)",
+          "conjugate(U)",
+          "conjugate(U)"
+        ]
+      },
+      "native_reused": {
+        "su2_covariant": false,
+        "generator_checks": {
+          "T1": {
+            "nonzero_residual_components": 4,
+            "first_nonzero": [
+              {
+                "indices_1_based": [
+                  1,
+                  1,
+                  1,
+                  2
+                ],
+                "residual": "-1"
+              },
+              {
+                "indices_1_based": [
+                  1,
+                  2,
+                  1,
+                  1
+                ],
+                "residual": "1"
+              },
+              {
+                "indices_1_based": [
+                  2,
+                  1,
+                  2,
+                  2
+                ],
+                "residual": "1"
+              },
+              {
+                "indices_1_based": [
+                  2,
+                  2,
+                  2,
+                  1
+                ],
+                "residual": "-1"
+              }
+            ]
+          },
+          "T2": {
+            "nonzero_residual_components": 0,
+            "first_nonzero": []
+          },
+          "T3": {
+            "nonzero_residual_components": 4,
+            "first_nonzero": [
+              {
+                "indices_1_based": [
+                  1,
+                  1,
+                  2,
+                  2
+                ],
+                "residual": "1"
+              },
+              {
+                "indices_1_based": [
+                  1,
+                  2,
+                  2,
+                  1
+                ],
+                "residual": "-1"
+              },
+              {
+                "indices_1_based": [
+                  2,
+                  1,
+                  1,
+                  2
+                ],
+                "residual": "1"
+              },
+              {
+                "indices_1_based": [
+                  2,
+                  2,
+                  1,
+                  1
+                ],
+                "residual": "-1"
+              }
+            ]
+          }
+        },
+        "field_transformations": [
+          "U",
+          "conjugate(U)",
+          "conjugate(U)",
+          "conjugate(U)"
+        ]
+      },
+      "proposed_replacement": {
+        "expression_inputform": "del[SU2L[fund],t3i1,t3i3]*eps[SU2L[fund],t3i2,t3i4]",
+        "su2_covariant": true,
+        "generator_checks": {
+          "T1": {
+            "nonzero_residual_components": 0,
+            "first_nonzero": []
+          },
+          "T2": {
+            "nonzero_residual_components": 0,
+            "first_nonzero": []
+          },
+          "T3": {
+            "nonzero_residual_components": 0,
+            "first_nonzero": []
+          }
+        },
+        "field_transformations": [
+          "U",
+          "conjugate(U)",
+          "conjugate(U)",
+          "conjugate(U)"
+        ]
+      },
+      "original_rgbeta_columns_in_matchete_span": [
+        true,
+        false
+      ],
+      "proposed_exact_geometry": {
+        "matchete_symbols": [
+          "lambdaT3ExtraQ110101I1",
+          "lambdaT3ExtraQ110101I2"
+        ],
+        "rgbeta_symbols": [
+          "lambdaT3GeneralQ110101I1",
+          "lambdaHHdagS1barS2barCross"
+        ],
+        "counts": [
+          1,
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        "dimensions": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "r_in_m": [
+          [
+            "1/2",
+            "1"
+          ],
+          [
+            "-sqrt(3)/2",
+            "0"
+          ]
+        ],
+        "m_in_r": [
+          [
+            "0",
+            "-2*sqrt(3)/3"
+          ],
+          [
+            "1",
+            "sqrt(3)/3"
+          ]
+        ],
+        "matchete_rank": 2,
+        "rgbeta_rank": 2,
+        "maximum_exact_component_residual": "0",
+        "zero_coupling_recovery": true,
+        "tensor_equality": true
+      },
+      "proposed_matrix_determinant": "sqrt(3)/2",
+      "physical_mapping_certified": false
+    },
+    "C_-1": {
+      "block": "110101",
+      "matchete_symbols": [
+        "lambdaT3ExtraQ110101I1",
+        "lambdaT3ExtraQ110101I2"
+      ],
+      "registered_rgbeta_symbols": [
+        "lambdaT3GeneralQ110101I1",
+        "lambdaHHdagS1barS2barCross"
+      ],
+      "native_first": {
+        "su2_covariant": true,
+        "generator_checks": {
+          "T1": {
+            "nonzero_residual_components": 0,
+            "first_nonzero": []
+          },
+          "T2": {
+            "nonzero_residual_components": 0,
+            "first_nonzero": []
+          },
+          "T3": {
+            "nonzero_residual_components": 0,
+            "first_nonzero": []
+          }
+        },
+        "field_transformations": [
+          "U",
+          "conjugate(U)",
+          "conjugate(U)",
+          "conjugate(U)"
+        ]
+      },
+      "native_reused": {
+        "su2_covariant": false,
+        "generator_checks": {
+          "T1": {
+            "nonzero_residual_components": 4,
+            "first_nonzero": [
+              {
+                "indices_1_based": [
+                  1,
+                  1,
+                  1,
+                  2
+                ],
+                "residual": "-1"
+              },
+              {
+                "indices_1_based": [
+                  1,
+                  2,
+                  1,
+                  1
+                ],
+                "residual": "1"
+              },
+              {
+                "indices_1_based": [
+                  2,
+                  1,
+                  2,
+                  2
+                ],
+                "residual": "1"
+              },
+              {
+                "indices_1_based": [
+                  2,
+                  2,
+                  2,
+                  1
+                ],
+                "residual": "-1"
+              }
+            ]
+          },
+          "T2": {
+            "nonzero_residual_components": 0,
+            "first_nonzero": []
+          },
+          "T3": {
+            "nonzero_residual_components": 4,
+            "first_nonzero": [
+              {
+                "indices_1_based": [
+                  1,
+                  1,
+                  2,
+                  2
+                ],
+                "residual": "1"
+              },
+              {
+                "indices_1_based": [
+                  1,
+                  2,
+                  2,
+                  1
+                ],
+                "residual": "-1"
+              },
+              {
+                "indices_1_based": [
+                  2,
+                  1,
+                  1,
+                  2
+                ],
+                "residual": "1"
+              },
+              {
+                "indices_1_based": [
+                  2,
+                  2,
+                  1,
+                  1
+                ],
+                "residual": "-1"
+              }
+            ]
+          }
+        },
+        "field_transformations": [
+          "U",
+          "conjugate(U)",
+          "conjugate(U)",
+          "conjugate(U)"
+        ]
+      },
+      "proposed_replacement": {
+        "expression_inputform": "del[SU2L[fund],t3i1,t3i3]*eps[SU2L[fund],t3i2,t3i4]",
+        "su2_covariant": true,
+        "generator_checks": {
+          "T1": {
+            "nonzero_residual_components": 0,
+            "first_nonzero": []
+          },
+          "T2": {
+            "nonzero_residual_components": 0,
+            "first_nonzero": []
+          },
+          "T3": {
+            "nonzero_residual_components": 0,
+            "first_nonzero": []
+          }
+        },
+        "field_transformations": [
+          "U",
+          "conjugate(U)",
+          "conjugate(U)",
+          "conjugate(U)"
+        ]
+      },
+      "original_rgbeta_columns_in_matchete_span": [
+        true,
+        false
+      ],
+      "proposed_exact_geometry": {
+        "matchete_symbols": [
+          "lambdaT3ExtraQ110101I1",
+          "lambdaT3ExtraQ110101I2"
+        ],
+        "rgbeta_symbols": [
+          "lambdaT3GeneralQ110101I1",
+          "lambdaHHdagS1barS2barCross"
+        ],
+        "counts": [
+          1,
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        "dimensions": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "r_in_m": [
+          [
+            "1/2",
+            "1"
+          ],
+          [
+            "-sqrt(3)/2",
+            "0"
+          ]
+        ],
+        "m_in_r": [
+          [
+            "0",
+            "-2*sqrt(3)/3"
+          ],
+          [
+            "1",
+            "sqrt(3)/3"
+          ]
+        ],
+        "matchete_rank": 2,
+        "rgbeta_rank": 2,
+        "maximum_exact_component_residual": "0",
+        "zero_coupling_recovery": true,
+        "tensor_equality": true
+      },
+      "proposed_matrix_determinant": "sqrt(3)/2",
+      "physical_mapping_certified": false
+    }
+  },
+  "counts": {
+    "models_checked": 2,
+    "native_symbols_checked": 4,
+    "native_pass": 2,
+    "native_fail": 2,
+    "proposed_pass": 2,
+    "proposed_full_rank_geometry_blocks": 2
+  },
+  "input_sha256": {
+    "matchete_tensors.json": "72e3af99beced8497a419c03f1f543dd80f071e950ca72cc65892d69f16eba0f",
+    "rgbeta_native_invariants.json": "d3d2d43e6a7a984e29cccc42d2ff50e4a0fa6384304481ead181f71e9938e0e1",
+    "rgbeta_native_declarations.json": "445a6c6f6b8bbd71e9b8b9ef26930a2a1feaa7a58e411933cd1164d537f0b5b6"
+  }
+}

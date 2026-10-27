@@ -1,0 +1,145 @@
+command: wolframscript -file C:\thesistemp\T3neutrinomassmodelpipeline\Lagrangian\RunGeneralT3EFT1ScalarThresholdProbe.wl C:\thesistemp\T3neutrinomassmodelpipeline\output\general_t3_mass_eigen_matchete\B_m1_final_parameters.json C:\thesistemp\T3neutrinomassmodelpipeline\output\general_t3_mass_eigen_matchete\eft1_fermion_first_tree\B_m1_final_eft1_fermion_first_tree_eft1_transition_eom.inputform.txt C:\thesistemp\T3neutrinomassmodelpipeline\output\general_t3_mass_eigen_matchete\eft1_scalar_threshold_probe\B_m1_final_eft1_scalar_threshold_probe_c5_relevant.json
+exit: 0
+stdout:
+T3ME_STAGE: script-initialized
+T3ME_STAGE: matchete-load-start
+by Javier Fuentes-Marti'n, Matthias Ko"nig, Julie Page`s, Anders Eller Thomsen, and Felix Wilsch 
+Contributors:   Lukas Born, Luis Hourtz, Tamilarasan Ketheeswaran, Javier Lo'pez Miras, Adria'n Moreno-Sa'nchez, and Philip Weber 
+Reference:      Hyperlink[arXiv:2212.04510, https://arxiv.org/abs/2212.04510]
+Documentation:  Hyperlink[open, paclet:Matchete/guide/Matchete]
+Website:        Hyperlink[https://matchete.gitlab.io, https://matchete.gitlab.io]
+Model database: Hyperlink[https://gitlab.com/matchete/model-database, https://gitlab.com/matchete/model-database]
+Repository:     Hyperlink[https://gitlab.com/matchete/matchete, https://gitlab.com/matchete/matchete]
+T3ME_STAGE: matchete-load-returned
+T3ME_STAGE: source-files-loaded
+T3ME_STAGE: saved-EFT1-tree-source-preflight-started
+T3ME_STAGE: saved-EFT1-tree-source-preflight-passed
+T3ME_STAGE: baseline-build-started
+Build stage 1/4: load SM
+  LoadModel result: OK
+Build stage 2/4: define BSM fields
+  Defined BSM SU(2) representation T3BSMd2 with d=2, Dynkin={1}
+  field definition result: True
+Build stage 3/4: define couplings
+  coupling definition result: True
+Build stage 4/4: define SU(2) CG tensors
+  CG T3Y1CG: dims={2, 1, 2}, oriented algebra reps=InputForm[{CRep[{1}], {1}}], CG reps=InputForm[{SU2L[fund], Bar[T3BSMd2]}], symmetric positions={}
+    InvariantTensors result head: List, count=1
+    DefineCG result: InputForm[T3Y1CG]
+  CG T3Y2CG: dims={2, 1, 2}, oriented algebra reps=InputForm[{CRep[{1}], CRep[{1}]}], CG reps=InputForm[{SU2L[fund], T3BSMd2}], symmetric positions={}
+    InvariantTensors result head: List, count=1
+    DefineCG result: InputForm[T3Y2CG]
+  CG T3MixCG: dims={2, 2, 2, 2}, oriented algebra reps=InputForm[{{1}, {1}, {1}, CRep[{1}]}], CG reps=InputForm[{Bar[SU2L[fund]], Bar[SU2L[fund]], Bar[T3BSMd2], T3BSMd2}], symmetric positions={1, 2}
+    InvariantTensors result head: List, count=1
+    DefineCG result: InputForm[T3MixCG]
+  CG definition result: InputForm[<|Yukawa1 -> T3Y1CG, Yukawa2 -> T3Y2CG, Mixing -> T3MixCG|>]
+  lambdaS1: raw SU(2) invariants=2, physical invariants=1
+  lambdaS2: raw SU(2) invariants=2, physical invariants=1
+  lambdaH1: raw SU(2) invariants=2, physical invariants=2
+  lambdaH2: raw SU(2) invariants=2, physical invariants=2
+  lambda12: raw SU(2) invariants=2, physical invariants=2
+Checking candidate: Yukawa1_GenericCG
+  result: InputForm[True]
+Checking candidate: Yukawa2_GenericCG
+  result: InputForm[True]
+Checking candidate: Scalar1SelfInv1
+  result: InputForm[True]
+Checking candidate: Scalar2SelfInv1
+  result: InputForm[True]
+Checking candidate: HiggsPortal1Inv1
+  result: InputForm[True]
+Checking candidate: HiggsPortal1Inv2
+  result: InputForm[True]
+Checking candidate: HiggsPortal2Inv1
+  result: InputForm[True]
+Checking candidate: HiggsPortal2Inv2
+  result: InputForm[True]
+Checking candidate: ScalarCrossPortalInv1
+  result: InputForm[True]
+Checking candidate: ScalarCrossPortalInv2
+  result: InputForm[True]
+Checking candidate: T3ScalarMix_GenericCG
+  result: InputForm[True]
+T3ME_STAGE: extra-quartic-generation-started
+General scalar structure {S1dag, S2, S2dag, S2dag}: SU(2) singlets=1, expected=1
+General scalar structure {S1dag, S1dag, S2dag, S2dag}: SU(2) singlets=1, expected=1
+General scalar structure {S1, S1dag, S1dag, S2dag}: SU(2) singlets=1, expected=1
+General scalar structure {Hdag, Hdag, S2, S2}: SU(2) singlets=1, expected=1
+General scalar structure {Hdag, Hdag, S1dag, S1dag}: SU(2) singlets=1, expected=1
+General scalar structure {H, Hdag, S1dag, S2dag}: SU(2) singlets=2, expected=2
+T3ME_STAGE: original-interaction-assembly-started
+Internalized-source representative objects: <|"raw_source_field_examples" -> {"Field[NewScalar1, Scalar, {Index[d$$1, T3BSMd2]}, {}]", "Field[NewScalar1, Scalar, {Index[d$$2, T3BSMd2]}, {}]", "Field[NewScalar2, Scalar, {Index[d$$3, T3BSMd2]}, {}]", "Field[NewScalar2, Scalar, {Index[d$$4, T3BSMd2]}, {}]"}, "raw_source_coupling_example" -> {"Coupling[lambdaT3ExtraQ000202I1, {}, 0]", "Coupling[lambdaT3ExtraQ020200I1, {}, 0]"}|>
+T3ME_STAGE: bridge-barred-started
+T3ME_STAGE: bridge-unbarred-started
+T3ME_STAGE: remove-old-scalar-1-started
+T3ME_STAGE: remove-old-scalar-2-started
+T3ME_STAGE: register-mixing-spurions-started
+T3ME_STAGE: register-light-X-for-fermion-first-started
+T3ME_STAGE: register-light-Y-for-fermion-first-started
+T3ME_STAGE: fermion-heavy-two-scalars-light-FreeLag-started
+T3ME_STAGE: native-topology-basis-started
+T3ME_STAGE: native-H2-portals-started
+T3ME_STAGE: native-S2-scalar-quartics-started
+T3ME_STAGE: native-Yukawa2-basis-started
+T3ME_STAGE: native-Yukawa1-basis-started
+T3ME_STAGE: native-extra-quartics-started
+T3ME_STAGE: scalar-threshold-remove-integrated-F-started
+T3ME_STAGE: saved-EFT1-tree-parse-started
+T3ME_STAGE: saved-EFT1-tree-parse-returned
+T3ME_STAGE: scalar-threshold-light-EFT1-hermiticity-preflight-started
+T3ME_STAGE: scalar-threshold-light-EFT1-hermiticity-preflight-returned
+Saved canonical EFT1 before heavy reclassification: <|"Hermiticity" -> False, "CanonicallyNormalized" -> True|>
+T3ME_STAGE: scalar-threshold-light-scalar-FreeLag-capture-started
+T3ME_STAGE: scalar-threshold-light-scalar-FreeLag-capture-returned
+T3ME_STAGE: scalar-threshold-reclassify-X-Y-started
+T3ME_STAGE: scalar-threshold-heavy-scalar-FreeLag-capture-started
+T3ME_STAGE: scalar-threshold-heavy-scalar-FreeLag-capture-returned
+T3ME_STAGE: scalar-threshold-leading-C5-sector-projection-started
+T3ME_STAGE: scalar-threshold-leading-C5-sector-projection-returned
+T3ME_STAGE: scalar-threshold-light-to-heavy-free-rebase-started
+T3ME_STAGE: scalar-threshold-light-to-heavy-free-rebase-returned
+Opt-in leading-C5 one-loop subtheory: excluded 122 spectator four-heavy-scalar quartics; retained LLSS=20; Higgs-bearing quartics=52; FULL EFT Hermiticity is NOT certified
+T3ME_STAGE: scalar-threshold-EFT1-lagrangian-check-started
+T3ME_STAGE: scalar-threshold-ordinary-lagrangian-check-returned
+T3ME_STAGE: scalar-threshold-detailed-lagrangian-check-returned
+Scalar-threshold CheckLagrangian: InputForm[True]
+Scalar-threshold Hermiticity audit: <|"light_EFT1_hermiticity" -> False, "heavy_EFT1_original_hermiticity" -> True, "equivalence_rewrite_accepted" -> "None", "final_hermiticity" -> True|>
+T3ME_STAGE: scalar-threshold-match-loader-started
+T3ME_STAGE: scalar-threshold-tree-Match-started
+
+Running Matchete matching...
+EFT order: 5; loop order: 0
+Running Match...
+  Match result head: Times
+Running GreensSimplify...
+  GreensSimplify result head: Plus
+Running EOMSimplify...
+  EOMSimplify result head: Plus
+Running EvaluateLoopFunctions...
+  EvaluateLoopFunctions result head: Plus
+Running ReplaceEffectiveCouplings...
+  ReplaceEffectiveCouplings result head: Plus
+Matching pipeline completed successfully.
+T3ME_STAGE: scalar-threshold-tree-Match-returned
+T3ME_STAGE: scalar-threshold-one-loop-Match-started
+
+Running Matchete matching...
+EFT order: 5; loop order: 1
+Running Match...
+  Match result head: Times
+Running GreensSimplify...
+  GreensSimplify result head: Plus
+Running EOMSimplify...
+  EOMSimplify result head: Plus
+Running EvaluateLoopFunctions...
+  EvaluateLoopFunctions result head: Plus
+Running ReplaceEffectiveCouplings...
+  ReplaceEffectiveCouplings result head: Plus
+Matching pipeline completed successfully.
+T3ME_STAGE: scalar-threshold-one-loop-Match-returned
+T3ME_STAGE: scalar-threshold-LLHH-extract-started
+T3ME_STAGE: scalar-threshold-LLHH-extract-returned
+T3 scalar-threshold tree+loop matching: total loop terms=758; raw LLHH candidates=232
+Mass-eigenstate Matchete result: ScalarThresholdOneLoopRawSectorsExtractedNoEFT1Running -> C:\thesistemp\T3neutrinomassmodelpipeline\output\general_t3_mass_eigen_matchete\eft1_scalar_threshold_probe\B_m1_final_eft1_scalar_threshold_probe_c5_relevant.json
+
+stderr:

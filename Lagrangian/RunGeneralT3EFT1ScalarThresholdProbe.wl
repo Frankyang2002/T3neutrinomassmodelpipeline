@@ -1,7 +1,7 @@
-(* Experimental second scalar-threshold matching from saved tree EFT1 (B_-1/C_-1).
+(* Experimental second scalar-threshold matching from saved canonical tree EOMEFT (B_-1/C_-1).
    Fork of the independently live-validated mass-eigenfield Lagrangian builder.
    In a fresh kernel F is removed and X,Y are registered HEAVY.
-   Match at EFTOrder -> 5, LoopOrder -> 0 then 1 on the *saved tree EFT1*.
+   Match at EFTOrder -> 5, LoopOrder -> 0 then 1 on the *saved canonical tree EOMEFT*.
    Subtract Matchete-matched EFTs to isolate scalar-loop LLHH candidates.
    No inherited hard one-loop piece, EFT1 running, counterterm certification,
    complete scalar threshold C5 or final neutrino mass is claimed.
@@ -15,7 +15,8 @@
    is rebuilt with F HEAVY and TWO HEAVY Y=-1/2 eigen-doublets X,Y.  The
    scalar kinetic/mass terms are diagonal, and all native SU(2) interaction
    tensors are the independently checked mass-basis tensors. Both scalars are integrated out, while F has already been removed
-   by the first-threshold tree-level EFT1 calculation.
+   by the first-threshold tree-level EFT1 calculation. The EOMEFT
+   continuation is deliberately NOT the ReplaceEffectiveCouplings-expanded MatchedEFT.
 *)
 ClearAll["Global`*"];
 args = Rest[$ScriptCommandLine];
@@ -27,6 +28,13 @@ inPath = ExpandFileName[args[[1]]];
 treePath = ExpandFileName[args[[2]]];
 outPath = ExpandFileName[args[[3]]];
 scriptDir = DirectoryName @ ExpandFileName[$InputFileName];
+(* Opt-in leading Weinberg-sector projection.  This does NOT fix Hermiticity
+   of the FULL EFT and cannot be represented as complete scalar EFT matching.
+   Its 1-loop LLHH subtheory keeps every LLSS and Higgs-bearing quartic.
+   Four-heavy-scalar interactions cannot supply the required two external H
+   lines together with LLSS at one loop.  Never run this mode silently. *)
+$T3MELeadingC5Only = (Environment["T3_EFT1_LEADING_C5_ONLY"] === "1");
+
 
 (* Durable last-completed stage. This file is intentionally distinct from
    the result JSON and survives an abort inside UsingFrontEnd or Matchete. *)
@@ -1078,6 +1086,273 @@ T3MEIsolateNonInvariantSource[built_Association, free_, extra_List, nativeTopolo
   |>
 ];
 
+(* Fail-closed partition audit of the *saved* Matchete EOMEFT.  This does
+   not modify the Lagrangian used for matching.  All partitions are defined
+   on exact expanded terms, so their sum reconstructs the original EFT. *)
+ClearAll[T3MEHermiticitySectorAudit, T3MEHermiticitySectorCheck];
+T3MEHermiticitySectorCheck[expr_] := Module[{result, keys},
+  result=CheckAbort[
+    Quiet[CheckLagrangian[expr,DetailedOutput->True],
+      {CheckLagrangian::Hermiticity}],$Aborted];
+  keys={"Hermiticity","CanonicallyNormalized","HeavyMassBasis",
+        "GaugeInvariant","AllObjectsDefined"};
+  If[!AssociationQ[result],
+    Return[<|"result"->ToString[Head[result],InputForm],
+      "hermiticity"->"Unavailable"|>]];
+  <|"result"->"DetailedCheckReturned", "hermiticity"->Lookup[result,"Hermiticity","Unavailable"],
+    "canonically_normalized"->Lookup[result,"CanonicallyNormalized","Unavailable"],
+    "heavy_mass_basis"->Lookup[result,"HeavyMassBasis","Unavailable"],
+    "gauge_invariant"->Lookup[result,"GaugeInvariant","Unavailable"],
+    "all_objects_defined"->Lookup[result,"AllObjectsDefined","Unavailable"]|>
+];
+T3MEHermiticitySectorAudit[eft_, dest_String] := Module[
+ {expanded, terms, indexed, llss, quartics, rest, xx, yy, xy,
+  qSelf, qPortal, groups, results=<||>, sector, testExpr, idx, text,
+  audit, name, counts, originalCount, notHermitian, preview, failGroups,
+  qLabels, qCouplingResults, qSelected,qOther,label},
+ T3MECheckpoint["scalar-threshold-hermiticity-sector-audit-started"];
+ expanded=Expand[eft];
+ terms=If[Head[expanded]===Plus,List@@expanded,{expanded}];
+ indexed=Map[Function[t,<|"term"->t,"text"->ToString[t,InputForm]|>],terms];
+ llss=Select[indexed,StringContainsQ[#["text"],"GammaCC"]&];
+ quartics=Select[indexed,Function[item,
+   With[{st=item["text"]},
+     !StringContainsQ[st,"GammaCC"] &&
+     (StringContainsQ[st,"Field[NewScalarX, Scalar"] ||
+      StringContainsQ[st,"Field[NewScalarY, Scalar"]) &&
+     (StringCount[st,"Field[NewScalarX, Scalar"]+
+      StringCount[st,"Field[NewScalarY, Scalar"]+
+      StringCount[st,"Field[H, Scalar"])===4]]];
+ rest=Select[indexed,Function[item,
+   !MemberQ[llss,item] && !MemberQ[quartics,item]]];
+ (* The XX, XY and YY sectors include each corresponding conjugate; this
+    avoids treating one chirality in isolation as a Hermitian Lagrangian. *)
+ xx=Select[llss,StringContainsQ[#["text"],"Field[NewScalarX, Scalar"] &&
+   !StringContainsQ[#["text"],"Field[NewScalarY, Scalar"]&];
+ yy=Select[llss,StringContainsQ[#["text"],"Field[NewScalarY, Scalar"] &&
+   !StringContainsQ[#["text"],"Field[NewScalarX, Scalar"]&];
+ xy=Select[llss,StringContainsQ[#["text"],"Field[NewScalarX, Scalar"] &&
+   StringContainsQ[#["text"],"Field[NewScalarY, Scalar"]&];
+ qSelf=Select[quartics,StringCount[#["text"],"Field[H, Scalar"]===0&];
+ qPortal=Select[quartics,StringCount[#["text"],"Field[H, Scalar"]===2&];
+ groups=<|
+   "full_expanded"->indexed,
+   "background_no_LLSS_or_BSM_quartics"->rest,
+   "background_plus_all_LLSS"->Join[rest,llss],
+   "background_plus_all_BSM_quartics"->Join[rest,quartics],
+   "without_LLSS"->Join[rest,quartics],
+   "without_BSM_quartics"->Join[rest,llss],
+   "background_plus_XX_LLSS"->Join[rest,xx],
+   "background_plus_XY_LLSS"->Join[rest,xy],
+   "background_plus_YY_LLSS"->Join[rest,yy],
+   "background_plus_scalar_self_quartics"->Join[rest,qSelf],
+   "background_plus_Higgs_portal_quartics"->Join[rest,qPortal]
+ |>;
+ counts=<|"all_terms"->Length[indexed],"LLSS"->Length[llss],
+   "BSM_quartics"->Length[quartics],"background"->Length[rest],
+   "XX_LLSS"->Length[xx],"XY_LLSS"->Length[xy],
+   "YY_LLSS"->Length[yy],"scalar_self_quartics"->Length[qSelf],
+   "Higgs_portal_quartics"->Length[qPortal]|>;
+ (* Do not silently classify away unrecognized LLSS/quartic sectors. *)
+ If[Length[Join[llss,quartics,rest]] =!= Length[indexed],
+   Return[<|"status"->"PartitionCountMismatch","counts"->counts|>]];
+ Do[
+   sector=groups[name];
+   testExpr=If[sector==={},0,Total[sector[[All,"term"]]]];
+   results[name]=Join[
+     <|"term_count"->Length[sector]|>,
+     T3MEHermiticitySectorCheck[testExpr]],
+   {name,Keys[groups]}];
+ (* Coupling-resolved test isolates which original scalar quartic label
+    actually controls the failed Hermiticity check. These are pure diagnostic
+    deletions, NEVER used as a matching Lagrangian. *)
+ qLabels=Sort@DeleteDuplicates@Flatten[
+   StringCases[#["text"],
+     RegularExpression["Coupling\\[(lambda[A-Za-z0-9]+),"]->"$1"]& /@ qSelf];
+ qCouplingResults=<||>;
+ Do[
+   qSelected=Select[qSelf,
+     StringContainsQ[#["text"],"Coupling["<>label<>","]&];
+   qOther=Select[qSelf,
+     !StringContainsQ[#["text"],"Coupling["<>label<>","]&];
+   If[qSelected =!= {},
+     qCouplingResults[label]=<|
+       "term_count"->Length[qSelected],
+       "background_plus_coupling"->T3MEHermiticitySectorCheck[
+         Total[Join[rest,qSelected][[All,"term"]]]]["hermiticity"],
+       "background_plus_self_quartics_without_coupling"->
+         T3MEHermiticitySectorCheck[
+           Total[Join[rest,qOther][[All,"term"]]]]["hermiticity"]|>],
+   {label,qLabels}];
+ failGroups=Select[Keys[results],results[#]["hermiticity"]===False&];
+ (* Only compact, bounded source excerpts. Never export the huge formatted
+    Mathematica CheckLagrangian result or silently alter any operator. *)
+ preview=AssociationMap[
+   Function[k,Take[Map[StringTake[#["text"],UpTo[250]]&,
+      If[k==="LLSS",llss,If[k==="BSM_quartics",quartics,rest]]],UpTo[3]]],
+   {"LLSS","BSM_quartics","background"}];
+ audit=<|
+   "status"->"HermiticitySectorAuditCompletedNotMatching",
+   "partition_conserves_exact_terms"->True,
+   "counts"->counts,
+   "sector_checks"->results,
+   "scalar_self_quartic_coupling_isolation"->qCouplingResults,
+   "sectors_failing_hermiticity"->failGroups,
+   "sample_inputform_prefixes"->preview,
+   "scalar_threshold_matching_performed"->False,
+   "physical_sequential_C5_computed"->False|>;
+ If[Quiet@Check[Export[dest,audit,"RawJSON"],$Failed]===$Failed,
+   Return[<|"status"->"AuditExportFailed"|>]];
+ T3MECheckpoint["scalar-threshold-hermiticity-sector-audit-returned"];
+ Print["Scalar-threshold Hermiticity sector audit: ",
+   ToString[<|"counts"->counts,"failing_sectors"->failGroups|>,InputForm]];
+ Print["Scalar-threshold self-quartic coupling isolation: ",
+   ToString[qCouplingResults,InputForm]];
+ audit
+];
+
+
+(* Strictly identify the quartic-only spectator sector at this specific
+   1-loop LLHH boundary, without redefining couplings or editing the
+   original saved canonical tree. Every original term must belong to either
+   the retained or excluded multiset. Exactly 122 spectator scalar self
+   quartics are expected for B_-1 and C_-1; unexpected structures abort. *)
+ClearAll[T3MELeadingC5OneLoopProjection];
+T3MELeadingC5OneLoopProjection[eft_] := Module[
+ {expanded, terms, records, spectator, kept, majors, higgsQuartics,
+  background, rest, expr, total, retCount, expCount, sourceHashes},
+ expanded=Expand[eft];
+ terms=If[Head[expanded]===Plus,List@@expanded,{expanded}];
+ records=Map[<|"term"->#,"text"->ToString[#,InputForm]|>&,terms];
+ spectator=Select[records, Function[item,
+   With[{text=item["text"]},
+    !StringContainsQ[text,"GammaCC"] &&
+    StringCount[text,"Field[H, Scalar"]===0 &&
+    (StringCount[text,"Field[NewScalarX, Scalar"]+
+     StringCount[text,"Field[NewScalarY, Scalar"])===4]]];
+ kept=Select[records,!MemberQ[spectator,#]&];
+ majors=Select[kept,StringContainsQ[#["text"],"GammaCC"]&];
+ higgsQuartics=Select[kept,Function[item,
+   With[{text=item["text"]},
+    !StringContainsQ[text,"GammaCC"] &&
+    StringCount[text,"Field[H, Scalar"]===2 &&
+    (StringCount[text,"Field[NewScalarX, Scalar"]+
+     StringCount[text,"Field[NewScalarY, Scalar"])===2]]];
+ background=Select[kept,Function[item,
+   !MemberQ[majors,item] && !MemberQ[higgsQuartics,item]]];
+ expCount=If[modelName==="B_-1",20,24];
+ retCount=Length[kept];
+ expr=Total[kept[[All,"term"]]];
+ If[Length[spectator]=!=122 || Length[majors]=!=expCount ||
+    Length[higgsQuartics]=!=52 || Length[background]=!=21 ||
+    retCount=!=21+52+expCount ||
+    Length[spectator]+retCount=!=Length[terms] ||
+    !TrueQ[Expand[Total[terms]-Total[spectator[[All,"term"]]]-expr]===0] ||
+    FreeQ[expr,GammaCC] || FreeQ[expr,lambdaT3],
+   Return[<|"status"->"RejectedUnexpectedOperatorInventory",
+     "saved_term_count"->Length[terms],
+     "excluded_count"->Length[spectator],"kept_count"->retCount,
+     "LLSS_count"->Length[majors],"Higgs_quartic_count"->Length[higgsQuartics],
+     "background_count"->Length[background]|>]];
+ <|"status"->"ExactLeadingC5OperatorPartition",
+   "original_saved_tree_unchanged"->True,
+   "saved_term_count"->Length[terms],
+   "excluded_count"->Length[spectator],
+   "kept_count"->retCount,
+   "LLSS_count"->Length[majors],
+   "Higgs_quartic_count"->Length[higgsQuartics],
+   "background_count"->Length[background],
+   "candidate"->expr|>
+];
+
+(* Verify a possible loss of Hermitian representation at the F-first EOMEFT
+   handoff.  At tree level through dimension five, F exchange creates LLSS;
+   the renormalizable scalar interactions themselves are already present in
+   the independently validated UV mass-eigenfield Lagrangian. Rebuild those
+   interactions from the same native SU(2) source, but only permit replacing
+   EOMEFT if their sum with the EXACT saved LLSS equals EOMEFT algebraically.
+   This is an equality gate, not a projection onto a Hermitian subspace. *)
+ClearAll[T3MEVerifiedRenormalizableReconstruction];
+T3MEVerifiedRenormalizableReconstruction[
+  saved_, built_Association, extraParts_Association,
+  nativeTopology_Association,nativeH2_Association,
+  nativeS2_Association,nativeExtra_Association] := Module[
+ {expanded,terms,majorana,rest,rotatedRest,renormFree,renorm,composite,
+  residual,exact,relabeled,attempted=False,fullCheck=$Failed,detail=$Failed,
+  qCount,clean,report},
+ T3MECheckpoint["scalar-threshold-verified-renormalizable-reconstruction-started"];
+ expanded=Expand[saved];
+ terms=If[Head[expanded]===Plus,List@@expanded,{expanded}];
+ majorana=Select[terms,!FreeQ[#,GammaCC]&];
+ rest=Select[terms,FreeQ[#,GammaCC]&];
+ qCount=If[modelName==="B_-1",20,24];
+ If[Length[majorana]=!=qCount ||
+    AnyTrue[majorana,FreeQ[#,Verbatim[NewScalarX]|Verbatim[NewScalarY],{0,Infinity}]&],
+    Return[<|"status"->"UnexpectedMatchedMajoranaInventory",
+      "majorana_terms"->Length[majorana],"expected"->qCount,
+      "equality_proven"->False,"accepted"->False|>]];
+ rotatedRest=T3MERotateInteraction[extraParts["RemainingInteractions"]];
+ If[rotatedRest===$Failed ||
+    !T3MEOldFieldsAbsentQ[rotatedRest],
+    Return[<|"status"->"OriginalRenormalizableRotationFailed",
+      "equality_proven"->False,"accepted"->False|>]];
+ renormFree=CheckAbort[FreeLag[NewScalarX,NewScalarY],$Aborted];
+ If[renormFree===$Failed || renormFree===$Aborted,
+    Return[<|"status"->"RenormalizableFreeLagFailed",
+      "equality_proven"->False,"accepted"->False|>]];
+ renorm=Expand[built["LSM"]+renormFree+rotatedRest+
+    Total[Values[nativeH2["Expressions"]]]+
+    Total[Values[nativeS2["Expressions"]]]+
+    Total[Values[nativeExtra["Expressions"]]]+
+    nativeTopology["Expression"]]//RelabelIndices;
+ If[!FreeQ[renorm,Verbatim[NewFermion],{0,Infinity}] ||
+    FreeQ[renorm,Verbatim[NewScalarX],{0,Infinity}] ||
+    FreeQ[renorm,Verbatim[NewScalarY],{0,Infinity}] ||
+    !FreeQ[renorm,GammaCC],
+    Return[<|"status"->"RenormalizableFieldInventoryInvalid",
+      "equality_proven"->False,"accepted"->False|>]];
+ composite=Expand[renorm+Total[majorana]]//RelabelIndices;
+ (* First try literal equality, then strictly algebraic index relabelling.
+    We intentionally do not accept numerical sample agreement, nor simply
+    matching the scalar-quartic coupling count. *)
+ residual=Expand[saved-composite];
+ exact=TrueQ[residual===0];
+ If[!exact,
+   relabeled=CheckAbort[RelabelIndices[residual],$Aborted];
+   exact=(relabeled=!= $Aborted &&
+     (TrueQ[relabeled===0] ||
+       TrueQ[TimeConstrained[Simplify[relabeled==0],15,False]]))];
+ If[exact,
+   attempted=True;
+   fullCheck=CheckAbort[
+     Quiet[CheckLagrangian[composite],{CheckLagrangian::Hermiticity}],$Aborted];
+   detail=CheckAbort[
+     Quiet[CheckLagrangian[composite,DetailedOutput->True],
+       {CheckLagrangian::Hermiticity}],$Aborted]];
+ clean=exact && TrueQ[fullCheck] && AssociationQ[detail] &&
+   And@@(TrueQ[Lookup[detail,#,False]]& /@
+     {"Hermiticity","CanonicallyNormalized","HeavyMassBasis",
+      "GaugeInvariant","AllObjectsDefined"});
+ report=<|
+   "status"->If[clean,"VerifiedEquivalentReconstructionAccepted",
+     If[exact,"EquivalentReconstructionFailedMatcheteChecks",
+       "RenormalizableReconstructionNotAlgebraicallyIdentical"]],
+   "matched_majorana_term_count"->Length[majorana],
+   "renormalizable_tree_term_count"->Length[rest],
+   "algebraic_equality_proven"->exact,
+   "independent_matchete_check_attempted"->attempted,
+   "independent_matchete_check_passed"->clean,
+   "independent_hermiticity"->If[AssociationQ[detail],
+     Lookup[detail,"Hermiticity","Unavailable"],"Unavailable"],
+   "residual_nonzero_inputform_prefix"->If[exact,"",
+     StringTake[ToString[InputForm[residual]],UpTo[600]]],
+   "physical_sequential_C5_computed"->False,
+   "accepted"->clean|>;
+ If[clean,AssociateTo[report,"candidate"->composite]];
+ T3MECheckpoint["scalar-threshold-verified-renormalizable-reconstruction-returned"];
+ report
+];
+
 T3MEScalarThresholdPerform[] := Module[
  {built, sourceInt, extraQ, originals, oldPresent, status,
   b1,b2,removeA,removeB,xstatus,ystatus,free,rotated,lag,check,
@@ -1098,7 +1373,14 @@ T3MEScalarThresholdPerform[] := Module[
   llhh, llhhText, scalarTreePath, scalarLoopPath, scalarCorrectionPath,
   scalarLLHHPath, coreCheck, detailedCore, noF, noOld,
   massX, massY, checkHeavyX, checkHeavyY,
-  firstTreeLength, firstLLSSCount, treeX, treeY, firstStageOriginalCount},
+  firstTreeLength, firstLLSSCount, treeX, treeY, firstStageOriginalCount,
+  lightTreeDetail, originalTreeDetail, hermiticityTrial, hermiticityTrialDetail,
+  hermiticityRewrite = "None", hermiticityAttempts = {}, treeHermiticityReport,
+  hermiticityDiagnosticPath, hermiticitySectorPath, hermiticitySectorResult, stageTag, rewriteName, candidate,
+  retainedFermionMass, pureBaseline, baselineFields,
+  reconstruction, reconstructionProof, reconstructionPath, reconstructionClean,
+  lightEigenFree, heavyEigenFree, rebasedSource, rebaseDelta, rebaseReport,
+  matchAuditPath, stageSummary, stageDiagnostic, k, expr, snapText},
  If[!MatchQ[$FrontEnd,_FrontEndObject],
    T3MEFail["FrontEndUnavailable"]];
  If[Environment["T3_EXPERIMENTAL_GENERAL_QUARTICS"] === "1",
@@ -1268,6 +1550,37 @@ T3MEScalarThresholdPerform[] := Module[
    T3MEFail["IntegratedFermionDeregistrationFailed"]];
  If[Quiet@Check[DefineCoupling[MF,SelfConjugate->True];True,$Failed] =!= True,
    T3MEFail["IntegratedFermionMassCouplingRegistrationFailed"]];
+ (* The canonical EOMEFT was serialized in a different Matchete kernel.
+    Before changing Light to Heavy, check its Hermiticity with exactly the
+    same light-X/Y field assignments used in the first matching stage.
+    The absent F has already been removed, so the EFT is the correct
+    field inventory for this independent check. *)
+ T3MECheckpoint["saved-EFT1-tree-parse-started"];
+ scalarEFT=CheckAbort[Quiet@Check[ToExpression[treeText,InputForm],$Failed],$Aborted];
+ T3MECheckpoint["saved-EFT1-tree-parse-returned"];
+ If[scalarEFT === $Failed || scalarEFT === $Aborted || !FreeQ[scalarEFT,NewFermion] ||
+    FreeQ[scalarEFT,NewScalarX] || FreeQ[scalarEFT,NewScalarY] ||
+    FreeQ[scalarEFT,GammaCC],
+   T3MEFail["SavedEFT1TreeParseOrFieldPreflightFailed"]];
+ T3MECheckpoint["scalar-threshold-light-EFT1-hermiticity-preflight-started"];
+ lightTreeDetail=CheckAbort[
+   Quiet[CheckLagrangian[scalarEFT,DetailedOutput->True],
+     {CheckLagrangian::Hermiticity}],$Aborted];
+ T3MECheckpoint["scalar-threshold-light-EFT1-hermiticity-preflight-returned"];
+ Print["Saved canonical EFT1 before heavy reclassification: ",
+   ToString[<|"Hermiticity"->If[AssociationQ[lightTreeDetail],
+       Lookup[lightTreeDetail,"Hermiticity",Missing["Absent"]],$Failed],
+     "CanonicallyNormalized"->If[AssociationQ[lightTreeDetail],
+       Lookup[lightTreeDetail,"CanonicallyNormalized",Missing["Absent"]],$Failed]|>,InputForm]];
+ (* Capture the actual scalar free Lagrangian while X and Y are still
+    registered LIGHT.  The incoming EFT was serialized with this exact
+    mass-power-counting assignment, so it must not be sent unchanged to
+    Match after redefining those fields as Heavy. *)
+ T3MECheckpoint["scalar-threshold-light-scalar-FreeLag-capture-started"];
+ lightEigenFree=CheckAbort[FreeLag[NewScalarX,NewScalarY] // RelabelIndices,$Aborted];
+ If[MemberQ[{$Aborted,$Failed},lightEigenFree],
+   T3MEFail["ScalarThresholdLightFreeLagCaptureFailed"]];
+ T3MECheckpoint["scalar-threshold-light-scalar-FreeLag-capture-returned"];
  T3MECheckpoint["scalar-threshold-reclassify-X-Y-started"];
  If[Quiet@Check[RemoveField[NewScalarX];True,$Failed] =!= True ||
     Quiet@Check[RemoveField[NewScalarY];True,$Failed] =!= True,
@@ -1280,29 +1593,219 @@ T3MEScalarThresholdPerform[] := Module[
      Indices->{T3BSMd2},Charges->{U1Y[-1/2]},Mass->{Heavy,MSY}];True,$Failed];
  If[checkHeavyX =!= True || checkHeavyY =!= True,
    T3MEFail["ScalarThresholdHeavyFieldRegistrationFailed"]];
- T3MECheckpoint["saved-EFT1-tree-parse-started"];
- scalarEFT=CheckAbort[Quiet@Check[ToExpression[treeText,InputForm],$Failed],$Aborted];
- T3MECheckpoint["saved-EFT1-tree-parse-returned"];
- If[scalarEFT === $Failed || scalarEFT === $Aborted || !FreeQ[scalarEFT,NewFermion] ||
-    FreeQ[scalarEFT,NewScalarX] || FreeQ[scalarEFT,NewScalarY] ||
-    FreeQ[scalarEFT,GammaCC],
-   T3MEFail["SavedEFT1TreeParseOrFieldPreflightFailed"]];
+ (* Re-registering the heavy fields does not retroactively rebuild free
+    terms constructed in a kernel with Mass->{Light,...}.  Obtain the heavy
+    free terms under the CURRENT registry, then replace the old light free
+    terms only in the explicitly opted-in leading-C5 matching subtheory.
+    Any mismatch is exposed by CheckLagrangian; this is NOT an equality claim
+    between light and heavy power counting. *)
+ T3MECheckpoint["scalar-threshold-heavy-scalar-FreeLag-capture-started"];
+ heavyEigenFree=CheckAbort[FreeLag[NewScalarX,NewScalarY] // RelabelIndices,$Aborted];
+ If[MemberQ[{$Aborted,$Failed},heavyEigenFree],
+   T3MEFail["ScalarThresholdHeavyFreeLagCaptureFailed"]];
+ T3MECheckpoint["scalar-threshold-heavy-scalar-FreeLag-capture-returned"];
+ (* Save the diagnostic status of the full theory before any optional
+    leading-C5 projection. This mode does not certify full-EFT Hermiticity. *)
+ fullSavedTreeHermiticity=If[AssociationQ[lightTreeDetail],
+   Lookup[lightTreeDetail,"Hermiticity","Unavailable"],"Unavailable"];
+ leadingC5Partition=<|"status"->"NotRequested"|>;
+ If[TrueQ[$T3MELeadingC5Only],
+   T3MECheckpoint["scalar-threshold-leading-C5-sector-projection-started"];
+   leadingC5Partition=T3MELeadingC5OneLoopProjection[scalarEFT];
+   If[Lookup[leadingC5Partition,"status",""]=!=
+       "ExactLeadingC5OperatorPartition",
+     T3MEFail["LeadingC5SectorInventoryFailed",
+       ToString[KeyDrop[leadingC5Partition,{"candidate"}],InputForm]]];
+   scalarEFT=leadingC5Partition["candidate"];
+   T3MECheckpoint["scalar-threshold-leading-C5-sector-projection-returned"];
+   (* A power-counting-aware replacement of the two scalar free
+      Lagrangians, not a replacement of interaction vertices or LLSS.
+      Keep this scoped to the explicit restricted matching experiment. *)
+   T3MECheckpoint["scalar-threshold-light-to-heavy-free-rebase-started"];
+   rebaseDelta=Expand[heavyEigenFree-lightEigenFree] // RelabelIndices;
+   rebasedSource=Expand[scalarEFT-lightEigenFree+heavyEigenFree] // RelabelIndices;
+   If[rebasedSource===$Aborted || rebasedSource===$Failed ||
+      FreeQ[rebasedSource,NewScalarX] || FreeQ[rebasedSource,NewScalarY] ||
+      FreeQ[rebasedSource,GammaCC],
+      T3MEFail["ScalarThresholdFreeLagRebaseInvalid"]];
+   rebaseReport=<|
+     "status"->"HeavyScalarFreeLagRebaseAttemptedNotYetVerifiedByMatch",
+     "mode"->"LeadingC5OneLoopSectorOnly",
+     "light_free_head"->ToString[Head[lightEigenFree],InputForm],
+     "heavy_free_head"->ToString[Head[heavyEigenFree],InputForm],
+     "free_lagrangians_structurally_identical"->TrueQ[lightEigenFree===heavyEigenFree],
+     "power_counting_delta_is_zero"->TrueQ[rebaseDelta===0],
+     "delta_contains_X"->!FreeQ[rebaseDelta,NewScalarX],
+     "delta_contains_Y"->!FreeQ[rebaseDelta,NewScalarY],
+     "delta_inputform_prefix"->StringTake[ToString[InputForm[rebaseDelta]],UpTo[1800]],
+     "full_saved_eft_unchanged"->True,
+     "physical_C5_computed"->False|>;
+   Export[FileNameJoin[{DirectoryName[outPath],
+      FileBaseName[outPath]<>"_free_lagrangian_rebase.json"}],
+      rebaseReport,"RawJSON"];
+   scalarEFT=rebasedSource;
+   T3MECheckpoint["scalar-threshold-light-to-heavy-free-rebase-returned"];
+   Print["Opt-in leading-C5 one-loop subtheory: excluded ",
+     leadingC5Partition["excluded_count"],
+     " spectator four-heavy-scalar quartics; retained LLSS=",
+     leadingC5Partition["LLSS_count"],
+     "; Higgs-bearing quartics=",leadingC5Partition["Higgs_quartic_count"],
+     "; FULL EFT Hermiticity is NOT certified"];
+ ];
  T3MECheckpoint["scalar-threshold-EFT1-lagrangian-check-started"];
- coreCheck=CheckAbort[Quiet@Check[CheckLagrangian[scalarEFT],$Failed],$Aborted];
- detailedCore=CheckAbort[Quiet@Check[
-   CheckLagrangian[scalarEFT,DetailedOutput->True],$Failed],$Aborted];
+ (* Do not use Check[CheckLagrangian[...,],$Failed] here: Matchete may issue
+    nonfatal diagnostic messages even when its returned check is True.
+    Match the first threshold and production SafeStage use CheckAbort only. *)
+ coreCheck=CheckAbort[CheckLagrangian[scalarEFT],$Aborted];
+ T3MECheckpoint["scalar-threshold-ordinary-lagrangian-check-returned"];
+ detailedCore=CheckAbort[
+   CheckLagrangian[scalarEFT,DetailedOutput->True],$Aborted];
+ T3MECheckpoint["scalar-threshold-detailed-lagrangian-check-returned"];
  Print["Scalar-threshold CheckLagrangian: ",InputForm[coreCheck]];
+ (* Check whether only Matchete's representation of Hermitian operators
+    changed during the EOMEFT/serialization transition. Only attempt
+    documented equivalence-preserving simplification functions; NEVER
+    insert HC terms or replace the EFT by (L + HC[L])/2.
+
+    Each rewrite must pass the *entire* ordinary CheckLagrangian plus the
+    detailed Hermiticity, canonical, heavy-mass and gauge checks. *)
+ originalTreeDetail=detailedCore;
  If[!TrueQ[coreCheck] || !AssociationQ[detailedCore] ||
     !TrueQ[Lookup[detailedCore,"HeavyMassBasis",False]],
-   Print["Scalar-threshold detailed CheckLagrangian: ",
-     ToString[detailedCore,InputForm]];
-   T3MEFail["SavedEFT1TreeHeavyScalarCheckFailed"]];
+   If[AssociationQ[detailedCore] &&
+      Lookup[detailedCore,"Hermiticity",Missing["Unknown"]] === False &&
+      TrueQ[Lookup[detailedCore,"HeavyMassBasis",False]] &&
+      TrueQ[Lookup[detailedCore,"CanonicallyNormalized",False]] &&
+      TrueQ[Lookup[detailedCore,"GaugeInvariant",False]],
+     Do[
+       rewriteName=stageTag;
+       T3MECheckpoint["scalar-threshold-hermiticity-equivalence-"<>rewriteName<>"-started"];
+       candidate=CheckAbort[
+         Quiet[Switch[rewriteName,
+            "OriginalRelabel", RelabelIndices[scalarEFT],
+            "ExpandOnly", Expand[scalarEFT],
+            "ExpandRelabel", RelabelIndices[Expand[scalarEFT]],
+            "HcSimplify", RelabelIndices[HcSimplify[scalarEFT]],
+            "GreensSimplify", RelabelIndices[GreensSimplify[scalarEFT]],
+            _, $Failed]],$Aborted];
+       If[candidate===$Failed || candidate===$Aborted ||
+          !FreeQ[candidate,Verbatim[NewFermion],{0,Infinity}] ||
+          FreeQ[candidate,Verbatim[NewScalarX],{0,Infinity}] ||
+          FreeQ[candidate,Verbatim[NewScalarY],{0,Infinity}] ||
+          FreeQ[candidate,GammaCC],
+         AppendTo[hermiticityAttempts,<|"method"->rewriteName,
+           "status"->"RewriteFailedOrInvalid"|>];Continue[]];
+       hermiticityTrial=CheckAbort[
+         Quiet[CheckLagrangian[candidate],{CheckLagrangian::Hermiticity}],$Aborted];
+       hermiticityTrialDetail=CheckAbort[
+         Quiet[CheckLagrangian[candidate,DetailedOutput->True],
+           {CheckLagrangian::Hermiticity}],$Aborted];
+       AppendTo[hermiticityAttempts,<|"method"->rewriteName,
+         "ordinary"->ToString[hermiticityTrial,InputForm],
+         "hermiticity"->If[AssociationQ[hermiticityTrialDetail],
+           Lookup[hermiticityTrialDetail,"Hermiticity","Unavailable"],"Unavailable"],
+         "canonical"->If[AssociationQ[hermiticityTrialDetail],
+           Lookup[hermiticityTrialDetail,"CanonicallyNormalized","Unavailable"],"Unavailable"]|>];
+       If[TrueQ[hermiticityTrial] && AssociationQ[hermiticityTrialDetail] &&
+          TrueQ[Lookup[hermiticityTrialDetail,"Hermiticity",False]] &&
+          TrueQ[Lookup[hermiticityTrialDetail,"CanonicallyNormalized",False]] &&
+          TrueQ[Lookup[hermiticityTrialDetail,"HeavyMassBasis",False]] &&
+          TrueQ[Lookup[hermiticityTrialDetail,"GaugeInvariant",False]] &&
+          TrueQ[Lookup[hermiticityTrialDetail,"AllObjectsDefined",False]],
+          scalarEFT=candidate;
+          coreCheck=hermiticityTrial;
+          detailedCore=hermiticityTrialDetail;
+          hermiticityRewrite=rewriteName;
+          Break[]],
+       {stageTag,{"OriginalRelabel","ExpandOnly","ExpandRelabel","HcSimplify","GreensSimplify"}}]
+   ];
+ ];
+ (* If a genuine Hermiticity failure remains, compare the saved EOMEFT
+    against the original UV renormalizable X/Y interactions plus exactly its
+    matched LLSS. Only exact equality AND a full new Matchete check permit
+    a canonical representation replacement. *)
+ reconstruction=<|"status"->"NotAttemptedOriginalPasses","accepted"->False|>;
+ reconstructionPath=FileNameJoin[{DirectoryName[outPath],
+   FileBaseName[outPath]<>"_reconstruction_audit.json"}];
+ If[!TrueQ[coreCheck] && AssociationQ[detailedCore] &&
+    Lookup[detailedCore,"Hermiticity",True]===False,
+   reconstruction=T3MEVerifiedRenormalizableReconstruction[
+     scalarEFT,built,extraParts,nativeTopology,nativeH2,nativeS2,nativeExtra];
+   reconstructionProof=KeyDrop[reconstruction,{"candidate"}];
+   Quiet@Check[Export[reconstructionPath,reconstructionProof,"RawJSON"],$Failed];
+   Print["Scalar-threshold reconstruction: ",
+      ToString[KeyTake[reconstructionProof,{"status","algebraic_equality_proven",
+        "independent_matchete_check_passed"}],InputForm]];
+   If[TrueQ[Lookup[reconstruction,"accepted",False]],
+     scalarEFT=reconstruction["candidate"];
+     coreCheck=True;
+     detailedCore=CheckAbort[
+       CheckLagrangian[scalarEFT,DetailedOutput->True],$Aborted];
+     If[!AssociationQ[detailedCore] ||
+        !And@@(TrueQ[Lookup[detailedCore,#,False]]& /@
+          {"Hermiticity","CanonicallyNormalized","HeavyMassBasis",
+           "GaugeInvariant","AllObjectsDefined"}),
+       T3MEFail["ReconstructionValidationNotStable"]];
+     hermiticityRewrite="VerifiedRenormalizableReconstruction"]];
+ (* Always export compact diagnostics so a true Hermiticity failure can be
+    distinguished from a registration problem without a 100-kB box dump. *)
+ hermiticityDiagnosticPath=FileNameJoin[{DirectoryName[outPath],
+   FileBaseName[outPath]<>"_hermiticity_diagnostics.json"}];
+ treeHermiticityReport=<|
+   "model"->modelName,
+   "matching_scope"->If[TrueQ[$T3MELeadingC5Only],
+     "LeadingC5OneLoopSectorOnly","FullEFT"],
+   "full_saved_eft_hermiticity"->fullSavedTreeHermiticity,
+   "excluded_four_heavy_scalar_quartic_terms"->Lookup[leadingC5Partition,
+     "excluded_count",0],
+   "source"->FileNameTake[treePath],
+   "light_EFT1_hermiticity"->If[AssociationQ[lightTreeDetail],
+     Lookup[lightTreeDetail,"Hermiticity","Unavailable"],"Unavailable"],
+   "heavy_EFT1_original_hermiticity"->If[AssociationQ[originalTreeDetail],
+     Lookup[originalTreeDetail,"Hermiticity","Unavailable"],"Unavailable"],
+   "heavy_EFT1_original_canonical"->If[AssociationQ[originalTreeDetail],
+     Lookup[originalTreeDetail,"CanonicallyNormalized","Unavailable"],"Unavailable"],
+   "heavy_EFT1_original_mass_basis"->If[AssociationQ[originalTreeDetail],
+     Lookup[originalTreeDetail,"HeavyMassBasis","Unavailable"],"Unavailable"],
+   "equivalence_rewrite_accepted"->hermiticityRewrite,
+   "reconstruction_audit_file"->If[FileExistsQ[reconstructionPath],
+      FileNameTake[reconstructionPath],""],
+   "equivalence_rewrite_attempts"->hermiticityAttempts,
+   "final_ordinary_CheckLagrangian"->ToString[coreCheck,InputForm],
+   "final_hermiticity"->If[AssociationQ[detailedCore],
+     Lookup[detailedCore,"Hermiticity","Unavailable"],"Unavailable"],
+   "physical_sequential_C5_computed"->False|>;
+ Quiet@Check[Export[hermiticityDiagnosticPath,treeHermiticityReport,"RawJSON"],$Failed];
+ Print["Scalar-threshold Hermiticity audit: ",
+   ToString[KeyTake[treeHermiticityReport,{
+     "light_EFT1_hermiticity","heavy_EFT1_original_hermiticity",
+     "equivalence_rewrite_accepted","final_hermiticity"}],InputForm]];
+ If[!TrueQ[coreCheck] || !AssociationQ[detailedCore] ||
+    !TrueQ[Lookup[detailedCore,"Hermiticity",False]] ||
+    !TrueQ[Lookup[detailedCore,"HeavyMassBasis",False]],
+   hermiticitySectorPath=FileNameJoin[{DirectoryName[outPath],
+     FileBaseName[outPath]<>"_hermiticity_sector_audit.json"}];
+   hermiticitySectorResult=T3MEHermiticitySectorAudit[
+     scalarEFT,hermiticitySectorPath];
+   Print["Scalar-threshold Hermiticity sector diagnostic: ",hermiticitySectorPath];
+   Print["Scalar-threshold diagnostic file: ",hermiticityDiagnosticPath];
+   T3MEFail["SavedEFT1TreeHeavyScalarCheckFailed",
+     "ordinary="<>ToString[coreCheck,InputForm]<>
+     "; Hermiticity="<>ToString[If[AssociationQ[detailedCore],
+       Lookup[detailedCore,"Hermiticity",False],"Unavailable"],InputForm]<>
+     "; diagnostic="<>FileNameTake[hermiticityDiagnosticPath]]];
  T3MECheckpoint["scalar-threshold-match-loader-started"];
  matchingSource=FileNameJoin[{scriptDir,"RunMatching.wl"}];
  If[!FileExistsQ[matchingSource],T3MEFail["MatchingFunctionsMissing"]];
  Get[matchingSource];
  If[!TrueQ[Length[DownValues[RunT3Matching]]>0],
    T3MEFail["MatchingFunctionsUnavailable"]];
+ (* Store the exact Matchete stage evidence even if the subsequent
+    loop-correction guard fails.  In particular, RunT3Matching's Success
+    only certifies that its stages returned rather than $Failed; warnings
+    about heavy fields being light require independent inspection. *)
+ matchAuditPath=FileNameJoin[{DirectoryName[outPath],
+   FileBaseName[outPath]<>"_matching_stage_audit.json"}];
  T3MECheckpoint["scalar-threshold-tree-Match-started"];
  treeResult=CheckAbort[RunT3Matching[scalarEFT,5,0],$Aborted];
  T3MECheckpoint["scalar-threshold-tree-Match-returned"];
@@ -1325,6 +1828,37 @@ T3MEScalarThresholdPerform[] := Module[
      ToString[If[AssociationQ[loopResult],Lookup[loopResult,"Status","Unknown"],
        loopResult],InputForm]]];
  loopMatched=loopResult["MatchedEFT"];
+ (* Export stage diagnostics *before* checking that the resulting EFT
+    actually contains the scalar-loop correction. *)
+ stageSummary=Association@Table[k->Module[{v,textRep},
+   v=Lookup[treeResult,k,Missing["StageAbsent"]];
+   textRep=ToString[InputForm[v]];
+   <|"head"->ToString[Head[v],InputForm],
+     "characters"->StringLength[textRep],
+     "explicit_hbar"->StringContainsQ[textRep,"hbar"],
+     "contains_X"->StringContainsQ[textRep,"Field[NewScalarX"],
+     "contains_Y"->StringContainsQ[textRep,"Field[NewScalarY"],
+     "contains_GammaCC"->StringContainsQ[textRep,"GammaCC"],
+     "prefix"->StringTake[textRep,UpTo[1100]]|>],
+   {k,{"RawEFT","EOMEFT","MatchedEFT"}}];
+ stageDiagnostic=Association@Table[k->Module[{v,textRep},
+   v=Lookup[loopResult,k,Missing["StageAbsent"]];
+   textRep=ToString[InputForm[v]];
+   <|"head"->ToString[Head[v],InputForm],
+     "characters"->StringLength[textRep],
+     "explicit_hbar"->StringContainsQ[textRep,"hbar"],
+     "contains_X"->StringContainsQ[textRep,"Field[NewScalarX"],
+     "contains_Y"->StringContainsQ[textRep,"Field[NewScalarY"],
+     "contains_GammaCC"->StringContainsQ[textRep,"GammaCC"],
+     "prefix"->StringTake[textRep,UpTo[1100]]|>],
+   {k,{"RawEFT","EOMEFT","MatchedEFT"}}];
+ Export[matchAuditPath,<|
+   "status"->"MatchStageAuditBeforeLoopValidation",
+   "model"->modelName,"matching_scope"->If[TrueQ[$T3MELeadingC5Only],
+     "LeadingC5OneLoopSectorOnly","FullEFT"],
+   "tree_stage"->stageSummary,"one_loop_stage"->stageDiagnostic,
+   "full_eft_validated"->!TrueQ[$T3MELeadingC5Only],
+   "physical_sequential_C5_computed"->False|>,"RawJSON"];
  correction=Expand[loopMatched-treeMatched];
  correctionText=ToString[InputForm[correction]];
  completeText=ToString[InputForm[loopMatched]];
@@ -1332,7 +1866,14 @@ T3MEScalarThresholdPerform[] := Module[
     StringContainsQ[completeText,"Field[NewScalarX"] ||
     StringContainsQ[completeText,"Field[NewScalarY"] ||
     StringContainsQ[completeText,"Field[NewFermion"],
-   T3MEFail["ScalarThresholdLoopCorrectionInvalid"]];
+   (Print["Scalar-threshold diagnostic: tree/loop stage audit -> ",matchAuditPath];
+    Print["  loop correction zero: ",correction===0,
+      "; has hbar: ",StringContainsQ[correctionText,"hbar"],
+      "; matched EFT retains X/Y/F: ",
+      Or@@(StringContainsQ[completeText,#]& /@
+        {"Field[NewScalarX","Field[NewScalarY","Field[NewFermion"})];
+    T3MEFail["ScalarThresholdLoopCorrectionInvalid",
+       "See "<>FileNameTake[matchAuditPath]])];
  scalarLoopPath=FileNameJoin[{DirectoryName[outPath],
    FileBaseName[outPath]<>"_sm_tree_plus_loop.inputform.txt"}];
  scalarCorrectionPath=FileNameJoin[{DirectoryName[outPath],
@@ -1364,13 +1905,28 @@ T3MEScalarThresholdPerform[] := Module[
    "format"->"t3-mass-eigen-eft1-scalar-threshold-probe-v1",
    "status"->"ScalarThresholdOneLoopRawSectorsExtractedNoEFT1Running",
    "model"->modelName,
+   "matching_scope"->If[TrueQ[$T3MELeadingC5Only],
+     "LeadingC5OneLoopSectorOnly","FullEFT"],
+   "full_saved_eft_hermiticity"->fullSavedTreeHermiticity,
+   "excluded_four_heavy_scalar_quartic_terms"->Lookup[leadingC5Partition,
+      "excluded_count",0],
+   "full_eft_validated"->If[TrueQ[$T3MELeadingC5Only],False,True],
+   "full_saved_eft_unchanged_on_disk"->True,
    "input_eft1_tree"->FileNameTake[treePath],
    "input_eft1_tree_character_count"->firstTreeLength,
    "eigenfield_input_yukawas_and_quartics_reconstructed"->True,
    "fermion_removed_before_scalar_matching"->True,
    "heavy_scalar_fields"->{"NewScalarX","NewScalarY"},
    "scalar_heavy_mass_basis_detailed_check_passed"->True,
+   "hermiticity_check_passed"->True,
+   "hermiticity_applies_to_matching_subtheory_only"->TrueQ[$T3MELeadingC5Only],
+   "canonical_EOMEFT_hermiticity_rewrite"->hermiticityRewrite,
+   "hermiticity_diagnostic_file"->FileNameTake[hermiticityDiagnosticPath],
+   "reconstruction_audit_file"->If[hermiticityRewrite==="VerifiedRenormalizableReconstruction",
+       FileNameTake[reconstructionPath],""],
    "tree_matching_completed"->True,"one_loop_matching_completed"->True,
+   "scalar_matching_stage_audit_file"->FileNameTake[matchAuditPath],
+   "scalar_free_lagrangian_rebased"->TrueQ[$T3MELeadingC5Only],
    "scalar_one_loop_correction_hbar_present"->True,
    "raw_scalar_llhh_term_count"->Length[scalarCandidates],
    "scalar_loop_difference_term_count"->Length[deltaTerms],

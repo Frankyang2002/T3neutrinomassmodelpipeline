@@ -1084,7 +1084,7 @@ T3MEPerform[] := Module[
   portalParts, nativeH2, otherRotated, portalsRotated,
   scalarParts, nativeS2, scalarRotated, yukawaParts, nativeY2,
   y1Parts, nativeY1, extraParts, nativeExtra, extraRotated,
-  matchingSource, matchingResult, matchedEFT, eftPath,
+  matchingSource, matchingResult, matchedEFT, transitionEOM, eftPath, transitionPath,
   terms, llssTerms, llss, llssPath, xPresent, yPresent, fAbsent,
   xLLSS, yLLSS},
  If[!MatchQ[$FrontEnd,_FrontEndObject],
@@ -1293,7 +1293,8 @@ T3MEPerform[] := Module[
  T3MECheckpoint["fermion-first-tree-Match-returned"];
  If[!AssociationQ[matchingResult] ||
     Lookup[matchingResult,"Status",""] =!= "Success" ||
-    !KeyExistsQ[matchingResult,"MatchedEFT"],
+    !KeyExistsQ[matchingResult,"MatchedEFT"] ||
+    !KeyExistsQ[matchingResult,"EOMEFT"],
    Print["F-first matching status: ",
      ToString[If[AssociationQ[matchingResult],
        KeyDrop[matchingResult,{"RawEFT","GreenEFT","EOMEFT","LoopEFT","MatchedEFT"}],
@@ -1302,6 +1303,23 @@ T3MEPerform[] := Module[
      ToString[If[AssociationQ[matchingResult],
        Lookup[matchingResult,"Status","Unknown"],matchingResult],InputForm]]];
  matchedEFT=matchingResult["MatchedEFT"];
+ (* The production sequential-matching handoff is EOMEFT, NOT MatchedEFT.
+    MatchedEFT expands effective couplings after the EOM field redefinitions;
+    reusing it at a later threshold can spoil canonical mass/kinetic terms.
+    Keep MatchedEFT exports unchanged for existing numerical diagnostics. *)
+ transitionEOM=matchingResult["EOMEFT"];
+ If[transitionEOM === $Failed || transitionEOM === $Aborted ||
+    FreeQ[transitionEOM,Verbatim[NewScalarX],{0,Infinity}] ||
+    FreeQ[transitionEOM,Verbatim[NewScalarY],{0,Infinity}] ||
+    !FreeQ[transitionEOM,Verbatim[NewFermion],{0,Infinity}] ||
+    FreeQ[transitionEOM,GammaCC],
+   T3MEFail["FermionFirstEOMTransitionInvalid"]];
+ transitionPath=FileNameJoin[{DirectoryName[outPath],
+   FileBaseName[outPath]<>"_eft1_transition_eom.inputform.txt"}];
+ If[Quiet@Check[Export[transitionPath,
+     ToString[InputForm[transitionEOM]],"Text"],$Failed]===$Failed,
+   T3MEFail["EFT1EOMTransitionExportFailed"]];
+ T3MECheckpoint["fermion-first-canonical-EOMEFT-handoff-exported"];
  eftPath=FileNameJoin[{DirectoryName[outPath],
    FileBaseName[outPath]<>"_eft1_tree.inputform.txt"}];
  If[Quiet@Check[Export[eftPath,ToString[InputForm[matchedEFT]],"Text"],$Failed]===$Failed,
@@ -1361,6 +1379,8 @@ T3MEPerform[] := Module[
    "llss_contains_x"->xLLSS,"llss_contains_y"->yLLSS,
    "llss_term_count"->Length[llssTerms],
    "matched_eft_file"->FileNameTake[eftPath],
+   "transition_eom_eft1_file"->FileNameTake[transitionPath],
+   "transition_representation"->"EOMEFT",
    "llss_inputform_file"->FileNameTake[llssPath],
    "numerical_U_parameters"->T3MEMixingSpurionNumericalMap[],
    "eft1_rge_performed"->False,

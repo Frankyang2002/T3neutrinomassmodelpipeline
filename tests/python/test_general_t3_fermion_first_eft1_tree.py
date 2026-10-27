@@ -27,6 +27,8 @@ def certified(model='B_-1', stem='B_m1_final_eft1_fermion_first_tree'):
         physical_matching_performed=False,
         matchete_rgbeta_quartic_normalization_certified=False,
         matched_eft_file=stem+'_eft1_tree.inputform.txt',
+        transition_representation='EOMEFT',
+        transition_eom_eft1_file=stem+'_eft1_transition_eom.inputform.txt',
         llss_inputform_file=stem+'_llss_tree.inputform.txt',
     )
 
@@ -34,6 +36,7 @@ def certified(model='B_-1', stem='B_m1_final_eft1_fermion_first_tree'):
 def write_artifacts(directory, stem):
     (directory/(stem+'_eft1_tree.inputform.txt')).write_text('Field[NewScalarX] + Field[NewScalarY]')
     (directory/(stem+'_llss_tree.inputform.txt')).write_text('GammaCC Field[NewScalarX] Field[NewScalarY]')
+    (directory/(stem+'_eft1_transition_eom.inputform.txt')).write_text('GammaCC Field[NewScalarX] Field[NewScalarY]')
 
 
 @pytest.mark.parametrize('model',['B_-1','C_-1'])
@@ -99,6 +102,8 @@ def test_wolfram_source_f_first_and_native_invariants():
     assert 'Mass->{Light,MSX}' in s and 'Mass->{Light,MSY}' in s
     assert 'Mass->{Heavy,MSX}' not in s and 'Mass->{Heavy,MSY}' not in s
     assert 'RunT3Matching[lag,5,0]' in s
+    assert 'matchingResult["EOMEFT"]' in s
+    assert 'transition_eom_eft1_file' in s
     assert 'RunT3Matching[lag,5,1]' not in s
     assert 'T3MECheckpoint["fermion-first-LLSS-sector-extracted"]' in s
     for f in ('T3MEBuildNativeTopology','T3MEBuildNativeH2Portals',
@@ -158,3 +163,20 @@ def test_nonzero_process_error_refused(monkeypatch,tmp_path):
     monkeypatch.setattr(task.subprocess,'run',nope)
     with pytest.raises(ValueError,match='EFT1 incomplete'):
         task.run_model('B_-1',outdir=root/'output/eft1')
+
+
+def test_eom_transition_required_and_clean(tmp_path):
+    stem='B_m1_final_eft1_fermion_first_tree'
+    write_artifacts(tmp_path,stem)
+    p=tmp_path/(stem+'_eft1_transition_eom.inputform.txt')
+    p.unlink()
+    with pytest.raises(ValueError,match='missing canonical'):
+        task.validate_tree_report(certified(), 'B_-1',tmp_path,stem)
+    p.write_text('GammaCC Field[NewScalarX] Field[NewScalarY] Field[NewFermion]')
+    with pytest.raises(ValueError,match='integrated F'):
+        task.validate_tree_report(certified(), 'B_-1',tmp_path,stem)
+    p.write_text('GammaCC Field[NewScalarX] Field[NewScalarY]')
+    bad=certified()
+    bad['transition_representation']='MatchedEFT'
+    with pytest.raises(ValueError):
+        task.validate_tree_report(bad,'B_-1',tmp_path,stem)

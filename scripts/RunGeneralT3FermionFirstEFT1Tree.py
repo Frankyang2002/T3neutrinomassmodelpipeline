@@ -63,6 +63,7 @@ def validate_tree_report(report: Mapping[str, Any], model: str,
         'scalar_light_fields': ['NewScalarX', 'NewScalarY'],
         'integrated_heavy_fields': ['NewFermion'],
         'tree_matching_completed': True,
+        'transition_representation': 'EOMEFT',
         'fermion_field_absent': True, 'x_scalar_present': True,
         'y_scalar_present': True, 'llss_contains_x': True,
         'llss_contains_y': True, 'eft1_rge_performed': False,
@@ -91,6 +92,18 @@ def validate_tree_report(report: Mapping[str, Any], model: str,
         if not path.is_file() or path.stat().st_size == 0:
             fail(f'{model}: missing or empty artifact: {path}')
         artefacts.append(path)
+    transition_name = stem + '_eft1_transition_eom.inputform.txt'
+    if report.get('transition_eom_eft1_file') != transition_name:
+        fail(f'{model}: missing canonical EOMEFT transition certificate')
+    transition = outdir / transition_name
+    if not transition.is_file() or transition.stat().st_size == 0:
+        fail(f'{model}: missing canonical EOMEFT transition file: {transition}')
+    transition_text = transition.read_text(encoding='utf-8')
+    if not all(x in transition_text for x in
+               ('GammaCC', 'Field[NewScalarX', 'Field[NewScalarY')):
+        fail(f'{model}: canonical EOMEFT transition missing operator/field structure')
+    if 'Field[NewFermion' in transition_text:
+        fail(f'{model}: integrated F unexpectedly present in EOMEFT transition')
     llss_text = artefacts[1].read_text(encoding='utf-8')
     if not all(x in llss_text for x in ('GammaCC', 'NewScalarX', 'NewScalarY')):
         fail(f'{model}: exported LLSS sector lacks certified field signatures')
@@ -116,7 +129,8 @@ def run_model(model: str, *, which: str = 'final', folder: Path = INPUT,
     progress = outdir / (stem + '.progress.json')
     log = outdir / (stem + '.log')
     for item in (target, progress, outdir / (stem + '_eft1_tree.inputform.txt'),
-                 outdir / (stem + '_llss_tree.inputform.txt')):
+                 outdir / (stem + '_llss_tree.inputform.txt'),
+                 outdir / (stem + '_eft1_transition_eom.inputform.txt')):
         if item.exists():
             item.unlink()
     env = dict(os.environ)
@@ -150,6 +164,7 @@ def run_model(model: str, *, which: str = 'final', folder: Path = INPUT,
         'first_threshold_wolfram_sha256': sha256(WOLFRAM.read_bytes()).hexdigest(),
         'existing_matching_source_sha256': sha256(MATCHING_SOURCE.read_bytes()).hexdigest(),
         'matched_eft_file': str(eft.relative_to(ROOT)),
+        'transition_eom_eft1_file': str((outdir / (stem + '_eft1_transition_eom.inputform.txt')).relative_to(ROOT)),
         'llss_file': str(llss.relative_to(ROOT)),
         'llss_term_count': report['llss_term_count'],
         'physical_C5_computed': False, 'sequential_EFT1_completed': False,

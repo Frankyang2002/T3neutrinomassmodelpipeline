@@ -53,6 +53,28 @@ def file_hash(path: Path) -> str:
     return sha256(path.read_bytes()).hexdigest()
 
 
+
+def verify_stage29_registry_provenance(stage29: dict, registry_file: Path = REGISTRY) -> None:
+    """Compare a Stage29 source digest using platform-independent path keys.
+
+    Stage29 serializes str(Path.relative_to(root)), which uses backslashes on
+    Windows and slashes on POSIX. Require one unambiguous matching key and the
+    actual SHA-256 digest; do not accept a missing key as a changed file.
+    """
+    recorded = stage29.get('input_sha256')
+    if not isinstance(recorded, dict):
+        fail('Stage29 provenance hashes missing')
+    canonical = 'RGE/general/generated/general_rgbeta_quartic_registry.json'
+    matching = [key for key in recorded if isinstance(key, str) and
+                key.replace('\\', '/') == canonical]
+    if len(matching) != 1:
+        fail('Stage29 registry provenance key absent or ambiguous (Windows/POSIX path)')
+    claimed = recorded[matching[0]]
+    actual = file_hash(registry_file)
+    if not isinstance(claimed, str) or claimed != actual:
+        fail('Stage29 registry source changed: regenerate Stage29 handoff')
+
+
 def quartic_names(registry: dict) -> tuple[str, ...]:
     totals = registry.get('totals', {})
     if totals.get('rgbeta_new_vertices') != 38 or totals.get('matchete_extra_quartics') != 50:
@@ -208,9 +230,7 @@ def run(*, folder: Path = DATA, output: Path | None = None,
     config = read_json(config_file)
     names = quartic_names(registry)
     boundary = uv_quartics(stage29, registry)
-    stage29_hash = stage29.get('input_sha256', {}).get('RGE/general/generated/general_rgbeta_quartic_registry.json')
-    if stage29_hash != file_hash(REGISTRY):
-        fail('Stage29 registry source changed: regenerate Stage29 handoff')
+    verify_stage29_registry_provenance(stage29)
     initial, base_vec, layout = benchmark_state(config)
     betas = validate_export(export, names, layout.names)
     y0 = np.concatenate((base_vec,np.array([v for name in names for v in

@@ -1,0 +1,187 @@
+{
+  "format": "stage36-t3-existing-c5-sm-weinberg-v1",
+  "status": "SuccessExistingC5WeinbergRunning",
+  "model": "C_+1",
+  "mu_scalar_threshold_gev": 1000.0,
+  "mu_low_gev": 100.0,
+  "sm_weinberg_running_performed": true,
+  "source_existing_c5_used": true,
+  "existing_matching_artifact_kind": "hierarchical-fixed-order-hard-plus-direct",
+  "matching_source_is_hierarchical": true,
+  "legacy_matching_approximation_opted_in": false,
+  "new_general_quartics_included_in_matching": false,
+  "c12_wilson_operators_evolved_from_stage33": false,
+  "scalar_wilson_matching_recomputed": false,
+  "physical_coupling_mapping_certified": false,
+  "neutrino_results_are_conditional_benchmark_estimates": true,
+  "matching_input_heavy_masses_gev": [
+    115177.1045596402,
+    126694.81502675019,
+    138212.52539561866
+  ],
+  "matching_input_scalar_masses_gev": [
+    1180.6511333019616,
+    1083.8778490966597
+  ],
+  "matching_input_lambdaT3": {
+    "real": 0.10155013937353213,
+    "imag": 0.0
+  },
+  "c5_at_scalar_threshold": {
+    "real": [
+      [
+        -1.2320739294317028e-16,
+        2.7733404816291135e-16,
+        -8.135726592588017e-17
+      ],
+      [
+        2.7733404816291135e-16,
+        -9.009479967455914e-16,
+        7.583001955848793e-16
+      ],
+      [
+        -8.135726592588017e-17,
+        7.583001955848793e-16,
+        -1.0365033919064095e-15
+      ]
+    ],
+    "imag": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  "c5_at_low_scale": {
+    "real": [
+      [
+        -1.152374634249459e-16,
+        2.5939411351357263e-16,
+        -7.609466426842885e-17
+      ],
+      [
+        2.5939411351357263e-16,
+        -8.426682920270862e-16,
+        7.092494883255424e-16
+      ],
+      [
+        -7.609466426842885e-17,
+        7.092494883255424e-16,
+        -9.69459175364059e-16
+      ]
+    ],
+    "imag": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  "neutrino_mass_matrix_low_scale_gev": {
+    "real": [
+      [
+        3.493094608579186e-12,
+        -7.862791773454582e-12,
+        2.306592436155203e-12
+      ],
+      [
+        -7.862791773454582e-12,
+        2.5543082780692747e-11,
+        -2.1498872763900057e-11
+      ],
+      [
+        2.306592436155203e-12,
+        -2.1498872763900057e-11,
+        2.938638631964845e-11
+      ]
+    ],
+    "imag": [
+      [
+        -0.0,
+        0.0,
+        -0.0
+      ],
+      [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      [
+        -0.0,
+        0.0,
+        -0.0
+      ]
+    ]
+  },
+  "final_sm_couplings": {
+    "gY": 0.33863636754580984,
+    "g2": 0.5903772143766153,
+    "g3": 1.2051683446040788,
+    "lambdaH": 0.3896223226797414
+  },
+  "neutrino_observables": {
+    "ordering": "NO",
+    "masses_ev": [
+      0.00037976713478791676,
+      0.008690057340374127,
+      0.05011227350333414
+    ],
+    "delta_m21_sq_ev2": 7.537287350232522e-05,
+    "delta_m31_sq_ev2": 0.0025110957325962997,
+    "delta_m32_sq_ev2": 0.0024357228590939743,
+    "pmns_abs": [
+      [
+        0.8219865108395381,
+        0.5494162138105528,
+        0.14993331851166006
+      ],
+      [
+        0.4900113321334307,
+        0.5481372950547077,
+        0.6778159043213201
+      ],
+      [
+        0.29021900416523844,
+        0.6306245553197126,
+        0.7197816334480563
+      ]
+    ],
+    "takagi_residual": 7.785993330105397e-17
+  },
+  "solver_nfev": 38,
+  "source_matching_artifact": "output\\full\\hypercharge\\T3_C_alpha_p1\\data\\final_weinberg_coefficient.json",
+  "source_matching_artifact_sha256": "74b4f0f90eadadcfa6b89094dd3c01509b08a7b022c6296ee0dbff291b5c155d",
+  "source_stage33_report_sha256": "6ef923c87e608d7419dc2e794db1b17aa80e8bdf880dfaad6ef9d7067b3abb86",
+  "source_stage35_report_sha256": "6a1e4eb4634db16498803cf09c74bed8a6f053ce74d247b44e9b45df5a6137bd",
+  "source_stage35_summary_sha256": "a8e84a9cd7a9b049b3597a2143dfb79b2a0a8d0a10ca41f8cc0d33c2a8ffaa5a",
+  "limitations": [
+    "Existing matching artifact only; not a newly derived C5 from Stage29 quartics",
+    "New Stage29 quartics excluded from intermediate EFT and Wilson matching",
+    "No new C12 Wilson evolution; existing fixed-order coefficient is reused",
+    "Legacy C5 (if opted in) lacks the hierarchical hard-plus-direct matching scheme",
+    "Physical Matchete/RGBeta quartic normalization map uncertified",
+    "Common threshold scales are benchmark approximations"
+  ]
+}

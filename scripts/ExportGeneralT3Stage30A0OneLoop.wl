@@ -27,7 +27,7 @@ T3S30LoadJSON[path_String] := Module[{obj=Quiet@Check[Import[path,"RawJSON"],$Fa
 T3S30Export[] := Module[
   {reg,entry,names,ext,modelPath,commonPath,accessPath,build,beta,extended,
    baseKeys,extraKeys,report,symbol,info,meta,raw,quartic,expectedQ,actualQ,
-   projectedBase,invalidQ,expression,firstInvalid},
+   projectedBase,invalidQ,expression,firstInvalid,nativeMessages,nativeResult},
   reg=T3S30LoadJSON[FileNameJoin[{root,"RGE","general","generated",
     "general_rgbeta_quartic_registry.json"}]];
   entry=Lookup[Lookup[reg,"models",<||>],"A_+0",Missing["model"]];
@@ -78,10 +78,30 @@ T3S30Export[] := Module[
      NEVER use five independent BetaTerm[symbol,1] outputs as physical
      beta functions when mixing is possible. *)
   Print["Stage30: projecting full native RGBeta quartic beta system"];
-  quartic=CheckAbort[Quiet@Check[BetaTerm[Quartic,1],$Failed],$Aborted];
+  (* DO NOT wrap a complete class-level beta calculation in Check[].
+     Wolfram Check[] returns $Failed on ANY message, including warnings, even
+     when BetaTerm successfully returns a valid, projected Association.
+     Leave native messages visible to distinguish harmless warnings from
+     RGBeta's actual ProjectionToUnmixedBetas::singular / Abort[]. *)
+  nativeMessages={};
+  quartic=CheckAbort[
+    Block[{$MessageList={}},
+      nativeResult=BetaTerm[Quartic,1];
+      nativeMessages=DeleteDuplicates[ToString[#,InputForm]& /@ $MessageList];
+      nativeResult
+    ],
+    $Aborted
+  ];
+  Print["Stage30: class-level RGBeta result head: ",Head[quartic],
+    "; native message count: ",Length[nativeMessages]];
   If[!AssociationQ[quartic],
-    T3S30Fail["RGBeta class-level BetaTerm[Quartic,1] failed or returned no Association. "<>
-      "Inspect RGBeta projector mixing/singularity messages"]];
+    If[nativeMessages=!={},
+      Print["Stage30: native message names: ",
+        StringRiffle[Take[nativeMessages,UpTo[20]],", "]]];
+    T3S30Fail["RGBeta class-level BetaTerm[Quartic,1] returned "<>
+      ToString[Head[quartic],InputForm]<>
+      " rather than an Association. Check preceding native messages; "<>
+      "a projector singularity cannot be bypassed"]];
   (* The class-level function keys are native coupling Symbols, unlike the
      production base association whose keys are strings. *)
   expectedQ=Join[Select[baseKeys,StringStartsQ[#,"lambda"]&],names];
@@ -131,7 +151,13 @@ T3S30Export[] := Module[
     "report_betas"->T3RGBetaSerializeAssociation[report]|>;
   raw
 ];
-result=CheckAbort[Check[Catch[T3S30Export[],"T3S30"],$Failed],$Aborted];
+(* Do NOT wrap the exporter in Check[]. RGBeta's native
+   ProjectionToUnmixedBetas uses Monitor[], which emits
+   FrontEndObject::notavail under headless wolframscript even when the
+   projected beta system is a valid Association. A surrounding Check[]
+   would discard that valid result. Real failures still propagate via
+   T3S30Fail/Catch, CheckAbort, and the strict result validation below. *)
+result=CheckAbort[Catch[T3S30Export[],"T3S30"],$Aborted];
 If[!AssociationQ[result]||Lookup[result,"status",""]=!="Success",
   Print["Stage30 full UV beta export FAILED"];Exit[2]];
 If[!DirectoryQ[DirectoryName[out]],

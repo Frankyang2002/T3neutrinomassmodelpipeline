@@ -106,3 +106,17 @@ unique numerical component identification. The Matchete-to-RGBeta signed
 coupling map therefore remains **physically uncertified**. No threshold
 matching, neutrino-mass prediction, vacuum-stability claim or all-model scan
 is performed at Stage 30.
+
+
+## Stage 30 native class-level diagnostic refinement
+
+`BetaTerm[Quartic,1]` can print Wolfram messages even if its returned
+expression is a valid association. `Check[expr,$Failed]` rejects ANY message
+and previously masked whether the native projector succeeded. The exporter
+now calls `CheckAbort[BetaTerm[Quartic,1],$Aborted]`, prints the native
+result head and message names if it fails, and still rejects results other
+than a complete projected association. In particular an actual
+`ProjectionToUnmixedBetas::singular` / `Abort[]` is NOT bypassed.
+
+This change is diagnostic and fail-closed; a live successful exporter run
+and numerical trajectory are still required.

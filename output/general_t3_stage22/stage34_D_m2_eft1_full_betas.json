@@ -1,0 +1,62 @@
+{
+	"format":"stage34-ordinary-t3-eft1-projected-rgbeta-v1",
+	"status":"Success",
+	"metadata":{
+		"SharedScalar":false,
+		"dS":null,
+		"dS1":3,
+		"dS2":1,
+		"dF":2,
+		"alpha":-2,
+		"YS1":"-1",
+		"YS2":"0",
+		"YS":"Null",
+		"IntegratedField":"F",
+		"ActiveBSMFields":[
+			"S1",
+			"S2"
+		],
+		"ReportBetaConvention":"16*pi^2*dX\/dln(mu); gauge BetaTerm divided by 2*g"
+	},
+	"source":"RGBeta BetaTerm[Quartic,1] projected in scalar-only EFT1",
+	"physical_coupling_mapping_certified":false,
+	"new_stage29_quartics_integrated":false,
+	"beta_symbols":[
+		"gY",
+		"g2",
+		"g3",
+		"yu",
+		"yd",
+		"ye",
+		"mS1Sq",
+		"mS2Sq",
+		"lambdaH",
+		"lambdaS1",
+		"lambdaS2",
+		"lambdaH1",
+		"lambdaH2",
+		"lambda12",
+		"lambdaT3",
+		"lambdaH1Adj",
+		"lambdaS1Adj"
+	],
+	"report_betas":{
+		"gY":"(47*gY^3)\/6",
+		"g2":"(-5*g2^3)\/2",
+		"g3":"-7*g3^3",
+		"yu":"(-9*g2^2*Matrix[yu][gen[$i], gen[$j]])\/4 - 8*g3^2*Matrix[yu][gen[$i], gen[$j]] - (17*gY^2*Matrix[yu][gen[$i], gen[$j]])\/12 + 3*Tr[yd . Trans[Bar[yd]]]*Matrix[yu][gen[$i], gen[$j]] + Tr[ye . Trans[Bar[ye]]]*Matrix[yu][gen[$i], gen[$j]] + 3*Tr[yu . Trans[Bar[yu]]]*Matrix[yu][gen[$i], gen[$j]] - (3*(Matrix[yd, Trans[Bar[yd]], yu][gen[$i], gen[$j]] - Matrix[yu, Trans[Bar[yu]], yu][gen[$i], gen[$j]]))\/2",
+		"yd":"(-9*g2^2*Matrix[yd][gen[$i], gen[$j]])\/4 - 8*g3^2*Matrix[yd][gen[$i], gen[$j]] - (5*gY^2*Matrix[yd][gen[$i], gen[$j]])\/12 + 3*Tr[yd . Trans[Bar[yd]]]*Matrix[yd][gen[$i], gen[$j]] + Tr[ye . Trans[Bar[ye]]]*Matrix[yd][gen[$i], gen[$j]] + 3*Tr[yu . Trans[Bar[yu]]]*Matrix[yd][gen[$i], gen[$j]] + (3*(Matrix[yd, Trans[Bar[yd]], yd][gen[$i], gen[$j]] - Matrix[yu, Trans[Bar[yu]], yd][gen[$i], gen[$j]]))\/2",
+		"ye":"(-9*g2^2*Matrix[ye][gen[$i], gen[$j]])\/4 - (15*gY^2*Matrix[ye][gen[$i], gen[$j]])\/4 + 3*Tr[yd . Trans[Bar[yd]]]*Matrix[ye][gen[$i], gen[$j]] + Tr[ye . Trans[Bar[ye]]]*Matrix[ye][gen[$i], gen[$j]] + 3*Tr[yu . Trans[Bar[yu]]]*Matrix[ye][gen[$i], gen[$j]] + (3*Matrix[ye, Trans[Bar[ye]], ye][gen[$i], gen[$j]])\/2",
+		"mS1Sq":"-12*g2^2*mS1Sq - 6*gY^2*mS1Sq + (8*lambdaS1 + 4*lambdaS1Adj)*mS1Sq + 2*lambda12*mS2Sq",
+		"mS2Sq":"6*lambda12*mS1Sq + 4*lambdaS2*mS2Sq",
+		"lambdaH":"(9*g2^4)\/4 + (3*gY^4)\/4 + gY^2*((3*g2^2)\/2 - 3*lambdaH) - 9*g2^2*lambdaH + 12*lambdaH^2 + 6*lambdaH1^2 + 3*lambdaH1Adj^2 + 2*lambdaH2^2 + 4*lambdaT3*Bar[lambdaT3] + lambdaH*(12*Tr[yd . Trans[Bar[yd]]] + 4*Tr[ye . Trans[Bar[ye]]] + 12*Tr[yu . Trans[Bar[yu]]]) - 12*Tr[yd . Trans[Bar[yd]] . yd . Trans[Bar[yd]]] - 4*Tr[ye . Trans[Bar[ye]] . ye . Trans[Bar[ye]]] - 12*Tr[yu . Trans[Bar[yu]] . yu . Trans[Bar[yu]]]",
+		"lambdaS1":"22*g2^4 + 12*gY^4 + 2*lambda12^2 + 4*lambdaH1^2 + gY^2*(8*g2^2 - 12*lambdaS1) - 24*g2^2*lambdaS1 + 14*lambdaS1^2 + 8*lambdaS1*lambdaS1Adj + 16*lambdaS1Adj^2",
+		"lambdaS2":"6*lambda12^2 + 4*lambdaH2^2 + 10*lambdaS2^2",
+		"lambdaH1":"6*g2^4 + 3*gY^4 - (33*g2^2*lambdaH1)\/2 - (15*gY^2*lambdaH1)\/2 + 6*lambdaH*lambdaH1 + 4*lambdaH1^2 + 6*lambdaH1Adj^2 + 2*lambda12*lambdaH2 + 8*lambdaH1*lambdaS1 + 4*lambdaT3*Bar[lambdaT3] + lambdaH1*(4*lambdaS1Adj + 6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]])",
+		"lambdaH2":"6*lambda12*lambdaH1 - (9*g2^2*lambdaH2)\/2 - (3*gY^2*lambdaH2)\/2 + 6*lambdaH*lambdaH2 + 4*lambdaH2^2 + 4*lambdaH2*lambdaS2 + 12*lambdaT3*Bar[lambdaT3] + lambdaH2*(6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]])",
+		"lambda12":"-12*g2^2*lambda12 - 6*gY^2*lambda12 + 4*lambda12^2 + 4*lambdaH1*lambdaH2 + 8*lambda12*lambdaS1 + 4*lambda12*lambdaS1Adj + 4*lambda12*lambdaS2 + 4*lambdaT3*Bar[lambdaT3]",
+		"lambdaT3":"(-21*g2^2*lambdaT3)\/2 - (9*gY^2*lambdaT3)\/2 + 2*lambda12*lambdaT3 + 2*lambdaH*lambdaT3 + 4*lambdaH1*lambdaT3 + 4*lambdaH2*lambdaT3 + lambdaT3*(-4*lambdaH1Adj + 6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]])",
+		"lambdaH1Adj":"gY^2*(-4*g2^2 - (15*lambdaH1Adj)\/2) - (33*g2^2*lambdaH1Adj)\/2 + 2*lambdaH*lambdaH1Adj + 8*lambdaH1*lambdaH1Adj + 2*lambdaH1Adj*lambdaS1 - (8*lambdaT3*Bar[lambdaT3])\/3 + lambdaH1Adj*(16*lambdaS1Adj + 6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]])",
+		"lambdaS1Adj":"-2*g2^4 + 3*lambdaH1Adj^2 + gY^2*(8*g2^2 - 12*lambdaS1Adj) - 24*g2^2*lambdaS1Adj + 12*lambdaS1*lambdaS1Adj + 20*lambdaS1Adj^2"
+	}
+}

@@ -9,7 +9,7 @@ import pytest
 
 from scripts.Stage30CoupledA0UVRunning import (
     BETA_CONVENTION, CONFIG, MODEL, START, STOP, file_hash, integrate_vector,
-    quartic_names, uv_quartics, validate_export,
+    quartic_names, uv_quartics, validate_export, verify_stage29_registry_provenance,
 )
 
 
@@ -229,7 +229,9 @@ def test_all_quartic_betas_use_native_full_class_projection():
     assert 'extended=Association@Table' in wl
     assert 'beta=Join[beta,projectedBase]' in wl
     assert 'Sort[expectedQ]=!=actualQ' in wl
-    assert 'CheckAbort[Quiet@Check[BetaTerm[Quartic,1],$Failed],$Aborted]' in wl
+    assert 'nativeResult=BetaTerm[Quartic,1]' in wl
+    assert 'quartic=CheckAbort[' in wl
+    assert 'Quiet@Check[BetaTerm[Quartic,1]' not in wl
 
 
 def test_projected_quartic_failure_remains_fail_closed():
@@ -237,5 +239,64 @@ def test_projected_quartic_failure_remains_fail_closed():
     wl = (root / 'scripts/ExportGeneralT3Stage30A0OneLoop.wl').read_text(encoding='utf-8')
     assert 'Projected new quartic beta missing or unevaluated:' in wl
     assert 'Projected base quartic beta missing or unevaluated:' in wl
-    assert 'class-level BetaTerm[Quartic,1] failed' in wl
+    assert 'class-level BetaTerm[Quartic,1] returned' in wl
     assert 'Missing["AbsentQuarticBeta",name]' in wl
+
+
+def test_native_projector_diagnostics_not_masked_by_check():
+    """A Wolfram message may accompany a valid Association; Check is too strict."""
+    root = Path(__file__).resolve().parents[2]
+    wl = (root/'scripts/ExportGeneralT3Stage30A0OneLoop.wl').read_text(encoding='utf-8')
+    assert 'Block[{$MessageList={}}' in wl
+    assert 'nativeResult=BetaTerm[Quartic,1]' in wl
+    assert 'CheckAbort[' in wl
+    assert 'ProjectionToUnmixedBetas::singular' in wl
+    assert 'a projector singularity cannot be bypassed' in wl
+    assert 'Check[BetaTerm[Quartic,1]' not in wl
+
+
+def test_outer_export_must_not_use_check_on_native_monitor_warning():
+    """FrontEndObject::notavail from Monitor must not discard good beta output.
+
+    Fail-closed guards remain: native abort, explicit Throw, result-schema checks.
+    """
+    wl=(Path(__file__).resolve().parents[2] /
+        'scripts/ExportGeneralT3Stage30A0OneLoop.wl').read_text(encoding='utf-8')
+    assert 'result=CheckAbort[Catch[T3S30Export[],"T3S30"],$Aborted];' in wl
+    assert 'Check[Catch[T3S30Export[]' not in wl
+    assert 'If[!AssociationQ[result]||Lookup[result,"status",""]=!="Success"' in wl
+    assert 'FrontEndObject::notavail' in wl
+    assert 'quartic=CheckAbort[' in wl
+
+
+@pytest.mark.parametrize('path_key', [
+    'RGE/general/generated/general_rgbeta_quartic_registry.json',
+    r'RGE\general\generated\general_rgbeta_quartic_registry.json',
+])
+def test_stage29_registry_provenance_accepts_windows_and_posix_keys(tmp_path, path_key):
+    registry = tmp_path / 'general_rgbeta_quartic_registry.json'
+    registry.write_text('{"verified": "example"}', encoding='utf-8')
+    s29 = {'input_sha256': {path_key: file_hash(registry)}}
+    verify_stage29_registry_provenance(s29, registry)
+
+
+def test_stage29_registry_provenance_rejects_stale_hash(tmp_path):
+    registry = tmp_path / 'general_rgbeta_quartic_registry.json'
+    registry.write_text('old', encoding='utf-8')
+    s29 = {'input_sha256': {
+        r'RGE\general\generated\general_rgbeta_quartic_registry.json': file_hash(registry)}}
+    registry.write_text('new', encoding='utf-8')
+    with pytest.raises(ValueError, match='source changed'):
+        verify_stage29_registry_provenance(s29, registry)
+
+
+@pytest.mark.parametrize('mapping', [
+    {},
+    {'RGE/general/generated/general_rgbeta_quartic_registry.json': 'a',
+     r'RGE\general\generated\general_rgbeta_quartic_registry.json': 'a'},
+])
+def test_stage29_registry_provenance_rejects_missing_or_duplicate_key(tmp_path, mapping):
+    registry = tmp_path / 'general_rgbeta_quartic_registry.json'
+    registry.write_text('example', encoding='utf-8')
+    with pytest.raises(ValueError, match='absent or ambiguous'):
+        verify_stage29_registry_provenance({'input_sha256': mapping}, registry)

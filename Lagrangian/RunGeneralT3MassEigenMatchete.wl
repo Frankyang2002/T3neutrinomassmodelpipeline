@@ -317,6 +317,642 @@ T3MERotateInteraction[expr_] := Module[{transformed, before},
   ];
   Expand[transformed] // RelabelIndices
 ];
+(* The original T3 topology has H H S1 Bar[S2]. After the pseudoreal
+   rotation, it becomes H H (X,Y) (X,Y).  Do NOT leave the product of the
+   old four-leg CG and a two-leg epsilon CG in the internal expression:
+   that product is not a registered invariant for the four NEW legs on the
+   installed Matchete version.  Construct the one-dimensional physical HHXX
+   tensor directly, using the existing basis generator.
+
+   Exact tensor relation (in Matchete's own SU(2) basis):
+     T_old[i,j,k,l] eps[l,m] = alphaCG T_HHXX[i,j,k,m].
+   alphaCG is computed, not guessed. Its validity is tested over ALL 16
+   tensor components, and HHXX symmetry in the last pair is mandatory.
+   The two X/Y orderings are then collected using bosonic commutativity.
+   This is a Matchete-group-tensor identity only, not an RGBeta map. *)
+T3MEBuildNativeTopology[] := Module[
+  {oldData, newData, oldT, newT, eps, projected, denominator, alphaCG,
+   i,j,k,m,l,sourceTensorAgreement, cgStatus, u11,u12,u21,u22,
+   common, topology, symCondition},
+  oldData = PhysicalSU2InvariantBasis[
+    {2,2,2,2}, {False,False,False,True}, {{1,2}}, {1,2}];
+  newData = PhysicalSU2InvariantBasis[
+    {2,2,2,2}, {False,False,False,False}, {{1,2},{3,4}}, {1,2}];
+  If[!AssociationQ[oldData] || !AssociationQ[newData] ||
+     oldData["PhysicalCount"] =!= 1 || newData["PhysicalCount"] =!= 1,
+    Print["T3ME topology CG invariant-basis multiplicity mismatch"];
+    Return[$Failed]
+  ];
+  oldT = Normal[oldData["Basis"][[1]]];
+  newT = Normal[newData["Basis"][[1]]];
+  If[Dimensions[oldT] =!= {2,2,2,2} ||
+     Dimensions[newT] =!= {2,2,2,2}, Return[$Failed]];
+  eps = {{0,1},{-1,0}};
+  projected = Table[
+    Sum[oldT[[i,j,k,l]] eps[[l,m]], {l,2}],
+    {i,2},{j,2},{k,2},{m,2}];
+  denominator = Total[Flatten[Conjugate[newT]] Flatten[newT]];
+  If[TrueQ[PossibleZeroQ[denominator]], Return[$Failed]];
+  alphaCG = FullSimplify[
+    Total[Flatten[Conjugate[newT]] Flatten[projected]] / denominator];
+  sourceTensorAgreement = TrueQ[FullSimplify[projected == alphaCG newT]];
+  symCondition = TrueQ[
+    FullSimplify[newT == Transpose[newT,{1,2,4,3}]]];
+  If[!sourceTensorAgreement || !symCondition ||
+     TrueQ[PossibleZeroQ[alphaCG]],
+    Print["Original HH S1 BarS2 -> native HHXY tensor identity FAILED; ",
+      "proportionality=", InputForm[alphaCG],
+      ", equality=", sourceTensorAgreement,
+      ", scalar-pair symmetric=", symCondition];
+    Return[$Failed]
+  ];
+  cgStatus = CheckAbort[
+    Check[DefineCG[T3MENativeHHMassCG, newData["CGReps"],newT]; True,
+      $Failed],$Aborted];
+  If[cgStatus =!= True, Return[$Failed]];
+  {u11,u12,u21,u22} = {
+    $T3MEInteractionMixingMatrix[[1,1]],
+    $T3MEInteractionMixingMatrix[[1,2]],
+    $T3MEInteractionMixingMatrix[[2,1]],
+    $T3MEInteractionMixingMatrix[[2,2]]};
+  common = lambdaT3[] H[i] H[j] CG[T3MENativeHHMassCG,{i,j,k,m}];
+  (* The minus sign follows Bar[S2] = -eps (eps Bar[S2]);
+     the cross coefficient has BOTH distinguishable X-Y contractions. *)
+  topology = PlusHc[-alphaCG common (
+    u11 u21 NewScalarX[k] NewScalarX[m] +
+    (u11 u22 + u12 u21) NewScalarX[k] NewScalarY[m] +
+    u12 u22 NewScalarY[k] NewScalarY[m])];
+  If[!T3MEOldFieldsAbsentQ[topology] ||
+     !T3MECouplingPresentQ[topology,lambdaT3] ||
+     !T3MECouplingPresentQ[topology,T3MEU11] ||
+     !T3MECouplingPresentQ[topology,T3MEU12] ||
+     !T3MECouplingPresentQ[topology,T3MEU21] ||
+     !T3MECouplingPresentQ[topology,T3MEU22],
+    Return[$Failed]];
+  <|"Expression" -> (topology // Expand // RelabelIndices),
+    "InvariantCG" -> "T3MENativeHHMassCG",
+    "OriginalTimesEpsilonCGFactor" -> ToString[alphaCG,InputForm],
+    "OriginalTimesEpsilonTensorExact" -> sourceTensorAgreement,
+    "SymmetricMassScalarCG" -> symCondition,
+    "OriginalHHScalarContractions" -> 1,
+    "NativeMassScalarContractions" -> 1,
+    "MappedRGBetaQuarticNormalizationCertified" -> False|>
+];
+
+(* Remove only the old lambdaT3 sector BEFORE doing generic field transport.
+   No other baseline or extra quartic source is removed. Strictly reconstruct
+   the original expression so that the baseline inventory cannot be weakened. *)
+T3MESeparateOriginalTopology[expr_] := Module[
+  {expanded,terms,selected,remainder},
+  expanded = Expand[expr];
+  terms = If[Head[expanded] === Plus,List@@expanded,{expanded}];
+  selected = Select[terms,TrueQ[T3MECouplingPresentQ[#,lambdaT3]] &];
+  If[selected === {} || Length[selected] >= Length[terms],Return[$Failed]];
+  (* Multiset-safe: reconstruct by SELECTING all non-topology terms in
+     order, never by using Complement on possibly repeated terms. *)
+  remainder = Total[Select[terms,!TrueQ[T3MECouplingPresentQ[#,lambdaT3]] &]];
+  If[!TrueQ[Expand[Total[selected]+remainder-expanded]===0] ||
+     T3MECouplingPresentQ[remainder,lambdaT3] ||
+     !T3MECouplingPresentQ[Total[selected],lambdaT3],Return[$Failed]];
+  <|"OriginalTopology"->Total[selected],"RemainingInteractions"->remainder,
+    "OriginalTopologyExpandedTermCount"->Length[selected]|>
+];
+
+(* Portal2 H^dag H S2^dag S2 contains TWO S2 legs. Transporting each
+   independently leaves T3HiggsPortal2CGInvI * epsilon * epsilon in the
+   Matchete expression; it is invariant as a product, but Matchete does not
+   interpret it as a single invariant tensor for the four external fields.
+
+   Reconstruct BOTH independent portals as native four-field invariants.
+   Old slot orientations: {Hbar,H,Bar[S2],S2} -> {T,F,T,F}.
+   New slot orientations: {Hbar,H,X,Bar[X]} -> {T,F,F,T}.
+   Each old tensor is contracted with epsilon on the last two slots, and
+   the resulting tensor is registered directly against the new CGReps.
+   No tensor normalization or phase is silently guessed. Projected rank,
+   span and four-index orientation are verified exactly. *)
+T3MEBuildNativeH2Portals[] := Module[
+  {oldData,newData,eps,oldTensors,newBasis,projected,cgNames,
+   originalRank,newRank,unionRank,register,coefficients,
+   i,j,k,l,m,n,fields,terms,inv,expression},
+  oldData=PhysicalSU2InvariantBasis[
+    {2,2,2,2},{True,False,True,False},{},{1,2}];
+  newData=PhysicalSU2InvariantBasis[
+    {2,2,2,2},{True,False,False,True},{},{1,2}];
+  If[!AssociationQ[oldData] || !AssociationQ[newData] ||
+     oldData["PhysicalCount"] =!= 2 ||
+     newData["PhysicalCount"] =!= 2,
+    Print["T3ME native H2 portal physical invariant count mismatch"];
+    Return[$Failed]];
+  eps={{0,1},{-1,0}};
+  oldTensors=Normal /@ oldData["Basis"];
+  newBasis=Normal /@ newData["Basis"];
+  If[!And@@(Dimensions[#]==={2,2,2,2}& /@ Join[oldTensors,newBasis]),
+    Return[$Failed]];
+  projected=Table[
+    Table[Sum[oldTensors[[inv,i,j,m,n]] eps[[m,k]] eps[[n,l]],
+      {m,2},{n,2}],{i,2},{j,2},{k,2},{l,2}],
+    {inv,2}];
+  originalRank=MatrixRank[Flatten /@ projected];
+  newRank=MatrixRank[Flatten /@ newBasis];
+  unionRank=MatrixRank[Flatten /@ Join[newBasis,projected]];
+  If[{originalRank,newRank,unionRank}=!={2,2,2},
+    Print["Native portal2 projected tensors do not span native basis: ",
+      InputForm[{originalRank,newRank,unionRank}]];
+    Return[$Failed]];
+  cgNames={T3MENativeH2CGInv1,T3MENativeH2CGInv2};
+  register=Table[CheckAbort[
+    Check[DefineCG[cgNames[[inv]],newData["CGReps"],projected[[inv]]];True,
+      $Failed],$Aborted],{inv,2}];
+  If[register =!= {True,True},
+    Print["Native H2 portal CG tensor registration failed: ",InputForm[register]];
+    Return[$Failed]];
+  coefficients={
+    $T3MEInteractionMixingMatrix[[2,1]],
+    $T3MEInteractionMixingMatrix[[2,2]]};
+  fields={NewScalarX,NewScalarY};
+  terms=Table[
+    Sum[coefficients[[a]] Bar[coefficients[[b]]] *
+      fields[[a]][k] Bar[fields[[b]][l]],
+      {a,2},{b,2}],{inv,2}];
+  expression=Association@Table[
+    With[{cg=cgNames[[inv]],coupling=If[inv===1,lambdaH2Inv1,lambdaH2Inv2]},
+      SymbolName[coupling] -> (
+        PlusHc[coupling[] Bar[H[i]] H[j] CG[cg,{i,j,k,l}] terms[[inv]]]/2
+          // Expand // RelabelIndices)],
+    {inv,2}];
+  If[Length[expression]=!=2 ||
+     !And@@(T3MECouplingPresentQ[expression[#],Symbol[#]]& /@
+       {"lambdaH2Inv1","lambdaH2Inv2"}) ||
+     !And@@(T3MEOldFieldsAbsentQ /@ Values[expression]),
+    Print["Native H2 portal expression inventory failed"];
+    Return[$Failed]];
+  <|"Expressions"->expression,
+    "OldInvariantCount"->oldData["PhysicalCount"],
+    "NewInvariantCount"->newData["PhysicalCount"],
+    "TransportedRank"->originalRank,
+    "CombinedBasisRank"->unionRank,
+    "ExactTensorProjectionVerified"->True,
+    "PhysicalCouplingMapCertified"->False|>
+];
+
+(* Separate these real portal sectors without dropping any conjugate terms.
+   Strict algebraic reconstruction is checked for the entire source. *)
+T3MESeparateOriginalH2Portals[expr_] := Module[
+  {expanded,terms,portalTerms,rest,required},
+  expanded=Expand[expr];
+  terms=If[Head[expanded]===Plus,List@@expanded,{expanded}];
+  required={lambdaH2Inv1,lambdaH2Inv2};
+  (* Use an explicit nested Function: unlike pattern replacement, this does
+     not capture the source term or dynamically bound coupling symbol. *)
+  portalTerms=Select[terms,
+    Function[term,AnyTrue[required,T3MECouplingPresentQ[term,#]&]]];
+  rest=Total[Select[terms,
+    Function[term,!AnyTrue[required,T3MECouplingPresentQ[term,#]&]]]];
+  If[portalTerms==={} ||
+     !And@@(T3MECouplingPresentQ[Total[portalTerms],#]& /@ required) ||
+     AnyTrue[required,T3MECouplingPresentQ[rest,#]&] ||
+     !TrueQ[Expand[Total[portalTerms]+rest-expanded]===0],
+    Return[$Failed]];
+  <|"OriginalH2Portals"->Total[portalTerms],
+    "RemainingInteractions"->rest,
+    "SourceTermCount"->Length[portalTerms]|>
+];
+
+(* Native scalar-quartic recoupling for all three baseline sources that
+   contain TWO or FOUR S2 legs. The mixing makes S2 an epsilon-conjugate
+   linear combination of X,Y; leaving the source CG multiplied by bridge
+   CGs can fail native Matchete's individual invariant-tensor checks.
+
+   (Bar S1) S1 (Bar S2) S2 -> (Bar mass) mass mass (Bar mass)
+   (Bar S2) S2 (Bar S2) S2 -> mass (Bar mass) mass (Bar mass).
+   Contract each S2 index with the same canonical epsilon used in the
+   numerical mass rotation, and register one new native CG for each source
+   contraction. Check both new invariant spans exactly, never equate bare
+   tensor normalization to a numerical RGBeta coupling. *)
+T3MEBuildNativeS2ScalarQuartics[] := Module[
+  {eps, oldCross, newCross, oldSelf, newSelf,
+   crossOld, crossNew, crossProjected, crossRank, crossNewRank, crossUnionRank,
+   selfOld, selfNew, selfProjected, selfRank, selfNewRank, selfUnionRank,
+   crossCG, selfCG, registers, fields, u1, u2, crossPolynomial,
+   selfPolynomial, crossTerms, selfTerm, terms, q,i,j,k,l,m,n,o,p,
+   a,b,c,d,expected},
+  eps={{0,1},{-1,0}};
+  oldCross=PhysicalSU2InvariantBasis[
+    {2,2,2,2},{True,False,True,False}];
+  newCross=PhysicalSU2InvariantBasis[
+    {2,2,2,2},{True,False,False,True}];
+  oldSelf=PhysicalSU2InvariantBasis[
+    {2,2,2,2},{True,False,True,False},{{1,3},{2,4}}];
+  newSelf=PhysicalSU2InvariantBasis[
+    {2,2,2,2},{False,True,False,True},{{1,3},{2,4}}];
+  If[!And@@(AssociationQ /@ {oldCross,newCross,oldSelf,newSelf}) ||
+     {oldCross["PhysicalCount"],newCross["PhysicalCount"],
+      oldSelf["PhysicalCount"],newSelf["PhysicalCount"]}=!={2,2,1,1},
+    Print["Native S2 scalar quartic invariant multiplicities differ from source"];
+    Return[$Failed]];
+  crossOld=Normal /@ oldCross["Basis"];
+  crossNew=Normal /@ newCross["Basis"];
+  selfOld=Normal /@ oldSelf["Basis"];
+  selfNew=Normal /@ newSelf["Basis"];
+  If[!And@@(Dimensions[#]==={2,2,2,2}& /@
+        Join[crossOld,crossNew,selfOld,selfNew]), Return[$Failed]];
+  (* Two epsilon contractions on the two source S2 legs. *)
+  crossProjected=Table[
+    Table[Sum[crossOld[[q,i,j,m,n]] eps[[m,k]] eps[[n,l]],
+       {m,2},{n,2}],{i,2},{j,2},{k,2},{l,2}],
+    {q,2}];
+  (* Four epsilon contractions for S2 self, preserving both boson pairs. *)
+  selfProjected=Table[
+    Sum[selfOld[[1,m,n,o,p]] eps[[m,i]] eps[[n,j]]
+      eps[[o,k]] eps[[p,l]],{m,2},{n,2},{o,2},{p,2}],
+    {i,2},{j,2},{k,2},{l,2}];
+  crossRank=MatrixRank[Flatten /@ crossProjected];
+  crossNewRank=MatrixRank[Flatten /@ crossNew];
+  crossUnionRank=MatrixRank[Flatten /@ Join[crossNew,crossProjected]];
+  selfRank=MatrixRank[{Flatten[selfProjected]}];
+  selfNewRank=MatrixRank[Flatten /@ selfNew];
+  selfUnionRank=MatrixRank[Flatten /@ Append[selfNew,selfProjected]];
+  If[{crossRank,crossNewRank,crossUnionRank,selfRank,selfNewRank,
+      selfUnionRank}=!={2,2,2,1,1,1},
+    Print["Native S2 scalar quartic epsilon transport rank failure: ",
+      InputForm[{crossRank,crossNewRank,crossUnionRank,selfRank,selfNewRank,
+        selfUnionRank}]];
+    Return[$Failed]];
+  crossCG={T3MENativeCrossCGInv1,T3MENativeCrossCGInv2};
+  selfCG=T3MENativeS2SelfCGInv1;
+  registers=Join[
+    Table[CheckAbort[
+       Check[DefineCG[crossCG[[q]],newCross["CGReps"],
+         crossProjected[[q]]];True,$Failed],$Aborted],{q,2}],
+    {CheckAbort[Check[DefineCG[selfCG,newSelf["CGReps"],
+      selfProjected];True,$Failed],$Aborted]}];
+  If[registers =!= {True,True,True},
+    Print["Native S2 scalar quartic CG registration failure: ",
+      InputForm[registers]];Return[$Failed]];
+  fields={NewScalarX,NewScalarY};
+  u1=$T3MEInteractionMixingMatrix[[1]];
+  u2=$T3MEInteractionMixingMatrix[[2]];
+  (* Each old S2 or Bar[S2] contributes minus epsilon, so the paired
+     signs cancel in cross and in S2-self operators. *)
+  crossPolynomial=Sum[
+    Bar[u1[[a]]] u1[[b]] u2[[c]] Bar[u2[[d]]] *
+    Bar[fields[[a]][i]] fields[[b]][j] *
+    fields[[c]][k] Bar[fields[[d]][l]],
+    {a,2},{b,2},{c,2},{d,2}];
+  selfPolynomial=Sum[
+    u2[[a]] Bar[u2[[b]]] u2[[c]] Bar[u2[[d]]] *
+    fields[[a]][i] Bar[fields[[b]][j]] *
+    fields[[c]][k] Bar[fields[[d]][l]],
+    {a,2},{b,2},{c,2},{d,2}];
+  crossTerms=Table[
+    With[{coupling=If[q===1,lambda12Inv1,lambda12Inv2],
+          cg=crossCG[[q]]},
+      SymbolName[coupling] -> (coupling[]
+        CG[cg,{i,j,k,l}] crossPolynomial // Expand // RelabelIndices)],
+    {q,2}];
+  selfTerm=(lambdaS2Inv1[]/2 CG[selfCG,{i,j,k,l}] selfPolynomial)
+    // Expand // RelabelIndices;
+  terms=Append[Association[crossTerms],"lambdaS2Inv1"->selfTerm];
+  expected={"lambda12Inv1","lambda12Inv2","lambdaS2Inv1"};
+  If[Sort[Keys[terms]]=!=Sort[expected] ||
+     !And@@(T3MECouplingPresentQ[terms[#],Symbol[#]]& /@ expected) ||
+     !And@@(T3MEOldFieldsAbsentQ /@ Values[terms]),
+    Print["Native S2 scalar quartic coupling or field inventory failed"];
+    Return[$Failed]];
+  <|"Expressions"->terms,
+    "CrossScalar"-><|"OldInvariantCount"->2,"NewInvariantCount"->2,
+      "TransportedRank"->crossRank,"CombinedBasisRank"->crossUnionRank,
+      "ExactTensorProjectionVerified"->True,
+      "PhysicalCouplingMapCertified"->False|>,
+    "S2Self"-><|"OldInvariantCount"->1,"NewInvariantCount"->1,
+      "TransportedRank"->selfRank,"CombinedBasisRank"->selfUnionRank,
+      "ExactTensorProjectionVerified"->True,
+      "PhysicalCouplingMapCertified"->False|>|>
+];
+
+T3MESeparateOriginalS2ScalarQuartics[expr_] := Module[
+  {required,expanded,parts,selected,rest},
+  required={lambda12Inv1,lambda12Inv2,lambdaS2Inv1};
+  expanded=Expand[expr];
+  parts=If[Head[expanded]===Plus,List@@expanded,{expanded}];
+  selected=Select[parts,
+    Function[term,AnyTrue[required,T3MECouplingPresentQ[term,#]&]]];
+  rest=Total[Select[parts,
+    Function[term,!AnyTrue[required,T3MECouplingPresentQ[term,#]&]]]];
+  If[selected==={} ||
+     !And@@(T3MECouplingPresentQ[Total[selected],#]& /@ required) ||
+     AnyTrue[required,T3MECouplingPresentQ[rest,#]&] ||
+     !TrueQ[Expand[Total[selected]+rest-expanded]===0],
+    Print["Native S2 scalar-quartic source separation inventory failed"];
+    Return[$Failed]];
+  <|"OriginalQuartics"->Total[selected],
+    "RemainingInteractions"->rest,"SourceTermCount"->Length[selected]|>
+];
+
+
+(* The second T3 Yukawa y2 couples Bar[l] F Bar[S2]. The Bar[S2]
+   SU(2) index is pseudoreal-transported through epsilon to an UNBARRED
+   mass-eigen doublet. An old T3Y2CG * bridge contraction cannot be handed
+   unchanged to CheckLagrangian: construct its native 2- or 3-leg invariant.
+
+   B_-1: dF=1, original {CRep[1],CRep[1]} -> {CRep[1],1}.
+   C_-1: dF=3, original {CRep[1],2,CRep[1]} -> {CRep[1],2,1}.
+   The proportionality factor alpha is derived from the native tensor
+   components and checked entrywise. No common sign is assumed across B/C.
+   The explicit minus sign below follows Bar[S2] = -eps * Phi2. *)
+T3MEBuildNativeYukawa2[model_Association] := Module[
+  {dF,oldData,newData,oldT,newT,eps,projected,denominator,
+   alphaCG,exact,registered,i,j,k,m,p,r,fermion,labels,term,
+   u21,u22,rank,sourceOrientation},
+  dF=model["Fermion","SU2"];
+  If[!MemberQ[{1,3},dF],Return[$Failed]];
+  oldData=PhysicalSU2InvariantBasis[
+    {2,dF,2},{True,False,True},{},{1}];
+  newData=PhysicalSU2InvariantBasis[
+    {2,dF,2},{True,False,False},{},{1}];
+  If[!AssociationQ[oldData] || !AssociationQ[newData] ||
+     oldData["PhysicalCount"] =!= 1 ||
+     newData["PhysicalCount"] =!= 1,
+    Print["Native y2 SU(2) invariant multiplicity failed for dF=",dF];
+    Return[$Failed]];
+  oldT=Normal[oldData["Basis"][[1]]];
+  newT=Normal[newData["Basis"][[1]]];
+  eps={{0,1},{-1,0}};
+  projected=If[dF===1,
+    Table[Sum[oldT[[i,m]] eps[[m,k]],{m,2}],{i,2},{k,2}],
+    Table[Sum[oldT[[i,j,m]] eps[[m,k]],{m,2}],
+      {i,2},{j,3},{k,2}]];
+  If[Dimensions[projected] =!= Dimensions[newT],Return[$Failed]];
+  denominator=Total[Flatten[Conjugate[newT]] Flatten[newT]];
+  If[TrueQ[PossibleZeroQ[denominator]],Return[$Failed]];
+  alphaCG=FullSimplify[
+    Total[Flatten[Conjugate[newT]] Flatten[projected]]/denominator];
+  exact=TrueQ[FullSimplify[projected==alphaCG newT]];
+  If[!exact || TrueQ[PossibleZeroQ[alphaCG]],
+    Print["Native Yukawa2 epsilon tensor identity failed: ",
+      InputForm[alphaCG]];
+    Return[$Failed]];
+  registered=CheckAbort[Check[
+    DefineCG[T3MENativeY2CG,newData["CGReps"],newT];True,$Failed],$Aborted];
+  If[registered =!= True,Return[$Failed]];
+  fermion=If[dF===1,NewFermion[r],NewFermion[j,r]];
+  labels=If[dF===1,{i,k},{i,j,k}];
+  u21=$T3MEInteractionMixingMatrix[[2,1]];
+  u22=$T3MEInteractionMixingMatrix[[2,2]];
+  term=PlusHc[-alphaCG y2[p,r] NCM[Bar[l[i,p]],fermion]
+      CG[T3MENativeY2CG,labels]
+      (u21 NewScalarX[k]+u22 NewScalarY[k])];
+  term=Expand[term]//RelabelIndices;
+  If[!T3MEOldFieldsAbsentQ[term] ||
+     !T3MECouplingPresentQ[term,y2] ||
+     !T3MECouplingPresentQ[term,T3MEU21] ||
+     !T3MECouplingPresentQ[term,T3MEU22],
+    Print["Native y2 reconstructed interaction inventory failed"];
+    Return[$Failed]];
+  <|"Expression"->term,
+    "OldInvariantCount"->1,"NewInvariantCount"->1,
+    "ExactTensorProjectionVerified"->exact,
+    "OldTimesEpsilonCGFactor"->ToString[alphaCG,InputForm],
+    "FermionSU2Dimension"->dF,
+    "NativeCG"->"T3MENativeY2CG",
+    "PhysicalCouplingMapCertified"->False|>
+];
+
+(* Account for every source y2 term, including its hermitian conjugate,
+   before substituting the native invariant. Nothing else is discarded. *)
+T3MESeparateOriginalYukawa2[expr_] := Module[
+  {expanded,terms,selected,rest},
+  expanded=Expand[expr];
+  terms=If[Head[expanded]===Plus,List@@expanded,{expanded}];
+  selected=Select[terms,TrueQ[T3MECouplingPresentQ[#,y2]]&];
+  rest=Total[Select[terms,!TrueQ[T3MECouplingPresentQ[#,y2]]&]];
+  If[selected==={} || Length[selected]>=Length[terms] ||
+     !T3MECouplingPresentQ[Total[selected],y2] ||
+     T3MECouplingPresentQ[rest,y2] ||
+     !TrueQ[Expand[Total[selected]+rest-expanded]===0],
+    Print["Original y2 source interaction separation incomplete"];
+    Return[$Failed]];
+  <|"OriginalYukawa2"->Total[selected],
+    "RemainingInteractions"->rest,"SourceTermCount"->Length[selected]|>
+];
+
+(* Native mass-eigenstate reconstruction of the FIRST Yukawa.
+   Unlike y2, y1 contains the original unbarred S1 doublet and therefore
+   requires NO epsilon on its scalar leg. Reconstruct the full PlusHc vertex
+   instead of rewriting a previously internalised Field inside a fermion
+   expression; exact original/new three-leg tensors must agree entrywise. *)
+T3MEBuildNativeYukawa1[model_Association] := Module[
+  {dF,oldData,newData,oldT,newT,denominator,alphaCG,exact,registered,
+   i,j,k,p,r,fermion,labels,u11,u12,term},
+  dF=model["Fermion","SU2"];
+  If[!MemberQ[{1,3},dF],Return[$Failed]];
+  oldData=PhysicalSU2InvariantBasis[
+    {2,dF,2},{True,True,False},{},{1}];
+  newData=PhysicalSU2InvariantBasis[
+    {2,dF,2},{True,True,False},{},{1}];
+  If[!AssociationQ[oldData] || !AssociationQ[newData] ||
+     oldData["PhysicalCount"] =!= 1 ||
+     newData["PhysicalCount"] =!= 1,
+    Print["Native y1 invariant multiplicity failed"];Return[$Failed]];
+  oldT=Normal[oldData["Basis"][[1]]];
+  newT=Normal[newData["Basis"][[1]]];
+  If[Dimensions[oldT] =!= Dimensions[newT],Return[$Failed]];
+  denominator=Total[Flatten[Conjugate[newT]] Flatten[newT]];
+  If[TrueQ[PossibleZeroQ[denominator]],Return[$Failed]];
+  alphaCG=FullSimplify[
+    Total[Flatten[Conjugate[newT]] Flatten[oldT]]/denominator];
+  exact=TrueQ[FullSimplify[oldT==alphaCG newT]];
+  If[!exact || TrueQ[PossibleZeroQ[alphaCG]],
+    Print["Native Yukawa1 tensor identity failed"];
+    Return[$Failed]];
+  registered=CheckAbort[Check[
+    DefineCG[T3MENativeY1CG,newData["CGReps"],newT];True,$Failed],
+    $Aborted];
+  If[registered =!= True,Return[$Failed]];
+  fermion=If[dF===1,CConj[NewFermion[r]],CConj[NewFermion[j,r]]];
+  labels=If[dF===1,{i,k},{i,j,k}];
+  u11=$T3MEInteractionMixingMatrix[[1,1]];
+  u12=$T3MEInteractionMixingMatrix[[1,2]];
+  term=PlusHc[alphaCG y1[p,r] NCM[Bar[l[i,p]],fermion]
+    CG[T3MENativeY1CG,labels]
+    (u11 NewScalarX[k]+u12 NewScalarY[k])];
+  term=Expand[term]//RelabelIndices;
+  If[!T3MEOldFieldsAbsentQ[term] ||
+     !T3MECouplingPresentQ[term,y1] ||
+     !T3MECouplingPresentQ[term,T3MEU11] ||
+     !T3MECouplingPresentQ[term,T3MEU12],
+    Print["Native y1 reconstructed vertex inventory failed"];
+    Return[$Failed]];
+  <|"Expression"->term,
+    "OldInvariantCount"->1,"NewInvariantCount"->1,
+    "ExactTensorProjectionVerified"->exact,
+    "OldToNewCGFactor"->ToString[alphaCG,InputForm],
+    "FermionSU2Dimension"->dF,
+    "NativeCG"->"T3MENativeY1CG",
+    "PhysicalCouplingMapCertified"->False|>
+];
+
+(* Keep every y1 source term, including h.c., accounted for before
+   reconstruction. The source term inventory and all other couplings stay
+   untouched. *)
+T3MESeparateOriginalYukawa1[expr_] := Module[
+  {expanded,terms,selected,rest},
+  expanded=Expand[expr];
+  terms=If[Head[expanded]===Plus,List@@expanded,{expanded}];
+  selected=Select[terms,TrueQ[T3MECouplingPresentQ[#,y1]]&];
+  rest=Total[Select[terms,!TrueQ[T3MECouplingPresentQ[#,y1]]&]];
+  If[selected==={} || Length[selected]>=Length[terms] ||
+     !T3MECouplingPresentQ[Total[selected],y1] ||
+     T3MECouplingPresentQ[rest,y1] ||
+     !TrueQ[Expand[Total[selected]+rest-expanded]===0],
+    Print["Original y1 source interaction separation incomplete"];
+    Return[$Failed]];
+  <|"OriginalYukawa1"->Total[selected],
+    "RemainingInteractions"->rest,"SourceTermCount"->Length[selected]|>
+];
+
+(* General direct-CG transformation of all SEVEN additional scalar quartics.
+   Species are H,Hdag,S1,S1dag,S2,S2dag; the original source tensors
+   were fully symmetrised in identical fields by
+   T3ExtendedBosonicTensorBasis. The old S2,Bar[S2] legs are transported
+   through the numerical convention epsilon={{0,1},{-1,0}}:
+       S2    -> -conj(U2a) epsilon Bar[Ma]
+       BarS2 -> -U2a epsilon Ma
+       S1    -> U1a Ma
+       BarS1 -> conj(U1a) Bar[Ma]
+   with a= X,Y. Every source tensor is projected index by index and
+   registered as ONE native Matchete four-leg CG. No composite source-CG
+   times epsilon-CG survives in these quartics. No RG coefficient map is
+   inferred from the Matchete tensor normalization. *)
+T3MEExtraProjectedTensorSlot[tensor_,pos_Integer] := Module[
+  {eps={{0,1},{-1,0}},i,j,k,l,old},
+  Table[With[{idx={i,j,k,l}},
+      Sum[Extract[tensor,ReplacePart[idx,pos->old]] *
+        eps[[old,idx[[pos]]]],{old,2}]],
+    {i,2},{j,2},{k,2},{l,2}]
+];
+T3MEExtraMassField[species_String,idx_] := Module[
+  {u11=$T3MEInteractionMixingMatrix[[1,1]],
+   u12=$T3MEInteractionMixingMatrix[[1,2]],
+   u21=$T3MEInteractionMixingMatrix[[2,1]],
+   u22=$T3MEInteractionMixingMatrix[[2,2]]},
+  Switch[species,
+    "H",H[idx],
+    "Hdag",Bar[H[idx]],
+    "S1",u11 NewScalarX[idx]+u12 NewScalarY[idx],
+    "S1dag",Bar[u11] Bar[NewScalarX[idx]]+Bar[u12] Bar[NewScalarY[idx]],
+    "S2",-Bar[u21] Bar[NewScalarX[idx]]-Bar[u22] Bar[NewScalarY[idx]],
+    "S2dag",-u21 NewScalarX[idx]-u22 NewScalarY[idx],
+    _, $Failed]
+];
+T3MEBuildNativeExtraQuartics[model_Association,extra_List] := Module[
+  {expressions=<||>,certs=<||>,couplings={},names,counts,indexNumber,
+   digits,coupling,cgName,source,oldData,newData,oldT,newBasis,
+   newConjugated,positions,projected,rankNew,rankUnion,exact,
+   cgReps,dims,smPositions,register,indices,product,term,entry},
+  If[Length[extra] =!= 7 ||
+     Length[DeleteDuplicates[Lookup[extra,"Name",{}]]] =!= 7,
+    Return[$Failed]];
+  Do[
+    entry=extra[[q]];
+    counts=entry["Counts"];
+    If[!ListQ[counts] || Length[counts] =!= 6 || Total[counts] =!= 4,
+      Return[$Failed]];
+    names=T3ExtendedSpeciesList[counts];
+    If[Length[names] =!= 4,Return[$Failed]];
+    digits=StringJoin[ToString/@counts];
+    indexNumber=Last[StringSplit[entry["Name"],"_"]];
+    If[!StringMatchQ[indexNumber,DigitCharacter..],Return[$Failed]];
+    coupling=Symbol["lambdaT3ExtraQ"<>digits<>"I"<>indexNumber];
+    cgName=Symbol["T3MENativeExtraQ"<>digits<>"I"<>indexNumber<>"CG"];
+    If[!T3MECouplingPresentQ[entry["Expression"],coupling],
+      Print["Additional quartic source/coupling mismatch: ",entry["Name"]];
+      Return[$Failed]];
+    oldData=T3ExtendedBosonicTensorBasis[model,names];
+    If[!AssociationQ[oldData],Return[$Failed]];
+    source=FromDigits[indexNumber];
+    If[!IntegerQ[source] || source<1 || source>Length[oldData["Basis"]],
+      Return[$Failed]];
+    oldT=Normal[oldData["Basis"][[source]]];
+    dims=T3ExtendedFieldDimensions[model,names];
+    newConjugated=MemberQ[{"Hdag","S1dag","S2"},#]& /@ names;
+    smPositions=Flatten@Position[names,"H"|"Hdag"];
+    newData=PhysicalSU2InvariantBasis[
+      dims,newConjugated,{},smPositions];
+    If[!AssociationQ[newData],Return[$Failed]];
+    newBasis=Normal /@ newData["Basis"];
+    If[Dimensions[oldT] =!= {2,2,2,2} ||
+       !And@@(Dimensions[#]==={2,2,2,2}& /@ newBasis),
+      Return[$Failed]];
+    positions=Flatten@Position[names,"S2"|"S2dag"];
+    projected=Fold[T3MEExtraProjectedTensorSlot[#1,#2]&,oldT,positions];
+    rankNew=MatrixRank[Flatten/@newBasis];
+    rankUnion=MatrixRank[Flatten/@Join[newBasis,{projected}]];
+    exact=TrueQ[rankUnion===rankNew] &&
+      !TrueQ[projected==ConstantArray[0,{2,2,2,2}]];
+    If[!exact,
+      Print["Additional quartic projected tensor is not in native SU(2) ",
+        "invariant span: ",entry["Name"]];
+      Return[$Failed]];
+    cgReps=newData["CGReps"];
+    register=CheckAbort[Check[
+      DefineCG[cgName,cgReps,projected];True,$Failed],$Aborted];
+    If[register =!= True,
+      Print["Failed native additional-quartic CG registration: ",
+        entry["Name"]];Return[$Failed]];
+    indices=Array[Unique["t3meextra"]&,4];
+    product=Times@@MapThread[T3MEExtraMassField,{names,indices}];
+    If[FreeQ[product,Verbatim[NewScalarX]|Verbatim[NewScalarY],
+         {0,Infinity}],Return[$Failed]];
+    term=PlusHc[coupling[] CG[cgName,indices] product];
+    term=Expand[term]//RelabelIndices;
+    If[!T3MEOldFieldsAbsentQ[term] ||
+       !T3MECouplingPresentQ[term,coupling],Return[$Failed]];
+    expressions[entry["Name"]]=term;
+    certs[entry["Name"]]=<|
+      "SourceCoupling"->SymbolName[coupling],
+      "SourceCounts"->counts,
+      "SourceTensorIndex"->source,
+      "NativeCG"->SymbolName[cgName],
+      "S2EpsilonProjectedLegs"->Length[positions],
+      "NativeInvariantSpanRank"->rankNew,
+      "CombinedBasisRank"->rankUnion,
+      "ExactTensorProjectionVerified"->exact|>;
+    AppendTo[couplings,coupling],
+    {q,Length[extra]}];
+  If[Length[expressions] =!= 7 || Length[certs] =!= 7 ||
+     Length[DeleteDuplicates[couplings]] =!= 7 ||
+     !And@@(T3MECouplingPresentQ[Total[Values[expressions]],#]& /@
+       couplings),Return[$Failed]];
+  <|"Expressions"->expressions,
+    "Certificates"->certs,
+    "SourceOperatorCount"->7,"RecoupledOperatorCount"->7,
+    "AllProjectedTensorsInvariant"->True,
+    "PhysicalCouplingMapCertified"->False|>
+];
+
+(* All seven quartic source terms are retained, including h.c.; a single
+   missing source symbol or any unexplained remainder is fatal. *)
+T3MESeparateOriginalExtraQuartics[expr_,symbols_List] := Module[
+  {expanded,terms,selected,rest},
+  If[Length[symbols] =!= 7 ||
+     Length[DeleteDuplicates[symbols]] =!= 7,Return[$Failed]];
+  expanded=Expand[expr];
+  terms=If[Head[expanded]===Plus,List@@expanded,{expanded}];
+  selected=Select[terms,Function[part,
+    AnyTrue[symbols,T3MECouplingPresentQ[part,#]&]]];
+  rest=Total[Select[terms,Function[part,
+    !AnyTrue[symbols,T3MECouplingPresentQ[part,#]&]]]];
+  If[selected==={} ||
+     !And@@(T3MECouplingPresentQ[Total[selected],#]& /@ symbols) ||
+     AnyTrue[symbols,T3MECouplingPresentQ[rest,#]&] ||
+     !TrueQ[Expand[Total[selected]+rest-expanded]===0],
+    Print["Additional quartic source expression separation incomplete"];
+    Return[$Failed]];
+  <|"OriginalExtraQuartics"->Total[selected],
+    "RemainingInteractions"->rest,"SourceTermCount"->Length[selected]|>
+];
+
 (* Diagnose gauge-tensor failures without recomputing or redefining any of
    the source Clebsch-Gordan tensors.  Expand the saved valid baseline LInt,
    partition its exact terms by coupling and CG labels, then check each
@@ -352,7 +988,7 @@ T3MEPartitionBaselineInteractions[expr_] := Module[
   parts
 ];
 
-T3MEIsolateNonInvariantSource[built_Association, free_, extra_List] := Module[
+T3MEIsolateNonInvariantSource[built_Association, free_, extra_List, nativeTopology_, nativeH2_Association, nativeS2_Association, nativeY2_Association, nativeY1_Association, nativeExtra_Association] := Module[
   {baseline, candidates, failures = {}, entry, converted, check,
    freeCheck, tested = 0},
   T3MECheckpoint["failure-isolation-started"];
@@ -380,7 +1016,27 @@ T3MEIsolateNonInvariantSource[built_Association, free_, extra_List] := Module[
     entry = candidates[[k]];
     tested = k;
     T3MECheckpoint["failure-isolation-operator-" <> ToString[k]];
-    converted = T3MERotateInteraction[entry["Expression"]];
+    converted = Which[
+      TrueQ[T3MECouplingPresentQ[entry["Expression"],lambdaT3]],
+        nativeTopology,
+      TrueQ[T3MECouplingPresentQ[entry["Expression"],lambdaH2Inv1]],
+        nativeH2["Expressions"]["lambdaH2Inv1"],
+      TrueQ[T3MECouplingPresentQ[entry["Expression"],lambdaH2Inv2]],
+        nativeH2["Expressions"]["lambdaH2Inv2"],
+      TrueQ[T3MECouplingPresentQ[entry["Expression"],lambda12Inv1]],
+        nativeS2["Expressions"]["lambda12Inv1"],
+      TrueQ[T3MECouplingPresentQ[entry["Expression"],lambda12Inv2]],
+        nativeS2["Expressions"]["lambda12Inv2"],
+      TrueQ[T3MECouplingPresentQ[entry["Expression"],lambdaS2Inv1]],
+        nativeS2["Expressions"]["lambdaS2Inv1"],
+      TrueQ[T3MECouplingPresentQ[entry["Expression"],y2]],
+        nativeY2["Expression"],
+      TrueQ[T3MECouplingPresentQ[entry["Expression"],y1]],
+        nativeY1["Expression"],
+      KeyExistsQ[nativeExtra["Expressions"],Lookup[entry,"Name",""]],
+        nativeExtra["Expressions"][entry["Name"]],
+      True,T3MERotateInteraction[entry["Expression"]]
+    ];
     check = If[converted === $Failed, $Failed,
       CheckAbort[Quiet @ Check[
         CheckLagrangian[(built["LSM"] + free + converted) // RelabelIndices],
@@ -420,7 +1076,10 @@ T3MEPerform[] := Module[
   b1,b2,removeA,removeB,xstatus,ystatus,free,rotated,lag,check,
   detailed,heavy,fullCount,baselineNames,oldYukawas,results,
   extraSymbols,extrasPresent,missingExtra,spurionStatus,missingSpurions,
-  failureDetail},
+  failureDetail, topoParts, nativeTopology, nonTopologyRotated, topoInventory,
+  portalParts, nativeH2, otherRotated, portalsRotated,
+  scalarParts, nativeS2, scalarRotated, yukawaParts, nativeY2,
+  y1Parts, nativeY1, extraParts, nativeExtra, extraRotated},
  If[!MatchQ[$FrontEnd,_FrontEndObject],
    T3MEFail["FrontEndUnavailable"]];
  If[Environment["T3_EXPERIMENTAL_GENERAL_QUARTICS"] === "1",
@@ -503,8 +1162,76 @@ T3MEPerform[] := Module[
  T3MECheckpoint["diagonal-FreeLag-started"];
  free=Quiet@Check[FreeLag[NewFermion,NewScalarX,NewScalarY],$Failed];
  If[free === $Failed,T3MEFail["DiagonalFreeLagFailed"]];
+ T3MECheckpoint["native-topology-basis-started"];
+ topoParts = T3MESeparateOriginalTopology[sourceInt];
+ If[!AssociationQ[topoParts],
+   T3MEFail["OriginalTopologyOperatorSeparationFailed"]];
+ nativeTopology = T3MEBuildNativeTopology[];
+ If[!AssociationQ[nativeTopology] ||
+    !TrueQ[nativeTopology["OriginalTimesEpsilonTensorExact"]] ||
+    !TrueQ[nativeTopology["SymmetricMassScalarCG"]],
+   T3MEFail["NativeTopologyTensorConstructionFailed"]];
+ T3MECheckpoint["native-H2-portals-started"];
+ portalParts=T3MESeparateOriginalH2Portals[topoParts["RemainingInteractions"]];
+ If[!AssociationQ[portalParts],
+   T3MEFail["OriginalH2PortalSeparationFailed"]];
+ nativeH2=T3MEBuildNativeH2Portals[];
+ If[!AssociationQ[nativeH2] ||
+    !TrueQ[nativeH2["ExactTensorProjectionVerified"]],
+   T3MEFail["NativeH2PortalTensorConstructionFailed"]];
+ T3MECheckpoint["native-S2-scalar-quartics-started"];
+ scalarParts=T3MESeparateOriginalS2ScalarQuartics[
+   portalParts["RemainingInteractions"]];
+ If[!AssociationQ[scalarParts],
+   T3MEFail["OriginalS2ScalarQuarticSeparationFailed"]];
+ nativeS2=T3MEBuildNativeS2ScalarQuartics[];
+ If[!AssociationQ[nativeS2] ||
+    !TrueQ[nativeS2["CrossScalar"]["ExactTensorProjectionVerified"]] ||
+    !TrueQ[nativeS2["S2Self"]["ExactTensorProjectionVerified"]],
+   T3MEFail["NativeS2ScalarQuarticTensorConstructionFailed"]];
+ T3MECheckpoint["native-Yukawa2-basis-started"];
+ yukawaParts=T3MESeparateOriginalYukawa2[
+   scalarParts["RemainingInteractions"]];
+ If[!AssociationQ[yukawaParts],
+   T3MEFail["OriginalYukawa2SeparationFailed"]];
+ nativeY2=T3MEBuildNativeYukawa2[model];
+ If[!AssociationQ[nativeY2] ||
+    !TrueQ[nativeY2["ExactTensorProjectionVerified"]] ||
+    nativeY2["OldInvariantCount"] =!= 1 ||
+    nativeY2["NewInvariantCount"] =!= 1,
+   T3MEFail["NativeYukawa2TensorConstructionFailed"]];
+ T3MECheckpoint["native-Yukawa1-basis-started"];
+ y1Parts=T3MESeparateOriginalYukawa1[yukawaParts["RemainingInteractions"]];
+ If[!AssociationQ[y1Parts],
+   T3MEFail["OriginalYukawa1SeparationFailed"]];
+ nativeY1=T3MEBuildNativeYukawa1[model];
+ If[!AssociationQ[nativeY1] ||
+    !TrueQ[nativeY1["ExactTensorProjectionVerified"]] ||
+    nativeY1["OldInvariantCount"] =!= 1 ||
+    nativeY1["NewInvariantCount"] =!= 1,
+   T3MEFail["NativeYukawa1TensorConstructionFailed"]];
+ T3MECheckpoint["native-extra-quartics-started"];
+ extraParts=T3MESeparateOriginalExtraQuartics[
+   y1Parts["RemainingInteractions"],extraSymbols];
+ If[!AssociationQ[extraParts],
+   T3MEFail["OriginalExtraQuarticSeparationFailed"]];
+ nativeExtra=T3MEBuildNativeExtraQuartics[model,extraQ];
+ If[!AssociationQ[nativeExtra] ||
+    !TrueQ[nativeExtra["AllProjectedTensorsInvariant"]] ||
+    nativeExtra["SourceOperatorCount"] =!= 7 ||
+    nativeExtra["RecoupledOperatorCount"] =!= 7,
+   T3MEFail["NativeExtraQuarticTensorConstructionFailed"]];
  T3MECheckpoint["rotate-original-interactions-started"];
- rotated=T3MERotateInteraction[sourceInt];
+ otherRotated=T3MERotateInteraction[extraParts["RemainingInteractions"]];
+ If[otherRotated === $Failed,
+   T3MEFail["OriginalScalarFieldsRemainAfterRotation"]];
+ portalsRotated=Total[Values[nativeH2["Expressions"]]];
+ scalarRotated=Total[Values[nativeS2["Expressions"]]];
+ extraRotated=Total[Values[nativeExtra["Expressions"]]];
+ rotated=Expand[otherRotated+portalsRotated+scalarRotated+extraRotated+
+    nativeTopology["Expression"]+nativeY2["Expression"]+
+    nativeY1["Expression"]]
+   // RelabelIndices;
  If[rotated === $Failed, T3MEFail["OriginalScalarFieldsRemainAfterRotation"]];
  oldPresent=!T3MEOldFieldsAbsentQ[rotated];
  If[oldPresent,T3MEFail["OriginalScalarFieldsRemain"]];
@@ -556,6 +1283,13 @@ T3MEPerform[] := Module[
   "diagonal_heavy_fields"->{"NewScalarX","NewScalarY"},
   "epsilon_bridge_BB"->b1,
   "epsilon_bridge_UU"->b2,
+  "native_topology_epsilon_tensor"->KeyDrop[nativeTopology,{"Expression"}],
+  "native_H2_portal_epsilon_tensors"->KeyDrop[nativeH2,{"Expressions"}],
+  "native_cross_scalar_epsilon_tensors"->nativeS2["CrossScalar"],
+  "native_S2_self_epsilon_tensor"->nativeS2["S2Self"],
+  "native_yukawa2_epsilon_tensor"->KeyDrop[nativeY2,{"Expression"}],
+  "native_yukawa1_tensor"->KeyDrop[nativeY1,{"Expression"}],
+  "native_additional_quartic_tensors"->KeyDrop[nativeExtra,{"Expressions"}],
   "input_unitarity_error"->unitarityError,
   "input_diagonalization_error_gev2"->massError,
   "matching_to_two_scalar_thresholds_performed"->False,
@@ -568,7 +1302,8 @@ T3MEPerform[] := Module[
    Print["Native mass eigenbasis CheckLagrangian failed: ",InputForm[check]];
    Print["Native detailed diagnostics: ",ToString[detailed,InputForm]];
    failureDetail = T3MEIsolateNonInvariantSource[
-     built, free, extraQ];
+     built, free, extraQ, nativeTopology["Expression"], nativeH2,
+     nativeS2,nativeY2,nativeY1,nativeExtra];
    Return[Join[results,<|"status"->"NativeHeavyMassBasisCheckFailed",
        "diagnostic"->ToString[detailed,InputForm],
        "isolated_source_failure"->failureDetail|>]]];

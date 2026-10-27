@@ -221,6 +221,93 @@ def validate_wolfram_output(payload: Mapping[str, Any], expected_model: str,
         fail('Matchete result lacks full interaction inventory')
     if payload.get('both_yukawa_interactions_present') is not True:
         fail('Matchete result omits Yukawa source vertices')
+    native = payload.get('native_topology_epsilon_tensor')
+    if (not isinstance(native, Mapping) or
+        native.get('OriginalTimesEpsilonTensorExact') is not True or
+        native.get('SymmetricMassScalarCG') is not True or
+        native.get('OriginalHHScalarContractions') != 1 or
+        native.get('NativeMassScalarContractions') != 1 or
+        native.get('MappedRGBetaQuarticNormalizationCertified') is not False or
+        native.get('InvariantCG') != 'T3MENativeHHMassCG'):
+        fail('Matchete topology tensor rotation lacks an exact native invariant certificate')
+    portals = payload.get('native_H2_portal_epsilon_tensors')
+    if (not isinstance(portals, Mapping) or
+        portals.get('OldInvariantCount') != 2 or
+        portals.get('NewInvariantCount') != 2 or
+        portals.get('TransportedRank') != 2 or
+        portals.get('CombinedBasisRank') != 2 or
+        portals.get('ExactTensorProjectionVerified') is not True or
+        portals.get('PhysicalCouplingMapCertified') is not False):
+        fail('Matchete H2 portal tensor transport lacks an exact native invariant certificate')
+    for label, count in (('native_cross_scalar_epsilon_tensors', 2),
+                         ('native_S2_self_epsilon_tensor', 1)):
+        cert = payload.get(label)
+        if (not isinstance(cert, Mapping) or
+            cert.get('OldInvariantCount') != count or
+            cert.get('NewInvariantCount') != count or
+            cert.get('TransportedRank') != count or
+            cert.get('CombinedBasisRank') != count or
+            cert.get('ExactTensorProjectionVerified') is not True or
+            cert.get('PhysicalCouplingMapCertified') is not False):
+            fail('Matchete S2 scalar-quartic tensor transport certificate invalid: ' + label)
+    native_y2 = payload.get('native_yukawa2_epsilon_tensor')
+    if (not isinstance(native_y2, Mapping) or
+        native_y2.get('OldInvariantCount') != 1 or
+        native_y2.get('NewInvariantCount') != 1 or
+        native_y2.get('ExactTensorProjectionVerified') is not True or
+        native_y2.get('FermionSU2Dimension') != MODEL_INFO[expected_model][2] or
+        native_y2.get('NativeCG') != 'T3MENativeY2CG' or
+        native_y2.get('PhysicalCouplingMapCertified') is not False or
+        not isinstance(native_y2.get('OldTimesEpsilonCGFactor'), str) or
+        not native_y2['OldTimesEpsilonCGFactor']):
+        fail('Matchete Yukawa2 tensor transport certificate invalid')
+    native_y1 = payload.get('native_yukawa1_tensor')
+    if (not isinstance(native_y1, Mapping) or
+        native_y1.get('OldInvariantCount') != 1 or
+        native_y1.get('NewInvariantCount') != 1 or
+        native_y1.get('ExactTensorProjectionVerified') is not True or
+        native_y1.get('FermionSU2Dimension') != MODEL_INFO[expected_model][2] or
+        native_y1.get('NativeCG') != 'T3MENativeY1CG' or
+        native_y1.get('PhysicalCouplingMapCertified') is not False or
+        not isinstance(native_y1.get('OldToNewCGFactor'), str) or
+        not native_y1['OldToNewCGFactor']):
+        fail('Matchete Yukawa1 tensor certificate invalid')
+    extra = payload.get('native_additional_quartic_tensors')
+    if (not isinstance(extra, Mapping) or
+        extra.get('SourceOperatorCount') != 7 or
+        extra.get('RecoupledOperatorCount') != 7 or
+        extra.get('AllProjectedTensorsInvariant') is not True or
+        extra.get('PhysicalCouplingMapCertified') is not False):
+        fail('Matchete native additional-quartic inventory certificate invalid')
+    certs = extra.get('Certificates')
+    expected_extra = {
+        'T3ExtraQ_0_0_0_1_1_2_1': (0,0,0,1,1,2,1),
+        'T3ExtraQ_0_0_0_2_0_2_1': (0,0,0,2,0,2,1),
+        'T3ExtraQ_0_0_1_2_0_1_1': (0,0,1,2,0,1,1),
+        'T3ExtraQ_0_2_0_0_2_0_1': (0,2,0,0,2,0,1),
+        'T3ExtraQ_0_2_0_2_0_0_1': (0,2,0,2,0,0,1),
+        'T3ExtraQ_1_1_0_1_0_1_1': (1,1,0,1,0,1,1),
+        'T3ExtraQ_1_1_0_1_0_1_2': (1,1,0,1,0,1,2),
+    }
+    if not isinstance(certs, Mapping) or set(certs) != set(expected_extra):
+        fail('Matchete native additional-quartic operator list incomplete')
+    for label, info in expected_extra.items():
+        cert = certs[label]
+        counts = info[:6]
+        tensor_index = info[6]
+        digits = ''.join(map(str, counts))
+        expected_cg = f'T3MENativeExtraQ{digits}I{tensor_index}CG'
+        expected_coupling = f'lambdaT3ExtraQ{digits}I{tensor_index}'
+        if (not isinstance(cert, Mapping) or
+            cert.get('SourceCoupling') != expected_coupling or
+            cert.get('SourceCounts') != list(counts) or
+            cert.get('SourceTensorIndex') != tensor_index or
+            cert.get('NativeCG') != expected_cg or
+            cert.get('S2EpsilonProjectedLegs') != counts[4] + counts[5] or
+            cert.get('ExactTensorProjectionVerified') is not True or
+            cert.get('NativeInvariantSpanRank') != 2 or
+            cert.get('CombinedBasisRank') != 2):
+            fail('Matchete additional-quartic tensor certificate invalid: ' + label)
     if payload.get('matchete_rotation_uses_exact_symbolic_spurions') is not True:
         fail('Matchete mass-basis result did not use symbolic mixing couplings')
     numerical_map = payload.get('rotation_spurion_values_from_numerical_U')

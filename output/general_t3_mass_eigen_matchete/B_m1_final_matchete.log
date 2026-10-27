@@ -1,5 +1,5 @@
 command: wolframscript -file C:\thesistemp\T3neutrinomassmodelpipeline\Lagrangian\RunGeneralT3MassEigenMatchete.wl C:\thesistemp\T3neutrinomassmodelpipeline\output\general_t3_mass_eigen_matchete\B_m1_final_parameters.json C:\thesistemp\T3neutrinomassmodelpipeline\output\general_t3_mass_eigen_matchete\B_m1_final_matchete.json
-returncode: 5
+returncode: 0
 stdout:
 T3ME_STAGE: script-initialized
 T3ME_STAGE: matchete-load-start
@@ -75,29 +75,20 @@ T3ME_STAGE: register-mixing-spurions-started
 T3ME_STAGE: register-heavy-X-started
 T3ME_STAGE: register-heavy-Y-started
 T3ME_STAGE: diagonal-FreeLag-started
+T3ME_STAGE: native-topology-basis-started
+T3ME_STAGE: native-H2-portals-started
+T3ME_STAGE: native-S2-scalar-quartics-started
+T3ME_STAGE: native-Yukawa2-basis-started
+T3ME_STAGE: native-Yukawa1-basis-started
+T3ME_STAGE: native-extra-quartics-started
 T3ME_STAGE: rotate-original-interactions-started
 T3ME_STAGE: assemble-eigenstate-Lagrangian-started
 T3ME_STAGE: final-index-preflight-started
 T3ME representative final eigenfield internal objects: {"Field[NewScalarX, Scalar, {Index[d$$1, T3BSMd2]}, {}]", "Field[NewScalarX, Scalar, {Index[d$$2, T3BSMd2]}, {}]", "Field[NewScalarY, Scalar, {Index[d$$2, T3BSMd2]}, {}]", "Field[NewScalarY, Scalar, {Index[d$$1, T3BSMd2]}, {}]"}
 T3ME_STAGE: ordinary-CheckLagrangian-started
-
-DefineCG::notInvariant: The tensor is not invariant under group transformations.
 T3ME_STAGE: detailed-CheckLagrangian-started
-
-DefineCG::notInvariant: The tensor is not invariant under group transformations.
 T3ME_STAGE: both-Matchete-checks-returned
-Native mass eigenbasis CheckLagrangian failed: InputForm[$Aborted]
-Native detailed diagnostics: $Aborted
-T3ME_STAGE: failure-isolation-started
-T3ME isolated diagonal FreeLag check: InputForm[True]
-T3ME disjoint baseline source partitions: 14
-T3ME_STAGE: failure-isolation-operator-1
-T3ME individual rotated check BaselinePart1 lambdaH1Inv1|CG:T3HiggsPortal1CGInv1 -> InputForm[True]
-T3ME_STAGE: failure-isolation-operator-2
-T3ME individual rotated check BaselinePart2 lambdaH1Inv2|CG:T3HiggsPortal1CGInv2 -> InputForm[True]
-T3ME_STAGE: failure-isolation-operator-3
-T3ME individual rotated check BaselinePart3 lambdaT3|CG:T3MixCG -> InputForm[$Aborted]
-T3ME first failing rotated source operator: <|"name" -> "BaselinePart3", "class" -> "BaselinePartition", "source_signature" -> "lambdaT3|CG:T3MixCG", "check_result" -> "$Aborted", "rotated_has_old_fields" -> False, "rotated_new_field_indices_well_typed" -> True|>
-Mass-eigenstate Matchete result: NativeHeavyMassBasisCheckFailed -> C:\thesistemp\T3neutrinomassmodelpipeline\output\general_t3_mass_eigen_matchete\B_m1_final_matchete.json
+T3ME_STAGE: complete-valid-eigenbasis
+Mass-eigenstate Matchete result: MatcheteMassEigenHeavyBasisPassedPhysicalMatchingNotPerformed -> C:\thesistemp\T3neutrinomassmodelpipeline\output\general_t3_mass_eigen_matchete\B_m1_final_matchete.json
 
 stderr:

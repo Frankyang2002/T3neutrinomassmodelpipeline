@@ -122,6 +122,71 @@ def valid_wolfram(model):
         'all_old_scalar_fields_removed':True,
         'all_17_quartics_present':True,
         'both_yukawa_interactions_present':True,
+        'native_topology_epsilon_tensor':{
+            'OriginalTimesEpsilonTensorExact':True,
+            'SymmetricMassScalarCG':True,
+            'OriginalHHScalarContractions':1,
+            'NativeMassScalarContractions':1,
+            'MappedRGBetaQuarticNormalizationCertified':False,
+            'InvariantCG':'T3MENativeHHMassCG',
+            'OriginalTimesEpsilonCGFactor':'1'
+        },
+        'native_H2_portal_epsilon_tensors':{
+            'OldInvariantCount':2, 'NewInvariantCount':2,
+            'TransportedRank':2, 'CombinedBasisRank':2,
+            'ExactTensorProjectionVerified':True,
+            'PhysicalCouplingMapCertified':False,
+        },
+        'native_cross_scalar_epsilon_tensors':{
+            'OldInvariantCount':2,'NewInvariantCount':2,
+            'TransportedRank':2,'CombinedBasisRank':2,
+            'ExactTensorProjectionVerified':True,
+            'PhysicalCouplingMapCertified':False,
+        },
+        'native_S2_self_epsilon_tensor':{
+            'OldInvariantCount':1,'NewInvariantCount':1,
+            'TransportedRank':1,'CombinedBasisRank':1,
+            'ExactTensorProjectionVerified':True,
+            'PhysicalCouplingMapCertified':False,
+        },
+        'native_yukawa2_epsilon_tensor':{
+            'OldInvariantCount':1,'NewInvariantCount':1,
+            'ExactTensorProjectionVerified':True,
+            'OldTimesEpsilonCGFactor':'1',
+            'FermionSU2Dimension': {'B_-1':1,'C_-1':3}[model],
+            'NativeCG':'T3MENativeY2CG',
+            'PhysicalCouplingMapCertified':False,
+        },
+        'native_yukawa1_tensor':{
+            'OldInvariantCount':1,'NewInvariantCount':1,
+            'ExactTensorProjectionVerified':True,'OldToNewCGFactor':'1',
+            'FermionSU2Dimension':{'B_-1':1,'C_-1':3}[model],
+            'NativeCG':'T3MENativeY1CG',
+            'PhysicalCouplingMapCertified':False,
+        },
+        'native_additional_quartic_tensors':{
+            'SourceOperatorCount':7,'RecoupledOperatorCount':7,
+            'AllProjectedTensorsInvariant':True,
+            'PhysicalCouplingMapCertified':False,
+            'Certificates':{
+                'T3ExtraQ_'+ '_'.join(map(str,counts))+'_'+str(inv):{
+                    'SourceCoupling':'lambdaT3ExtraQ'+''.join(map(str,counts))+'I'+str(inv),
+                    'SourceCounts':list(counts),
+                    'SourceTensorIndex':inv,
+                    'NativeCG':'T3MENativeExtraQ'+''.join(map(str,counts))+'I'+str(inv)+'CG',
+                    'S2EpsilonProjectedLegs':counts[4]+counts[5],
+                    'NativeInvariantSpanRank':2,
+                    'CombinedBasisRank':2,
+                    'ExactTensorProjectionVerified':True,
+                }
+                for counts,inv in (
+                    ((0,0,0,1,1,2),1),((0,0,0,2,0,2),1),
+                    ((0,0,1,2,0,1),1),((0,2,0,0,2,0),1),
+                    ((0,2,0,2,0,0),1),((1,1,0,1,0,1),1),
+                    ((1,1,0,1,0,1),2),
+                )
+            }
+        },
         'matchete_rotation_uses_exact_symbolic_spurions':True,
         'rotation_spurion_values_from_numerical_U':{
             f'T3MEU{i}{j}':{'real':float(i+j),'imag':0.0}
@@ -282,7 +347,7 @@ def test_wolfram_unitary_rename_applies_to_entire_scalar_rotation():
     assert 'MatrixQ[$T3MEUnitaryMatrix,NumericQ]' in source
     assert 'ConjugateTranspose[$T3MEUnitaryMatrix].$T3MEUnitaryMatrix' in source
     assert 'ConjugateTranspose[$T3MEUnitaryMatrix].aMatrix.$T3MEUnitaryMatrix' in source
-    rotate = source.split('T3MERotateInteraction[expr_] :=',1)[1].split('T3MEIsolateNonInvariantSource[',1)[0]
+    rotate = source.split('T3MERotateInteraction[expr_] :=',1)[1].split('T3MEBuildNativeTopology[] :=',1)[0]
     for a,b in ((1,1),(1,2),(2,1),(2,2)):
         assert f'$T3MEInteractionMixingMatrix[[{a},{b}]]' in rotate
     assert '$T3MEUnitaryMatrix[[' not in rotate
@@ -407,7 +472,7 @@ def test_symbolic_couplings_instead_of_machinenumbers_in_interactions():
     source=(Path(__file__).resolve().parents[2]/
             'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text(encoding='utf-8')
     rotate=source.split('T3MERotateInteraction[expr_] :=',1)[1].split(
-        'T3MEIsolateNonInvariantSource[',1)[0]
+        'T3MEBuildNativeTopology[] :=',1)[0]
     assert rotate.count('Bar[$T3MEInteractionMixingMatrix[[')==4
     assert rotate.count('$T3MEInteractionMixingMatrix[[')==8
     assert '$T3MEUnitaryMatrix' not in rotate
@@ -431,7 +496,7 @@ def test_numeric_mass_diagonalization_still_checked_before_symbolic_rotation():
 def test_failing_full_check_partitions_baseline_without_regenerating_cgs():
     source=(Path(__file__).resolve().parents[2]/
             'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text(encoding='utf-8')
-    assert 'T3MEIsolateNonInvariantSource[built_Association, free_, extra_List]' in source
+    assert 'T3MEIsolateNonInvariantSource[built_Association, free_, extra_List, nativeTopology_, nativeH2_Association, nativeS2_Association, nativeY2_Association, nativeY1_Association, nativeExtra_Association]' in source
     assert 'T3MEPartitionBaselineInteractions[built["LInt"]]' in source
     assert 'T3MEBaselineTermKey[term_]' in source
     assert '"Name" -> ("BaselinePart" <>' in source
@@ -507,3 +572,356 @@ def test_wolfram_output_rejects_unsupported_spurion_claim_or_incomplete_map():
         with pytest.raises(ValueError): runner.validate_wolfram_output(payload,'B_-1',expected)
     with pytest.raises(ValueError,match='does not match prepared'):
         runner.validate_wolfram_output(baseline,'B_-1',{'real':[[9.,3.],[3.,4.]],'imag':[[0.,0.],[0.,0.]]})
+
+
+def test_native_topology_must_have_exact_tensor_certificate():
+    for key,value in (
+        ('OriginalTimesEpsilonTensorExact',False),
+        ('SymmetricMassScalarCG',False),
+        ('OriginalHHScalarContractions',2),
+        ('NativeMassScalarContractions',0),
+        ('MappedRGBetaQuarticNormalizationCertified',True),
+        ('InvariantCG','IncorrectCG')):
+        payload=valid_wolfram('B_-1')
+        payload['native_topology_epsilon_tensor'][key]=value
+        with pytest.raises(ValueError,match='native invariant'):
+            runner.validate_wolfram_output(payload,'B_-1')
+    payload=valid_wolfram('C_-1')
+    payload.pop('native_topology_epsilon_tensor')
+    with pytest.raises(ValueError,match='native invariant'):
+        runner.validate_wolfram_output(payload,'C_-1')
+
+
+def test_topology_is_rebuilt_from_native_hhxx_cg_and_not_composite_bridges():
+    source=(Path(__file__).resolve().parents[2] /
+            'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text(encoding='utf-8')
+    assert 'T3MEBuildNativeTopology[] := Module[' in source
+    region=source.split('T3MEBuildNativeTopology[] := Module[',1)[1].split(
+        'T3MESeparateOriginalTopology[expr_]',1)[0]
+    assert '{False,False,False,True}' in region
+    assert '{False,False,False,False}' in region
+    assert 'DefineCG[T3MENativeHHMassCG' in region
+    assert 'projected == alphaCG newT' in region
+    assert 'Transpose[newT,{1,2,4,3}]' in region
+    assert 'u11 u21 NewScalarX[k] NewScalarX[m]' in region
+    assert '(u11 u22 + u12 u21) NewScalarX[k] NewScalarY[m]' in region
+    assert 'u12 u22 NewScalarY[k] NewScalarY[m]' in region
+    assert 'CG[T3MENativeHHMassCG,{i,j,k,m}]' in region
+    assert 'T3MECheckpoint["native-topology-basis-started"]' in source
+    assert 'nativeTopology["Expression"]' in source
+    assert 'T3MESeparateOriginalTopology[sourceInt]' in source
+    assert 'T3MESeparateOriginalYukawa1[yukawaParts["RemainingInteractions"]]' in source
+    assert 'T3MECouplingPresentQ[entry["Expression"],lambdaT3]' in source
+
+
+def test_topology_reconstruction_preserves_inventory_and_matching_flags():
+    source=(Path(__file__).resolve().parents[2] /
+            'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text(encoding='utf-8')
+    assert 'Total[selected]+remainder-expanded' in source
+    assert 'native_topology_epsilon_tensor' in source
+    assert '"physical_matching_performed"->False' in source
+    assert '"component_basis_map_certified"->False' in source
+    assert 'T3MEFail["NativeTopologyTensorConstructionFailed"]' in source
+
+
+
+@pytest.mark.parametrize('model',['B_-1','C_-1'])
+def test_native_H2_portal_certificate_is_checked(model):
+    runner.validate_wolfram_output(valid_wolfram(model), model)
+    for key, bad in (
+        ('OldInvariantCount',1),
+        ('NewInvariantCount',3),
+        ('TransportedRank',1),
+        ('CombinedBasisRank',3),
+        ('ExactTensorProjectionVerified',False),
+        ('PhysicalCouplingMapCertified',True)):
+        payload = valid_wolfram(model)
+        payload['native_H2_portal_epsilon_tensors'][key]=bad
+        with pytest.raises(ValueError,match='H2 portal tensor'):
+            runner.validate_wolfram_output(payload,model)
+    payload = valid_wolfram(model)
+    payload.pop('native_H2_portal_epsilon_tensors')
+    with pytest.raises(ValueError,match='H2 portal tensor'):
+        runner.validate_wolfram_output(payload,model)
+
+
+def test_native_H2_portals_replace_both_CG_structures_exactly():
+    src = (Path(__file__).resolve().parents[2]/
+           'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text()
+    assert 'T3MEBuildNativeH2Portals[] := Module[' in src
+    region=src.split('T3MEBuildNativeH2Portals[] := Module[',1)[1].split(
+        'T3MESeparateOriginalH2Portals[expr_]',1)[0]
+    assert '{True,False,True,False}' in region
+    assert '{True,False,False,True}' in region
+    assert 'eps[[m,k]] eps[[n,l]]' in region
+    assert 'DefineCG[cgNames[[inv]],newData["CGReps"],projected[[inv]]]' in region
+    assert '{originalRank,newRank,unionRank}=!={2,2,2}' in region
+    assert 'coefficients[[a]] Bar[coefficients[[b]]]' in region
+    assert 'Bar[H[i]] H[j] CG[cg,{i,j,k,l}]' in region
+    assert '"lambdaH2Inv1","lambdaH2Inv2"' in region
+    assert 'T3MECheckpoint["native-H2-portals-started"]' in src
+    assert 'nativeH2=T3MEBuildNativeH2Portals[]' in src
+    assert 'portalsRotated=Total[Values[nativeH2["Expressions"]]]' in src
+    assert 'T3MERotateInteraction[extraParts["RemainingInteractions"]]' in src
+    assert 'native_H2_portal_epsilon_tensors' in src
+
+
+def test_original_H2_source_terms_are_not_dropped():
+    src = (Path(__file__).resolve().parents[2]/
+           'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text()
+    region=src.split('T3MESeparateOriginalH2Portals[expr_] := Module[',1)[1].split(
+        '(* Diagnose gauge-tensor failures',1)[0]
+    assert 'required={lambdaH2Inv1,lambdaH2Inv2}' in region
+    assert 'Expand[Total[portalTerms]+rest-expanded]===0' in region
+    assert 'T3MECouplingPresentQ[Total[portalTerms],#]' in region
+    assert 'AnyTrue[required,T3MECouplingPresentQ[rest,#]&]' in region
+    assert 'T3MEFail["OriginalH2PortalSeparationFailed"]' in src
+    assert 'T3MEFail["NativeH2PortalTensorConstructionFailed"]' in src
+
+
+def test_isolation_uses_native_H2_for_both_portals():
+    src = (Path(__file__).resolve().parents[2]/
+           'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text()
+    region=src.split('T3MEIsolateNonInvariantSource[built_Association',1)[1].split(
+        'T3MEPerform[] :=',1)[0]
+    assert 'nativeH2["Expressions"]["lambdaH2Inv1"]' in region
+    assert 'nativeH2["Expressions"]["lambdaH2Inv2"]' in region
+    assert 'T3MERotateInteraction[entry["Expression"]]' in region
+
+
+@pytest.mark.parametrize('model',['B_-1','C_-1'])
+@pytest.mark.parametrize('label,n',[
+    ('native_cross_scalar_epsilon_tensors',2),
+    ('native_S2_self_epsilon_tensor',1),
+])
+def test_native_S2_scalar_quartic_certificates_fail_closed(model,label,n):
+    payload=valid_wolfram(model)
+    runner.validate_wolfram_output(payload,model)
+    payload.pop(label)
+    with pytest.raises(ValueError,match='S2 scalar-quartic tensor'):
+        runner.validate_wolfram_output(payload,model)
+    for key,value in [
+        ('OldInvariantCount',n+1),
+        ('NewInvariantCount',n+1),
+        ('TransportedRank',n+1),
+        ('CombinedBasisRank',n+1),
+        ('ExactTensorProjectionVerified',False),
+        ('PhysicalCouplingMapCertified',True),
+    ]:
+        payload=valid_wolfram(model)
+        payload[label][key]=value
+        with pytest.raises(ValueError,match='S2 scalar-quartic tensor'):
+            runner.validate_wolfram_output(payload,model)
+
+
+def test_native_S2_scalar_quartics_replace_all_three_source_cgs():
+    src=(Path(__file__).resolve().parents[2]/
+         'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text()
+    region=src.split('T3MEBuildNativeS2ScalarQuartics[] := Module[',1)[1].split(
+        'T3MESeparateOriginalS2ScalarQuartics[expr_]',1)[0]
+    assert '{True,False,True,False}' in region
+    assert '{True,False,False,True}' in region
+    assert '{False,True,False,True}' in region
+    assert 'eps[[m,k]] eps[[n,l]]' in region
+    assert 'eps[[m,i]] eps[[n,j]]' in region
+    assert 'eps[[o,k]] eps[[p,l]]' in region
+    assert 'DefineCG[crossCG[[q]],newCross["CGReps"],' in region
+    assert 'DefineCG[selfCG,newSelf["CGReps"],' in region
+    assert '{2,2,2,1,1,1}' in region
+    assert '"lambda12Inv1","lambda12Inv2","lambdaS2Inv1"' in region
+    assert 'nativeS2=T3MEBuildNativeS2ScalarQuartics[]' in src
+    assert 'scalarRotated=Total[Values[nativeS2["Expressions"]]]' in src
+    assert 'T3MECheckpoint["native-S2-scalar-quartics-started"]' in src
+    assert 'T3MERotateInteraction[extraParts["RemainingInteractions"]]' in src
+    assert 'native_cross_scalar_epsilon_tensors' in src
+    assert 'native_S2_self_epsilon_tensor' in src
+
+
+def test_native_S2_scalar_source_separation_preserves_all_terms():
+    src=(Path(__file__).resolve().parents[2]/
+         'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text()
+    region=src.split('T3MESeparateOriginalS2ScalarQuartics[expr_] := Module[',1)[1].split(
+        '(* Diagnose gauge-tensor failures',1)[0]
+    assert 'required={lambda12Inv1,lambda12Inv2,lambdaS2Inv1}' in region
+    assert 'Expand[Total[selected]+rest-expanded]===0' in region
+    assert 'AnyTrue[required,T3MECouplingPresentQ[rest,#]&]' in region
+    assert 'T3MEFail["OriginalS2ScalarQuarticSeparationFailed"]' in src
+    assert 'T3MEFail["NativeS2ScalarQuarticTensorConstructionFailed"]' in src
+
+
+def test_isolation_uses_native_S2_scalar_quartics():
+    src=(Path(__file__).resolve().parents[2]/
+         'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text()
+    region=src.split('T3MEIsolateNonInvariantSource[built_Association',1)[1].split(
+        'T3MEPerform[] :=',1)[0]
+    for label in ('lambda12Inv1','lambda12Inv2','lambdaS2Inv1'):
+        assert 'nativeS2["Expressions"]["'+label+'"]' in region
+
+
+@pytest.mark.parametrize('model',['B_-1','C_-1'])
+def test_native_yukawa2_certificate_required(model):
+    runner.validate_wolfram_output(valid_wolfram(model),model)
+    for key,bad in (
+        ('OldInvariantCount',0),('NewInvariantCount',2),
+        ('ExactTensorProjectionVerified',False),
+        ('FermionSU2Dimension',2),('NativeCG','OldY2CG'),
+        ('OldTimesEpsilonCGFactor',''),
+        ('PhysicalCouplingMapCertified',True)):
+        payload=valid_wolfram(model)
+        payload['native_yukawa2_epsilon_tensor'][key]=bad
+        with pytest.raises(ValueError,match='Yukawa2 tensor'):
+            runner.validate_wolfram_output(payload,model)
+    payload=valid_wolfram(model)
+    payload.pop('native_yukawa2_epsilon_tensor')
+    with pytest.raises(ValueError,match='Yukawa2 tensor'):
+        runner.validate_wolfram_output(payload,model)
+
+
+def test_yukawa2_new_cg_complete_replacement():
+    source=(Path(__file__).resolve().parents[2]/
+            'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text()
+    section=source.split('T3MEBuildNativeYukawa2[model_Association] := Module[',1)[1].split(
+        'T3MESeparateOriginalYukawa2[expr_]',1)[0]
+    assert '{2,dF,2},{True,False,True}' in section
+    assert '{2,dF,2},{True,False,False}' in section
+    assert 'oldT[[i,m]] eps[[m,k]]' in section
+    assert 'oldT[[i,j,m]] eps[[m,k]]' in section
+    assert 'projected==alphaCG newT' in section
+    assert 'DefineCG[T3MENativeY2CG,newData["CGReps"],newT]' in section
+    assert 'If[dF===1,NewFermion[r],NewFermion[j,r]]' in section
+    assert 'If[dF===1,{i,k},{i,j,k}]' in section
+    assert 'y2[p,r] NCM[Bar[l[i,p]],fermion]' in section
+    assert 'u21 NewScalarX[k]+u22 NewScalarY[k]' in section
+    assert 'T3MECheckpoint["native-Yukawa2-basis-started"]' in source
+    assert 'T3MESeparateOriginalYukawa2[' in source
+    assert 'T3MESeparateOriginalYukawa1[yukawaParts["RemainingInteractions"]]' in source
+    assert 'nativeTopology["Expression"]+nativeY2["Expression"]+' in source
+    assert 'native_yukawa2_epsilon_tensor' in source
+
+
+def test_yukawa2_source_separation_is_lossless_and_isolates():
+    source=(Path(__file__).resolve().parents[2]/
+            'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text()
+    section=source.split('T3MESeparateOriginalYukawa2[expr_] := Module[',1)[1].split(
+        '(* Diagnose gauge-tensor failures',1)[0]
+    assert 'Total[selected]+rest-expanded' in section
+    assert 'T3MECouplingPresentQ[rest,y2]' in section
+    assert '"OriginalYukawa2SeparationFailed"' in source
+    assert '"NativeYukawa2TensorConstructionFailed"' in source
+    isolator=source.split('T3MEIsolateNonInvariantSource[built_Association',1)[1].split('T3MEPerform[] :=',1)[0]
+    assert 'T3MECouplingPresentQ[entry["Expression"],y2]' in isolator
+    assert 'nativeY2["Expression"]' in isolator
+    assert 'nativeS2,nativeY2,nativeY1,nativeExtra];' in source
+
+
+@pytest.mark.parametrize('model',['B_-1','C_-1'])
+def test_native_yukawa1_certificate_required(model):
+    runner.validate_wolfram_output(valid_wolfram(model),model)
+    for key,bad in (
+        ('OldInvariantCount',0),('NewInvariantCount',2),
+        ('ExactTensorProjectionVerified',False),
+        ('FermionSU2Dimension',2),('NativeCG','T3Y1CG'),
+        ('OldToNewCGFactor',''),('PhysicalCouplingMapCertified',True)):
+        payload=valid_wolfram(model)
+        payload['native_yukawa1_tensor'][key]=bad
+        with pytest.raises(ValueError,match='Yukawa1 tensor'):
+            runner.validate_wolfram_output(payload,model)
+    payload=valid_wolfram(model)
+    payload.pop('native_yukawa1_tensor')
+    with pytest.raises(ValueError,match='Yukawa1 tensor'):
+        runner.validate_wolfram_output(payload,model)
+
+
+def test_yukawa1_reconstructed_from_original_complete_yukawa():
+    source=(Path(__file__).resolve().parents[2]/
+            'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text()
+    region=source.split('T3MEBuildNativeYukawa1[model_Association] := Module[',1)[1].split(
+        'T3MESeparateOriginalYukawa1[expr_]',1)[0]
+    assert region.count('{2,dF,2},{True,True,False}') == 2
+    assert 'oldT==alphaCG newT' in region
+    assert 'DefineCG[T3MENativeY1CG,newData["CGReps"],newT]' in region
+    assert 'CConj[NewFermion[r]]' in region
+    assert 'CConj[NewFermion[j,r]]' in region
+    assert 'y1[p,r] NCM[Bar[l[i,p]],fermion]' in region
+    assert 'u11 NewScalarX[k]+u12 NewScalarY[k]' in region
+    assert 'T3MECheckpoint["native-Yukawa1-basis-started"]' in source
+    assert '"OriginalYukawa1SeparationFailed"' in source
+    assert '"NativeYukawa1TensorConstructionFailed"' in source
+    assert 'native_yukawa1_tensor' in source
+
+
+def test_yukawa1_full_source_term_coverage():
+    source=(Path(__file__).resolve().parents[2]/
+            'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text()
+    region=source.split('T3MESeparateOriginalYukawa1[expr_] := Module[',1)[1].split(
+        '(* General direct-CG transformation',1)[0]
+    for token in ('Total[selected]+rest-expanded','T3MECouplingPresentQ[rest,y1]',
+                  'T3MECouplingPresentQ[Total[selected],y1]'):
+        assert token in region
+    isolator=source.split('T3MEIsolateNonInvariantSource[built_Association',1)[1].split('T3MEPerform[] :=',1)[0]
+    assert 'T3MECouplingPresentQ[entry["Expression"],y1]' in isolator
+    assert 'nativeY1["Expression"]' in isolator
+
+
+@pytest.mark.parametrize('model',['B_-1','C_-1'])
+def test_native_extra_quartic_certificates_strict(model):
+    runner.validate_wolfram_output(valid_wolfram(model),model)
+    for key,bad in (('SourceOperatorCount',6),('RecoupledOperatorCount',8),
+                    ('AllProjectedTensorsInvariant',False),
+                    ('PhysicalCouplingMapCertified',True)):
+        data=valid_wolfram(model)
+        data['native_additional_quartic_tensors'][key]=bad
+        with pytest.raises(ValueError,match='additional-quartic'):
+            runner.validate_wolfram_output(data,model)
+    for key,bad in (('ExactTensorProjectionVerified',False),('CombinedBasisRank',3),
+                    ('S2EpsilonProjectedLegs',0),('SourceTensorIndex',99),
+                    ('SourceCoupling','wrong')):
+        data=valid_wolfram(model)
+        name='T3ExtraQ_0_0_0_1_1_2_1'
+        data['native_additional_quartic_tensors']['Certificates'][name][key]=bad
+        with pytest.raises(ValueError,match='additional-quartic'):
+            runner.validate_wolfram_output(data,model)
+    data=valid_wolfram(model)
+    data['native_additional_quartic_tensors']['Certificates'].pop('T3ExtraQ_1_1_0_1_0_1_2')
+    with pytest.raises(ValueError,match='additional-quartic'):
+        runner.validate_wolfram_output(data,model)
+
+
+def test_extra_quartics_use_one_native_cg_per_complete_source():
+    source=(Path(__file__).resolve().parents[2]/
+            'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text()
+    section=source.split('T3MEBuildNativeExtraQuartics[model_Association,extra_List] := Module[',1)[1].split(
+        'T3MESeparateOriginalExtraQuartics[expr_,symbols_List]',1)[0]
+    for token in ('T3ExtendedBosonicTensorBasis[model,names]',
+                  'T3ExtendedSpeciesList[counts]',
+                  'PhysicalSU2InvariantBasis[',
+                  'T3MEExtraProjectedTensorSlot[#1,#2]&',
+                  'newData["CGReps"]',
+                  'rankUnion=MatrixRank[',
+                  'DefineCG[cgName,cgReps,projected]',
+                  'PlusHc[coupling[] CG[cgName,indices] product]',
+                  '"AllProjectedTensorsInvariant"->True',
+                  '"PhysicalCouplingMapCertified"->False'):
+        assert token in section
+    assert 'T3MECheckpoint["native-extra-quartics-started"]' in source
+    assert '"OriginalExtraQuarticSeparationFailed"' in source
+    assert '"NativeExtraQuarticTensorConstructionFailed"' in source
+    assert 'native_additional_quartic_tensors' in source
+    assert 'nativeExtra["Expressions"][entry["Name"]]' in source
+
+
+def test_extra_quartic_lossless_separation_and_epsilon_rules():
+    source=(Path(__file__).resolve().parents[2]/
+            'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text()
+    body=source.split('T3MESeparateOriginalExtraQuartics[expr_,symbols_List] := Module[',1)[1].split(
+        '(* Diagnose gauge-tensor failures',1)[0]
+    assert 'Total[selected]+rest-expanded' in body
+    assert 'AnyTrue[symbols,T3MECouplingPresentQ[part,#]&]' in body
+    assert 'Length[DeleteDuplicates[symbols]] =!= 7' in body
+    factors=source.split('T3MEExtraMassField[species_String,idx_] :=',1)[1].split(
+        'T3MEBuildNativeExtraQuartics[',1)[0]
+    for token in ('"S1",u11 NewScalarX[idx]+u12 NewScalarY[idx]',
+                  '"S1dag",Bar[u11] Bar[NewScalarX[idx]]+Bar[u12] Bar[NewScalarY[idx]]',
+                  '"S2",-Bar[u21] Bar[NewScalarX[idx]]-Bar[u22] Bar[NewScalarY[idx]]',
+                  '"S2dag",-u21 NewScalarX[idx]-u22 NewScalarY[idx]'):
+        assert token in factors

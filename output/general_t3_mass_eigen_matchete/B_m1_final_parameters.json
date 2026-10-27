@@ -1,0 +1,110 @@
+{
+  "format": "t3-experimental-mass-eigen-matchete-parameters-v1",
+  "status": "NumericMassEigenstateBoundaryPreparedMatcheteNotRun",
+  "model": "B_-1",
+  "dimensions_alpha": [
+    2,
+    2,
+    1,
+    -1
+  ],
+  "endpoint": "final",
+  "source_eft1_scale_gev": 1000.0,
+  "unitary_U": {
+    "real": [
+      [
+        -0.046899801044566244,
+        0.9988995988896882
+      ],
+      [
+        0.9988995988896882,
+        0.046899801044566244
+      ]
+    ],
+    "imag": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  "original_mass_squared_A_gev2": {
+    "real": [
+      [
+        1411852.9376586468,
+        15936.286622738484
+      ],
+      [
+        15936.286622738484,
+        1073180.7465563142
+      ]
+    ],
+    "imag": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  "heavy_mass_squared_gev2": [
+    1072432.5145289649,
+    1412601.169685996
+  ],
+  "heavy_masses_gev": [
+    1035.583176055388,
+    1188.5289940451582
+  ],
+  "threshold_plan": {
+    "decreasing_scale_order": [
+      "NewScalarY",
+      "NewScalarX"
+    ],
+    "mass_scales_gev": [
+      1188.5289940451582,
+      1035.583176055388
+    ],
+    "scale_ratio": 1.1476905202075143,
+    "log_separation": 0.13775167985292458,
+    "existing_eft1_endpoint_below_both_mass_thresholds": true,
+    "numerical_eft1_state_must_be_evaluated_at_each_threshold": true,
+    "sequential_matching_performed": false
+  },
+  "epsilon": [
+    [
+      0.0,
+      1.0
+    ],
+    [
+      -1.0,
+      0.0
+    ]
+  ],
+  "heavy_scalar_fields": [
+    "NewScalarX",
+    "NewScalarY"
+  ],
+  "heavy_scalar_hypercharge": -0.5,
+  "quartic_source_count": 17,
+  "yukawa_source_count": 2,
+  "verified_eight_real_mode_hessian": true,
+  "verified_17_tensor_rotation": true,
+  "source_sha256": "1abeff8f880ad6a3c4ce1d1d9b04c1f66b9b51f117057cdbcd93abc2f009d1ba",
+  "source_path": "output/general_t3_mass_basis/B_m1_final_mass_basis.json",
+  "matchete_mass_basis_verified": false,
+  "physical_matching_performed": false,
+  "matchete_rgbeta_component_map_certified": false,
+  "coefficient_map_certified": false,
+  "matching_next_actions": [
+    "Certify native Matchete epsilon/CG tensor phases against numerical spherical basis",
+    "Transform exact source Matchete quartic tensor coefficients to eigenbasis",
+    "Match both non-degenerate scalar eigenfields and Wilson coefficients"
+  ]
+}

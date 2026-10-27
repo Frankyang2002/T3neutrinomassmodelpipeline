@@ -1,0 +1,367 @@
+{
+  "format": "t3-direct-one-scale-numerical-c5-v1",
+  "status": "FrozenScalarDiagonalDirectOneScaleC5NotPhysicalEFT1",
+  "model": "B_-1",
+  "reference_yukawa_transfer_only": false,
+  "frozen_scalar_aligned_one_scale_scenario": true,
+  "reproduces_frozen_fitted_result": false,
+  "mass_basis_compatible_with_frozen_reference": true,
+  "input_semantics": "Frozen fitted-reference Yukawas and scalar mass DIAGONALS; additional quadratic mixing is explicit scenario input; not EFT1 evolved or fitted",
+  "physical_c5_certified": false,
+  "sequential_EFT1_performed": false,
+  "matching_approach": "SimultaneousAllHeavyOneScaleExploratory",
+  "weinberg_conversion": "C5_ij=A5_ij+A5_ji; mnu=-v^2*C5/2",
+  "loop_factor": "hbar=1/(16*pi^2)",
+  "source_coefficient_sha256": "12b4507253982cb58d6adb79fb83ba59363f22f86af8f9d04897d533d48e97fd",
+  "source_probe_report_sha256": "2d163099f1a3ce44a52cd9311e8eea64a28658454edb2bf1e9e803d696205732",
+  "source_mass_parameters_sha256": "b8ad4be8e27a3a74ca84345c471fa63af23983a0f101a3f503b91fd03668799c",
+  "source_mass_parameters_used_as_numeric_scalar_input": false,
+  "effective_scalar_basis_A_gev2": {
+    "real": [
+      [
+        1306122.448979592,
+        0.0
+      ],
+      [
+        0.0,
+        1000000.0
+      ]
+    ],
+    "imag": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.0,
+        0.0
+      ]
+    ]
+  },
+  "effective_scalar_basis_U": {
+    "real": [
+      [
+        0.0,
+        1.0
+      ],
+      [
+        1.0,
+        0.0
+      ]
+    ],
+    "imag": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  "effective_scalar_basis_source": "Frozen reference scalar diagonals with explicit quadratic mixing scenario",
+  "source_coupling_names": [
+    "MF",
+    "MSX",
+    "MSY",
+    "T3MEU11",
+    "T3MEU12",
+    "T3MEU21",
+    "T3MEU22",
+    "lambdaT3",
+    "lambdaT3ExtraQ020020I1",
+    "lambdaT3ExtraQ020200I1",
+    "y1",
+    "y2"
+  ],
+  "benchmark_config": {
+    "format": "t3-frozen-scalar-diagonal-direct-C5-input-v1",
+    "benchmark_label": "frozen_reference_yukawa_and_scalar_diagonals_explicit_quadratic_mixing",
+    "reference_transfer_only": false,
+    "mass_basis_compatible_with_frozen_reference": true,
+    "physical_input_certified": false,
+    "sequential_EFT1": false,
+    "fermion_masses_gev": [
+      100000.0,
+      110000.0,
+      120000.0
+    ],
+    "vev_gev": 246.22,
+    "y1": [
+      [
+        {
+          "real": 0.00014730014679953455,
+          "imag": 0.0
+        },
+        {
+          "real": 8.047324810177089e-05,
+          "imag": 0.0
+        },
+        {
+          "real": 5.135984066873789e-05,
+          "imag": 0.0
+        }
+      ],
+      [
+        {
+          "real": 9.160865289806976e-05,
+          "imag": 0.0
+        },
+        {
+          "real": -0.0001247487818822265,
+          "imag": 0.0
+        },
+        {
+          "real": 5.50681452266872e-05,
+          "imag": 0.0
+        }
+      ],
+      [
+        {
+          "real": -0.00013495873259380462,
+          "imag": 0.0
+        },
+        {
+          "real": 4.006479675612658e-06,
+          "imag": 0.0
+        },
+        {
+          "real": -1.1051706131547697e-05,
+          "imag": 0.0
+        }
+      ]
+    ],
+    "y2": [
+      [
+        {
+          "real": -3.993949927389622e-05,
+          "imag": 0.0
+        },
+        {
+          "real": 0.0001104188997298479,
+          "imag": 0.0
+        },
+        {
+          "real": -4.563543247058988e-05,
+          "imag": 0.0
+        }
+      ],
+      [
+        {
+          "real": 9.689309212123487e-05,
+          "imag": 0.0
+        },
+        {
+          "real": 7.181667404833679e-05,
+          "imag": 0.0
+        },
+        {
+          "real": 0.00010138807827606797,
+          "imag": 0.0
+        }
+      ],
+      [
+        {
+          "real": -5.459642853347696e-05,
+          "imag": 0.0
+        },
+        {
+          "real": -1.1209904044959123e-05,
+          "imag": 0.0
+        },
+        {
+          "real": 4.721599090844392e-05,
+          "imag": 0.0
+        }
+      ]
+    ],
+    "quartics": {
+      "lambdaT3": {
+        "real": 0.1,
+        "imag": 0.0
+      },
+      "lambdaT3ExtraQ020020I1": {
+        "real": 0.0,
+        "imag": 0.0
+      },
+      "lambdaT3ExtraQ020200I1": {
+        "real": 0.0,
+        "imag": 0.0
+      }
+    },
+    "reference_provenance": {
+      "frozen_config_path": "Numerical/benchmarks/fitted_reference/T3_dS1_2_dS2_2_dF_1_alpha_m1.json",
+      "frozen_sha256": "d83d7d31f9929f21dffad63c429a9e996a3f065a60535243a282a54d6f87dd5f",
+      "frozen_scalar_diagonal_masses_squared_gev2": [
+        1306122.448979592,
+        1000000.0
+      ],
+      "quadratic_mixing_mu2_gev2": {
+        "real": 0.0,
+        "imag": 0.0
+      },
+      "quadratic_mixing_source": "zero_by_explicit_default_scenario_not_in_fitted_reference",
+      "mass_basis_generated_by": "MixedDoubletMassBasis.build",
+      "frozen_yukawas_are_saved_base_state_not_threshold_evolved": true,
+      "reproduces_original_fit": false,
+      "physical_EFT1_matching_performed": false,
+      "nonzero_matchete_rgbeta_quartic_map_certified": false
+    },
+    "frozen_reference_scalar_diagonals": true,
+    "quadratic_mixing_is_explicit_scenario": true
+  },
+  "fermion_mass_gev": null,
+  "fermion_masses_gev": [
+    100000.0,
+    110000.0,
+    120000.0
+  ],
+  "scalar_masses_gev": [
+    1000.0,
+    1142.857142857143
+  ],
+  "n_fermion_flavours": 3,
+  "ordered_A5_gev_inv": [
+    [
+      {
+        "real": -1.7587396772332345e-17,
+        "imag": 0.0
+      },
+      {
+        "real": -1.2363968055369758e-15,
+        "imag": 0.0
+      },
+      {
+        "real": 3.460698876434331e-16,
+        "imag": 0.0
+      }
+    ],
+    [
+      {
+        "real": 9.541937722710431e-16,
+        "imag": 0.0
+      },
+      {
+        "real": -2.76171386754583e-16,
+        "imag": 0.0
+      },
+      {
+        "real": 7.339936912573559e-17,
+        "imag": 0.0
+      }
+    ],
+    [
+      {
+        "real": -3.1905621543901277e-16,
+        "imag": 0.0
+      },
+      {
+        "real": 7.047002158975679e-16,
+        "imag": 0.0
+      },
+      {
+        "real": -3.5131040847927927e-16,
+        "imag": 0.0
+      }
+    ]
+  ],
+  "symmetrized_C5_gev_inv": [
+    [
+      {
+        "real": -3.517479354466469e-17,
+        "imag": 0.0
+      },
+      {
+        "real": -2.822030332659327e-16,
+        "imag": 0.0
+      },
+      {
+        "real": 2.7013672204420335e-17,
+        "imag": 0.0
+      }
+    ],
+    [
+      {
+        "real": -2.822030332659327e-16,
+        "imag": 0.0
+      },
+      {
+        "real": -5.52342773509166e-16,
+        "imag": 0.0
+      },
+      {
+        "real": 7.780995850233034e-16,
+        "imag": 0.0
+      }
+    ],
+    [
+      {
+        "real": 2.7013672204420335e-17,
+        "imag": 0.0
+      },
+      {
+        "real": 7.780995850233034e-16,
+        "imag": 0.0
+      },
+      {
+        "real": -7.026208169585585e-16,
+        "imag": 0.0
+      }
+    ]
+  ],
+  "mnu_gev": [
+    [
+      {
+        "real": 1.0662234141311053e-12,
+        "imag": 0.0
+      },
+      {
+        "real": 8.554179038034349e-12,
+        "imag": 0.0
+      },
+      {
+        "real": -8.18842327231921e-13,
+        "imag": 0.0
+      }
+    ],
+    [
+      {
+        "real": 8.554179038034349e-12,
+        "imag": 0.0
+      },
+      {
+        "real": 1.6742693798437778e-11,
+        "imag": 0.0
+      },
+      {
+        "real": -2.3585866823186533e-11,
+        "imag": 0.0
+      }
+    ],
+    [
+      {
+        "real": -8.18842327231921e-13,
+        "imag": 0.0
+      },
+      {
+        "real": -2.3585866823186533e-11,
+        "imag": 0.0
+      },
+      {
+        "real": 2.129794352156963e-11,
+        "imag": 0.0
+      }
+    ]
+  ],
+  "takagi_singular_values_eV_descending": [
+    0.043679827059150675,
+    0.008489261369418985,
+    0.003916295044406827
+  ],
+  "max_abs_mnu_eV": 0.023585866823186533,
+  "largest_takagi_mass_eV": 0.043679827059150675,
+  "mass_matrix_entry_max_vs_takagi_different_quantities": true,
+  "symmetry_max_abs_C5_gev_inv": 0.0,
+  "note": "Numbers evaluate the original one-loop Matchete InputForm, not a postulated neutrino-mass loop formula."
+}

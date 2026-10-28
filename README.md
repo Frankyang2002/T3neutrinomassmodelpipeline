@@ -20,10 +20,12 @@ This README is the **project entry point**, not a statement that every phenomeno
 ## Documentation
 
 - [`docs/PHYSICS.md`](docs/PHYSICS.md): model conventions, Lagrangian, matching, one-loop power counting, group factors and thresholds.
+- [`docs/SCALAR_SECTOR.md`](docs/SCALAR_SECTOR.md): **authoritative scalar-potential justification** — full operator inventory, leading-one-loop selection, zero-boundary power counting, quadratic mixing, numerical scope, and limitations.
 - [`docs/NUMERICAL.md`](docs/NUMERICAL.md): implementation ownership, benchmark evolution, fitting and testing.
 - [`docs/RESULTS.md`](docs/RESULTS.md): benchmark provenance, verified numerical findings, limitations and references.
+- [`docs/T3_THESIS_PLAN.md`](docs/T3_THESIS_PLAN.md): working thesis narrative and figure plan; individual historical statements must be checked against completed results.
 
-The previous `INFO_*.md`, `README_*.txt`, `docs/archive/` and `Reports/notes/` materials are **not deleted by this package**. They remain source material for checking whether the consolidation has retained everything important.
+The earlier scalar Batch 1–8 documents and historical stage notes are **retained for now**. `docs/SCALAR_SECTOR.md` consolidates their scalar-relevance argument but does not replace the machine-readable scientific audits. Obsolete documentation will be archived only after reference and dependency verification; this documentation-only change does not delete it.
 
 ## PowerShell commands
 
@@ -31,7 +33,7 @@ From the repository root, in the project's working Python environment:
 
 ```powershell
 python pipeline.py --help
-python -m pytest -q
+python -X utf8 -m pytest -q
 
 # Regenerate figures and interactive comparisons from saved numerical diagnostics
 python -m Numerical.plotting.BuildDisplayResults --output Reports/output/display
@@ -46,16 +48,19 @@ The saved-results display builder is presentation-only; it does not run Matchete
 
 `output/full/` holds raw saved numerical diagnostics. Some numerical study records (including scan JSON/CSV) live under `Reports/output/full/`. Generated PNG/PDF/HTML can be rebuilt from the appropriate saved data when the relevant generator is available; they are not automatically physics sources of truth.
 
+The final reduced-scalar numerical report is under `output/studies/reduced_scalar_final_reports/final_reduced_v2/`, with fit inputs in `output/studies/reduced_scalar_sobol/reduced_frozen_overnight_v2/`. The general-scalar exploratory campaigns and conditional zero-boundary pilots are distinct datasets; consult `docs/SCALAR_SECTOR.md` before interpreting or comparing them.
+
 ## Interpretation cautions
 
 - The nominal 16-model × four-scenario grid has 64 numerical cases. A successful numerical trajectory is **not** evidence of agreement with oscillation data.
 - Fitted reference Yukawa matrices are deliberately calibrated to NuFIT. Agreement of fitted observables is not an independent model prediction.
 - Four fixed `small/large` labels describe benchmark inputs. Later feasibility fits need not respect strict regime boundaries unless they are explicitly imposed.
 - Standard production calculations use a fermion-first threshold hierarchy; see the detailed documents before changing threshold order or conventions.
+- The reduced scalar potential is an explicit **zero-additional-coupling boundary benchmark**, not the unrestricted general gauge-invariant potential or a certified full general-scalar EFT matching result.
 - Keep numerical source data, generated matching artifacts and benchmark manifests when cleaning reports.
 
 ## Source
 
 Repository: https://github.com/Frankyang2002/T3neutrinomassmodelpipeline
 
-This consolidated documentation was drafted from existing repository notes; **no executable source file is changed by the ZIP**.
+This documentation consolidation is based on a read-only inspection of commit `aa4dd2b7b6d2c31494e45290a88004822a8c43c5`. No executable source file or saved scientific data is changed by the documentation ZIP.

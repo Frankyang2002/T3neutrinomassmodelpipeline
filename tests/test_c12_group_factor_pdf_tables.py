@@ -1,83 +1,52 @@
+"""Current C12 PDF report table API regression tests.
+
+The retired HTML/TeX parsing API (_extract_c12_sections and
+transform_group_factor_tex) is not part of the current PDF generator.
+"""
 from __future__ import annotations
 
-from Reports.C12GroupFactorPDF import _extract_c12_sections, transform_group_factor_tex
+import pytest
+import sympy as sp
+
+from Reports import C12GroupFactorPDF as pdf
 
 
-SAMPLE_TEX = r'''
-\documentclass{article}
-\usepackage{booktabs}
-\begin{document}
-\section*{Existing C5 tables}
-Some C5 content here.
-\subsection*{T3-A-p0}
-Representation: $(d_{S_1}, d_{S_2}, d_F, \alpha) = (1,3,2,0)$. Matched independent $C_{12}$ components: 20.
-\begin{tabular}{lll}
-\toprule
-One-loop source & Group factor & Alignment \\
-\midrule
-Yukawa wavefunction & 0 & yes \\
-Scalar-pair gauge/quartic & -2\lambda_{12,\mathrm{Inv1}} & yes \\
-Mixed Yukawa and gauge & not proportional to C_{12} & no \\
-Fermion anomalous dimension & -\frac{3 g_1^2}{2} - \frac{9 g_2^2}{2} + y_e \overline{y_e} & yes \\
-\bottomrule
-\end{tabular}
-\subsection*{T3-B-m3}
-Representation: $(d_{S_1}, d_{S_2}, d_F, \alpha) = (2,2,1,-3)$. Matched independent $C_{12}$ components: 48.
-\begin{tabular}{lll}
-\toprule
-One-loop source & Group factor & Alignment \\
-\midrule
-Yukawa wavefunction & 0 & yes \\
-Scalar anomalous dimension & -3 g_2^2 & yes \\
-\bottomrule
-\end{tabular}
-\subsection*{T3-B-m1}
-Representation: $(d_{S_1}, d_{S_2}, d_F, \alpha) = (2,2,1,-1)$. Matched independent $C_{12}$ components: 48.
-\begin{tabular}{lll}
-\toprule
-One-loop source & Group factor & Alignment \\
-\midrule
-Yukawa wavefunction & 0 & yes \\
-Scalar anomalous dimension & -3 g_2^2 - 4\sqrt{3}\lambda_{12Inv2}/3 & yes \\
-\bottomrule
-\end{tabular}
-\subsection*{T3-B-p1}
-Representation: $(d_{S_1}, d_{S_2}, d_F, \alpha) = (2,2,1,1)$. Matched independent $C_{12}$ components: 48.
-\begin{tabular}{lll}
-\toprule
-One-loop source & Group factor & Alignment \\
-\midrule
-Yukawa wavefunction & 0 & yes \\
-Scalar anomalous dimension & -3 g_2^2 & yes \\
-\bottomrule
-\end{tabular}
-\end{document}
-'''
+def _item(model, alpha, factor):
+    return {'model': model, 'status': 'Projected',
+            'representation': {'dS1': 2, 'dS2': 2, 'dF': 1, 'alpha': alpha},
+            'terms': {'g2**2': sp.Integer(factor)}, 'total_collinear': True,
+            'data_dir': None}
 
 
-def test_extracts_existing_c12_sections():
-    sections = _extract_c12_sections(SAMPLE_TEX)
-    assert [s.model for s in sections] == ["T3-A-p0", "T3-B-m3", "T3-B-m1", "T3-B-p1"]
-    assert sections[0].matched_components == 20
-    assert any(label == "Scalar-pair gauge/quartic" for label, _, _ in sections[0].rows)
+def test_current_table_grouping_keeps_representations_distinct():
+    models = [_item('T3-B-m3', -3, 3), _item('T3-B-m1', -1, 5),
+              _item('T3-B-p1', 1, 7)]
+    blocks = pdf._run_blocks(models)
+    assert len(blocks) == 1
+    assert [x['model'] for x in blocks[0]] == [x['model'] for x in models]
+    assert [x['terms']['g2**2'] for x in blocks[0]] == [3, 5, 7]
 
 
-def test_transform_replaces_individual_sections_with_run_block_tables():
-    out = transform_group_factor_tex(SAMPLE_TEX)
-    assert "{12}$ representation-specific group factors" in out
-    assert "Run block 1: T3-A-p0--T3-A-p0" in out
-    assert "Run block 2: T3-B-m3--T3-B-p1" in out
-    assert "T3 -- B -- m3" in out
-    assert "T3 -- B -- m1" in out
-    assert "T3 -- B -- p1" in out
-    assert "\\textit{not proportional}" in out
-    # Original per-model section headings should be gone from the rewritten body.
-    assert out.count("\\subsection*{T3-A-p0}") == 0
-    assert out.count("\\subsection*{T3-B-m3}") == 0
+def test_current_table_generation_preserves_independent_factors():
+    models = [_item('T3-B-m3', -3, 3), _item('T3-B-m1', -1, 5)]
+    rendered = '\n'.join(pdf._comparison_table(models, 1))
+    assert 'Run block 1' in rendered
+    assert 'T3-B-m3' in rendered and 'T3-B-m1' in rendered
+    assert '$3$' in rendered and '$5$' in rendered
 
 
-def test_existing_non_c12_content_is_preserved():
-    out = transform_group_factor_tex(SAMPLE_TEX)
-    assert "Existing C5 tables" in out
-    assert "Some C5 content here." in out
-    assert out.strip().endswith(r"\end{document}")
+def test_c12_pdf_section_replacement_preserves_existing_content():
+    before = r'\documentclass{article}' + '\n' + r'\begin{document}' + '\n'
+    before += 'Existing C5 content.\n' + r'\end{document}' + '\n'
+    generated = pdf.BEGIN + '\n' + 'New C12 content.\n' + pdf.END + '\n'
+    once = pdf.replace_pdf_tex_section(before, generated)
+    twice = pdf.replace_pdf_tex_section(once, generated)
+    assert once == twice
+    assert 'Existing C5 content.' in twice
+    assert twice.count('New C12 content.') == 1
+    assert twice.strip().endswith(r'\end{document}')
+
+
+def test_mismatched_section_markers_fail_closed():
+    with pytest.raises(ValueError, match='markers'):
+        pdf.replace_pdf_tex_section(pdf.BEGIN + r'\end{document}', 'replacement')

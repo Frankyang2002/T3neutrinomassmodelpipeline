@@ -15,7 +15,7 @@ import pytest
 from scripts import RunT3GeneralScalarNumericalCampaign as p
 
 
-def put(path, value):
+def put(path,value):
     path.parent.mkdir(parents=True,exist_ok=True)
     path.write_text(json.dumps(value,indent=2)+'\n',encoding='utf-8')
 
@@ -41,7 +41,7 @@ def project(tmp_path):
     return tmp_path
 
 
-def fake_fit(root,case,model,runid,chi2,*,q=0.1,mu=0.0, continuation=False):
+def fake_fit(root,case,model,runid,chi2,*,q=0.1,mu=0.0,continuation=False):
     tag=model.replace('-','m')
     folder=root/p.OUT/case/runid
     base={'case':case,'model':model,'run_id':runid,
@@ -74,8 +74,9 @@ def test_model_inventory_count():
 
 
 def test_campaign_id_path_safety():
-    for bad in ('', '../x', 'a/b', 'a b', 'a'*36,'C:\\bad','☃'):
-        with pytest.raises(ValueError):p.run_id(bad)
+    for bad in ('','../x','a/b','a b','a'*36,'C:\\bad','☃'):
+        with pytest.raises(ValueError):
+            p.run_id(bad)
     assert p.run_id('gen26_01')=='gen26_01'
 
 
@@ -236,7 +237,13 @@ def test_chosen_existing_is_smallest_chi2(project):
 
 
 def install_fake_fit_modules(monkeypatch,root,*,initial_accepted=True):
-    """Exercise campaign state machine without RG/Matchete dependencies."""
+    """Exercise campaign state machine without RG/Matchete dependencies.
+
+    Mock both sys.modules AND package attributes: `from scripts import module`
+    can otherwise retrieve the already-imported genuine fitter from scripts.
+    The production same-checkout guard is deliberately retained.
+    """
+    import scripts as scripts_package
     name1='scripts.RunT3GeneralScalarBCExploratoryFit'
     name2='scripts.ContinueT3GeneralScalarBCExploratoryFit'
     r=types.ModuleType(name1);r.ROOT=root
@@ -252,13 +259,19 @@ def install_fake_fit_modules(monkeypatch,root,*,initial_accepted=True):
     def new_run(case,model,identifier,**kwargs):
         calls.append(('fit',case,model,identifier))
         return simulate(case,model,identifier,accepted=initial_accepted)
+
     def continue_run(case,model,previous_run_id,identifier,**kwargs):
         calls.append(('continue',case,model,identifier))
         return simulate(case,model,identifier,accepted=True)
+
     r.new_run=new_run
     c.continue_run=continue_run
     monkeypatch.setitem(sys.modules,name1,r)
     monkeypatch.setitem(sys.modules,name2,c)
+    monkeypatch.setattr(scripts_package,'RunT3GeneralScalarBCExploratoryFit',r,
+                        raising=False)
+    monkeypatch.setattr(scripts_package,'ContinueT3GeneralScalarBCExploratoryFit',c,
+                        raising=False)
     return calls
 
 
@@ -284,7 +297,8 @@ def test_campaign_continues_failed_first_fit(project,monkeypatch):
     calls=install_fake_fit_modules(monkeypatch,project,initial_accepted=False)
     inv=p.run_campaign(project,'one_repair')
     assert [x[0] for x in calls]==['fit','continue']
-    row=next(r for r in inv['rows'] if r['case']=='small_uv_running_5e-9' and r['model']=='B_-1')
+    row=next(r for r in inv['rows'] if r['case']=='small_uv_running_5e-9'
+             and r['model']=='B_-1')
     assert row['status']=='NewExploratoryAccepted'
     assert row['new_fit']['run_id']=='one_repair_B_m1_cont'
     assert row['new_fit']['chi2']==1e-8
@@ -297,7 +311,7 @@ def test_stale_existing_fit_not_reused(project):
     fake_fit(project,case,model,'former_fit',1e-10)
     assert len(p.available_fits(project,case,model))==1
     config=project/'RGE/general/generated/general_rgbeta_quartic_registry.json'
-    raw=json.loads(config.read_text())
+    raw=json.loads(config.read_text(encoding='utf-8'))
     raw['extra_metadata']='changed'
     put(config,raw)
     assert p.available_fits(project,case,model)==[]

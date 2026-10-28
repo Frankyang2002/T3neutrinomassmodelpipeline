@@ -1,0 +1,213 @@
+{
+  "format": "t3-bc-uv-hierarchy-constrained-sobol-refit-v1",
+  "case": "small_uv_running_5e-9",
+  "model": "B_-1",
+  "run_id": "b_uv_constrained_pilot_v1",
+  "status": "CandidateConstrainedAccepted",
+  "accepted_threshold_chi2": 5.86,
+  "model_count": 1,
+  "quartic_fraction": 0.1,
+  "mu2_fraction": 0.0,
+  "mass_screen": {
+    "rhoF_max": 0.5,
+    "scalar_min_tev": 0.5,
+    "scalar_max_tev": 5.0
+  },
+  "search": {
+    "sobol_points_per_anchor": 8,
+    "anchors": 3,
+    "seed_sources": [
+      "historical_fit"
+    ],
+    "seed_factors": [
+      0.005,
+      0.01,
+      0.02
+    ],
+    "local_seed_count": 1,
+    "local_max_nfev": 20,
+    "local_fraction": 0.8,
+    "floor_fraction": 0.03,
+    "lambda_low": 1e-09,
+    "lambda_high": 0.1,
+    "yukawa_abs_max": 0.15,
+    "random_seed": 20261028
+  },
+  "run_counts": {
+    "evaluator_calls": 294,
+    "mass_safe_c5_evaluations": 294,
+    "failed_numerical_evaluations": 0,
+    "status_counts": {
+      "CandidateOscillationEvaluated": 27
+    }
+  },
+  "best_mass_safe": {
+    "label": "least_squares",
+    "parameters": {
+      "y1_00": 0.014821962986784018,
+      "y1_01": 0.006956101403391952,
+      "y1_02": 0.004547867854108696,
+      "y1_10": 0.004812090332780486,
+      "y1_11": -0.012496483589965697,
+      "y1_12": -0.01760573517324219,
+      "y1_20": -0.02042042675926679,
+      "y1_21": 0.00024594520821141465,
+      "y1_22": -0.0009032148487757103,
+      "y2_00": -0.0031124608823685194,
+      "y2_01": 0.006566694669866963,
+      "y2_02": -0.004248675967280553,
+      "y2_10": 0.008436856189053231,
+      "y2_11": -0.01138607159028748,
+      "y2_12": 0.007672747272952151,
+      "y2_20": -0.004263939340758597,
+      "y2_21": -0.004696430924589149,
+      "y2_22": 0.00273027909413252,
+      "log10_lambdaT3": -5.045877189188374
+    },
+    "chi2": 0.0028880424767608495,
+    "screen_pass": true,
+    "prediction": {
+      "delta_m21_sq_ev2": 7.535429979174541e-05,
+      "delta_m3l_sq_ev2": 0.0025113806672046437,
+      "sin2_theta12": 0.30911075285607825,
+      "sin2_theta13": 0.022483697996504827,
+      "sin2_theta23": 0.47011546206693605
+    },
+    "lambdaT3_uv": 8.997519795325962e-06,
+    "rhoF": 0.028488969747243627,
+    "uv_nfev": 191,
+    "scalar_light_muF_tev": 1.8043191241840117,
+    "scalar_heavy_muF_tev": 2.8487674421380134,
+    "min_fermion_muF_tev": 99.99545323725292,
+    "quadratic_mu2_at_muF_gev2": 1.1353026606711134,
+    "match_performed": true,
+    "candidate_one_scale_only": true,
+    "physical_map_certified": false,
+    "eft1_nfev": 179,
+    "screen": {
+      "ratio_muF": 0.028488969747243627,
+      "ordering_at_muF": true,
+      "strict_hierarchy_at_muF": true,
+      "near_1tev_at_muS": true,
+      "screen_pass": true,
+      "reason": "CandidatePassedScreenOnly"
+    },
+    "scalar_light_muS_tev": 1.8388812604166433,
+    "scalar_heavy_muS_tev": 2.9072721101798096,
+    "status": "CandidateOscillationEvaluated",
+    "reason": "ScreenPassOnly",
+    "candidate_C5_muS_gev_inv": {
+      "real": [
+        [
+          -1.0065085060801265e-16,
+          -5.41542929799914e-17,
+          2.957949050859168e-16
+        ],
+        [
+          -5.41542929799914e-17,
+          -9.41992932744021e-16,
+          7.641432166849395e-16
+        ],
+        [
+          2.957949050859168e-16,
+          7.641432166849395e-16,
+          -9.83853405510814e-16
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    "candidate_C5_muLow_gev_inv": {
+      "real": [
+        [
+          -9.430065833020487e-17,
+          -5.073762901106996e-17,
+          2.771334310488458e-16
+        ],
+        [
+          -5.073762901106996e-17,
+          -8.825613943818752e-16,
+          7.159340118147898e-16
+        ],
+        [
+          2.771334310488458e-16,
+          7.159340118147898e-16,
+          -9.217848729148671e-16
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    "heavy_mass_basis_residual": 1.72222071823078e-10,
+    "absolute_neutrino_fit_pass": true,
+    "whitened_residual": [
+      -0.016185781705770494,
+      0.018569131933826453,
+      0.04672975279371933,
+      0.006487713166363149,
+      0.0074491656087792525
+    ]
+  },
+  "optimiser": [
+    {
+      "anchor_source": "historical_fit",
+      "anchor_factor": 0.02,
+      "start_chi2": 5436.687172009327,
+      "max_nfev": 20,
+      "optimiser_nfev": 20,
+      "optimiser_success": false,
+      "optimiser_message": "The maximum number of function evaluations is exceeded.",
+      "function_calls_recorded": 267,
+      "screened_function_calls": 267,
+      "best_screened_chi2_so_far": 0.0028880424767608495
+    }
+  ],
+  "trial_errors": [],
+  "source_sha256": {
+    "output\\studies\\general_scalar_extended\\small_uv_running_5e-9\\general_fresh_v1_B_m1_cont\\B_m1_exploratory_fit.json": "a528c3e44ee6846d0ea151007f018392198b3d18d2a370c549e1eb2ad6a2f838",
+    "output\\studies\\general_scalar_extended\\small_uv_running_5e-9\\general_fresh_v1_B_m1_cont\\B_m1_exploratory_fitted_config.json": "c8bb4c3c7ee424473fd3d945e36ebbd40cb5f97d4b3c65805e0bc3a297cb1940",
+    "output\\studies\\lambda_5e-9_refit\\fitted\\T3_dS1_2_dS2_2_dF_1_alpha_m1.json": "e8bb30476227feda2bc4ed101417a9c0fded1adc3cbbbb5a0b9e3fdc9f949e85",
+    "output\\studies\\lambda_5e-9_refit\\fits\\T3_dS1_2_dS2_2_dF_1_alpha_m1.json": "bd8076ed9ea5fdb2cffcbd09918d2110a8398544be78d2e8e8d7defe3723ea20",
+    "output\\general_t3_mass_eigen_matchete\\one_loop_probe\\B_m1_final_one_loop_probe_weinberg_ordered_coefficient.inputform.txt": "12b4507253982cb58d6adb79fb83ba59363f22f86af8f9d04897d533d48e97fd",
+    "configs\\nufit_6_1_ic24_no.json": "27bd4d4297fddb3ef71b5b804afd8e31d44d302b569f7cf8c34d37d54005e15e",
+    "RGE\\general\\generated\\general_rgbeta_quartic_registry.json": "86a096410384641efa8f751b2aa98e8fee4bb6d3cccb4cfd116c559b71182eea",
+    "output\\general_t3_quadratic_eft1\\B_m1_uv_quadratic_live_rgbeta.json": "5508a9a2bdaab3354e7191c83bd082e60f4089edff40588f54823456a32ca33d",
+    "output\\general_t3_quadratic_eft1\\B_m1_eft1_quadratic_live_rgbeta.json": "b99358b50e12e0466e0f1c11a44bd1bbecefb45021293907a1d5f92b7baaf473",
+    "output\\general_t3_stage22\\stage23_quartic_prefactor_candidates.json": "f443587dae570f740dac2cf0aab587f41ed8d4088615ad000e30244127570a42",
+    "output\\general_t3_stage22\\stage26_conditional_quartic_action.json": "fa190cb12e3b792caefb2942ffc9f7f9ddb77c14a13c95e99e95d6940dd5ac85"
+  },
+  "physical_matchete_rgbeta_map_certified": false,
+  "general_scalar_sequential_matching_performed": false,
+  "neutrino_chi2_is_candidate_only": true,
+  "historical_outputs_overwritten": false
+}

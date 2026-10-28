@@ -1,0 +1,516 @@
+{
+  "format": "t3-bc-uv-running-mass-hierarchy-diagnostic-v1",
+  "status": "CandidateRGERunningMassHierarchyNotPhysicalThreshold",
+  "input_case": "small_uv_running_5e-9",
+  "nominal_fermion_threshold_gev": 100000.0,
+  "nominal_scalar_threshold_gev": 1000.0,
+  "grid_points_per_segment": 61,
+  "models": {
+    "B_-1": {
+      "source_run_id": "general_fresh_v1_B_m1_cont",
+      "saved_fit_sha256": "a528c3e44ee6846d0ea151007f018392198b3d18d2a370c549e1eb2ad6a2f838",
+      "saved_config_sha256": "c8bb4c3c7ee424473fd3d945e36ebbd40cb5f97d4b3c65805e0bc3a297cb1940",
+      "verified_source_file_count": 9,
+      "quartic_fraction": 0.1,
+      "mu2_fraction": 0.0,
+      "reproduction": {
+        "scalar_mass_squared": {
+          "mS1Sq_gev2": {
+            "saved": 7554840694.786638,
+            "replayed": 7554840694.786638,
+            "relative_error": 0.0
+          },
+          "mS2Sq_gev2": {
+            "saved": 18383472452.239372,
+            "replayed": 18383472452.239372,
+            "relative_error": 0.0
+          }
+        },
+        "mu2_abs_gev2_saved": 2.1286553539034467,
+        "mu2_abs_gev2_replayed": 2.1286553539034467,
+        "MF_muF_gev_saved": [
+          84394.78182053808,
+          90007.09191927804,
+          110241.90672819078
+        ],
+        "MF_muF_gev_replayed": [
+          84394.78182053808,
+          90007.09191927807,
+          110241.9067281908
+        ],
+        "saved_candidate_RGBeta_endpoint_reproduced": true
+      },
+      "diagnostic": {
+        "model": "B_-1",
+        "fitted_chi2": 18376.678022257205,
+        "passes_chi2_5p86": false,
+        "general_at_muF": {
+          "model": "B_-1",
+          "boundary": "general_quartics",
+          "phase": "UV",
+          "mu_gev": 100000.00000000001,
+          "mS1Sq_gev2": 8317570780.097607,
+          "mS2Sq_gev2": 21116192886.78986,
+          "mu2_abs_gev2": 0.9753485226965687,
+          "m_scalar_light_gev": 91200.71699333075,
+          "m_scalar_heavy_gev": 145314.11798854874,
+          "min_fermion_mass_gev": 84394.78182053808,
+          "max_fermion_mass_gev": 110241.9067281908,
+          "max_scalar_over_mu": 1.4531411798854872,
+          "max_scalar_over_min_fermion": 1.7218377114541636,
+          "x_min_scalar2_over_max_F2": 0.6843890825780551,
+          "x_max_scalar2_over_min_F2": 2.9647251045857117
+        },
+        "general_at_muS": {
+          "model": "B_-1",
+          "boundary": "general_quartics",
+          "phase": "EFT1",
+          "mu_gev": 999.9999999999998,
+          "mS1Sq_gev2": 7554840694.786638,
+          "mS2Sq_gev2": 18383472452.239372,
+          "mu2_abs_gev2": 2.1286553539034467,
+          "m_scalar_light_gev": 86918.58658990399,
+          "m_scalar_heavy_gev": 135585.6646266093,
+          "min_fermion_mass_gev": 84394.78182053808,
+          "max_fermion_mass_gev": 110241.9067281908,
+          "max_scalar_over_mu": 135.58566462660934,
+          "max_scalar_over_min_fermion": 1.6065645493927156,
+          "x_min_scalar2_over_max_F2": 0.6216298759368907,
+          "x_max_scalar2_over_min_F2": 2.5810496513654195
+        },
+        "restricted_at_muF": {
+          "model": "B_-1",
+          "boundary": "restricted_zero",
+          "phase": "UV",
+          "mu_gev": 100000.00000000001,
+          "mS1Sq_gev2": 8317570780.104335,
+          "mS2Sq_gev2": 21116192886.793797,
+          "mu2_abs_gev2": 0.0,
+          "m_scalar_light_gev": 91200.71699336763,
+          "m_scalar_heavy_gev": 145314.11798856227,
+          "min_fermion_mass_gev": 84394.78182053808,
+          "max_fermion_mass_gev": 110241.90672819082,
+          "max_scalar_over_mu": 1.4531411798856224,
+          "max_scalar_over_min_fermion": 1.721837711454324,
+          "x_min_scalar2_over_max_F2": 0.6843890825786085,
+          "x_max_scalar2_over_min_F2": 2.9647251045862637
+        },
+        "restricted_at_muS": {
+          "model": "B_-1",
+          "boundary": "restricted_zero",
+          "phase": "EFT1",
+          "mu_gev": 999.9999999999998,
+          "mS1Sq_gev2": 7554840694.8223095,
+          "mS2Sq_gev2": 18383472452.25876,
+          "mu2_abs_gev2": 0.0,
+          "m_scalar_light_gev": 86918.58659010919,
+          "m_scalar_heavy_gev": 135585.66462668078,
+          "min_fermion_mass_gev": 84394.78182053808,
+          "max_fermion_mass_gev": 110241.90672819082,
+          "max_scalar_over_mu": 135.58566462668082,
+          "max_scalar_over_min_fermion": 1.6065645493935625,
+          "x_min_scalar2_over_max_F2": 0.6216298759398257,
+          "x_max_scalar2_over_min_F2": 2.5810496513681405
+        },
+        "general_at_muF_heavy_scalar_over_minF": 1.7218377114541636,
+        "general_at_muS_heavy_scalar_over_muF": 1.355856646266093,
+        "general_at_muS_heavy_scalar_over_muS": 135.58566462660932,
+        "general_masses_at_muS_gev": [
+          86918.58658990399,
+          135585.6646266093
+        ],
+        "restricted_masses_at_muS_gev": [
+          86918.58659010919,
+          135585.66462668078
+        ],
+        "delta_mass_sq_at_muS_over_general": {
+          "mS1Sq_gev2": -4.721639485459301e-12,
+          "mS2Sq_gev2": -1.0545500342371237e-12
+        },
+        "fermion_first_ordering_at_muF": false,
+        "scalar_below_muF_at_muS": false,
+        "scalar_decoupling_scale_close_to_muS": false,
+        "conclusion": "Running-parameter ordering only; no physical/pole threshold certification"
+      },
+      "general": {
+        "boundary": "general_quartics",
+        "uv_nfev": 275,
+        "eft1_nfev": 212,
+        "mass_squared_derivatives_dlnmu": {
+          "UV": {
+            "first": {
+              "mS1Sq": -2770876286.4768724,
+              "mS2Sq": -9589706346.955402
+            },
+            "last": {
+              "mS1Sq": -1133886875.9800706,
+              "mS2Sq": -1788779265.9314573
+            }
+          },
+          "EFT1": {
+            "first": {
+              "mS1Sq": 205030105.48861077,
+              "mS2Sq": 771169649.7097536
+            },
+            "last": {
+              "mS1Sq": 133533647.11131388,
+              "mS2Sq": 455912182.7208435
+            }
+          }
+        },
+        "heavy_mass_at_muF_gev": [
+          84394.78182053808,
+          90007.09191927807,
+          110241.9067281908
+        ],
+        "crossings_heavy_scalar_equals_mu": [
+          {
+            "mu_geV_interpolated": 142949.94159105181,
+            "bracket_mu_gev": [
+              146779.92676220692,
+              135935.6390878525
+            ],
+            "numerical_crossing_only": true
+          }
+        ],
+        "crossings_light_scalar_equals_mu": [
+          {
+            "mu_geV_interpolated": 91096.38184428279,
+            "bracket_mu_gev": [
+              92611.87281287934,
+              85769.58985908938
+            ],
+            "numerical_crossing_only": true
+          }
+        ],
+        "crossings_heavy_scalar_equals_minF": [
+          {
+            "mu_geV_interpolated": 3111080.397632294,
+            "bracket_mu_gev": [
+              3162277.6601683795,
+              2928644.5646252357
+            ],
+            "numerical_crossing_only": true
+          }
+        ]
+      },
+      "restricted": {
+        "boundary": "restricted_zero",
+        "uv_nfev": 275,
+        "eft1_nfev": 212,
+        "mass_squared_derivatives_dlnmu": {
+          "UV": {
+            "first": {
+              "mS1Sq": -2770876286.4768724,
+              "mS2Sq": -9589706346.955402
+            },
+            "last": {
+              "mS1Sq": -1133886875.9840808,
+              "mS2Sq": -1788779265.9336493
+            }
+          },
+          "EFT1": {
+            "first": {
+              "mS1Sq": 205030105.48446414,
+              "mS2Sq": 771169649.7073383
+            },
+            "last": {
+              "mS1Sq": 133533647.1031365,
+              "mS2Sq": 455912182.71676385
+            }
+          }
+        },
+        "heavy_mass_at_muF_gev": [
+          84394.78182053808,
+          90007.09191927806,
+          110241.90672819082
+        ],
+        "crossings_heavy_scalar_equals_mu": [
+          {
+            "mu_geV_interpolated": 142949.9415910625,
+            "bracket_mu_gev": [
+              146779.92676220692,
+              135935.6390878525
+            ],
+            "numerical_crossing_only": true
+          }
+        ],
+        "crossings_light_scalar_equals_mu": [
+          {
+            "mu_geV_interpolated": 91096.38184432243,
+            "bracket_mu_gev": [
+              92611.87281287934,
+              85769.58985908938
+            ],
+            "numerical_crossing_only": true
+          }
+        ],
+        "crossings_heavy_scalar_equals_minF": [
+          {
+            "mu_geV_interpolated": 3111080.39763231,
+            "bracket_mu_gev": [
+              3162277.6601683795,
+              2928644.5646252357
+            ],
+            "numerical_crossing_only": true
+          }
+        ]
+      }
+    },
+    "C_-1": {
+      "source_run_id": "general_fresh_v1_C_m1_cont",
+      "saved_fit_sha256": "7994b5e44852faf411a1e36324666ae084c6d6b5bf56e8b198324f339a4d7172",
+      "saved_config_sha256": "423cb53c1305b977f4470913b50a9cef28b3aba0f7e92444010f45f1c9dd2ef0",
+      "verified_source_file_count": 9,
+      "quartic_fraction": 0.1,
+      "mu2_fraction": 0.0,
+      "reproduction": {
+        "scalar_mass_squared": {
+          "mS1Sq_gev2": {
+            "saved": 27979748212.053677,
+            "replayed": 27979748212.053677,
+            "relative_error": 0.0
+          },
+          "mS2Sq_gev2": {
+            "saved": 18257489250.630592,
+            "replayed": 18257489250.630592,
+            "relative_error": 0.0
+          }
+        },
+        "mu2_abs_gev2_saved": 2.9363267761710645,
+        "mu2_abs_gev2_replayed": 2.9363267761710645,
+        "MF_muF_gev_saved": [
+          104302.23472717761,
+          112747.2070693485,
+          128461.64998798925
+        ],
+        "MF_muF_gev_replayed": [
+          104302.23472717757,
+          112747.20706934846,
+          128461.6499879893
+        ],
+        "saved_candidate_RGBeta_endpoint_reproduced": true
+      },
+      "diagnostic": {
+        "model": "C_-1",
+        "fitted_chi2": 20279.293144360177,
+        "passes_chi2_5p86": false,
+        "general_at_muF": {
+          "model": "C_-1",
+          "boundary": "general_quartics",
+          "phase": "UV",
+          "mu_gev": 100000.00000000001,
+          "mS1Sq_gev2": 32632244475.18144,
+          "mS2Sq_gev2": 20763491395.979492,
+          "mu2_abs_gev2": 1.3721268103116135,
+          "m_scalar_light_gev": 144095.42461847805,
+          "m_scalar_heavy_gev": 180643.97159933526,
+          "min_fermion_mass_gev": 104302.23472717757,
+          "max_fermion_mass_gev": 128461.6499879893,
+          "max_scalar_over_mu": 1.8064397159933523,
+          "max_scalar_over_min_fermion": 1.7319281036676166,
+          "x_min_scalar2_over_max_F2": 1.258210747269319,
+          "x_max_scalar2_over_min_F2": 2.9995749562737064
+        },
+        "general_at_muS": {
+          "model": "C_-1",
+          "boundary": "general_quartics",
+          "phase": "EFT1",
+          "mu_gev": 999.9999999999998,
+          "mS1Sq_gev2": 27979748212.053677,
+          "mS2Sq_gev2": 18257489250.630592,
+          "mu2_abs_gev2": 2.9363267761710645,
+          "m_scalar_light_gev": 135120.2769780709,
+          "m_scalar_heavy_gev": 167271.48056992164,
+          "min_fermion_mass_gev": 104302.23472717757,
+          "max_fermion_mass_gev": 128461.6499879893,
+          "max_scalar_over_mu": 167.27148056992166,
+          "max_scalar_over_min_fermion": 1.6037190478943444,
+          "x_min_scalar2_over_max_F2": 1.106353876388322,
+          "x_max_scalar2_over_min_F2": 2.5719147845791426
+        },
+        "restricted_at_muF": {
+          "model": "C_-1",
+          "boundary": "restricted_zero",
+          "phase": "UV",
+          "mu_gev": 100000.00000000001,
+          "mS1Sq_gev2": 32632244475.191437,
+          "mS2Sq_gev2": 20763491395.99316,
+          "mu2_abs_gev2": 0.0,
+          "m_scalar_light_gev": 144095.4246185255,
+          "m_scalar_heavy_gev": 180643.9715993629,
+          "min_fermion_mass_gev": 104302.23472717757,
+          "max_fermion_mass_gev": 128461.6499879893,
+          "max_scalar_over_mu": 1.8064397159936287,
+          "max_scalar_over_min_fermion": 1.7319281036678815,
+          "x_min_scalar2_over_max_F2": 1.2582107472701474,
+          "x_max_scalar2_over_min_F2": 2.9995749562746243
+        },
+        "restricted_at_muS": {
+          "model": "C_-1",
+          "boundary": "restricted_zero",
+          "phase": "EFT1",
+          "mu_gev": 999.9999999999998,
+          "mS1Sq_gev2": 27979748212.097893,
+          "mS2Sq_gev2": 18257489250.69319,
+          "mu2_abs_gev2": 0.0,
+          "m_scalar_light_gev": 135120.2769783025,
+          "m_scalar_heavy_gev": 167271.48057005383,
+          "min_fermion_mass_gev": 104302.23472717757,
+          "max_fermion_mass_gev": 128461.6499879893,
+          "max_scalar_over_mu": 167.27148057005385,
+          "max_scalar_over_min_fermion": 1.6037190478956118,
+          "x_min_scalar2_over_max_F2": 1.106353876392115,
+          "x_max_scalar2_over_min_F2": 2.5719147845832078
+        },
+        "general_at_muF_heavy_scalar_over_minF": 1.7319281036676166,
+        "general_at_muS_heavy_scalar_over_muF": 1.6727148056992163,
+        "general_at_muS_heavy_scalar_over_muS": 167.27148056992164,
+        "general_masses_at_muS_gev": [
+          135120.2769780709,
+          167271.48056992164
+        ],
+        "restricted_masses_at_muS_gev": [
+          135120.2769783025,
+          167271.48057005383
+        ],
+        "delta_mass_sq_at_muS_over_general": {
+          "mS1Sq_gev2": -1.5802914190203846e-12,
+          "mS2Sq_gev2": -3.4286851422762936e-12
+        },
+        "fermion_first_ordering_at_muF": false,
+        "scalar_below_muF_at_muS": false,
+        "scalar_decoupling_scale_close_to_muS": false,
+        "conclusion": "Running-parameter ordering only; no physical/pole threshold certification"
+      },
+      "general": {
+        "boundary": "general_quartics",
+        "uv_nfev": 275,
+        "eft1_nfev": 212,
+        "mass_squared_derivatives_dlnmu": {
+          "UV": {
+            "first": {
+              "mS1Sq": -12661438937.573229,
+              "mS2Sq": -6637817920.233872
+            },
+            "last": {
+              "mS1Sq": -3860094800.536189,
+              "mS2Sq": -3089214862.609081
+            }
+          },
+          "EFT1": {
+            "first": {
+              "mS1Sq": 1312388193.5775628,
+              "mS2Sq": 678404761.9988388
+            },
+            "last": {
+              "mS1Sq": 777463124.8942348,
+              "mS2Sq": 436692058.04811674
+            }
+          }
+        },
+        "heavy_mass_at_muF_gev": [
+          104302.23472717757,
+          112747.20706934846,
+          128461.6499879893
+        ],
+        "crossings_heavy_scalar_equals_mu": [
+          {
+            "mu_geV_interpolated": 174256.60114668976,
+            "bracket_mu_gev": [
+              184784.97974222922,
+              171132.83041617813
+            ],
+            "numerical_crossing_only": true
+          }
+        ],
+        "crossings_light_scalar_equals_mu": [
+          {
+            "mu_geV_interpolated": 140332.64674050105,
+            "bracket_mu_gev": [
+              146779.92676220692,
+              135935.6390878525
+            ],
+            "numerical_crossing_only": true
+          }
+        ],
+        "crossings_heavy_scalar_equals_minF": [
+          {
+            "mu_geV_interpolated": 3997460.039199227,
+            "bracket_mu_gev": [
+              4298662.3470822815,
+              3981071.705534976
+            ],
+            "numerical_crossing_only": true
+          }
+        ]
+      },
+      "restricted": {
+        "boundary": "restricted_zero",
+        "uv_nfev": 275,
+        "eft1_nfev": 212,
+        "mass_squared_derivatives_dlnmu": {
+          "UV": {
+            "first": {
+              "mS1Sq": -12661438937.573229,
+              "mS2Sq": -6637817920.233872
+            },
+            "last": {
+              "mS1Sq": -3860094800.5413003,
+              "mS2Sq": -3089214862.616377
+            }
+          },
+          "EFT1": {
+            "first": {
+              "mS1Sq": 1312388193.571727,
+              "mS2Sq": 678404761.9908864
+            },
+            "last": {
+              "mS1Sq": 777463124.8856738,
+              "mS2Sq": 436692058.0354146
+            }
+          }
+        },
+        "heavy_mass_at_muF_gev": [
+          104302.23472717757,
+          112747.20706934846,
+          128461.6499879893
+        ],
+        "crossings_heavy_scalar_equals_mu": [
+          {
+            "mu_geV_interpolated": 174256.60114670926,
+            "bracket_mu_gev": [
+              184784.97974222922,
+              171132.83041617813
+            ],
+            "numerical_crossing_only": true
+          }
+        ],
+        "crossings_light_scalar_equals_mu": [
+          {
+            "mu_geV_interpolated": 140332.64674053818,
+            "bracket_mu_gev": [
+              146779.92676220692,
+              135935.6390878525
+            ],
+            "numerical_crossing_only": true
+          }
+        ],
+        "crossings_heavy_scalar_equals_minF": [
+          {
+            "mu_geV_interpolated": 3997460.0391992624,
+            "bracket_mu_gev": [
+              4298662.3470822815,
+              3981071.705534976
+            ],
+            "numerical_crossing_only": true
+          }
+        ]
+      }
+    }
+  },
+  "candidate_RGE_only": true,
+  "physical_pole_masses_calculated": false,
+  "physical_matching_certified": false,
+  "historical_outputs_overwritten": false
+}

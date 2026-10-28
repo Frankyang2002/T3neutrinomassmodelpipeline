@@ -1,0 +1,196 @@
+{
+  "format": "batch21-b-p1-three-scenario-conditional-general-scalar-fit-v1",
+  "status": "CandidateConstrainedAccepted",
+  "case": "small_uv_frozen_5e-9",
+  "model": "B_+1",
+  "run_id": "b_p1_three_fit_v1",
+  "uv_running_per_trial": false,
+  "historical_lambdaT3_fixed": 5e-09,
+  "extra_quartic_boundary_rule": "fixed real RGBeta boundary",
+  "extra_quartic_boundary_real": -0.01,
+  "extra_fraction": null,
+  "conditional_one_scale_matching": true,
+  "hierarchical_existing_c5_artifact_reused": true,
+  "matched_wilson_eft1_evolved": false,
+  "physical_quartic_normalization_certified": false,
+  "screens": {
+    "rhoF_max": 0.5,
+    "scalar_min_tev": 0.5,
+    "scalar_max_tev": 5.0,
+    "chi2_max": 5.86
+  },
+  "search": {
+    "sobol_points": 8,
+    "max_nfev": 25,
+    "seed_count": 1,
+    "seed": 20261028,
+    "local_fraction": 0.8,
+    "floor_fraction": 0.03,
+    "yukawa_abs_max": 2.0
+  },
+  "counts": {
+    "candidate_evaluations": 9,
+    "mass_safe_c5_evaluations": 9,
+    "numerical_failures": 0,
+    "total_eft1_rhs_evaluations": 44
+  },
+  "matching_kernel_stage36_parity_relative_error": 1.0391982534721294e-16,
+  "best_mass_safe": {
+    "label": "historical_seed",
+    "chi2": 4.178681862267484e-06,
+    "screen_pass": true,
+    "parameters": {
+      "y1_00": -0.1169666780866665,
+      "y1_01": 0.15681957223934617,
+      "y1_02": 0.1897275811769914,
+      "y1_10": -0.43170292581851877,
+      "y1_11": 0.3041542774254351,
+      "y1_12": -0.34440140912746786,
+      "y1_20": -0.26993253105310266,
+      "y1_21": 0.13486823310059304,
+      "y1_22": -0.15997433633214397,
+      "y2_00": 0.4994562565189602,
+      "y2_01": 0.4083060228403035,
+      "y2_02": -0.09465777551053645,
+      "y2_10": -0.051688153787989854,
+      "y2_11": 0.0006816388035586485,
+      "y2_12": 0.47543991288799603,
+      "y2_20": 0.1291014526230967,
+      "y2_21": -0.48770408903877627,
+      "y2_22": 0.20193049784652572
+    },
+    "rhoF": 0.011428571428571429,
+    "scalar_masses_muS_tev": [
+      1.0439661001650336,
+      1.1639320261383301
+    ],
+    "fermion_masses_muF_tev": [
+      100.0,
+      110.0,
+      120.0
+    ],
+    "max_yukawa_singular_muF": 0.7499449804603017,
+    "max_scalar_quartic_abs": 0.27762792141449333,
+    "mass_screen_pass": true,
+    "perturbativity_screen_pass": true,
+    "lambdaT3_fixed": 5e-09,
+    "extra_quartic_at_start": {
+      "real": -0.01,
+      "imag": 0.0
+    },
+    "extra_quartic_at_muS": {
+      "real": -0.010015552997233309,
+      "imag": 0.0
+    },
+    "uv_solver_nfev": 0,
+    "eft1_solver_nfev": 44,
+    "status": "MassSafeMatchedNeutrinoTrial",
+    "whitened_residual": [
+      0.0010950052804758726,
+      0.0017261649104293134,
+      -1.0851804000095515e-13,
+      6.695423942366624e-14,
+      -3.581364595565021e-15
+    ],
+    "prediction": {
+      "delta_m21_sq_ev2": 7.537106215512207e-05,
+      "delta_m3l_sq_ev2": 0.002511035386380664,
+      "sin2_theta12": 0.3087999999999993,
+      "sin2_theta13": 0.022480000000000038,
+      "sin2_theta23": 0.4699999999999999
+    },
+    "c5_at_muS": {
+      "real": [
+        [
+          8.97433605736182e-17,
+          -4.004169836330309e-17,
+          3.818877476841153e-16
+        ],
+        [
+          -4.004169836330309e-17,
+          7.432730114314762e-16,
+          9.48881628920781e-16
+        ],
+        [
+          3.818877476841153e-16,
+          9.48881628920781e-16,
+          7.689349428413219e-16
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    "c5_at_mu100": {
+      "real": [
+        [
+          8.604274301321677e-17,
+          -3.8390556887354694e-17,
+          3.6614122981209456e-16
+        ],
+        [
+          -3.8390556887354694e-17,
+          7.126237452571199e-16,
+          9.09756051134693e-16
+        ],
+        [
+          3.6614122981209456e-16,
+          9.09756051134693e-16,
+          7.372308500912875e-16
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    }
+  },
+  "local_optimisation": [],
+  "trial_problems": [],
+  "source_sha256": {
+    "output\\studies\\fermion_start_lambda_comparison\\5e-9\\fitted\\T3_dS1_2_dS2_2_dF_1_alpha_p1.json": "ad5961f6ba1f6357f387f8f9763b616ff23492c0c24ecc7f0f315bae7aeb53a5",
+    "output\\studies\\fermion_start_lambda_comparison\\5e-9\\fits\\T3_dS1_2_dS2_2_dF_1_alpha_p1.json": "a0e6cba8236031a328c58e96f10db611d75783c3aafca824df88dfd55386af3c",
+    "output\\studies\\general_scalar_extended\\b_p1_eft1_running\\b_p1_eft1_general_v1\\native_eft1_betas.json": "c9ccab2bd4644995ed3abaed7862d11102df293d553dfc1c8559ca04c3c9c79a",
+    "output\\studies\\general_scalar_extended\\b_p1_eft1_running\\b_p1_eft1_general_v1\\report.json": "d2dd22953152d238dbf628e3b374c3069ae29a241dc1794c230eb866c234966c",
+    "output\\full\\hypercharge\\T3_B_alpha_p1\\data\\final_weinberg_coefficient.json": "b3144f8ebbebddd313b90662f97bbb26c07e368e22fc67b73ceffd25ea575fee",
+    "configs\\nufit_6_1_ic24_no.json": "27bd4d4297fddb3ef71b5b804afd8e31d44d302b569f7cf8c34d37d54005e15e",
+    "RGE\\general\\generated\\general_rgbeta_quartic_registry.json": "86a096410384641efa8f751b2aa98e8fee4bb6d3cccb4cfd116c559b71182eea",
+    "scripts\\RunT3BPlus1GeneralEFT1.py": "8f81befee4e1e8ce488312247625043343525a453220c9670359508b86828cd4",
+    "scripts\\FitT3BPlus1GeneralThreeStudies.py": "3d87edb1e700f3b8247a575bcd417baf44652821e4cd7a270f31ac661ab81a80"
+  },
+  "historical_results_overwritten": false,
+  "limitations": [
+    "One-scale grouped C5 evaluation from existing model-specific hierarchical artifact",
+    "Native extra quartic included in UV/EFT1 renormalisable running only",
+    "No new Wilson coefficient beta functions or sequential general-scalar matching",
+    "Matchete-RGBeta physical coupling map not certified",
+    "18 real Yukawa fit variables to five observed values: no predictive claim"
+  ]
+}

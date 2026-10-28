@@ -1,0 +1,227 @@
+{
+  "format": "t3-bc-uv-hierarchy-constrained-sobol-refit-v1",
+  "case": "small_uv_running_5e-9",
+  "model": "C_-1",
+  "run_id": "c_uv_constrained_pilot_v1",
+  "status": "CandidateConstrainedAccepted",
+  "accepted_threshold_chi2": 5.86,
+  "model_count": 1,
+  "quartic_fraction": 0.1,
+  "mu2_fraction": 0.0,
+  "mass_screen": {
+    "rhoF_max": 0.5,
+    "scalar_min_tev": 0.5,
+    "scalar_max_tev": 5.0
+  },
+  "search": {
+    "sobol_points_per_anchor": 8,
+    "anchors": 3,
+    "seed_sources": [
+      "historical_fit"
+    ],
+    "seed_factors": [
+      0.005,
+      0.01,
+      0.015
+    ],
+    "local_seed_count": 1,
+    "local_max_nfev": 20,
+    "local_fraction": 0.8,
+    "floor_fraction": 0.03,
+    "lambda_low": 1e-09,
+    "lambda_high": 0.1,
+    "yukawa_abs_max": 0.15,
+    "random_seed": 20261028
+  },
+  "run_counts": {
+    "evaluator_calls": 274,
+    "mass_safe_c5_evaluations": 272,
+    "failed_numerical_evaluations": 0,
+    "status_counts": {
+      "CandidateOscillationEvaluated": 25,
+      "MassScreenFailAtMuS": 2
+    }
+  },
+  "best_mass_safe": {
+    "label": "least_squares",
+    "parameters": {
+      "y1_00": -0.00478584662978636,
+      "y1_01": -0.0006963184869780211,
+      "y1_02": 0.02253110361776118,
+      "y1_10": -0.006076418679689708,
+      "y1_11": 0.011150000317039317,
+      "y1_12": -0.0035837378674650183,
+      "y1_20": -6.634314278367438e-05,
+      "y1_21": 0.0032053424187108623,
+      "y1_22": -0.0014196556761284958,
+      "y2_00": 0.006611788519796987,
+      "y2_01": 0.0018337167546454234,
+      "y2_02": 0.004678232682966641,
+      "y2_10": -0.0002518040064690399,
+      "y2_11": -0.004316275754310258,
+      "y2_12": 0.002169423000204133,
+      "y2_20": -0.0029735623623285213,
+      "y2_21": -0.01600726803176286,
+      "y2_22": 0.0008319980541079407,
+      "log10_lambdaT3": -4.6708975096660765
+    },
+    "chi2": 3.13301181496958e-08,
+    "screen_pass": true,
+    "prediction": {
+      "delta_m21_sq_ev2": 7.536991504264203e-05,
+      "delta_m3l_sq_ev2": 0.0025110012863392827,
+      "sin2_theta12": 0.3088003275451662,
+      "sin2_theta13": 0.022479984307338087,
+      "sin2_theta23": 0.4699980067182514
+    },
+    "lambdaT3_uv": 2.1335483556090326e-05,
+    "rhoF": 0.02795149843646106,
+    "uv_nfev": 191,
+    "scalar_light_muF_tev": 2.1938113836297037,
+    "scalar_heavy_muF_tev": 3.1590657362198757,
+    "min_fermion_muF_tev": 113.01954860849474,
+    "quadratic_mu2_at_muF_gev2": 3.207797472527125,
+    "match_performed": true,
+    "candidate_one_scale_only": true,
+    "physical_map_certified": false,
+    "eft1_nfev": 179,
+    "screen": {
+      "ratio_muF": 0.02795149843646106,
+      "ordering_at_muF": true,
+      "strict_hierarchy_at_muF": true,
+      "near_1tev_at_muS": true,
+      "screen_pass": true,
+      "reason": "CandidatePassedScreenOnly"
+    },
+    "scalar_light_muS_tev": 2.230344568560951,
+    "scalar_heavy_muS_tev": 3.2168014351857965,
+    "status": "CandidateOscillationEvaluated",
+    "reason": "ScreenPassOnly",
+    "candidate_C5_muS_gev_inv": {
+      "real": [
+        [
+          8.851804804739064e-17,
+          1.0675260868083623e-16,
+          2.8597751000689e-16
+        ],
+        [
+          1.0675260868083623e-16,
+          -7.063071361535983e-16,
+          -9.76612033024722e-16
+        ],
+        [
+          2.8597751000689e-16,
+          -9.76612033024722e-16,
+          -7.877719239289109e-16
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    "candidate_C5_muLow_gev_inv": {
+      "real": [
+        [
+          8.284798161297926e-17,
+          9.991451938223425e-17,
+          2.676596662819932e-16
+        ],
+        [
+          9.991451938223425e-17,
+          -6.610643004742501e-16,
+          -9.140566781557163e-16
+        ],
+        [
+          2.676596662819932e-16,
+          -9.140566781557163e-16,
+          -7.373140302546568e-16
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    "heavy_mass_basis_residual": 3.8730253973389635e-11,
+    "absolute_neutrino_fit_pass": true,
+    "whitened_residual": [
+      -8.75849051292375e-05,
+      6.274825768230097e-05,
+      4.925491220400431e-05,
+      -2.7530985812246432e-05,
+      -0.00012859882248689348
+    ]
+  },
+  "optimiser": [
+    {
+      "anchor_source": "historical_fit",
+      "anchor_factor": 0.01,
+      "start_chi2": 19896.110719860706,
+      "max_nfev": 20,
+      "optimiser_nfev": 20,
+      "optimiser_success": false,
+      "optimiser_message": "The maximum number of function evaluations is exceeded.",
+      "function_calls_recorded": 248,
+      "screened_function_calls": 248,
+      "best_screened_chi2_so_far": 3.13301181496958e-08
+    }
+  ],
+  "trial_errors": [
+    {
+      "anchor": 3,
+      "point": 4,
+      "reason": "ScalarNotInTargetWindowAtMuS",
+      "status": "MassScreenFailAtMuS"
+    },
+    {
+      "anchor": 3,
+      "point": 7,
+      "reason": "ScalarNotInTargetWindowAtMuS",
+      "status": "MassScreenFailAtMuS"
+    }
+  ],
+  "source_sha256": {
+    "output\\studies\\general_scalar_extended\\small_uv_running_5e-9\\general_fresh_v1_C_m1_cont\\C_m1_exploratory_fit.json": "7994b5e44852faf411a1e36324666ae084c6d6b5bf56e8b198324f339a4d7172",
+    "output\\studies\\general_scalar_extended\\small_uv_running_5e-9\\general_fresh_v1_C_m1_cont\\C_m1_exploratory_fitted_config.json": "423cb53c1305b977f4470913b50a9cef28b3aba0f7e92444010f45f1c9dd2ef0",
+    "output\\studies\\lambda_5e-9_refit\\fitted\\T3_dS1_2_dS2_2_dF_3_alpha_m1.json": "b68ab5884cd4f5600d808f598b9d7691331dc60e9f617646c73ee3e28dae9f20",
+    "output\\studies\\lambda_5e-9_refit\\fits\\T3_dS1_2_dS2_2_dF_3_alpha_m1.json": "10ed72e8f0872c6429b218014033ec606e8da9cbc13e5f8e1a90b62e84fce91c",
+    "output\\general_t3_mass_eigen_matchete\\one_loop_probe\\C_m1_final_one_loop_probe_weinberg_ordered_coefficient.inputform.txt": "83e587e503f4945b4af4ffad2334593d1e7fc7275ca20536c95a386084c6984d",
+    "configs\\nufit_6_1_ic24_no.json": "27bd4d4297fddb3ef71b5b804afd8e31d44d302b569f7cf8c34d37d54005e15e",
+    "RGE\\general\\generated\\general_rgbeta_quartic_registry.json": "86a096410384641efa8f751b2aa98e8fee4bb6d3cccb4cfd116c559b71182eea",
+    "output\\general_t3_quadratic_eft1\\C_m1_uv_quadratic_live_rgbeta.json": "f5ab3557c0f7a88edcf82d20fca673fdcd6c4e9f5beb28010db57c4cab3d1f0c",
+    "output\\general_t3_quadratic_eft1\\C_m1_eft1_quadratic_live_rgbeta.json": "9b955729a342a43d8fef0c2267383b5a7ff4dcf1c87d22d043be7b05960559af",
+    "output\\general_t3_stage22\\stage23_quartic_prefactor_candidates.json": "f443587dae570f740dac2cf0aab587f41ed8d4088615ad000e30244127570a42",
+    "output\\general_t3_stage22\\stage26_conditional_quartic_action.json": "fa190cb12e3b792caefb2942ffc9f7f9ddb77c14a13c95e99e95d6940dd5ac85"
+  },
+  "physical_matchete_rgbeta_map_certified": false,
+  "general_scalar_sequential_matching_performed": false,
+  "neutrino_chi2_is_candidate_only": true,
+  "historical_outputs_overwritten": false
+}

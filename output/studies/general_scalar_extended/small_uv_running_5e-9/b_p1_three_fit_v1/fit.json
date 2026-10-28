@@ -1,0 +1,107 @@
+{
+  "format": "batch21-b-p1-three-scenario-conditional-general-scalar-fit-v1",
+  "status": "NoMassSafeNeutrinoFit",
+  "case": "small_uv_running_5e-9",
+  "model": "B_+1",
+  "run_id": "b_p1_three_fit_v1",
+  "uv_running_per_trial": true,
+  "historical_lambdaT3_fixed": 5e-09,
+  "extra_quartic_boundary_rule": "fixed real RGBeta boundary",
+  "extra_quartic_boundary_real": -0.01,
+  "extra_fraction": null,
+  "conditional_one_scale_matching": true,
+  "hierarchical_existing_c5_artifact_reused": true,
+  "matched_wilson_eft1_evolved": false,
+  "physical_quartic_normalization_certified": false,
+  "screens": {
+    "rhoF_max": 0.5,
+    "scalar_min_tev": 0.5,
+    "scalar_max_tev": 5.0,
+    "chi2_max": 5.86
+  },
+  "search": {
+    "sobol_points": 8,
+    "max_nfev": 25,
+    "seed_count": 1,
+    "seed": 20261028,
+    "local_fraction": 0.8,
+    "floor_fraction": 0.03,
+    "yukawa_abs_max": 2.0
+  },
+  "counts": {
+    "candidate_evaluations": 9,
+    "mass_safe_c5_evaluations": 0,
+    "numerical_failures": 0,
+    "total_eft1_rhs_evaluations": 396
+  },
+  "matching_kernel_stage36_parity_relative_error": null,
+  "best_mass_safe": null,
+  "local_optimisation": [],
+  "trial_problems": [
+    {
+      "trial": "historical_seed",
+      "status": "MassOrCouplingScreenRejected",
+      "reason": "screen failed"
+    },
+    {
+      "trial": "sobol_1",
+      "status": "MassOrCouplingScreenRejected",
+      "reason": "screen failed"
+    },
+    {
+      "trial": "sobol_2",
+      "status": "MassOrCouplingScreenRejected",
+      "reason": "screen failed"
+    },
+    {
+      "trial": "sobol_3",
+      "status": "MassOrCouplingScreenRejected",
+      "reason": "screen failed"
+    },
+    {
+      "trial": "sobol_4",
+      "status": "MassOrCouplingScreenRejected",
+      "reason": "screen failed"
+    },
+    {
+      "trial": "sobol_5",
+      "status": "MassOrCouplingScreenRejected",
+      "reason": "screen failed"
+    },
+    {
+      "trial": "sobol_6",
+      "status": "MassOrCouplingScreenRejected",
+      "reason": "screen failed"
+    },
+    {
+      "trial": "sobol_7",
+      "status": "MassOrCouplingScreenRejected",
+      "reason": "screen failed"
+    },
+    {
+      "trial": "sobol_8",
+      "status": "MassOrCouplingScreenRejected",
+      "reason": "screen failed"
+    }
+  ],
+  "source_sha256": {
+    "output\\studies\\lambda_5e-9_refit\\fitted\\T3_dS1_2_dS2_2_dF_1_alpha_p1.json": "f06dfafef056aeec8c5ec8afb43f5503d6dce73e38067be64ca9e0edd4ffb1ef",
+    "output\\studies\\lambda_5e-9_refit\\fits\\T3_dS1_2_dS2_2_dF_1_alpha_p1.json": "4adac4a15776b94e11129642bce362961468edb9eecedf0e5923aadc5fa1e58c",
+    "output\\studies\\general_scalar_extended\\b_p1_eft1_running\\b_p1_eft1_general_v1\\native_eft1_betas.json": "c9ccab2bd4644995ed3abaed7862d11102df293d553dfc1c8559ca04c3c9c79a",
+    "output\\studies\\general_scalar_extended\\b_p1_eft1_running\\b_p1_eft1_general_v1\\report.json": "d2dd22953152d238dbf628e3b374c3069ae29a241dc1794c230eb866c234966c",
+    "output\\full\\hypercharge\\T3_B_alpha_p1\\data\\final_weinberg_coefficient.json": "b3144f8ebbebddd313b90662f97bbb26c07e368e22fc67b73ceffd25ea575fee",
+    "configs\\nufit_6_1_ic24_no.json": "27bd4d4297fddb3ef71b5b804afd8e31d44d302b569f7cf8c34d37d54005e15e",
+    "RGE\\general\\generated\\general_rgbeta_quartic_registry.json": "86a096410384641efa8f751b2aa98e8fee4bb6d3cccb4cfd116c559b71182eea",
+    "scripts\\RunT3BPlus1GeneralEFT1.py": "8f81befee4e1e8ce488312247625043343525a453220c9670359508b86828cd4",
+    "scripts\\FitT3BPlus1GeneralThreeStudies.py": "3d87edb1e700f3b8247a575bcd417baf44652821e4cd7a270f31ac661ab81a80",
+    "output\\general_t3_stage22\\stage31_B_p1_full_uv_betas.json": "dbb6e6124c13130496dd9e2f78ba3c9730010a6c799b50d25c2f40b99f235540"
+  },
+  "historical_results_overwritten": false,
+  "limitations": [
+    "One-scale grouped C5 evaluation from existing model-specific hierarchical artifact",
+    "Native extra quartic included in UV/EFT1 renormalisable running only",
+    "No new Wilson coefficient beta functions or sequential general-scalar matching",
+    "Matchete-RGBeta physical coupling map not certified",
+    "18 real Yukawa fit variables to five observed values: no predictive claim"
+  ]
+}

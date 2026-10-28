@@ -1,0 +1,630 @@
+{
+  "format": "t3-bc-uv-positive-mass-feasibility-screen-v1",
+  "status": "CandidateRGFeasibilityScreenOnly",
+  "no_chi2_optimization_performed": true,
+  "physical_matching_certified": false,
+  "physical_thresholds_computed": false,
+  "historical_outputs_overwritten": false,
+  "screen": {
+    "ratio_max": 0.5,
+    "scalar_min_tev": 0.5,
+    "scalar_max_tev": 5.0
+  },
+  "input_grid": {
+    "yukawa_factors": [
+      0.005,
+      0.01,
+      0.015,
+      0.02,
+      0.025,
+      0.03,
+      0.05,
+      1.0
+    ],
+    "uv_scalar_mass_factors": [
+      1.0
+    ]
+  },
+  "models": {
+    "B_-1": {
+      "model": "B_-1",
+      "source_fit_chi2": 18376.678022257205,
+      "beta_decomposition": {
+        "uv_start": {
+          "mu_gev": 10000000.0,
+          "terms": {
+            "mS1Sq": {
+              "full_d_m2_d_lnmu_gev2": -2770876286.4768724,
+              "no_y_no_MF": -9774.344628092276,
+              "y_dependence_at_MF0": 38036.38961095304,
+              "MF_dependence_at_y0": 0.0,
+              "joint_y_MF_dependence": -2770904548.5218554,
+              "total_heavy_related": -2770866512.1322446,
+              "identity_verified": true
+            },
+            "mS2Sq": {
+              "full_d_m2_d_lnmu_gev2": -9589706346.955402,
+              "no_y_no_MF": -6586.664125349924,
+              "y_dependence_at_MF0": 102351.67750499584,
+              "MF_dependence_at_y0": 0.0,
+              "joint_y_MF_dependence": -9589802111.968782,
+              "total_heavy_related": -9589699760.291277,
+              "identity_verified": true
+            }
+          },
+          "interpretation": "Frozen-state algebraic Y/MF dependence, NOT unique Feynman-diagram beta classes"
+        },
+        "uv_at_muF": {
+          "mu_gev": 100000.0,
+          "terms": {
+            "mS1Sq": {
+              "full_d_m2_d_lnmu_gev2": -1133886875.9800706,
+              "no_y_no_MF": 205030105.4886108,
+              "y_dependence_at_MF0": 169238563.4253121,
+              "MF_dependence_at_y0": 0.0,
+              "joint_y_MF_dependence": -1508155544.8939934,
+              "total_heavy_related": -1338916981.4686813,
+              "identity_verified": true
+            },
+            "mS2Sq": {
+              "full_d_m2_d_lnmu_gev2": -1788779265.9314573,
+              "no_y_no_MF": 771169649.7097536,
+              "y_dependence_at_MF0": 1197443781.7325068,
+              "MF_dependence_at_y0": 0.0,
+              "joint_y_MF_dependence": -3757392697.373718,
+              "total_heavy_related": -2559948915.641211,
+              "identity_verified": true
+            }
+          },
+          "interpretation": "Frozen-state algebraic Y/MF dependence, NOT unique Feynman-diagram beta classes"
+        }
+      },
+      "n_trials": 8,
+      "n_candidate_screen_passes": 4,
+      "candidate_pass_coordinates": [
+        [
+          0.005,
+          1.0
+        ],
+        [
+          0.01,
+          1.0
+        ],
+        [
+          0.015,
+          1.0
+        ],
+        [
+          0.02,
+          1.0
+        ]
+      ],
+      "trials": [
+        {
+          "model": "B_-1",
+          "yukawa_factor": 1.0,
+          "uv_scalar_mass_factor": 1.0,
+          "saved_chi2_not_reevaluated": 18376.678022257205,
+          "new_oscillation_fit_performed": false,
+          "uv_nfev": 239,
+          "uv_scalar1_tev": 1.0,
+          "uv_scalar2_tev": 1.1428571428571428,
+          "scalar_light_muF_tev": 91.20071699333074,
+          "scalar_heavy_muF_tev": 145.31411798854873,
+          "min_fermion_muF_tev": 84.39478182053807,
+          "muF_scalar_eigen_mass_squared_gev2": [
+            8317570780.097607,
+            21116192886.78986
+          ],
+          "ratio_muF": 1.7218377114541636,
+          "ordering_at_muF": false,
+          "strict_hierarchy_at_muF": false,
+          "near_1tev_at_muS": false,
+          "screen_pass": false,
+          "reason": "ScalarAtOrAboveFAtMuF",
+          "scalar_light_muS_tev": null,
+          "scalar_heavy_muS_tev": null,
+          "eft1_nfev": 0,
+          "status": "CandidateScreenFail"
+        },
+        {
+          "model": "B_-1",
+          "yukawa_factor": 0.005,
+          "uv_scalar_mass_factor": 1.0,
+          "saved_chi2_not_reevaluated": 18376.678022257205,
+          "new_oscillation_fit_performed": false,
+          "uv_nfev": 191,
+          "uv_scalar1_tev": 1.0,
+          "uv_scalar2_tev": 1.1428571428571428,
+          "scalar_light_muF_tev": 1.2993010691101106,
+          "scalar_heavy_muF_tev": 1.4786615574623323,
+          "min_fermion_muF_tev": 99.99945253017255,
+          "muF_scalar_eigen_mass_squared_gev2": [
+            1688183.2681906766,
+            2186440.00151693
+          ],
+          "ratio_muF": 0.014786696527325286,
+          "ordering_at_muF": true,
+          "strict_hierarchy_at_muF": true,
+          "near_1tev_at_muS": true,
+          "screen_pass": true,
+          "reason": "CandidatePassedScreenOnly",
+          "scalar_light_muS_tev": 1.3262558986841477,
+          "scalar_heavy_muS_tev": 1.5063854427930679,
+          "eft1_nfev": 179,
+          "status": "CandidateScreenPass"
+        },
+        {
+          "model": "B_-1",
+          "yukawa_factor": 0.01,
+          "uv_scalar_mass_factor": 1.0,
+          "saved_chi2_not_reevaluated": 18376.678022257205,
+          "new_oscillation_fit_performed": false,
+          "uv_nfev": 191,
+          "uv_scalar1_tev": 1.0,
+          "uv_scalar2_tev": 1.1428571428571428,
+          "scalar_light_muF_tev": 1.639793035854031,
+          "scalar_heavy_muF_tev": 2.3761878613176006,
+          "min_fermion_muF_tev": 99.99781019229503,
+          "muF_scalar_eigen_mass_squared_gev2": [
+            2688921.200435379,
+            5646268.752273113
+          ],
+          "ratio_muF": 0.023762398964019403,
+          "ordering_at_muF": true,
+          "strict_hierarchy_at_muF": true,
+          "near_1tev_at_muS": true,
+          "screen_pass": true,
+          "reason": "CandidatePassedScreenOnly",
+          "scalar_light_muS_tev": 1.6741219257847075,
+          "scalar_heavy_muS_tev": 2.4205758533781734,
+          "eft1_nfev": 179,
+          "status": "CandidateScreenPass"
+        },
+        {
+          "model": "B_-1",
+          "yukawa_factor": 0.015,
+          "uv_scalar_mass_factor": 1.0,
+          "saved_chi2_not_reevaluated": 18376.678022257205,
+          "new_oscillation_fit_performed": false,
+          "uv_nfev": 191,
+          "uv_scalar1_tev": 1.0,
+          "uv_scalar2_tev": 1.1428571428571428,
+          "scalar_light_muF_tev": 2.0872566547223537,
+          "scalar_heavy_muF_tev": 3.378100710517387,
+          "min_fermion_muF_tev": 99.99507320115143,
+          "muF_scalar_eigen_mass_squared_gev2": [
+            4356640.342682751,
+            11411564.410398077
+          ],
+          "ratio_muF": 0.03378267150944481,
+          "ordering_at_muF": true,
+          "strict_hierarchy_at_muF": true,
+          "near_1tev_at_muS": true,
+          "screen_pass": true,
+          "reason": "CandidatePassedScreenOnly",
+          "scalar_light_muS_tev": 2.131208656076713,
+          "scalar_heavy_muS_tev": 3.4411339496857587,
+          "eft1_nfev": 179,
+          "status": "CandidateScreenPass"
+        },
+        {
+          "model": "B_-1",
+          "yukawa_factor": 0.02,
+          "uv_scalar_mass_factor": 1.0,
+          "saved_chi2_not_reevaluated": 18376.678022257205,
+          "new_oscillation_fit_performed": false,
+          "uv_nfev": 191,
+          "uv_scalar1_tev": 1.0,
+          "uv_scalar2_tev": 1.1428571428571428,
+          "scalar_light_muF_tev": 2.5867111602230244,
+          "scalar_heavy_muF_tev": 4.413694501870066,
+          "min_fermion_muF_tev": 99.99124191461476,
+          "muF_scalar_eigen_mass_squared_gev2": [
+            6691074.626422344,
+            19480699.155838054
+          ],
+          "ratio_muF": 0.04414081090860977,
+          "ordering_at_muF": true,
+          "strict_hierarchy_at_muF": true,
+          "near_1tev_at_muS": true,
+          "screen_pass": true,
+          "reason": "CandidatePassedScreenOnly",
+          "scalar_light_muS_tev": 2.641359185266905,
+          "scalar_heavy_muS_tev": 4.496019393925253,
+          "eft1_nfev": 179,
+          "status": "CandidateScreenPass"
+        },
+        {
+          "model": "B_-1",
+          "yukawa_factor": 0.025,
+          "uv_scalar_mass_factor": 1.0,
+          "saved_chi2_not_reevaluated": 18376.678022257205,
+          "new_oscillation_fit_performed": false,
+          "uv_nfev": 191,
+          "uv_scalar1_tev": 1.0,
+          "uv_scalar2_tev": 1.1428571428571428,
+          "scalar_light_muF_tev": 3.1131738874006287,
+          "scalar_heavy_muF_tev": 5.46364303183796,
+          "min_fermion_muF_tev": 99.98631683349598,
+          "muF_scalar_eigen_mass_squared_gev2": [
+            9691851.653193142,
+            29851395.179351497
+          ],
+          "ratio_muF": 0.05464390733520458,
+          "ordering_at_muF": true,
+          "strict_hierarchy_at_muF": true,
+          "near_1tev_at_muS": false,
+          "screen_pass": false,
+          "reason": "ScalarNotInTargetWindowAtMuS",
+          "scalar_light_muS_tev": 3.1790695949166867,
+          "scalar_heavy_muS_tev": 5.565540026362739,
+          "eft1_nfev": 179,
+          "status": "CandidateScreenFail"
+        },
+        {
+          "model": "B_-1",
+          "yukawa_factor": 0.03,
+          "uv_scalar_mass_factor": 1.0,
+          "saved_chi2_not_reevaluated": 18376.678022257205,
+          "new_oscillation_fit_performed": false,
+          "uv_nfev": 203,
+          "uv_scalar1_tev": 1.0,
+          "uv_scalar2_tev": 1.1428571428571428,
+          "scalar_light_muF_tev": 3.654927193805799,
+          "scalar_heavy_muF_tev": 6.520791809301962,
+          "min_fermion_muF_tev": 99.98029860133349,
+          "muF_scalar_eigen_mass_squared_gev2": [
+            13358492.792021131,
+            42520725.820259556
+          ],
+          "ratio_muF": 0.06522076749643746,
+          "ordering_at_muF": true,
+          "strict_hierarchy_at_muF": true,
+          "near_1tev_at_muS": false,
+          "screen_pass": false,
+          "reason": "ScalarNotInTargetWindowAtMuS",
+          "scalar_light_muS_tev": 3.732381380249516,
+          "scalar_heavy_muS_tev": 6.6424064321811995,
+          "eft1_nfev": 179,
+          "status": "CandidateScreenFail"
+        },
+        {
+          "model": "B_-1",
+          "yukawa_factor": 0.05,
+          "uv_scalar_mass_factor": 1.0,
+          "saved_chi2_not_reevaluated": 18376.678022257205,
+          "new_oscillation_fit_performed": false,
+          "uv_nfev": 203,
+          "uv_scalar1_tev": 1.0,
+          "uv_scalar2_tev": 1.1428571428571428,
+          "scalar_light_muF_tev": 5.888158923032656,
+          "scalar_heavy_muF_tev": 10.775121455937855,
+          "min_fermion_muF_tev": 99.94531201164611,
+          "muF_scalar_eigen_mass_squared_gev2": [
+            34670415.50288909,
+            116103242.39021231
+          ],
+          "ratio_muF": 0.10781017377465675,
+          "ordering_at_muF": true,
+          "strict_hierarchy_at_muF": true,
+          "near_1tev_at_muS": false,
+          "screen_pass": false,
+          "reason": "ScalarNotInTargetWindowAtMuS",
+          "scalar_light_muS_tev": 6.013191242599356,
+          "scalar_heavy_muS_tev": 10.976201828965136,
+          "eft1_nfev": 179,
+          "status": "CandidateScreenFail"
+        }
+      ],
+      "input_fit_sha256": "a528c3e44ee6846d0ea151007f018392198b3d18d2a370c549e1eb2ad6a2f838",
+      "input_fitted_config_sha256": "c8bb4c3c7ee424473fd3d945e36ebbd40cb5f97d4b3c65805e0bc3a297cb1940",
+      "source_run_id": "general_fresh_v1_B_m1_cont",
+      "verified_input_hash_count": 9,
+      "batch14_muF_replay": {
+        "checked": true,
+        "prior_heavy_scalar_tev": 145.31411798854873,
+        "replayed_heavy_scalar_tev": 145.31411798854873,
+        "prior_diagnostic_sha256": "ff821e84689d64543ca942d76bb5c9e7a5ed680133dc3fadca536e0b0fd335fc"
+      }
+    },
+    "C_-1": {
+      "model": "C_-1",
+      "source_fit_chi2": 20279.293144360177,
+      "beta_decomposition": {
+        "uv_start": {
+          "mu_gev": 10000000.0,
+          "terms": {
+            "mS1Sq": {
+              "full_d_m2_d_lnmu_gev2": -12661438937.573229,
+              "no_y_no_MF": -9774.344628092276,
+              "y_dependence_at_MF0": 166714.17367764414,
+              "MF_dependence_at_y0": 0.0,
+              "joint_y_MF_dependence": -12661595877.402279,
+              "total_heavy_related": -12661429163.228601,
+              "identity_verified": true
+            },
+            "mS2Sq": {
+              "full_d_m2_d_lnmu_gev2": -6637817920.233872,
+              "no_y_no_MF": -6586.664125349924,
+              "y_dependence_at_MF0": 71390.10477612064,
+              "MF_dependence_at_y0": 0.0,
+              "joint_y_MF_dependence": -6637882723.674523,
+              "total_heavy_related": -6637811333.569747,
+              "identity_verified": true
+            }
+          },
+          "interpretation": "Frozen-state algebraic Y/MF dependence, NOT unique Feynman-diagram beta classes"
+        },
+        "uv_at_muF": {
+          "mu_gev": 100000.0,
+          "terms": {
+            "mS1Sq": {
+              "full_d_m2_d_lnmu_gev2": -3860094800.536189,
+              "no_y_no_MF": 1312388193.5775628,
+              "y_dependence_at_MF0": 2365818837.911628,
+              "MF_dependence_at_y0": 0.0,
+              "joint_y_MF_dependence": -7538301832.025379,
+              "total_heavy_related": -5172482994.113752,
+              "identity_verified": true
+            },
+            "mS2Sq": {
+              "full_d_m2_d_lnmu_gev2": -3089214862.609081,
+              "no_y_no_MF": 678404761.9988388,
+              "y_dependence_at_MF0": 997212820.2318755,
+              "MF_dependence_at_y0": 0.0,
+              "joint_y_MF_dependence": -4764832444.839795,
+              "total_heavy_related": -3767619624.6079197,
+              "identity_verified": true
+            }
+          },
+          "interpretation": "Frozen-state algebraic Y/MF dependence, NOT unique Feynman-diagram beta classes"
+        }
+      },
+      "n_trials": 8,
+      "n_candidate_screen_passes": 3,
+      "candidate_pass_coordinates": [
+        [
+          0.005,
+          1.0
+        ],
+        [
+          0.01,
+          1.0
+        ],
+        [
+          0.015,
+          1.0
+        ]
+      ],
+      "trials": [
+        {
+          "model": "C_-1",
+          "yukawa_factor": 1.0,
+          "uv_scalar_mass_factor": 1.0,
+          "saved_chi2_not_reevaluated": 20279.293144360177,
+          "new_oscillation_fit_performed": false,
+          "uv_nfev": 239,
+          "uv_scalar1_tev": 1.0,
+          "uv_scalar2_tev": 1.1428571428571428,
+          "scalar_light_muF_tev": 144.09542461847806,
+          "scalar_heavy_muF_tev": 180.64397159933526,
+          "min_fermion_muF_tev": 104.30223472717756,
+          "muF_scalar_eigen_mass_squared_gev2": [
+            20763491395.97949,
+            32632244475.181442
+          ],
+          "ratio_muF": 1.7319281036676166,
+          "ordering_at_muF": false,
+          "strict_hierarchy_at_muF": false,
+          "near_1tev_at_muS": false,
+          "screen_pass": false,
+          "reason": "ScalarAtOrAboveFAtMuF",
+          "scalar_light_muS_tev": null,
+          "scalar_heavy_muS_tev": null,
+          "eft1_nfev": 0,
+          "status": "CandidateScreenFail"
+        },
+        {
+          "model": "C_-1",
+          "yukawa_factor": 0.005,
+          "uv_scalar_mass_factor": 1.0,
+          "saved_chi2_not_reevaluated": 20279.293144360177,
+          "new_oscillation_fit_performed": false,
+          "uv_nfev": 191,
+          "uv_scalar1_tev": 1.0,
+          "uv_scalar2_tev": 1.1428571428571428,
+          "scalar_light_muF_tev": 1.412314572346759,
+          "scalar_heavy_muF_tev": 1.7870934837223509,
+          "min_fermion_muF_tev": 113.0196570801488,
+          "muF_scalar_eigen_mass_squared_gev2": [
+            1994632.4512630089,
+            3193703.1195628885
+          ],
+          "ratio_muF": 0.01581223594100112,
+          "ordering_at_muF": true,
+          "strict_hierarchy_at_muF": true,
+          "near_1tev_at_muS": true,
+          "screen_pass": true,
+          "reason": "CandidatePassedScreenOnly",
+          "scalar_light_muS_tev": 1.4357358491449974,
+          "scalar_heavy_muS_tev": 1.8197898345551735,
+          "eft1_nfev": 179,
+          "status": "CandidateScreenPass"
+        },
+        {
+          "model": "C_-1",
+          "yukawa_factor": 0.01,
+          "uv_scalar_mass_factor": 1.0,
+          "saved_chi2_not_reevaluated": 20279.293144360177,
+          "new_oscillation_fit_performed": false,
+          "uv_nfev": 191,
+          "uv_scalar1_tev": 1.0,
+          "uv_scalar2_tev": 1.1428571428571428,
+          "scalar_light_muF_tev": 2.210293138237931,
+          "scalar_heavy_muF_tev": 2.952733427372036,
+          "min_fermion_muF_tev": 113.01876729205615,
+          "muF_scalar_eigen_mass_squared_gev2": [
+            4885395.756941683,
+            8718634.69312021
+          ],
+          "ratio_muF": 0.026126045241156838,
+          "ordering_at_muF": true,
+          "strict_hierarchy_at_muF": true,
+          "near_1tev_at_muS": true,
+          "screen_pass": true,
+          "reason": "CandidatePassedScreenOnly",
+          "scalar_light_muS_tev": 2.2470080779873496,
+          "scalar_heavy_muS_tev": 3.006731294863971,
+          "eft1_nfev": 179,
+          "status": "CandidateScreenPass"
+        },
+        {
+          "model": "C_-1",
+          "yukawa_factor": 0.015,
+          "uv_scalar_mass_factor": 1.0,
+          "saved_chi2_not_reevaluated": 20279.293144360177,
+          "new_oscillation_fit_performed": false,
+          "uv_nfev": 191,
+          "uv_scalar1_tev": 1.0,
+          "uv_scalar2_tev": 1.1428571428571428,
+          "scalar_light_muF_tev": 3.114901182365328,
+          "scalar_heavy_muF_tev": 4.233785905859419,
+          "min_fermion_muF_tev": 113.01728441594354,
+          "muF_scalar_eigen_mass_squared_gev2": [
+            9702609.375900917,
+            17924943.09665386
+          ],
+          "ratio_muF": 0.037461401835471385,
+          "ordering_at_muF": true,
+          "strict_hierarchy_at_muF": true,
+          "near_1tev_at_muS": true,
+          "screen_pass": true,
+          "reason": "CandidatePassedScreenOnly",
+          "scalar_light_muS_tev": 3.166674119074314,
+          "scalar_heavy_muS_tev": 4.3112054216058535,
+          "eft1_nfev": 179,
+          "status": "CandidateScreenPass"
+        },
+        {
+          "model": "C_-1",
+          "yukawa_factor": 0.02,
+          "uv_scalar_mass_factor": 1.0,
+          "saved_chi2_not_reevaluated": 20279.293144360177,
+          "new_oscillation_fit_performed": false,
+          "uv_nfev": 191,
+          "uv_scalar1_tev": 1.0,
+          "uv_scalar2_tev": 1.1428571428571428,
+          "scalar_light_muF_tev": 4.055266428400654,
+          "scalar_heavy_muF_tev": 5.550654303180149,
+          "min_fermion_muF_tev": 113.01520860785448,
+          "muF_scalar_eigen_mass_squared_gev2": [
+            16445185.805313395,
+            30809763.19341231
+          ],
+          "ratio_muF": 0.04911422428498161,
+          "ordering_at_muF": true,
+          "strict_hierarchy_at_muF": true,
+          "near_1tev_at_muS": false,
+          "screen_pass": false,
+          "reason": "ScalarNotInTargetWindowAtMuS",
+          "scalar_light_muS_tev": 4.122690390719724,
+          "scalar_heavy_muS_tev": 5.652159387953459,
+          "eft1_nfev": 179,
+          "status": "CandidateScreenFail"
+        },
+        {
+          "model": "C_-1",
+          "yukawa_factor": 0.025,
+          "uv_scalar_mass_factor": 1.0,
+          "saved_chi2_not_reevaluated": 20279.293144360177,
+          "new_oscillation_fit_performed": false,
+          "uv_nfev": 203,
+          "uv_scalar1_tev": 1.0,
+          "uv_scalar2_tev": 1.1428571428571428,
+          "scalar_light_muF_tev": 5.011147893132784,
+          "scalar_heavy_muF_tev": 6.8825203359253395,
+          "min_fermion_muF_tev": 113.01254008621116,
+          "muF_scalar_eigen_mass_squared_gev2": [
+            25111603.20684914,
+            47369086.17442585
+          ],
+          "ratio_muF": 0.060900501224687424,
+          "ordering_at_muF": true,
+          "strict_hierarchy_at_muF": true,
+          "near_1tev_at_muS": false,
+          "screen_pass": false,
+          "reason": "ScalarNotInTargetWindowAtMuS",
+          "scalar_light_muS_tev": 5.094483051539642,
+          "scalar_heavy_muS_tev": 7.008395260266841,
+          "eft1_nfev": 179,
+          "status": "CandidateScreenFail"
+        },
+        {
+          "model": "C_-1",
+          "yukawa_factor": 0.03,
+          "uv_scalar_mass_factor": 1.0,
+          "saved_chi2_not_reevaluated": 20279.293144360177,
+          "new_oscillation_fit_performed": false,
+          "uv_nfev": 203,
+          "uv_scalar1_tev": 1.0,
+          "uv_scalar2_tev": 1.1428571428571428,
+          "scalar_light_muF_tev": 5.97493983833819,
+          "scalar_heavy_muF_tev": 8.221785811986999,
+          "min_fermion_muF_tev": 113.0092791317766,
+          "muF_scalar_eigen_mass_squared_gev2": [
+            35699906.0717608,
+            67597761.93819073
+          ],
+          "ratio_muF": 0.07275319226131716,
+          "ordering_at_muF": true,
+          "strict_hierarchy_at_muF": true,
+          "near_1tev_at_muS": false,
+          "screen_pass": false,
+          "reason": "ScalarNotInTargetWindowAtMuS",
+          "scalar_light_muS_tev": 6.074321977301115,
+          "scalar_heavy_muS_tev": 8.372177393661651,
+          "eft1_nfev": 179,
+          "status": "CandidateScreenFail"
+        },
+        {
+          "model": "C_-1",
+          "yukawa_factor": 0.05,
+          "uv_scalar_mass_factor": 1.0,
+          "saved_chi2_not_reevaluated": 20279.293144360177,
+          "new_oscillation_fit_performed": false,
+          "uv_nfev": 203,
+          "uv_scalar1_tev": 1.0,
+          "uv_scalar2_tev": 1.1428571428571428,
+          "scalar_light_muF_tev": 9.85990550894483,
+          "scalar_heavy_muF_tev": 13.603794892530082,
+          "min_fermion_muF_tev": 112.99031878021847,
+          "muF_scalar_eigen_mass_squared_gev2": [
+            97217736.6453206,
+            185063235.47802758
+          ],
+          "ratio_muF": 0.12039788045019426,
+          "ordering_at_muF": true,
+          "strict_hierarchy_at_muF": true,
+          "near_1tev_at_muS": false,
+          "screen_pass": false,
+          "reason": "ScalarNotInTargetWindowAtMuS",
+          "scalar_light_muS_tev": 10.024035193904073,
+          "scalar_heavy_muS_tev": 13.852850527497392,
+          "eft1_nfev": 179,
+          "status": "CandidateScreenFail"
+        }
+      ],
+      "input_fit_sha256": "7994b5e44852faf411a1e36324666ae084c6d6b5bf56e8b198324f339a4d7172",
+      "input_fitted_config_sha256": "423cb53c1305b977f4470913b50a9cef28b3aba0f7e92444010f45f1c9dd2ef0",
+      "source_run_id": "general_fresh_v1_C_m1_cont",
+      "verified_input_hash_count": 9,
+      "batch14_muF_replay": {
+        "checked": true,
+        "prior_heavy_scalar_tev": 180.64397159933526,
+        "replayed_heavy_scalar_tev": 180.64397159933526,
+        "prior_diagnostic_sha256": "ff821e84689d64543ca942d76bb5c9e7a5ed680133dc3fadca536e0b0fd335fc"
+      }
+    }
+  }
+}

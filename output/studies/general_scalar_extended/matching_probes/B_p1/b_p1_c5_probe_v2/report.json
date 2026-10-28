@@ -1,0 +1,149 @@
+{
+  "format": "t3-b-plus1-one-scale-general-quartic-c5-probe-v1",
+  "status": "OneScaleSourceAndNumericAuditPassed",
+  "model": "B_+1",
+  "run_id": "b_p1_c5_probe_v2",
+  "registry": {
+    "model": "B_+1",
+    "rgbeta_symbol": "lambdaT3GeneralQ022000I1",
+    "matchete_symbol": "lambdaT3ExtraQ022000I1",
+    "counts": [
+      0,
+      2,
+      2,
+      0,
+      0,
+      0
+    ]
+  },
+  "source_sha256": {
+    "RGE/general/generated/general_rgbeta_quartic_registry.json": "86a096410384641efa8f751b2aa98e8fee4bb6d3cccb4cfd116c559b71182eea",
+    "Lagrangian/RunModel.wl": "dd8156db10adf86477493aadb17850d16985355a60d60868109557abcae901ba",
+    "scripts/CompareT3BPlus1OneScaleC5.wl": "6a1bbeda232651b8ebd72688225f4b44a32ca9878f19d89e45d04b70804f0b6b",
+    "Lagrangian/model/LagrangianBuilder.wl": "cf43e763551c7a0ded5ea38b4f03f8c43ca3448b2388592bac98e55feb84ba50",
+    "Lagrangian/interactions/GeneralScalarOperators.wl": "45d0bdf6fc1565b5601abd74b0f68649ffa78a8eeda6328e0c2f94cbcdb8b470",
+    "Lagrangian/interactions/GeneralScalarVerifiedQuartics.wl": "ca9f0a88cb29a22abcca4b7079b69923a6a6a2ab4a5d9429d9c2ccbfb78e3d3a",
+    "Lagrangian/interactions/T3Topology.wl": "977ca87b96c9e634f56f4700456e56c9226a20515eadafd7addcf1019b5704bf",
+    "Lagrangian/RunMatching.wl": "2a3d7415695213b501e53023b19e8a4a7ee54275daa918ba2ce10064d0d87567"
+  },
+  "baseline_source_provenance": "MatchingSourcesSHA256Verified_ComparisonScriptUpdated",
+  "baseline_source_hash_certified": true,
+  "full_original_source_manifest_unchanged": false,
+  "comparison_script_updated_since_match": true,
+  "comparison_script_sha256_at_matching": "649e6c74189ce09876944646d0c347605f9a9aff09dff9b0ace52ad4155b079f",
+  "numeric_audit_recomputed": true,
+  "malformed_prior_numeric_audit_detected": false,
+  "resumed_interrupted_run": true,
+  "baseline": {
+    "reported_model_class": "T3-B",
+    "accepted_extra_interactions": [],
+    "holomorphic_term_count": 4,
+    "coefficient_sha256": "7f192897409fe14b6111fc1fa1e263ee4d99be378fc7497180698d9816c50cc5",
+    "coefficient_bytes": 1728,
+    "extra_quartic_symbol_occurs_in_ordered_c5": false
+  },
+  "general": {
+    "reported_model_class": "T3-B",
+    "accepted_extra_interactions": [
+      "T3ExtraQ_0_2_2_0_0_0_1"
+    ],
+    "holomorphic_term_count": 4,
+    "coefficient_sha256": "7f192897409fe14b6111fc1fa1e263ee4d99be378fc7497180698d9816c50cc5",
+    "coefficient_bytes": 1728,
+    "extra_quartic_symbol_occurs_in_ordered_c5": false
+  },
+  "native_numeric_check": {
+    "format": "t3-b-plus1-c5-wolfram-numeric-audit-v1",
+    "status": "Success",
+    "model": "B_+1",
+    "sample_count": 3,
+    "couplings_seen_baseline": [
+      "y1",
+      "y2",
+      "lambdaT3",
+      "MF",
+      "MS1",
+      "MS2"
+    ],
+    "couplings_seen_general": [
+      "y1",
+      "y2",
+      "lambdaT3",
+      "MF",
+      "MS1",
+      "MS2"
+    ],
+    "baseline_agrees_with_general_at_zero_extra": true,
+    "nonzero_extra_changes_c5_at_any_sample": false,
+    "samples": [
+      {
+        "sample_index": 1,
+        "zero_extra_agrees": true,
+        "all_numeric_values_finite": true,
+        "restricted_c5_real_imag": [
+          -1.2678826314085745e-11,
+          0.0
+        ],
+        "general_zero_extra_c5_real_imag": [
+          -1.2678826314085745e-11,
+          0.0
+        ],
+        "general_nonzero_extra_c5_real_imag": [
+          -1.2678826314085745e-11,
+          0.0
+        ],
+        "zero_extra_relative_error": 0.0,
+        "extra_quartic_relative_effect": 0.0,
+        "nonzero_extra_changes_c5": false
+      },
+      {
+        "sample_index": 2,
+        "zero_extra_agrees": true,
+        "all_numeric_values_finite": true,
+        "restricted_c5_real_imag": [
+          -1.0136637576709397e-12,
+          0.0
+        ],
+        "general_zero_extra_c5_real_imag": [
+          -1.0136637576709397e-12,
+          0.0
+        ],
+        "general_nonzero_extra_c5_real_imag": [
+          -1.0136637576709397e-12,
+          0.0
+        ],
+        "zero_extra_relative_error": 0.0,
+        "extra_quartic_relative_effect": 0.0,
+        "nonzero_extra_changes_c5": false
+      },
+      {
+        "sample_index": 3,
+        "zero_extra_agrees": true,
+        "all_numeric_values_finite": true,
+        "restricted_c5_real_imag": [
+          -1.985428063053187e-11,
+          0.0
+        ],
+        "general_zero_extra_c5_real_imag": [
+          -1.985428063053187e-11,
+          0.0
+        ],
+        "general_nonzero_extra_c5_real_imag": [
+          -1.985428063053187e-11,
+          0.0
+        ],
+        "zero_extra_relative_error": 0.0,
+        "extra_quartic_relative_effect": 0.0,
+        "nonzero_extra_changes_c5": false
+      }
+    ],
+    "one_scale_only": true,
+    "finite_regulator_sample_not_renormalised_msbar": true,
+    "physical_matchete_rgbeta_coupling_map_certified": false
+  },
+  "conditional_one_scale_only": true,
+  "three_study_neutrino_refits_completed": false,
+  "sequential_EFT_matching_completed": false,
+  "physical_matchete_rgbeta_map_certified": false,
+  "historical_outputs_overwritten": false
+}

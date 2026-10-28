@@ -1,0 +1,295 @@
+{
+  "kind": "t3_pipeline_numerical_results_v1",
+  "_comment": "Default ordinary-T3 numerical template. New low-scale benchmark: UV=1e7 GeV, MF threshold=100 TeV, scalar threshold=1 TeV, low scale=100 GeV. SM gauge and Yukawa reference values at 1e7 GeV from Antusch, Hinze and Saad (2026), arXiv:2510.01312, Table II; gY=sqrt(3/5)*g1. SM-only running reference, not T3 threshold-matched.",
+  "representation": {
+    "d_s1": 3,
+    "d_s2": 1,
+    "d_f": 2,
+    "alpha": 2,
+    "shared_scalar": false
+  },
+  "ordering": "NO",
+  "scales": {
+    "mu_fermion_threshold_gev": 100000.0,
+    "mu_scalar_threshold_gev": 1000.0,
+    "mu_low_gev": 100.0
+  },
+  "numerical": {
+    "vev_gev": 246.22,
+    "rtol": 1e-08,
+    "atol": 1e-11,
+    "n_scale_points": 120
+  },
+  "base_state": {
+    "mu_gev": 10000000.0,
+    "sm": {
+      "gY": 0.38265,
+      "g2": 0.59493,
+      "g3": 0.7649,
+      "lambdaH": 0.25,
+      "yu": {
+        "real": [
+          [
+            4.39e-06,
+            0,
+            0
+          ],
+          [
+            0,
+            0.00222,
+            0
+          ],
+          [
+            0,
+            0,
+            0.6462
+          ]
+        ],
+        "imag": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "yd": {
+        "real": [
+          [
+            9.7e-06,
+            0,
+            0
+          ],
+          [
+            0,
+            0.000193,
+            0
+          ],
+          [
+            0,
+            0,
+            0.00961
+          ]
+        ],
+        "imag": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "ye": {
+        "real": [
+          [
+            2.8681e-06,
+            0,
+            0
+          ],
+          [
+            0,
+            0.00060421,
+            0
+          ],
+          [
+            0,
+            0,
+            0.010264
+          ]
+        ],
+        "imag": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      }
+    },
+    "ordinary": {
+      "y1": {
+        "real": [
+          [
+            -2.365418638388911e-05,
+            3.740257838401296e-05,
+            1.950077843960327e-05
+          ],
+          [
+            -3.4860214555573525e-05,
+            1.5282407671028314e-05,
+            -5.99488162006101e-05
+          ],
+          [
+            -2.0896129721070174e-05,
+            3.471293014075928e-05,
+            1.6341388771100895e-05
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "y2": {
+        "real": [
+          [
+            -5.512290164471153e-06,
+            -5.996107450244494e-06,
+            -9.431266942705093e-06
+          ],
+          [
+            1.748669715479602e-05,
+            6.229255566570798e-07,
+            1.0659013490668547e-05
+          ],
+          [
+            2.184683908650566e-06,
+            -5.0934508887400085e-05,
+            3.809885089117344e-05
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "MF": {
+        "real": [
+          [
+            100000.0,
+            0,
+            0
+          ],
+          [
+            0,
+            110000.0,
+            0
+          ],
+          [
+            0,
+            0,
+            120000.0
+          ]
+        ],
+        "imag": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "mS1Sq": 1306122.448979592,
+      "mS2Sq": 1000000.0,
+      "lambdaS1": 0.1,
+      "lambdaS2": 0.12,
+      "lambdaH1": 0.02,
+      "lambdaH2": 0.03,
+      "lambda12": 0.01,
+      "lambdaT3": {
+        "real": 0.5,
+        "imag": 0.0
+      },
+      "lambdaH1Adj": 0.0,
+      "lambdaS1Adj": 0.0
+    }
+  },
+  "benchmark_search": {
+    "enabled": false
+  },
+  "sensitivity": {
+    "enabled": false
+  },
+  "lambda_5e9_study": {
+    "status": "Original Sobol multistart staged refinement",
+    "source": "output\\studies\\small_lambda_1e-7\\fitted\\T3_dS1_3_dS2_1_dF_2_alpha_p2.json",
+    "source_sha256": "e99ecec2bae56ecaffe469322924666636b18607f51489724222d49ceffe15d7",
+    "lambdaT3": 5e-09,
+    "seed_scale": 4.47213595499958,
+    "chi2": 2.099875695073638e-18
+  },
+  "fermion_start_study": {
+    "boundary_definition": "UV initial parameter values imposed directly at mu_F; UV RGEs disabled",
+    "case": "0p5",
+    "lambdaT3": 0.5,
+    "seed_factor": 0.0001,
+    "source": "output\\studies\\lambda_5e-9_refit\\fitted\\T3_dS1_3_dS2_1_dF_2_alpha_p2.json",
+    "source_sha256": "4e117c21977fa3600b772d084d1a79314902456c34d2bfa0f4c5143ec9b6d8d9",
+    "fit_chi2": 4.224617143765492,
+    "fit_method": "Sobol + ranked 5/8/12 active parameter refinement"
+  },
+  "reduced_scalar_zero_extra_boundary": {
+    "all_additional_quartics_exact_zero": true,
+    "all_additional_quadratics_exact_zero": true,
+    "boundary_scale_gev": 100000.0,
+    "reused_rgbeta_quartics_zeroed_in_runner": [],
+    "new_rgbeta_quartics_zero_sidecars_in_runner": [],
+    "NOTE": "This config alone does not encode sidecar states. Use the runner."
+  }
+}

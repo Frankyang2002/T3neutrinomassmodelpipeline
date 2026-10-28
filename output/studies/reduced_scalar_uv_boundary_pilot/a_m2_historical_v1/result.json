@@ -1,0 +1,252 @@
+{
+  "format": "t3-reduced-scalar-a2-uv-boundary-feasibility-v1",
+  "model": "A_-2",
+  "scenario": "small_uv_running_5e-9",
+  "status": "NoViablePositiveUVBoundaryAtTheseFixedYukawas",
+  "fit_optimisation_performed": false,
+  "yukawa_boundary": {
+    "source": "historical_running_uv_Yukawas",
+    "fitted_config_path": "output/studies/lambda_5e-9_refit/fitted/T3_dS1_1_dS2_3_dF_2_alpha_m2.json",
+    "fitted_config_sha256": "446f9d288662c4d155f5af9a4989de3d49deadc840eb8a90b3b68baf8a13c4fb",
+    "historical_fit_sha256": "f63b873e004261613312975908587a12d6a8965cefb17d6521a4db88bf1acab4"
+  },
+  "lambdaT3_input": 5e-09,
+  "scales_gev": {
+    "uv": 10000000.0,
+    "fermion_threshold": 100000.0,
+    "scalar_threshold": 1000.0
+  },
+  "fixed_scalar_window_tev": [
+    0.5,
+    5.0
+  ],
+  "original_uv_scalar_msq_tev2": [
+    1.306122448979592,
+    1.0
+  ],
+  "original_baseline_fermion_rhoF": 0.38052270593767373,
+  "probe_shift_mass_sq_tev2": 4.0,
+  "affine_map": {
+    "A": [
+      [
+        0.9533370384496038,
+        -0.013308572898267812
+      ],
+      [
+        -0.004297854016670044,
+        1.1775896731378452
+      ]
+    ],
+    "offset_b_tev2": [
+      1589.9818079248655,
+      1642.26500595121
+    ],
+    "y_tev2_equals": "A @ x_tev2 + b",
+    "validation_max_abs_error_tev2": 1.9326762412674725e-11
+  },
+  "exact_equal_scalar_mass_target_tev": 2.0,
+  "signed_exact_target": {
+    "status": "SolvedAlgebraically",
+    "uv_mass_sq_tev2": [
+      -1683.1177309557868,
+      -1397.34479486991
+    ],
+    "positive_uv_mass_squared": false,
+    "condition_number": 1.2360360637464245,
+    "note": "Signed algebraic extrapolation only; negative inputs are not physical benchmark candidates."
+  },
+  "nonnegative_uv_mass_squared_feasibility": {
+    "feasible": false,
+    "solver_status": 2,
+    "solver_message": "The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None)",
+    "uv_min_mass_tev": 0.0,
+    "uv_max_mass_tev": null
+  },
+  "light_positive_uv_mass_feasibility": {
+    "feasible": false,
+    "solver_status": 2,
+    "solver_message": "The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None)",
+    "uv_min_mass_tev": 0.5,
+    "uv_max_mass_tev": 5.0
+  },
+  "forward_verifications": {},
+  "forward_probes": [
+    {
+      "label": "original",
+      "uv_scalar_msq_tev2": [
+        1.306122448979592,
+        1.0
+      ],
+      "fermion_threshold_scalar_msq_tev2": [
+        1590.7355343129295,
+        1468.4807449447007
+      ],
+      "scalar_threshold_msq_tev2": [
+        1591.21367425933,
+        1643.4369821007342
+      ],
+      "scalar_threshold_mass_tev": [
+        39.89001973250114,
+        40.53932636466391
+      ],
+      "screen": {
+        "screen": false,
+        "rhoF": 0.38052270593767373,
+        "scalar_masses_muS_tev": [
+          39.89001973250114,
+          40.53932636466391
+        ],
+        "max_yukawa_singular_muF": 0.7857741123928903,
+        "max_scalar_quartic_abs": 0.337887529458544,
+        "reason": "MassHierarchyWindowOrPerturbativity"
+      },
+      "uv_nfev": 86,
+      "eft1_nfev": 38
+    },
+    {
+      "label": "shift_S1",
+      "uv_scalar_msq_tev2": [
+        5.3061224489795915,
+        1.0
+      ],
+      "fermion_threshold_scalar_msq_tev2": [
+        1594.5188053424936,
+        1468.4747383417034
+      ],
+      "scalar_threshold_msq_tev2": [
+        1595.0270224131284,
+        1643.4197906846675
+      ],
+      "scalar_threshold_mass_tev": [
+        39.93778940318465,
+        40.53911433029424
+      ],
+      "screen": {
+        "screen": false,
+        "rhoF": 0.3809749387403094,
+        "scalar_masses_muS_tev": [
+          39.93778940318465,
+          40.53911433029424
+        ],
+        "max_yukawa_singular_muF": 0.7857741123928904,
+        "max_scalar_quartic_abs": 0.3378875294585527,
+        "reason": "MassHierarchyWindowOrPerturbativity"
+      },
+      "uv_nfev": 86,
+      "eft1_nfev": 38
+    },
+    {
+      "label": "shift_S2",
+      "uv_scalar_msq_tev2": [
+        1.306122448979592,
+        5.0
+      ],
+      "fermion_threshold_scalar_msq_tev2": [
+        1590.7171688993924,
+        1472.6783811394982
+      ],
+      "scalar_threshold_msq_tev2": [
+        1591.160439967737,
+        1648.1473407932856
+      ],
+      "scalar_threshold_mass_tev": [
+        39.88935246363041,
+        40.59738095977726
+      ],
+      "screen": {
+        "screen": false,
+        "rhoF": 0.3805205093195449,
+        "scalar_masses_muS_tev": [
+          39.88935246363041,
+          40.59738095977726
+        ],
+        "max_yukawa_singular_muF": 0.7857741123928905,
+        "max_scalar_quartic_abs": 0.3378875294585826,
+        "reason": "MassHierarchyWindowOrPerturbativity"
+      },
+      "uv_nfev": 86,
+      "eft1_nfev": 38
+    },
+    {
+      "label": "zero_mass_squared",
+      "uv_scalar_msq_tev2": [
+        0.0,
+        0.0
+      ],
+      "fermion_threshold_scalar_msq_tev2": [
+        1589.5047718607398,
+        1467.4332972357709
+      ],
+      "scalar_threshold_msq_tev2": [
+        1589.9818079248646,
+        1642.2650059512293
+      ],
+      "scalar_threshold_mass_tev": [
+        39.87457595918563,
+        40.52486898129628
+      ],
+      "screen": {
+        "screen": false,
+        "rhoF": 0.3803754710039856,
+        "scalar_masses_muS_tev": [
+          39.87457595918563,
+          40.52486898129628
+        ],
+        "max_yukawa_singular_muF": 0.78577411239289,
+        "max_scalar_quartic_abs": 0.33788752945866873,
+        "reason": "MassHierarchyWindowOrPerturbativity"
+      },
+      "uv_nfev": 158,
+      "eft1_nfev": 38
+    },
+    {
+      "label": "combined_shift",
+      "uv_scalar_msq_tev2": [
+        5.3061224489795915,
+        5.0
+      ],
+      "fermion_threshold_scalar_msq_tev2": [
+        1594.500439928955,
+        1472.6723745365018
+      ],
+      "scalar_threshold_msq_tev2": [
+        1594.9737881215344,
+        1648.1301493772205
+      ],
+      "scalar_threshold_mass_tev": [
+        39.93712293244888,
+        40.597169228620125
+      ],
+      "screen": {
+        "screen": false,
+        "rhoF": 0.3809727447296709,
+        "scalar_masses_muS_tev": [
+          39.93712293244888,
+          40.597169228620125
+        ],
+        "max_yukawa_singular_muF": 0.7857741123928904,
+        "max_scalar_quartic_abs": 0.3378875294585343,
+        "reason": "MassHierarchyWindowOrPerturbativity"
+      },
+      "uv_nfev": 86,
+      "eft1_nfev": 38
+    }
+  ],
+  "source_sha256": {
+    "output/studies/lambda_5e-9_refit/fitted/T3_dS1_1_dS2_3_dF_2_alpha_m2.json": "446f9d288662c4d155f5af9a4989de3d49deadc840eb8a90b3b68baf8a13c4fb",
+    "output/studies/lambda_5e-9_refit/fits/T3_dS1_1_dS2_3_dF_2_alpha_m2.json": "f63b873e004261613312975908587a12d6a8965cefb17d6521a4db88bf1acab4",
+    "RGE/general/generated/general_rgbeta_quartic_registry.json": "86a096410384641efa8f751b2aa98e8fee4bb6d3cccb4cfd116c559b71182eea",
+    "output/general_t3_stage22/stage31_A_m2_full_uv_betas.json": "3f48e43fbe82e59f51ccbde12f9148d28e40e6d646028355de461147a07d2018",
+    "output/studies/general_scalar_extended/bulk_48/bulk48_v1/betas/A_m2.json": "6284886dc3849c636503c2fcc352c9e06f04c7e71847786215752571d0be0641",
+    "scripts/RunT3ReducedScalarSobolComparison.py": "9ac87bedc754a66cad228215c49c0300d4eefa75c3a3e7d5c9acf123da6a6ebc",
+    "scripts/RunT3GeneralScalar48Campaign.py": "2e2cc68822361e6186244af98ecf69faa26a689a78ad7c34f378d5c75d8c22da"
+  },
+  "limits": [
+    "Candidate RGBeta one-loop equations, not a physically certified Matchete/RGBeta basis.",
+    "Fixed Yukawa, MF and quartic inputs; only two UV scalar squared-masses varied.",
+    "Affineness applies to this mass-independent one-loop RG truncation, not arbitrary EFT matching.",
+    "The endpoint mass test is distinct from complete trajectory vacuum-stability checks.",
+    "Signed negative squared-mass extrapolations are not valid positive-UV benchmarks.",
+    "No neutrino refitting, new C5 matching, or proof of impossibility after varying other UV inputs."
+  ]
+}

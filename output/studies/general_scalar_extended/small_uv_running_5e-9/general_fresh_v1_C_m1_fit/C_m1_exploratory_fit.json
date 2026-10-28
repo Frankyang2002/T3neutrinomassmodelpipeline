@@ -1,0 +1,813 @@
+{
+  "format": "t3-bc-general-scalar-exploratory-yukawa-refit-v1",
+  "model": "C_-1",
+  "case": "small_uv_running_5e-9",
+  "run_id": "general_fresh_v1_C_m1_fit",
+  "status": "ExploratoryPoorFit",
+  "chi2_initial": 24494.41684761671,
+  "chi2_final": 20279.354485591994,
+  "passes_approx_chi2_5p86": false,
+  "historical_fit_chi2": 2.2292195646900616e-20,
+  "historical_fitted_config": "output/studies/lambda_5e-9_refit/fitted/T3_dS1_2_dS2_2_dF_3_alpha_m1.json",
+  "initial_parameters": {
+    "y1_00": -1.1124076038640878,
+    "y1_01": -0.10225030329439155,
+    "y1_02": 1.2524783803917234,
+    "y1_10": -0.7624419465816721,
+    "y1_11": 1.4954518713349954,
+    "y1_12": -0.3319042006995634,
+    "y1_20": 0.0005308249073836535,
+    "y1_21": 0.5714976865808312,
+    "y1_22": -0.31371153130659835,
+    "y2_00": 0.7162323430375572,
+    "y2_01": 0.10587875755109266,
+    "y2_02": 0.494198756902021,
+    "y2_10": -0.02866854991086276,
+    "y2_11": -0.3931147228045986,
+    "y2_12": 0.18442896136138298,
+    "y2_20": -0.5364628471856214,
+    "y2_21": -1.0335758813927884,
+    "y2_22": 0.060098786767722956
+  },
+  "best_parameters": {
+    "y1_00": -0.7555587569513889,
+    "y1_01": -0.07650063137031227,
+    "y1_02": 1.2743864003358523,
+    "y1_10": -0.7661958528319928,
+    "y1_11": 1.7536712329482613,
+    "y1_12": -0.45045895359440014,
+    "y1_20": 0.15105726904741879,
+    "y1_21": 0.7095168302281016,
+    "y1_22": -0.3557321621115137,
+    "y2_00": 0.6459893384980195,
+    "y2_01": -0.02314995788348151,
+    "y2_02": 0.19384582540828355,
+    "y2_10": 1.0808872665040354,
+    "y2_11": -0.3869022682247065,
+    "y2_12": 0.14439239251498837,
+    "y2_20": -0.7260558955960166,
+    "y2_21": -0.5881424692620478,
+    "y2_22": 1.044308321872693
+  },
+  "prediction": {
+    "delta_m21_sq_ev2": 4.954909181900449e-06,
+    "delta_m3l_sq_ev2": 4.9553179192356404e-06,
+    "sin2_theta12": 0.36023194200519243,
+    "sin2_theta13": 0.022939489724297876,
+    "sin2_theta23": 0.5048579468918937
+  },
+  "whitened_residual": [
+    -72.59287713206139,
+    -122.24608205272021,
+    7.734126617322167,
+    0.8061223233296063,
+    2.248899799477013
+  ],
+  "optimiser": {
+    "enabled": true,
+    "skipped": false,
+    "seed_count": 3,
+    "stopped_early": false,
+    "stages": [
+      {
+        "stage": "multistart_seed_1_active_5",
+        "seed_chi2": 21044.687779685402,
+        "baseline_recomputed_chi2": 21044.687779685402,
+        "active_parameter_count": 5,
+        "active_parameters": [
+          "y2_01",
+          "y2_10",
+          "y2_21",
+          "y2_20",
+          "y2_00"
+        ],
+        "max_nfev": 20,
+        "optimizer_nfev": 20,
+        "optimizer_success": false,
+        "optimizer_message": "The maximum number of function evaluations is exceeded.",
+        "pipeline_evaluations": 152,
+        "best_chi2": 20826.33860086227,
+        "sensitivity_ranking": [
+          {
+            "name": "y2_01",
+            "score": 2275.3789059973456,
+            "status": "Success"
+          },
+          {
+            "name": "y2_10",
+            "score": 1705.5445938735159,
+            "status": "Success"
+          },
+          {
+            "name": "y2_21",
+            "score": 1514.9162730134178,
+            "status": "Success"
+          },
+          {
+            "name": "y2_20",
+            "score": 1382.9287592984444,
+            "status": "Success"
+          },
+          {
+            "name": "y2_00",
+            "score": 1358.9068788606614,
+            "status": "Success"
+          },
+          {
+            "name": "y2_02",
+            "score": 1175.2802072042316,
+            "status": "Success"
+          },
+          {
+            "name": "y1_01",
+            "score": 1003.8442648619177,
+            "status": "Success"
+          },
+          {
+            "name": "y2_11",
+            "score": 810.6380687383231,
+            "status": "Success"
+          },
+          {
+            "name": "y2_22",
+            "score": 700.9768947030855,
+            "status": "Success"
+          },
+          {
+            "name": "y1_00",
+            "score": 673.6814515319596,
+            "status": "Success"
+          },
+          {
+            "name": "y1_22",
+            "score": 473.13702997489617,
+            "status": "Success"
+          },
+          {
+            "name": "y1_20",
+            "score": 433.0584324275066,
+            "status": "Success"
+          },
+          {
+            "name": "y2_12",
+            "score": 259.2647173843371,
+            "status": "Success"
+          },
+          {
+            "name": "y1_12",
+            "score": 248.57708095319748,
+            "status": "Success"
+          },
+          {
+            "name": "y1_02",
+            "score": 240.8896668647847,
+            "status": "Success"
+          },
+          {
+            "name": "y1_10",
+            "score": 196.7073237730079,
+            "status": "Success"
+          },
+          {
+            "name": "y1_21",
+            "score": 187.6441033387071,
+            "status": "Success"
+          },
+          {
+            "name": "y1_11",
+            "score": 170.421556639691,
+            "status": "Success"
+          }
+        ]
+      },
+      {
+        "stage": "multistart_seed_2_active_5",
+        "seed_chi2": 21393.709843819488,
+        "baseline_recomputed_chi2": 21393.709843819484,
+        "active_parameter_count": 5,
+        "active_parameters": [
+          "y2_01",
+          "y2_20",
+          "y2_02",
+          "y2_10",
+          "y1_01"
+        ],
+        "max_nfev": 20,
+        "optimizer_nfev": 20,
+        "optimizer_success": false,
+        "optimizer_message": "The maximum number of function evaluations is exceeded.",
+        "pipeline_evaluations": 142,
+        "best_chi2": 20917.303303655342,
+        "sensitivity_ranking": [
+          {
+            "name": "y2_01",
+            "score": 1399.9842275776543,
+            "status": "Success"
+          },
+          {
+            "name": "y2_20",
+            "score": 1101.5741650997504,
+            "status": "Success"
+          },
+          {
+            "name": "y2_02",
+            "score": 914.6336131093401,
+            "status": "Success"
+          },
+          {
+            "name": "y2_10",
+            "score": 853.8446727886255,
+            "status": "Success"
+          },
+          {
+            "name": "y1_01",
+            "score": 781.8286368624495,
+            "status": "Success"
+          },
+          {
+            "name": "y2_22",
+            "score": 649.753111409834,
+            "status": "Success"
+          },
+          {
+            "name": "y2_11",
+            "score": 643.6543378115213,
+            "status": "Success"
+          },
+          {
+            "name": "y1_22",
+            "score": 514.4035164746612,
+            "status": "Success"
+          },
+          {
+            "name": "y1_02",
+            "score": 435.1422534351161,
+            "status": "Success"
+          },
+          {
+            "name": "y1_00",
+            "score": 424.69174413569897,
+            "status": "Success"
+          },
+          {
+            "name": "y1_20",
+            "score": 397.03536411477535,
+            "status": "Success"
+          },
+          {
+            "name": "y2_21",
+            "score": 383.544457874158,
+            "status": "Success"
+          },
+          {
+            "name": "y2_12",
+            "score": 382.6516380991115,
+            "status": "Success"
+          },
+          {
+            "name": "y2_00",
+            "score": 370.74848115688474,
+            "status": "Success"
+          },
+          {
+            "name": "y1_12",
+            "score": 354.88036417548864,
+            "status": "Success"
+          },
+          {
+            "name": "y1_21",
+            "score": 321.71187954064317,
+            "status": "Success"
+          },
+          {
+            "name": "y1_10",
+            "score": 259.3349818201339,
+            "status": "Success"
+          },
+          {
+            "name": "y1_11",
+            "score": 257.0180516064953,
+            "status": "Success"
+          }
+        ]
+      },
+      {
+        "stage": "multistart_seed_3_active_5",
+        "seed_chi2": 22910.143484859673,
+        "baseline_recomputed_chi2": 22910.14348485968,
+        "active_parameter_count": 5,
+        "active_parameters": [
+          "y2_01",
+          "y2_02",
+          "y2_11",
+          "y2_10",
+          "y2_22"
+        ],
+        "max_nfev": 20,
+        "optimizer_nfev": 14,
+        "optimizer_success": true,
+        "optimizer_message": "`ftol` termination condition is satisfied.",
+        "pipeline_evaluations": 101,
+        "best_chi2": 20599.5208332835,
+        "sensitivity_ranking": [
+          {
+            "name": "y2_01",
+            "score": 3736.715208853544,
+            "status": "Success"
+          },
+          {
+            "name": "y2_02",
+            "score": 2505.985110024357,
+            "status": "Success"
+          },
+          {
+            "name": "y2_11",
+            "score": 2392.497023876253,
+            "status": "Success"
+          },
+          {
+            "name": "y2_10",
+            "score": 1883.3890857933543,
+            "status": "Success"
+          },
+          {
+            "name": "y2_22",
+            "score": 1652.914096643325,
+            "status": "Success"
+          },
+          {
+            "name": "y2_20",
+            "score": 1575.6412329983898,
+            "status": "Success"
+          },
+          {
+            "name": "y1_00",
+            "score": 1551.8518439534005,
+            "status": "Success"
+          },
+          {
+            "name": "y1_01",
+            "score": 1421.1408458033113,
+            "status": "Success"
+          },
+          {
+            "name": "y1_20",
+            "score": 1195.231033480975,
+            "status": "Success"
+          },
+          {
+            "name": "y2_12",
+            "score": 920.1897772485028,
+            "status": "Success"
+          },
+          {
+            "name": "y2_00",
+            "score": 736.1146916796347,
+            "status": "Success"
+          },
+          {
+            "name": "y1_22",
+            "score": 514.6033672029398,
+            "status": "Success"
+          },
+          {
+            "name": "y2_21",
+            "score": 471.13920315473155,
+            "status": "Success"
+          },
+          {
+            "name": "y1_12",
+            "score": 468.1548162606685,
+            "status": "Success"
+          },
+          {
+            "name": "y1_21",
+            "score": 413.6318596378063,
+            "status": "Success"
+          },
+          {
+            "name": "y1_10",
+            "score": 327.9331548655916,
+            "status": "Success"
+          },
+          {
+            "name": "y1_02",
+            "score": 203.7100509741399,
+            "status": "Success"
+          },
+          {
+            "name": "y1_11",
+            "score": 169.49756779421426,
+            "status": "Success"
+          }
+        ]
+      },
+      {
+        "stage": "best_branch_active_8",
+        "seed_chi2": 20599.5208332835,
+        "baseline_recomputed_chi2": 20599.5208332835,
+        "active_parameter_count": 8,
+        "active_parameters": [
+          "y2_11",
+          "y1_20",
+          "y2_02",
+          "y2_10",
+          "y2_01",
+          "y2_22",
+          "y2_20",
+          "y1_10"
+        ],
+        "max_nfev": 30,
+        "optimizer_nfev": 30,
+        "optimizer_success": false,
+        "optimizer_message": "The maximum number of function evaluations is exceeded.",
+        "pipeline_evaluations": 187,
+        "best_chi2": 20279.35776818825,
+        "sensitivity_ranking": [
+          {
+            "name": "y2_11",
+            "score": 6344.25588119982,
+            "status": "Success"
+          },
+          {
+            "name": "y1_20",
+            "score": 4353.190321526667,
+            "status": "Success"
+          },
+          {
+            "name": "y2_02",
+            "score": 4163.676521881152,
+            "status": "Success"
+          },
+          {
+            "name": "y2_10",
+            "score": 3188.1691984206077,
+            "status": "Success"
+          },
+          {
+            "name": "y2_01",
+            "score": 3178.3644456124953,
+            "status": "Success"
+          },
+          {
+            "name": "y2_22",
+            "score": 3111.5267014803403,
+            "status": "Success"
+          },
+          {
+            "name": "y2_20",
+            "score": 2726.1379376158357,
+            "status": "Success"
+          },
+          {
+            "name": "y1_10",
+            "score": 2295.989440093432,
+            "status": "Success"
+          },
+          {
+            "name": "y1_02",
+            "score": 1845.2497496454948,
+            "status": "Success"
+          },
+          {
+            "name": "y1_22",
+            "score": 1768.799963074492,
+            "status": "Success"
+          },
+          {
+            "name": "y1_12",
+            "score": 1699.5927330291063,
+            "status": "Success"
+          },
+          {
+            "name": "y1_21",
+            "score": 1371.0325310574922,
+            "status": "Success"
+          },
+          {
+            "name": "y2_21",
+            "score": 1297.7141964924704,
+            "status": "Success"
+          },
+          {
+            "name": "y1_01",
+            "score": 1082.7633584028024,
+            "status": "Success"
+          },
+          {
+            "name": "y2_12",
+            "score": 754.6122601124259,
+            "status": "Success"
+          },
+          {
+            "name": "y1_00",
+            "score": 457.93576972565546,
+            "status": "Success"
+          },
+          {
+            "name": "y2_00",
+            "score": 227.24236601924477,
+            "status": "Success"
+          },
+          {
+            "name": "y1_11",
+            "score": 95.74827442816989,
+            "status": "Success"
+          }
+        ]
+      },
+      {
+        "stage": "best_branch_active_12",
+        "seed_chi2": 20279.35776818825,
+        "baseline_recomputed_chi2": 20279.35776818825,
+        "active_parameter_count": 12,
+        "active_parameters": [
+          "y2_00",
+          "y1_00",
+          "y1_12",
+          "y2_20",
+          "y1_01",
+          "y2_02",
+          "y1_20",
+          "y1_11",
+          "y2_12",
+          "y2_11",
+          "y2_21",
+          "y1_02"
+        ],
+        "max_nfev": 40,
+        "optimizer_nfev": 2,
+        "optimizer_success": true,
+        "optimizer_message": "Both `ftol` and `xtol` termination conditions are satisfied.",
+        "pipeline_evaluations": 63,
+        "best_chi2": 20279.354485591994,
+        "sensitivity_ranking": [
+          {
+            "name": "y2_00",
+            "score": 16488.626373142004,
+            "status": "Success"
+          },
+          {
+            "name": "y1_00",
+            "score": 16429.87240311631,
+            "status": "Success"
+          },
+          {
+            "name": "y1_12",
+            "score": 16027.844153515407,
+            "status": "Success"
+          },
+          {
+            "name": "y2_20",
+            "score": 15649.992919764954,
+            "status": "Success"
+          },
+          {
+            "name": "y1_01",
+            "score": 15625.901707554425,
+            "status": "Success"
+          },
+          {
+            "name": "y2_02",
+            "score": 15100.96388144262,
+            "status": "Success"
+          },
+          {
+            "name": "y1_20",
+            "score": 14865.913087246563,
+            "status": "Success"
+          },
+          {
+            "name": "y1_11",
+            "score": 14607.653880683945,
+            "status": "Success"
+          },
+          {
+            "name": "y2_12",
+            "score": 14359.753317793124,
+            "status": "Success"
+          },
+          {
+            "name": "y2_11",
+            "score": 13814.827104255839,
+            "status": "Success"
+          },
+          {
+            "name": "y2_21",
+            "score": 11970.454190025517,
+            "status": "Success"
+          },
+          {
+            "name": "y1_02",
+            "score": 9789.912182110573,
+            "status": "Success"
+          },
+          {
+            "name": "y1_10",
+            "score": 5844.8938362441295,
+            "status": "Success"
+          },
+          {
+            "name": "y1_21",
+            "score": 5597.749257358677,
+            "status": "Success"
+          },
+          {
+            "name": "y2_01",
+            "score": 2917.490846643002,
+            "status": "Success"
+          },
+          {
+            "name": "y2_22",
+            "score": 2892.4956743555967,
+            "status": "Success"
+          },
+          {
+            "name": "y2_10",
+            "score": 2047.9852034666576,
+            "status": "Success"
+          },
+          {
+            "name": "y1_22",
+            "score": 1508.7502819364404,
+            "status": "Success"
+          }
+        ]
+      }
+    ],
+    "pipeline_evaluations": 645
+  },
+  "sobol_success_count": 7,
+  "sobol_failure_count": 0,
+  "sobol_failures": [],
+  "candidate_evaluation_count": 655,
+  "final_diagnostics": {
+    "trajectory": {
+      "eft1_end": {
+        "mu_gev": 1000.0,
+        "mS1Sq_gev2": 27979884775.3841,
+        "mS2Sq_gev2": 18257767994.534676,
+        "lambdaT3": {
+          "real": 3.3365104522374216e-09,
+          "imag": 0.0
+        },
+        "new_quartics": {
+          "lambdaT3GeneralQ110101I1": {
+            "real": 3.3068799987652645e-10,
+            "imag": 0.0
+          }
+        },
+        "reused_quartics": {
+          "lambdaS1barS2S2bar2": {
+            "real": 1.9956967026358913e-10,
+            "imag": 0.0
+          },
+          "lambdaS1bar2S2bar2": {
+            "real": -0.03239813525406175,
+            "imag": 0.0
+          },
+          "lambdaS1S1bar2S2bar": {
+            "real": 1.113137969603171e-10,
+            "imag": 0.0
+          },
+          "lambdaHHdagS2S2": {
+            "real": 6.251883872917055e-10,
+            "imag": 0.0
+          },
+          "lambdaHHdagS1barS1bar": {
+            "real": 2.118954910081443e-10,
+            "imag": 0.0
+          },
+          "lambdaHHdagS1barS2barCross": {
+            "real": 3.253286958641616e-10,
+            "imag": 0.0
+          }
+        },
+        "quadratic_mu2_gev2": {
+          "real": -2.9362988381104493,
+          "imag": 0.0
+        }
+      },
+      "uv_nfev": 239,
+      "eft1_nfev": 179,
+      "boundary_extra_quartic_fraction": 0.1,
+      "boundary_mu2_fraction": 0.0
+    },
+    "MF_muF_gev": [
+      104302.24292418992,
+      112746.85954995593,
+      128461.44736512685
+    ],
+    "heavy_mass_basis_residual": 4.6673632943020105e-11,
+    "C5_muS_gev_inv": {
+      "real": [
+        [
+          -8.665542938195208e-18,
+          -3.2252091989463224e-17,
+          4.805295698855022e-17
+        ],
+        [
+          -3.2252091989463224e-17,
+          -7.232899127267915e-17,
+          -2.009083355364076e-17
+        ],
+        [
+          4.805295698855022e-17,
+          -2.009083355364076e-17,
+          -5.588143180367794e-17
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    "C5_low_gev_inv": {
+      "real": [
+        [
+          -8.110457940424356e-18,
+          -3.018614323029843e-17,
+          4.4974950225816016e-17
+        ],
+        [
+          -3.018614323029843e-17,
+          -6.76958620418733e-17,
+          -1.880392424102396e-17
+        ],
+        [
+          4.4974950225816016e-17,
+          -1.880392424102396e-17,
+          -5.230207839368588e-17
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    }
+  },
+  "source_manifest": {
+    "format": "t3-bc-general-scalar-exploratory-yukawa-refit-v1",
+    "case": "small_uv_running_5e-9",
+    "model": "C_-1",
+    "files_sha256": {
+      "output/studies/lambda_5e-9_refit/fitted/T3_dS1_2_dS2_2_dF_3_alpha_m1.json": "b68ab5884cd4f5600d808f598b9d7691331dc60e9f617646c73ee3e28dae9f20",
+      "output/studies/lambda_5e-9_refit/fits/T3_dS1_2_dS2_2_dF_3_alpha_m1.json": "10ed72e8f0872c6429b218014033ec606e8da9cbc13e5f8e1a90b62e84fce91c",
+      "RGE/general/generated/general_rgbeta_quartic_registry.json": "86a096410384641efa8f751b2aa98e8fee4bb6d3cccb4cfd116c559b71182eea",
+      "output/general_t3_stage22/stage23_quartic_prefactor_candidates.json": "f443587dae570f740dac2cf0aab587f41ed8d4088615ad000e30244127570a42",
+      "output/general_t3_stage22/stage26_conditional_quartic_action.json": "fa190cb12e3b792caefb2942ffc9f7f9ddb77c14a13c95e99e95d6940dd5ac85",
+      "output/general_t3_mass_eigen_matchete/one_loop_probe/C_m1_final_one_loop_probe_weinberg_ordered_coefficient.inputform.txt": "83e587e503f4945b4af4ffad2334593d1e7fc7275ca20536c95a386084c6984d",
+      "output/general_t3_quadratic_eft1/C_m1_uv_quadratic_live_rgbeta.json": "f5ab3557c0f7a88edcf82d20fca673fdcd6c4e9f5beb28010db57c4cab3d1f0c",
+      "output/general_t3_quadratic_eft1/C_m1_eft1_quadratic_live_rgbeta.json": "9b955729a342a43d8fef0c2267383b5a7ff4dcf1c87d22d043be7b05960559af",
+      "configs/nufit_6_1_ic24_no.json": "27bd4d4297fddb3ef71b5b804afd8e31d44d302b569f7cf8c34d37d54005e15e"
+    },
+    "fit_options": {
+      "quartic_fraction": 0.1,
+      "mu2_fraction": 0.0,
+      "sobol_seed": 20261028,
+      "sobol_points": 8,
+      "bound": 3.0,
+      "fraction": 0.5,
+      "floor": 1e-06,
+      "seed_count": 3
+    },
+    "conditional_map": "lambda_M = -lambda_RGBeta for two direct quartics",
+    "physical_coupling_map_certified": false,
+    "sequential_general_scalar_matching": false,
+    "historical_input_unchanged": true
+  },
+  "UV_running_enabled": true,
+  "input_extra_quartic_fraction_of_abs_lambdaT3": 0.1,
+  "input_mu2_fraction_of_min_scalar_m2": 0.0,
+  "physical_matchete_rgbeta_map_certified": false,
+  "one_scale_matchete_expression_reused": true,
+  "full_sequential_general_scalar_matching_performed": false,
+  "fits_not_independent_predictions": true,
+  "historical_outputs_overwritten": false
+}

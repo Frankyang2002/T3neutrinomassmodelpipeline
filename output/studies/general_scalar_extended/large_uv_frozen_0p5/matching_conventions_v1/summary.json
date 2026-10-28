@@ -1,0 +1,490 @@
+{
+  "format": "t3-bc-conditional-convention-mixed-one-scale-preview-v1",
+  "case": "large_uv_frozen_0p5",
+  "run_id": "matching_conventions_v1",
+  "models": [
+    "B_-1",
+    "C_-1"
+  ],
+  "source_run_id": "pilot_q0p1_c5_unmixed",
+  "mixing_run_id": null,
+  "status": "ConditionalConventionsOnlyNotPhysicalC5",
+  "source_stage23_sha256": "f443587dae570f740dac2cf0aab587f41ed8d4088615ad000e30244127570a42",
+  "source_stage26_sha256": "fa190cb12e3b792caefb2942ffc9f7f9ddb77c14a13c95e99e95d6940dd5ac85",
+  "checked_direct_maps": {
+    "signed_map_is_conditional": true,
+    "physical_mapping_certified": false,
+    "direct_blocks": {
+      "B_-1": {
+        "lambdaHHdagS2S2": {
+          "matchete": "lambdaT3ExtraQ020020I1",
+          "block": "020020",
+          "geometry_class": "DirectGeometryCandidate",
+          "r_in_m": "1",
+          "matchete_from_rgbeta_conditional": "-1"
+        },
+        "lambdaHHdagS1barS1bar": {
+          "matchete": "lambdaT3ExtraQ020200I1",
+          "block": "020200",
+          "geometry_class": "CorrectedBCReusedInvariantCandidate",
+          "r_in_m": "1",
+          "matchete_from_rgbeta_conditional": "-1"
+        }
+      },
+      "C_-1": {
+        "lambdaHHdagS2S2": {
+          "matchete": "lambdaT3ExtraQ020020I1",
+          "block": "020020",
+          "geometry_class": "DirectGeometryCandidate",
+          "r_in_m": "1",
+          "matchete_from_rgbeta_conditional": "-1"
+        },
+        "lambdaHHdagS1barS1bar": {
+          "matchete": "lambdaT3ExtraQ020200I1",
+          "block": "020200",
+          "geometry_class": "CorrectedBCReusedInvariantCandidate",
+          "r_in_m": "1",
+          "matchete_from_rgbeta_conditional": "-1"
+        }
+      }
+    }
+  },
+  "source_files_sha256": {
+    "B_-1_paired_pilot": "01d9d2bc30e1bddd39ba202e44828186081491532fb74320f732f4ad3024e6a9",
+    "B_-1_one_scale_ordered_coefficient": "12b4507253982cb58d6adb79fb83ba59363f22f86af8f9d04897d533d48e97fd",
+    "C_-1_paired_pilot": "a195c3245ec5a2c09f7e4c2f174b769629098760ba1ea335da109057253132df",
+    "C_-1_one_scale_ordered_coefficient": "83e587e503f4945b4af4ffad2334593d1e7fc7275ca20536c95a386084c6984d"
+  },
+  "model_results": {
+    "B_-1": {
+      "model": "B_-1",
+      "historical_fit_chi2": 32.294488683843106,
+      "historical_fit_passes_5p86": false,
+      "initial_scalar_boundary_scale_gev": 100000.0,
+      "zero_endpoint_mu2_over_min_m2": 0.0,
+      "general_endpoint_mu2_over_min_m2": 0.020555937017305743,
+      "general_endpoint_mu2_gev2": {
+        "real": -21289.730255209866,
+        "imag": 0.0
+      },
+      "actual_candidate_mixed_mass_matrix_used_in_one_scale_expression": true,
+      "quartics_used_in_matchete_C5_only": [
+        "lambdaHHdagS2S2",
+        "lambdaHHdagS1barS1bar"
+      ],
+      "mappings": {
+        "identity_prior_preview": {
+          "matchete_equals_rgbeta_times": 1,
+          "relative_prior_Batch9_unmixed_projection": 0.7792346042227264,
+          "effects": {
+            "relative_total": 0.7705183247913435,
+            "relative_background_diagonal": 0.0004581311759766261,
+            "relative_mixing_at_zero_direct_quartics": 0.008656420540190229,
+            "relative_direct_quartics_unmixed": 0.7791639483487673,
+            "relative_quartic_mass_mixing_interference": 0.0004543060252411341,
+            "relative_direct_quartics_at_actual_mixing": 0.7793674171137066,
+            "relative_mixing_at_nonzero_direct_quartics": 0.00846263376011225,
+            "telescoping_residual_relative": 7.355145972263424e-17,
+            "relative_terms_are_norms_not_additive": true
+          },
+          "C5_one_scale_candidate_gev_minus1": {
+            "real": [
+              [
+                6.416753683039681e-16,
+                -4.942513548660601e-16,
+                8.369029352028656e-17
+              ],
+              [
+                -4.942513548660601e-16,
+                3.487609738607727e-16,
+                6.683326004843997e-16
+              ],
+              [
+                8.369029352028656e-17,
+                6.683326004843997e-16,
+                -4.425468396388011e-16
+              ]
+            ],
+            "imag": [
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ]
+            ]
+          },
+          "C5_reference_one_scale_gev_minus1": {
+            "real": [
+              [
+                1.4575387087533578e-16,
+                -9.668970907922669e-17,
+                2.344987448477799e-16
+              ],
+              [
+                -9.668970907922669e-17,
+                -4.064271785994325e-16,
+                8.133081939017984e-16
+              ],
+              [
+                2.344987448477799e-16,
+                8.133081939017984e-16,
+                -7.801742752979479e-16
+              ]
+            ],
+            "imag": [
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ]
+            ]
+          },
+          "neutrino_takagi_singular_values_eV_from_one_scale_candidate": [
+            0.010338595076912468,
+            0.02708215751416164,
+            0.03335126804348171
+          ],
+          "mass_values_not_refitted_or_physically_certified": true
+        },
+        "stage23_conditional_minus": {
+          "matchete_equals_rgbeta_times": -1,
+          "relative_prior_Batch9_unmixed_projection": 0.7792346042227264,
+          "effects": {
+            "relative_total": 0.788216731080098,
+            "relative_background_diagonal": 0.0004581311759766261,
+            "relative_mixing_at_zero_direct_quartics": 0.008656420540190229,
+            "relative_direct_quartics_unmixed": 0.7791639483487671,
+            "relative_quartic_mass_mixing_interference": 0.00045430602524132186,
+            "relative_direct_quartics_at_actual_mixing": 0.7793674171137068,
+            "relative_mixing_at_nonzero_direct_quartics": 0.008869264395010767,
+            "telescoping_residual_relative": 6.578642551365919e-17,
+            "relative_terms_are_norms_not_additive": true
+          },
+          "C5_one_scale_candidate_gev_minus1": {
+            "real": [
+              [
+                -3.610917891007567e-16,
+                3.0974687416027504e-16,
+                3.8888319284805153e-16
+              ],
+              [
+                3.0974687416027504e-16,
+                -1.1789865925308132e-15,
+                9.622862911795715e-16
+              ],
+              [
+                3.8888319284805153e-16,
+                9.622862911795715e-16,
+                -1.1261117577098417e-15
+              ]
+            ],
+            "imag": [
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ]
+            ]
+          },
+          "C5_reference_one_scale_gev_minus1": {
+            "real": [
+              [
+                1.4575387087533578e-16,
+                -9.668970907922669e-17,
+                2.344987448477799e-16
+              ],
+              [
+                -9.668970907922669e-17,
+                -4.064271785994325e-16,
+                8.133081939017984e-16
+              ],
+              [
+                2.344987448477799e-16,
+                8.133081939017984e-16,
+                -7.801742752979479e-16
+              ]
+            ],
+            "imag": [
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ]
+            ]
+          },
+          "neutrino_takagi_singular_values_eV_from_one_scale_candidate": [
+            0.006881179645813736,
+            0.023537918664515895,
+            0.06416120094963279
+          ],
+          "mass_values_not_refitted_or_physically_certified": true
+        }
+      },
+      "explicit_mixing_scenario": null,
+      "physical_mixed_C5_certified": false,
+      "sequential_eft1_general_C5_performed": false,
+      "yukawas_and_MF_frozen_historical_boundary": true,
+      "pilot_source_json_sha256": "01d9d2bc30e1bddd39ba202e44828186081491532fb74320f732f4ad3024e6a9",
+      "one_scale_ordered_coefficient_sha256": "12b4507253982cb58d6adb79fb83ba59363f22f86af8f9d04897d533d48e97fd",
+      "historical_fitted_config_sha256": "b1ddacfc5b4300ccb22ecd1fe3780b09c8dcd56e2c7f00da4359e7e83db35648",
+      "original_fit_record_sha256": "77abd79c862c4dc7572e951f487ca700060695475987a4ffc9122b14875a6b9d"
+    },
+    "C_-1": {
+      "model": "C_-1",
+      "historical_fit_chi2": 4.500181092100493e-17,
+      "historical_fit_passes_5p86": true,
+      "initial_scalar_boundary_scale_gev": 100000.0,
+      "zero_endpoint_mu2_over_min_m2": 0.0,
+      "general_endpoint_mu2_over_min_m2": 0.020555937017305743,
+      "general_endpoint_mu2_gev2": {
+        "real": -21289.730255209866,
+        "imag": 0.0
+      },
+      "actual_candidate_mixed_mass_matrix_used_in_one_scale_expression": true,
+      "quartics_used_in_matchete_C5_only": [
+        "lambdaHHdagS2S2",
+        "lambdaHHdagS1barS1bar"
+      ],
+      "mappings": {
+        "identity_prior_preview": {
+          "matchete_equals_rgbeta_times": 1,
+          "relative_prior_Batch9_unmixed_projection": 0.9822394364205963,
+          "effects": {
+            "relative_total": 0.9713680068322583,
+            "relative_background_diagonal": 0.0004627061240810853,
+            "relative_mixing_at_zero_direct_quartics": 0.010798546206957754,
+            "relative_direct_quartics_unmixed": 0.9821496591022207,
+            "relative_quartic_mass_mixing_interference": 0.0004339544882006785,
+            "relative_direct_quartics_at_actual_mixing": 0.9823461539429412,
+            "relative_mixing_at_nonzero_direct_quartics": 0.010608022952946761,
+            "telescoping_residual_relative": 0.0,
+            "relative_terms_are_norms_not_additive": true
+          },
+          "C5_one_scale_candidate_gev_minus1": {
+            "real": [
+              [
+                3.740210183877236e-16,
+                -1.5368438523591953e-15,
+                2.906480412074399e-16
+              ],
+              [
+                -1.5368438523591953e-15,
+                2.056667354657637e-15,
+                -8.657310369174603e-16
+              ],
+              [
+                2.906480412074399e-16,
+                -8.657310369174603e-16,
+                -4.647067917219213e-16
+              ]
+            ],
+            "imag": [
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ]
+            ]
+          },
+          "C5_reference_one_scale_gev_minus1": {
+            "real": [
+              [
+                -6.156704759997395e-16,
+                -1.1875709715690028e-15,
+                8.035603591914602e-16
+              ],
+              [
+                -1.1875709715690028e-15,
+                -4.467967733616682e-16,
+                -1.3289242285686379e-15
+              ],
+              [
+                8.035603591914602e-16,
+                -1.3289242285686379e-15,
+                -1.0372630668316952e-15
+              ]
+            ],
+            "imag": [
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ]
+            ]
+          },
+          "neutrino_takagi_singular_values_eV_from_one_scale_candidate": [
+            0.01244552855556556,
+            0.02454749955587823,
+            0.0965861452990639
+          ],
+          "mass_values_not_refitted_or_physically_certified": true
+        },
+        "stage23_conditional_minus": {
+          "matchete_equals_rgbeta_times": -1,
+          "relative_prior_Batch9_unmixed_projection": 0.9822394364205962,
+          "effects": {
+            "relative_total": 0.9933245144800434,
+            "relative_background_diagonal": 0.0004627061240810853,
+            "relative_mixing_at_zero_direct_quartics": 0.010798546206957754,
+            "relative_direct_quartics_unmixed": 0.9821496591022209,
+            "relative_quartic_mass_mixing_interference": 0.00043395448820057454,
+            "relative_direct_quartics_at_actual_mixing": 0.9823461539429411,
+            "relative_mixing_at_nonzero_direct_quartics": 0.011002894273463534,
+            "telescoping_residual_relative": 1.446150206098772e-16,
+            "relative_terms_are_norms_not_additive": true
+          },
+          "C5_one_scale_candidate_gev_minus1": {
+            "real": [
+              [
+                -1.6280161257618275e-15,
+                -8.316824922377662e-16,
+                1.3288381149996068e-15
+              ],
+              [
+                -8.316824922377662e-16,
+                -3.0061808354673584e-15,
+                -1.8036082676717903e-15
+              ],
+              [
+                1.3288381149996068e-15,
+                -1.8036082676717903e-15,
+                -1.6237096898470112e-15
+              ]
+            ],
+            "imag": [
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ]
+            ]
+          },
+          "C5_reference_one_scale_gev_minus1": {
+            "real": [
+              [
+                -6.156704759997395e-16,
+                -1.1875709715690028e-15,
+                8.035603591914602e-16
+              ],
+              [
+                -1.1875709715690028e-15,
+                -4.467967733616682e-16,
+                -1.3289242285686379e-15
+              ],
+              [
+                8.035603591914602e-16,
+                -1.3289242285686379e-15,
+                -1.0372630668316952e-15
+              ]
+            ],
+            "imag": [
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ]
+            ]
+          },
+          "neutrino_takagi_singular_values_eV_from_one_scale_candidate": [
+            0.020608094341305207,
+            0.08150899850005332,
+            0.12878966463881267
+          ],
+          "mass_values_not_refitted_or_physically_certified": true
+        }
+      },
+      "explicit_mixing_scenario": null,
+      "physical_mixed_C5_certified": false,
+      "sequential_eft1_general_C5_performed": false,
+      "yukawas_and_MF_frozen_historical_boundary": true,
+      "pilot_source_json_sha256": "a195c3245ec5a2c09f7e4c2f174b769629098760ba1ea335da109057253132df",
+      "one_scale_ordered_coefficient_sha256": "83e587e503f4945b4af4ffad2334593d1e7fc7275ca20536c95a386084c6984d",
+      "historical_fitted_config_sha256": "bd289bf7ce27840311c3cde372463994ca4fa5369e9c67b666cd9bdb6a709f7e",
+      "original_fit_record_sha256": "0b8a95de448555eb40c1a88d30cab45b4f63062f2d52a783d2932fcfc532b55a"
+    }
+  },
+  "original_historical_results_modified": false,
+  "upstream_Batch9_results_modified": false,
+  "physical_rgbeta_matchete_map_certified": false,
+  "physical_mixed_eft_C5_matched": false
+}

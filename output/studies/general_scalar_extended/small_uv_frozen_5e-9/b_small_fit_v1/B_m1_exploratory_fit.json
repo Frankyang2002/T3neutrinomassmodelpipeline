@@ -1,0 +1,813 @@
+{
+  "format": "t3-bc-general-scalar-exploratory-yukawa-refit-v1",
+  "model": "B_-1",
+  "case": "small_uv_frozen_5e-9",
+  "run_id": "b_small_fit_v1",
+  "status": "ExploratoryPoorFit",
+  "chi2_initial": 1781981.8572724692,
+  "chi2_final": 118.57915264725226,
+  "passes_approx_chi2_5p86": false,
+  "historical_fit_chi2": 1.1808347355583052e-17,
+  "historical_fitted_config": "output/studies/fermion_start_lambda_comparison/5e-9/fitted/T3_dS1_2_dS2_2_dF_1_alpha_m1.json",
+  "initial_parameters": {
+    "y1_00": 0.5296013044797672,
+    "y1_01": 0.37864526759470163,
+    "y1_02": 0.23741673942395725,
+    "y1_10": 0.23381675324924345,
+    "y1_11": -0.6960767815546447,
+    "y1_12": -1.0965510600813677,
+    "y1_20": -0.37879881912509816,
+    "y1_21": -0.28642833467660767,
+    "y1_22": 0.05085545275847636,
+    "y2_00": -0.08199610562853055,
+    "y2_01": 0.256633453895442,
+    "y2_02": -0.25318157181652,
+    "y2_10": 0.22659566473977044,
+    "y2_11": -0.8038824930226101,
+    "y2_12": 0.4347433566138301,
+    "y2_20": -0.2439484666878955,
+    "y2_21": -0.1654745694522024,
+    "y2_22": 0.4696719439278736
+  },
+  "best_parameters": {
+    "y1_00": 0.5865469187194736,
+    "y1_01": 0.3970885922003422,
+    "y1_02": 0.18401886619527996,
+    "y1_10": 0.11958457155762492,
+    "y1_11": -0.5203085180354052,
+    "y1_12": -1.5446260741949303,
+    "y1_20": -0.45335928042298645,
+    "y1_21": -0.41279158619245226,
+    "y1_22": 0.047948315971297895,
+    "y2_00": -0.036406555207476377,
+    "y2_01": 0.01694836424595536,
+    "y2_02": -0.057569632767829226,
+    "y2_10": 0.1842751550797299,
+    "y2_11": -0.6070499976797503,
+    "y2_12": 0.38151060942002335,
+    "y2_20": -0.1847476345663317,
+    "y2_21": -0.13181376385569088,
+    "y2_22": 0.46016255258399674
+  },
+  "prediction": {
+    "delta_m21_sq_ev2": 7.514486852781824e-05,
+    "delta_m3l_sq_ev2": 0.0025268432374529856,
+    "sin2_theta12": 0.30881436231547343,
+    "sin2_theta13": 0.021934716118824287,
+    "sin2_theta23": 0.3023326660749859
+  },
+  "whitened_residual": [
+    -0.23209430121831554,
+    0.7728408513651424,
+    0.0021597466877316023,
+    -0.9566383880275664,
+    -10.81724735000091
+  ],
+  "optimiser": {
+    "enabled": true,
+    "skipped": false,
+    "seed_count": 3,
+    "stopped_early": false,
+    "stages": [
+      {
+        "stage": "multistart_seed_1_active_5",
+        "seed_chi2": 34147.16470365595,
+        "baseline_recomputed_chi2": 34147.16470365594,
+        "active_parameter_count": 5,
+        "active_parameters": [
+          "y2_12",
+          "y2_22",
+          "y2_02",
+          "y2_00",
+          "y2_01"
+        ],
+        "max_nfev": 20,
+        "optimizer_nfev": 20,
+        "optimizer_success": false,
+        "optimizer_message": "The maximum number of function evaluations is exceeded.",
+        "pipeline_evaluations": 132,
+        "best_chi2": 131.6133333696355,
+        "sensitivity_ranking": [
+          {
+            "name": "y2_12",
+            "score": 7761.884708013921,
+            "status": "Success"
+          },
+          {
+            "name": "y2_22",
+            "score": 7360.778166478096,
+            "status": "Success"
+          },
+          {
+            "name": "y2_02",
+            "score": 6303.908197577283,
+            "status": "Success"
+          },
+          {
+            "name": "y2_00",
+            "score": 5454.797885905144,
+            "status": "Success"
+          },
+          {
+            "name": "y2_01",
+            "score": 5200.934819152186,
+            "status": "Success"
+          },
+          {
+            "name": "y2_21",
+            "score": 4858.189781005138,
+            "status": "Success"
+          },
+          {
+            "name": "y1_01",
+            "score": 4613.2672489287015,
+            "status": "Success"
+          },
+          {
+            "name": "y1_21",
+            "score": 4449.689927127576,
+            "status": "Success"
+          },
+          {
+            "name": "y1_02",
+            "score": 4103.986243075056,
+            "status": "Success"
+          },
+          {
+            "name": "y1_22",
+            "score": 3937.5402667381964,
+            "status": "Success"
+          },
+          {
+            "name": "y2_10",
+            "score": 3689.026663658146,
+            "status": "Success"
+          },
+          {
+            "name": "y2_20",
+            "score": 3596.215700289372,
+            "status": "Success"
+          },
+          {
+            "name": "y1_11",
+            "score": 3579.022564348564,
+            "status": "Success"
+          },
+          {
+            "name": "y2_11",
+            "score": 3323.6690200797807,
+            "status": "Success"
+          },
+          {
+            "name": "y1_12",
+            "score": 3285.6217336747077,
+            "status": "Success"
+          },
+          {
+            "name": "y1_00",
+            "score": 2451.7861243487628,
+            "status": "Success"
+          },
+          {
+            "name": "y1_20",
+            "score": 1843.572003348411,
+            "status": "Success"
+          },
+          {
+            "name": "y1_10",
+            "score": 1586.4787302580241,
+            "status": "Success"
+          }
+        ]
+      },
+      {
+        "stage": "multistart_seed_2_active_5",
+        "seed_chi2": 286855.74077676237,
+        "baseline_recomputed_chi2": 286855.7407767647,
+        "active_parameter_count": 5,
+        "active_parameters": [
+          "y1_22",
+          "y2_21",
+          "y1_21",
+          "y2_20",
+          "y1_20"
+        ],
+        "max_nfev": 20,
+        "optimizer_nfev": 20,
+        "optimizer_success": false,
+        "optimizer_message": "The maximum number of function evaluations is exceeded.",
+        "pipeline_evaluations": 147,
+        "best_chi2": 31682.669044015143,
+        "sensitivity_ranking": [
+          {
+            "name": "y1_22",
+            "score": 17882.908528948345,
+            "status": "Success"
+          },
+          {
+            "name": "y2_21",
+            "score": 17805.001819736175,
+            "status": "Success"
+          },
+          {
+            "name": "y1_21",
+            "score": 17362.345796479614,
+            "status": "Success"
+          },
+          {
+            "name": "y2_20",
+            "score": 15431.0088157277,
+            "status": "Success"
+          },
+          {
+            "name": "y1_20",
+            "score": 8869.565722369987,
+            "status": "Success"
+          },
+          {
+            "name": "y1_11",
+            "score": 7380.328020749858,
+            "status": "Success"
+          },
+          {
+            "name": "y2_01",
+            "score": 6905.520805523364,
+            "status": "Success"
+          },
+          {
+            "name": "y2_11",
+            "score": 6877.919663677231,
+            "status": "Success"
+          },
+          {
+            "name": "y2_00",
+            "score": 6719.054069898353,
+            "status": "Success"
+          },
+          {
+            "name": "y1_01",
+            "score": 5651.931323134304,
+            "status": "Success"
+          },
+          {
+            "name": "y2_12",
+            "score": 5230.675437800255,
+            "status": "Success"
+          },
+          {
+            "name": "y1_02",
+            "score": 5162.597027454066,
+            "status": "Success"
+          },
+          {
+            "name": "y2_22",
+            "score": 4861.658055032847,
+            "status": "Success"
+          },
+          {
+            "name": "y2_10",
+            "score": 4601.288626548431,
+            "status": "Success"
+          },
+          {
+            "name": "y1_12",
+            "score": 4149.986012738314,
+            "status": "Success"
+          },
+          {
+            "name": "y1_10",
+            "score": 3556.148062267745,
+            "status": "Success"
+          },
+          {
+            "name": "y2_02",
+            "score": 3093.8763813222345,
+            "status": "Success"
+          },
+          {
+            "name": "y1_00",
+            "score": 2869.138309700385,
+            "status": "Success"
+          }
+        ]
+      },
+      {
+        "stage": "multistart_seed_3_active_5",
+        "seed_chi2": 904273.4585391392,
+        "baseline_recomputed_chi2": 904273.4585391368,
+        "active_parameter_count": 5,
+        "active_parameters": [
+          "y2_12",
+          "y2_11",
+          "y2_22",
+          "y1_11",
+          "y2_21"
+        ],
+        "max_nfev": 20,
+        "optimizer_nfev": 20,
+        "optimizer_success": false,
+        "optimizer_message": "The maximum number of function evaluations is exceeded.",
+        "pipeline_evaluations": 147,
+        "best_chi2": 294.55984452088063,
+        "sensitivity_ranking": [
+          {
+            "name": "y2_12",
+            "score": 31788.869501505287,
+            "status": "Success"
+          },
+          {
+            "name": "y2_11",
+            "score": 24988.23826387976,
+            "status": "Success"
+          },
+          {
+            "name": "y2_22",
+            "score": 24378.84502702274,
+            "status": "Success"
+          },
+          {
+            "name": "y1_11",
+            "score": 22386.696006497586,
+            "status": "Success"
+          },
+          {
+            "name": "y2_21",
+            "score": 19797.060767242743,
+            "status": "Success"
+          },
+          {
+            "name": "y1_12",
+            "score": 18863.400265672055,
+            "status": "Success"
+          },
+          {
+            "name": "y1_21",
+            "score": 17518.765011386735,
+            "status": "Success"
+          },
+          {
+            "name": "y1_22",
+            "score": 14567.587505906538,
+            "status": "Success"
+          },
+          {
+            "name": "y2_02",
+            "score": 12636.838819419732,
+            "status": "Success"
+          },
+          {
+            "name": "y2_10",
+            "score": 10414.090084680283,
+            "status": "Success"
+          },
+          {
+            "name": "y2_20",
+            "score": 9715.342345201865,
+            "status": "Success"
+          },
+          {
+            "name": "y2_01",
+            "score": 9253.926155930707,
+            "status": "Success"
+          },
+          {
+            "name": "y1_01",
+            "score": 8532.527988358004,
+            "status": "Success"
+          },
+          {
+            "name": "y1_02",
+            "score": 8424.747333838444,
+            "status": "Success"
+          },
+          {
+            "name": "y1_10",
+            "score": 5121.688183213752,
+            "status": "Success"
+          },
+          {
+            "name": "y1_20",
+            "score": 4613.838275610358,
+            "status": "Success"
+          },
+          {
+            "name": "y2_00",
+            "score": 3721.526803687642,
+            "status": "Success"
+          },
+          {
+            "name": "y1_00",
+            "score": 2314.809437074981,
+            "status": "Success"
+          }
+        ]
+      },
+      {
+        "stage": "best_branch_active_8",
+        "seed_chi2": 131.6133333696355,
+        "baseline_recomputed_chi2": 131.6133333696355,
+        "active_parameter_count": 8,
+        "active_parameters": [
+          "y2_12",
+          "y2_22",
+          "y2_21",
+          "y1_21",
+          "y1_11",
+          "y2_00",
+          "y1_12",
+          "y1_22"
+        ],
+        "max_nfev": 30,
+        "optimizer_nfev": 30,
+        "optimizer_success": false,
+        "optimizer_message": "The maximum number of function evaluations is exceeded.",
+        "pipeline_evaluations": 307,
+        "best_chi2": 125.47706317480856,
+        "sensitivity_ranking": [
+          {
+            "name": "y2_12",
+            "score": 9237.04873294955,
+            "status": "Success"
+          },
+          {
+            "name": "y2_22",
+            "score": 7528.730164043723,
+            "status": "Success"
+          },
+          {
+            "name": "y2_21",
+            "score": 5936.798489373098,
+            "status": "Success"
+          },
+          {
+            "name": "y1_21",
+            "score": 5533.212826725448,
+            "status": "Success"
+          },
+          {
+            "name": "y1_11",
+            "score": 5383.232563964465,
+            "status": "Success"
+          },
+          {
+            "name": "y2_00",
+            "score": 4513.881899874226,
+            "status": "Success"
+          },
+          {
+            "name": "y1_12",
+            "score": 4402.084961819408,
+            "status": "Success"
+          },
+          {
+            "name": "y1_22",
+            "score": 3950.929856050465,
+            "status": "Success"
+          },
+          {
+            "name": "y2_11",
+            "score": 3841.916678690062,
+            "status": "Success"
+          },
+          {
+            "name": "y2_02",
+            "score": 3610.927002127855,
+            "status": "Success"
+          },
+          {
+            "name": "y2_10",
+            "score": 3022.5281522504242,
+            "status": "Success"
+          },
+          {
+            "name": "y2_20",
+            "score": 2926.9902837871955,
+            "status": "Success"
+          },
+          {
+            "name": "y1_02",
+            "score": 2059.5154559366397,
+            "status": "Success"
+          },
+          {
+            "name": "y2_01",
+            "score": 1853.9014002733907,
+            "status": "Success"
+          },
+          {
+            "name": "y1_00",
+            "score": 1841.2676005627268,
+            "status": "Success"
+          },
+          {
+            "name": "y1_20",
+            "score": 1379.7463029233074,
+            "status": "Success"
+          },
+          {
+            "name": "y1_01",
+            "score": 1218.025647418111,
+            "status": "Success"
+          },
+          {
+            "name": "y1_10",
+            "score": 1059.9314428957528,
+            "status": "Success"
+          }
+        ]
+      },
+      {
+        "stage": "best_branch_active_12",
+        "seed_chi2": 125.47706317480856,
+        "baseline_recomputed_chi2": 125.47706317480856,
+        "active_parameter_count": 12,
+        "active_parameters": [
+          "y2_12",
+          "y2_22",
+          "y2_21",
+          "y1_21",
+          "y1_11",
+          "y2_00",
+          "y1_12",
+          "y1_22",
+          "y2_11",
+          "y2_02",
+          "y2_10",
+          "y2_20"
+        ],
+        "max_nfev": 40,
+        "optimizer_nfev": 40,
+        "optimizer_success": false,
+        "optimizer_message": "The maximum number of function evaluations is exceeded.",
+        "pipeline_evaluations": 557,
+        "best_chi2": 118.57915264725226,
+        "sensitivity_ranking": [
+          {
+            "name": "y2_12",
+            "score": 9330.023544806689,
+            "status": "Success"
+          },
+          {
+            "name": "y2_22",
+            "score": 7557.345850789707,
+            "status": "Success"
+          },
+          {
+            "name": "y2_21",
+            "score": 5970.836510108316,
+            "status": "Success"
+          },
+          {
+            "name": "y1_21",
+            "score": 5567.320686764673,
+            "status": "Success"
+          },
+          {
+            "name": "y1_11",
+            "score": 5444.499303821571,
+            "status": "Success"
+          },
+          {
+            "name": "y2_00",
+            "score": 4503.007574708574,
+            "status": "Success"
+          },
+          {
+            "name": "y1_12",
+            "score": 4437.8514197952345,
+            "status": "Success"
+          },
+          {
+            "name": "y1_22",
+            "score": 3983.948975177546,
+            "status": "Success"
+          },
+          {
+            "name": "y2_11",
+            "score": 3919.538720574116,
+            "status": "Success"
+          },
+          {
+            "name": "y2_02",
+            "score": 3627.1683903343537,
+            "status": "Success"
+          },
+          {
+            "name": "y2_10",
+            "score": 3064.0796676984787,
+            "status": "Success"
+          },
+          {
+            "name": "y2_20",
+            "score": 2911.8735655264477,
+            "status": "Success"
+          },
+          {
+            "name": "y1_02",
+            "score": 2046.349525451149,
+            "status": "Success"
+          },
+          {
+            "name": "y2_01",
+            "score": 1856.2889871011346,
+            "status": "Success"
+          },
+          {
+            "name": "y1_00",
+            "score": 1842.901084782717,
+            "status": "Success"
+          },
+          {
+            "name": "y1_20",
+            "score": 1372.5808709987896,
+            "status": "Success"
+          },
+          {
+            "name": "y1_01",
+            "score": 1241.0312325715731,
+            "status": "Success"
+          },
+          {
+            "name": "y1_10",
+            "score": 1051.2619672919855,
+            "status": "Success"
+          }
+        ]
+      }
+    ],
+    "pipeline_evaluations": 1290
+  },
+  "sobol_success_count": 7,
+  "sobol_failure_count": 0,
+  "sobol_failures": [],
+  "candidate_evaluation_count": 1300,
+  "final_diagnostics": {
+    "trajectory": {
+      "eft1_end": {
+        "mu_gev": 1000.0,
+        "mS1Sq_gev2": 1354586.2149007167,
+        "mS2Sq_gev2": 1033055.175671957,
+        "lambdaT3": {
+          "real": 5.027402489261596e-09,
+          "imag": 0.0
+        },
+        "new_quartics": {
+          "lambdaT3GeneralQ110101I1": {
+            "real": 5.06521581678673e-10,
+            "imag": 0.0
+          }
+        },
+        "reused_quartics": {
+          "lambdaS1barS2S2bar2": {
+            "real": 5.336200029395142e-10,
+            "imag": 0.0
+          },
+          "lambdaS1bar2S2bar2": {
+            "real": 5.496990093874048e-10,
+            "imag": 0.0
+          },
+          "lambdaS1S1bar2S2bar": {
+            "real": 5.374228024135176e-10,
+            "imag": 0.0
+          },
+          "lambdaHHdagS2S2": {
+            "real": 4.990706098192904e-10,
+            "imag": 0.0
+          },
+          "lambdaHHdagS1barS1bar": {
+            "real": 5.008014154095885e-10,
+            "imag": 0.0
+          },
+          "lambdaHHdagS1barS2barCross": {
+            "real": 4.985993376882367e-10,
+            "imag": 0.0
+          }
+        },
+        "quadratic_mu2_gev2": {
+          "real": -0.00021814487599380603,
+          "imag": 0.0
+        }
+      },
+      "uv_nfev": 0,
+      "eft1_nfev": 179,
+      "boundary_extra_quartic_fraction": 0.1,
+      "boundary_mu2_fraction": 0.0
+    },
+    "MF_muF_gev": [
+      100000.0,
+      110000.0,
+      120000.0
+    ],
+    "heavy_mass_basis_residual": 0.0,
+    "C5_muS_gev_inv": {
+      "real": [
+        [
+          -1.388794257223334e-16,
+          1.7878730210612792e-16,
+          4.0938801123495336e-16
+        ],
+        [
+          1.7878730210612792e-16,
+          -4.2715891310801683e-16,
+          9.132798594801266e-16
+        ],
+        [
+          4.0938801123495336e-16,
+          9.132798594801266e-16,
+          -1.091205896283427e-15
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    "C5_low_gev_inv": {
+      "real": [
+        [
+          -1.3315197652380967e-16,
+          1.714140357183664e-16,
+          3.925055648206325e-16
+        ],
+        [
+          1.714140357183664e-16,
+          -4.095426963001276e-16,
+          8.756178004382388e-16
+        ],
+        [
+          3.925055648206325e-16,
+          8.756178004382388e-16,
+          -1.0462088622766142e-15
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    }
+  },
+  "source_manifest": {
+    "format": "t3-bc-general-scalar-exploratory-yukawa-refit-v1",
+    "case": "small_uv_frozen_5e-9",
+    "model": "B_-1",
+    "files_sha256": {
+      "output/studies/fermion_start_lambda_comparison/5e-9/fitted/T3_dS1_2_dS2_2_dF_1_alpha_m1.json": "09ee40fd4964bc2ac8db1172d4f9338bad23e08c3715f7613f2021e1c192a76c",
+      "output/studies/fermion_start_lambda_comparison/5e-9/fits/T3_dS1_2_dS2_2_dF_1_alpha_m1.json": "10ea818fb9914b34fb21c67e049eca7d582bed79e759dab794904cdf5fc83ad2",
+      "RGE/general/generated/general_rgbeta_quartic_registry.json": "86a096410384641efa8f751b2aa98e8fee4bb6d3cccb4cfd116c559b71182eea",
+      "output/general_t3_stage22/stage23_quartic_prefactor_candidates.json": "f443587dae570f740dac2cf0aab587f41ed8d4088615ad000e30244127570a42",
+      "output/general_t3_stage22/stage26_conditional_quartic_action.json": "fa190cb12e3b792caefb2942ffc9f7f9ddb77c14a13c95e99e95d6940dd5ac85",
+      "output/general_t3_mass_eigen_matchete/one_loop_probe/B_m1_final_one_loop_probe_weinberg_ordered_coefficient.inputform.txt": "12b4507253982cb58d6adb79fb83ba59363f22f86af8f9d04897d533d48e97fd",
+      "output/general_t3_quadratic_eft1/B_m1_uv_quadratic_live_rgbeta.json": "5508a9a2bdaab3354e7191c83bd082e60f4089edff40588f54823456a32ca33d",
+      "output/general_t3_quadratic_eft1/B_m1_eft1_quadratic_live_rgbeta.json": "b99358b50e12e0466e0f1c11a44bd1bbecefb45021293907a1d5f92b7baaf473",
+      "configs/nufit_6_1_ic24_no.json": "27bd4d4297fddb3ef71b5b804afd8e31d44d302b569f7cf8c34d37d54005e15e"
+    },
+    "fit_options": {
+      "quartic_fraction": 0.1,
+      "mu2_fraction": 0.0,
+      "sobol_seed": 20261028,
+      "sobol_points": 8,
+      "bound": 3.0,
+      "fraction": 0.5,
+      "floor": 1e-06,
+      "seed_count": 3
+    },
+    "conditional_map": "lambda_M = -lambda_RGBeta for two direct quartics",
+    "physical_coupling_map_certified": false,
+    "sequential_general_scalar_matching": false,
+    "historical_input_unchanged": true
+  },
+  "UV_running_enabled": false,
+  "input_extra_quartic_fraction_of_abs_lambdaT3": 0.1,
+  "input_mu2_fraction_of_min_scalar_m2": 0.0,
+  "physical_matchete_rgbeta_map_certified": false,
+  "one_scale_matchete_expression_reused": true,
+  "full_sequential_general_scalar_matching_performed": false,
+  "fits_not_independent_predictions": true,
+  "historical_outputs_overwritten": false
+}

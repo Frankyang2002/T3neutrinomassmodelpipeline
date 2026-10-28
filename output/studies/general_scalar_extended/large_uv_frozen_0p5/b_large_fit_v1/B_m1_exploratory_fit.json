@@ -1,0 +1,359 @@
+{
+  "format": "t3-bc-general-scalar-exploratory-yukawa-refit-v1",
+  "model": "B_-1",
+  "case": "large_uv_frozen_0p5",
+  "run_id": "b_large_fit_v1",
+  "status": "ExploratoryAcceptedFit",
+  "chi2_initial": 169346.57323639796,
+  "chi2_final": 0.03295040015025054,
+  "passes_approx_chi2_5p86": true,
+  "historical_fit_chi2": 32.294488683843106,
+  "historical_fitted_config": "output/studies/fermion_start_lambda_comparison/0p5/fitted/T3_dS1_2_dS2_2_dF_1_alpha_m1.json",
+  "initial_parameters": {
+    "y1_00": 5.559055943260387e-05,
+    "y1_01": 5.715459950959151e-05,
+    "y1_02": 1.7334464190686683e-05,
+    "y1_10": 1.8555300223552576e-05,
+    "y1_11": -4.044852630854037e-05,
+    "y1_12": -5.742992195310881e-05,
+    "y1_20": -6.648072545129349e-05,
+    "y1_21": 9.097085680708633e-06,
+    "y1_22": 1.8630344957724226e-05,
+    "y2_00": -3.888857030518063e-05,
+    "y2_01": 4.130603871782025e-05,
+    "y2_02": -2.0998533493974195e-05,
+    "y2_10": 6.875645827373288e-05,
+    "y2_11": -5.6664010440396484e-05,
+    "y2_12": 5.242713196288579e-05,
+    "y2_20": -2.847728590526545e-05,
+    "y2_21": -3.444074761198984e-05,
+    "y2_22": -5.717933596887867e-06
+  },
+  "best_parameters": {
+    "y1_00": 7.876087347469252e-05,
+    "y1_01": 5.538477456479285e-05,
+    "y1_02": 2.576901925266384e-05,
+    "y1_10": 7.977865144503937e-06,
+    "y1_11": -3.104636055217824e-05,
+    "y1_12": -6.701569090239445e-05,
+    "y1_20": -4.82984304861489e-05,
+    "y1_21": 9.027137704897825e-06,
+    "y1_22": 2.6926756697687182e-05,
+    "y2_00": -5.413386543473564e-05,
+    "y2_01": 5.9115029427125876e-05,
+    "y2_02": -2.7018697958514082e-05,
+    "y2_10": 7.165758399318989e-05,
+    "y2_11": -8.241333525660366e-05,
+    "y2_12": 4.908371021272728e-05,
+    "y2_20": -3.5955834817968935e-05,
+    "y2_21": -2.155660597180642e-05,
+    "y2_22": -7.478923386372571e-06
+  },
+  "prediction": {
+    "delta_m21_sq_ev2": 7.521522834277511e-05,
+    "delta_m3l_sq_ev2": 0.00251229883943974,
+    "sin2_theta12": 0.30891699489770574,
+    "sin2_theta13": 0.02251172266894087,
+    "sin2_theta23": 0.46986994042000046
+  },
+  "whitened_residual": [
+    -0.1595584095101989,
+    0.06335802145072092,
+    0.017593217700108944,
+    0.055653805159419936,
+    -0.008390940645129585
+  ],
+  "optimiser": {
+    "enabled": true,
+    "skipped": false,
+    "seed_count": 3,
+    "stopped_early": true,
+    "stages": [
+      {
+        "stage": "multistart_seed_1_active_5",
+        "seed_chi2": 50385.928460289484,
+        "baseline_recomputed_chi2": 50385.92845564151,
+        "active_parameter_count": 5,
+        "active_parameters": [
+          "y1_11",
+          "y1_10",
+          "y2_00",
+          "y2_20",
+          "y1_01"
+        ],
+        "max_nfev": 20,
+        "optimizer_nfev": 4,
+        "optimizer_success": true,
+        "optimizer_message": "`xtol` termination condition is satisfied.",
+        "pipeline_evaluations": 61,
+        "best_chi2": 0.03295040015025054,
+        "sensitivity_ranking": [
+          {
+            "name": "y1_11",
+            "score": 14588817822798.055,
+            "status": "Success"
+          },
+          {
+            "name": "y1_10",
+            "score": 14209294334254.773,
+            "status": "Success"
+          },
+          {
+            "name": "y2_00",
+            "score": 13987415358584.285,
+            "status": "Success"
+          },
+          {
+            "name": "y2_20",
+            "score": 11001344369154.889,
+            "status": "Success"
+          },
+          {
+            "name": "y1_01",
+            "score": 10546919087966.201,
+            "status": "Success"
+          },
+          {
+            "name": "y2_11",
+            "score": 9497122489154.594,
+            "status": "Success"
+          },
+          {
+            "name": "y1_20",
+            "score": 9383304694342.973,
+            "status": "Success"
+          },
+          {
+            "name": "y2_12",
+            "score": 8401631040869.23,
+            "status": "Success"
+          },
+          {
+            "name": "y2_01",
+            "score": 7250250551716.399,
+            "status": "Success"
+          },
+          {
+            "name": "y2_10",
+            "score": 7224880482119.524,
+            "status": "Success"
+          },
+          {
+            "name": "y1_12",
+            "score": 5099347203352.347,
+            "status": "Success"
+          },
+          {
+            "name": "y2_22",
+            "score": 3742403747363.1855,
+            "status": "Success"
+          },
+          {
+            "name": "y1_00",
+            "score": 3359376613931.833,
+            "status": "Success"
+          },
+          {
+            "name": "y1_21",
+            "score": 3201723553030.759,
+            "status": "Success"
+          },
+          {
+            "name": "y1_02",
+            "score": 3115389126018.0635,
+            "status": "Success"
+          },
+          {
+            "name": "y2_02",
+            "score": 2986694278858.693,
+            "status": "Success"
+          },
+          {
+            "name": "y2_21",
+            "score": 780950268357.0316,
+            "status": "Success"
+          },
+          {
+            "name": "y1_22",
+            "score": 313425005607.4704,
+            "status": "Success"
+          }
+        ]
+      }
+    ],
+    "pipeline_evaluations": 61
+  },
+  "sobol_success_count": 7,
+  "sobol_failure_count": 0,
+  "sobol_failures": [],
+  "candidate_evaluation_count": 71,
+  "final_diagnostics": {
+    "trajectory": {
+      "eft1_end": {
+        "mu_gev": 1000.0,
+        "mS1Sq_gev2": 1356804.4614754785,
+        "mS2Sq_gev2": 1035697.3869537717,
+        "lambdaT3": {
+          "real": 0.5082661148650995,
+          "imag": 0.0
+        },
+        "new_quartics": {
+          "lambdaT3GeneralQ110101I1": {
+            "real": 0.05044155193623032,
+            "imag": 0.0
+          }
+        },
+        "reused_quartics": {
+          "lambdaS1barS2S2bar2": {
+            "real": 0.051643398633481157,
+            "imag": 0.0
+          },
+          "lambdaS1bar2S2bar2": {
+            "real": 0.053736943065368734,
+            "imag": 0.0
+          },
+          "lambdaS1S1bar2S2bar": {
+            "real": 0.05213049873224111,
+            "imag": 0.0
+          },
+          "lambdaHHdagS2S2": {
+            "real": 0.050276069642492656,
+            "imag": 0.0
+          },
+          "lambdaHHdagS1barS1bar": {
+            "real": 0.04998918855603598,
+            "imag": 0.0
+          },
+          "lambdaHHdagS1barS2barCross": {
+            "real": 0.05010918086448352,
+            "imag": 0.0
+          }
+        },
+        "quadratic_mu2_gev2": {
+          "real": -21289.730255209866,
+          "imag": 0.0
+        }
+      },
+      "uv_nfev": 0,
+      "eft1_nfev": 239,
+      "boundary_extra_quartic_fraction": 0.1,
+      "boundary_mu2_fraction": 0.0
+    },
+    "MF_muF_gev": [
+      100000.0,
+      110000.0,
+      120000.0
+    ],
+    "heavy_mass_basis_residual": 0.0,
+    "C5_muS_gev_inv": {
+      "real": [
+        [
+          9.686953281161818e-17,
+          1.2828485279649381e-16,
+          5.117079667412046e-16
+        ],
+        [
+          1.2828485279649381e-16,
+          -1.005506983490764e-15,
+          7.547178125749704e-16
+        ],
+        [
+          5.117079667412046e-16,
+          7.547178125749704e-16,
+          -9.615712516696386e-16
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    "C5_low_gev_inv": {
+      "real": [
+        [
+          9.294515128974758e-17,
+          1.2308777383044668e-16,
+          4.909787597349501e-16
+        ],
+        [
+          1.2308777383044668e-16,
+          -9.647718686266815e-16,
+          7.241443217353823e-16
+        ],
+        [
+          4.909787597349501e-16,
+          7.241443217353823e-16,
+          -9.226202641858296e-16
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    }
+  },
+  "source_manifest": {
+    "format": "t3-bc-general-scalar-exploratory-yukawa-refit-v1",
+    "case": "large_uv_frozen_0p5",
+    "model": "B_-1",
+    "files_sha256": {
+      "output/studies/fermion_start_lambda_comparison/0p5/fitted/T3_dS1_2_dS2_2_dF_1_alpha_m1.json": "b1ddacfc5b4300ccb22ecd1fe3780b09c8dcd56e2c7f00da4359e7e83db35648",
+      "output/studies/fermion_start_lambda_comparison/0p5/fits/T3_dS1_2_dS2_2_dF_1_alpha_m1.json": "77abd79c862c4dc7572e951f487ca700060695475987a4ffc9122b14875a6b9d",
+      "RGE/general/generated/general_rgbeta_quartic_registry.json": "86a096410384641efa8f751b2aa98e8fee4bb6d3cccb4cfd116c559b71182eea",
+      "output/general_t3_stage22/stage23_quartic_prefactor_candidates.json": "f443587dae570f740dac2cf0aab587f41ed8d4088615ad000e30244127570a42",
+      "output/general_t3_stage22/stage26_conditional_quartic_action.json": "fa190cb12e3b792caefb2942ffc9f7f9ddb77c14a13c95e99e95d6940dd5ac85",
+      "output/general_t3_mass_eigen_matchete/one_loop_probe/B_m1_final_one_loop_probe_weinberg_ordered_coefficient.inputform.txt": "12b4507253982cb58d6adb79fb83ba59363f22f86af8f9d04897d533d48e97fd",
+      "output/general_t3_quadratic_eft1/B_m1_uv_quadratic_live_rgbeta.json": "5508a9a2bdaab3354e7191c83bd082e60f4089edff40588f54823456a32ca33d",
+      "output/general_t3_quadratic_eft1/B_m1_eft1_quadratic_live_rgbeta.json": "b99358b50e12e0466e0f1c11a44bd1bbecefb45021293907a1d5f92b7baaf473",
+      "configs/nufit_6_1_ic24_no.json": "27bd4d4297fddb3ef71b5b804afd8e31d44d302b569f7cf8c34d37d54005e15e"
+    },
+    "fit_options": {
+      "quartic_fraction": 0.1,
+      "mu2_fraction": 0.0,
+      "sobol_seed": 20261028,
+      "sobol_points": 8,
+      "bound": 3.0,
+      "fraction": 0.5,
+      "floor": 1e-06,
+      "seed_count": 3
+    },
+    "conditional_map": "lambda_M = -lambda_RGBeta for two direct quartics",
+    "physical_coupling_map_certified": false,
+    "sequential_general_scalar_matching": false,
+    "historical_input_unchanged": true
+  },
+  "UV_running_enabled": false,
+  "input_extra_quartic_fraction_of_abs_lambdaT3": 0.1,
+  "input_mu2_fraction_of_min_scalar_m2": 0.0,
+  "physical_matchete_rgbeta_map_certified": false,
+  "one_scale_matchete_expression_reused": true,
+  "full_sequential_general_scalar_matching_performed": false,
+  "fits_not_independent_predictions": true,
+  "historical_outputs_overwritten": false
+}

@@ -1,0 +1,3165 @@
+{
+  "format": "t3-one-loop-scalar-single-quartic-wick-audit-v1",
+  "scope": "unbroken electroweak, LLSS -> LLHH / holomorphic Weinberg projection at fixed one-loop order",
+  "status": "WickNecessaryConditionsReproduceSavedC5Inventory",
+  "new_matching_calculation_performed": false,
+  "source_provenance_verified_on_local_checkout": true,
+  "source_basis_convention": "Lagrangian/interactions/T3Topology.wl @ a02e04c6def5cf8522b2f612ccd6bff7d9963b91",
+  "batch1_report_sha256": "e6e4f9df7965bd5620d30148edab3387a6f30f873fa8a65f4770be28550ed5fa",
+  "assumptions": [
+    "Use both lepton-side Yukawa vertices as in T3Topology.wl: y1 couples S1, y2 couples S2dag.",
+    "Free scalar propagators connect S1 to S1dag and S2 to S2dag only; all eight additional holomorphic quadratic coefficients are zero for this test.",
+    "A single quartic with two Higgs legs is inserted, and both external Higgs fields follow the conjugate orientation of the benchmark HH S1 S2dag topology coupling.",
+    "Work in the unbroken gauge phase and at leading dimension-five, fixed-order one-loop matching; no additional Higgs VEV insertions or quartic vertices.",
+    "Fermion chirality/Majorana contractions, nonzero CG coefficients and coefficient normalization are NOT proven by Wick-leg counting; saved C5 observations are a separate check."
+  ],
+  "counts": {
+    "models_checked": 16,
+    "additional_quartics_total": 50,
+    "new_two_H_vertices": 24,
+    "new_direct_wick_eligible": 4,
+    "saved_C5_observed_new": 4,
+    "excluded_H_Hdag_by_higgs_orientation": 10,
+    "excluded_Hdag2_by_scalar_orientation": 10,
+    "new_no_H_vertex": 26,
+    "extra_quadratics_not_screened": 8,
+    "baseline_portal_families_H_Hdag": 32
+  },
+  "classification_counts": {
+    "baseline_no_direct_two_H_vertex": 48,
+    "baseline_portal_higgs_chirality_mismatch": 32,
+    "baseline_topology_reproduced": 16,
+    "higgs_chirality_mismatch": 10,
+    "no_H_fields_at_one_vertex": 26,
+    "required_diagonal_mass_input": 32,
+    "scalar_wick_orientation_mismatch": 10,
+    "single_vertex_wick_eligible_and_saved_C5_observed": 4,
+    "unsuppressed_tree_level_mass_effect": 8
+  },
+  "per_model": {
+    "A_+0": {
+      "new_two_H_vertices": 2,
+      "wick_eligible": 0,
+      "chirality_mismatch": 1,
+      "scalar_orientation_mismatch": 1,
+      "observed_in_saved_C5": 0
+    },
+    "A_-2": {
+      "new_two_H_vertices": 2,
+      "wick_eligible": 0,
+      "chirality_mismatch": 1,
+      "scalar_orientation_mismatch": 1,
+      "observed_in_saved_C5": 0
+    },
+    "A_-4": {
+      "new_two_H_vertices": 0,
+      "wick_eligible": 0,
+      "chirality_mismatch": 0,
+      "scalar_orientation_mismatch": 0,
+      "observed_in_saved_C5": 0
+    },
+    "B_+1": {
+      "new_two_H_vertices": 1,
+      "wick_eligible": 0,
+      "chirality_mismatch": 0,
+      "scalar_orientation_mismatch": 1,
+      "observed_in_saved_C5": 0
+    },
+    "B_-1": {
+      "new_two_H_vertices": 4,
+      "wick_eligible": 2,
+      "chirality_mismatch": 2,
+      "scalar_orientation_mismatch": 0,
+      "observed_in_saved_C5": 2
+    },
+    "B_-3": {
+      "new_two_H_vertices": 1,
+      "wick_eligible": 0,
+      "chirality_mismatch": 0,
+      "scalar_orientation_mismatch": 1,
+      "observed_in_saved_C5": 0
+    },
+    "C_+1": {
+      "new_two_H_vertices": 1,
+      "wick_eligible": 0,
+      "chirality_mismatch": 0,
+      "scalar_orientation_mismatch": 1,
+      "observed_in_saved_C5": 0
+    },
+    "C_-1": {
+      "new_two_H_vertices": 4,
+      "wick_eligible": 2,
+      "chirality_mismatch": 2,
+      "scalar_orientation_mismatch": 0,
+      "observed_in_saved_C5": 2
+    },
+    "C_-3": {
+      "new_two_H_vertices": 1,
+      "wick_eligible": 0,
+      "chirality_mismatch": 0,
+      "scalar_orientation_mismatch": 1,
+      "observed_in_saved_C5": 0
+    },
+    "D_+0": {
+      "new_two_H_vertices": 2,
+      "wick_eligible": 0,
+      "chirality_mismatch": 1,
+      "scalar_orientation_mismatch": 1,
+      "observed_in_saved_C5": 0
+    },
+    "D_+2": {
+      "new_two_H_vertices": 0,
+      "wick_eligible": 0,
+      "chirality_mismatch": 0,
+      "scalar_orientation_mismatch": 0,
+      "observed_in_saved_C5": 0
+    },
+    "D_-2": {
+      "new_two_H_vertices": 2,
+      "wick_eligible": 0,
+      "chirality_mismatch": 1,
+      "scalar_orientation_mismatch": 1,
+      "observed_in_saved_C5": 0
+    },
+    "E_+0": {
+      "new_two_H_vertices": 2,
+      "wick_eligible": 0,
+      "chirality_mismatch": 1,
+      "scalar_orientation_mismatch": 1,
+      "observed_in_saved_C5": 0
+    },
+    "E_+2": {
+      "new_two_H_vertices": 0,
+      "wick_eligible": 0,
+      "chirality_mismatch": 0,
+      "scalar_orientation_mismatch": 0,
+      "observed_in_saved_C5": 0
+    },
+    "E_-2": {
+      "new_two_H_vertices": 2,
+      "wick_eligible": 0,
+      "chirality_mismatch": 1,
+      "scalar_orientation_mismatch": 1,
+      "observed_in_saved_C5": 0
+    },
+    "E_-4": {
+      "new_two_H_vertices": 0,
+      "wick_eligible": 0,
+      "chirality_mismatch": 0,
+      "scalar_orientation_mismatch": 0,
+      "observed_in_saved_C5": 0
+    }
+  },
+  "operators": [
+    {
+      "model": "A_+0",
+      "kind": "baseline_topology",
+      "coupling": "lambdaT3",
+      "field_structure": "H H S1 S2dag + h.c.",
+      "source_Batch1_classification": "leading_one_loop_topology",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        2,
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "baseline_topology_reproduced",
+      "channel": "y1_y2",
+      "basis_assumption": "diagonal_complex_scalar_propagators",
+      "reason": "Hermitian conjugate of HH S1 S2dag saturates the Yukawa scalar ends."
+    },
+    {
+      "model": "A_+0",
+      "kind": "baseline_quadratic",
+      "coupling": "MS1",
+      "field_structure": "S1dag S1",
+      "source_Batch1_classification": "tree_level_scalar_spectrum",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "required_diagonal_mass_input",
+      "reason": "Determines the propagators used by the test."
+    },
+    {
+      "model": "A_+0",
+      "kind": "baseline_quadratic",
+      "coupling": "MS2",
+      "field_structure": "S2dag S2",
+      "source_Batch1_classification": "tree_level_scalar_spectrum",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "required_diagonal_mass_input",
+      "reason": "Determines the propagators used by the test."
+    },
+    {
+      "model": "A_+0",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaS1Inv*",
+      "field_structure": "(S1dag S1)(S1dag S1)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "A_+0",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaS2Inv*",
+      "field_structure": "(S2dag S2)(S2dag S2)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "A_+0",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaH1Inv*",
+      "field_structure": "(Hdag H)(S1dag S1)",
+      "source_Batch1_classification": "one_loop_higgs_vertex_candidate",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_portal_higgs_chirality_mismatch",
+      "reason": "The Hdag H portal cannot furnish the Hdag Hdag vertex of the unbroken holomorphic Weinberg projection alone; v/M mass shifts and RG effects remain."
+    },
+    {
+      "model": "A_+0",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaH2Inv*",
+      "field_structure": "(Hdag H)(S2dag S2)",
+      "source_Batch1_classification": "one_loop_higgs_vertex_candidate",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_portal_higgs_chirality_mismatch",
+      "reason": "The Hdag H portal cannot furnish the Hdag Hdag vertex of the unbroken holomorphic Weinberg projection alone; v/M mass shifts and RG effects remain."
+    },
+    {
+      "model": "A_+0",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambda12Inv*",
+      "field_structure": "(S1dag S1)(S2dag S2)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "A_+0",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ000211I1",
+      "field_structure": "S1dag^2 S2 S2dag",
+      "source_Batch1_classification": "no_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        1
+      ],
+      "status": "no_H_fields_at_one_vertex",
+      "reason": "Cannot furnish the two external Higgs fields with a single quartic vertex; indirect effects remain."
+    },
+    {
+      "model": "A_+0",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ000400I1",
+      "field_structure": "S1dag^4",
+      "source_Batch1_classification": "no_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        0,
+        4,
+        0,
+        0
+      ],
+      "status": "no_H_fields_at_one_vertex",
+      "reason": "Cannot furnish the two external Higgs fields with a single quartic vertex; indirect effects remain."
+    },
+    {
+      "model": "A_+0",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ001300I1",
+      "field_structure": "S1 S1dag^3",
+      "source_Batch1_classification": "no_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        1,
+        3,
+        0,
+        0
+      ],
+      "status": "no_H_fields_at_one_vertex",
+      "reason": "Cannot furnish the two external Higgs fields with a single quartic vertex; indirect effects remain."
+    },
+    {
+      "model": "A_+0",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ021010I1",
+      "field_structure": "Hdag^2 S1 S2",
+      "source_Batch1_classification": "higgs_vertex_not_seen_in_saved_C5",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        2,
+        1,
+        0,
+        1,
+        0
+      ],
+      "status": "scalar_wick_orientation_mismatch",
+      "reason": "The Hdag Hdag orientation does not supply two scalar legs conjugate to S1/S2dag Yukawa sources with diagonal scalar propagators.",
+      "channel": null,
+      "orientation": null,
+      "orientations_tested": [
+        {
+          "orientation": "as_named",
+          "higgs_pair_correct": true,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        },
+        {
+          "orientation": "hermitian_conjugate",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        }
+      ],
+      "basis_assumption": "diagonal_complex_scalar_propagators"
+    },
+    {
+      "model": "A_+0",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ110200I1",
+      "field_structure": "H Hdag S1dag^2",
+      "source_Batch1_classification": "higgs_vertex_not_seen_in_saved_C5",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        1,
+        1,
+        0,
+        2,
+        0,
+        0
+      ],
+      "status": "higgs_chirality_mismatch",
+      "reason": "Both orientations contain H Hdag, not the Hdag Hdag vertex used by the lepton-side holomorphic Weinberg projection.",
+      "channel": null,
+      "orientation": null,
+      "orientations_tested": [
+        {
+          "orientation": "as_named",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": true,
+          "yukawa_pair_channel": null
+        },
+        {
+          "orientation": "hermitian_conjugate",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        }
+      ],
+      "basis_assumption": "diagonal_complex_scalar_propagators"
+    },
+    {
+      "model": "A_+0",
+      "kind": "additional_quadratic",
+      "coupling": "mu2_extra_000200_I1",
+      "field_structure": "S1dag^2",
+      "source_Batch1_classification": "unsuppressed_tree_scalar_mass_effect",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        0,
+        2,
+        0,
+        0
+      ],
+      "status": "unsuppressed_tree_level_mass_effect",
+      "reason": "Can generate anomalous/off-diagonal propagators or physical mass splittings at tree level. Nonzero coupling INVALIDATES this Wick-screening assumption."
+    },
+    {
+      "model": "A_-2",
+      "kind": "baseline_topology",
+      "coupling": "lambdaT3",
+      "field_structure": "H H S1 S2dag + h.c.",
+      "source_Batch1_classification": "leading_one_loop_topology",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        2,
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "baseline_topology_reproduced",
+      "channel": "y1_y2",
+      "basis_assumption": "diagonal_complex_scalar_propagators",
+      "reason": "Hermitian conjugate of HH S1 S2dag saturates the Yukawa scalar ends."
+    },
+    {
+      "model": "A_-2",
+      "kind": "baseline_quadratic",
+      "coupling": "MS1",
+      "field_structure": "S1dag S1",
+      "source_Batch1_classification": "tree_level_scalar_spectrum",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "required_diagonal_mass_input",
+      "reason": "Determines the propagators used by the test."
+    },
+    {
+      "model": "A_-2",
+      "kind": "baseline_quadratic",
+      "coupling": "MS2",
+      "field_structure": "S2dag S2",
+      "source_Batch1_classification": "tree_level_scalar_spectrum",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "required_diagonal_mass_input",
+      "reason": "Determines the propagators used by the test."
+    },
+    {
+      "model": "A_-2",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaS1Inv*",
+      "field_structure": "(S1dag S1)(S1dag S1)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "A_-2",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaS2Inv*",
+      "field_structure": "(S2dag S2)(S2dag S2)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "A_-2",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaH1Inv*",
+      "field_structure": "(Hdag H)(S1dag S1)",
+      "source_Batch1_classification": "one_loop_higgs_vertex_candidate",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_portal_higgs_chirality_mismatch",
+      "reason": "The Hdag H portal cannot furnish the Hdag Hdag vertex of the unbroken holomorphic Weinberg projection alone; v/M mass shifts and RG effects remain."
+    },
+    {
+      "model": "A_-2",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaH2Inv*",
+      "field_structure": "(Hdag H)(S2dag S2)",
+      "source_Batch1_classification": "one_loop_higgs_vertex_candidate",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_portal_higgs_chirality_mismatch",
+      "reason": "The Hdag H portal cannot furnish the Hdag Hdag vertex of the unbroken holomorphic Weinberg projection alone; v/M mass shifts and RG effects remain."
+    },
+    {
+      "model": "A_-2",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambda12Inv*",
+      "field_structure": "(S1dag S1)(S2dag S2)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "A_-2",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ000004I1",
+      "field_structure": "S2dag^4",
+      "source_Batch1_classification": "no_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        4
+      ],
+      "status": "no_H_fields_at_one_vertex",
+      "reason": "Cannot furnish the two external Higgs fields with a single quartic vertex; indirect effects remain."
+    },
+    {
+      "model": "A_-2",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ000013I1",
+      "field_structure": "S2 S2dag^3",
+      "source_Batch1_classification": "no_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        3
+      ],
+      "status": "no_H_fields_at_one_vertex",
+      "reason": "Cannot furnish the two external Higgs fields with a single quartic vertex; indirect effects remain."
+    },
+    {
+      "model": "A_-2",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ001102I1",
+      "field_structure": "S1 S1dag S2dag^2",
+      "source_Batch1_classification": "no_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        1,
+        1,
+        0,
+        2
+      ],
+      "status": "no_H_fields_at_one_vertex",
+      "reason": "Cannot furnish the two external Higgs fields with a single quartic vertex; indirect effects remain."
+    },
+    {
+      "model": "A_-2",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ020101I1",
+      "field_structure": "Hdag^2 S1dag S2dag",
+      "source_Batch1_classification": "higgs_vertex_not_seen_in_saved_C5",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        2,
+        0,
+        1,
+        0,
+        1
+      ],
+      "status": "scalar_wick_orientation_mismatch",
+      "reason": "The Hdag Hdag orientation does not supply two scalar legs conjugate to S1/S2dag Yukawa sources with diagonal scalar propagators.",
+      "channel": null,
+      "orientation": null,
+      "orientations_tested": [
+        {
+          "orientation": "as_named",
+          "higgs_pair_correct": true,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        },
+        {
+          "orientation": "hermitian_conjugate",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        }
+      ],
+      "basis_assumption": "diagonal_complex_scalar_propagators"
+    },
+    {
+      "model": "A_-2",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ110002I1",
+      "field_structure": "H Hdag S2dag^2",
+      "source_Batch1_classification": "higgs_vertex_not_seen_in_saved_C5",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        1,
+        1,
+        0,
+        0,
+        0,
+        2
+      ],
+      "status": "higgs_chirality_mismatch",
+      "reason": "Both orientations contain H Hdag, not the Hdag Hdag vertex used by the lepton-side holomorphic Weinberg projection.",
+      "channel": null,
+      "orientation": null,
+      "orientations_tested": [
+        {
+          "orientation": "as_named",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        },
+        {
+          "orientation": "hermitian_conjugate",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": true,
+          "yukawa_pair_channel": null
+        }
+      ],
+      "basis_assumption": "diagonal_complex_scalar_propagators"
+    },
+    {
+      "model": "A_-2",
+      "kind": "additional_quadratic",
+      "coupling": "mu2_extra_000002_I1",
+      "field_structure": "S2dag^2",
+      "source_Batch1_classification": "unsuppressed_tree_scalar_mass_effect",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        2
+      ],
+      "status": "unsuppressed_tree_level_mass_effect",
+      "reason": "Can generate anomalous/off-diagonal propagators or physical mass splittings at tree level. Nonzero coupling INVALIDATES this Wick-screening assumption."
+    },
+    {
+      "model": "A_-4",
+      "kind": "baseline_topology",
+      "coupling": "lambdaT3",
+      "field_structure": "H H S1 S2dag + h.c.",
+      "source_Batch1_classification": "leading_one_loop_topology",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        2,
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "baseline_topology_reproduced",
+      "channel": "y1_y2",
+      "basis_assumption": "diagonal_complex_scalar_propagators",
+      "reason": "Hermitian conjugate of HH S1 S2dag saturates the Yukawa scalar ends."
+    },
+    {
+      "model": "A_-4",
+      "kind": "baseline_quadratic",
+      "coupling": "MS1",
+      "field_structure": "S1dag S1",
+      "source_Batch1_classification": "tree_level_scalar_spectrum",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "required_diagonal_mass_input",
+      "reason": "Determines the propagators used by the test."
+    },
+    {
+      "model": "A_-4",
+      "kind": "baseline_quadratic",
+      "coupling": "MS2",
+      "field_structure": "S2dag S2",
+      "source_Batch1_classification": "tree_level_scalar_spectrum",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "required_diagonal_mass_input",
+      "reason": "Determines the propagators used by the test."
+    },
+    {
+      "model": "A_-4",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaS1Inv*",
+      "field_structure": "(S1dag S1)(S1dag S1)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "A_-4",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaS2Inv*",
+      "field_structure": "(S2dag S2)(S2dag S2)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "A_-4",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaH1Inv*",
+      "field_structure": "(Hdag H)(S1dag S1)",
+      "source_Batch1_classification": "one_loop_higgs_vertex_candidate",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_portal_higgs_chirality_mismatch",
+      "reason": "The Hdag H portal cannot furnish the Hdag Hdag vertex of the unbroken holomorphic Weinberg projection alone; v/M mass shifts and RG effects remain."
+    },
+    {
+      "model": "A_-4",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaH2Inv*",
+      "field_structure": "(Hdag H)(S2dag S2)",
+      "source_Batch1_classification": "one_loop_higgs_vertex_candidate",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_portal_higgs_chirality_mismatch",
+      "reason": "The Hdag H portal cannot furnish the Hdag Hdag vertex of the unbroken holomorphic Weinberg projection alone; v/M mass shifts and RG effects remain."
+    },
+    {
+      "model": "A_-4",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambda12Inv*",
+      "field_structure": "(S1dag S1)(S2dag S2)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "B_+1",
+      "kind": "baseline_topology",
+      "coupling": "lambdaT3",
+      "field_structure": "H H S1 S2dag + h.c.",
+      "source_Batch1_classification": "leading_one_loop_topology",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        2,
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "baseline_topology_reproduced",
+      "channel": "y1_y2",
+      "basis_assumption": "diagonal_complex_scalar_propagators",
+      "reason": "Hermitian conjugate of HH S1 S2dag saturates the Yukawa scalar ends."
+    },
+    {
+      "model": "B_+1",
+      "kind": "baseline_quadratic",
+      "coupling": "MS1",
+      "field_structure": "S1dag S1",
+      "source_Batch1_classification": "tree_level_scalar_spectrum",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "required_diagonal_mass_input",
+      "reason": "Determines the propagators used by the test."
+    },
+    {
+      "model": "B_+1",
+      "kind": "baseline_quadratic",
+      "coupling": "MS2",
+      "field_structure": "S2dag S2",
+      "source_Batch1_classification": "tree_level_scalar_spectrum",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "required_diagonal_mass_input",
+      "reason": "Determines the propagators used by the test."
+    },
+    {
+      "model": "B_+1",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaS1Inv*",
+      "field_structure": "(S1dag S1)(S1dag S1)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "B_+1",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaS2Inv*",
+      "field_structure": "(S2dag S2)(S2dag S2)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "B_+1",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaH1Inv*",
+      "field_structure": "(Hdag H)(S1dag S1)",
+      "source_Batch1_classification": "one_loop_higgs_vertex_candidate",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_portal_higgs_chirality_mismatch",
+      "reason": "The Hdag H portal cannot furnish the Hdag Hdag vertex of the unbroken holomorphic Weinberg projection alone; v/M mass shifts and RG effects remain."
+    },
+    {
+      "model": "B_+1",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaH2Inv*",
+      "field_structure": "(Hdag H)(S2dag S2)",
+      "source_Batch1_classification": "one_loop_higgs_vertex_candidate",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_portal_higgs_chirality_mismatch",
+      "reason": "The Hdag H portal cannot furnish the Hdag Hdag vertex of the unbroken holomorphic Weinberg projection alone; v/M mass shifts and RG effects remain."
+    },
+    {
+      "model": "B_+1",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambda12Inv*",
+      "field_structure": "(S1dag S1)(S2dag S2)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "B_+1",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ022000I1",
+      "field_structure": "Hdag^2 S1^2",
+      "source_Batch1_classification": "higgs_vertex_not_seen_in_saved_C5",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        2,
+        2,
+        0,
+        0,
+        0
+      ],
+      "status": "scalar_wick_orientation_mismatch",
+      "reason": "The Hdag Hdag orientation does not supply two scalar legs conjugate to S1/S2dag Yukawa sources with diagonal scalar propagators.",
+      "channel": null,
+      "orientation": null,
+      "orientations_tested": [
+        {
+          "orientation": "as_named",
+          "higgs_pair_correct": true,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        },
+        {
+          "orientation": "hermitian_conjugate",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": true,
+          "yukawa_pair_channel": null
+        }
+      ],
+      "basis_assumption": "diagonal_complex_scalar_propagators"
+    },
+    {
+      "model": "B_-1",
+      "kind": "baseline_topology",
+      "coupling": "lambdaT3",
+      "field_structure": "H H S1 S2dag + h.c.",
+      "source_Batch1_classification": "leading_one_loop_topology",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        2,
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "baseline_topology_reproduced",
+      "channel": "y1_y2",
+      "basis_assumption": "diagonal_complex_scalar_propagators",
+      "reason": "Hermitian conjugate of HH S1 S2dag saturates the Yukawa scalar ends."
+    },
+    {
+      "model": "B_-1",
+      "kind": "baseline_quadratic",
+      "coupling": "MS1",
+      "field_structure": "S1dag S1",
+      "source_Batch1_classification": "tree_level_scalar_spectrum",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "required_diagonal_mass_input",
+      "reason": "Determines the propagators used by the test."
+    },
+    {
+      "model": "B_-1",
+      "kind": "baseline_quadratic",
+      "coupling": "MS2",
+      "field_structure": "S2dag S2",
+      "source_Batch1_classification": "tree_level_scalar_spectrum",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "required_diagonal_mass_input",
+      "reason": "Determines the propagators used by the test."
+    },
+    {
+      "model": "B_-1",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaS1Inv*",
+      "field_structure": "(S1dag S1)(S1dag S1)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "B_-1",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaS2Inv*",
+      "field_structure": "(S2dag S2)(S2dag S2)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "B_-1",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaH1Inv*",
+      "field_structure": "(Hdag H)(S1dag S1)",
+      "source_Batch1_classification": "one_loop_higgs_vertex_candidate",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_portal_higgs_chirality_mismatch",
+      "reason": "The Hdag H portal cannot furnish the Hdag Hdag vertex of the unbroken holomorphic Weinberg projection alone; v/M mass shifts and RG effects remain."
+    },
+    {
+      "model": "B_-1",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaH2Inv*",
+      "field_structure": "(Hdag H)(S2dag S2)",
+      "source_Batch1_classification": "one_loop_higgs_vertex_candidate",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_portal_higgs_chirality_mismatch",
+      "reason": "The Hdag H portal cannot furnish the Hdag Hdag vertex of the unbroken holomorphic Weinberg projection alone; v/M mass shifts and RG effects remain."
+    },
+    {
+      "model": "B_-1",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambda12Inv*",
+      "field_structure": "(S1dag S1)(S2dag S2)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "B_-1",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ000112I1",
+      "field_structure": "S1dag S2 S2dag^2",
+      "source_Batch1_classification": "no_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        2
+      ],
+      "status": "no_H_fields_at_one_vertex",
+      "reason": "Cannot furnish the two external Higgs fields with a single quartic vertex; indirect effects remain."
+    },
+    {
+      "model": "B_-1",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ000202I1",
+      "field_structure": "S1dag^2 S2dag^2",
+      "source_Batch1_classification": "no_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        0,
+        2,
+        0,
+        2
+      ],
+      "status": "no_H_fields_at_one_vertex",
+      "reason": "Cannot furnish the two external Higgs fields with a single quartic vertex; indirect effects remain."
+    },
+    {
+      "model": "B_-1",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ001201I1",
+      "field_structure": "S1 S1dag^2 S2dag",
+      "source_Batch1_classification": "no_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        1,
+        2,
+        0,
+        1
+      ],
+      "status": "no_H_fields_at_one_vertex",
+      "reason": "Cannot furnish the two external Higgs fields with a single quartic vertex; indirect effects remain."
+    },
+    {
+      "model": "B_-1",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ020020I1",
+      "field_structure": "Hdag^2 S2^2",
+      "source_Batch1_classification": "observed_in_saved_one_loop_C5",
+      "observed_in_saved_C5": true,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        2,
+        0,
+        0,
+        2,
+        0
+      ],
+      "status": "single_vertex_wick_eligible_and_saved_C5_observed",
+      "reason": "Exactly two Hdag and the conjugate of two original Yukawa scalar ends; this is a necessary, not sufficient, nonzero-amplitude condition.",
+      "channel": "y2_y2",
+      "orientation": "as_named",
+      "orientations_tested": [
+        {
+          "orientation": "as_named",
+          "higgs_pair_correct": true,
+          "scalar_pair_compatible": true,
+          "yukawa_pair_channel": "y2_y2"
+        },
+        {
+          "orientation": "hermitian_conjugate",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        }
+      ],
+      "basis_assumption": "diagonal_complex_scalar_propagators"
+    },
+    {
+      "model": "B_-1",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ020200I1",
+      "field_structure": "Hdag^2 S1dag^2",
+      "source_Batch1_classification": "observed_in_saved_one_loop_C5",
+      "observed_in_saved_C5": true,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        2,
+        0,
+        2,
+        0,
+        0
+      ],
+      "status": "single_vertex_wick_eligible_and_saved_C5_observed",
+      "reason": "Exactly two Hdag and the conjugate of two original Yukawa scalar ends; this is a necessary, not sufficient, nonzero-amplitude condition.",
+      "channel": "y1_y1",
+      "orientation": "as_named",
+      "orientations_tested": [
+        {
+          "orientation": "as_named",
+          "higgs_pair_correct": true,
+          "scalar_pair_compatible": true,
+          "yukawa_pair_channel": "y1_y1"
+        },
+        {
+          "orientation": "hermitian_conjugate",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        }
+      ],
+      "basis_assumption": "diagonal_complex_scalar_propagators"
+    },
+    {
+      "model": "B_-1",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ110101I1",
+      "field_structure": "H Hdag S1dag S2dag",
+      "source_Batch1_classification": "higgs_vertex_not_seen_in_saved_C5",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        1,
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "status": "higgs_chirality_mismatch",
+      "reason": "Both orientations contain H Hdag, not the Hdag Hdag vertex used by the lepton-side holomorphic Weinberg projection.",
+      "channel": null,
+      "orientation": null,
+      "orientations_tested": [
+        {
+          "orientation": "as_named",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        },
+        {
+          "orientation": "hermitian_conjugate",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        }
+      ],
+      "basis_assumption": "diagonal_complex_scalar_propagators"
+    },
+    {
+      "model": "B_-1",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ110101I2",
+      "field_structure": "H Hdag S1dag S2dag",
+      "source_Batch1_classification": "higgs_vertex_not_seen_in_saved_C5",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        1,
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "status": "higgs_chirality_mismatch",
+      "reason": "Both orientations contain H Hdag, not the Hdag Hdag vertex used by the lepton-side holomorphic Weinberg projection.",
+      "channel": null,
+      "orientation": null,
+      "orientations_tested": [
+        {
+          "orientation": "as_named",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        },
+        {
+          "orientation": "hermitian_conjugate",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        }
+      ],
+      "basis_assumption": "diagonal_complex_scalar_propagators"
+    },
+    {
+      "model": "B_-1",
+      "kind": "additional_quadratic",
+      "coupling": "mu2_extra_000101_I1",
+      "field_structure": "S1dag S2dag",
+      "source_Batch1_classification": "unsuppressed_tree_scalar_mass_effect",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        1
+      ],
+      "status": "unsuppressed_tree_level_mass_effect",
+      "reason": "Can generate anomalous/off-diagonal propagators or physical mass splittings at tree level. Nonzero coupling INVALIDATES this Wick-screening assumption."
+    },
+    {
+      "model": "B_-3",
+      "kind": "baseline_topology",
+      "coupling": "lambdaT3",
+      "field_structure": "H H S1 S2dag + h.c.",
+      "source_Batch1_classification": "leading_one_loop_topology",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        2,
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "baseline_topology_reproduced",
+      "channel": "y1_y2",
+      "basis_assumption": "diagonal_complex_scalar_propagators",
+      "reason": "Hermitian conjugate of HH S1 S2dag saturates the Yukawa scalar ends."
+    },
+    {
+      "model": "B_-3",
+      "kind": "baseline_quadratic",
+      "coupling": "MS1",
+      "field_structure": "S1dag S1",
+      "source_Batch1_classification": "tree_level_scalar_spectrum",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "required_diagonal_mass_input",
+      "reason": "Determines the propagators used by the test."
+    },
+    {
+      "model": "B_-3",
+      "kind": "baseline_quadratic",
+      "coupling": "MS2",
+      "field_structure": "S2dag S2",
+      "source_Batch1_classification": "tree_level_scalar_spectrum",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "required_diagonal_mass_input",
+      "reason": "Determines the propagators used by the test."
+    },
+    {
+      "model": "B_-3",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaS1Inv*",
+      "field_structure": "(S1dag S1)(S1dag S1)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "B_-3",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaS2Inv*",
+      "field_structure": "(S2dag S2)(S2dag S2)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "B_-3",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaH1Inv*",
+      "field_structure": "(Hdag H)(S1dag S1)",
+      "source_Batch1_classification": "one_loop_higgs_vertex_candidate",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_portal_higgs_chirality_mismatch",
+      "reason": "The Hdag H portal cannot furnish the Hdag Hdag vertex of the unbroken holomorphic Weinberg projection alone; v/M mass shifts and RG effects remain."
+    },
+    {
+      "model": "B_-3",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaH2Inv*",
+      "field_structure": "(Hdag H)(S2dag S2)",
+      "source_Batch1_classification": "one_loop_higgs_vertex_candidate",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_portal_higgs_chirality_mismatch",
+      "reason": "The Hdag H portal cannot furnish the Hdag Hdag vertex of the unbroken holomorphic Weinberg projection alone; v/M mass shifts and RG effects remain."
+    },
+    {
+      "model": "B_-3",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambda12Inv*",
+      "field_structure": "(S1dag S1)(S2dag S2)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "B_-3",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ020002I1",
+      "field_structure": "Hdag^2 S2dag^2",
+      "source_Batch1_classification": "higgs_vertex_not_seen_in_saved_C5",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        2,
+        0,
+        0,
+        0,
+        2
+      ],
+      "status": "scalar_wick_orientation_mismatch",
+      "reason": "The Hdag Hdag orientation does not supply two scalar legs conjugate to S1/S2dag Yukawa sources with diagonal scalar propagators.",
+      "channel": null,
+      "orientation": null,
+      "orientations_tested": [
+        {
+          "orientation": "as_named",
+          "higgs_pair_correct": true,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        },
+        {
+          "orientation": "hermitian_conjugate",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": true,
+          "yukawa_pair_channel": null
+        }
+      ],
+      "basis_assumption": "diagonal_complex_scalar_propagators"
+    },
+    {
+      "model": "C_+1",
+      "kind": "baseline_topology",
+      "coupling": "lambdaT3",
+      "field_structure": "H H S1 S2dag + h.c.",
+      "source_Batch1_classification": "leading_one_loop_topology",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        2,
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "baseline_topology_reproduced",
+      "channel": "y1_y2",
+      "basis_assumption": "diagonal_complex_scalar_propagators",
+      "reason": "Hermitian conjugate of HH S1 S2dag saturates the Yukawa scalar ends."
+    },
+    {
+      "model": "C_+1",
+      "kind": "baseline_quadratic",
+      "coupling": "MS1",
+      "field_structure": "S1dag S1",
+      "source_Batch1_classification": "tree_level_scalar_spectrum",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "required_diagonal_mass_input",
+      "reason": "Determines the propagators used by the test."
+    },
+    {
+      "model": "C_+1",
+      "kind": "baseline_quadratic",
+      "coupling": "MS2",
+      "field_structure": "S2dag S2",
+      "source_Batch1_classification": "tree_level_scalar_spectrum",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "required_diagonal_mass_input",
+      "reason": "Determines the propagators used by the test."
+    },
+    {
+      "model": "C_+1",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaS1Inv*",
+      "field_structure": "(S1dag S1)(S1dag S1)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "C_+1",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaS2Inv*",
+      "field_structure": "(S2dag S2)(S2dag S2)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "C_+1",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaH1Inv*",
+      "field_structure": "(Hdag H)(S1dag S1)",
+      "source_Batch1_classification": "one_loop_higgs_vertex_candidate",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_portal_higgs_chirality_mismatch",
+      "reason": "The Hdag H portal cannot furnish the Hdag Hdag vertex of the unbroken holomorphic Weinberg projection alone; v/M mass shifts and RG effects remain."
+    },
+    {
+      "model": "C_+1",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaH2Inv*",
+      "field_structure": "(Hdag H)(S2dag S2)",
+      "source_Batch1_classification": "one_loop_higgs_vertex_candidate",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_portal_higgs_chirality_mismatch",
+      "reason": "The Hdag H portal cannot furnish the Hdag Hdag vertex of the unbroken holomorphic Weinberg projection alone; v/M mass shifts and RG effects remain."
+    },
+    {
+      "model": "C_+1",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambda12Inv*",
+      "field_structure": "(S1dag S1)(S2dag S2)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "C_+1",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ022000I1",
+      "field_structure": "Hdag^2 S1^2",
+      "source_Batch1_classification": "higgs_vertex_not_seen_in_saved_C5",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        2,
+        2,
+        0,
+        0,
+        0
+      ],
+      "status": "scalar_wick_orientation_mismatch",
+      "reason": "The Hdag Hdag orientation does not supply two scalar legs conjugate to S1/S2dag Yukawa sources with diagonal scalar propagators.",
+      "channel": null,
+      "orientation": null,
+      "orientations_tested": [
+        {
+          "orientation": "as_named",
+          "higgs_pair_correct": true,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        },
+        {
+          "orientation": "hermitian_conjugate",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": true,
+          "yukawa_pair_channel": null
+        }
+      ],
+      "basis_assumption": "diagonal_complex_scalar_propagators"
+    },
+    {
+      "model": "C_-1",
+      "kind": "baseline_topology",
+      "coupling": "lambdaT3",
+      "field_structure": "H H S1 S2dag + h.c.",
+      "source_Batch1_classification": "leading_one_loop_topology",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        2,
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "baseline_topology_reproduced",
+      "channel": "y1_y2",
+      "basis_assumption": "diagonal_complex_scalar_propagators",
+      "reason": "Hermitian conjugate of HH S1 S2dag saturates the Yukawa scalar ends."
+    },
+    {
+      "model": "C_-1",
+      "kind": "baseline_quadratic",
+      "coupling": "MS1",
+      "field_structure": "S1dag S1",
+      "source_Batch1_classification": "tree_level_scalar_spectrum",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "required_diagonal_mass_input",
+      "reason": "Determines the propagators used by the test."
+    },
+    {
+      "model": "C_-1",
+      "kind": "baseline_quadratic",
+      "coupling": "MS2",
+      "field_structure": "S2dag S2",
+      "source_Batch1_classification": "tree_level_scalar_spectrum",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "required_diagonal_mass_input",
+      "reason": "Determines the propagators used by the test."
+    },
+    {
+      "model": "C_-1",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaS1Inv*",
+      "field_structure": "(S1dag S1)(S1dag S1)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "C_-1",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaS2Inv*",
+      "field_structure": "(S2dag S2)(S2dag S2)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "C_-1",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaH1Inv*",
+      "field_structure": "(Hdag H)(S1dag S1)",
+      "source_Batch1_classification": "one_loop_higgs_vertex_candidate",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_portal_higgs_chirality_mismatch",
+      "reason": "The Hdag H portal cannot furnish the Hdag Hdag vertex of the unbroken holomorphic Weinberg projection alone; v/M mass shifts and RG effects remain."
+    },
+    {
+      "model": "C_-1",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaH2Inv*",
+      "field_structure": "(Hdag H)(S2dag S2)",
+      "source_Batch1_classification": "one_loop_higgs_vertex_candidate",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_portal_higgs_chirality_mismatch",
+      "reason": "The Hdag H portal cannot furnish the Hdag Hdag vertex of the unbroken holomorphic Weinberg projection alone; v/M mass shifts and RG effects remain."
+    },
+    {
+      "model": "C_-1",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambda12Inv*",
+      "field_structure": "(S1dag S1)(S2dag S2)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "C_-1",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ000112I1",
+      "field_structure": "S1dag S2 S2dag^2",
+      "source_Batch1_classification": "no_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        2
+      ],
+      "status": "no_H_fields_at_one_vertex",
+      "reason": "Cannot furnish the two external Higgs fields with a single quartic vertex; indirect effects remain."
+    },
+    {
+      "model": "C_-1",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ000202I1",
+      "field_structure": "S1dag^2 S2dag^2",
+      "source_Batch1_classification": "no_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        0,
+        2,
+        0,
+        2
+      ],
+      "status": "no_H_fields_at_one_vertex",
+      "reason": "Cannot furnish the two external Higgs fields with a single quartic vertex; indirect effects remain."
+    },
+    {
+      "model": "C_-1",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ001201I1",
+      "field_structure": "S1 S1dag^2 S2dag",
+      "source_Batch1_classification": "no_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        1,
+        2,
+        0,
+        1
+      ],
+      "status": "no_H_fields_at_one_vertex",
+      "reason": "Cannot furnish the two external Higgs fields with a single quartic vertex; indirect effects remain."
+    },
+    {
+      "model": "C_-1",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ020020I1",
+      "field_structure": "Hdag^2 S2^2",
+      "source_Batch1_classification": "observed_in_saved_one_loop_C5",
+      "observed_in_saved_C5": true,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        2,
+        0,
+        0,
+        2,
+        0
+      ],
+      "status": "single_vertex_wick_eligible_and_saved_C5_observed",
+      "reason": "Exactly two Hdag and the conjugate of two original Yukawa scalar ends; this is a necessary, not sufficient, nonzero-amplitude condition.",
+      "channel": "y2_y2",
+      "orientation": "as_named",
+      "orientations_tested": [
+        {
+          "orientation": "as_named",
+          "higgs_pair_correct": true,
+          "scalar_pair_compatible": true,
+          "yukawa_pair_channel": "y2_y2"
+        },
+        {
+          "orientation": "hermitian_conjugate",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        }
+      ],
+      "basis_assumption": "diagonal_complex_scalar_propagators"
+    },
+    {
+      "model": "C_-1",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ020200I1",
+      "field_structure": "Hdag^2 S1dag^2",
+      "source_Batch1_classification": "observed_in_saved_one_loop_C5",
+      "observed_in_saved_C5": true,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        2,
+        0,
+        2,
+        0,
+        0
+      ],
+      "status": "single_vertex_wick_eligible_and_saved_C5_observed",
+      "reason": "Exactly two Hdag and the conjugate of two original Yukawa scalar ends; this is a necessary, not sufficient, nonzero-amplitude condition.",
+      "channel": "y1_y1",
+      "orientation": "as_named",
+      "orientations_tested": [
+        {
+          "orientation": "as_named",
+          "higgs_pair_correct": true,
+          "scalar_pair_compatible": true,
+          "yukawa_pair_channel": "y1_y1"
+        },
+        {
+          "orientation": "hermitian_conjugate",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        }
+      ],
+      "basis_assumption": "diagonal_complex_scalar_propagators"
+    },
+    {
+      "model": "C_-1",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ110101I1",
+      "field_structure": "H Hdag S1dag S2dag",
+      "source_Batch1_classification": "higgs_vertex_not_seen_in_saved_C5",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        1,
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "status": "higgs_chirality_mismatch",
+      "reason": "Both orientations contain H Hdag, not the Hdag Hdag vertex used by the lepton-side holomorphic Weinberg projection.",
+      "channel": null,
+      "orientation": null,
+      "orientations_tested": [
+        {
+          "orientation": "as_named",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        },
+        {
+          "orientation": "hermitian_conjugate",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        }
+      ],
+      "basis_assumption": "diagonal_complex_scalar_propagators"
+    },
+    {
+      "model": "C_-1",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ110101I2",
+      "field_structure": "H Hdag S1dag S2dag",
+      "source_Batch1_classification": "higgs_vertex_not_seen_in_saved_C5",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        1,
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "status": "higgs_chirality_mismatch",
+      "reason": "Both orientations contain H Hdag, not the Hdag Hdag vertex used by the lepton-side holomorphic Weinberg projection.",
+      "channel": null,
+      "orientation": null,
+      "orientations_tested": [
+        {
+          "orientation": "as_named",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        },
+        {
+          "orientation": "hermitian_conjugate",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        }
+      ],
+      "basis_assumption": "diagonal_complex_scalar_propagators"
+    },
+    {
+      "model": "C_-1",
+      "kind": "additional_quadratic",
+      "coupling": "mu2_extra_000101_I1",
+      "field_structure": "S1dag S2dag",
+      "source_Batch1_classification": "unsuppressed_tree_scalar_mass_effect",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        1
+      ],
+      "status": "unsuppressed_tree_level_mass_effect",
+      "reason": "Can generate anomalous/off-diagonal propagators or physical mass splittings at tree level. Nonzero coupling INVALIDATES this Wick-screening assumption."
+    },
+    {
+      "model": "C_-3",
+      "kind": "baseline_topology",
+      "coupling": "lambdaT3",
+      "field_structure": "H H S1 S2dag + h.c.",
+      "source_Batch1_classification": "leading_one_loop_topology",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        2,
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "baseline_topology_reproduced",
+      "channel": "y1_y2",
+      "basis_assumption": "diagonal_complex_scalar_propagators",
+      "reason": "Hermitian conjugate of HH S1 S2dag saturates the Yukawa scalar ends."
+    },
+    {
+      "model": "C_-3",
+      "kind": "baseline_quadratic",
+      "coupling": "MS1",
+      "field_structure": "S1dag S1",
+      "source_Batch1_classification": "tree_level_scalar_spectrum",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "required_diagonal_mass_input",
+      "reason": "Determines the propagators used by the test."
+    },
+    {
+      "model": "C_-3",
+      "kind": "baseline_quadratic",
+      "coupling": "MS2",
+      "field_structure": "S2dag S2",
+      "source_Batch1_classification": "tree_level_scalar_spectrum",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "required_diagonal_mass_input",
+      "reason": "Determines the propagators used by the test."
+    },
+    {
+      "model": "C_-3",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaS1Inv*",
+      "field_structure": "(S1dag S1)(S1dag S1)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "C_-3",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaS2Inv*",
+      "field_structure": "(S2dag S2)(S2dag S2)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "C_-3",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaH1Inv*",
+      "field_structure": "(Hdag H)(S1dag S1)",
+      "source_Batch1_classification": "one_loop_higgs_vertex_candidate",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_portal_higgs_chirality_mismatch",
+      "reason": "The Hdag H portal cannot furnish the Hdag Hdag vertex of the unbroken holomorphic Weinberg projection alone; v/M mass shifts and RG effects remain."
+    },
+    {
+      "model": "C_-3",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaH2Inv*",
+      "field_structure": "(Hdag H)(S2dag S2)",
+      "source_Batch1_classification": "one_loop_higgs_vertex_candidate",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_portal_higgs_chirality_mismatch",
+      "reason": "The Hdag H portal cannot furnish the Hdag Hdag vertex of the unbroken holomorphic Weinberg projection alone; v/M mass shifts and RG effects remain."
+    },
+    {
+      "model": "C_-3",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambda12Inv*",
+      "field_structure": "(S1dag S1)(S2dag S2)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "C_-3",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ020002I1",
+      "field_structure": "Hdag^2 S2dag^2",
+      "source_Batch1_classification": "higgs_vertex_not_seen_in_saved_C5",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        2,
+        0,
+        0,
+        0,
+        2
+      ],
+      "status": "scalar_wick_orientation_mismatch",
+      "reason": "The Hdag Hdag orientation does not supply two scalar legs conjugate to S1/S2dag Yukawa sources with diagonal scalar propagators.",
+      "channel": null,
+      "orientation": null,
+      "orientations_tested": [
+        {
+          "orientation": "as_named",
+          "higgs_pair_correct": true,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        },
+        {
+          "orientation": "hermitian_conjugate",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": true,
+          "yukawa_pair_channel": null
+        }
+      ],
+      "basis_assumption": "diagonal_complex_scalar_propagators"
+    },
+    {
+      "model": "D_+0",
+      "kind": "baseline_topology",
+      "coupling": "lambdaT3",
+      "field_structure": "H H S1 S2dag + h.c.",
+      "source_Batch1_classification": "leading_one_loop_topology",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        2,
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "baseline_topology_reproduced",
+      "channel": "y1_y2",
+      "basis_assumption": "diagonal_complex_scalar_propagators",
+      "reason": "Hermitian conjugate of HH S1 S2dag saturates the Yukawa scalar ends."
+    },
+    {
+      "model": "D_+0",
+      "kind": "baseline_quadratic",
+      "coupling": "MS1",
+      "field_structure": "S1dag S1",
+      "source_Batch1_classification": "tree_level_scalar_spectrum",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "required_diagonal_mass_input",
+      "reason": "Determines the propagators used by the test."
+    },
+    {
+      "model": "D_+0",
+      "kind": "baseline_quadratic",
+      "coupling": "MS2",
+      "field_structure": "S2dag S2",
+      "source_Batch1_classification": "tree_level_scalar_spectrum",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "required_diagonal_mass_input",
+      "reason": "Determines the propagators used by the test."
+    },
+    {
+      "model": "D_+0",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaS1Inv*",
+      "field_structure": "(S1dag S1)(S1dag S1)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "D_+0",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaS2Inv*",
+      "field_structure": "(S2dag S2)(S2dag S2)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "D_+0",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaH1Inv*",
+      "field_structure": "(Hdag H)(S1dag S1)",
+      "source_Batch1_classification": "one_loop_higgs_vertex_candidate",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_portal_higgs_chirality_mismatch",
+      "reason": "The Hdag H portal cannot furnish the Hdag Hdag vertex of the unbroken holomorphic Weinberg projection alone; v/M mass shifts and RG effects remain."
+    },
+    {
+      "model": "D_+0",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaH2Inv*",
+      "field_structure": "(Hdag H)(S2dag S2)",
+      "source_Batch1_classification": "one_loop_higgs_vertex_candidate",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_portal_higgs_chirality_mismatch",
+      "reason": "The Hdag H portal cannot furnish the Hdag Hdag vertex of the unbroken holomorphic Weinberg projection alone; v/M mass shifts and RG effects remain."
+    },
+    {
+      "model": "D_+0",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambda12Inv*",
+      "field_structure": "(S1dag S1)(S2dag S2)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "D_+0",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ000211I1",
+      "field_structure": "S1dag^2 S2 S2dag",
+      "source_Batch1_classification": "no_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        1
+      ],
+      "status": "no_H_fields_at_one_vertex",
+      "reason": "Cannot furnish the two external Higgs fields with a single quartic vertex; indirect effects remain."
+    },
+    {
+      "model": "D_+0",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ000400I1",
+      "field_structure": "S1dag^4",
+      "source_Batch1_classification": "no_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        0,
+        4,
+        0,
+        0
+      ],
+      "status": "no_H_fields_at_one_vertex",
+      "reason": "Cannot furnish the two external Higgs fields with a single quartic vertex; indirect effects remain."
+    },
+    {
+      "model": "D_+0",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ001300I1",
+      "field_structure": "S1 S1dag^3",
+      "source_Batch1_classification": "no_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        1,
+        3,
+        0,
+        0
+      ],
+      "status": "no_H_fields_at_one_vertex",
+      "reason": "Cannot furnish the two external Higgs fields with a single quartic vertex; indirect effects remain."
+    },
+    {
+      "model": "D_+0",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ021010I1",
+      "field_structure": "Hdag^2 S1 S2",
+      "source_Batch1_classification": "higgs_vertex_not_seen_in_saved_C5",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        2,
+        1,
+        0,
+        1,
+        0
+      ],
+      "status": "scalar_wick_orientation_mismatch",
+      "reason": "The Hdag Hdag orientation does not supply two scalar legs conjugate to S1/S2dag Yukawa sources with diagonal scalar propagators.",
+      "channel": null,
+      "orientation": null,
+      "orientations_tested": [
+        {
+          "orientation": "as_named",
+          "higgs_pair_correct": true,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        },
+        {
+          "orientation": "hermitian_conjugate",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        }
+      ],
+      "basis_assumption": "diagonal_complex_scalar_propagators"
+    },
+    {
+      "model": "D_+0",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ110200I1",
+      "field_structure": "H Hdag S1dag^2",
+      "source_Batch1_classification": "higgs_vertex_not_seen_in_saved_C5",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        1,
+        1,
+        0,
+        2,
+        0,
+        0
+      ],
+      "status": "higgs_chirality_mismatch",
+      "reason": "Both orientations contain H Hdag, not the Hdag Hdag vertex used by the lepton-side holomorphic Weinberg projection.",
+      "channel": null,
+      "orientation": null,
+      "orientations_tested": [
+        {
+          "orientation": "as_named",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": true,
+          "yukawa_pair_channel": null
+        },
+        {
+          "orientation": "hermitian_conjugate",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        }
+      ],
+      "basis_assumption": "diagonal_complex_scalar_propagators"
+    },
+    {
+      "model": "D_+0",
+      "kind": "additional_quadratic",
+      "coupling": "mu2_extra_000200_I1",
+      "field_structure": "S1dag^2",
+      "source_Batch1_classification": "unsuppressed_tree_scalar_mass_effect",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        0,
+        2,
+        0,
+        0
+      ],
+      "status": "unsuppressed_tree_level_mass_effect",
+      "reason": "Can generate anomalous/off-diagonal propagators or physical mass splittings at tree level. Nonzero coupling INVALIDATES this Wick-screening assumption."
+    },
+    {
+      "model": "D_+2",
+      "kind": "baseline_topology",
+      "coupling": "lambdaT3",
+      "field_structure": "H H S1 S2dag + h.c.",
+      "source_Batch1_classification": "leading_one_loop_topology",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        2,
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "baseline_topology_reproduced",
+      "channel": "y1_y2",
+      "basis_assumption": "diagonal_complex_scalar_propagators",
+      "reason": "Hermitian conjugate of HH S1 S2dag saturates the Yukawa scalar ends."
+    },
+    {
+      "model": "D_+2",
+      "kind": "baseline_quadratic",
+      "coupling": "MS1",
+      "field_structure": "S1dag S1",
+      "source_Batch1_classification": "tree_level_scalar_spectrum",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "required_diagonal_mass_input",
+      "reason": "Determines the propagators used by the test."
+    },
+    {
+      "model": "D_+2",
+      "kind": "baseline_quadratic",
+      "coupling": "MS2",
+      "field_structure": "S2dag S2",
+      "source_Batch1_classification": "tree_level_scalar_spectrum",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "required_diagonal_mass_input",
+      "reason": "Determines the propagators used by the test."
+    },
+    {
+      "model": "D_+2",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaS1Inv*",
+      "field_structure": "(S1dag S1)(S1dag S1)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "D_+2",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaS2Inv*",
+      "field_structure": "(S2dag S2)(S2dag S2)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "D_+2",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaH1Inv*",
+      "field_structure": "(Hdag H)(S1dag S1)",
+      "source_Batch1_classification": "one_loop_higgs_vertex_candidate",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_portal_higgs_chirality_mismatch",
+      "reason": "The Hdag H portal cannot furnish the Hdag Hdag vertex of the unbroken holomorphic Weinberg projection alone; v/M mass shifts and RG effects remain."
+    },
+    {
+      "model": "D_+2",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaH2Inv*",
+      "field_structure": "(Hdag H)(S2dag S2)",
+      "source_Batch1_classification": "one_loop_higgs_vertex_candidate",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_portal_higgs_chirality_mismatch",
+      "reason": "The Hdag H portal cannot furnish the Hdag Hdag vertex of the unbroken holomorphic Weinberg projection alone; v/M mass shifts and RG effects remain."
+    },
+    {
+      "model": "D_+2",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambda12Inv*",
+      "field_structure": "(S1dag S1)(S2dag S2)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "D_-2",
+      "kind": "baseline_topology",
+      "coupling": "lambdaT3",
+      "field_structure": "H H S1 S2dag + h.c.",
+      "source_Batch1_classification": "leading_one_loop_topology",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        2,
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "baseline_topology_reproduced",
+      "channel": "y1_y2",
+      "basis_assumption": "diagonal_complex_scalar_propagators",
+      "reason": "Hermitian conjugate of HH S1 S2dag saturates the Yukawa scalar ends."
+    },
+    {
+      "model": "D_-2",
+      "kind": "baseline_quadratic",
+      "coupling": "MS1",
+      "field_structure": "S1dag S1",
+      "source_Batch1_classification": "tree_level_scalar_spectrum",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "required_diagonal_mass_input",
+      "reason": "Determines the propagators used by the test."
+    },
+    {
+      "model": "D_-2",
+      "kind": "baseline_quadratic",
+      "coupling": "MS2",
+      "field_structure": "S2dag S2",
+      "source_Batch1_classification": "tree_level_scalar_spectrum",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "required_diagonal_mass_input",
+      "reason": "Determines the propagators used by the test."
+    },
+    {
+      "model": "D_-2",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaS1Inv*",
+      "field_structure": "(S1dag S1)(S1dag S1)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "D_-2",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaS2Inv*",
+      "field_structure": "(S2dag S2)(S2dag S2)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "D_-2",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaH1Inv*",
+      "field_structure": "(Hdag H)(S1dag S1)",
+      "source_Batch1_classification": "one_loop_higgs_vertex_candidate",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_portal_higgs_chirality_mismatch",
+      "reason": "The Hdag H portal cannot furnish the Hdag Hdag vertex of the unbroken holomorphic Weinberg projection alone; v/M mass shifts and RG effects remain."
+    },
+    {
+      "model": "D_-2",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaH2Inv*",
+      "field_structure": "(Hdag H)(S2dag S2)",
+      "source_Batch1_classification": "one_loop_higgs_vertex_candidate",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_portal_higgs_chirality_mismatch",
+      "reason": "The Hdag H portal cannot furnish the Hdag Hdag vertex of the unbroken holomorphic Weinberg projection alone; v/M mass shifts and RG effects remain."
+    },
+    {
+      "model": "D_-2",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambda12Inv*",
+      "field_structure": "(S1dag S1)(S2dag S2)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "D_-2",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ000004I1",
+      "field_structure": "S2dag^4",
+      "source_Batch1_classification": "no_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        4
+      ],
+      "status": "no_H_fields_at_one_vertex",
+      "reason": "Cannot furnish the two external Higgs fields with a single quartic vertex; indirect effects remain."
+    },
+    {
+      "model": "D_-2",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ000013I1",
+      "field_structure": "S2 S2dag^3",
+      "source_Batch1_classification": "no_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        3
+      ],
+      "status": "no_H_fields_at_one_vertex",
+      "reason": "Cannot furnish the two external Higgs fields with a single quartic vertex; indirect effects remain."
+    },
+    {
+      "model": "D_-2",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ001102I1",
+      "field_structure": "S1 S1dag S2dag^2",
+      "source_Batch1_classification": "no_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        1,
+        1,
+        0,
+        2
+      ],
+      "status": "no_H_fields_at_one_vertex",
+      "reason": "Cannot furnish the two external Higgs fields with a single quartic vertex; indirect effects remain."
+    },
+    {
+      "model": "D_-2",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ020101I1",
+      "field_structure": "Hdag^2 S1dag S2dag",
+      "source_Batch1_classification": "higgs_vertex_not_seen_in_saved_C5",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        2,
+        0,
+        1,
+        0,
+        1
+      ],
+      "status": "scalar_wick_orientation_mismatch",
+      "reason": "The Hdag Hdag orientation does not supply two scalar legs conjugate to S1/S2dag Yukawa sources with diagonal scalar propagators.",
+      "channel": null,
+      "orientation": null,
+      "orientations_tested": [
+        {
+          "orientation": "as_named",
+          "higgs_pair_correct": true,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        },
+        {
+          "orientation": "hermitian_conjugate",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        }
+      ],
+      "basis_assumption": "diagonal_complex_scalar_propagators"
+    },
+    {
+      "model": "D_-2",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ110002I1",
+      "field_structure": "H Hdag S2dag^2",
+      "source_Batch1_classification": "higgs_vertex_not_seen_in_saved_C5",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        1,
+        1,
+        0,
+        0,
+        0,
+        2
+      ],
+      "status": "higgs_chirality_mismatch",
+      "reason": "Both orientations contain H Hdag, not the Hdag Hdag vertex used by the lepton-side holomorphic Weinberg projection.",
+      "channel": null,
+      "orientation": null,
+      "orientations_tested": [
+        {
+          "orientation": "as_named",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        },
+        {
+          "orientation": "hermitian_conjugate",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": true,
+          "yukawa_pair_channel": null
+        }
+      ],
+      "basis_assumption": "diagonal_complex_scalar_propagators"
+    },
+    {
+      "model": "D_-2",
+      "kind": "additional_quadratic",
+      "coupling": "mu2_extra_000002_I1",
+      "field_structure": "S2dag^2",
+      "source_Batch1_classification": "unsuppressed_tree_scalar_mass_effect",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        2
+      ],
+      "status": "unsuppressed_tree_level_mass_effect",
+      "reason": "Can generate anomalous/off-diagonal propagators or physical mass splittings at tree level. Nonzero coupling INVALIDATES this Wick-screening assumption."
+    },
+    {
+      "model": "E_+0",
+      "kind": "baseline_topology",
+      "coupling": "lambdaT3",
+      "field_structure": "H H S1 S2dag + h.c.",
+      "source_Batch1_classification": "leading_one_loop_topology",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        2,
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "baseline_topology_reproduced",
+      "channel": "y1_y2",
+      "basis_assumption": "diagonal_complex_scalar_propagators",
+      "reason": "Hermitian conjugate of HH S1 S2dag saturates the Yukawa scalar ends."
+    },
+    {
+      "model": "E_+0",
+      "kind": "baseline_quadratic",
+      "coupling": "MS1",
+      "field_structure": "S1dag S1",
+      "source_Batch1_classification": "tree_level_scalar_spectrum",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "required_diagonal_mass_input",
+      "reason": "Determines the propagators used by the test."
+    },
+    {
+      "model": "E_+0",
+      "kind": "baseline_quadratic",
+      "coupling": "MS2",
+      "field_structure": "S2dag S2",
+      "source_Batch1_classification": "tree_level_scalar_spectrum",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "required_diagonal_mass_input",
+      "reason": "Determines the propagators used by the test."
+    },
+    {
+      "model": "E_+0",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaS1Inv*",
+      "field_structure": "(S1dag S1)(S1dag S1)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "E_+0",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaS2Inv*",
+      "field_structure": "(S2dag S2)(S2dag S2)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "E_+0",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaH1Inv*",
+      "field_structure": "(Hdag H)(S1dag S1)",
+      "source_Batch1_classification": "one_loop_higgs_vertex_candidate",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_portal_higgs_chirality_mismatch",
+      "reason": "The Hdag H portal cannot furnish the Hdag Hdag vertex of the unbroken holomorphic Weinberg projection alone; v/M mass shifts and RG effects remain."
+    },
+    {
+      "model": "E_+0",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaH2Inv*",
+      "field_structure": "(Hdag H)(S2dag S2)",
+      "source_Batch1_classification": "one_loop_higgs_vertex_candidate",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_portal_higgs_chirality_mismatch",
+      "reason": "The Hdag H portal cannot furnish the Hdag Hdag vertex of the unbroken holomorphic Weinberg projection alone; v/M mass shifts and RG effects remain."
+    },
+    {
+      "model": "E_+0",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambda12Inv*",
+      "field_structure": "(S1dag S1)(S2dag S2)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "E_+0",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ000211I1",
+      "field_structure": "S1dag^2 S2 S2dag",
+      "source_Batch1_classification": "no_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        1
+      ],
+      "status": "no_H_fields_at_one_vertex",
+      "reason": "Cannot furnish the two external Higgs fields with a single quartic vertex; indirect effects remain."
+    },
+    {
+      "model": "E_+0",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ000211I2",
+      "field_structure": "S1dag^2 S2 S2dag",
+      "source_Batch1_classification": "no_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        1
+      ],
+      "status": "no_H_fields_at_one_vertex",
+      "reason": "Cannot furnish the two external Higgs fields with a single quartic vertex; indirect effects remain."
+    },
+    {
+      "model": "E_+0",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ000400I1",
+      "field_structure": "S1dag^4",
+      "source_Batch1_classification": "no_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        0,
+        4,
+        0,
+        0
+      ],
+      "status": "no_H_fields_at_one_vertex",
+      "reason": "Cannot furnish the two external Higgs fields with a single quartic vertex; indirect effects remain."
+    },
+    {
+      "model": "E_+0",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ001300I1",
+      "field_structure": "S1 S1dag^3",
+      "source_Batch1_classification": "no_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        1,
+        3,
+        0,
+        0
+      ],
+      "status": "no_H_fields_at_one_vertex",
+      "reason": "Cannot furnish the two external Higgs fields with a single quartic vertex; indirect effects remain."
+    },
+    {
+      "model": "E_+0",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ021010I1",
+      "field_structure": "Hdag^2 S1 S2",
+      "source_Batch1_classification": "higgs_vertex_not_seen_in_saved_C5",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        2,
+        1,
+        0,
+        1,
+        0
+      ],
+      "status": "scalar_wick_orientation_mismatch",
+      "reason": "The Hdag Hdag orientation does not supply two scalar legs conjugate to S1/S2dag Yukawa sources with diagonal scalar propagators.",
+      "channel": null,
+      "orientation": null,
+      "orientations_tested": [
+        {
+          "orientation": "as_named",
+          "higgs_pair_correct": true,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        },
+        {
+          "orientation": "hermitian_conjugate",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        }
+      ],
+      "basis_assumption": "diagonal_complex_scalar_propagators"
+    },
+    {
+      "model": "E_+0",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ110200I1",
+      "field_structure": "H Hdag S1dag^2",
+      "source_Batch1_classification": "higgs_vertex_not_seen_in_saved_C5",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        1,
+        1,
+        0,
+        2,
+        0,
+        0
+      ],
+      "status": "higgs_chirality_mismatch",
+      "reason": "Both orientations contain H Hdag, not the Hdag Hdag vertex used by the lepton-side holomorphic Weinberg projection.",
+      "channel": null,
+      "orientation": null,
+      "orientations_tested": [
+        {
+          "orientation": "as_named",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": true,
+          "yukawa_pair_channel": null
+        },
+        {
+          "orientation": "hermitian_conjugate",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        }
+      ],
+      "basis_assumption": "diagonal_complex_scalar_propagators"
+    },
+    {
+      "model": "E_+0",
+      "kind": "additional_quadratic",
+      "coupling": "mu2_extra_000200_I1",
+      "field_structure": "S1dag^2",
+      "source_Batch1_classification": "unsuppressed_tree_scalar_mass_effect",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        0,
+        2,
+        0,
+        0
+      ],
+      "status": "unsuppressed_tree_level_mass_effect",
+      "reason": "Can generate anomalous/off-diagonal propagators or physical mass splittings at tree level. Nonzero coupling INVALIDATES this Wick-screening assumption."
+    },
+    {
+      "model": "E_+2",
+      "kind": "baseline_topology",
+      "coupling": "lambdaT3",
+      "field_structure": "H H S1 S2dag + h.c.",
+      "source_Batch1_classification": "leading_one_loop_topology",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        2,
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "baseline_topology_reproduced",
+      "channel": "y1_y2",
+      "basis_assumption": "diagonal_complex_scalar_propagators",
+      "reason": "Hermitian conjugate of HH S1 S2dag saturates the Yukawa scalar ends."
+    },
+    {
+      "model": "E_+2",
+      "kind": "baseline_quadratic",
+      "coupling": "MS1",
+      "field_structure": "S1dag S1",
+      "source_Batch1_classification": "tree_level_scalar_spectrum",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "required_diagonal_mass_input",
+      "reason": "Determines the propagators used by the test."
+    },
+    {
+      "model": "E_+2",
+      "kind": "baseline_quadratic",
+      "coupling": "MS2",
+      "field_structure": "S2dag S2",
+      "source_Batch1_classification": "tree_level_scalar_spectrum",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "required_diagonal_mass_input",
+      "reason": "Determines the propagators used by the test."
+    },
+    {
+      "model": "E_+2",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaS1Inv*",
+      "field_structure": "(S1dag S1)(S1dag S1)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "E_+2",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaS2Inv*",
+      "field_structure": "(S2dag S2)(S2dag S2)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "E_+2",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaH1Inv*",
+      "field_structure": "(Hdag H)(S1dag S1)",
+      "source_Batch1_classification": "one_loop_higgs_vertex_candidate",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_portal_higgs_chirality_mismatch",
+      "reason": "The Hdag H portal cannot furnish the Hdag Hdag vertex of the unbroken holomorphic Weinberg projection alone; v/M mass shifts and RG effects remain."
+    },
+    {
+      "model": "E_+2",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaH2Inv*",
+      "field_structure": "(Hdag H)(S2dag S2)",
+      "source_Batch1_classification": "one_loop_higgs_vertex_candidate",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_portal_higgs_chirality_mismatch",
+      "reason": "The Hdag H portal cannot furnish the Hdag Hdag vertex of the unbroken holomorphic Weinberg projection alone; v/M mass shifts and RG effects remain."
+    },
+    {
+      "model": "E_+2",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambda12Inv*",
+      "field_structure": "(S1dag S1)(S2dag S2)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "E_-2",
+      "kind": "baseline_topology",
+      "coupling": "lambdaT3",
+      "field_structure": "H H S1 S2dag + h.c.",
+      "source_Batch1_classification": "leading_one_loop_topology",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        2,
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "baseline_topology_reproduced",
+      "channel": "y1_y2",
+      "basis_assumption": "diagonal_complex_scalar_propagators",
+      "reason": "Hermitian conjugate of HH S1 S2dag saturates the Yukawa scalar ends."
+    },
+    {
+      "model": "E_-2",
+      "kind": "baseline_quadratic",
+      "coupling": "MS1",
+      "field_structure": "S1dag S1",
+      "source_Batch1_classification": "tree_level_scalar_spectrum",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "required_diagonal_mass_input",
+      "reason": "Determines the propagators used by the test."
+    },
+    {
+      "model": "E_-2",
+      "kind": "baseline_quadratic",
+      "coupling": "MS2",
+      "field_structure": "S2dag S2",
+      "source_Batch1_classification": "tree_level_scalar_spectrum",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "required_diagonal_mass_input",
+      "reason": "Determines the propagators used by the test."
+    },
+    {
+      "model": "E_-2",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaS1Inv*",
+      "field_structure": "(S1dag S1)(S1dag S1)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "E_-2",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaS2Inv*",
+      "field_structure": "(S2dag S2)(S2dag S2)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "E_-2",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaH1Inv*",
+      "field_structure": "(Hdag H)(S1dag S1)",
+      "source_Batch1_classification": "one_loop_higgs_vertex_candidate",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_portal_higgs_chirality_mismatch",
+      "reason": "The Hdag H portal cannot furnish the Hdag Hdag vertex of the unbroken holomorphic Weinberg projection alone; v/M mass shifts and RG effects remain."
+    },
+    {
+      "model": "E_-2",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaH2Inv*",
+      "field_structure": "(Hdag H)(S2dag S2)",
+      "source_Batch1_classification": "one_loop_higgs_vertex_candidate",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_portal_higgs_chirality_mismatch",
+      "reason": "The Hdag H portal cannot furnish the Hdag Hdag vertex of the unbroken holomorphic Weinberg projection alone; v/M mass shifts and RG effects remain."
+    },
+    {
+      "model": "E_-2",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambda12Inv*",
+      "field_structure": "(S1dag S1)(S2dag S2)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "E_-2",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ000004I1",
+      "field_structure": "S2dag^4",
+      "source_Batch1_classification": "no_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        4
+      ],
+      "status": "no_H_fields_at_one_vertex",
+      "reason": "Cannot furnish the two external Higgs fields with a single quartic vertex; indirect effects remain."
+    },
+    {
+      "model": "E_-2",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ000013I1",
+      "field_structure": "S2 S2dag^3",
+      "source_Batch1_classification": "no_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        3
+      ],
+      "status": "no_H_fields_at_one_vertex",
+      "reason": "Cannot furnish the two external Higgs fields with a single quartic vertex; indirect effects remain."
+    },
+    {
+      "model": "E_-2",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ001102I1",
+      "field_structure": "S1 S1dag S2dag^2",
+      "source_Batch1_classification": "no_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        1,
+        1,
+        0,
+        2
+      ],
+      "status": "no_H_fields_at_one_vertex",
+      "reason": "Cannot furnish the two external Higgs fields with a single quartic vertex; indirect effects remain."
+    },
+    {
+      "model": "E_-2",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ001102I2",
+      "field_structure": "S1 S1dag S2dag^2",
+      "source_Batch1_classification": "no_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        1,
+        1,
+        0,
+        2
+      ],
+      "status": "no_H_fields_at_one_vertex",
+      "reason": "Cannot furnish the two external Higgs fields with a single quartic vertex; indirect effects remain."
+    },
+    {
+      "model": "E_-2",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ020101I1",
+      "field_structure": "Hdag^2 S1dag S2dag",
+      "source_Batch1_classification": "higgs_vertex_not_seen_in_saved_C5",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        2,
+        0,
+        1,
+        0,
+        1
+      ],
+      "status": "scalar_wick_orientation_mismatch",
+      "reason": "The Hdag Hdag orientation does not supply two scalar legs conjugate to S1/S2dag Yukawa sources with diagonal scalar propagators.",
+      "channel": null,
+      "orientation": null,
+      "orientations_tested": [
+        {
+          "orientation": "as_named",
+          "higgs_pair_correct": true,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        },
+        {
+          "orientation": "hermitian_conjugate",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        }
+      ],
+      "basis_assumption": "diagonal_complex_scalar_propagators"
+    },
+    {
+      "model": "E_-2",
+      "kind": "additional_quartic",
+      "coupling": "lambdaT3ExtraQ110002I1",
+      "field_structure": "H Hdag S2dag^2",
+      "source_Batch1_classification": "higgs_vertex_not_seen_in_saved_C5",
+      "observed_in_saved_C5": false,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        1,
+        1,
+        0,
+        0,
+        0,
+        2
+      ],
+      "status": "higgs_chirality_mismatch",
+      "reason": "Both orientations contain H Hdag, not the Hdag Hdag vertex used by the lepton-side holomorphic Weinberg projection.",
+      "channel": null,
+      "orientation": null,
+      "orientations_tested": [
+        {
+          "orientation": "as_named",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": false,
+          "yukawa_pair_channel": null
+        },
+        {
+          "orientation": "hermitian_conjugate",
+          "higgs_pair_correct": false,
+          "scalar_pair_compatible": true,
+          "yukawa_pair_channel": null
+        }
+      ],
+      "basis_assumption": "diagonal_complex_scalar_propagators"
+    },
+    {
+      "model": "E_-2",
+      "kind": "additional_quadratic",
+      "coupling": "mu2_extra_000002_I1",
+      "field_structure": "S2dag^2",
+      "source_Batch1_classification": "unsuppressed_tree_scalar_mass_effect",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        2
+      ],
+      "status": "unsuppressed_tree_level_mass_effect",
+      "reason": "Can generate anomalous/off-diagonal propagators or physical mass splittings at tree level. Nonzero coupling INVALIDATES this Wick-screening assumption."
+    },
+    {
+      "model": "E_-4",
+      "kind": "baseline_topology",
+      "coupling": "lambdaT3",
+      "field_structure": "H H S1 S2dag + h.c.",
+      "source_Batch1_classification": "leading_one_loop_topology",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": [
+        2,
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "baseline_topology_reproduced",
+      "channel": "y1_y2",
+      "basis_assumption": "diagonal_complex_scalar_propagators",
+      "reason": "Hermitian conjugate of HH S1 S2dag saturates the Yukawa scalar ends."
+    },
+    {
+      "model": "E_-4",
+      "kind": "baseline_quadratic",
+      "coupling": "MS1",
+      "field_structure": "S1dag S1",
+      "source_Batch1_classification": "tree_level_scalar_spectrum",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "required_diagonal_mass_input",
+      "reason": "Determines the propagators used by the test."
+    },
+    {
+      "model": "E_-4",
+      "kind": "baseline_quadratic",
+      "coupling": "MS2",
+      "field_structure": "S2dag S2",
+      "source_Batch1_classification": "tree_level_scalar_spectrum",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "required_diagonal_mass_input",
+      "reason": "Determines the propagators used by the test."
+    },
+    {
+      "model": "E_-4",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaS1Inv*",
+      "field_structure": "(S1dag S1)(S1dag S1)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "E_-4",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaS2Inv*",
+      "field_structure": "(S2dag S2)(S2dag S2)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    },
+    {
+      "model": "E_-4",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaH1Inv*",
+      "field_structure": "(Hdag H)(S1dag S1)",
+      "source_Batch1_classification": "one_loop_higgs_vertex_candidate",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_portal_higgs_chirality_mismatch",
+      "reason": "The Hdag H portal cannot furnish the Hdag Hdag vertex of the unbroken holomorphic Weinberg projection alone; v/M mass shifts and RG effects remain."
+    },
+    {
+      "model": "E_-4",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambdaH2Inv*",
+      "field_structure": "(Hdag H)(S2dag S2)",
+      "source_Batch1_classification": "one_loop_higgs_vertex_candidate",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_portal_higgs_chirality_mismatch",
+      "reason": "The Hdag H portal cannot furnish the Hdag Hdag vertex of the unbroken holomorphic Weinberg projection alone; v/M mass shifts and RG effects remain."
+    },
+    {
+      "model": "E_-4",
+      "kind": "baseline_quartic_family",
+      "coupling": "lambda12Inv*",
+      "field_structure": "(S1dag S1)(S2dag S2)",
+      "source_Batch1_classification": "not_direct_single_vertex_LLSS_to_LLHH",
+      "observed_in_saved_C5": null,
+      "counts_H_Hdag_S1_S1dag_S2_S2dag": null,
+      "status": "baseline_no_direct_two_H_vertex",
+      "reason": "No Higgs pair for the selected single-quartic vertex; scalar dynamics/RG effects remain."
+    }
+  ],
+  "limitations": [
+    "This is a necessary contraction test in the DIAGONAL scalar basis, NOT a proof of irrelevance with nonzero extra quadratic mixing.",
+    "Fermion contractions and group tensors can make a Wick-eligible vertex vanish; the four observed terms are supported separately by saved symbolic Matchete matching.",
+    "Non-observed 20 are excluded only from the defined direct one-quartic-vertex amplitude, not from the general UV scalar potential.",
+    "Higher-loop, RG, v^2/M^2, vacuum stability, and general two-threshold Wilson matching are not addressed here."
+  ]
+}

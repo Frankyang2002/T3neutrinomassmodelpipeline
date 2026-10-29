@@ -26,6 +26,11 @@
 - [T3 B_-1/C_-1: direct one-scale C5 to low-scale SM+Weinberg endpoint](#source-t3-general-t3-one-scale-sm-weinberg-endpoint-md) — `docs/T3_GENERAL_T3_ONE_SCALE_SM_WEINBERG_ENDPOINT.md`
 - [Restricted two-threshold fixed-order Weinberg projection (B_-1 and C_-1)](#source-t3-general-two-threshold-numerical-c5-md) — `docs/T3_GENERAL_TWO_THRESHOLD_NUMERICAL_C5.md`
 - [T3 B_-1/C_-1: two-threshold raw Weinberg-sector pole cancellation](#source-t3-general-two-threshold-raw-pole-assembly-md) — `docs/T3_GENERAL_TWO_THRESHOLD_RAW_POLE_ASSEMBLY.md`
+- [General T3: additional EFT1 scalar-pair Wilson mixing](#source-general-t3-eft1-scalar-pair-mixing-md) — `docs/GENERAL_T3_EFT1_SCALAR_PAIR_MIXING.md`
+- [General T3: numerical extra-quartic EFT1 LLHH Wilson-source transport](#source-general-t3-eft1-wilson-source-transport-md) — `docs/GENERAL_T3_EFT1_WILSON_SOURCE_TRANSPORT.md`
+- [General T3: grouped fermion-first threshold continuation (experimental)](#source-general-t3-fermion-first-thresholds-md) — `docs/GENERAL_T3_FERMION_FIRST_THRESHOLDS.md`
+- [General T3: existing model-specific C5 and final SM+Weinberg running](#source-general-t3-final-c5-and-weinberg-running-md) — `docs/GENERAL_T3_FINAL_C5_AND_WEINBERG_RUNNING.md`
+- [General T3: selected extra-quartic Weinberg projection and low-energy transport](#source-general-t3-weinberg-source-transport-md) — `docs/GENERAL_T3_WEINBERG_SOURCE_TRANSPORT.md`
 
 ---
 
@@ -1505,6 +1510,375 @@ New source: `scripts/RunGeneralT3TwoThresholdPoleAssembly.py`.
 New tests: `tests/python/test_general_t3_two_threshold_pole_assembly.py`.
 
 All prior files and validated matching executables remain unchanged. Do not overwrite the reference matching exports with the composite outputs. Do not present the common-scale expression as an already scheme-renormalized `C5`.
+
+</details>
+
+---
+
+<a id="source-general-t3-eft1-scalar-pair-mixing-md"></a>
+
+## Original document: `docs/GENERAL_T3_EFT1_SCALAR_PAIR_MIXING.md`
+
+**Original SHA-256:** `e5f030bff424796a0f3bcc492f8f8fffe968660f88784fb0cd82ede220ccbf6b`
+
+**Status:** Historical record; verify current source and core documentation
+before using its old commands or provisional conclusions.
+
+<details>
+<summary>Expand original: General T3: additional EFT1 scalar-pair Wilson mixing</summary>
+
+# General T3: additional EFT1 scalar-pair Wilson mixing
+
+The Stage 16 B/C(-1) renormalisable UV and scalar-EFT RGE trajectories, together with the **pre-existing baseline** SM+Weinberg evolution, are already running on Windows.
+
+Stage 17 extracts the **new quartic-dependent part** of the one-loop EFT1 psi2phi2 Wilson anomalous dimension. The existing matched F-threshold tree Wilson seed contains both PL y1*y1 and PL y2*y2 operators. The new real-scalar quartic tensor is constructed from the independent SU(2) tensors proven in Stages 9 and 13:
+
+- `lambdaHHdagS2S2`: `V_extra = lambda2 (Hdag_1*S2_1 + Hdag_2*S2_2)^2 + h.c.`;
+- `lambdaHHdagS1barS1bar`: `V_extra = lambda1 (Hdag_1*S1dag_2 - Hdag_2*S1dag_1)^2 + h.c.`;
+
+where `lambda1`, `lambda2` are RGBeta **potential** coefficients and Stage 15 established `lambda_Matchete = -lambda_RGBeta` in the common scalar basis. `V_extra = lambda_abcd phi_a phi_b phi_c phi_d/24`; `lambda_abcd` is computed by exact real-field derivatives, with the source's identical-boson projector already incorporated.
+
+The one-loop master tensor RGE's scalar-pair term, holding existing Wilson coefficients fixed, gives
+
+`(16*pi^2) d C_ijab/dln(mu) |_extra = (1/2)*sum_{swap(a,b)} sum_{c,d} lambda_extra_abcd C_ijcd`.
+
+The new script uses the existing `build_eft1_wilson_tensor` Matchete PL adapter, not an invented analytic Yukawa prefactor. It computes the nonzero real Higgs components of the **new piece only** for one lepton generation and checks that both Yukawa families occur.
+
+**Not completed:** full 3-generation flavor Wilson ODE, inclusion of all already existing anomalous dimensions in a coupled Wilson evolution, scalar-threshold one-loop matching, pole cancellation and the final corrected C5. Do NOT add these beta components directly as the final C5; the stage is an operator-mixing audit. All production files stay unchanged. The Stage 16 legacy low-energy masses remain valid baseline values.
+
+Requires the user's current repository `RGE/running/intermediate/ScalarOnlyTensorAdapters.py`, `output/T3_{B,C}_alpha_m1/data/eft1_after_F_wilson_seed.json`, `eft1_rgbeta_rge.json`, and Stage 15 source-convention certificate.
+
+PowerShell from project root:
+
+```powershell
+Expand-Archive -LiteralPath .\T3_General_Scalar_Batch17.zip -DestinationPath . -Force
+python -m pytest -q tests\python\test_general_t3_e_f_t1_scalar_pair_mixing.py
+powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3EFT1ScalarPairMixing.ps1
+```
+
+Reports: `output/general_t3_stage17/{B_m1,C_m1}_extra_eft1_scalar_pair_beta.json` and `stage17_summary.json`.
+
+</details>
+
+---
+
+<a id="source-general-t3-eft1-wilson-source-transport-md"></a>
+
+## Original document: `docs/GENERAL_T3_EFT1_WILSON_SOURCE_TRANSPORT.md`
+
+**Original SHA-256:** `c00bec8f0bf4b61cee551892e730456ffbe9f641c3e417aec69bba91d2cf4415`
+
+**Status:** Historical record; verify current source and core documentation
+before using its old commands or provisional conclusions.
+
+<details>
+<summary>Expand original: General T3: numerical extra-quartic EFT1 LLHH Wilson-source transport</summary>
+
+# General T3: numerical extra-quartic EFT1 LLHH Wilson-source transport
+
+## Verified preceding steps
+
+- Stage 16: grouped two-threshold **renormalisable** UV/EFT1 one-loop RGBeta running and pre-existing baseline Weinberg evolution (both B/C(-1) run successfully on Windows).
+- Stage 17: two additional scalar quartic invariants contracted into the Matchete PL EFT1 Wilson seed, producing four nonzero Higgs-real components of the **extra** scalar-pair Wilson anomalous dimension in both models (10/10 local tests and both model exports passed).
+- Stage 15: potential/Lagrangian sign relation `lambda_Matchete = -lambda_RGBeta` for these couplings in the common scalar field basis. Stage18 uses the *RGBeta potential* coefficients, so it does NOT insert an additional minus sign.
+
+## Stage18 calculation
+
+Reuse `output/T3_{B,C}_alpha_m1/data/{uv_rgbeta_rge.json,eft1_rgbeta_rge.json}` and the genuine `output/general_t3_stage17/{B_m1,C_m1}_extra_eft1_scalar_pair_beta.json`. Run the Stage16 grouped benchmark again in memory to obtain the time-dependent EFT1 state at 17 logarithmically spaced scales. Use the full existing coupled RGEs for **all** renormalisable EFT1 couplings (including six special scalar quartics); only the Wilson insertion is new.
+
+Stage17's scalar-pair beta components are homogeneous of degree 2 in the one-generation PL Yukawa and inverse-linear in MF. The code validates that they factor into
+
+    beta_ijab^(1)(mu) = A_ab(mu) * conjugate(y1)^2 / MF
+                       + B_ab(mu) * conjugate(y2)^2 / MF .
+
+The only allowed free symbols in `A` and `B` are the two active complex RGBeta potential couplings and their conjugates, each to degree at most one. In the positive diagonal heavy-mass basis at the F boundary, promote the factors to symmetric 3x3 matrices:
+
+    Y_i[p,q] = sum_r conjugate(y_i[p,r]) conjugate(y_i[q,r]) / M_r .
+
+The Yukawas, positive heavy masses, and tree Wilson seeds are evaluated **at mu_F** and kept fixed below F, where those heavy fields are absent. Evolve the source only:
+
+    Delta C_ijab|extra-source = (1 / (16*pi^2)) * integral_{
+      ln(mu_F)}^{ln(mu_S)} beta_ijab^(1)(mu) dln(mu).
+
+Integration uses composite Simpson quadrature over the saved EFT1 trajectory, plus an independent composite trapezoid estimate (reported as a quadrature difference). Both are downwards in logarithmic scale. Output units: `GeV^-1` for each flavour-matrix component.
+
+### Scope (important)
+
+This **is not the full coupled EFT1 Wilson system**: it omits homogeneous Wilson mixing (except the direct new scalar-pair source), additional operator-generated source feedback, one-loop corrections to the F threshold seed, and finite scalar-threshold matching. It exports **real** Higgs-index Wilson coefficients (`i,j` fixed to lepton SU2 indices `(1,2)`, `a,b` in Higgs real indices 1..4), not a canonically normalised Weinberg coefficient. Therefore it makes *no* new neutrino mass prediction, and does not add a contribution to the pre-existing physical baseline. This is a full **three-lepton-flavour source lift** of a tree-seed single-insertion, not a validated three-generation coupled Wilson ODE.
+
+For radiatively generated extra quartics initialized at zero at the UV scale, this piece has nominal two-loop suppression. The computation is a selected `O(hbar^2)` effect, **not a complete two-loop prediction**.
+
+We retain the Stage16 grouped mass hierarchy and its finite-order approximation, not individual particle thresholds. The `mu_F` tree boundary is continuous for renormalisable parameters; no new finite matching terms are assumed. The original Stage11-15 toy spectrum violates the grouped F-first ordering and is not used.
+
+## Commands (PowerShell from project root)
+
+```powershell
+Expand-Archive -LiteralPath .\T3_General_Scalar_Batch18.zip -DestinationPath . -Force
+python -m pytest -q tests\python\test_general_t3_e_f_t1_wilson_source_transport.py
+powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3EFT1WilsonSourceTransport.ps1
+```
+
+Optional numerical consistency scan, uses more sampled points:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3EFT1WilsonSourceTransport.ps1 -Samples 33
+```
+
+## Output files
+
+- `output/general_t3_stage18/B_m1_extra_eft1_wilson_source_integral.json`
+- `output/general_t3_stage18/C_m1_extra_eft1_wilson_source_integral.json`
+- `output/general_t3_stage18/stage18_summary.json`
+
+The script fails closed and records each model error in `stage18_summary.json`. It does not modify production physics code, the baseline outputs, or GitHub.
+
+## Next physics task
+
+Match these real Higgs Wilson tensors onto the correctly normalised Weinberg operator using the project's established `WeinbergTensorAdapter` and the scalar threshold, then compare with direct Matchete matching. Only after consistency checks should the extra piece be included in the final SM+Weinberg transport.
+
+</details>
+
+---
+
+<a id="source-general-t3-fermion-first-thresholds-md"></a>
+
+## Original document: `docs/GENERAL_T3_FERMION_FIRST_THRESHOLDS.md`
+
+**Original SHA-256:** `b3dd6aff0cd59c2f8c4daf3cf48cf54d7ff8da07488efa8855c9296e900ba7d6`
+
+**Status:** Historical record; verify current source and core documentation
+before using its old commands or provisional conclusions.
+
+<details>
+<summary>Expand original: General T3: grouped fermion-first threshold continuation (experimental)</summary>
+
+# General T3: grouped fermion-first threshold continuation (experimental)
+
+## Implemented
+
+1. Run the existing *complete currently coded* B/C(alpha=-1) one-loop UV RGBeta system from `mu_UV` to a common `mu_F`, including both C5-active and four other existing RGBeta complex quartics.
+2. Apply `build_intermediate_scalar_boundary` at `mu_F`: remove F and both Yukawas; transport the renormalisable quartics continuously (tree-level matching; no finite threshold correction).
+3. Run the existing scalar-only **EFT1 RGBeta** one-loop system to `mu_S`, including all six complex quartics.
+4. Use the existing scalar-threshold projection to SM.
+5. With `final_weinberg_coefficient.json` supplied, use the **previously established baseline** hierarchical C5 evaluator and run the SM+Weinberg matrix to `mu_low`. This baseline DOES NOT contain the new quartic corrections to the Wilson matching.
+6. Save all running extra quartic values at UV, F boundary and S boundary, plus baseline C5/mass matrices, and a machine-readable blocked flag for extra Wilson matching.
+
+## NOT implemented
+
+**The generated quartics do NOT yet contribute to the physical C5 at the scalar threshold.** The missing pieces are matching of the relevant higher-dimensional LLSS Wilson tensors at F, their EFT1 anomalous dimensions with extra quartic insertions, and the associated scalar matching and pole cancellation at S. The one-step Matchete hard response is not a substitute. No unsupported extra C5 or extra low-energy neutrino mass is output. The already existing `final_weinberg_coefficient.json` is a baseline coefficient, not an extended-model result. A complete O(hbar^2) calculation also needs other two-loop effects.
+
+**The threshold prescription is grouped**, not individual thresholds for the three different MF and two different MS. The default benchmark enforces the strict ordering `mu_UV > max(MF) > min(MF) > mu_F > max(MS) > min(MS) > mu_S > mu_low` approximately, rechecking running masses. Grouped matching is an approximation until matched finite threshold corrections and sequential heavy-generation integration are supplied. The pre-existing Stage 11–15 benchmark does **not** have this ordering (MF1=1500 GeV < MS2=1780 GeV). Its numerical results are unchanged; this batch creates a separate benchmark with MF=[5100,6000,7000] GeV.
+
+The benchmark values are illustrative, not measured couplings or a physics fit. The source-level `lambda_Matchete=-lambda_RGBeta` relation still assumes an identical scalar-field basis. The production numerical source files are untouched.
+
+## Run
+
+In the repository root:
+
+```powershell
+Expand-Archive -LiteralPath .\T3_General_Scalar_Batch16.zip -DestinationPath . -Force
+python -m pytest -q tests\python\test_general_t3_fermion_first_thresholds.py
+powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3FermionFirstThresholds.ps1
+```
+
+For the two renormalisable segments only (no baseline matching):
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3FermionFirstThresholds.ps1 -RenormalisableOnly
+```
+
+Requires existing `output/T3_{B,C}_alpha_m1/data/{uv_rgbeta_rge.json,eft1_rgbeta_rge.json,final_weinberg_coefficient.json}`. Outputs `output/general_t3_stage16/{B_m1,C_m1}_hierarchical_trajectory.json` and `stage16_summary.json`.
+
+</details>
+
+---
+
+<a id="source-general-t3-final-c5-and-weinberg-running-md"></a>
+
+## Original document: `docs/GENERAL_T3_FINAL_C5_AND_WEINBERG_RUNNING.md`
+
+**Original SHA-256:** `8f6c91ebc635829d04dd8f10477448654cb65246116e0cb7f71ee74eff2e3c3d`
+
+**Status:** Historical record; verify current source and core documentation
+before using its old commands or provisional conclusions.
+
+<details>
+<summary>Expand original: General T3: existing model-specific C5 and final SM+Weinberg running</summary>
+
+# General T3: existing model-specific C5 and final SM+Weinberg running
+
+## Scope
+
+Connect the successful Stage 33 / 35 *numerical states* to existing model-specific one-loop matching artifacts. No new symbolic matching is derived. The authoritative code is reused:
+
+- `Numerical/running/FinalC5TrajectoryAdapter.py`: heavy mass-basis conversion and construction of C5 inputs from the heavy threshold at 100 TeV and scalar masses and `lambdaT3` at 1 TeV;
+- `Numerical/running/SMWeinbergStage.py`: evaluation of an **existing** symbolic C5 artifact;
+- `Numerical/running/ScalarThresholdBoundary.py`: initial SM+Weinberg state;
+- `Numerical/running/SMWeinbergEvolution.py`: one-loop running 1 TeV -> 100 GeV;
+- `physics/NeutrinoMass.py`, `physics/NeutrinoTrajectory.py`, `physics/NeutrinoObservables.py`: low-energy neutrino mass and charged-lepton basis observables.
+
+Full prior UV and intermediate RGEs are **not** rerun. SHA-256 validations tie Stage 33/34/35 outputs to the inputs. For each model the coefficient file is resolved from its *own* `(class,alpha)` path, never by recycling another model's matching artifact.
+
+## Existing C5 sources
+
+For twelve model/alpha values, the successful hierarchical fixed-order source is:
+
+`output/full/hypercharge/T3_<family>_alpha_<pN_or_mN>/data/final_weinberg_coefficient.json`
+
+The source must be `status=Success`, `scheme=fixed_order_one_loop_MSbar_hierarchical`, have a successful renormalized hard threshold and a validated manifestly symmetric direct-running contribution. `FinalWeinbergAdapter` combines the hard and direct terms.
+
+Four extreme-hypercharge cases (`A_-4`, `B_-3`, `C_-3`, `E_-4`) currently do not have this hierarchical artifact in the inspected repository. They have the *different* legacy one-loop output:
+
+`output/hypercharge/T3_<family>_alpha_<mN>/data/c5_coefficient.txt`
+
+This uses the existing `evaluate_symbolic_c5` parser and *does not* reproduce the same hierarchical hard-plus-direct scheme. To include these four rough benchmarks the caller must explicitly supply `--allow-legacy`. The combined 16-model result is labelled **mixed matching sources**, and source kind is recorded per model. Do not treat it as a uniform precision comparison.
+
+## Missing physics and convention caveats
+
+- No re-evaluation of the full Matchete matching with the 38 new Stage 29 scalar quartic vertices. Those new terms have no certified EFT1 basis transfer and are absent below 100 TeV.
+- The 12 reused quartic slots were evolved in Stage 34; they enter the scalar threshold state, but there is no new Wilson-operator matching.
+- Existing matched C5 coefficients are evaluated on the Stage 33/35 RGE backgrounds. That is a conditional approximate prediction, **not** a new matched EFT calculation.
+- Model-specific mass eigenvalues differ from the grouped matching scales (100 TeV and 1 TeV); this is an explicit common-scale approximation.
+- The matching convention / coupling map between Matchete and RGBeta extra quartics remains uncertified.
+- The `NO` mass eigenstate labelling follows the fitted-reference benchmark convention. No refit to oscillation data is performed.
+
+## Files / project paths
+
+- `scripts/FinalWeinbergRunning.py` — new complete runner.
+- `tests/python/test_general_t3_final_weinberg.py` — new offline regression tests.
+- `docs/GENERAL_T3_FINAL_C5_AND_WEINBERG_RUNNING.md` — this document.
+
+All generated JSON outputs are placed under `output/general_t3_stage22`.
+
+## Commands — PowerShell from repository root
+
+Install ZIP (place it in repository root first):
+
+```powershell
+Expand-Archive -LiteralPath .\T3_General_Scalar_Stage36_ExistingC5_WeinbergRunning.zip -DestinationPath . -Force
+```
+
+Tests:
+
+```powershell
+python -m pytest -q tests\python\test_general_t3_final_weinberg.py
+```
+
+First model (hierarchical C5):
+
+```powershell
+python -m scripts.FinalWeinbergRunning --model A_+0
+```
+
+Run all 16 **with explicit opt-in for the four legacy approximations**:
+
+```powershell
+python -m scripts.FinalWeinbergRunning --all --allow-legacy
+```
+
+Regenerate/check the combined summary without rerunning:
+
+```powershell
+python -m scripts.FinalWeinbergRunning --summary
+```
+
+## Output
+
+Individual model:
+
+`output/general_t3_stage22/stage36_A_p0_low_energy_neutrinos.json`
+
+All-model summary:
+
+`output/general_t3_stage22/stage36_16_model_low_energy_neutrino_summary.json`
+
+The per-model record carries provenance hashes, matching scheme, heavy/scalar numerical matching inputs, full complex C5 at 1 TeV and 100 GeV, low-energy neutrino mass matrix, `NO` neutrino mass eigenvalues, squared splittings and absolute PMNS entries. The combined summary differentiates the twelve hierarchical and four legacy artifacts. All files use the existing benchmark without refitting.
+
+## Offline verification
+
+The Stage 36 unit tests mock the external numerical services but validate all source routing, missing-artifact failures, alpha isolation, opt-in policy, and handoff contract. Existing Stage 30/31/33/34/35 Python regressions also pass in a local isolated staging tree. *The actual Stage 36 matching evaluations and numerical integration must run in the user's full Windows repository.*
+
+</details>
+
+---
+
+<a id="source-general-t3-weinberg-source-transport-md"></a>
+
+## Original document: `docs/GENERAL_T3_WEINBERG_SOURCE_TRANSPORT.md`
+
+**Original SHA-256:** `f9df8e69428ae01b92dbf573cd3dad68e7b52796eb1aa48d14b58a96973ff3b4`
+
+**Status:** Historical record; verify current source and core documentation
+before using its old commands or provisional conclusions.
+
+<details>
+<summary>Expand original: General T3: selected extra-quartic Weinberg projection and low-energy transport</summary>
+
+# General T3: selected extra-quartic Weinberg projection and low-energy transport
+
+## Established inputs
+
+- Stage 16: B/C(-1) grouped, fermion-first UV and scalar-only EFT RGBeta running, including all six special quartics, and **baseline** physical hierarchical C5.
+- Stage 17: **new** quartic-dependent scalar-pair part of the one-loop dimension-five EFT1 Wilson-tensor anomalous dimension, based on Matchete PL LLSS tree seed.
+- Stage 18: numerical integral of this **selected source**, using running EFT1 renormalisable couplings and *frozen* tree LLSS Wilson seed at mu_F. Four nonzero mixed-lepton Higgs-real components in both models (actual Windows runs).
+
+## New verification and calculation
+
+**Symbolic closure:** Use the project's authoritative `RGE.matching.WeinbergTensorAdapter.build_weinberg_wilson_tensor(kappa=1)` to generate the same SU(2) real-scalar template that validates the production EFT1 Wilson RGE. Independently recalculate the extra scalar-pair beta from the actual Matchete PL Wilson seed and the two SU(2) potential tensors for **all 30 independent lepton-doublet/Higgs-real index combinations** (`i<=j`, `a<=b`). Require exact identity
+
+    delta_beta^(1)_{ijab} = beta_kappa^(1) * WeinbergTemplate_{ijab}
+
+and require the four mixed-lepton components to agree with the saved Stage 17 expressions. If an index/sign/phase fails, **no numerical C5 is exported**. This check must be performed with the *actual local* seed; it has not been run here.
+
+**Physical normalisation:** Independently compare the existing successful `eft1_wilson_rge.json` `weinberg_subspace_validation.beta_kappa_16pi2` with the `final_weinberg_coefficient.json` direct-running expression after inserting the canonical one-generation `C12 = conjugate(y1)*conjugate(y2)/MF` and extracting its coefficient of `log(MS/MF)`. This establishes that the RGE tensor's `kappa` uses the same one-loop direct-running C5 convention as the established physical matching adapter.
+
+**Numerical projection:** Given the certified complex Weinberg template and the four integrated Stage 18 `C_{nu,e,a,b}`, the mixed-lepton template ratios are
+
+    (a,b)=(1,3): -1/4
+          (1,4): -i/4
+          (2,3): -i/4
+          (2,4): +1/4
+
+for polynomial `kappa*(nu*H0 - e*H+)^2` and tensor `C=(1/4) fourth derivative`. Project by least squares and verify the *complete matrix* residual is smaller than 2e-8 relative, rather than using merely the four component norms.
+
+**Scalar boundary:** Since the selected source is already LLHH with no S1 or S2 legs, the tree-level projection at the scalar threshold simply carries its coefficient to SM+Weinberg. **Finite one-loop scalar-threshold effects are not computed.**
+
+**SM running:** Pass this **selected-source-only** symmetric 3x3 matrix through the existing `T3Trajectory.continue_with_weinberg_running`, from the grouped scalar matching scale `mu_S=1100 GeV` to `mu_low=246.22 GeV`, and convert each endpoint by `delta m_nu = -(246.22 GeV)^2/2 * delta C5`. Saved outputs remain separate from Stage 16 baseline.
+
+## Deliberate limitations
+
+- Full coupled EFT1 LLSS Wilson evolution and closure are not integrated (source-only, frozen LLSS seed).
+- F and S matching remain **grouped**; individual heavy and scalar mass thresholds are not crossed.
+- No finite extra contribution at the F or scalar threshold is included.
+- With extra quartics generated from UV zero boundary, this contribution starts at **formal O(hbar^2)**; this is **not** a complete two-loop calculation, and the low-energy source-only output is **not a full physical neutrino mass prediction**.
+- The running baseline and production matching results are not overwritten, nor are the source or GitHub files modified.
+
+## Install and run (PowerShell, repository root)
+
+```powershell
+Expand-Archive -LiteralPath .\T3_General_Scalar_Batch19.zip -DestinationPath . -Force
+python -m pytest -q tests\python\test_general_t3_weinberg_source_transport.py
+powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3WeinbergSourceTransport.ps1
+```
+
+Stage 19 uses existing Stage 17/18 user-generated reports and the *production* Matchete/RGBeta exports under `output/T3_B_alpha_m1/data/` and `output/T3_C_alpha_m1/data/`; no fresh symbolic matching or Stage 18 quadrature is required. It reruns two short renormalisable RGBeta numerical segments to recover the current consistent SM matching boundary.
+
+## New files
+
+- `Numerical/experimental/GeneralT3WeinbergProjection.py`
+- `Numerical/experimental/GeneralT3ExtraLowEnergyTransport.py`
+- `scripts/RunGeneralT3WeinbergSourceTransport.py`
+- `scripts/RunGeneralT3WeinbergSourceTransport.ps1`
+- `tests/python/test_general_t3_weinberg_source_transport.py`
+- `docs/GENERAL_T3_WEINBERG_SOURCE_TRANSPORT.md`
+
+## Output
+
+- `output/general_t3_stage19/B_m1_selected_extra_weinberg_transport.json`
+- `output/general_t3_stage19/C_m1_selected_extra_weinberg_transport.json`
+- `output/general_t3_stage19/stage19_summary.json`
+
+A failure writes an exact error to `stage19_summary.json` and exits nonzero, without manufacturing a `delta C5` value.
 
 </details>
 

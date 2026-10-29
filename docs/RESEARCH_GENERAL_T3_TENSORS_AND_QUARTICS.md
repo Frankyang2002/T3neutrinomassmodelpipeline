@@ -19,6 +19,16 @@
 - [General T3: native quartic prefactors and conditional signed coupling maps](#source-general-t3-quartic-prefactors-md) — `docs/GENERAL_T3_QUARTIC_PREFACTORS.md`
 - [General T3: Native RGBeta SU(2) `S2` and triplet conjugation structure](#source-general-t3-rgbeta-s2-structure-md) — `docs/GENERAL_T3_RGBETA_S2_STRUCTURE.md`
 - [General T3: SU(2) triplet component-basis witness](#source-general-t3-triplet-intertwiner-md) — `docs/GENERAL_T3_TRIPLET_INTERTWINER.md`
+- [General T3: full ordinary-T3 scalar interaction programme, first generalisation batch](#source-general-t3-general-quartic-rgbeta-programme-md) — `docs/GENERAL_T3_GENERAL_QUARTIC_RGBETA_PROGRAMME.md`
+- [General T3: standalone Matchete tensor exporter initialisation](#source-general-t3-matchete-tensor-initialization-md) — `docs/GENERAL_T3_MATCHETE_TENSOR_INITIALIZATION.md`
+- [General T3: quartic Lagrangian sign convention and source-mapped B/C(-1) response](#source-general-t3-quartic-convention-c5-md) — `docs/GENERAL_T3_QUARTIC_CONVENTION_C5.md`
+- [General T3: 16-model candidate RGBeta export validation](#source-general-t3-rgbeta-export-coverage-audit-md) — `docs/GENERAL_T3_RGBETA_EXPORT_COVERAGE_AUDIT.md`
+- [General T3 extension: validated physics and next numerical gate](#source-general-t3-scalar-quartic-validation-md) — `docs/GENERAL_T3_SCALAR_QUARTIC_VALIDATION.md`
+- [General T3: RGBeta native association-key repair (Fix 2)](#source-general-t3-scalar-tensor-certification-md) — `docs/GENERAL_T3_SCALAR_TENSOR_CERTIFICATION.md`
+- [General T3: Local B/C reused quartic SU(2) correction](#source-general-t3-tensor-110101-local-correction-md) — `docs/GENERAL_T3_TENSOR_110101_LOCAL_CORRECTION.md`
+- [General T3: native-source SU(2) covariance of `110101` (B_-1 and C_-1)](#source-general-t3-tensor-110101-su2-covariance-md) — `docs/GENERAL_T3_TENSOR_110101_SU2_COVARIANCE.md`
+- [General T3: aligned SU(2) geometry diagnostic (not coupling normalisation)](#source-general-t3-tensor-aligned-geometry-md) — `docs/GENERAL_T3_TENSOR_ALIGNED_GEOMETRY.md`
+- [General T3: exact RGBeta invariant geometry diagnostic](#source-general-t3-tensor-explicit-geometry-md) — `docs/GENERAL_T3_TENSOR_EXPLICIT_GEOMETRY.md`
 
 ---
 
@@ -993,6 +1003,959 @@ This tests whether one **Matchete-derived triplet CG basis** works for all six c
 - `physical_coupling_mapping_certified = false`.
 
 Before promoting the 46 Stage 23/26 conditional signed maps to physical RG input, independently extract and identify the native component representation and barred-field conjugation on **both sides**. A candidate \(U\) without these checks is not a certificate. No further arbitrary per-block reindexing is justified.
+
+</details>
+
+---
+
+<a id="source-general-t3-general-quartic-rgbeta-programme-md"></a>
+
+## Original document: `docs/GENERAL_T3_GENERAL_QUARTIC_RGBETA_PROGRAMME.md`
+
+**Original SHA-256:** `67bd5f79f30b8f8d65bf6a5abb5d611f3f7183fd4f7ce8eac5010099cbff230b`
+
+**Status:** Historical record; verify current source and core documentation
+before using its old commands or provisional conclusions.
+
+<details>
+<summary>Expand original: General T3: full ordinary-T3 scalar interaction programme, first generalisation batch</summary>
+
+# General T3: full ordinary-T3 scalar interaction programme, first generalisation batch
+
+## Objective
+
+Extend the scalar basis across **all 16 ordinary T3 assignments**, rather than
+continuing B/C(-1)-only numerical neutrino-mass studies. Everything here is
+**experimental** and is kept separate from the production baseline.
+
+## Source-verified inventory
+
+Input: `docs/general_scalar_trial_operator_manifest.json` and the Matchete
+`Lagrangian/interactions/GeneralScalarVerifiedQuartics.wl` table.
+
+- 16 independent model assignments.
+- 50 additional **complex** independent quartic coefficients summed *across*
+  the assignments, NOT 50 coefficients within each individual model.
+- 12 of these 50 have existing RGBeta **structural** analogues (six for B(-1),
+  six for C(-1)); **38 new RGBeta candidate vertices** are generated.
+- Eight additional complex *quadratic* coefficients exist, one each in
+  A(-2), A(0), B(-1), C(-1), D(-2), D(0), E(-2), E(0).
+- Additional Z2-even, gauge-invariant renormalisable cubic interactions do
+  not arise for these assignments (odd BSM fields forbidden, and one Higgs
+  plus two BSM scalars has half-integer hypercharge).
+
+## Implemented in this batch
+
+1. `scripts/GenerateGeneralT3RGBetaBasis.py`: deterministic field-monomial
+   generator using RGBeta's native `eps`, `del`, `delS2` and triplet coupling
+   structures, with Bose-symmetrised rank selection and a fail-closed check
+   against all 50 independently enumerated structures.
+2. `RGE/general/generated/*_extra_quartics.wl`: 16 model-specific source files,
+   covering 38 previously unrepresented quartics. B/C(-1) reuse six existing
+   RGBeta couplings **without creating duplicates**; the second independent
+   H H† S1† S2† structure gets a new vertex.
+3. `RGE/running/rgbeta/RunGeneralT3RGBeta.wl`: **experimental** UV and
+   intermediate scalar-EFT beta exporter. Loads the unchanged production
+   `T3RGBetaModel.wl`, adds generated vertices, requests the new `BetaTerm`s,
+   and includes them in `report_betas`. `-CheckGauge` runs an independent, explicit U(1)Y/Z2/field-type/SU(2)
+   candidate-rank audit. RGBeta v1.2.0 rejects `CheckInvariance -> True`;
+   therefore its native invariant Ward check is **not** invoked.
+4. `Numerical/experimental/GeneralT3ScalarRGState.py`: a general
+   per-representation, manifest-checked state extension and generic
+   UV/intermediate beta evaluator/ODE runner. It retains all generated
+   extra-quartic components across a tree-level F threshold; no silent ignored
+   beta keys and no claim of complete matching.
+5. `Numerical/experimental/GeneralT3ScalarQuadraticMasses.py`: **standalone,
+   spherical SU(2) basis prototype** of mass-squared Hessians for all eight
+   additional bilinears. It verifies a zero-coupling diagonal limit and tests
+   the B/C(-1) two-multiplet analytic spectrum. Not incorporated into the
+   physical Matchete mass basis, RGBeta mass running, or scalar thresholds.
+6. New tests, scripts and machine-readable coverage reports.
+
+## Important verification boundaries
+
+The **38 generated extra quartic vertices are *candidate* RGBeta bases**.
+The Python rank tests confirm their span in the generator's index convention;
+they DO NOT demonstrate equivalent invariant normalisation, triplet basis
+rotation, phase, or the individual coefficient map against Matchete.
+`-ExportBetas -CheckGauge` performs a separate structural charge/parity/
+index-basis audit and exports the candidate betas under the locally installed
+Wolfram kernel. **It does not run RGBeta's native `CheckInvariance` Ward check**:
+that option is rejected by the installed RGBeta v1.2.0. In addition, the
+B/C(-1) new delta/epsilon contraction was corrected to respect dual SU(2)
+index orientations; the pre-existing B/C mixed contraction remains subject to
+a separate native tensor validation. No Wolfram kernel is present
+in the package-construction environment, so this local run is **mandatory**
+before claiming RGBeta success. The independent structural audit still does not establish a full
+native SU(2) Ward identity or Matchete/RGBeta coupling equality.
+
+No existing production matching, RGBeta source, UV numerical states or their
+existing test semantics have been changed. The eight quadratic terms are **not
+physically installed**; the most general T3 neutrino-mass pipeline is NOT yet
+complete. The new generic RG numerical code is intentionally an experimental
+candidate until exports and coupling maps are verified.
+
+## Commands (PowerShell, project root)
+
+```powershell
+Expand-Archive -LiteralPath .\T3_General_Scalar_Batch20.zip -DestinationPath . -Force
+
+python -m pytest -q tests\python\test_general_t3_general_quartic_r_g_beta.py tests\python\test_general_t3_general_quartic_quadratics.py
+
+powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3GeneralQuarticRGBeta.ps1
+python -m scripts.RunGeneralT3QuadraticAudit
+```
+
+To export candidate beta functions, start with **two high-value controls**
+and request the independent structural charge/parity/rank check:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3GeneralQuarticRGBeta.ps1 -ExportBetas -CheckGauge -Models B_-1,C_-1
+```
+
+After that succeeds, export/verify both UV and scalar-EFT beta functions for
+**all 16 ordinary model assignments**:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3GeneralQuarticRGBeta.ps1 -ExportBetas -CheckGauge
+```
+
+Partial runs may select `-Models A_-2,E_-2` and/or `-Stage UV` / `-Stage EFT1`.
+Model-level JSON and logs are written to `output/general_t3_stage20/`.
+
+## Next required work (not claimed as complete)
+
+1. For every model, independently validate native RGBeta SU(2) Ward identities, beta closure and its
+   exact Matchete tensor change-of-basis/normalisation (especially complex
+   conjugations for triplets).
+2. Incorporate the eight quadratic mass mixings in **Matchete**, RGBeta,
+   scalar mass diagonalisation and threshold matching (no diagonal-scalar
+   approximation where mass mixing is nonzero).
+3. Use the generic extended RGBeta numerical state to run the full coupling
+   sets and revalidate zero-extra-interaction baseline recovery for all 16.
+4. Re-do multi-threshold physical neutrino masses after the general scalar
+   mass-basis and extra EFT1 Wilson sectors have been completed.
+
+</details>
+
+---
+
+<a id="source-general-t3-matchete-tensor-initialization-md"></a>
+
+## Original document: `docs/GENERAL_T3_MATCHETE_TENSOR_INITIALIZATION.md`
+
+**Original SHA-256:** `db9c0fde2814d7a44e7503b61c3ee2aa612fefd97c2c7b2bf593029f0b21842c`
+
+**Status:** Historical record; verify current source and core documentation
+before using its old commands or provisional conclusions.
+
+<details>
+<summary>Expand original: General T3: standalone Matchete tensor exporter initialisation</summary>
+
+# General T3: standalone Matchete tensor exporter initialisation
+
+## Verified input
+
+User's Batch 8 local run: 42 Python tests passed. The formal C5 response passed,
+including the Yukawa-family classification for B/C(-1). The one-loop RGBeta
+source check passed. The tensor exporter then emitted
+`DefineRepresentation::unkwngroup: SU2L has not been defined as a group` and
+reported `GenerationFailed` for its four active structures.
+
+**Cause:** `ExportGeneralT3TensorConvention.wl` called `ResetAll[]` and then
+built BSM SU(2) tensors without first calling `LoadModel["SM"]`. The generator's
+`EnsureBSMRepresentation` registers a new representation under Matchete's
+`SU2L` group, which does not exist until the SM model has been loaded.
+`BuildT3Lagrangian` already follows the correct order: `ResetAll[]`,
+`LoadModel["SM"]`, then BSM field/representation generation.
+
+## Implemented
+
+- Full replacement `scripts/ExportGeneralT3TensorConvention.wl`: reloads the
+  SM group registry immediately after every Matchete reset, *inside*
+  `UsingFrontEnd`, and distinguishes a failed SM load from a tensor mismatch.
+- Full replacement `scripts/RunGeneralT3ScalarQuarticResponseAudit.ps1`: optional `-TensorOnly`
+  for retrying the failed stage without repeating proven C5 and RGBeta work.
+- Full replacement `tests/python/test_general_t3_scalar_quartic_response_audit.py`: adds regression
+  checks for the prerequisite initialization and targeted runner mode.
+
+This corrects the `SU2L` registry error but does **not** claim the resulting
+Matchete tensor is proportional to the canonical index tensor; that comparison
+must still be run using the user's Matchete installation. Even a successful
+canonical comparison does **not** by itself establish the Matchete-to-RGBeta
+normalisation, signs or scalar potential convention.
+
+## Run (PowerShell, repository root)
+
+```powershell
+Expand-Archive -LiteralPath .\T3_General_Scalar_Batch9.zip -DestinationPath . -Force
+python -m pytest -q tests\python\test_general_scalar_trial.py tests\python\test_scalar_quadratic_prototype.py tests\python\test_general_scalar_c5_proof.py tests\python\test_general_rgbeta_coverage.py tests\python\test_general_t3_scalar_quartic_response_audit.py
+powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3ScalarQuarticResponseAudit.ps1 -TensorOnly
+```
+
+If the tensor stage passes, the existing Stage 8 formal-response and RGBeta
+reports can be retained, or run the complete Stage 6 script to refresh them:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3ScalarQuarticResponseAudit.ps1
+```
+
+Expected tensor JSON:
+`output/general_t3_trial/matchete_active_quartic_tensors.json`.
+The field `rgbeta_mapping_verified` remains `false` regardless of the tensor
+check result. General RGBeta RGE and numerical C5 are still *not* activated.
+
+</details>
+
+---
+
+<a id="source-general-t3-quartic-convention-c5-md"></a>
+
+## Original document: `docs/GENERAL_T3_QUARTIC_CONVENTION_C5.md`
+
+**Original SHA-256:** `2a33435fdabba05ea26dc18b2bd6705b86768da9360b0b220d31c54381b88bc2`
+
+**Status:** Historical record; verify current source and core documentation
+before using its old commands or provisional conclusions.
+
+<details>
+<summary>Expand original: General T3: quartic Lagrangian sign convention and source-mapped B/C(-1) response</summary>
+
+# General T3: quartic Lagrangian sign convention and source-mapped B/C(-1) response
+
+Stage 14 successfully calculated 16 hypothetical complex-coupling mappings per
+model. For its toy benchmark the induced extra-only neutrino-mass norms span
+B(-1) `5.112920e-14`–`3.103345e-13` eV and C(-1)
+`4.542737e-14`–`2.757276e-13` eV. These were **not physical predictions**.
+
+Stage 15 derives the source-level coupling convention for the *two C5-active*
+quartics using three independently checked facts:
+
+1. `Lagrangian/interactions/GeneralScalarOperators.wl` inserts the new scalar
+   interaction as `PlusHc[lambdaMat[] * fields * CG]` into the UV Lagrangian,
+   **with a plus sign and without a 1/2 vertex factor**.
+2. `RGE/running/rgbeta/T3RGBetaModel.wl` registers the identical field
+   monomials and the `delS2 delS2` invariant using `AddQuartic[..., SelfConjugate -> False]`:
+   `Bar[H] Bar[H] S2 S2` and `Bar[H] Bar[H] Bar[S1] Bar[S1]`.
+   `output/general_t3_stage13/doublet_tensor_map.json` already certifies
+   their RGBeta/Matchete group-tensor factor is **+1**.
+3. **RGBeta's published model-builder Lagrangian** includes scalar quartics
+   with the overall sign **minus**, Eq. (2.3) in A. E. Thomsen,
+   *Introducing RGBeta*, EPJC **81** (2021) 408,
+   <https://doi.org/10.1140/epjc/s10052-021-09142-4>.
+   The package's `AddQuartic` interface does **not** insert optional user-level
+   symmetry normalisation factors automatically, as described in Section 4.
+
+In the **same named scalar-field basis**, equating the interaction terms gives
+
+\[
+    \lambda_{\text{Matchete},i}=-\lambda_{\text{RGBeta},i},\qquad
+    i\in\{020020,020200\}.
+\]
+
+**No complex conjugation** is needed in that source-level identification;
+conjugated couplings inside the exported Matchete C5 response remain
+conjugated when numerically evaluated.
+
+This is a *source-convention derivation*, not a claim of a full end-to-end
+RGE/matching validation. The scripts fail if the relevant sources change, the
+previous tensor report is incomplete, or the new numerical evaluation
+fails to reproduce Stage 14's `negative/negative` scenario.
+
+## Run from project root
+
+```powershell
+Expand-Archive -LiteralPath .\T3_General_Scalar_Batch15.zip -DestinationPath . -Force
+python -m pytest -q tests\python\test_general_t3_quartic_convention_c5.py
+powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3QuarticConventionC5.ps1
+```
+
+To run only the source convention check:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3QuarticConventionC5.ps1 -ConventionOnly
+```
+
+Read-only inputs: Stage 11, 13, 14 report JSONs, experimental C5 kernel JSONs,
+current Matchete and RGBeta source files, and the toy parameters.
+
+Outputs (all under `output/general_t3_stage15/`):
+
+- `source_lagrangian_convention.json`
+- `B_m1_source_mapped_extra_c5.json`
+- `C_m1_source_mapped_extra_c5.json`
+- `stage15_summary.json`, `stage15_summary.csv`
+
+## Important limits
+
+- Stage 13's running stops at 3.5 TeV above the toy fermion masses, while the
+  Matchete hard responses are evaluated at `MF = 1.5, 2.1, 2.8 TeV`. The
+  parameters are not evolved between these scales or matched across thresholds.
+- This is an extra-only response; the original C5 and scalar/intermediate EFT
+  evolution are not included.
+- Quartics induced from zero by one-loop running and inserted into the one-loop
+  C5 response contribute at formal order \(\hbar^2\). This is **not** a complete
+  two-loop neutrino-mass calculation.
+- A field-basis rotation or changed coupling normalisation would require a
+  new independent vertex-level check; source signatures are pinned to prevent
+  silently applying this map elsewhere.
+- None of the production numerical, RGBeta or matching modules are modified.
+
+</details>
+
+---
+
+<a id="source-general-t3-rgbeta-export-coverage-audit-md"></a>
+
+## Original document: `docs/GENERAL_T3_RGBETA_EXPORT_COVERAGE_AUDIT.md`
+
+**Original SHA-256:** `51396ede7b6986b64f4caa87eeed7dbec54b8e503fbf552f15d501aa12b35325`
+
+**Status:** Historical record; verify current source and core documentation
+before using its old commands or provisional conclusions.
+
+<details>
+<summary>Expand original: General T3: 16-model candidate RGBeta export validation</summary>
+
+# General T3: 16-model candidate RGBeta export validation
+
+Stage 20 produced 32 Wolfram RGBeta JSON exports: UV and scalar-only EFT1 for each of the 16 ordinary T3 models. Stage 21 is a **read-only compatibility and coverage audit** of those outputs.
+
+## What is checked
+
+- All 16 registry assignments, 50 model-specific extra scalar-quartic slots: 38 new RGBeta vertices and 12 structurally reused B/C(-1) slots.
+- All 32 exported JSON payloads are successful, have matching representation and stage metadata, and share the model-specific registry beta keys.
+- Both newly generated and previously existing overlapping quartics are included in RGBeta's **full quartic projection** (`BetaTerm[Quartic,1]`).
+- Every serialized beta is a nonempty string and no unresolved RGBeta beta-projection heads remain.
+- UV/EFT1 beta key sets remain consistent apart from Yukawa/heavy-fermion fields absent after integrating out F.
+- The report leaves exact Matchete normalisation, quadratic mixing, and physical C5 matching explicitly **unverified**.
+
+`--numeric-probe` separately uses synthetic complex Yukawa matrices (3x3) to exercise the production Python InputForm expression evaluator. A failure is a diagnostic for parser or synthetic input shape problems; passing is **not proof** of a representation-correct numerical RGE trajectory. Examine each failure in `output/general_t3_stage21/stage21_summary.json`; prefer actual baseline state tests next.
+
+## Install
+
+Unzip the Stage21 overlay at the project root, preserving paths.
+
+```powershell
+Expand-Archive -LiteralPath .\T3_General_Scalar_Stage21_ExportAudit.zip -DestinationPath . -Force
+python -m pytest -q tests\python\test_general_t3_quartic_export_audit.py
+powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3QuarticExportAudit.ps1
+```
+
+Optional diagnostic:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3QuarticExportAudit.ps1 -NumericProbe
+```
+
+Required input files (already created by Stage 20): `RGE/general/generated/general_rgbeta_quartic_registry.json` and `output/general_t3_stage20/{MODEL}_{uv,eft1}_rgbeta.json`.
+
+Output: `output/general_t3_stage21/stage21_summary.json`.
+
+## Physical status
+
+The verified result, if all checks pass, is *candidate quartic-RGE export consistency*. It is **not** certified general scalar potential matching or a complete neutrino mass prediction. Next steps: confirm Matchete↔RGBeta invariant transforms and signs, run model-specific state-vector ODE tests, implement eight scalar bilinear mass mixings, and recompute masses/thresholds in the correct basis.
+
+</details>
+
+---
+
+<a id="source-general-t3-scalar-quartic-validation-md"></a>
+
+## Original document: `docs/GENERAL_T3_SCALAR_QUARTIC_VALIDATION.md`
+
+**Original SHA-256:** `dd3e01afe99cbab4aa90c93accc1ded6dd8b56fd867862b68b11dc7798f84419`
+
+**Status:** Historical record; verify current source and core documentation
+before using its old commands or provisional conclusions.
+
+<details>
+<summary>Expand original: General T3 extension: validated physics and next numerical gate</summary>
+
+# General T3 extension: validated physics and next numerical gate
+
+## Verified on the user's 16-model Windows Matchete run (Batch 5)
+
+- 16/16 expected extra quartic bases were constructed and validated.
+- All baseline and extended one-loop symbolic matching jobs completed.
+- Formal zero-extra-coupling limit was proved for all 16 `C5` outputs.
+- The only extra quartics observed in the formal one-loop Weinberg coefficient
+  were `lambdaT3ExtraQ020020I1` and `lambdaT3ExtraQ020200I1` in B/C(-1).
+- The other 14 models had text-identical one-loop `C5` output in the comparison.
+
+These claims concern additional **scalar quartics** in the separately defined
+ordinary two-complex-scalar models. They do not establish the complete
+renormalisable UV theory including independent quadratic mixings and all
+possible special-case fermionic couplings.
+
+## RGBeta structural status
+
+- Of 50 additional complex scalar quartics summed across the 16 separate
+  model points, 12 have structurally analogous vertices already in RGBeta.
+- 38 are still missing from the current RGBeta interaction set.
+- No Matchete-to-RGBeta numerical coupling normalisation is verified yet.
+- For the leading-order C5 effect, only two B/C(-1) structures require an
+  immediate matching-to-RGBeta map. All other omitted structures may affect
+  the renormalisable RG running even when absent from the fixed-order C5.
+
+## Stage 6 (new)
+
+1. Confirm the linear response of the C5 coefficient to the new couplings
+   and identify which Yukawa structures multiply them.
+2. Confirm additive sources in their existing RGBeta one-loop beta functions.
+3. Export the exact Matchete tensor convention relative to an explicit
+   SU(2) doublet tensor. This determines a Matchete-to-canonical coefficient,
+   not yet the RGBeta-to-canonical coefficient.
+
+Successful Stage 6 results do **not** certify the enlarged numerical pipeline.
+The remaining numerical implementation should not equate differently
+normalised symbolic couplings without verifying RGBeta's `delS2` conventions.
+
+## PowerShell
+
+```powershell
+Expand-Archive -LiteralPath .\T3_General_Scalar_Batch6.zip -DestinationPath . -Force
+python -m pytest -q tests\python\test_general_scalar_trial.py tests\python\test_scalar_quadratic_prototype.py tests\python\test_general_scalar_c5_proof.py tests\python\test_general_rgbeta_coverage.py tests\python\test_general_t3_scalar_quartic_response_audit.py
+powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3ScalarQuarticResponseAudit.ps1
+```
+
+To revert the experimental version entirely, switch back to the pre-trial Git
+branch or revert the experiment commit. Avoid using `git restore` on files
+with independent local changes. No GitHub repository changes are made by
+this package.
+
+</details>
+
+---
+
+<a id="source-general-t3-scalar-tensor-certification-md"></a>
+
+## Original document: `docs/GENERAL_T3_SCALAR_TENSOR_CERTIFICATION.md`
+
+**Original SHA-256:** `429ad8a1e4d7db3b20fae738e19473fda6cd5f67eb128394e11dbafeac32d645`
+
+**Status:** Historical record; verify current source and core documentation
+before using its old commands or provisional conclusions.
+
+<details>
+<summary>Expand original: General T3: RGBeta native association-key repair (Fix 2)</summary>
+
+# General T3: RGBeta native association-key repair (Fix 2)
+
+## Current status and verified evidence
+
+**Physical Matchete–RGBeta quartic normalisation remains UNCERTIFIED.**
+
+Four JSON files from the user's Windows run were inspected (no source files were modified):
+
+- `matchete_tensors.json` contains exactly 50 explicit Matchete SU(2) tensors in 16 models. The independent Python verifier passes 46 full-rank field-content blocks, including the four two-invariant blocks. There are 26 triplet-containing slots, and six tensors contain explicit imaginary components; those must not be mapped by assuming identical triplet or conjugate component conventions.
+- `rgbeta_native_declarations.json` has 50 coupling *names*, but the actual `Fields`, `Invariant`, `Coupling`, `UniqueArrangements` values are all serialized as `Missing["KeyAbsent", ...]`.
+- `rgbeta_native_invariants.json` repeats those unresolved values; `Missing["KeyAbsent", Invariant][...]` is **not** a native invariant evaluation.
+- `stage22_summary.json` consequently gives misleading positive diagnostic labels: the original validators only checked that metadata strings were nonempty. These cannot be used as coupling certification evidence.
+
+The root cause is a **Wolfram symbol-context mismatch**: RGBeta associates native metadata under package-context symbol keys. The previous exporter looked them up with unqualified `Fields`, `Invariant`, `Coupling`, etc., which may resolve to different `Global`` symbols outside the package. This diagnosis is supported by the missing-key payload and RGBeta source construction, but the repaired Wolfram exports still require execution on the user's Windows installation.
+
+## Fix 2 implementation
+
+Full replacement files, all paths relative to repository root:
+
+1. `scripts/RGBetaNativeAccess.wl` — **new**; resolves native `$quartics` Association keys by their symbol name, checks exactly one match, insists on native four-field lists, and rejects `Missing` values before serialization.
+2. `scripts/ExportGeneralT3ScalarTensorRGBetaDeclarations.wl` — **replacement**; uses the common accessor, fails closed and clears stale output before a new export.
+3. `scripts/ExportGeneralT3ScalarTensorRGBetaInvariants.wl` — **replacement**; evaluates the actual native stored invariant function, rejects missing/unresolved expressions, and clears stale output.
+4. `scripts/RunGeneralT3ScalarTensorCertification.py` — **replacement**; rejects serialized Wolfram `Missing[...]` in both channels; validates explicit native four-field lists, compares corresponding native fields/invariants/coupling functions/arrangements between files, and marks all 50 slots uncertified on malformed evidence.
+5. `tests/python/test_general_t3_scalar_tensor_certification.py` — **replacement**; regression coverage for the exact failure seen in uploaded JSON and cross-file metadata mismatch.
+6. `docs/GENERAL_T3_SCALAR_TENSOR_CERTIFICATION.md` — **replacement**; this document.
+
+No change to native Matchete exporter, scalar operator generation, RGBeta model, production numerical trajectories, mass matrices, or threshold code.
+
+## Installation and tests (PowerShell, project root)
+
+```powershell
+Expand-Archive -LiteralPath .\T3_General_Scalar_Stage22_Fix2.zip -DestinationPath . -Force
+python -m pytest -q tests\python\test_general_t3_scalar_tensor_certification.py
+powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3ScalarTensorCertification.ps1 `
+  -ExportRGBetaDeclarations -NativeDiagnosticsOnly
+```
+
+This deliberately **reuses the already validated** `output/general_t3_stage22/matchete_tensors.json`. It reruns the two repaired RGBeta diagnostics and checks every field-content block. `-ExportRGBetaDeclarations` in the Stage 22 PowerShell runner also exports native invariant expressions.
+
+Expected verified diagnostics after a successful native run:
+
+- `output/general_t3_stage22/matchete_tensors.json`
+- `output/general_t3_stage22/rgbeta_native_declarations.json`
+- `output/general_t3_stage22/rgbeta_native_invariants.json`
+- `output/general_t3_stage22/stage22_summary.json`
+
+The JSON summary must contain:
+
+- `native_matchete.status = MatcheteNativeComponentsAndRanksVerified`
+- `native_rgbeta_declarations.status = NativeRGBetaDeclarationsVerifiedNoCommonBasisComponents`
+- `native_rgbeta_invariant_expressions.status = RGBetaNativeInvariantExpressionsVerifiedNotComponents`
+- `native_rgbeta_coherence.status = TwoNativeRGBetaDiagnosticChannelsAgree`
+- `certification_status = Uncertified`, `normalisation_certified = false`
+
+If a required native key cannot be resolved, the exporters exit nonzero, print the available key names, and do not claim success. They require actual Mathematica/RGBeta and were not run in the container (WolframScript unavailable). Local Python tests: **16 passed**.
+
+The strict command without `-NativeDiagnosticsOnly` still fails until `output/general_t3_stage22/rgbeta_native_tensors.json` contains source-verified explicit component tensors with field alignment, potential-prefactor/conjugation provenance, and an invertible exact tensor map. **Do not** fill that file with candidate invariants or assert proof flags merely to pass tests.
+
+## Next physical task
+
+After obtaining the corrected native RGBeta invariant functions and field order, derive explicit RGBeta components for `del`, `eps`, `delS2`, and triplet structures, verify the intertwiners against Matchete's complex triplet basis, and establish RGBeta's potential prefactors (including the internal `AddQuartic` symmetry normalisation). Then test all 46 blocks componentwise, including B/C `110101` and E's two-invariant sectors. Only a genuine component/prefactor proof may activate the 50 transformations in the numerical RG pipeline. Eight quadratic mixing slots remain separate work.
+
+</details>
+
+---
+
+<a id="source-general-t3-tensor-110101-local-correction-md"></a>
+
+## Original document: `docs/GENERAL_T3_TENSOR_110101_LOCAL_CORRECTION.md`
+
+**Original SHA-256:** `d7e3f6e37af392fe084b3046bf32c9e4b9334878ddd5905c30f7efc7cfb71261`
+
+**Status:** Historical record; verify current source and core documentation
+before using its old commands or provisional conclusions.
+
+<details>
+<summary>Expand original: General T3: Local B/C reused quartic SU(2) correction</summary>
+
+# General T3: Local B/C reused quartic SU(2) correction
+
+## Source and scope
+
+Full replacement `RGE/running/rgbeta/T3RGBetaModel.wl` is reconstructed from the
+current GitHub `main` blob `584ccb3ada2a20b980442533bf0dac5160d0ff10`
+(confirmed byte-for-byte with `git hash-object`). The **only change** is
+
+```wolfram
+(* Before *)
+eps[SU2L @ fund, #1, #3] * eps[SU2L @ fund, #2, #4] &
+(* After *)
+del[SU2L @ fund, #1, #3] * eps[SU2L @ fund, #2, #4] &
+```
+
+inside `lambdaHHdagS1barS2barCross`, field order
+`{H, Bar @ H, Bar @ S1, Bar @ S2}`. Other RGBeta model interactions unchanged.
+The original live RGBeta native covariance export registered two SU(2) structures
+in B_-1 and C_-1. It found generator nonzero residual counts [0,0,0]
+(new `lambdaT3GeneralQ110101I1`) and [4,0,4] (reused coupling).
+The proposed delta-epsilon tensor passes all three generators in exact Python
+analysis, and the two RGBeta geometry columns have exact basis matrix
+
+    R = M A,  A = [[1/2, 1], [-sqrt(3)/2, 0]], det A = sqrt(3)/2.
+
+This **does not** prove RGBeta component-basis identification outside this
+block, establish signed scalar-potential prefactors, or certify the physical
+Matchete–RGBeta coupling map. Stage 22 continues to FAIL CLOSED.
+
+## Changed/generated full files
+
+- `RGE/running/rgbeta/T3RGBetaModel.wl`: full production replacement; one contraction changed.
+- `scripts/RGBeta110101Covariance.py`: supports old and corrected native exports, never silently accepts other tensors.
+- `scripts/RGBetaAlignedGeometry.py`: supports historical obstruction or exact corrected 2D block.
+- `scripts/VerifyGeneralT3SU2Tensor110101Correction.py`: strict check of independently generated live Wolfram native tensor components and covariance.
+- `tests/python/test_general_t3_tensor_110101_covariance.py`: pre/post and synthetic correction tests.
+- `tests/python/test_general_t3_tensor_aligned_geometry.py`: old and synthetic corrected block tests.
+- `tests/python/test_general_t3_tensor_explicit_basis.py`: expected pre/post inventory totals.
+- `tests/python/test_general_t3_tensor_live_110101_fix.py`: live-Wolfram verifier tests.
+- `docs/GENERAL_T3_TENSOR_110101_LOCAL_CORRECTION.md`: this document.
+
+## Windows PowerShell
+
+From repository root, back up any current local model file before extracting:
+
+```powershell
+Copy-Item .\RGE\running\rgbeta\T3RGBetaModel.wl .\RGE\running\rgbeta\T3RGBetaModel.wl.pre-stage22.bak
+Expand-Archive -LiteralPath .\T3_General_Scalar_Stage22_110101_LocalFix.zip -DestinationPath . -Force
+python -m pytest -q tests\python\test_general_t3_scalar_tensor_certification.py tests\python\test_general_t3_tensor_explicit_basis.py tests\python\test_general_t3_tensor_aligned_geometry.py tests\python\test_general_t3_tensor_110101_covariance.py
+```
+
+Then run the existing Wolfram exporter to ensure RGBeta registered the
+corrected function in **both** models:
+
+```powershell
+wolframscript -file .\scripts\ExportGeneralT3SU2NativeCovariance.wl output/general_t3_stage22/stage22_110101_wolfram_native_covariance.json
+python -m scripts.VerifyGeneralT3SU2Tensor110101Correction
+python -m pytest -q tests\python\test_general_t3_tensor_live_110101_fix.py
+```
+
+After successful live audit, regenerate Stage 22 declarations and invariants
+without repeating the Matchete export:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3ScalarTensorCertification.ps1 `
+    -ExportRGBetaDeclarations -NativeDiagnosticsOnly
+python -m scripts.RGBeta110101Covariance
+python -m scripts.RGBetaAlignedGeometry
+python -m scripts.RGBetaExplicitBasis
+```
+
+Expected post-fix conditional aligned report totals:
+`DirectGeometryCandidate=32`, `PseudorealReindexCandidate=8`,
+`CalibratedTripletCGCandidate=6`, `CorrectedReusedInvariantCandidate=4`,
+`slots=50`, `blocks=46`. The simple unrotated geometry report becomes
+`ExactGeometryCandidate=36`, `ExplicitGeometryMismatch=8`,
+`TripletBasisPending=6`.
+
+Do not trust stale pre-fix exports as post-fix evidence. Existing
+`stage22_summary.json` remains *Uncertified* by design.
+
+</details>
+
+---
+
+<a id="source-general-t3-tensor-110101-su2-covariance-md"></a>
+
+## Original document: `docs/GENERAL_T3_TENSOR_110101_SU2_COVARIANCE.md`
+
+**Original SHA-256:** `9ec8911a0bc94ba237adce5ae623a476afb271be5b462bb211e43d0e3b8359e9`
+
+**Status:** Historical record; verify current source and core documentation
+before using its old commands or provisional conclusions.
+
+<details>
+<summary>Expand original: General T3: native-source SU(2) covariance of `110101` (B_-1 and C_-1)</summary>
+
+# General T3: native-source SU(2) covariance of `110101` (B_-1 and C_-1)
+
+## Scope and evidence
+
+Read-only test of the **actual Wolfram-exported RGBeta `Invariant` functions** for
+`lambdaT3GeneralQ110101I1` and the reused
+`lambdaHHdagS1barS2barCross`, compared to uploaded Matchete component tensors.
+The previous 50-slot native exports are still required. No production changes;
+Stage 22 physical normalisation is **UNCERTIFIED**.
+
+Source checked: `RGE/general/generated/B_-1_extra_quartics.wl` registers the
+new `lambdaT3GeneralQ110101I1`; `RGE/running/rgbeta/T3RGBetaModel.wl`
+registers the reused `lambdaHHdagS1barS2barCross` (in
+`T3RGBetaAddRGClosedQuartics`). B and C have the same relevant field
+content and native invariant expressions. The Python test fails closed if
+those exported expressions have changed, rather than assuming an old diagnosis.
+
+## Gauge covariance calculation (exact, not fitted)
+
+Native fields are ordered `(H, Bar[H], Bar[S1], Bar[S2])`. Under the **explicit
+standard component convention**
+
+\[
+  H \longmapsto U H,\qquad
+  \bar H,\bar S_1,\bar S_2 \longmapsto U^*\bar H,U^*\bar S_1,U^*\bar S_2,\qquad U\in SU(2),
+\]
+
+use `epsilon[1,2]=+1`, and generators `T_a=sigma_a/2`. For an invariant
+coefficient tensor `Q_{i j k l}`, exact infinitesimal covariance requires
+
+\[
+ \sum_{p=1}^4\sum_b Q_{i_1\ldots b\ldots i_4}
+              (G_p)_{b i_p}=0
+ \quad\text{for every }(i_1,\ldots,i_4)\in\{1,2\}^4,
+\]
+
+where `G_1=T_a` and `G_2=G_3=G_4=-T_a^*`. The three Lie-algebra generators
+are a complete test of continuous SU(2) covariance in this representation.
+All calculations use exact SymPy arithmetic: no floating-point thresholds.
+
+| Invariant | `sigma1/2` residual components | `sigma2/2` | `sigma3/2` | Covariant? |
+|---|---:|---:|---:|---|
+| Native `delta(4,1) epsilon(2,3)` | 0 | 0 | 0 | Yes |
+| Native reused `epsilon(1,3) epsilon(2,4)` | 4 | 0 | 4 | **No** |
+| Proposed `delta(3,1) epsilon(2,4)` | 0 | 0 | 0 | Yes |
+
+Example exact violation for the reused invariant: the `sigma1/2` Lie variation
+at `(i1,i2,i3,i4)=(1,1,1,2)` equals **-1**. The identity is not rescued by
+an overall multiplicative factor.
+
+**Important qualification:** RGBeta's internal convention for conjugate-field
+indices has not yet been independently linked to its actual gauge-action
+implementation. Thus this is an exact test of the *stated standard* SU(2)
+representation convention applied to actual native invariant expressions,
+not proof of an RGBeta package bug under every possible internal convention.
+
+## Exact provisional Matchete comparison
+
+Let `M1,M2` denote the two exported native Matchete `110101` tensors in order.
+Use the source-verified native first RGBeta tensor `R1` and the **candidate,
+not registered** replacement `R2* = delta(3,1) epsilon(2,4)`. For both B_-1
+and C_-1:
+
+\[
+  [R_1\quad R_2^*]=[M_1\quad M_2]A,\quad
+  A=\begin{pmatrix}\tfrac12&1\\-\tfrac{\sqrt3}{2}&0\end{pmatrix},\quad
+  \det A=\tfrac{\sqrt3}{2},\quad
+  A^{-1}=\begin{pmatrix}0&-2/\sqrt3\\1&1/\sqrt3\end{pmatrix}.
+\]
+
+Rank is 2 and the **exact component residual is zero** for each model.
+With the original reused source invariant, the first RGBeta column lies in
+the Matchete span, while the reused second column does not. Therefore the
+proposed invariant simultaneously resolves the two earlier `110101` failures
+within the stated component convention.
+
+This is **geometry**, NOT a coupling map: the native coupling functions
+`6*Matrix[coupling][##1]&` do not by themselves establish the signed scalar
+potential prefactor, conjugation orientation or a globally consistent field
+basis. Never send these matrices to production before those checks.
+
+## Local installation and execution
+
+Overlay the ZIP onto your existing repo root; do not push changes to GitHub:
+
+```powershell
+Expand-Archive -LiteralPath .\T3_General_Scalar_Stage22_110101_Covariance.zip -DestinationPath . -Force
+python -m pytest -q tests\python\test_general_t3_tensor_110101_covariance.py
+python -m scripts.RGBeta110101Covariance
+```
+
+The Python checker reuses the existing native evidence in
+`output/general_t3_stage22/`. Output is
+`output/general_t3_stage22/stage22_110101_su2_covariance.json`.
+
+For an **additional live-Wolfram RGBeta check**, run on your Windows machine:
+
+```powershell
+wolframscript -file .\scripts\ExportGeneralT3SU2NativeCovariance.wl `
+  output/general_t3_stage22/stage22_110101_wolfram_native_covariance.json
+```
+
+The Wolfram script rebuilds B_-1 and C_-1, reads their *registered* quartics
+through `RGBetaNativeAccess.wl`, converts symbolic `del` and `eps`
+to component evaluators **before** numerical index substitution (avoiding
+RGBeta's contracted-delta trace rule), and applies all three Lie-algebra
+generators. This independent
+runtime script has **not** been executed here because Wolfram is unavailable.
+If its results differ from the Python diagnostic, treat that as an unresolved
+convention mismatch and do not modify the source until explained.
+
+## Scope estimate after Stage 22
+
+Approximately **3-4 substantive stages** for the *rough numerical benchmark*
+goal, contingent on no further blockers:
+
+1. Verify the source defect with live RGBeta; decide whether/how to repair the reused invariant **locally**.
+2. Independently derive the signed scalar potential prefactors and 50-slot physical coupling map.
+3. Integrate and smoke-test the map with the existing RGE/threshold/benchmark workflow.
+4. If required, address new numerical blockers to obtain representative outputs.
+
+The eight previously blocked complex quadratic operators may be separate
+follow-up scope. This is a planning estimate, not a verified numbered roadmap
+and not a forecast of effort or completion date.
+
+</details>
+
+---
+
+<a id="source-general-t3-tensor-aligned-geometry-md"></a>
+
+## Original document: `docs/GENERAL_T3_TENSOR_ALIGNED_GEOMETRY.md`
+
+**Original SHA-256:** `9c833566fe0961b578f3af8ac6decfb77d64eb80cd9210bf939c98be0d1fc651`
+
+**Status:** Historical record; verify current source and core documentation
+before using its old commands or provisional conclusions.
+
+<details>
+<summary>Expand original: General T3: aligned SU(2) geometry diagnostic (not coupling normalisation)</summary>
+
+# General T3: aligned SU(2) geometry diagnostic (not coupling normalisation)
+
+This diagnostic consumes **unchanged native evidence** from Matchete and RGBeta:
+
+- `output/general_t3_stage22/matchete_tensors.json`
+- `output/general_t3_stage22/rgbeta_native_invariants.json`
+- `output/general_t3_stage22/rgbeta_native_declarations.json`
+
+The inputs supplied in the October 26, 2026 run match the SHA-256 digests embedded in `stage22_aligned_geometry_diagnostics.json`. This step changes **no production code**, generates no `rgbeta_native_tensors.json`, and cannot set any physical-coupling certification flag.
+
+## Run
+
+From the repository root (PowerShell):
+
+```powershell
+python -m pytest -q tests\python\test_general_t3_tensor_explicit_basis.py tests\python\test_general_t3_tensor_aligned_geometry.py
+python -m scripts.RGBetaAlignedGeometry
+```
+
+The report is `output/general_t3_stage22/stage22_aligned_geometry_diagnostics.json`. Its per-block `geometric.r_in_m` matrices express `R = M A` for **component tensors only**. They are not coupling transformations. The physical potential mapping requires verified relative Lagrangian signs, prefactors, conjugation and component-basis identification:
+
+`r = diag(1/pR) A^(-1) diag(pM) m` (direct holomorphic orientation).
+
+### Findings for all 16 ordinary assignments
+
+| Diagnostic status | Slots | Blocks | Meaning |
+|---|---:|---:|---|
+| `DirectGeometryCandidate` | 32 | 30 | RGBeta invariant components match within the previously stated direct Cartesian/epsilon convention |
+| `PseudorealReindexCandidate` | 8 | 8 | Full exact tensor equality after a **local** epsilon reidentification; not an established global field basis |
+| `CalibratedTripletCGCandidate` | 6 | 6 | Exact tensors with a Matchete-calibrated, unit-normalised SU(2) triplet CG basis |
+| `IncompatibleNativePair` | 4 | 2 | B_-1 and C_-1 `110101` two-coupling blocks; no common I/J reidentification of their four active doublets |
+| **Total** | **50** | **46** |  |
+
+Two direct E-model `2×2` blocks contain two coupling slots each, so there are 30 direct blocks for 32 directly matched slots.
+
+### Doublet index reidentification
+
+Use `J = [[0,1],[-1,0]]`, with `J[i_M,i_R]`. In `B_-1` and `C_-1`, applying it to each occurrence of `S1` and `S1dag` in the native RGBeta expression gives an exactly matching one-dimensional Matchete tensor for blocks `000112`, `000202`, `001201`, `020200`. Every resulting `r_in_m` is exactly `[[1]]`.
+
+**Important:** This operation is selected *per field-content block*. It is not a verified universal field redefinition. Applying a universal rotation to other assignments or the two-coupling block can spoil otherwise matched contractions. It therefore provides geometric candidates only.
+
+### Triplet Clebsch–Gordan calibration and prediction
+
+Represent `delS2[SU2L,a,i,j]` by an orthonormal symmetric tensor `C[a,i,j]`:
+
+```
+C[1] =  1/sqrt(2) * [[ 1,  0], [ 0, -1]]
+C[2] = -1/sqrt(2) * [[ 0,  1], [ 1,  0]]
+C[3] = -I/sqrt(2) * [[ 1,  0], [ 0,  1]]
+```
+
+Check `sum_ij conjugate(C[a,i,j]) C[b,i,j] = delta_ab` exactly. This basis was calibrated from Matchete `A_+0/021010`; its triplet component coordinate choice is not independently sourced from RGBeta.
+
+For `A_+0`, `A_-2`, `D_+0`, `D_-2` (one triplet with two symmetric H† fields), the exact identity is
+
+`M = (sqrt(2)/3^(1/4)) * R_C`.
+
+For the two E models, evaluate the *existing verified source code*
+
+```
+T3RGBetaS2TripleInvariant[a_,b_,c_] =
+  C[a,i,j] C[b,k,l] C[c,m,n] epsilon[i,k] epsilon[j,m] epsilon[l,n]
+```
+
+and contract `C[a,h1,h2] T3RGBetaS2TripleInvariant[a,b,c]` with no new normalisation. Every `2×2×3×3` component then satisfies
+
+`M_E = sqrt(2) * R_C`
+
+for both `E_+0/021010` and `E_-2/020101`. These are **independent predictions from the calibration** but not proof that RGBeta's abstract triplet basis is numerically this Cartesian basis.
+
+### Structural obstruction in B/C(-1) block `110101`
+
+The native RGBeta entries are:
+
+```
+lambdaT3GeneralQ110101I1:
+    del[fund, #4, #1] * eps[fund, #2, #3]
+lambdaHHdagS1barS2barCross:
+    eps[fund, #1, #3] * eps[fund, #2, #4]
+```
+
+Their Matchete analogues form an independent, two-dimensional invariant basis. The diagnostic exhaustively enumerates all `2^4 = 16` choices of identity or `J` reindexing on the four distinct doublet species `H`, `Hdag`, `S1dag`, `S2dag`. Some choices bring the *first* RGBeta tensor into Matchete's span; different choices bring the *second* one into that span. **No single choice brings both in simultaneously.** Thus the full-rank `2×2` map cannot be extracted with this reindexing ansatz.
+
+An algebraic candidate replacement for the first contraction *under the local `J(S1dag)` alignment* is `del[fund,#4,#1]*del[fund,#2,#3]`; it is linearly independent of the existing cross contraction in the Matchete component space. This is **not** evidence it is gauge covariant in the actual RGBeta field/Bar conventions, so **do not change any production quartic definition based only on this candidate**. Verify RGBeta's SU(2) transformation rules and the native tensor map first.
+
+## What is / is not verified
+
+**Verified on uploaded evidence:** exact Matchete tensors; actual RGBeta invariant expressions; exact symbolic equality conditional on explicitly described component identifications; triplet CG orthonormality; all 16 model counts and full-rank checks for the 44 aligned blocks; exhaustive binary pseudoreal reindexing obstruction for the other 2 blocks.
+
+**Not verified:** native RGBeta **component** basis relative to Matchete; RGBeta's `Matrix`/`Lam` coupling-tensor `6*Matrix[...]` prefactors relative to physical scalar-potential coefficients; whether one field basis is globally consistent across all quartics; signs from Lagrangian vs scalar potential and complex conjugation. Physical certification therefore remains **false for all 50 slots**.
+
+The next production-relevant step is to check the two RGBeta `110101` quartic tensors at the group/field-conjugation level, then obtain native RGBeta coupling-tensor components and signed potential prefactors. Do not populate the production coefficient mapper from this diagnostic alone.
+
+</details>
+
+---
+
+<a id="source-general-t3-tensor-explicit-geometry-md"></a>
+
+## Original document: `docs/GENERAL_T3_TENSOR_EXPLICIT_GEOMETRY.md`
+
+**Original SHA-256:** `cf6f2f455ad463fc4f507951adcea5217cf1878d8bbcc51136277050a6fda16c`
+
+**Status:** Historical record; verify current source and core documentation
+before using its old commands or provisional conclusions.
+
+<details>
+<summary>Expand original: General T3: exact RGBeta invariant geometry diagnostic</summary>
+
+# General T3: exact RGBeta invariant geometry diagnostic
+
+## Scope
+
+A new **non-certifying** source-to-tensor comparison is implemented by
+`scripts/RGBetaExplicitBasis.py`. It consumes existing native outputs:
+
+- `output/general_t3_stage22/matchete_tensors.json`
+- `output/general_t3_stage22/rgbeta_native_declarations.json`
+- `output/general_t3_stage22/rgbeta_native_invariants.json`
+
+It writes `output/general_t3_stage22/stage22_explicit_geometry_candidates.json`.
+**It NEVER writes `rgbeta_native_tensors.json` and NEVER changes the production
+RGEs, matching, or scalar-sector conventions.** The original Stage 22
+certification runner remains fail-closed.
+
+## What is actually checked
+
+- All 16 model and 50 slot inventories and consistency of two independent RGBeta
+  metadata exports.
+- Field species and ordering against the Matchete tensor exporter (no guessed
+  symbol pairing for reused RGBeta couplings).
+- Exact, component-by-component evaluation of the *literal* exported RGBeta
+  invariant expressions built from `del[SU2L[fund],...]`,
+  `del[SU2L[S2],...]`, and `eps[SU2L[fund],...]`.
+- Exact rank, span, Bose symmetries, and change-of-basis matrices via the
+  existing RGBetaTensorAlgebra solver. No floating point fitting.
+- An explicit diagnostic convention `eps[0,1]=+1`, ordinary Kronecker delta
+  components and matching native index labels. The comparison does **not**
+  independently establish which complex/daggered SU(2) representation basis
+  the packages use. The native RGBeta quartic function `6*Matrix[lambda]`
+  is **not** interpreted as a verified scalar-potential coefficient.
+- Triplet Clebsch-Gordan `delS2` structures are blocked pending a common
+  representation basis: even when algebraic expressions look similar, this
+  script does not insert a guessed `3 x 3` unitary basis transformation.
+
+The exact symbolic comparisons for the uploaded Fix 2 diagnostic evidence yield:
+
+| Category | Coupling slots | Details |
+|---|---:|---|
+| `ExactGeometryCandidate` | 32 | Zero component residual in the stated provisional common component labels |
+| `ExplicitGeometryMismatch` | 12 | B(-1)/C(-1), five field-content blocks per model, including a 2D mixing block (two slots) |
+| `TripletBasisPending` | 6 | One H/H/triplet invariant per A(+0), A(-2), D(+0), D(-2), E(+0), E(-2) |
+| Total | 50 | 46 field-content blocks |
+
+The two **E** blocks have a nontrivial formal basis change. Define `R = M A`,
+where `M` and `R` are matrices whose columns are the Matchete and RGBeta
+invariant components in `I1, I2` order. Then for E(+0)/000211 and E(-2)/001102:
+
+```
+A = [[1/2,               1],
+     [sqrt(33)/6,         0]]
+```
+
+This is **not** a map between physical Matchete and RGBeta scalar couplings.
+For that, independent signed scalar-potential prefactors and basis orientation
+must be established (as well as triplet basis alignment in the remaining blocks).
+
+### Significant warning for the B/C 2x2 block
+
+The RGBeta `110101` invariant pair is linearly independent but falls outside
+Matchete's 2D tensor span under the simple index-identification convention.
+This can indicate a mismatch in raising/lowering conjugate SU(2) indices or a
+problem with one generated invariant; the diagnostic cannot distinguish the two.
+**Do not silently coerce or discard this mismatch.** Before certification,
+verify the actual gauge invariance of both registered quartics under the
+package's native representation and conjugation conventions.
+
+## Run from repository root (PowerShell)
+
+```
+python -m pytest -q tests\python\test_general_t3_tensor_explicit_basis.py
+python -m scripts.RGBetaExplicitBasis
+```
+
+Do not change `RunGeneralT3ScalarTensorCertification.py` to accept this provisional report as
+native RGBeta component evidence. The old Stage 22 summary remains
+`Uncertified`, and the next dependency is **independent native RGBeta tensor
+basis and physical Lagrangian normalisation certification**.
+
+## Source evidence
+
+- Native Matchete tensor components: uploaded `matchete_tensors.json` (50 slots).
+- Native RGBeta fields, invariant functions and `6*Matrix[...]` declaration
+  functions: uploaded `rgbeta_native_declarations.json` and
+  `rgbeta_native_invariants.json` (50 slots).
+- RGBeta `Package/FieldsAndCouplings.m` `AddQuartic` and `Lam` source, read-only,
+  defines the internal quartic normalisation factor and permutation machinery.
+- RGBeta `Package/GroupsAndIndices.m` source, read-only, describes `delS2`
+  contraction reductions. These definitions do not directly supply a certified
+  matrix relating RGBeta triplet basis to Matchete's triplet component basis.
 
 </details>
 

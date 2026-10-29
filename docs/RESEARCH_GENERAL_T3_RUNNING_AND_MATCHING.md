@@ -16,6 +16,14 @@
 - [T3 general-scalar batch: eight quadratic operators and one-loop mass beta functions](#source-general-t3-quadratic-batch-notes-md) — `docs/GENERAL_T3_QUADRATIC_BATCH_NOTES.md`
 - [General T3: scalar-threshold renormalisable handoff](#source-general-t3-scalar-threshold-handoff-md) — `docs/GENERAL_T3_SCALAR_THRESHOLD_HANDOFF.md`
 - [General T3 scalar interaction trial — batched validation package](#source-general-t3-trial-md) — `docs/GENERAL_T3_TRIAL.md`
+- [General T3: 16-model convention-labelled one-loop UV running](#source-general-t3-16-model-uv-running-md) — `docs/GENERAL_T3_16_MODEL_UV_RUNNING.md`
+- [General T3: finite mass-ratio logarithms in the experimental C5 pilot](#source-general-t3-c5-finite-mass-logarithms-md) — `docs/GENERAL_T3_C5_FINITE_MASS_LOGARITHMS.md`
+- [General T3: fixed formal C5 atom/linearity audit](#source-general-t3-c5-linear-response-correction-md) — `docs/GENERAL_T3_C5_LINEAR_RESPONSE_CORRECTION.md`
+- [General T3: conditional UV-induced C5 sensitivity (B/C, alpha=-1)](#source-general-t3-conditional-uv-to-c5-md) — `docs/GENERAL_T3_CONDITIONAL_UV_TO_C5.md`
+- [General T3: RGBeta projector mapping + coupled B/C(-1) UV running](#source-general-t3-coupled-uv-running-md) — `docs/GENERAL_T3_COUPLED_UV_RUNNING.md`
+- [General T3: extra-only neutrino mass response and phase analysis](#source-general-t3-extra-c5-phase-response-md) — `docs/GENERAL_T3_EXTRA_C5_PHASE_RESPONSE.md`
+- [General T3: numerical **pilot**, not completed general T3 model](#source-general-t3-matching-rg-source-pilots-md) — `docs/GENERAL_T3_MATCHING_RG_SOURCE_PILOTS.md`
+- [General T3: WolframScript self-test argument fix](#source-general-t3-wolframscript-selftest-fix-md) — `docs/GENERAL_T3_WOLFRAMSCRIPT_SELFTEST_FIX.md`
 
 ---
 
@@ -1158,6 +1166,634 @@ powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3QuarticConvention
 Results are written under `output/general_t3_stage15/`; no production modules
 are modified. **Still not threshold-consistent matching or a complete two-loop
 calculation**. See `docs/GENERAL_T3_QUARTIC_CONVENTION_C5.md`.
+
+</details>
+
+---
+
+<a id="source-general-t3-16-model-uv-running-md"></a>
+
+## Original document: `docs/GENERAL_T3_16_MODEL_UV_RUNNING.md`
+
+**Original SHA-256:** `c5ebd35682be9c781542f7b480e91b4673f05c431d067b13c02f56f99b9e38d2`
+
+**Status:** Historical record; verify current source and core documentation
+before using its old commands or provisional conclusions.
+
+<details>
+<summary>Expand original: General T3: 16-model convention-labelled one-loop UV running</summary>
+
+# General T3: 16-model convention-labelled one-loop UV running
+
+## Scope
+
+Stage 30 completed `A_+0` with a live, class-level projected RGBeta quartic
+beta system and coupled DOP853 integration. Stage 31 extends that **isolated**
+method to the other 15 ordinary T3 models, not into production.
+
+- 33 newly registered quartic slots among the remaining 15 models are represented
+  as complex sidecar ODE coordinates.
+- 12 *reused* extra-quartic slots (six in `B_-1`, six in `C_-1`) are **not**
+  double-counted: their Stage 29 boundary values replace the matching existing
+  complex scalar entries in a *copy* of the fitted benchmark state.
+- Four models (`A_-4`, `D_+2`, `E_+2`, `E_-4`) have zero extra quartic slots.
+  Their standard UV beta functions are still exported and integrated.
+- Together with Stage 30's five new `A_+0` slots, the inventory is **16 models,
+  38 new slots + 12 reused slots = 50 additional quartic slots**.
+
+## Equations and implementation
+
+RGBeta's **native** projected class-level `BetaTerm[Quartic,1]` is used for
+all quartics, not unprojected individual `BetaTerm[symbol,1]`. The complete beta
+system is regenerated after registering the appropriate extension:
+
+\[
+  \frac{dX}{d\ln\mu} = \frac{\beta_X^{(1)}}{16\pi^2},\quad
+  \mu:10^7\to10^5\ \mathrm{GeV}.
+\]
+
+All base and new beta expressions use the production numerical `RGBetaEvaluator`
+and `BetaVector` with a temporary extra-complex sidecar, integrated by SciPy
+`solve_ivp(method='DOP853',rtol=1e-8,atol=1e-11)`.
+
+The output uses frozen fitted UV input matrices *without refitting* and Stage 29
+illustrative quartic boundary candidates. The extra quartic signs and relative
+magnitudes are conditional on the Stage 27 provisional triplet convention.
+**The Matchete/RGBeta physical component identification is not certified.**
+
+No threshold matching, EFT running, neutrino-mass calculation, stability survey,
+or physical viability claim is included.
+
+## Files and installation (repository root)
+
+- `scripts/ExportGeneralT3AllModelsUVOneLoop.wl`: generalised **per-model** RGBeta
+  export with a fail-closed projector and full inventory checks.
+- `scripts/CoupledUVRunning.py`: single-model coupled UV integrator and
+  16-model summary validator.
+- `scripts/RunGeneralT3CoupledUVRunning.ps1`: sequential local driver, stops on failures
+  instead of reporting false completion.
+- `tests/python/test_general_t3_coupled_uv_running.py`: synthetic
+  integration/inventory/provenance checks, not a native RGBeta substitute.
+
+Run the local Stage 31 tests, then the entire 15-model batch:
+
+```powershell
+python -m pytest -q tests\python\test_general_t3_coupled_uv_running.py
+.\scripts\RunGeneralT3CoupledUVRunning.ps1
+```
+
+To run only one model initially (recommended to check the native exporter):
+
+```powershell
+.\scripts\RunGeneralT3CoupledUVRunning.ps1 -Models 'A_-2'
+```
+
+Re-running all models overwrites only the isolated Stage 31 output JSON files.
+The Stage 30 `A_+0` numerical result must remain available at
+`output/general_t3_stage22/stage30_A_p0_coupled_uv_running.json` for final summary.
+
+For a given model such as `A_-2`, the generated files are:
+
+- `output/general_t3_stage22/stage31_A_m2_full_uv_betas.json`
+- `output/general_t3_stage22/stage31_A_m2_coupled_uv_running.json`
+
+After all 15 have succeeded:
+
+- `output/general_t3_stage22/stage31_16_model_uv_summary.json`
+
+Stage 31 does not modify the production RGBeta model, UV ODE state, numerical
+configurations, or the remote GitHub repository.
+
+## Verification scope
+
+Python tests use controlled synthetic fixtures to verify conservation of
+coupling inventory and the numerical handoff contracts. The actual 15-model
+RGBeta projector and numerical integrations can only be verified by running
+`wolframscript` and the Python pipeline locally with the user's native package.
+Failure, including a genuinely singular quartic projection, must not be
+bypassed. Retain the raw native failure output if any model fails.
+
+</details>
+
+---
+
+<a id="source-general-t3-c5-finite-mass-logarithms-md"></a>
+
+## Original document: `docs/GENERAL_T3_C5_FINITE_MASS_LOGARITHMS.md`
+
+**Original SHA-256:** `e943d1280101be15085e418d047db0079c8aa63241b214cacfde8e3ce2f4b97c`
+
+**Status:** Historical record; verify current source and core documentation
+before using its old commands or provisional conclusions.
+
+<details>
+<summary>Expand original: General T3: finite mass-ratio logarithms in the experimental C5 pilot</summary>
+
+# General T3: finite mass-ratio logarithms in the experimental C5 pilot
+
+## Source of the Stage 10 failure
+
+In the user's Stage 10 run, **54 Python tests passed** but the first real
+Matchete derivative artifact was rejected with `Unresolved matching logarithm;
+hard-scale convention unknown`. The Stage 10 implementation rejected every
+remaining `Log` after setting `μbar2 = MF^2`, even though terms such as
+`Log[MF^2/MS1^2]` are finite **physical mass-ratio logarithms** and must
+not be discarded. This was an overly restrictive validation rule. The exact
+remaining logarithm(s) in the user's real artifact are not available in this
+package, so the failure's precise expression is not yet established.
+
+## Implemented change
+
+- `Numerical/experimental/GeneralT3C5Pilot.py`: keeps finite logarithms of
+  **known, positive physical scalar masses**, and substitutes the renormalisation
+  squared scale `μbar2 = MF_r^2` separately for each positive fermion mass.
+  It requires dimensionless log arguments, refuses unresolved unknown symbols,
+  and continues to **reject UV regulator poles**. It will not arbitrarily
+  zero `Log` terms. `MS1`, `MS2`, `MS` are masses in GeV; `mS1Sq`, `mS2Sq`
+  are mass-squared inputs in GeV^2. The squared values are derived from the
+  masses when omitted, with a consistency check if both are provided.
+- `docs/general_c5_toy_benchmark.json`: includes toy scalar masses
+  `MS1=1350 GeV`, `MS2=1780 GeV`. These are *not* fitted model parameters.
+- `scripts/RunGeneralT3NumericalPilot.py`: writes a machine-readable
+  `status=Blocked` diagnostic containing the actual response atoms if the
+  real Matchete expression cannot be interpreted safely.
+- `scripts/RunGeneralT3MatchingRGSourcePilots.ps1`: executes both B/C hard-C5 pilots and
+  both independent RGBeta source pilots, aggregating errors at the end so
+  one failure cannot hide the other three reports.
+- `tests/python/test_general_t3_matching_r_g_source_pilots.py`: tests mass-ratio logs, missing
+  scalar masses, inconsistent masses, unsafe dimensional logs and unknown
+  symbols in addition to the earlier Stage 10 regressions.
+
+**Scope:** This remains an experimental *one-loop Matchete hard-boundary*
+response and a **separate** one-step RGBeta beta-source computation. No
+Matchete-to-RGBeta normalization, hierarchical final C5, complete quadratic
+mass mixing or RG-improved neutrino-mass calculation is claimed.
+
+## Run (PowerShell, from repository root)
+
+```powershell
+Expand-Archive -LiteralPath .\T3_General_Scalar_Batch11.zip -DestinationPath . -Force
+python -m pytest -q tests\python\test_general_scalar_trial.py tests\python\test_scalar_quadratic_prototype.py tests\python\test_general_scalar_c5_proof.py tests\python\test_general_rgbeta_coverage.py tests\python\test_general_t3_scalar_quartic_response_audit.py tests\python\test_general_t3_matching_r_g_source_pilots.py
+powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3MatchingRGSourcePilots.ps1
+```
+
+Outputs are unchanged:
+
+```
+output/general_t3_numerical_pilot/B_m1_matchete_hard_c5.json
+output/general_t3_numerical_pilot/B_m1_rgbeta_source.json
+output/general_t3_numerical_pilot/C_m1_matchete_hard_c5.json
+output/general_t3_numerical_pilot/C_m1_rgbeta_source.json
+```
+
+The hard-C5 JSON records the chosen matching-scale convention, finite
+mass-ratio log handling, and supplied scalar masses. If another symbolic
+structure occurs, the Matchete hard-C5 JSON instead contains the exact
+`reason` and `raw_response_atoms`. This is intentional: no extrapolated
+numerical result is returned for an unsupported symbolic expression.
+
+## Verification performed here
+
+- 59 pytest cases passed using local isolated copies of the previously
+  examined parser/evaluator as test fixtures. The production repository
+  itself was not modified.
+- A four-command CLI integration check succeeded with **synthetic** B/C
+  response artifacts containing both a matching-scale log and a finite
+  mass-ratio log, plus synthetic RGBeta source artifacts. This does not
+  prove the as-yet-unseen real Matchete derivative expression will parse.
+- The ZIP contains full replacement files and all earlier experimental files.
+
+</details>
+
+---
+
+<a id="source-general-t3-c5-linear-response-correction-md"></a>
+
+## Original document: `docs/GENERAL_T3_C5_LINEAR_RESPONSE_CORRECTION.md`
+
+**Original SHA-256:** `f986490c792ddb5b7597dfaee81df681b2da3441b8a196bb572ae423492b7833`
+
+**Status:** Historical record; verify current source and core documentation
+before using its old commands or provisional conclusions.
+
+<details>
+<summary>Expand original: General T3: fixed formal C5 atom/linearity audit</summary>
+
+# General T3: fixed formal C5 atom/linearity audit
+
+## Why Stage 6 stopped
+
+Your log shows 37 Python checks passed, then the formal response audit returned
+`ReviewRequired` for B(-1) and C(-1). Importantly, the previous algebraic proof
+already established `C5_extended|extra=0 == C5_baseline` in both cases; a false
+linearity audit does **not** overturn that identity. The Stage 6 report also
+identified the expected `y1`/`y2` terms.
+
+The old algebraic extraction used `Expand[C5_extended-C5_baseline]` to prove
+linearity even though `C5_extended|extra=0-C5_baseline` was proved zero through
+potentially stronger simplification. It also used a recursive `Cases` pattern
+that counted an underlying direct `Coupling[...]` *inside* `Bar[Coupling[...]]`
+as if it were an independently present atom, producing empty derivative rows.
+
+## Changes
+
+1. `CompareGeneralT3C5.wl`: still proves the complete zero-extra limit against
+   the independent baseline; extracts actual response separately as
+   `C5_extended-C5_extended|extra=0`.
+2. Conjugated coupling atoms are masked before searching for direct couplings,
+   preventing duplicated ghost atoms.
+3. Checks polynomiality, coefficient independence, vanishing zero-response,
+   and linear reconstruction residual using exact symbolic reduction. Filters
+   mathematically zero coefficients out of the physical response report.
+4. Exports residual diagnostics when checks fail rather than silently passing.
+5. `AssessGeneralT3C5Response.py`: demands the new proof fields. Old Stage 6
+   JSON files *cannot* be misinterpreted as a successful Stage 7 audit.
+6. `RunGeneralT3ScalarQuarticResponseAudit.ps1`: executes a standalone Wolfram atom self-test and
+   regenerates formal reports from the *existing* matching outputs by default.
+   Does **not** rerun any 16-model matching.
+
+## Windows PowerShell commands (project root)
+
+```powershell
+Expand-Archive -LiteralPath .\T3_General_Scalar_Batch7.zip -DestinationPath . -Force
+python -m pytest -q tests\python\test_general_scalar_trial.py tests\python\test_scalar_quadratic_prototype.py tests\python\test_general_scalar_c5_proof.py tests\python\test_general_rgbeta_coverage.py tests\python\test_general_t3_scalar_quartic_response_audit.py
+powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3ScalarQuarticResponseAudit.ps1
+```
+
+Artifacts:
+- `output/general_t3_trial/c5_algebraic_report.json` (refreshed)
+- `output/general_t3_trial/B_m1/general_c5_algebraic/delta_c5_atoms.json` (refreshed)
+- `output/general_t3_trial/C_m1/general_c5_algebraic/delta_c5_atoms.json` (refreshed)
+- `output/general_c5_response.json` (refreshed)
+- `output/general_rgbeta_source_proof.json` (if C5 proof passes)
+- `output/general_t3_trial/matchete_active_quartic_tensors.json` (if all prior stages pass)
+
+Expected (not yet verified on your Matchete artifacts): `VerifiedFormalResponse`,
+with two active quartic names for B/C(-1). If that still fails, the exported
+`response_reconstruction_residual_inputform` and `response_at_zero_inputform`
+fields will identify whether the symbolic coefficient is truly nonlinear or
+has an algebraic-form issue; do not treat such a failure as a model result.
+
+### Important scope
+
+This remains a **scalar-quartic-only** symbolic extension. UV scalar quadratic
+mixing, full RGBeta coupling coverage and numerical propagation have not been
+implemented or verified. In particular, Matchete/RGBeta normalisation factors
+must be determined before using the additional symbolic couplings numerically.
+
+</details>
+
+---
+
+<a id="source-general-t3-conditional-uv-to-c5-md"></a>
+
+## Original document: `docs/GENERAL_T3_CONDITIONAL_UV_TO_C5.md`
+
+**Original SHA-256:** `1634fff44190466d503be5516776eb2a96f6c842072b42744469ee17db800f1e`
+
+**Status:** Historical record; verify current source and core documentation
+before using its old commands or provisional conclusions.
+
+<details>
+<summary>Expand original: General T3: conditional UV-induced C5 sensitivity (B/C, alpha=-1)</summary>
+
+# General T3: conditional UV-induced C5 sensitivity (B/C, alpha=-1)
+
+**Experimental, NOT a complete RGE-improved neutrino-mass prediction.**
+
+Stage 13 successfully integrated the already-implemented B/C(-1) RGBeta UV
+system down from 20 TeV to 3.5 TeV, above the initial heavy masses. The
+C5-active RGBeta quartics started at zero and acquired values near 10^-12.
+Stage 11 independently computed the extra Matchete hard-C5 response at toy
+couplings of order 10^-2. Stage 14 assesses the *size difference* without
+claiming the missing Lagrangian-level coupling conversion has been proven.
+
+`Numerical/experimental/GeneralT3ConditionalUVBridge.py` reads the actual
+Stage 13 endpoint coupling **changes**, the four certified Stage 13 SU(2)
+tensor ratios, the two algebraically verified Matchete C5 response kernels,
+the original Stage 11 Matchete toy reference, and the original toy parameters.
+
+For each of the two complex quartics, independently test four *hypothetical*
+convention identifications: `z`, `-z`, `conjugate(z)`, `-conjugate(z)`. This
+gives 16 discrete cases with extra-only 3x3 C5 matrices and Takagi singular
+values. The four possibilities are **not an exhaustive scan over unknown
+continuous relative phases**. No production C5 or beta functions are changed.
+
+## Physics scope and critical limitations
+
+- Matchete SU(2) tensor ratios are +1, **not** a complete statement about
+  Lagrangian signs, field basis orientations or Hermitian conjugation.
+- The 3.5 TeV UV endpoint is above the fermion masses, whereas the experimental
+  hard C5 is evaluated at the **individual** `MF` matching scales. Stage 14
+  does not run between them, match at these thresholds or decouple fields.
+- Because the two extra quartics start at zero and are generated by a one-loop
+  RGE, inserting their radiatively induced values into a one-loop matching
+  coefficient is **formally O(hbar^2)**. It is not a complete two-loop
+  calculation, nor should this be compared directly to a leading-order
+  prediction with freely specified nonzero UV quartics.
+- The toy Yukawas, heavy masses, scalar masses, and SM parameters are frozen
+  in the C5 response even though they run in Stage 13. Thus the result is a
+  *fixed-input sensitivity estimate*, not an endpoint prediction.
+- Stage 14 includes only **induced changes from zero** (and refuses nonzero
+  UV initial C5-active quartics); no original T3 C5, direct intermediate running,
+  additional quadratic mass mixing or measured oscillation fit is included.
+- A full hierarchy-consistent treatment requires a verified complex vertex
+  map and consistent evolution of all fields and mass parameters through the
+  heavy-fermion and scalar thresholds.
+
+## Run from the repository root
+
+```powershell
+Expand-Archive -LiteralPath .\T3_General_Scalar_Batch14.zip -DestinationPath . -Force
+python -m pytest -q tests\python\test_general_t3_conditional_u_v_to_c5.py
+powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3ConditionalUVToC5.ps1
+```
+
+Previous Stage 13 and Stage 11 outputs must exist:
+
+```
+output/general_t3_stage13/doublet_tensor_map.json
+output/general_t3_stage13/{B_m1,C_m1}_coupled_uv.json
+output/general_t3_numerical_pilot/{B_m1,C_m1}_matchete_hard_c5.json
+output/general_t3_trial/{B_m1,C_m1}/general_c5_algebraic/delta_c5_atoms.json
+```
+
+Outputs:
+
+```
+output/general_t3_stage14/{B_m1,C_m1}_conditional_induced_c5.json
+output/general_t3_stage14/stage14_summary.json
+output/general_t3_stage14/stage14_summary.csv
+```
+
+**Do not infer a fitted mass spectrum from these estimates.** The values only
+show parametric sensitivity to the small UV-induced quartics, under the
+explicitly scanned hypothetical coupling conversions.
+
+</details>
+
+---
+
+<a id="source-general-t3-coupled-uv-running-md"></a>
+
+## Original document: `docs/GENERAL_T3_COUPLED_UV_RUNNING.md`
+
+**Original SHA-256:** `4a720f9447be6b5129dc5961837b7cc568fe5d3ff71737c2501e3cff2625dda9`
+
+**Status:** Historical record; verify current source and core documentation
+before using its old commands or provisional conclusions.
+
+<details>
+<summary>Expand original: General T3: RGBeta projector mapping + coupled B/C(-1) UV running</summary>
+
+# General T3: RGBeta projector mapping + coupled B/C(-1) UV running
+
+This is an **experimental UV-only** extension. The original T3 pipeline is not modified.
+
+## New physics calculation
+
+`Numerical/experimental/GeneralT3CoupledUV.py` calls the *existing production* `Numerical.running.UVRunner.run_uv_segment` with the complete `output/T3_{B,C}_alpha_m1/data/uv_rgbeta_rge.json` payload, evolved between the toy UV scale and a scale **above every initial heavy fermion mass**. The full state includes all six previously supported complex RG-closure quartics. For the two C5-active quartics it reports both (i) the coupled one-loop RGBeta solution and (ii) the first-order frozen-background leading-log estimate over the same interval.
+
+The new code is **not** a separate partial beta-function implementation. It invokes the existing project beta evaluator and validates the complete beta/state key layout. It does not run below a heavy-particle threshold or compute the fully RG-improved neutrino mass.
+
+The example `docs/general_c5_toy_benchmark.json` is not a fitted benchmark. For the UV-only run the default endpoint is **3500 GeV** (initial masses 1500, 2100, 2800 GeV). This differs deliberately from the earlier frozen-source pilot's 1500 GeV endpoint, which lies below the heaviest heavy fermion and was not a proper full-UV-running interval.
+
+## RGBeta symmetric-projector audit
+
+Source-verified against [RGBeta `Package/GroupsAndIndices.m`](https://github.com/aethomsen/RGBeta/blob/master/Package/GroupsAndIndices.m) and the project's `RGE/running/rgbeta/T3RGBetaModel.wl`:
+
+```
+P[a,b,c,d] = (delta[a,c] delta[b,d] + delta[a,d] delta[b,c])/2
+```
+
+For the all-conjugated interaction, transforming the two last indices by the standard SU(2) pseudo-reality intertwiner `epsilon[1,2]=+1` gives
+
+```
+P[a,b,u,v] epsilon[u,c] epsilon[v,d]
+ = (epsilon[a,c] epsilon[b,d] + epsilon[a,d] epsilon[b,c])/2.
+```
+
+The two tensors match exactly the canonical choices measured in the local Stage 9 Matchete exporter, with factor `+1` **at the SU(2) group-tensor level**. That does **not** prove an equality of the complex coupling coefficients in the physical Lagrangian: the relative field-conjugation/basis orientation, potential-vs-interaction sign, and hermitian-conjugate phase must still be checked at the vertex level. Accordingly `full_lagrangian_coupling_identification_verified=false`.
+
+## Install and run
+
+From project root:
+
+```powershell
+Expand-Archive -LiteralPath .\T3_General_Scalar_Batch13.zip -DestinationPath . -Force
+python -m pytest -q tests\python\test_general_t3_coupled_u_v_r_g_e.py
+powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3CoupledUVRGE.ps1
+```
+
+Expected paths:
+
+```
+output/general_t3_stage13/doublet_tensor_map.json
+output/general_t3_stage13/B_m1_coupled_uv.json
+output/general_t3_stage13/C_m1_coupled_uv.json
+output/general_t3_stage13/stage13_summary.json
+```
+
+If existing `output/T3_{B,C}_alpha_m1/data/uv_rgbeta_rge.json` exports are not available, the runner attempts the corresponding `output/general_t3_trial/{B_m1,C_m1}/baseline/data/uv_rgbeta_rge.json` path and explicitly reports absence if neither exists. Refresh missing exports using the project's normal RGBeta production runner, **not** by fabricating beta functions.
+
+Important: numerical beta-running and matched extra C5 responses are still reported separately. Do not interpret their sum or product as a fully renormalized general T3 neutrino-mass prediction until the complete vertex-level Matchete–RGBeta coupling convention is verified.
+
+</details>
+
+---
+
+<a id="source-general-t3-extra-c5-phase-response-md"></a>
+
+## Original document: `docs/GENERAL_T3_EXTRA_C5_PHASE_RESPONSE.md`
+
+**Original SHA-256:** `e0d78e38cddad7bac1fc5638b9a54f7b4d0d7fd6ef1c2f21d06b8731bca57fc2`
+
+**Status:** Historical record; verify current source and core documentation
+before using its old commands or provisional conclusions.
+
+<details>
+<summary>Expand original: General T3: extra-only neutrino mass response and phase analysis</summary>
+
+# General T3: extra-only neutrino mass response and phase analysis
+
+**Scope:** Ordinary T3-B and T3-C at alpha=-1, **two independent scalars S1 and S2**. This is not the physical one-scalar shared-scalar scotogenic theory.
+
+## Verified prior to this batch by the user's local execution
+
+- 16/16 ordinary T3 points passed Matchete scalar-quartic validation and extended one-loop matching.
+- Formal zero-extra limit reproduced the original one-loop C5 in all 16 cases.
+- For B/C(-1) the matched C5 has two new quartic response terms, with y1*y1 and y2*y2 structures.
+- Source betas for the two corresponding RGBeta quartics are nonzero at zero extra RGBeta quartics.
+- Matchete tensor factors are exactly 1 relative to the explicit canonical SU(2) tensors, for four model/coupling combinations.
+- Stage 11 produced extra-only hard C5 matrices for both models, using the toy benchmark. **RGBeta-to-Matchete normalization is NOT yet verified.**
+
+## What Stage 12 actually calculates
+
+For each model, read the `output/general_t3_numerical_pilot/<model>_matchete_hard_c5.json` output from Stage 11. Reconstruct its two complex symmetric C5 contributions C1 and C2 and check:
+
+    C1 + C2 == delta_C5
+
+Use the existing project mass convention:
+
+    delta_m_nu [eV] = -(246.22 GeV)^2/2 * delta_C5 [GeV^-1] * 1e9.
+
+Calculate the singular values of the complex-symmetric delta_m_nu, which coincide with its Takagi singular values, in increasing order. These are NOT physical neutrino mass predictions, because the original C5 and subsequent RGE/mass mixing have not been included.
+
+Report the norm interference:
+
+    ||C1+C2||_F^2 = ||C1||_F^2 + ||C2||_F^2 + 2 Re Tr(C1^dag C2).
+
+Create the zero-extra, either-extra-only, and both-extra benchmark scenarios. Scan the two **physical quartic coupling** phases over 0, 90, 180, 270 degrees (16 combinations). `Bar[Coupling]` in the matched coefficient means rotating the underlying coupling by exp(+i theta) rotates its contribution by exp(-i theta). The scan reuses fixed one-loop kernels and magnitudes, not re-matched Lagrangians.
+
+The Stage 11 user's log gives C5 Frobenius norms of 2.577247421905154e-17 GeV^-1 for B(-1) and 1.4879744928052096e-17 GeV^-1 for C(-1), corresponding to extra-only mass-matrix Frobenius norms about 7.81e-4 and 4.51e-4 eV.
+
+## Files
+
+- `Numerical/experimental/GeneralT3NeutrinoImpact.py`: checked C5/mass matrices, Takagi singular values, interference, phase scenarios.
+- `scripts/RunGeneralT3ExtraC5PhaseResponse.py`: CLI for both models, JSON + CSV.
+- `scripts/RunGeneralT3ExtraC5PhaseResponse.ps1`: PowerShell wrapper, reuses previous output.
+- `tests/python/test_general_t3_extra_c5_phase_response.py`: regression tests, including correct complex-conjugate phases and strict failures.
+- `Numerical/experimental/GeneralT3RGSourcePilot.py`: only converts NumPy scalar output fields to plain Python floats; physics unchanged.
+
+## Commands (project root, PowerShell)
+
+    Expand-Archive -LiteralPath .\T3_General_Scalar_Batch12.zip -DestinationPath . -Force
+    python -m pytest -q tests\python\test_general_scalar_trial.py tests\python\test_scalar_quadratic_prototype.py tests\python\test_general_scalar_c5_proof.py tests\python\test_general_rgbeta_coverage.py tests\python\test_general_t3_scalar_quartic_response_audit.py tests\python\test_general_t3_matching_r_g_source_pilots.py tests\python\test_general_t3_extra_c5_phase_response.py
+    powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3ExtraC5PhaseResponse.ps1
+
+No Matchete/RGBeta reruns are necessary. Results:
+
+    output/general_t3_neutrino_impact/B_m1_extra_mass_impact.json
+    output/general_t3_neutrino_impact/C_m1_extra_mass_impact.json
+    output/general_t3_neutrino_impact/extra_mass_impact_summary.json
+    output/general_t3_neutrino_impact/extra_mass_impact_summary.csv
+
+## Remaining physics — not implemented
+
+1. Gauge-invariant **and convention-safe** identification of the Matchete extra couplings with the RGBeta couplings. Canonical SU(2) agreement on Matchete's side is insufficient: RGBeta `delS2` normalization and the coupling conventions require explicit checks. RGBeta documentation states that `AddQuartic` assumes no normalization factors; the supplied `GroupInvariant` fixes them (Thomsen, EPJC 81 (2021) 408, section 4.2).
+2. Complete RGEs for all additional quartics and scalar quadratic mass terms.
+3. Extended running states, heavy/scalar mass-basis consistency, and hierarchical matching with all nonzero UV terms.
+4. Comparison of the complete low-scale C5 and neutrino masses against the user's fitted benchmark.
+
+**Do not pass Stage 12 delta_C5 as the full physical C5 to the production neutrino solver.**
+
+</details>
+
+---
+
+<a id="source-general-t3-matching-rg-source-pilots-md"></a>
+
+## Original document: `docs/GENERAL_T3_MATCHING_RG_SOURCE_PILOTS.md`
+
+**Original SHA-256:** `53034f0b34ec7e0e17898e845deb6ac3dc095b486e0a181b5c981dc8b2821971`
+
+**Status:** Historical record; verify current source and core documentation
+before using its old commands or provisional conclusions.
+
+<details>
+<summary>Expand original: General T3: numerical **pilot**, not completed general T3 model</summary>
+
+# General T3: numerical **pilot**, not completed general T3 model
+
+## Confirmed from user's Stage 9 run
+
+- 44 Python tests passed.
+- Matchete tensor/canonical SU(2) factors equal **1** for both C5-active quartic contractions in ordinary B(-1) and C(-1).
+- Earlier checks: 16/16 quartic enumeration, formal zero-extra C5 regression, linear response extraction and additive RGBeta source terms succeeded.
+- **NOT** verified: RGBeta's `delS2` tensor, overall coupling-potential sign/normalisation, or a Matchete↔RGBeta map.
+
+## Implemented in this package
+
+- `Numerical/experimental/GeneralT3C5Pilot.py`: reads the existing formal `delta_c5_atoms.json` for B/C(-1), parses the *actual Matchete derivative expressions* through `RGE.matching.MatcheteC5Parsing`, requires a single `conjugate(y1)^2` or `conjugate(y2)^2` flavour structure, substitutes the hard matching scale `μbar2=MF²`, refuses ultraviolet regulator poles, and evaluates a symmetric flavour response matrix for diagonal, positive heavy masses. Input extra couplings are **Matchete** coefficients, not RGBeta couplings. This is the **hard-boundary response only**, not the final `C5` after sequential running.
+- `Numerical/experimental/GeneralT3RGSourcePilot.py`: reads the independently verified RGBeta source expressions at vanishing six special quartics, evaluates one-loop `β` via the **existing** `RGBetaEvaluator.evaluate_inputform_expression`, and reports a frozen-background leading-log step, `δλ = β^(1)/(16π²) log(μIR/μUV)`. The input `rgbeta_lambdaT3` is an RGBeta coefficient.
+- Two CLI wrappers, one PowerShell multi-model runner, 10 new Python tests and a clearly marked **toy numerical input**.
+- No production matching, RGE or fitted-parameter code was modified by Stage 10. Existing experiment files are retained in the consolidated archive.
+
+## Commands (PowerShell; repository root)
+
+Place `T3_General_Scalar_Batch10.zip` in the repository root:
+
+```powershell
+Expand-Archive -LiteralPath .\T3_General_Scalar_Batch10.zip -DestinationPath . -Force
+python -m pytest -q tests\python\test_general_scalar_trial.py tests\python\test_scalar_quadratic_prototype.py tests\python\test_general_scalar_c5_proof.py tests\python\test_general_rgbeta_coverage.py tests\python\test_general_t3_scalar_quartic_response_audit.py tests\python\test_general_t3_matching_r_g_source_pilots.py
+powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3MatchingRGSourcePilots.ps1
+```
+
+Inputs are the saved Batch 8 `output/general_t3_trial/{B_m1,C_m1}/general_c5_algebraic/delta_c5_atoms.json` and `output/general_rgbeta_source_proof.json`. The PowerShell command uses the synthetic `docs/general_c5_toy_benchmark.json` and writes:
+
+```
+output/general_t3_numerical_pilot/B_m1_matchete_hard_c5.json
+output/general_t3_numerical_pilot/C_m1_matchete_hard_c5.json
+output/general_t3_numerical_pilot/B_m1_rgbeta_source.json
+output/general_t3_numerical_pilot/C_m1_rgbeta_source.json
+```
+
+For real inputs, copy the toy JSON, change the values and pass `-Config path\to\your.json`. **Do not** equate `matchete_extra_couplings` with RGBeta's special couplings until the tensor and Lagrangian normalisations have been checked.
+
+### Interpretation and limitations
+
+1. The hard C5 response is evaluated at `μ=MF` in the matching calculation's conventions. It is **not** the fully renormalised hierarchical final coefficient or a neutrino-mass prediction; the existing complete pipeline handles the original contribution separately.
+2. The formal Matchete derivative must be free of UV regulator poles after the hard-scale substitution. If a `1/ϵ` term appears, **the pilot refuses to evaluate it**. Proper pole/RGE subtraction must be validated first.
+3. The flavour lift assumes a *single symmetric same-species Yukawa bilinear* and diagonal heavy fermion mass eigenvalues (matching the existing numerical heavy-mass-basis handling). Any other flavour dependence is rejected.
+4. The frozen-background RGBeta source is a first-order leading-log estimate, not integrated running. Its numerical value is independent of the Matchete coupling input.
+5. Zero new quartics at the UV input are not an RG invariant restriction in B/C(-1): the measured source terms are nonzero in general. Inserting their loop-generated values in a one-loop mass is formally of higher order.
+6. The other 14 ordinary models have no new quartic dependence in the *observed one-loop C5 artifacts*; they are unchanged by this numerical pilot. Quadratic scalar mass terms and general mass mixing remain unimplemented.
+
+## Next full-theory steps
+
+- Extract and calibrate RGBeta's symmetric `delS2` invariant coefficients, including both field orientations and overall factors in `AddQuartic`. Matchete/canonical = 1 **alone does not provide this map**.
+- Complete the missing RGBeta quartic basis and expose its corresponding UV/intermediate numerical states and solvers with tested transformations.
+- Extend full hierarchical matching and numerical final-C5 construction to allow new independent hard contributions and RG effects; validate the zero-new-coupling benchmark and scale consistency.
+- Treat the symmetry-allowed quadratic mass matrices (and special real/complex scalar choices) separately; this changes propagators, thresholds and mass bases.
+
+The broader objective remains a general T3 framework, but the current status should be stated precisely as **general scalar-quartic symbolic matching plus an experimental numerical hard-response/leading-log study**.
+
+</details>
+
+---
+
+<a id="source-general-t3-wolframscript-selftest-fix-md"></a>
+
+## Original document: `docs/GENERAL_T3_WOLFRAMSCRIPT_SELFTEST_FIX.md`
+
+**Original SHA-256:** `6c06ebc1ee6f9c6134ee9848962e735ebd0017b3605c4b1e3aedc65e492bba94`
+
+**Status:** Historical record; verify current source and core documentation
+before using its old commands or provisional conclusions.
+
+<details>
+<summary>Expand original: General T3: WolframScript self-test argument fix</summary>
+
+# General T3: WolframScript self-test argument fix
+
+## Observed failure
+
+The Batch 7 runner invoked `wolframscript -file scripts/CompareGeneralT3C5.wl --selftest`.
+On Windows, `wolframscript` consumed the dash-leading argument rather than forwarding it to the Mathematica script. The script received zero positional arguments, printed its usage and exited with code 64. Consequently **no formal response or RGBeta/tensor check was run in that invocation**. The earlier 16-model matching and Batch 5 zero-extra proof are unaffected.
+
+## Correction
+
+Call `wolframscript -file scripts/CompareGeneralT3C5.wl SELFTEST` with a plain positional token. The Mathematica script now recognises the token and prints the received argument list if usage is wrong. A Python regression test guards the actual PowerShell invocation.
+
+## Run
+
+```powershell
+Expand-Archive -LiteralPath .\T3_General_Scalar_Batch8.zip -DestinationPath . -Force
+python -m pytest -q tests\python\test_general_scalar_trial.py tests\python\test_scalar_quadratic_prototype.py tests\python\test_general_scalar_c5_proof.py tests\python\test_general_rgbeta_coverage.py tests\python\test_general_t3_scalar_quartic_response_audit.py
+wolframscript -file .\scripts\CompareGeneralT3C5.wl SELFTEST
+powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3ScalarQuarticResponseAudit.ps1
+```
+
+The runner reuses your existing 16-model matching outputs and refreshes the formal response, then runs the RGBeta-source and Matchete-tensor checks. It does **not** enable a numerical general-T3 theory. If any step reports `ReviewRequired`, inspect the relevant JSON rather than assuming it passed.
+
+## Changed files
+
+- `scripts/RunGeneralT3ScalarQuarticResponseAudit.ps1` — full replacement; pass positional `SELFTEST`.
+- `scripts/CompareGeneralT3C5.wl` — full replacement; recognise positional token and print usage diagnostics.
+- `tests/python/test_general_t3_scalar_quartic_response_audit.py` — full replacement; check CLI contract.
+- `docs/GENERAL_T3_WOLFRAMSCRIPT_SELFTEST_FIX.md` — new.
+
+This archive is consolidated: it also contains all unchanged files from Batch 7.
 
 </details>
 

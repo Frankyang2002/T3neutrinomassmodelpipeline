@@ -15,6 +15,9 @@
 - [Filename migration: historical Stage 23 report provenance](#source-renamed-quartic-provenance-compatibility-md) — `docs/RENAMED_QUARTIC_PROVENANCE_COMPATIBILITY.md`
 - [Reports/output/full — retention audit](#source-reports-full-retention-audit-md) — `docs/REPORTS_FULL_RETENTION_AUDIT.md`
 - [Historical script dependency audit (read-only)](#source-script-dependency-audit-md) — `docs/SCRIPT_DEPENDENCY_AUDIT.md`
+- [One-time artifact cleanup (local, archive-first)](#source-one-time-artifact-cleanup-md) — `docs/ONE_TIME_ARTIFACT_CLEANUP.md`
+- [T3 repository cleanup: historical-document reference audit](#source-repository-cleanup-audit-md) — `docs/REPOSITORY_CLEANUP_AUDIT.md`
+- [Script dependency audit — refinement of the 77 broad-reference modules](#source-script-dependency-refinement-md) — `docs/SCRIPT_DEPENDENCY_REFINEMENT.md`
 
 ---
 
@@ -449,6 +452,273 @@ Input text files exceeding the default 8 MiB limit are reported as *skipped*, no
 In particular, `BuildT3ReducedScalarFinalResults.py` and `BuildReducedScalarExistingInteractiveReports.py` import `RunT3GeneralScalar48Campaign.py`. The script's historical name therefore does **not** make it obsolete. The original figure/report builders, matching evaluators, threshold-running scripts and source-hash-verified fit records may have similar dependencies.
 
 Review `references.csv` and the direct-import relationships before proposing any historical script archive. The frozen benchmark inputs and report generators must remain reproducible. Once a shortlist is reviewed against the local checkout, any archival should use an **external archive with original relative paths and SHA-256 manifests**, followed by `python -X utf8 -m pytest -q --tb=line`. This package performs no such archival.
+
+</details>
+
+---
+
+<a id="source-one-time-artifact-cleanup-md"></a>
+
+## Original document: `docs/ONE_TIME_ARTIFACT_CLEANUP.md`
+
+**Original SHA-256:** `1f87ff36056a36c15a38ab6b514505777f1793a5dfb2109fe2290c88e9b77c3f`
+
+**Status:** Historical record; verify current source and core documentation
+before using its old commands or provisional conclusions.
+
+<details>
+<summary>Expand original: One-time artifact cleanup (local, archive-first)</summary>
+
+# One-time artifact cleanup (local, archive-first)
+
+This utility archives **only five explicit root-level run artifacts**, subject to local Git cleanliness, exact filename matching, simple content validation and an all-text reference scan:
+
+- `overnight_refinement.log`
+- `reduced_interactive_reports.log`
+- `reduced_interactive_reports_retry.log`
+- `t -q --tb=line`
+- `t -q --tb=lineqqq`
+
+The logs record historical console execution; archive them externally instead of discarding evidence. The two unusual `t -q ...` filenames were observed to contain terminal pager help at commit `fe0f511`; content changes block automatic archival.
+
+**Not automatic deletion targets:** any `output/` or `Reports/output/` files, historical fitted configs, equations, scientific source code, tests, Wolfram exports, `README_*.txt` historical implementation notes, root `T3_*.zip` source/output bundles, existing `report_cleanup_archive/` backups, or old PowerShell launcher scripts. The audit lists several of these under `review_only` for a later explicit decision.
+
+## Running in PowerShell
+
+```powershell
+cd C:\thesistemp\T3neutrinomassmodelpipeline
+python -X utf8 -m pytest -q tests/python/test_one_time_artifact_cleanup.py --tb=line
+python -X utf8 -m tools.AuditOneTimeArtifacts
+Get-Content -Encoding UTF8 .\output\cleanup_audit\one_time_files_v1\summary.md
+```
+
+Review the summary. Only files marked `ARCHIVE_CANDIDATE` will be handled by `--apply`. An item with a textual reference, local modification, no matching Git index entry, unusual content, or a scan error becomes `REVIEW_ONLY`. The scan is static: dynamic filename construction is not proven absent.
+
+```powershell
+python -X utf8 -m tools.AuditOneTimeArtifacts --apply --confirm ARCHIVE_ONE_TIME_ROOT_FILES
+if ($LASTEXITCODE -ne 0) { throw "One-time archival failed" }
+python -X utf8 -m pytest -q --tb=line
+git status --short
+```
+
+On application, the script recomputes the local audit, creates a new dated external archive in the repository's parent directory, copies and SHA-256-verifies every eligible file, saves `manifest.json`, then removes the working-tree copies. Git displays the intended deletions. **No Git push occurs.** Keep the archive and manifest. For optional explicit archive location pass `--archive 'C:\thesistemp\T3_one_time_archive_custom'`; the folder must not exist already and must be outside the repo.
+
+Do **not** automatically move or delete the README notes, root ZIPs, or source scripts merely because they are old or are only referenced in tests; they can contain historical validation and regeneration instructions. The scientific output folders are outside this tool's deletion scope.
+
+</details>
+
+---
+
+<a id="source-repository-cleanup-audit-md"></a>
+
+## Original document: `docs/REPOSITORY_CLEANUP_AUDIT.md`
+
+**Original SHA-256:** `0526e977149314a1ca77a3d2878ccf6e2270765a8a21eb8575c895ba79cdbe60`
+
+**Status:** Historical record; verify current source and core documentation
+before using its old commands or provisional conclusions.
+
+<details>
+<summary>Expand original: T3 repository cleanup: historical-document reference audit</summary>
+
+# T3 repository cleanup: historical-document reference audit
+
+**Phase:** documentation audit and optional external retirement.  **Source baseline:**
+`f21d15d2d38f4f313a0f2214bc52f90e1469dce2` (verified read-only on GitHub).
+The installed local checkout may contain the uncommitted authoritative documents
+`docs/SCALAR_SECTOR.md`, `docs/NUMERICAL.md`, and `docs/RESULTS.md`; this utility
+uses the **actual local files**, not the remote snapshot, for its decisions.
+
+## Scope and safety boundary
+
+The audited group consists of 14 older explanatory documents from the scalar
+relevance batches, zero-boundary probes, and reduced-scalar final reporting.
+The intended successors are:
+
+- `docs/SCALAR_SECTOR.md`: physical scalar potential, 50 additional quartic and
+  eight quadratic operator slots, 46/4 fixed-order vertex selection, radiative
+  generation, quadratic mixing and scope limitations.
+- `docs/NUMERICAL.md`: numerical evolution, Yukawa fitting, report generation,
+  interactive RGE and sensitivity diagnostics, convergence/provenance rules.
+- `docs/RESULTS.md`: final frozen reduced-scalar benchmark outcomes, comparison
+  with common A(-2) Yukawas, and historical UV-running diagnostic limitations.
+
+**The archive is outside the repository**, by default at:
+
+`C:\thesistemp\T3_cleanup_archive\documentation_v1\`
+
+Nothing in `Lagrangian/`, `RGE/`, `Numerical/`, `physics/`, `scripts/`,
+`tests/`, `configs/`, `output/`, `Reports/` or the fitted result directories is
+retired by this tool. In particular, production and historical scripts are
+not classified by filename. Some apparently historical scripts remain imports
+of current reporting code; deleting them now would break reproducibility.
+
+The audit searches current local text files, both tracked and untracked, for
+historical Markdown filenames and stems. A candidate is blocked by references
+from a **retained** file. References between documents archived together are
+allowed. A candidate which becomes blocked can in turn block another candidate:
+this transitive dependency is checked before any move.
+
+The three authoritative master documents often list old filenames solely as
+**historical provenance**. Plain mentions in those three are recorded as
+non-blocking; active Markdown links or navigation instructions remain blockers.
+This special rule does not apply to any other document, Python script, test,
+configuration, or report. The utility excludes itself, this audit guide and
+its generated report files from reference counting, and never follows symlinked
+source trees. Dynamic path construction or references hidden inside binary
+artifacts cannot be proved absent by text search. Review the report before
+archiving even files marked safe.
+
+## Dry-run commands (PowerShell; no unsigned .ps1 execution)
+
+From the project root with `.venv` active:
+
+```powershell
+cd C:\thesistemp\T3neutrinomassmodelpipeline
+python -X utf8 -m tools.AuditDocumentationRetirement
+Get-Content -Encoding UTF8 .\output\cleanup_audit\documentation_v1\summary.md
+```
+
+The audit creates only:
+
+```text
+output/cleanup_audit/documentation_v1/
+    audit.json          # candidate hashes, source commit, all reference occurrences
+    references.csv      # references, source filenames, line numbers, type
+    summary.md          # safe/blocked/missing list and example blockers
+```
+
+The generated files are audit evidence, **not** physics inputs. A dry run moves
+nothing. It does not affect the previously verified Python test baseline
+(2,144 passed / 10 skipped / 1 warning in the user's checkout).
+
+## After reviewing the report
+
+If every safe file has been reviewed, the optional explicit command is:
+
+```powershell
+python -X utf8 -m tools.AuditDocumentationRetirement --apply --confirm ARCHIVE_SAFE_ONLY
+```
+
+This archives **only** the currently safe subset. It refuses to run if any
+master document is absent or fails the SHA-256 fingerprint of the delivered
+consolidated versions (with LF/CRLF normalised), if a source file could not be scanned,
+if the archive destination is inside the checkout or already exists, or if a
+candidate changed after the audit. For each archive member, its original SHA-256
+is recorded; the copy's SHA-256 is checked before its original is removed.
+The external archive writes `manifest.json` and keeps the original project
+relative path (e.g. `docs/T3_SCALAR_VERTEX_BATCH2.md`).
+
+Do **not** run `--apply` merely because the scanner reports some files safe:
+first check `summary.md`, particularly whether a planned thesis source link
+should remain accessible inside the repository. Files flagged blocked stay
+in place. This tool does not automatically rewrite their references.
+
+## Restoring an archived document
+
+The archive does not modify a historical file's bytes. For a single retired
+file, restore it manually from the archived path, for example:
+
+```powershell
+Copy-Item -LiteralPath 'C:\thesistemp\T3_cleanup_archive\documentation_v1\docs\T3_SCALAR_VERTEX_BATCH2.md' `
+  -Destination '.\docs\T3_SCALAR_VERTEX_BATCH2.md'
+```
+
+Before restoring, ensure that destination is not already present and compare
+the restored file's `Get-FileHash -Algorithm SHA256` against the manifest.
+The original is retained until its verified archive copy has been written.
+
+## Required post-archival validation
+
+```powershell
+git --no-pager status --short
+python -X utf8 -m pytest -q --tb=line
+```
+
+The expected prior baseline is **2,144 passed, 10 skipped, one warning**.
+Any new failure or changed skip count requires investigation. Following this
+phase, use the reference audit results to update the remaining historical
+links with **complete replacement files**, then audit again; do not delete
+historical batch scripts or source numerical data as part of a documentation
+cleanup.
+
+**Installation prerequisite:** Both replacements from
+`T3_Numerical_Results_Consolidation_f21d15d.zip` and the earlier
+`docs/SCALAR_SECTOR.md` must already be installed. A dry run still reports
+references if they are not, but `--apply` is disabled until all three master
+documents match their delivered versions. This prevents retiring their
+original sources while an old master document is still installed.
+
+</details>
+
+---
+
+<a id="source-script-dependency-refinement-md"></a>
+
+## Original document: `docs/SCRIPT_DEPENDENCY_REFINEMENT.md`
+
+**Original SHA-256:** `29093ef82d8e70e7c52c592974ecdafe1b9100d4becbaf3bff5cc96fe5095613`
+
+**Status:** Historical record; verify current source and core documentation
+before using its old commands or provisional conclusions.
+
+<details>
+<summary>Expand original: Script dependency audit — refinement of the 77 broad-reference modules</summary>
+
+# Script dependency audit — refinement of the 77 broad-reference modules
+
+**Purpose:** reclassify the first-pass `RETAIN_STATIC_CODE_OR_TEST_REFERENCE` scripts without mistaking textual mentions for imports. This is a **read-only local audit**. No scripts, tests, results, PDFs, numerical fit records, or GitHub content are modified. No archival action is supplied.
+
+## Provenance and scope
+
+The first-pass `tools/AuditScriptDependencies.py` reported **98** script modules: 11 declared workflows, 77 with import/test/code mentions, and 10 documented-only entrypoints on the user's checkout at `fe0f511104cce8d7d914d114e3fd884eb47c6a95` (29 October 2026). The new audit rescans the **current local checkout** rather than relying on these counts or an old cached CSV. It uses the installed first-pass scanner to cover project text and independently parses all Python files to find concrete executable dependencies.
+
+The refinement distinguishes:
+
+1. **Syntactic Python imports:** `import scripts.X`, `from scripts import X`, `from scripts.X import ...`, and single-level relative imports inside `scripts/`.
+2. **Literal dynamic imports:** literal `importlib.import_module('scripts.X')`, `__import__('scripts.X')`, or `runpy.run_module('scripts.X')`.
+3. **Literal execution calls:** known `subprocess`, `os.system`, or `runpy.run_path` calls with an actual literal script/module target.
+4. **Tests:** actual test imports/execution versus tests that merely mention a name in source strings or comments.
+5. **Weak evidence:** Python comments/string mentions, shell wrappers, documentation, configuration, and frozen-output provenance. These are kept in separate columns; they are not automatically promoted to executable dependencies.
+
+The closure of explicitly preserved workflows is computed by following confirmed script-to-script AST/import/execution edges, including transitive edges. Other executable dependencies and test imports remain protected by their own categories.
+
+**Limitations:** constructed module names, reflection, subprocess commands assembled from variables, externally invoked entrypoints, and stale documentation may not be resolvable statically. `REVIEW` means **manual investigation**, *never* safe for deletion. Source metadata in historical JSON must not be edited to make a script appear unused. The earlier two full-study convenience wrappers remain potential review candidates, not automatic archive targets.
+
+## Install (PowerShell)
+
+Extract the ZIP at the project root, preserving exactly these new paths:
+
+- `tools/RefineScriptDependencyAudit.py`
+- `tests/python/test_t3_refined_script_dependencies.py`
+- `docs/SCRIPT_DEPENDENCY_REFINEMENT.md`
+
+The original `tools/AuditScriptDependencies.py` must remain installed. The new script imports its read-only `examine()` function; it does **not** replace or modify it.
+
+```powershell
+cd C:\thesistemp\T3neutrinomassmodelpipeline
+$zip = Join-Path $HOME 'Downloads\T3_Script_Dependency_Refinement_v2.zip'
+if (!(Test-Path $zip)) { throw "ZIP not found: $zip" }
+$targets = @('tools/RefineScriptDependencyAudit.py', 'tests/python/test_t3_refined_script_dependencies.py', 'docs/SCRIPT_DEPENDENCY_REFINEMENT.md')
+foreach ($target in $targets) { if (Test-Path $target) { throw "Already exists: $target" } }
+Expand-Archive -LiteralPath $zip -DestinationPath . -Force
+python -X utf8 -m pytest -q tests/python/test_t3_refined_script_dependencies.py --tb=line
+python -X utf8 -m tools.RefineScriptDependencyAudit
+Get-Content -Encoding UTF8 .\output\cleanup_audit\script_dependencies_refined_v2\summary.md | Select-Object -First 100
+```
+
+## Output files
+
+Under `output/cleanup_audit/script_dependencies_refined_v2/`:
+
+- `summary.md`: counts and named review candidates from the original 77, plus the active workflow transitive dependency closure.
+- `inventory.csv`: all 98 script modules with prior and refined classes, exact hard versus weak evidence counts, and SHA-256 fingerprints.
+- `strong_evidence.csv`: each resolvable import or literal execution, with referring source file, line and source excerpt.
+- `audit.json`: all above information and first-pass weak references for additional review.
+
+Run the full Python suite **only if production files are subsequently changed or scripts are archived**; no physics computation is performed by the audit.
+
+Do not archive the 77-script group from classification totals alone. The next decision should be made from actual names in `summary.md` and the references in `strong_evidence.csv`, while preserving tested entrypoints, live imports, archived derivations, fitting provenance, and reproducibility.
 
 </details>
 

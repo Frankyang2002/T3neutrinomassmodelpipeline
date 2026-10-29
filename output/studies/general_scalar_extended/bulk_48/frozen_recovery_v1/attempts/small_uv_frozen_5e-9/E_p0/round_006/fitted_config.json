@@ -1,0 +1,297 @@
+{
+  "kind": "t3_pipeline_numerical_results_v1",
+  "_comment": "Default ordinary-T3 numerical template. New low-scale benchmark: UV=1e7 GeV, MF threshold=100 TeV, scalar threshold=1 TeV, low scale=100 GeV. SM gauge and Yukawa reference values at 1e7 GeV from Antusch, Hinze and Saad (2026), arXiv:2510.01312, Table II; gY=sqrt(3/5)*g1. SM-only running reference, not T3 threshold-matched.",
+  "representation": {
+    "d_s1": 3,
+    "d_s2": 3,
+    "d_f": 2,
+    "alpha": 0,
+    "shared_scalar": false
+  },
+  "ordering": "NO",
+  "scales": {
+    "mu_fermion_threshold_gev": 100000.0,
+    "mu_scalar_threshold_gev": 1000.0,
+    "mu_low_gev": 100.0
+  },
+  "numerical": {
+    "vev_gev": 246.22,
+    "rtol": 1e-08,
+    "atol": 1e-11,
+    "n_scale_points": 120
+  },
+  "base_state": {
+    "mu_gev": 10000000.0,
+    "sm": {
+      "gY": 0.38265,
+      "g2": 0.59493,
+      "g3": 0.7649,
+      "lambdaH": 0.25,
+      "yu": {
+        "real": [
+          [
+            4.39e-06,
+            0,
+            0
+          ],
+          [
+            0,
+            0.00222,
+            0
+          ],
+          [
+            0,
+            0,
+            0.6462
+          ]
+        ],
+        "imag": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "yd": {
+        "real": [
+          [
+            9.7e-06,
+            0,
+            0
+          ],
+          [
+            0,
+            0.000193,
+            0
+          ],
+          [
+            0,
+            0,
+            0.00961
+          ]
+        ],
+        "imag": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "ye": {
+        "real": [
+          [
+            2.8681e-06,
+            0,
+            0
+          ],
+          [
+            0,
+            0.00060421,
+            0
+          ],
+          [
+            0,
+            0,
+            0.010264
+          ]
+        ],
+        "imag": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      }
+    },
+    "ordinary": {
+      "y1": {
+        "real": [
+          [
+            0.02547117520980427,
+            -0.7841242223306562,
+            0.0019220382869285513
+          ],
+          [
+            -0.26458797120292676,
+            0.10431177901341171,
+            0.9152953763601381
+          ],
+          [
+            0.27857009058024734,
+            -0.1035179149279867,
+            0.1717766141308495
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "y2": {
+        "real": [
+          [
+            0.4050095784357486,
+            0.08552693869332073,
+            0.005663579227039445
+          ],
+          [
+            -0.01689898946056001,
+            0.03298325299862681,
+            0.0349133434385169
+          ],
+          [
+            -0.18197276181575456,
+            0.1994103345221338,
+            0.02942712998728632
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "MF": {
+        "real": [
+          [
+            100000.0,
+            0,
+            0
+          ],
+          [
+            0,
+            110000.0,
+            0
+          ],
+          [
+            0,
+            0,
+            120000.0
+          ]
+        ],
+        "imag": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "mS1Sq": 1306122.448979592,
+      "mS2Sq": 1000000.0,
+      "lambdaS1": 0.1,
+      "lambdaS2": 0.12,
+      "lambdaH1": 0.02,
+      "lambdaH2": 0.03,
+      "lambda12": 0.01,
+      "lambdaT3": {
+        "real": 2.5e-09,
+        "imag": 0.0
+      },
+      "lambdaH1Adj": 0.0,
+      "lambdaH2Adj": 0.0,
+      "lambda12Adj": 0.0,
+      "lambdaS1Adj": 0.0,
+      "lambdaS2Adj": 0.0,
+      "lambda12Cross": 0.0
+    }
+  },
+  "benchmark_search": {
+    "enabled": false
+  },
+  "sensitivity": {
+    "enabled": false
+  },
+  "lambda_5e9_study": {
+    "status": "Original Sobol multistart staged refinement",
+    "source": "output\\studies\\small_lambda_1e-7\\fitted\\T3_dS1_3_dS2_3_dF_2_alpha_p0.json",
+    "source_sha256": "e119f6790ae6dc138f774d6483c80ddb06c4b95c8825f2b677aa3fe0130a448b",
+    "lambdaT3": 2.5e-09,
+    "seed_scale": 4.47213595499958,
+    "chi2": 5.374126957368162e-22
+  },
+  "fermion_start_study": {
+    "boundary_definition": "UV initial parameter values imposed directly at mu_F; UV RGEs disabled",
+    "case": "5e-9",
+    "lambdaT3": 2.5e-09,
+    "seed_factor": 1.0,
+    "source": "output\\studies\\lambda_5e-9_refit\\fitted\\T3_dS1_3_dS2_3_dF_2_alpha_p0.json",
+    "source_sha256": "772279807f975d17be94521724511cd72767720014bc7de6a4fdc5f01bf674b6",
+    "fit_chi2": 4.0735010417142515e-23,
+    "fit_method": "Sobol + ranked 5/8/12 active parameter refinement"
+  },
+  "conditional_general_scalar_fit": {
+    "model": "E_+0",
+    "case": "small_uv_frozen_5e-9",
+    "chi2": 7669115757.552661,
+    "sequential_matching_certified": false
+  }
+}

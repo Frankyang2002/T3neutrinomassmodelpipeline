@@ -1,0 +1,120 @@
+{
+  "format": "t3-frozen-stable-full18-v1",
+  "model": "A_+0",
+  "case": "small_uv_frozen_5e-9",
+  "status": "CandidateConstrainedPoorFit",
+  "best": {
+    "label": "seed_1_local",
+    "chi2": 664.2193041930483,
+    "status": "NeutrinoEvaluated",
+    "reason": "AcceptedScreen",
+    "prediction": {
+      "delta_m21_sq_ev2": 7.514337633551804e-05,
+      "delta_m3l_sq_ev2": 0.0024970794813157227,
+      "sin2_theta12": 0.2732369557068151,
+      "sin2_theta13": 0.031396997370196564,
+      "sin2_theta23": 0.7762472748807767
+    },
+    "screen": true,
+    "rhoF": 0.011428571428571429,
+    "scalar_masses_muS_tev": [
+      1.0685399926531904,
+      1.1354863028347468
+    ],
+    "max_yukawa_singular_muF": 0.8411975822546778,
+    "max_scalar_quartic_abs": 0.277603104755747,
+    "whitened_residual": [
+      -0.23363264379583853,
+      -0.6790496919159781,
+      -5.34782620950149,
+      15.64385503543257,
+      19.757888701985596
+    ],
+    "parameters": {
+      "y1_00": 0.006904995580214762,
+      "y1_01": 0.07452272096818785,
+      "y1_02": 0.2348370920323391,
+      "y1_10": -0.31428450244038014,
+      "y1_11": 0.7115631357016462,
+      "y1_12": -0.19392862106625464,
+      "y1_20": -0.09496596363783028,
+      "y1_21": 0.23266259835956593,
+      "y1_22": -0.044752591504181094,
+      "y2_00": 0.29981946057423703,
+      "y2_01": 0.05567574495266167,
+      "y2_02": -0.007266347941033924,
+      "y2_10": 0.02272309683549123,
+      "y2_11": 0.0918202568943498,
+      "y2_12": 0.2733946155803294,
+      "y2_20": 0.11044390564062323,
+      "y2_21": 0.06040868656421139,
+      "y2_22": 0.1303208567821123
+    },
+    "uv_nfev": 0,
+    "eft1_nfev": 38
+  },
+  "stages": [
+    {
+      "seed": 1,
+      "source": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\studies\\general_scalar_extended\\bulk_48\\frozen_stable18_a0_v1\\small_uv_frozen_5e-9\\A_p0\\state.json",
+      "baseline_chi2": 726.3316351707537,
+      "optimizer_nfev": 9,
+      "optimizer_njev": 9,
+      "optimizer_status": 3,
+      "optimizer_success": true,
+      "optimizer_message": "`xtol` termination condition is satisfied.",
+      "optimality": 56163884.08284427,
+      "cost": 332.10965209652414,
+      "initial_radius_unit": 0.005,
+      "error_evaluations": 0,
+      "best_chi2": 664.2193041930483
+    },
+    {
+      "seed": 2,
+      "source": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\studies\\general_scalar_extended\\bulk_48\\frozen_full18_v1\\small_uv_frozen_5e-9\\A_p0\\full18_refinement.json",
+      "baseline_chi2": 891.5505059383291,
+      "optimizer_nfev": 24,
+      "optimizer_njev": 22,
+      "optimizer_status": 3,
+      "optimizer_success": true,
+      "optimizer_message": "`xtol` termination condition is satisfied.",
+      "optimality": 57569807.37223121,
+      "cost": 363.16575712982245,
+      "initial_radius_unit": 0.005,
+      "error_evaluations": 0,
+      "best_chi2": 664.2193041930483
+    },
+    {
+      "seed": 3,
+      "source": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\studies\\general_scalar_extended\\bulk_48\\frozen_full18_v1\\small_uv_frozen_5e-9\\A_p0\\full18_refinement.json",
+      "baseline_chi2": 919.7887096362916,
+      "optimizer_nfev": 18,
+      "optimizer_njev": 16,
+      "optimizer_status": 3,
+      "optimizer_success": true,
+      "optimizer_message": "`xtol` termination condition is satisfied.",
+      "optimality": 57708954.19224782,
+      "cost": 363.59873136924034,
+      "initial_radius_unit": 0.005,
+      "error_evaluations": 0,
+      "best_chi2": 664.2193041930483
+    }
+  ],
+  "inputs": {
+    "source_campaign": "overnight_six_v1_bulk48",
+    "from_runs": [
+      "frozen_stable18_a0_v1",
+      "frozen_full18_v1"
+    ],
+    "beta_sha256": "952a2d87184c033c22ee93e03be10c609ea442ac359f49be30da7e5e3b2f7f13",
+    "matching_sha256": "071c5e28ec72124666b21715a3ebc5f93f26c5baec530f813f62f66c46ff7ffe",
+    "historical_sha256": "b10f9a379434710af0b28b0b4ee48ca330b1627842dd37dc652e73501c62abcd",
+    "radius_unit": 0.005,
+    "diff_step_unit": 1e-06,
+    "max_nfev_per_stage": 600,
+    "target_chi2": 5.86,
+    "seed_count": 3
+  },
+  "evaluations": 1746,
+  "numerical_failures": 0
+}

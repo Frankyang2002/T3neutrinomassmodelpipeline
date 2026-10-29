@@ -1,0 +1,47 @@
+{
+  "metadata": {
+    "format": "t3-joint-scalar-yukawa-exploration-v1",
+    "model": "A_-2",
+    "case": "small_uv_running_5e-9",
+    "beta_campaign": "overnight_six_v1_bulk48",
+    "qnames": [
+      "lambdaS1",
+      "lambdaS2",
+      "lambdaH1",
+      "lambdaH2",
+      "lambda12",
+      "lambdaH2Adj",
+      "lambdaS2Adj"
+    ],
+    "sobol_points": 128,
+    "max_rounds": 8,
+    "max_nfev": 100,
+    "local_seeds": 3,
+    "seed": 20261030,
+    "mass_limits": [
+      0.05,
+      5.0
+    ],
+    "quartic_bound": 1.0,
+    "extra_real": -0.01,
+    "historical_lambdaT3_fixed": 5e-09,
+    "matching_kind": "hierarchical-hard-plus-direct",
+    "physics_caveat": "candidate general-quartic; no general quadratic or sequential EFT matching"
+  },
+  "rounds": [
+    {
+      "round": 1,
+      "tested": 129,
+      "screen_passed": 0,
+      "rejected_reasons": {
+        "MassHierarchyWindowOrPerturbativity": 100,
+        "Exception: T3 48-study campaign: Coupled EFT1 integration failed: Required step size is less than spacing betwe": 28,
+        "Exception: mS1Sq must be positive to define a physical scalar threshold; got -643493146.5188724 GeV^2.": 1
+      },
+      "exceptions": 29,
+      "best_chi2": null
+    }
+  ],
+  "best_fit": null,
+  "best_screen": null
+}

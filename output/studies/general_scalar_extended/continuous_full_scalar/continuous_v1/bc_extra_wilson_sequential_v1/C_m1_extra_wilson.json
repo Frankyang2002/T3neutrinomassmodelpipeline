@@ -1,0 +1,739 @@
+{
+  "format": "t3-bc-extra-quartic-selected-wilson-sequential-candidate-v1",
+  "status": "SelectedBCExtraQuarticSourceTransportedOnFullScalarEFT1",
+  "model": "C_-1",
+  "saved_points": 65,
+  "input_sha256": {
+    "stage17": "5e474ee3ebfbfa7d15367a4b63e01320a682fc3cea910019597fe174f83d3d66",
+    "stage19": "6fd2e11a9b04e28baeb9a2e0d898a1b89d312ed88db4298455dd09b38fb402a3",
+    "seed": "f4561951f3163358996f7609d4f01f78acb35130968b60e843774928b5108284",
+    "matching": "8c721ace4d22b21e7ac1dacadfa6daba29e288c9ffa6ae4a3f52e0c0171e8a51",
+    "wilson_rge": "883a9083dc541d95920415b04dadeb65fe97a9e04c0522b0923fd5a2ae0b66bc",
+    "eft1_beta": "9b955729a342a43d8fef0c2267383b5a7ff4dcf1c87d22d043be7b05960559af",
+    "continuous": "f0af4d9f5f1862dac47119e3a44a495615be92f00078968c25e12c67598cc651",
+    "sidecar": "661e75b9588fc843d8b4815c3a6d05a6426b2636af10e3b5ddc83031a5bfcd86",
+    "direct": "8dd3bcac79791fac071df378378612ac16b95949631c8c2f160aea4964a3cd45",
+    "runner": "2b5a567697daa1f4864e009c842d1281293d89fdb9e1627ac994e4ca7fb3e293",
+    "continuous_runner": "d418a371cb46ae589304b76a6dc4e2b9b71323494fd135625d64b57962cd9af0",
+    "neutrino_runner": "9bf549179e90879644fe33bb906a7185815cbde63b074364b1438142b77d7abc",
+    "direct_runner": "0407d3471478f215dd06d1da43e3b492800ba7f3665098419b7d93d5ed9fbd61"
+  },
+  "source_projection_certificate": {
+    "status": "FullExtraWeinbergTensorProjectionVerified",
+    "model": "C_m1",
+    "independent_components_verified": 30,
+    "mixed_components_matched_to_stage17": 4,
+    "beta_kappa_16pi2_expression": "2*sqrt(3)*(conjugate(lambdaHHdagS1barS1bar)*conjugate(y1)**2 + conjugate(lambdaHHdagS2S2)*conjugate(y2)**2)/(3*MF)",
+    "all_component_residuals_zero": true,
+    "template": "RGE.matching.WeinbergTensorAdapter.build_weinberg_wilson_tensor(kappa=1)",
+    "normalization": "C_ijab=(1/4)*partial_i partial_j partial_a partial_b [kappa*(nu*H0-e*H+)**2]"
+  },
+  "normalization_certificate": {
+    "status": "ProductionDirectC5NormalizationVerified",
+    "beta_kappa_16pi2": "-4*lambdaT3*conjugate(y1)*conjugate(y2)/(3*MF)",
+    "direct_running_log_coefficient_equals_beta_kappa": true
+  },
+  "source_model": "C_m1",
+  "direct_source_result_path": "direct_wilson_sequential_v1\\C_m1_direct_wilson.json",
+  "source_tensor_integration_status": "ExtraEFT1LLHHTensorSourceIntegrated",
+  "source_integral_projection": {
+    "status": "IntegratedExtraWeinbergSourceProjected",
+    "model": "C_m1",
+    "component_count": 4,
+    "projection_relative_residual": 1.7705687469191437e-17,
+    "extra_delta_kappa_norm_gev_inverse": 9.845157390551488e-16,
+    "loop_order_statement": "one-loop LLSS-source insertion; O(hbar^2) when extra quartics are radiatively generated from zero",
+    "scalar_threshold_projection": "tree-level LLHH survives removing S1/S2, finite scalar matching omitted",
+    "complete_eft1_wilson_running": false,
+    "complete_two_loop_prediction": false
+  },
+  "source_convention": "lambda_Matchete=-lambda_RGBeta, same named scalar field basis",
+  "source_quartics_at_F": {
+    "lambdaHHdagS2S2": {
+      "real": -0.009959752875279173,
+      "imag": 0.0
+    },
+    "lambdaHHdagS1barS1bar": {
+      "real": -0.009990576806287503,
+      "imag": 0.0
+    }
+  },
+  "source_quartics_at_S": {
+    "lambdaHHdagS2S2": {
+      "real": -0.00968627657892337,
+      "imag": 0.0
+    },
+    "lambdaHHdagS1barS1bar": {
+      "real": -0.009738270580196018,
+      "imag": 0.0
+    }
+  },
+  "direct_C5_at_scalar_threshold_gev_inverse": {
+    "real": [
+      [
+        -5.466209776948222e-16,
+        -1.0909660112405039e-15,
+        6.734846195307933e-16
+      ],
+      [
+        -1.0909660112405039e-15,
+        -5.595547668725953e-16,
+        -1.3617827951061293e-15
+      ],
+      [
+        6.734846195307933e-16,
+        -1.3617827951061293e-15,
+        -1.1048486860774549e-15
+      ]
+    ],
+    "imag": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  "selected_extra_delta_C5_at_scalar_threshold_gev_inverse": {
+    "real": [
+      [
+        4.979001394483996e-16,
+        -9.772467937010525e-17,
+        -2.351409960428624e-16
+      ],
+      [
+        -9.772467937010525e-17,
+        6.956583546529329e-16,
+        1.8602496116344414e-16
+      ],
+      [
+        -2.351409960428624e-16,
+        1.8602496116344414e-16,
+        1.9629765887137777e-16
+      ]
+    ],
+    "imag": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  "selected_extra_frozen_quartic_delta_C5_gev_inverse": {
+    "real": [
+      [
+        5.03360595397647e-16,
+        -9.873833745199861e-17,
+        -2.3770665975515393e-16
+      ],
+      [
+        -9.873833745199861e-17,
+        7.028301148017328e-16,
+        1.8796673813393574e-16
+      ],
+      [
+        -2.3770665975515393e-16,
+        1.8796673813393574e-16,
+        1.984549614208866e-16
+      ]
+    ],
+    "imag": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  "direct_plus_selected_extra_C5_at_scalar_threshold_gev_inverse": {
+    "real": [
+      [
+        -4.872083824642263e-17,
+        -1.1886906906106092e-15,
+        4.383436234879309e-16
+      ],
+      [
+        -1.1886906906106092e-15,
+        1.3610358778033763e-16,
+        -1.1757578339426852e-15
+      ],
+      [
+        4.383436234879309e-16,
+        -1.1757578339426852e-15,
+        -9.08551027206077e-16
+      ]
+    ],
+    "imag": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  "selected_extra_delta_C5_at_100gev_gev_inverse": {
+    "real": [
+      [
+        4.660294449083943e-16,
+        -9.146930240993162e-17,
+        -2.2009005089926454e-16
+      ],
+      [
+        -9.146930240993162e-17,
+        6.511291242616645e-16,
+        1.741178449086406e-16
+      ],
+      [
+        -2.2009005089926454e-16,
+        1.741178449086406e-16,
+        1.8373340571757895e-16
+      ]
+    ],
+    "imag": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  "relative_extra_C5_vs_direct_at_scalar_threshold": 0.33133340897330965,
+  "relative_extra_C5_vs_frozen_extra": 0.010477357108791585,
+  "direct_only_masses_ev_descending": [
+    0.0637495615597576,
+    0.039512908428894336,
+    0.038494353706171214
+  ],
+  "updated_masses_ev_descending": [
+    0.049841810372010055,
+    0.04945567379216859,
+    0.02368431828545912
+  ],
+  "eft1_source_integration_nfev": 212,
+  "eft1_source_samples": 65,
+  "eft1_endpoint_parity": {
+    "mS1Sq": 0.0,
+    "mS2Sq": 0.0,
+    "lambdaT3": 0.0,
+    "lambdaHHdagS2S2": 0.0,
+    "lambdaHHdagS1barS1bar": 0.0,
+    "mixed_mu2": 0.0
+  },
+  "heavy_mass_basis_residual": 1.0784121755501318e-11,
+  "reverified_tensor_projection": false,
+  "stage18_component_integrals": [
+    {
+      "higgs_real_indices": [
+        1,
+        3
+      ],
+      "integrated_delta_C_ijab_gev_inverse": {
+        "real": [
+          [
+            -1.244750348620999e-16,
+            2.443116984252631e-17,
+            5.87852490107156e-17
+          ],
+          [
+            2.4431169842526316e-17,
+            -1.7391458866323323e-16,
+            -4.6506240290861036e-17
+          ],
+          [
+            5.87852490107156e-17,
+            -4.6506240290861036e-17,
+            -4.907441471784444e-17
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "frobenius_norm_gev_inverse": 2.461289347637872e-16
+      },
+      "quadrature_simpson_minus_trapezoid_gev_inverse": {
+        "real": [
+          [
+            -7.452175017843398e-23,
+            1.4856381953047107e-23,
+            3.524593356852893e-23
+          ],
+          [
+            1.4856381959210083e-23,
+            -1.0593004280483412e-22,
+            -2.823172573868674e-23
+          ],
+          [
+            3.524593356852893e-23,
+            -2.823172573868674e-23,
+            -2.93624344388932e-23
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "frobenius_norm_gev_inverse": 1.4885178630679964e-22
+      },
+      "coefficient_y1": "-sqrt(3)*l1bar/6",
+      "coefficient_y2": "-sqrt(3)*l2bar/6"
+    },
+    {
+      "higgs_real_indices": [
+        1,
+        4
+      ],
+      "integrated_delta_C_ijab_gev_inverse": {
+        "real": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "imag": [
+          [
+            -1.244750348620999e-16,
+            2.443116984252631e-17,
+            5.87852490107156e-17
+          ],
+          [
+            2.4431169842526316e-17,
+            -1.7391458866323323e-16,
+            -4.6506240290861036e-17
+          ],
+          [
+            5.87852490107156e-17,
+            -4.6506240290861036e-17,
+            -4.907441471784444e-17
+          ]
+        ],
+        "frobenius_norm_gev_inverse": 2.461289347637872e-16
+      },
+      "quadrature_simpson_minus_trapezoid_gev_inverse": {
+        "real": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "imag": [
+          [
+            -7.452175017843398e-23,
+            1.4856381953047107e-23,
+            3.524593356852893e-23
+          ],
+          [
+            1.4856381959210083e-23,
+            -1.0593004280483412e-22,
+            -2.823172573868674e-23
+          ],
+          [
+            3.524593356852893e-23,
+            -2.823172573868674e-23,
+            -2.93624344388932e-23
+          ]
+        ],
+        "frobenius_norm_gev_inverse": 1.4885178630679964e-22
+      },
+      "coefficient_y1": "-sqrt(3)*I*l1bar/6",
+      "coefficient_y2": "-sqrt(3)*I*l2bar/6"
+    },
+    {
+      "higgs_real_indices": [
+        2,
+        3
+      ],
+      "integrated_delta_C_ijab_gev_inverse": {
+        "real": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "imag": [
+          [
+            -1.244750348620999e-16,
+            2.443116984252631e-17,
+            5.87852490107156e-17
+          ],
+          [
+            2.4431169842526316e-17,
+            -1.7391458866323323e-16,
+            -4.6506240290861036e-17
+          ],
+          [
+            5.87852490107156e-17,
+            -4.6506240290861036e-17,
+            -4.907441471784444e-17
+          ]
+        ],
+        "frobenius_norm_gev_inverse": 2.461289347637872e-16
+      },
+      "quadrature_simpson_minus_trapezoid_gev_inverse": {
+        "real": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "imag": [
+          [
+            -7.452175017843398e-23,
+            1.4856381953047107e-23,
+            3.524593356852893e-23
+          ],
+          [
+            1.4856381959210083e-23,
+            -1.0593004280483412e-22,
+            -2.823172573868674e-23
+          ],
+          [
+            3.524593356852893e-23,
+            -2.823172573868674e-23,
+            -2.93624344388932e-23
+          ]
+        ],
+        "frobenius_norm_gev_inverse": 1.4885178630679964e-22
+      },
+      "coefficient_y1": "-sqrt(3)*I*l1bar/6",
+      "coefficient_y2": "-sqrt(3)*I*l2bar/6"
+    },
+    {
+      "higgs_real_indices": [
+        2,
+        4
+      ],
+      "integrated_delta_C_ijab_gev_inverse": {
+        "real": [
+          [
+            1.244750348620999e-16,
+            -2.443116984252631e-17,
+            -5.87852490107156e-17
+          ],
+          [
+            -2.4431169842526316e-17,
+            1.7391458866323323e-16,
+            4.6506240290861036e-17
+          ],
+          [
+            -5.87852490107156e-17,
+            4.6506240290861036e-17,
+            4.907441471784444e-17
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "frobenius_norm_gev_inverse": 2.461289347637872e-16
+      },
+      "quadrature_simpson_minus_trapezoid_gev_inverse": {
+        "real": [
+          [
+            7.452175017843398e-23,
+            -1.4856381953047107e-23,
+            -3.524593356852893e-23
+          ],
+          [
+            -1.4856381959210083e-23,
+            1.0593004280483412e-22,
+            2.823172573868674e-23
+          ],
+          [
+            -3.524593356852893e-23,
+            2.823172573868674e-23,
+            2.93624344388932e-23
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "frobenius_norm_gev_inverse": 1.4885178630679964e-22
+      },
+      "coefficient_y1": "sqrt(3)*l1bar/6",
+      "coefficient_y2": "sqrt(3)*l2bar/6"
+    }
+  ],
+  "frozen_fermion_threshold_LLSS_seed": true,
+  "additional_quartic_scalar_pair_source_included": true,
+  "homogeneous_LLSS_wilson_running_included": false,
+  "other_general_quartic_mixing_included": false,
+  "finite_one_loop_scalar_threshold_matching_included": false,
+  "full_coupled_eft1_wilson_evolution_implemented": false,
+  "complete_general_scalar_sequential_matching": false,
+  "physical_general_scalar_matching_certified": false,
+  "uv_running_repeated": false,
+  "eft1_scalar_running_repeated_for_source": true,
+  "notes": "Selected Stage17/19 additional quartic scalar-pair source integrated on continuous full-scalar EFT1 trajectory, then added to the saved direct-only hierarchical C5. This is a single source insertion with the heavy LLSS seed frozen at the F threshold; NOT a complete EFT1 Wilson beta, finite scalar matching, nor certified general-scalar C5 prediction.",
+  "c5_at_1tev_gev_inverse": {
+    "real": [
+      [
+        -4.872083824642263e-17,
+        -1.1886906906106092e-15,
+        4.383436234879309e-16
+      ],
+      [
+        -1.1886906906106092e-15,
+        1.3610358778033763e-16,
+        -1.1757578339426852e-15
+      ],
+      [
+        4.383436234879309e-16,
+        -1.1757578339426852e-15,
+        -9.08551027206077e-16
+      ]
+    ],
+    "imag": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  "c5_at_100gev_gev_inverse": {
+    "real": [
+      [
+        -4.560220695781434e-17,
+        -1.112602353388689e-15,
+        4.1028604976752814e-16
+      ],
+      [
+        -1.112602353388689e-15,
+        1.273915699100605e-16,
+        -1.1004997334776251e-15
+      ],
+      [
+        4.1028604976752814e-16,
+        -1.1004997334776251e-15,
+        -8.50398193521798e-16
+      ]
+    ],
+    "imag": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  "mnu_at_100gev_ev": {
+    "real": [
+      [
+        0.001382300660913331,
+        -0.03372536290135899,
+        0.01243665002261563
+      ],
+      [
+        -0.03372536290135899,
+        -0.0038615114848455498,
+        0.033358506704660146
+      ],
+      [
+        0.01243665002261563,
+        0.033358506704660146,
+        0.025777392529549872
+      ]
+    ],
+    "imag": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  "takagi_masses_ev_descending": [
+    0.049841810372010055,
+    0.04945567379216859,
+    0.02368431828545912
+  ],
+  "oscillation_observables_normal_ordering": {
+    "delta_m21_sq_ev2": 0.0018849167375904583,
+    "delta_m3l_sq_ev2": 0.0019232591285124772,
+    "sin2_theta12": 0.0864959187810227,
+    "sin2_theta13": 0.3238209375583082,
+    "sin2_theta23": 0.7532995697776638
+  },
+  "takagi_residual": 3.4936110336044695e-16,
+  "weinberg_rge_solver_nfev": 38,
+  "sm_weinberg_rge_performed": true
+}

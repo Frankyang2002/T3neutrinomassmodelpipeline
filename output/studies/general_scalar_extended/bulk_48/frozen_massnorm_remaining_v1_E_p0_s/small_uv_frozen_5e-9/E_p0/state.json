@@ -1,0 +1,80 @@
+{
+  "format": "t3-frozen-persistent-sobol-v1",
+  "model": "E_+0",
+  "case": "small_uv_frozen_5e-9",
+  "inputs": {
+    "source_campaign": "overnight_six_v1_bulk48",
+    "beta_sha256": "8e72ab135743e08a3c20b1210ccaa7dc163dabb284b903dee3fb759f9550755f",
+    "matching_sha256": "f652f7d91664f6092cab5e4dc4bec3ae1b8f0d43477cee8bfdfbcd236275045d",
+    "historical_sha256": "f44b9b01042b801c6c3ac9ad4130c424c0694ab576b83b8a3105f08361eed009",
+    "points": 256,
+    "seed": 20261030,
+    "radius": 0.02,
+    "diff_step": 1e-06,
+    "local_seeds": 3,
+    "nfev": 300,
+    "target": 5.86,
+    "radii": [
+      0.02,
+      0.05,
+      0.1
+    ],
+    "min_seed_distance": 0.08,
+    "extra_real": -0.01,
+    "mass_normalization": true,
+    "mass_normalization_rtol": 0.03
+  },
+  "completed_cycles": 1,
+  "best": {
+    "label": "cycle_1_local_1",
+    "chi2": 4.134186855279253e-17,
+    "status": "NeutrinoEvaluated",
+    "reason": "AcceptedScreen",
+    "prediction": {
+      "delta_m21_sq_ev2": 7.536999999994582e-05,
+      "delta_m3l_sq_ev2": 0.002510999999995114,
+      "sin2_theta12": 0.30879999999843366,
+      "sin2_theta13": 0.022480000000328203,
+      "sin2_theta23": 0.47000000009912113
+    },
+    "screen": true,
+    "rhoF": 0.011428571428571429,
+    "scalar_masses_muS_tev": [
+      1.070999949966883,
+      1.209404761038104
+    ],
+    "max_yukawa_singular_muF": 0.007828493592993683,
+    "max_scalar_quartic_abs": 0.277505521820059,
+    "whitened_residual": [
+      -5.585876656697225e-11,
+      -2.3835523663208154e-10,
+      -2.3554257959284243e-10,
+      5.757942855454526e-10,
+      6.394913272757666e-09
+    ],
+    "parameters": {
+      "y1_00": 0.00026104595279508036,
+      "y1_01": -0.006267302000034336,
+      "y1_02": -0.0005805561279826343,
+      "y1_10": -0.003361704830459833,
+      "y1_11": -0.0013403787131217593,
+      "y1_12": 0.002633474170301797,
+      "y1_20": 0.003463986232299876,
+      "y1_21": 0.0035347772517263787,
+      "y1_22": 0.0025327305974904846,
+      "y2_00": 0.0022505391873378633,
+      "y2_01": 0.0003840677041021534,
+      "y2_02": 0.0014114517711929925,
+      "y2_10": -0.005670490291476371,
+      "y2_11": 2.007874521325892e-05,
+      "y2_12": -0.00029909531297905856,
+      "y2_20": -0.00023552104073779057,
+      "y2_21": 0.00553565956621449,
+      "y2_22": -0.00010109039290985555
+    },
+    "uv_nfev": 0,
+    "eft1_nfev": 38
+  },
+  "status": "Accepted",
+  "total_evaluations_this_invocation": 10822
+}

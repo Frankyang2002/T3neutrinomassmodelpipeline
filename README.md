@@ -1,33 +1,47 @@
-# T3 Batch 1 — bulk continuation (existing repository)
+# Candidate scalar endpoint to one-scale neutrino mass: B(-1)/C(-1)
 
-## Exact destination
+## New paths (DO NOT overwrite root README.md)
 
-Copy `scripts/RunT3FullScalarBatch1.ps1` into the **existing** repository at `scripts/RunT3FullScalarBatch1.ps1`. No existing files need to be replaced. This deliberately does **not** override the established T3 production Lagrangian, Matchete or RGBeta code.
+- `scripts/RunT3QuadraticEndpointC5.py`
+- `tests/test_t3_quadratic_endpoint_c5.py`
 
-## What it does
+All older scripts and outputs are unchanged. Extract ZIP into the repository root.
 
-Runs existing `scripts.AuditGeneralT3QuadraticBasis`, the existing 16-model general quartic RGBeta generator, and `scripts.RunGeneralT3QuadraticAudit` in one batch. When passed `-ExportBetas`, it asks locally installed Wolfram/RGBeta to regenerate UV and EFT1 beta expressions for **all 16 models**. When passed `-RunTests`, it runs all Python tests. Results are written under `output/audits/full_scalar_bulk_batch1/`, and the generator writes its established outputs under `output/general_t3_stage20/`. Audit scripts may update their existing audit artifact paths. None is a physical full-sequential-matching implementation.
+## Prerequisites
 
-## PowerShell from repository root
+Existing Stage 33 boundary, frozen fitted-reference files, experimental Matchete mass-basis certificates and **saved** Stage quadratic EFT1 flow from `scripts.RunGeneralT3QuadraticEFT1`. This runner deliberately does not launch Wolfram or refit Yukawas.
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\RunT3FullScalarBatch1.ps1 -ExportBetas -RunTests
-```
-
-If Wolfram is unavailable, run the Python structural stages only:
+For missing endpoint flow outputs, generate the two candidates first (Wolfram required):
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\RunT3FullScalarBatch1.ps1 -RunTests
+python -m scripts.RunGeneralT3QuadraticEFT1 --model B_-1 --mu2-fraction 0.01
+python -m scripts.RunGeneralT3QuadraticEFT1 --model C_-1 --mu2-fraction 0.01
 ```
 
-Inspect `output/audits/full_scalar_bulk_batch1/batch1_status.json` afterward.
+Use already saved outputs when available; do not regenerate unnecessarily.
 
-## Known scientific limits
+## Run
 
-- The additional 50 quartic entries are summed over 16 **different models**, not 50 couplings per model.
-- Eight additional bilinears remain outside the complete coupled scalar RGE/matching pipeline.
-- Matchete/RGBeta coupling normalisation is not established for the complete basis.
-- Native RGBeta export is not a physical one-loop C5-matching certificate.
-- No existing neutrino-fit results are relabelled as fully matched.
+```powershell
+python -X utf8 -m pytest -q tests/test_t3_quadratic_endpoint_c5.py
+python -m scripts.RunT3QuadraticEndpointC5 --all
+```
 
-Read-only source snapshot used for the batch runner: `119f5d46f89159470af59bff3189ab65424ef280`. Run against the user's latest local checkout; confirm differences if any.
+Output: `output/studies/general_scalar_extended/quadratic_endpoint_c5/summary.json` and separate B/C reports. For the zero-extra-quartic control:
+
+```powershell
+python -m scripts.RunT3QuadraticEndpointC5 --all --zero-extra-quartics
+```
+
+**Note:** Running `--zero-extra-quartics` into the default output directory replaces this *new experimental output folder's* B/C files; use `--output-dir output/studies/general_scalar_extended/quadratic_endpoint_c5_zero_extra` to preserve both.
+
+## What the calculation actually does
+
+1. Reads saved candidate running scalar masses, extra mixed quadratic coefficient and quartics at the EFT1 endpoint.
+2. Constructs and verifies the B/C complex-doublet mass eigenbasis.
+3. Loads SHA256-checked frozen fitted-reference Yukawas/fermion masses (not Yukawa running on the candidate background).
+4. Evaluates the already extracted **direct one-scale** Matchete ordered coefficient using the endpoint eigenmasses and mixing matrix.
+5. Compares the original `lambdaT3`-only C5 with the two extra C5-active quartics, mapped by the existing source-level sign convention `lambda_matchete = -lambda_rgbeta`.
+6. Records Takagi masses and the relative Frobenius norm of the response.
+
+**Not implemented/certified here:** full sequential EFT1 matching or Wilson running, complete field-component/Matchete-RGBeta normalisation, genuine physical predictions, self-bilinear A/D/E threshold treatment. Reports explicitly say so. The nonzero-extra-quartic result is a *conditional sensitivity probe*.

@@ -193,7 +193,7 @@ def verify_beta_source(root: Path, run_id: str, state: Any):
 
 
 def prepare_uv(root: Path, config: dict, *, uv_on: bool):
-    from scripts import Stage31CoupledUVRunning as s31
+    from scripts import CoupledUVRunning as s31
     from Numerical.core.StateVector import unpack_uv_state
     registry=read(root/'RGE/general/generated/general_rgbeta_quartic_registry.json')
     entry,new,reused=s31.inventories(registry,MODEL)
@@ -207,7 +207,7 @@ def prepare_uv(root: Path, config: dict, *, uv_on: bool):
 
 
 def run_uv(boundary: Any, q: complex):
-    from scripts import Stage30CoupledA0UVRunning as s30
+    from scripts import CoupledA0UVRunning as s30
     from Numerical.core.StateVector import unpack_uv_state
     vec,layout,betas=boundary
     y0=np.concatenate((vec,[q.real,q.imag]))
@@ -244,7 +244,7 @@ class MatchedKernel:
     def __init__(self,path:Path):
         import sympy as sp
         from RGE.matching.FinalWeinbergAdapter import load_hierarchical_majorana_c5
-        from scripts.Stage36FinalWeinbergRunning import verify_hierarchical_artifact
+        from scripts.FinalWeinbergRunning import verify_hierarchical_artifact
         verify_hierarchical_artifact(path)
         symbolic=load_hierarchical_majorana_c5(path,n_lepton=3,n_heavy=3)
         expr=sp.simplify(symbolic['hard_kernel']+symbolic['running_kernel'])
@@ -402,7 +402,7 @@ def fit_case(case:str,run_id:str,*,root:Path=ROOT,beta_run_id:str='b_p1_eft1_gen
              extra_fraction:float|None=None,extra_real:float=-.01,rho_max:float=RHO_MAX,
              scalar_min_tev:float=SCALAR_MIN_TEV,
              scalar_max_tev:float=SCALAR_MAX_TEV) -> dict:
-    from scripts import Stage31CoupledUVRunning as s31
+    from scripts import CoupledUVRunning as s31
     from Numerical.orchestration import RunSmallLambdaRefit as base
     from Numerical.fitting.OscillationFit import OscillationFitTarget
     options(sobol_points=sobol_points,local_nfev=local_nfev,

@@ -23,8 +23,8 @@ from pathlib import Path
 import subprocess
 from typing import Any
 
-from scripts import Stage33FermionThresholdHandoff as s33
-from scripts import Stage34IntermediateEFTRunning as s34
+from scripts import FermionThresholdHandoff as s33
+from scripts import IntermediateEFTRunning as s34
 from Numerical.experimental.GeneralT3ScalarRGState import (
     GeneralT3ScalarRGState,
     evaluate_general_scalar_derivative,

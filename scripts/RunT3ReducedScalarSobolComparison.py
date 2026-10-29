@@ -35,8 +35,8 @@ from scipy.optimize import least_squares
 from scipy.stats import qmc
 
 from scripts import RunT3GeneralScalar48Campaign as bulk
-from scripts import Stage31CoupledUVRunning as s31
-from scripts import Stage30CoupledA0UVRunning as s30
+from scripts import CoupledUVRunning as s31
+from scripts import CoupledA0UVRunning as s30
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'output/studies/reduced_scalar_sobol'

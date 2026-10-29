@@ -1,0 +1,834 @@
+script,source,line,kind,excerpt
+AddMathematicalDefinitions,T3_COMMAND_REFERENCE.md,363,DOC_REFERENCE,python scripts/AddMathematicalDefinitions.py
+AddMathematicalDefinitions,T3_COMMAND_REFERENCE.md,364,DOC_REFERENCE,python scripts/AddMathematicalDefinitions.py --compile
+AddMathematicalDefinitions,T3_COMMAND_REFERENCE.md,372,DOC_REFERENCE,"| `scripts/AddMathematicalDefinitions.py` | `--root` (default `Reports/output/analytical`), `--compile` | Edits generated TeX, writes `mathematical_definitions_audit.json`, and explicitly records unresolved definitions instead of inventing "
+AddMathematicalDefinitions,T3_COMMAND_REFERENCE.md,1259,DOC_REFERENCE,| Analytical TeX/PDF | `scripts/BuildCombinedAnalyticalReports.py`; `BuildCompactC5Report.py`; `AddMathematicalDefinitions.py`; `PolishAnalyticalReports.py` | [5](#5-analytical-latex-and-pdf-reports) |
+AddMathematicalDefinitions,tests/test_mathematical_report_definitions.py,2,STATIC_IMPORT,"from scripts.AddMathematicalDefinitions import insert_definitions, MATH_START"
+AnalyticalReportHousekeeping,T3_COMMAND_REFERENCE.md,374,DOC_REFERENCE,**Automatic report cleanup:** `scripts/AnalyticalReportHousekeeping.py` implements an importable `clean()` function but has **no standalone CLI**; `BuildCombinedAnalyticalReports.py` invokes it after successful regeneration. It limits clean
+AnalyticalReportHousekeeping,scripts/BuildCombinedAnalyticalReports.py,25,STATIC_IMPORT,from scripts.AnalyticalReportHousekeeping import clean
+AnalyticalReportHousekeeping,tests/test_analytical_housekeeping_auto.py,4,STATIC_IMPORT,"from scripts.AnalyticalReportHousekeeping import clean, classify"
+AnalyzeT3BCMatchingConventions,docs/T3_BC_CONDITIONAL_MIXED_C5_CONVENTION_AUDIT.md,67,DOC_REFERENCE,- `scripts/AnalyzeT3BCMatchingConventions.py`
+AnalyzeT3BCMatchingConventions,docs/T3_BC_CONDITIONAL_MIXED_C5_CONVENTION_AUDIT.md,88,DOC_REFERENCE,python -m scripts.AnalyzeT3BCMatchingConventions `
+AnalyzeT3BCMatchingConventions,docs/T3_BC_CONDITIONAL_MIXED_C5_CONVENTION_AUDIT.md,93,DOC_REFERENCE,python -m scripts.AnalyzeT3BCMatchingConventions `
+AnalyzeT3BCMatchingConventions,scripts/FitT3BCUVHierarchyConstrained.py,27,STATIC_IMPORT,from scripts import AnalyzeT3BCMatchingConventions as b10
+AnalyzeT3BCMatchingConventions,scripts/ProbeT3BCUVNeutrinoNormalization.py,107,STATIC_IMPORT,    from scripts import AnalyzeT3BCMatchingConventions as b10
+AnalyzeT3BCMatchingConventions,scripts/ProbeT3BCUVNeutrinoNormalization.py,256,STATIC_IMPORT,    from scripts import AnalyzeT3BCMatchingConventions as b10
+AnalyzeT3BCMatchingConventions,scripts/RunT3GeneralScalarBCExploratoryFit.py,28,STATIC_IMPORT,from scripts import AnalyzeT3BCMatchingConventions as b10
+AnalyzeT3BCMatchingConventions,scripts/ValidateT3BCGeneralScalarSixFits.py,259,STATIC_IMPORT,    from scripts import AnalyzeT3BCMatchingConventions as b10
+AnalyzeT3BCMatchingConventions,tests/python/test_t3_bc_matching_conventions.py,11,STATIC_IMPORT,from scripts import AnalyzeT3BCMatchingConventions as m
+AnalyzeT3BCMatchingConventions,tests/python/test_t3_bc_uv_neutrino_normalization.py,177,STATIC_IMPORT,    from scripts import AnalyzeT3BCMatchingConventions as b10
+AssessGeneralT3C5Response,docs/GENERAL_T3_STAGE7_STATUS.md,28,DOC_REFERENCE,5. `AssessGeneralT3C5Response.py`: demands the new proof fields. Old Stage 6
+AssessGeneralT3C5Response,scripts/RunGeneralT3Stage6.ps1,59,SHELL_REFERENCE,"(Join-Path $repo 'scripts\AssessGeneralT3C5Response.py'),"
+AssessGeneralT3C5Response,tests/python/test_general_t3_stage6.py,13,STATIC_IMPORT,from scripts.AssessGeneralT3C5Response import (  # noqa: E402
+AuditGeneralT3QuadraticBasis,docs/GENERAL_T3_QUADRATIC_BATCH_NOTES.md,36,DOC_REFERENCE,"1. **Independent quadratic gauge-invariant inventory**: `scripts/AuditGeneralT3QuadraticBasis.py`, checks the original manifest without using it to generate the candidate list. Fail-closed 8/16 test."
+AuditGeneralT3QuadraticBasis,docs/GENERAL_T3_QUADRATIC_BATCH_NOTES.md,67,DOC_REFERENCE,python -m scripts.AuditGeneralT3QuadraticBasis
+AuditGeneralT3QuadraticBasis,scripts/RunGeneralT3QuadraticMatcheteAudit.py,18,STATIC_IMPORT,"from scripts.AuditGeneralT3QuadraticBasis import audit, ROOT"
+AuditGeneralT3QuadraticBasis,tests/python/test_general_t3_quadratic_full_batch.py,156,STATIC_IMPORT,    from scripts.AuditGeneralT3QuadraticBasis import audit
+AuditT3OneLoopScalarVertices,docs/SCALAR_SECTOR.md,114,DOC_REFERENCE,"**Sources:** `scripts/AuditT3ScalarRelevance.py`, `scripts/AuditT3OneLoopScalarVertices.py`, `output/scalar_relevance/operator_classification.json`, `output/scalar_relevance/leading_c5_vertex_audit.json`, `output/general_matching_symbolic_r"
+AuditT3OneLoopScalarVertices,docs/SCALAR_SECTOR.md,277,DOC_REFERENCE,"| Wick necessary-condition selection | `scripts/AuditT3OneLoopScalarVertices.py`, `output/scalar_relevance/leading_c5_vertex_audit.json` |"
+AuditT3OneLoopScalarVertices,tests/python/test_t3_scalar_vertex_batch2.py,12,STATIC_IMPORT,from scripts.AuditT3OneLoopScalarVertices import (
+AuditT3QuadraticImpact,docs/SCALAR_SECTOR.md,155,DOC_REFERENCE,"**Sources:** `scripts/AuditT3QuadraticImpact.py`, `output/scalar_relevance/quadratic_impact_audit.json` and the saved candidate quadratic EFT1 reports."
+AuditT3QuadraticImpact,docs/SCALAR_SECTOR.md,278,DOC_REFERENCE,"| Extra quadratic spectrum | `scripts/AuditT3QuadraticImpact.py`, `output/scalar_relevance/quadratic_impact_audit.json` |"
+AuditT3QuadraticImpact,tests/python/test_t3_quadratic_impact_batch3.py,9,STATIC_IMPORT,from scripts.AuditT3QuadraticImpact import (
+AuditT3QuadraticRGClosure,docs/SCALAR_SECTOR.md,216,DOC_REFERENCE,"**Sources:** `scripts/AuditT3QuadraticRGClosure.py`, `scripts/AuditT3ReducedScalarRG.py`, `output/scalar_relevance/quadratic_rg_zero_boundary_audit.json`, `output/scalar_relevance/reduced_scalar_rg_order_audit.json`, and `output/general_rgb"
+AuditT3QuadraticRGClosure,docs/SCALAR_SECTOR.md,279,DOC_REFERENCE,"| Candidate quadratic RG source | `scripts/AuditT3QuadraticRGClosure.py`, `output/scalar_relevance/quadratic_rg_zero_boundary_audit.json` |"
+AuditT3QuadraticRGClosure,scripts/AuditT3ReducedScalarRG.py,27,STATIC_IMPORT,from scripts.AuditT3QuadraticRGClosure import (
+AuditT3QuadraticRGClosure,tests/python/test_t3_quadratic_rg_closure_batch4.py,7,STATIC_IMPORT,from scripts import AuditT3QuadraticRGClosure as a
+AuditT3ReducedScalarRG,docs/SCALAR_SECTOR.md,216,DOC_REFERENCE,"**Sources:** `scripts/AuditT3QuadraticRGClosure.py`, `scripts/AuditT3ReducedScalarRG.py`, `output/scalar_relevance/quadratic_rg_zero_boundary_audit.json`, `output/scalar_relevance/reduced_scalar_rg_order_audit.json`, and `output/general_rgb"
+AuditT3ReducedScalarRG,docs/SCALAR_SECTOR.md,280,DOC_REFERENCE,"| Candidate RG insertion order | `scripts/AuditT3ReducedScalarRG.py`, `output/scalar_relevance/reduced_scalar_rg_order_audit.json` |"
+AuditT3ReducedScalarRG,tests/python/test_t3_reduced_scalar_rg_batch5.py,7,STATIC_IMPORT,from scripts import AuditT3ReducedScalarRG as a
+AuditT3SavedStudyScalarBoundaries,docs/T3_GENERAL_SCALAR_STUDY_SEPARATION.md,84,DOC_REFERENCE,python -m scripts.AuditT3SavedStudyScalarBoundaries
+AuditT3SavedStudyScalarBoundaries,tests/python/test_t3_saved_scalar_boundaries.py,8,STATIC_IMPORT,from scripts import AuditT3SavedStudyScalarBoundaries as a
+AuditT3ScalarRelevance,docs/SCALAR_SECTOR.md,114,DOC_REFERENCE,"**Sources:** `scripts/AuditT3ScalarRelevance.py`, `scripts/AuditT3OneLoopScalarVertices.py`, `output/scalar_relevance/operator_classification.json`, `output/scalar_relevance/leading_c5_vertex_audit.json`, `output/general_matching_symbolic_r"
+AuditT3ScalarRelevance,docs/SCALAR_SECTOR.md,276,DOC_REFERENCE,"| Operator count and field relevance | `scripts/AuditT3ScalarRelevance.py`, `output/scalar_relevance/operator_classification.json` |"
+AuditT3ScalarRelevance,tests/python/test_t3_scalar_relevance_batch1.py,9,STATIC_IMPORT,from scripts.AuditT3ScalarRelevance import (
+BuildBCSixSavedRunning,docs/GENERAL_SCALAR_48_FINAL_REPORTING.md,18,DOC_REFERENCE,- `scripts/BuildBCSixSavedRunning.py`: optional additional presentation-only export from the *already saved* six-fit B(-1)/C(-1) Batch18 validation trajectory CSV. No re-integration.
+BuildBCSixSavedRunning,docs/GENERAL_SCALAR_48_FINAL_REPORTING.md,41,DOC_REFERENCE,python -m scripts.BuildBCSixSavedRunning
+BuildBCSixSavedRunning,docs/GENERAL_SCALAR_48_FINAL_REPORTING.md,69,DOC_REFERENCE,`campaign_frozen.csv` has three scale endpoints per model and no time/scale-series arrays. The bulk fit JSONs store final fit data and solver counters but not complete per-scale UV/EFT1/final-Weinberg trajectories. **Exception:** a separate
+BuildCombinedAnalyticalReports,README_C12_GroupFactors_PDF.txt,10,DOC_REFERENCE,scripts/BuildCombinedAnalyticalReports.py                       [complete replacement]
+BuildCombinedAnalyticalReports,README_C12_GroupFactors_PDF.txt,31,DOC_REFERENCE,"analytical report generator, scripts/BuildCombinedAnalyticalReports.py."
+BuildCombinedAnalyticalReports,README_C12_GroupFactors_PDF.txt,67,DOC_REFERENCE,python scripts/BuildCombinedAnalyticalReports.py --check
+BuildCombinedAnalyticalReports,README_C12_GroupFactors_PDF.txt,68,DOC_REFERENCE,python scripts/BuildCombinedAnalyticalReports.py
+BuildCombinedAnalyticalReports,README_C12_PDF_GroupFactor_Repair.txt,22,DOC_REFERENCE,- scripts/BuildCombinedAnalyticalReports.py     FULL REPLACEMENT
+BuildCombinedAnalyticalReports,README_C12_PDF_GroupFactor_Repair.txt,43,DOC_REFERENCE,python scripts/BuildCombinedAnalyticalReports.py --check
+BuildCombinedAnalyticalReports,README_C12_PDF_GroupFactor_Repair.txt,44,DOC_REFERENCE,python scripts/BuildCombinedAnalyticalReports.py
+BuildCombinedAnalyticalReports,README_T3_C12_PDF_Table_Fix.txt,9,DOC_REFERENCE,- scripts/BuildCombinedAnalyticalReports.py
+BuildCombinedAnalyticalReports,README_T3_C12_PDF_Table_Fix.txt,21,DOC_REFERENCE,python scripts/BuildCombinedAnalyticalReports.py --check
+BuildCombinedAnalyticalReports,README_T3_C12_PDF_Table_Fix.txt,22,DOC_REFERENCE,python scripts/BuildCombinedAnalyticalReports.py
+BuildCombinedAnalyticalReports,T3_COMMAND_REFERENCE.md,341,DOC_REFERENCE,python scripts/BuildCombinedAnalyticalReports.py --check
+BuildCombinedAnalyticalReports,T3_COMMAND_REFERENCE.md,344,DOC_REFERENCE,python scripts/BuildCombinedAnalyticalReports.py `
+BuildCombinedAnalyticalReports,T3_COMMAND_REFERENCE.md,349,DOC_REFERENCE,python scripts/BuildCombinedAnalyticalReports.py `
+BuildCombinedAnalyticalReports,T3_COMMAND_REFERENCE.md,369,DOC_REFERENCE,"| `scripts/BuildCombinedAnalyticalReports.py` | `--scenario` (one of four historical fixed scenarios), `--source`, `--output` (default `Reports/output/analytical`), `--check` | `--check` **only validates** saved model records; otherwise gen"
+BuildCombinedAnalyticalReports,T3_COMMAND_REFERENCE.md,374,DOC_REFERENCE,**Automatic report cleanup:** `scripts/AnalyticalReportHousekeeping.py` implements an importable `clean()` function but has **no standalone CLI**; `BuildCombinedAnalyticalReports.py` invokes it after successful regeneration. It limits clean
+BuildCombinedAnalyticalReports,T3_COMMAND_REFERENCE.md,1259,DOC_REFERENCE,| Analytical TeX/PDF | `scripts/BuildCombinedAnalyticalReports.py`; `BuildCompactC5Report.py`; `AddMathematicalDefinitions.py`; `PolishAnalyticalReports.py` | [5](#5-analytical-latex-and-pdf-reports) |
+BuildCombinedAnalyticalReports,Reports/C12GroupFactorPDF.py,395,STATIC_IMPORT,    from scripts.BuildCombinedAnalyticalReports import reconstruct_records
+BuildCombinedAnalyticalReports,tests/test_c12_group_factor_block_tables.py,83,TEST_REFERENCE,fake = types.ModuleType('scripts.BuildCombinedAnalyticalReports')
+BuildCombinedAnalyticalReports,tests/test_c12_group_factor_block_tables.py,85,TEST_REFERENCE,"monkeypatch.setitem(sys.modules, 'scripts.BuildCombinedAnalyticalReports', fake)"
+BuildCombinedAnalyticalReports,tests/test_combined_analytical_reports.py,8,TEST_REFERENCE,SCRIPT = Path(__file__).resolve().parents[1] / 'scripts' / 'BuildCombinedAnalyticalReports.py'
+BuildCombinedAnalyticalReports,tests/test_combined_analytical_reports.py,12,TEST_REFERENCE,"spec = importlib.util.spec_from_file_location('BuildCombinedAnalyticalReports', SCRIPT)"
+BuildCompactC5Report,T3_COMMAND_REFERENCE.md,355,DOC_REFERENCE,python scripts/BuildCompactC5Report.py
+BuildCompactC5Report,T3_COMMAND_REFERENCE.md,356,DOC_REFERENCE,python scripts/BuildCompactC5Report.py --compile
+BuildCompactC5Report,T3_COMMAND_REFERENCE.md,370,DOC_REFERENCE,"| `scripts/BuildCompactC5Report.py` | `--root` (default `Reports/output/analytical/Lagrangian`), `--compile` | Reconstructs a readable C5-only report from saved Matchete source; refuses to conflate unequal kernels. |"
+BuildCompactC5Report,T3_COMMAND_REFERENCE.md,1259,DOC_REFERENCE,| Analytical TeX/PDF | `scripts/BuildCombinedAnalyticalReports.py`; `BuildCompactC5Report.py`; `AddMathematicalDefinitions.py`; `PolishAnalyticalReports.py` | [5](#5-analytical-latex-and-pdf-reports) |
+BuildCompactC5Report,tests/test_compact_c5.py,2,STATIC_IMPORT,"from scripts.BuildCompactC5Report import parse_ordered, build_tex"
+BuildGeneralScalar48FinalReports,docs/GENERAL_SCALAR_48_FINAL_REPORTING.md,17,DOC_REFERENCE,- `scripts/BuildGeneralScalar48FinalReports.py`: new full standalone benchmark reporting script. No modifications to existing physics scripts.
+BuildGeneralScalar48FinalReports,docs/GENERAL_SCALAR_48_FINAL_REPORTING.md,37,DOC_REFERENCE,python -m scripts.BuildGeneralScalar48FinalReports --verify-only
+BuildGeneralScalar48FinalReports,docs/GENERAL_SCALAR_48_FINAL_REPORTING.md,38,DOC_REFERENCE,python -m scripts.BuildGeneralScalar48FinalReports
+BuildGeneralScalar48FinalReports,docs/RESULTS.md,154,DOC_REFERENCE,"The reporting script `scripts/BuildGeneralScalar48FinalReports.py` validates the **exact** frozen campaign CSV hash, its 48 unique model/scenario entries and **20/6/22** result classification **before writing**. Two accepted B(-1)/C(-1) UV-"
+BuildGeneralScalar48FinalReports,tests/python/test_reduced_scalar_lambda_style_reports.py,112,TEST_REFERENCE,assert 'BuildGeneralScalar48FinalReports' not in text
+BuildReducedScalarExistingInteractiveReports,docs/NUMERICAL.md,5,DOC_REFERENCE,"**Source status (29 October 2026):** verified against the read-only repository commit `f21d15d2d38f4f313a0f2214bc52f90e1469dce2`, including `scripts/RunT3ReducedScalarSobolComparison.py`, `scripts/BuildT3ReducedScalarFinalResults.py`, `scri"
+BuildReducedScalarExistingInteractiveReports,docs/NUMERICAL.md,116,DOC_REFERENCE,"The two established rendering functions are `Numerical.plotting.InteractiveModelComparison.write_dashboard()` for RGE HTML, and `Numerical.plotting.BuildFittedModelEnvelopes.build()` for **descriptive sensitivity ovals**, not statistical co"
+BuildReducedScalarExistingInteractiveReports,docs/NUMERICAL.md,162,DOC_REFERENCE,python -m scripts.BuildReducedScalarExistingInteractiveReports --help
+BuildReducedScalarExistingInteractiveReports,docs/NUMERICAL.md,174,DOC_REFERENCE,python -u -m scripts.BuildReducedScalarExistingInteractiveReports --case small_uv_frozen_5e-9 --mode optimised --model A_-2 --kind rge
+BuildReducedScalarExistingInteractiveReports,docs/SCRIPT_DEPENDENCY_AUDIT.md,49,DOC_REFERENCE,"In particular, `BuildT3ReducedScalarFinalResults.py` and `BuildReducedScalarExistingInteractiveReports.py` import `RunT3GeneralScalar48Campaign.py`. The script's historical name therefore does **not** make it obsolete. The original figure/r"
+BuildReducedScalarExistingInteractiveReports,tests/python/test_reduced_scalar_existing_interactive_reports.py,13,TEST_REFERENCE,SCRIPT = Path(__file__).resolve().parents[2] / 'scripts' / 'BuildReducedScalarExistingInteractiveReports.py'
+BuildReducedScalarLambdaStyleReports,tests/python/test_reduced_scalar_lambda_style_reports.py,7,STATIC_IMPORT,from scripts import BuildReducedScalarLambdaStyleReports as report
+BuildT3ReducedScalarFinalResults,docs/NUMERICAL.md,5,DOC_REFERENCE,"**Source status (29 October 2026):** verified against the read-only repository commit `f21d15d2d38f4f313a0f2214bc52f90e1469dce2`, including `scripts/RunT3ReducedScalarSobolComparison.py`, `scripts/BuildT3ReducedScalarFinalResults.py`, `scri"
+BuildT3ReducedScalarFinalResults,docs/NUMERICAL.md,161,DOC_REFERENCE,python -m scripts.BuildT3ReducedScalarFinalResults --help
+BuildT3ReducedScalarFinalResults,docs/NUMERICAL.md,168,DOC_REFERENCE,python -u -m scripts.BuildT3ReducedScalarFinalResults --run-id final_reduced_rebuild_v1 --skip-uv-replay
+BuildT3ReducedScalarFinalResults,docs/SCALAR_SECTOR.md,238,DOC_REFERENCE,"Authoritative campaign/report scripts: `scripts/RunT3ReducedScalarSobolComparison.py`, `scripts/BuildT3ReducedScalarFinalResults.py`."
+BuildT3ReducedScalarFinalResults,docs/SCALAR_SECTOR.md,282,DOC_REFERENCE,"| Reduced-Sobol fit campaign and final reporting | `scripts/RunT3ReducedScalarSobolComparison.py`, `scripts/BuildT3ReducedScalarFinalResults.py` |"
+BuildT3ReducedScalarFinalResults,docs/SCRIPT_DEPENDENCY_AUDIT.md,49,DOC_REFERENCE,"In particular, `BuildT3ReducedScalarFinalResults.py` and `BuildReducedScalarExistingInteractiveReports.py` import `RunT3GeneralScalar48Campaign.py`. The script's historical name therefore does **not** make it obsolete. The original figure/r"
+BuildT3ReducedScalarFinalResults,output/studies/reduced_scalar_final_reports/final_reduced_v2/summary.md,190,DOC_REFERENCE,- `scripts/BuildT3ReducedScalarFinalResults.py`: `2013353affa1d57ae2f11e6e797cce26eeb1b78e02d5839c4ff6c3da39809309`
+BuildT3ReducedScalarFinalResults,output/studies/reduced_scalar_final_reports/final_reduced_v2/manifest.json,31,SAVED_RESULT_REFERENCE,"""scripts/BuildT3ReducedScalarFinalResults.py"": ""2013353affa1d57ae2f11e6e797cce26eeb1b78e02d5839c4ff6c3da39809309"","
+BuildT3ReducedScalarFinalResults,tests/python/test_t3_reduced_scalar_final_reporting.py,11,TEST_REFERENCE,SCRIPT=Path(__file__).resolve().parents[2]/'scripts/BuildT3ReducedScalarFinalResults.py'
+CheckGeneralT3RGBetaCoverage,docs/GENERAL_T3_TRIAL.md,312,DOC_REFERENCE,beta functions. `scripts/CheckGeneralT3RGBetaCoverage.py` explicitly labels
+CheckGeneralT3RGBetaCoverage,scripts/RunGeneralT3Analysis.ps1,42,SHELL_REFERENCE,"(Join-Path $repo 'scripts\CheckGeneralT3RGBetaCoverage.py'),"
+CheckGeneralT3RGBetaCoverage,tests/python/test_general_rgbeta_coverage.py,10,STATIC_IMPORT,"from scripts.CheckGeneralT3RGBetaCoverage import audit, B_MINUS_ONE_STRUCTURAL_MAP  # noqa"
+ContinueT3GeneralScalarBCExploratoryFit,docs/T3_BC_GENERAL_SCALAR_EXPLORATORY_REFIT_CONTINUATION_BATCH12.md,49,DOC_REFERENCE,- `scripts/ContinueT3GeneralScalarBCExploratoryFit.py`
+ContinueT3GeneralScalarBCExploratoryFit,docs/T3_BC_GENERAL_SCALAR_EXPLORATORY_REFIT_CONTINUATION_BATCH12.md,63,DOC_REFERENCE,python -m scripts.ContinueT3GeneralScalarBCExploratoryFit `
+ContinueT3GeneralScalarBCExploratoryFit,docs/T3_BC_GENERAL_SCALAR_EXPLORATORY_REFIT_CONTINUATION_BATCH12.md,71,DOC_REFERENCE,python -m scripts.ContinueT3GeneralScalarBCExploratoryFit `
+ContinueT3GeneralScalarBCExploratoryFit,scripts/RunT3GeneralScalarNumericalCampaign.py,281,STATIC_IMPORT,    from scripts import ContinueT3GeneralScalarBCExploratoryFit as continue_fit
+ContinueT3GeneralScalarBCExploratoryFit,tests/python/test_t3_general_scalar_bc_continuation.py,14,STATIC_IMPORT,from scripts import ContinueT3GeneralScalarBCExploratoryFit as c
+ContinueT3GeneralScalarBCExploratoryFit,tests/python/test_t3_general_scalar_numerical_campaign.py,248,TEST_REFERENCE,name2='scripts.ContinueT3GeneralScalarBCExploratoryFit'
+ContinueT3GeneralScalarBCExploratoryFit,tests/python/test_t3_general_scalar_numerical_campaign.py,273,TEST_REFERENCE,"monkeypatch.setattr(scripts_package,'ContinueT3GeneralScalarBCExploratoryFit',c,"
+DiagnoseT3BCUVScalarHierarchy,docs/T3_BC_UV_RUNNING_MASS_HIERARCHY_BATCH14.md,7,DOC_REFERENCE,"`DiagnoseT3BCUVScalarHierarchy.py` **replays, but does not modify**, the exact fitted 18 real Yukawas from `general_fresh_v1_B_m1_cont` and `general_fresh_v1_C_m1_cont`. It reuses the existing experimental native RGBeta UV and EFT1 beta exp"
+DiagnoseT3BCUVScalarHierarchy,docs/T3_BC_UV_RUNNING_MASS_HIERARCHY_BATCH14.md,22,DOC_REFERENCE,- `scripts/DiagnoseT3BCUVScalarHierarchy.py`
+DiagnoseT3BCUVScalarHierarchy,docs/T3_BC_UV_RUNNING_MASS_HIERARCHY_BATCH14.md,36,DOC_REFERENCE,python -m scripts.DiagnoseT3BCUVScalarHierarchy --run-id uv_mass_hierarchy_v1
+DiagnoseT3BCUVScalarHierarchy,docs/T3_BC_UV_RUNNING_MASS_HIERARCHY_BATCH14.md,81,DOC_REFERENCE,python -m scripts.DiagnoseT3BCUVScalarHierarchy --run-id uv_mass_hierarchy_v1
+DiagnoseT3BCUVScalarHierarchy,scripts/FitT3BCUVHierarchyConstrained.py,25,STATIC_IMPORT,from scripts import DiagnoseT3BCUVScalarHierarchy as b14
+DiagnoseT3BCUVScalarHierarchy,scripts/ProbeT3BCUVNeutrinoNormalization.py,28,STATIC_IMPORT,from scripts import DiagnoseT3BCUVScalarHierarchy as b14
+DiagnoseT3BCUVScalarHierarchy,scripts/StudyT3BCUVScalarMassFeasibility.py,28,STATIC_IMPORT,from scripts import DiagnoseT3BCUVScalarHierarchy as b14
+DiagnoseT3BCUVScalarHierarchy,scripts/ValidateT3BCGeneralScalarSixFits.py,264,STATIC_IMPORT,    from scripts import DiagnoseT3BCUVScalarHierarchy as b14
+DiagnoseT3BCUVScalarHierarchy,tests/python/test_t3_bc_uv_scalar_hierarchy.py,14,STATIC_IMPORT,from scripts import DiagnoseT3BCUVScalarHierarchy as mod
+FinalizeT3LeadingScalarPotential,docs/SCALAR_SECTOR.md,281,DOC_REFERENCE,"| Fail-closed synthesis of those audits | `scripts/FinalizeT3LeadingScalarPotential.py`, `output/scalar_relevance/final_leading_scalar_potential.json` and `.md` |"
+FinalizeT3LeadingScalarPotential,tests/python/test_t3_leading_scalar_potential_batch6.py,10,STATIC_IMPORT,from scripts import FinalizeT3LeadingScalarPotential as a
+FitT3BCUVHierarchyConstrained,docs/T3_BC_UV_HIERARCHY_CONSTRAINED_FIT_BATCH17.md,51,DOC_REFERENCE,"- `scripts/FitT3BCUVHierarchyConstrained.py` — **new, complete** runner."
+FitT3BCUVHierarchyConstrained,docs/T3_BC_UV_HIERARCHY_CONSTRAINED_FIT_BATCH17.md,68,DOC_REFERENCE,python -m scripts.FitT3BCUVHierarchyConstrained `
+FitT3BCUVHierarchyConstrained,docs/T3_BC_UV_HIERARCHY_CONSTRAINED_FIT_BATCH17.md,73,DOC_REFERENCE,python -m scripts.FitT3BCUVHierarchyConstrained `
+FitT3BCUVHierarchyConstrained,scripts/ValidateT3BCGeneralScalarSixFits.py,270,STATIC_IMPORT,        from scripts import FitT3BCUVHierarchyConstrained as b17
+FitT3BCUVHierarchyConstrained,tests/python/test_t3_bc_uv_hierarchy_constrained_fit.py,9,STATIC_IMPORT,from scripts import FitT3BCUVHierarchyConstrained as mod
+FitT3BCUVHierarchyConstrained,tests/python/test_t3_bc_uv_hierarchy_constrained_fit.py,272,TEST_REFERENCE,"'FitT3BCUVHierarchyConstrained',"
+FitT3BCUVHierarchyConstrained,tests/python/test_t3_bc_uv_hierarchy_constrained_fit.py,302,TEST_REFERENCE,"'FitT3BCUVHierarchyConstrained',"
+FitT3BPlus1GeneralThreeStudies,docs/T3_B_PLUS1_THREE_GENERAL_SCALAR_STUDIES_BATCH21.md,42,DOC_REFERENCE,- `scripts/FitT3BPlus1GeneralThreeStudies.py`
+FitT3BPlus1GeneralThreeStudies,docs/T3_B_PLUS1_THREE_GENERAL_SCALAR_STUDIES_BATCH21.md,58,DOC_REFERENCE,python -m scripts.FitT3BPlus1GeneralThreeStudies `
+FitT3BPlus1GeneralThreeStudies,docs/T3_B_PLUS1_THREE_GENERAL_SCALAR_STUDIES_BATCH21.md,62,DOC_REFERENCE,python -m scripts.FitT3BPlus1GeneralThreeStudies `
+FitT3BPlus1GeneralThreeStudies,output/studies/general_scalar_extended/large_uv_frozen_0p5/b_p1_three_fit_v1/fit.json,193,SAVED_RESULT_REFERENCE,"""scripts\\FitT3BPlus1GeneralThreeStudies.py"": ""3d87edb1e700f3b8247a575bcd417baf44652821e4cd7a270f31ac661ab81a80"""
+FitT3BPlus1GeneralThreeStudies,output/studies/general_scalar_extended/large_uv_frozen_0p5/b_p1_three_pilot_v1/fit.json,186,SAVED_RESULT_REFERENCE,"""scripts\\FitT3BPlus1GeneralThreeStudies.py"": ""3d87edb1e700f3b8247a575bcd417baf44652821e4cd7a270f31ac661ab81a80"""
+FitT3BPlus1GeneralThreeStudies,output/studies/general_scalar_extended/small_uv_frozen_5e-9/b_p1_three_fit_v1/fit.json,186,SAVED_RESULT_REFERENCE,"""scripts\\FitT3BPlus1GeneralThreeStudies.py"": ""3d87edb1e700f3b8247a575bcd417baf44652821e4cd7a270f31ac661ab81a80"""
+FitT3BPlus1GeneralThreeStudies,output/studies/general_scalar_extended/small_uv_frozen_5e-9/b_p1_three_pilot_v1/fit.json,186,SAVED_RESULT_REFERENCE,"""scripts\\FitT3BPlus1GeneralThreeStudies.py"": ""3d87edb1e700f3b8247a575bcd417baf44652821e4cd7a270f31ac661ab81a80"""
+FitT3BPlus1GeneralThreeStudies,output/studies/general_scalar_extended/small_uv_running_5e-9/b_p1_three_fit_v1/fit.json,96,SAVED_RESULT_REFERENCE,"""scripts\\FitT3BPlus1GeneralThreeStudies.py"": ""3d87edb1e700f3b8247a575bcd417baf44652821e4cd7a270f31ac661ab81a80"","
+FitT3BPlus1GeneralThreeStudies,output/studies/general_scalar_extended/small_uv_running_5e-9/b_p1_three_pilot_v1/fit.json,76,SAVED_RESULT_REFERENCE,"""scripts\\FitT3BPlus1GeneralThreeStudies.py"": ""3d87edb1e700f3b8247a575bcd417baf44652821e4cd7a270f31ac661ab81a80"","
+FitT3BPlus1GeneralThreeStudies,scripts/RunT3GeneralScalar48Campaign.py,29,STATIC_IMPORT,from scripts import FitT3BPlus1GeneralThreeStudies as b21
+FitT3BPlus1GeneralThreeStudies,scripts/RunT3ReducedScalarSobolComparison.py,77,STATIC_IMPORT,    from scripts import FitT3BPlus1GeneralThreeStudies as b21
+FitT3BPlus1GeneralThreeStudies,scripts/RunT3ReducedScalarSobolComparison.py,228,STATIC_IMPORT,                from scripts import FitT3BPlus1GeneralThreeStudies as b21
+FitT3BPlus1GeneralThreeStudies,tests/python/test_t3_b_plus1_general_three_studies.py,12,STATIC_IMPORT,from scripts import FitT3BPlus1GeneralThreeStudies as f
+FullStudyOrganised,T3_COMMAND_REFERENCE.md,180,DOC_REFERENCE,"| `python scripts/FullStudyOrganised.py` | Runs `pipeline.py --full`, then moves/consolidates symbolic reports into model-centric layout. |"
+FullStudyOrganised,T3_COMMAND_REFERENCE.md,181,DOC_REFERENCE,"| `python scripts/FullStudyOrganised.py --keep-originals` | Same, but preserve original layout when migrating reports. |"
+FullStudyOrganised,T3_COMMAND_REFERENCE.md,182,DOC_REFERENCE,| `python scripts/FullStudyOrganised.py -- --debug-reports` | Pass additional pipeline arguments after `--`. |
+FullStudyOrganised,T3_COMMAND_REFERENCE.md,386,DOC_REFERENCE,"This changes **folder layout** (`T3-A-m4`, etc.), not model representation data. Use `--apply` only when downstream readers support the new path layout. `FullStudyOrganised.py` (§3) can also move/organize reports but launches a fresh full s"
+FullStudyOrganised,T3_COMMAND_REFERENCE.md,1255,DOC_REFERENCE,| Full-run wrappers and regression | `scripts/FullStudyOrganised.py`; `scripts/FullStudyShortNames.py`; `scripts/FullRunWithWithinModelReports.ps1` (**stale import**); `scripts/run_regression.py` | [3](#3-master-pipeline-symbolic-matching-a
+FullStudyOrganised,T3_COMMAND_REFERENCE.md,1260,DOC_REFERENCE,| Presentation file changes | `scripts/RenameT3ModelFolders.py`; `scripts/FullStudyOrganised.py` | [5](#5-analytical-latex-and-pdf-reports) |
+FullStudyShortNames,T3_COMMAND_REFERENCE.md,183,DOC_REFERENCE,| `python scripts/FullStudyShortNames.py` | Runs full pipeline with short study names. **Caution:** it monkey-patches a legacy `_model_key` attribute while the current full-study implementation uses frozen manifest paths; do not rely on it 
+FullStudyShortNames,T3_COMMAND_REFERENCE.md,1230,DOC_REFERENCE,| `scripts/FullStudyShortNames.py` claims to override `_model_key` for short full-run study folders | `studies/FullT3Study.py` now enumerates manifest-defined model names; short-name monkey-patch is legacy; do not rely on its earlier effect
+FullStudyShortNames,T3_COMMAND_REFERENCE.md,1255,DOC_REFERENCE,| Full-run wrappers and regression | `scripts/FullStudyOrganised.py`; `scripts/FullStudyShortNames.py`; `scripts/FullRunWithWithinModelReports.ps1` (**stale import**); `scripts/run_regression.py` | [3](#3-master-pipeline-symbolic-matching-a
+GenerateGeneralScalarWLManifest,docs/GENERAL_T3_TRIAL.md,233,DOC_REFERENCE,python scripts\GenerateGeneralScalarWLManifest.py --check
+GenerateGeneralScalarWLManifest,tests/python/test_general_scalar_trial.py,253,TEST_REFERENCE,from GenerateGeneralScalarWLManifest import render
+GenerateGeneralScalarWLManifest,tests/python/test_general_scalar_trial.py,302,TEST_REFERENCE,from GenerateGeneralScalarWLManifest import DIMS
+GenerateGeneralT3RGBetaBasis,docs/GENERAL_T3_STAGE20_STATUS.md,27,DOC_REFERENCE,1. `scripts/GenerateGeneralT3RGBetaBasis.py`: deterministic field-monomial
+GenerateGeneralT3RGBetaBasis,scripts/RunGeneralT3Stage20.py,19,STATIC_IMPORT,"from scripts.GenerateGeneralT3RGBetaBasis import (MANIFEST, OUTPUT,generate,audit_candidate_gauge_structures)"
+GenerateGeneralT3RGBetaBasis,tests/python/test_general_t3_stage20.py,13,STATIC_IMPORT,from scripts import GenerateGeneralT3RGBetaBasis as gen
+GenerateGeneralT3RGBetaBasis,tests/python/test_general_t3_stage20.py,215,STATIC_IMPORT,    from scripts import GenerateGeneralT3RGBetaBasis as gen
+GenerateGeneralT3RGBetaBasis,RGE/running/rgbeta/RunGeneralT3RGBeta.wl,4,TEXT_REFERENCE,independent-operator manifest by scripts/GenerateGeneralT3RGBetaBasis.py.
+InspectGeneralScalarMatching,docs/GENERAL_T3_TRIAL.md,47,DOC_REFERENCE,- `scripts/InspectGeneralScalarMatching.py` — compares *symbolic textual*
+InspectGeneralScalarMatching,docs/GENERAL_T3_TRIAL.md,122,DOC_REFERENCE,python scripts\InspectGeneralScalarMatching.py --root output\general_t3_trial --output output\general_matching_symbolic_report.json
+InspectGeneralScalarMatching,docs/GENERAL_T3_TRIAL.md,199,DOC_REFERENCE,python scripts\InspectGeneralScalarMatching.py --root output\general_t3_trial --output output\general_matching_symbolic_report.json
+InspectGeneralScalarMatching,docs/GENERAL_T3_TRIAL.md,236,DOC_REFERENCE,python scripts\InspectGeneralScalarMatching.py --root output\general_t3_trial --require-complete --output output\general_matching_symbolic_report.json
+InspectGeneralScalarMatching,scripts/RunGeneralT3Analysis.ps1,37,SHELL_REFERENCE,"(Join-Path $repo 'scripts\InspectGeneralScalarMatching.py'),"
+InspectGeneralScalarMatching,tests/python/test_general_scalar_trial.py,206,TEST_REFERENCE,from InspectGeneralScalarMatching import inspect_model
+InspectGeneralScalarMatching,tests/python/test_general_scalar_trial.py,279,TEST_REFERENCE,from InspectGeneralScalarMatching import inspect_model
+PolishAnalyticalReports,T3_COMMAND_REFERENCE.md,359,DOC_REFERENCE,"python scripts/PolishAnalyticalReports.py --root ""Reports\output\analytical"""
+PolishAnalyticalReports,T3_COMMAND_REFERENCE.md,360,DOC_REFERENCE,python scripts/PolishAnalyticalReports.py --compile
+PolishAnalyticalReports,T3_COMMAND_REFERENCE.md,371,DOC_REFERENCE,"| `scripts/PolishAnalyticalReports.py` | `--root` (default `Reports/output/analytical`), `--compile` | Edits **presentation TeX files in place**; optional PDF compilation. |"
+PolishAnalyticalReports,T3_COMMAND_REFERENCE.md,1259,DOC_REFERENCE,| Analytical TeX/PDF | `scripts/BuildCombinedAnalyticalReports.py`; `BuildCompactC5Report.py`; `AddMathematicalDefinitions.py`; `PolishAnalyticalReports.py` | [5](#5-analytical-latex-and-pdf-reports) |
+PolishAnalyticalReports,tests/test_polish_analytical_reports.py,3,STATIC_IMPORT,"from scripts.PolishAnalyticalReports import _polish_c5, _polish_group_factors, _polish_rge"
+PolishAnalyticalReports,tests/test_polish_analytical_reports.py,72,STATIC_IMPORT,    from scripts.PolishAnalyticalReports import polish_file
+ProbeT3BCUVNeutrinoNormalization,docs/T3_BC_UV_NEUTRINO_NORMALIZATION_BATCH16.md,45,DOC_REFERENCE,- `scripts/ProbeT3BCUVNeutrinoNormalization.py` — full standalone numerical probe runner.
+ProbeT3BCUVNeutrinoNormalization,docs/T3_BC_UV_NEUTRINO_NORMALIZATION_BATCH16.md,68,DOC_REFERENCE,python -m scripts.ProbeT3BCUVNeutrinoNormalization `
+ProbeT3BCUVNeutrinoNormalization,docs/T3_BC_UV_NEUTRINO_NORMALIZATION_BATCH16.md,75,DOC_REFERENCE,python -m scripts.ProbeT3BCUVNeutrinoNormalization `
+ProbeT3BCUVNeutrinoNormalization,scripts/FitT3BCUVHierarchyConstrained.py,26,STATIC_IMPORT,from scripts import ProbeT3BCUVNeutrinoNormalization as b16
+ProbeT3BCUVNeutrinoNormalization,tests/python/test_t3_bc_uv_neutrino_normalization.py,13,STATIC_IMPORT,from scripts import ProbeT3BCUVNeutrinoNormalization as mod
+ProbeT3BPlus1GeneralC5,docs/T3_B_PLUS1_GENERAL_C5_PROBE_BATCH19.md,39,DOC_REFERENCE,- `scripts/ProbeT3BPlus1GeneralC5.py`: new-only run coordinator and structural checks.
+ProbeT3BPlus1GeneralC5,docs/T3_B_PLUS1_GENERAL_C5_PROBE_BATCH19.md,50,DOC_REFERENCE,python -m scripts.ProbeT3BPlus1GeneralC5 --run-id b_p1_c5_probe_v1
+ProbeT3BPlus1GeneralC5,docs/T3_B_PLUS1_GENERAL_C5_PROBE_BATCH19.md,93,DOC_REFERENCE,python -m scripts.ProbeT3BPlus1GeneralC5 --run-id b_p1_c5_probe_v1 --resume
+ProbeT3BPlus1GeneralC5,docs/T3_B_PLUS1_GENERAL_C5_PROBE_BATCH19.md,126,DOC_REFERENCE,python -m scripts.ProbeT3BPlus1GeneralC5 --run-id b_p1_c5_probe_v2 --resume
+ProbeT3BPlus1GeneralC5,docs/T3_B_PLUS1_GENERAL_C5_PROBE_BATCH19.md,151,DOC_REFERENCE,- `scripts/ProbeT3BPlus1GeneralC5.py` (full replacement): permits an updated
+ProbeT3BPlus1GeneralC5,docs/T3_B_PLUS1_GENERAL_C5_PROBE_BATCH19.md,169,DOC_REFERENCE,python -m scripts.ProbeT3BPlus1GeneralC5 --run-id b_p1_c5_probe_v2 --resume
+ProbeT3BPlus1GeneralC5,tests/python/test_t3_b_plus1_general_c5_probe.py,12,STATIC_IMPORT,from scripts import ProbeT3BPlus1GeneralC5 as probe
+ProbeT3ReducedUVScalarBoundaries,docs/T3_REDUCED_UV_SCALAR_BOUNDARY_PILOT.md,41,DOC_REFERENCE,- `scripts/ProbeT3ReducedUVScalarBoundaries.py` — complete new pilot source
+ProbeT3ReducedUVScalarBoundaries,docs/T3_REDUCED_UV_SCALAR_BOUNDARY_PILOT.md,60,DOC_REFERENCE,python -u -m scripts.ProbeT3ReducedUVScalarBoundaries --run-id a_m2_historical_v1
+ProbeT3ReducedUVScalarBoundaries,docs/T3_REDUCED_UV_SCALAR_BOUNDARY_PILOT.md,67,DOC_REFERENCE,python -u -m scripts.ProbeT3ReducedUVScalarBoundaries --run-id a_m2_frozen_yukawas_v1 --yukawa-source frozen-newfit
+ProbeT3ReducedUVScalarBoundaries,tests/python/test_t3_reduced_uv_scalar_boundary_pilot.py,7,TEST_REFERENCE,SRC = Path(__file__).resolve().parents[2] / 'scripts/ProbeT3ReducedUVScalarBoundaries.py'
+RenameT3ModelFolders,T3_COMMAND_REFERENCE.md,380,DOC_REFERENCE,python scripts/RenameT3ModelFolders.py
+RenameT3ModelFolders,T3_COMMAND_REFERENCE.md,383,DOC_REFERENCE,python scripts/RenameT3ModelFolders.py --apply
+RenameT3ModelFolders,T3_COMMAND_REFERENCE.md,1260,DOC_REFERENCE,| Presentation file changes | `scripts/RenameT3ModelFolders.py`; `scripts/FullStudyOrganised.py` | [5](#5-analytical-latex-and-pdf-reports) |
+RenameT3ModelFolders,tests/test_t3_model_names.py,4,STATIC_IMPORT,from scripts.RenameT3ModelFolders import migrate
+ReportGeneralScalarTrial,docs/GENERAL_T3_TRIAL.md,45,DOC_REFERENCE,- `scripts/ReportGeneralScalarTrial.py` — checks observed audit JSON against
+ReportGeneralScalarTrial,docs/GENERAL_T3_TRIAL.md,101,DOC_REFERENCE,python scripts\ReportGeneralScalarTrial.py --root output\general_t3_trial
+ReportGeneralScalarTrial,docs/GENERAL_T3_TRIAL.md,108,DOC_REFERENCE,python scripts\ReportGeneralScalarTrial.py --root output\general_t3_trial --all --require-complete --output output\general_scalar_audit_report.json
+ReportGeneralScalarTrial,docs/GENERAL_T3_TRIAL.md,182,DOC_REFERENCE,`ReportGeneralScalarTrial.py` and returns a nonzero exit code for that case.
+ReportGeneralScalarTrial,docs/GENERAL_T3_TRIAL.md,198,DOC_REFERENCE,python scripts\ReportGeneralScalarTrial.py --root output\general_t3_trial --all --output output\general_scalar_audit_report.json
+ReportGeneralScalarTrial,docs/GENERAL_T3_TRIAL.md,235,DOC_REFERENCE,python scripts\ReportGeneralScalarTrial.py --root output\general_t3_trial --all --require-complete --output output\general_scalar_audit_report.json
+ReportGeneralScalarTrial,scripts/RunGeneralT3Analysis.ps1,32,SHELL_REFERENCE,"(Join-Path $repo 'scripts\ReportGeneralScalarTrial.py'),"
+ReportGeneralScalarTrial,tests/python/test_general_scalar_trial.py,167,TEST_REFERENCE,from ReportGeneralScalarTrial import evaluate
+ReportGeneralScalarTrial,tests/python/test_general_scalar_trial.py,241,TEST_REFERENCE,import ReportGeneralScalarTrial as report_module
+ReportGeneralScalarTrial,tests/python/test_general_scalar_trial.py,243,TEST_REFERENCE,"'ReportGeneralScalarTrial.py', '--root', str(tmp_path / 'nothing')"
+RunGeneralT3EFT1HardPoleAudit,docs/T3_GENERAL_T3_EFT1_HARD_POLE_AUDIT.md,64,DOC_REFERENCE,python -m scripts.RunGeneralT3EFT1HardPoleAudit --all
+RunGeneralT3EFT1HardPoleAudit,tests/python/test_general_t3_eft1_hard_pole_audit.py,9,STATIC_IMPORT,from scripts import RunGeneralT3EFT1HardPoleAudit as task
+RunGeneralT3EFT1HardPoleAudit,tests/python/test_general_t3_eft1_hard_pole_audit.py,209,TEST_REFERENCE,s=(Path(__file__).resolve().parents[2]/'scripts/RunGeneralT3EFT1HardPoleAudit.py').read_text()
+RunGeneralT3EFT1Quartics,docs/GENERAL_T3_EFT1_QUARTIC_FIX_NOTES.md,19,DOC_REFERENCE,Install **only** `scripts/RunGeneralT3EFT1Quartics.py`. This separate
+RunGeneralT3EFT1Quartics,docs/GENERAL_T3_EFT1_QUARTIC_FIX_NOTES.md,55,DOC_REFERENCE,python -m py_compile .\scripts\RunGeneralT3EFT1Quartics.py
+RunGeneralT3EFT1Quartics,docs/GENERAL_T3_EFT1_QUARTIC_FIX_NOTES.md,56,DOC_REFERENCE,python -m scripts.RunGeneralT3EFT1Quartics --model B_+1
+RunGeneralT3EFT1Quartics,docs/GENERAL_T3_EFT1_QUARTIC_FIX_NOTES.md,62,DOC_REFERENCE,python -m scripts.RunGeneralT3EFT1Quartics --all
+RunGeneralT3EFT1Quartics,tests/python/test_general_t3_eft1_alpha_argument.py,13,STATIC_IMPORT,from scripts import RunGeneralT3EFT1Quartics as runner
+RunGeneralT3EFT1ScalarThresholdProbe,docs/T3_GENERAL_EFT1_CANONICAL_EOM_HANDOFF_FIX.md,17,DOC_REFERENCE,- `Lagrangian/RunGeneralT3EFT1ScalarThresholdProbe.wl` (full replacement): no longer marks message-emitting successful Matchete checks as `$Failed`. Logs detailed failures and **still fails closed** unless ordinary `CheckLagrangian` and det
+RunGeneralT3EFT1ScalarThresholdProbe,docs/T3_GENERAL_EFT1_CANONICAL_EOM_HANDOFF_FIX.md,18,DOC_REFERENCE,- `scripts/RunGeneralT3EFT1ScalarThresholdProbe.py` (full replacement): reads the newly exported canonical EOMEFT from the validated first-stage **tree-only** run; rejects missing/stale transition files. Prior one-loop fermion-threshold out
+RunGeneralT3EFT1ScalarThresholdProbe,docs/T3_GENERAL_EFT1_CANONICAL_EOM_HANDOFF_FIX.md,35,DOC_REFERENCE,python -m scripts.RunGeneralT3EFT1ScalarThresholdProbe --model B_-1
+RunGeneralT3EFT1ScalarThresholdProbe,docs/T3_GENERAL_EFT1_CANONICAL_EOM_HANDOFF_FIX.md,36,DOC_REFERENCE,python -m scripts.RunGeneralT3EFT1ScalarThresholdProbe --model C_-1
+RunGeneralT3EFT1ScalarThresholdProbe,docs/T3_GENERAL_EFT1_HERMITICITY_SECOND_THRESHOLD.md,28,DOC_REFERENCE,- `Lagrangian/RunGeneralT3EFT1ScalarThresholdProbe.wl`
+RunGeneralT3EFT1ScalarThresholdProbe,docs/T3_GENERAL_EFT1_HERMITICITY_SECOND_THRESHOLD.md,29,DOC_REFERENCE,- `scripts/RunGeneralT3EFT1ScalarThresholdProbe.py`
+RunGeneralT3EFT1ScalarThresholdProbe,docs/T3_GENERAL_EFT1_HERMITICITY_SECOND_THRESHOLD.md,39,DOC_REFERENCE,python -m scripts.RunGeneralT3EFT1ScalarThresholdProbe --model B_-1
+RunGeneralT3EFT1ScalarThresholdProbe,docs/T3_GENERAL_EFT1_HERMITICITY_SECOND_THRESHOLD.md,40,DOC_REFERENCE,python -m scripts.RunGeneralT3EFT1ScalarThresholdProbe --model C_-1
+RunGeneralT3EFT1ScalarThresholdProbe,docs/T3_GENERAL_EFT1_HERMITICITY_SECTOR_ISOLATION.md,37,DOC_REFERENCE,- `Lagrangian/RunGeneralT3EFT1ScalarThresholdProbe.wl`
+RunGeneralT3EFT1ScalarThresholdProbe,docs/T3_GENERAL_EFT1_HERMITICITY_SECTOR_ISOLATION.md,38,DOC_REFERENCE,- `scripts/RunGeneralT3EFT1ScalarThresholdProbe.py`
+RunGeneralT3EFT1ScalarThresholdProbe,docs/T3_GENERAL_EFT1_HERMITICITY_SECTOR_ISOLATION.md,51,DOC_REFERENCE,python -m scripts.RunGeneralT3EFT1ScalarThresholdProbe --model B_-1
+RunGeneralT3EFT1ScalarThresholdProbe,docs/T3_GENERAL_EFT1_HERMITICITY_SECTOR_ISOLATION.md,52,DOC_REFERENCE,python -m scripts.RunGeneralT3EFT1ScalarThresholdProbe --model C_-1
+RunGeneralT3EFT1ScalarThresholdProbe,docs/T3_GENERAL_EFT1_LEADING_C5_SCALAR_THRESHOLD.md,40,DOC_REFERENCE,python -m scripts.RunGeneralT3EFT1ScalarThresholdProbe --model B_-1 --c5-relevant-only
+RunGeneralT3EFT1ScalarThresholdProbe,docs/T3_GENERAL_EFT1_LEADING_C5_SCALAR_THRESHOLD.md,41,DOC_REFERENCE,python -m scripts.RunGeneralT3EFT1ScalarThresholdProbe --model C_-1 --c5-relevant-only
+RunGeneralT3EFT1ScalarThresholdProbe,docs/T3_GENERAL_EFT1_SCALAR_MATCHING_HEAVY_FREE_REBASE.md,27,DOC_REFERENCE,- `Lagrangian/RunGeneralT3EFT1ScalarThresholdProbe.wl`
+RunGeneralT3EFT1ScalarThresholdProbe,docs/T3_GENERAL_EFT1_SCALAR_MATCHING_HEAVY_FREE_REBASE.md,28,DOC_REFERENCE,- `scripts/RunGeneralT3EFT1ScalarThresholdProbe.py`
+RunGeneralT3EFT1ScalarThresholdProbe,docs/T3_GENERAL_EFT1_SCALAR_MATCHING_HEAVY_FREE_REBASE.md,40,DOC_REFERENCE,python -m scripts.RunGeneralT3EFT1ScalarThresholdProbe --model B_-1 --c5-relevant-only
+RunGeneralT3EFT1ScalarThresholdProbe,docs/T3_GENERAL_EFT1_SCALAR_MATCHING_HEAVY_FREE_REBASE.md,41,DOC_REFERENCE,python -m scripts.RunGeneralT3EFT1ScalarThresholdProbe --model C_-1 --c5-relevant-only
+RunGeneralT3EFT1ScalarThresholdProbe,docs/T3_GENERAL_EFT1_VERIFIED_RECONSTRUCTION_AND_QUARTIC_ISOLATION.md,11,DOC_REFERENCE,"`Lagrangian/RunGeneralT3EFT1ScalarThresholdProbe.wl` rebuilds the *renormalizable* SM + X,Y interactions from the same native SU(2) mass-eigenstate components as the first-stage UV Lagrangian. It keeps the **exact** saved 20 (`B_-1`) or 24 "
+RunGeneralT3EFT1ScalarThresholdProbe,docs/T3_GENERAL_EFT1_VERIFIED_RECONSTRUCTION_AND_QUARTIC_ISOLATION.md,31,DOC_REFERENCE,python -m scripts.RunGeneralT3EFT1ScalarThresholdProbe --model B_-1
+RunGeneralT3EFT1ScalarThresholdProbe,docs/T3_GENERAL_EFT1_VERIFIED_RECONSTRUCTION_AND_QUARTIC_ISOLATION.md,32,DOC_REFERENCE,python -m scripts.RunGeneralT3EFT1ScalarThresholdProbe --model C_-1
+RunGeneralT3EFT1ScalarThresholdProbe,docs/T3_GENERAL_T3_EFT1_SCALAR_THRESHOLD_PROBE.md,30,DOC_REFERENCE,- `Lagrangian/RunGeneralT3EFT1ScalarThresholdProbe.wl`
+RunGeneralT3EFT1ScalarThresholdProbe,docs/T3_GENERAL_T3_EFT1_SCALAR_THRESHOLD_PROBE.md,31,DOC_REFERENCE,- `scripts/RunGeneralT3EFT1ScalarThresholdProbe.py`
+RunGeneralT3EFT1ScalarThresholdProbe,docs/T3_GENERAL_T3_EFT1_SCALAR_THRESHOLD_PROBE.md,47,DOC_REFERENCE,python -m scripts.RunGeneralT3EFT1ScalarThresholdProbe --model B_-1
+RunGeneralT3EFT1ScalarThresholdProbe,docs/T3_GENERAL_T3_EFT1_SCALAR_THRESHOLD_PROBE.md,48,DOC_REFERENCE,python -m scripts.RunGeneralT3EFT1ScalarThresholdProbe --model C_-1
+RunGeneralT3EFT1ScalarThresholdProbe,tests/python/test_general_t3_eft1_c5_relevant_sector.py,13,STATIC_IMPORT,from scripts import RunGeneralT3EFT1ScalarThresholdProbe as task
+RunGeneralT3EFT1ScalarThresholdProbe,tests/python/test_general_t3_eft1_heavy_free_rebase.py,13,STATIC_IMPORT,from scripts import RunGeneralT3EFT1ScalarThresholdProbe as task
+RunGeneralT3EFT1ScalarThresholdProbe,tests/python/test_general_t3_eft1_scalar_threshold_probe.py,10,STATIC_IMPORT,from scripts import RunGeneralT3EFT1ScalarThresholdProbe as task
+RunGeneralT3EFT1ScalarThresholdProbe,tests/python/test_general_t3_eft1_c5_relevant_sector.py,95,TEST_REFERENCE,wl = Path(__file__).resolve().parents[2] / 'Lagrangian/RunGeneralT3EFT1ScalarThresholdProbe.wl'
+RunGeneralT3EFT1ScalarThresholdProbe,tests/python/test_general_t3_eft1_c5_relevant_sector.py,116,TEST_REFERENCE,wl = root / 'Lagrangian/RunGeneralT3EFT1ScalarThresholdProbe.wl'
+RunGeneralT3EFT1ScalarThresholdProbe,tests/python/test_general_t3_eft1_heavy_free_rebase.py,18,TEST_REFERENCE,WL = ROOT / 'Lagrangian/RunGeneralT3EFT1ScalarThresholdProbe.wl'
+RunGeneralT3EFT1ScalarThresholdProbe,tests/python/test_general_t3_eft1_heavy_free_rebase.py,72,TEST_REFERENCE,wolfram = root / 'Lagrangian/RunGeneralT3EFT1ScalarThresholdProbe.wl'
+RunGeneralT3EFT1ScalarThresholdProbe,tests/python/test_general_t3_eft1_scalar_threshold_probe.py,148,TEST_REFERENCE,path=Path(__file__).resolve().parents[2]/'Lagrangian/RunGeneralT3EFT1ScalarThresholdProbe.wl'
+RunGeneralT3EFT1ScalarThresholdProbe,tests/python/test_general_t3_eft1_scalar_threshold_probe.py,182,TEST_REFERENCE,wl=root/'Lagrangian/RunGeneralT3EFT1ScalarThresholdProbe.wl';wl.write_text('Matchete source')
+RunGeneralT3EFT1ScalarThresholdProbe,tests/python/test_general_t3_eft1_scalar_threshold_probe.py,210,TEST_REFERENCE,wl=root/'Lagrangian/RunGeneralT3EFT1ScalarThresholdProbe.wl';wl.write_text('Matchete source')
+RunGeneralT3EFT1ScalarThresholdProbe,tests/python/test_general_t3_eft1_scalar_threshold_probe.py,309,TEST_REFERENCE,wl = (root / 'Lagrangian/RunGeneralT3EFT1ScalarThresholdProbe.wl').read_text()
+RunGeneralT3EFT1ScalarThresholdProbe,tests/python/test_general_t3_eft1_scalar_threshold_probe.py,327,TEST_REFERENCE,runner = (root/'scripts/RunGeneralT3EFT1ScalarThresholdProbe.py').read_text()
+RunGeneralT3EFT1ScalarThresholdProbe,tests/python/test_general_t3_eft1_scalar_threshold_probe.py,371,TEST_REFERENCE,/ 'Lagrangian/RunGeneralT3EFT1ScalarThresholdProbe.wl').read_text()
+RunGeneralT3EFT1ScalarThresholdProbe,Lagrangian/RunGeneralT3EFT1ScalarThresholdProbe.wl,9,TEXT_REFERENCE,wolframscript -file Lagrangian/RunGeneralT3EFT1ScalarThresholdProbe.wl \
+RunGeneralT3EFT1ScalarThresholdProbe,Lagrangian/RunGeneralT3EFT1ScalarThresholdProbe.wl,24,TEXT_REFERENCE,"Print[""Usage: RunGeneralT3EFT1ScalarThresholdProbe.wl INPUT.json EFT1_TREE.inputform.txt OUTPUT.json""];"
+RunGeneralT3FermionFirstEFT1OneLoop,docs/T3_GENERAL_EFT1_CANONICAL_EOM_HANDOFF_FIX.md,39,DOC_REFERENCE,"The backup command assumes `eft1_fermion_first_tree_pre_eom_backup` does not already exist; give it another name if necessary. **Do not rerun** `RunGeneralT3FermionFirstEFT1OneLoop` unless its prior outputs were removed, since the loop outp"
+RunGeneralT3FermionFirstEFT1OneLoop,docs/T3_GENERAL_FERMION_FIRST_EFT1_ONE_LOOP.md,18,DOC_REFERENCE,The new `RunGeneralT3FermionFirstEFT1OneLoop.wl` is a **standalone full replacement-style script** based on the live-validated eigenfield and tree-first matching source. It:
+RunGeneralT3FermionFirstEFT1OneLoop,docs/T3_GENERAL_FERMION_FIRST_EFT1_ONE_LOOP.md,51,DOC_REFERENCE,python -m scripts.RunGeneralT3FermionFirstEFT1OneLoop --model B_-1
+RunGeneralT3FermionFirstEFT1OneLoop,docs/T3_GENERAL_FERMION_FIRST_EFT1_ONE_LOOP.md,52,DOC_REFERENCE,python -m scripts.RunGeneralT3FermionFirstEFT1OneLoop --model C_-1
+RunGeneralT3FermionFirstEFT1OneLoop,docs/T3_GENERAL_T3_EFT1_HARD_POLE_AUDIT.md,5,DOC_REFERENCE,`RunGeneralT3FermionFirstEFT1OneLoop` for `B_-1` and `C_-1`. It reads those
+RunGeneralT3FermionFirstEFT1OneLoop,docs/T3_GENERAL_T3_EFT1_SCALAR_THRESHOLD_PROBE.md,51,DOC_REFERENCE,"This needs the successful previous `RunGeneralT3FermionFirstEFT1Tree` and `RunGeneralT3FermionFirstEFT1OneLoop` results in their original output locations, the same mass-eigenstate input parameters, and your working local Matchete + `wolfra"
+RunGeneralT3FermionFirstEFT1OneLoop,scripts/RunGeneralT3EFT1ScalarThresholdProbe.py,27,STATIC_IMPORT,from scripts.RunGeneralT3FermionFirstEFT1OneLoop import (
+RunGeneralT3FermionFirstEFT1OneLoop,tests/python/test_general_t3_fermion_first_eft1_one_loop.py,10,STATIC_IMPORT,from scripts import RunGeneralT3FermionFirstEFT1OneLoop as task
+RunGeneralT3FermionFirstEFT1OneLoop,tests/python/test_general_t3_fermion_first_eft1_one_loop.py,124,TEST_REFERENCE,script=(Path(__file__).resolve().parents[2]/'Lagrangian/RunGeneralT3FermionFirstEFT1OneLoop.wl').read_text()
+RunGeneralT3FermionFirstEFT1OneLoop,tests/python/test_general_t3_fermion_first_eft1_one_loop.py,145,TEST_REFERENCE,wl=root/'Lagrangian/RunGeneralT3FermionFirstEFT1OneLoop.wl';wl.write_text('Matchete matching script')
+RunGeneralT3FermionFirstEFT1OneLoop,tests/python/test_general_t3_fermion_first_eft1_one_loop.py,171,TEST_REFERENCE,wl=root/'Lagrangian/RunGeneralT3FermionFirstEFT1OneLoop.wl';wl.write_text('Matchete script')
+RunGeneralT3FermionFirstEFT1OneLoop,Lagrangian/RunGeneralT3FermionFirstEFT1OneLoop.wl,10,TEXT_REFERENCE,wolframscript -file Lagrangian/RunGeneralT3FermionFirstEFT1OneLoop.wl \
+RunGeneralT3FermionFirstEFT1OneLoop,Lagrangian/RunGeneralT3FermionFirstEFT1OneLoop.wl,23,TEXT_REFERENCE,"Print[""Usage: RunGeneralT3FermionFirstEFT1OneLoop.wl INPUT.json OUTPUT.json""];"
+RunGeneralT3FermionFirstEFT1Tree,docs/T3_GENERAL_EFT1_CANONICAL_EOM_HANDOFF_FIX.md,15,DOC_REFERENCE,"- `Lagrangian/RunGeneralT3FermionFirstEFT1Tree.wl` (full replacement): additionally exports `matchingResult[""EOMEFT""]` as `*_eft1_transition_eom.inputform.txt` and certifies its type. Keeps existing expanded `MatchedEFT` and LLSS diagnostic"
+RunGeneralT3FermionFirstEFT1Tree,docs/T3_GENERAL_EFT1_CANONICAL_EOM_HANDOFF_FIX.md,16,DOC_REFERENCE,- `scripts/RunGeneralT3FermionFirstEFT1Tree.py` (full replacement): validates the new canonical EOMEFT certificate and artifact; cleans stale transition artifacts before a run.
+RunGeneralT3FermionFirstEFT1Tree,docs/T3_GENERAL_EFT1_CANONICAL_EOM_HANDOFF_FIX.md,34,DOC_REFERENCE,python -m scripts.RunGeneralT3FermionFirstEFT1Tree --all
+RunGeneralT3FermionFirstEFT1Tree,docs/T3_GENERAL_FERMION_FIRST_EFT1_ONE_LOOP.md,14,DOC_REFERENCE,The existing `RunGeneralT3MassEigenMatchete` detailed HeavyMassBasis check and `RunGeneralT3FermionFirstEFT1Tree` report remain prerequisites. They are never overwritten.
+RunGeneralT3FermionFirstEFT1Tree,docs/T3_GENERAL_FERMION_FIRST_EFT1_TREE_BOUNDARY.md,36,DOC_REFERENCE,- `Lagrangian/RunGeneralT3FermionFirstEFT1Tree.wl` (new full Wolfram source)
+RunGeneralT3FermionFirstEFT1Tree,docs/T3_GENERAL_FERMION_FIRST_EFT1_TREE_BOUNDARY.md,37,DOC_REFERENCE,- `scripts/RunGeneralT3FermionFirstEFT1Tree.py` (new full CLI)
+RunGeneralT3FermionFirstEFT1Tree,docs/T3_GENERAL_FERMION_FIRST_EFT1_TREE_BOUNDARY.md,47,DOC_REFERENCE,python -m scripts.RunGeneralT3FermionFirstEFT1Tree --model B_-1
+RunGeneralT3FermionFirstEFT1Tree,docs/T3_GENERAL_FERMION_FIRST_EFT1_TREE_BOUNDARY.md,48,DOC_REFERENCE,python -m scripts.RunGeneralT3FermionFirstEFT1Tree --model C_-1
+RunGeneralT3FermionFirstEFT1Tree,docs/T3_GENERAL_T3_EFT1_SCALAR_THRESHOLD_PROBE.md,51,DOC_REFERENCE,"This needs the successful previous `RunGeneralT3FermionFirstEFT1Tree` and `RunGeneralT3FermionFirstEFT1OneLoop` results in their original output locations, the same mass-eigenstate input parameters, and your working local Matchete + `wolfra"
+RunGeneralT3FermionFirstEFT1Tree,scripts/RunGeneralT3EFT1ScalarThresholdProbe.py,24,STATIC_IMPORT,from scripts.RunGeneralT3FermionFirstEFT1Tree import (
+RunGeneralT3FermionFirstEFT1Tree,scripts/RunGeneralT3FermionFirstEFT1OneLoop.py,25,STATIC_IMPORT,from scripts.RunGeneralT3FermionFirstEFT1Tree import (
+RunGeneralT3FermionFirstEFT1Tree,tests/python/test_general_t3_fermion_first_eft1_tree.py,8,STATIC_IMPORT,from scripts import RunGeneralT3FermionFirstEFT1Tree as task
+RunGeneralT3FermionFirstEFT1Tree,tests/python/test_general_t3_fermion_first_eft1_tree.py,101,TEST_REFERENCE,s=(Path(__file__).resolve().parents[2]/'Lagrangian/RunGeneralT3FermionFirstEFT1Tree.wl').read_text()
+RunGeneralT3FermionFirstEFT1Tree,tests/python/test_general_t3_fermion_first_eft1_tree.py,127,TEST_REFERENCE,wl=root/'Lagrangian/RunGeneralT3FermionFirstEFT1Tree.wl';wl.write_text('WL contents')
+RunGeneralT3FermionFirstEFT1Tree,tests/python/test_general_t3_fermion_first_eft1_tree.py,152,TEST_REFERENCE,wl=root/'Lagrangian/RunGeneralT3FermionFirstEFT1Tree.wl';wl.write_text('wl')
+RunGeneralT3FermionFirstEFT1Tree,Lagrangian/RunGeneralT3FermionFirstEFT1Tree.wl,8,TEXT_REFERENCE,wolframscript -file Lagrangian/RunGeneralT3FermionFirstEFT1Tree.wl \
+RunGeneralT3FermionFirstEFT1Tree,Lagrangian/RunGeneralT3FermionFirstEFT1Tree.wl,21,TEXT_REFERENCE,"Print[""Usage: RunGeneralT3FermionFirstEFT1Tree.wl INPUT.json OUTPUT.json""];"
+RunGeneralT3FrozenScalarC5,scripts/RunGeneralT3TwoThresholdNumericalC5.py,245,CODE_REFERENCE,'; first run python -m scripts.RunGeneralT3FrozenScalarC5 --all')
+RunGeneralT3FrozenScalarC5,docs/T3_GENERAL_T3_FROZEN_SCALAR_ALIGNED_ONE_SCALE.md,45,DOC_REFERENCE,| `scripts/RunGeneralT3FrozenScalarC5.py` | New scenario runner |
+RunGeneralT3FrozenScalarC5,docs/T3_GENERAL_T3_FROZEN_SCALAR_ALIGNED_ONE_SCALE.md,57,DOC_REFERENCE,python -m scripts.RunGeneralT3FrozenScalarC5 --all
+RunGeneralT3FrozenScalarC5,docs/T3_GENERAL_T3_FROZEN_SCALAR_ALIGNED_ONE_SCALE.md,63,DOC_REFERENCE,python -m scripts.RunGeneralT3FrozenScalarC5 --all --mu2-real-gev2 10000 --mu2-imag-gev2 0
+RunGeneralT3FrozenScalarC5,docs/T3_GENERAL_T3_ONE_SCALE_SM_WEINBERG_ENDPOINT.md,57,DOC_REFERENCE,python -m scripts.RunGeneralT3FrozenScalarC5 --all
+RunGeneralT3FrozenScalarC5,docs/T3_GENERAL_TWO_THRESHOLD_NUMERICAL_C5.md,11,DOC_REFERENCE,"- Optional, for `--numeric`: `output/general_t3_numerical_c5_frozen_scalar_scenario/<stem>_numerical_c5.json`, generated by `python -m scripts.RunGeneralT3FrozenScalarC5 --all` using *explicit* zero scalar quadratic mixing unless a nonzero "
+RunGeneralT3FrozenScalarC5,docs/T3_GENERAL_TWO_THRESHOLD_NUMERICAL_C5.md,37,DOC_REFERENCE,python -m scripts.RunGeneralT3FrozenScalarC5 --all
+RunGeneralT3FrozenScalarC5,scripts/RunT3ZeroExtraBoundaryBenchmark.py,270,STATIC_IMPORT,    from scripts.RunGeneralT3FrozenScalarC5 import build_scenario
+RunGeneralT3FrozenScalarC5,tests/python/test_general_t3_frozen_scalar_c5.py,17,STATIC_IMPORT,from scripts import RunGeneralT3FrozenScalarC5 as aligned
+RunGeneralT3LowScaleOneScale,docs/T3_GENERAL_T3_ONE_SCALE_SM_WEINBERG_ENDPOINT.md,35,DOC_REFERENCE,- `scripts/RunGeneralT3LowScaleOneScale.py` (new)
+RunGeneralT3LowScaleOneScale,docs/T3_GENERAL_T3_ONE_SCALE_SM_WEINBERG_ENDPOINT.md,51,DOC_REFERENCE,python -m scripts.RunGeneralT3LowScaleOneScale --all
+RunGeneralT3LowScaleOneScale,tests/python/test_general_t3_low_scale_one_scale.py,12,STATIC_IMPORT,from scripts.RunGeneralT3LowScaleOneScale import (
+RunGeneralT3MassEigenMatchete,docs/T3_GENERAL_FERMION_FIRST_EFT1_ONE_LOOP.md,14,DOC_REFERENCE,The existing `RunGeneralT3MassEigenMatchete` detailed HeavyMassBasis check and `RunGeneralT3FermionFirstEFT1Tree` report remain prerequisites. They are never overwritten.
+RunGeneralT3MassEigenMatchete,docs/T3_GENERAL_T3_ONE_LOOP_STATUS_AND_PROBE.md,18,DOC_REFERENCE,"Two **new** project files introduce a symbolic exploratory diagnostic while leaving `RunGeneralT3MassEigenMatchete.wl`, the validated heavy-basis checker, unchanged."
+RunGeneralT3MassEigenMatchete,docs/T3_MASS_EIGEN_COUPLING_DETECTION_FIX.md,22,DOC_REFERENCE,Only `Lagrangian/RunGeneralT3MassEigenMatchete.wl` has physics-adjacent changes.
+RunGeneralT3MassEigenMatchete,docs/T3_MASS_EIGEN_COUPLING_DETECTION_FIX.md,31,DOC_REFERENCE,- `Lagrangian/RunGeneralT3MassEigenMatchete.wl` — full replacement
+RunGeneralT3MassEigenMatchete,docs/T3_MASS_EIGEN_COUPLING_DETECTION_FIX.md,41,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenMatchete --model B_-1
+RunGeneralT3MassEigenMatchete,docs/T3_MASS_EIGEN_COUPLING_DETECTION_FIX.md,42,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenMatchete --model C_-1
+RunGeneralT3MassEigenMatchete,docs/T3_MASS_EIGEN_COUPLING_DETECTION_FIX.md,43,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenMatchete --all
+RunGeneralT3MassEigenMatchete,docs/T3_MASS_EIGEN_MATCHING_PREPARATION.md,62,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenMatchete --all --prepare-only
+RunGeneralT3MassEigenMatchete,docs/T3_MASS_EIGEN_MATCHING_PREPARATION.md,63,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenMatchete --model B_-1
+RunGeneralT3MassEigenMatchete,docs/T3_MASS_EIGEN_MATCHING_PREPARATION.md,64,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenMatchete --model C_-1
+RunGeneralT3MassEigenMatchete,docs/T3_MASS_EIGEN_MATCHING_PREPARATION.md,65,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenMatchete --all
+RunGeneralT3MassEigenMatchete,docs/T3_MASS_EIGEN_MATchete_SM_FIELD_SYMBOL_FIX.md,13,DOC_REFERENCE,"In `Lagrangian/RunGeneralT3MassEigenMatchete.wl`, all 15 uses of the global"
+RunGeneralT3MassEigenMatchete,docs/T3_MASS_EIGEN_MATchete_SM_FIELD_SYMBOL_FIX.md,25,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenMatchete --model B_-1
+RunGeneralT3MassEigenMatchete,docs/T3_MASS_EIGEN_MATchete_SM_FIELD_SYMBOL_FIX.md,26,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenMatchete --model C_-1
+RunGeneralT3MassEigenMatchete,docs/T3_MASS_EIGEN_MATchete_SM_FIELD_SYMBOL_FIX.md,27,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenMatchete --all
+RunGeneralT3MassEigenMatchete,docs/T3_MASS_EIGEN_PROVENANCE_FIX.md,7,DOC_REFERENCE,"keys, whereas `scripts/RunGeneralT3MassEigenMatchete.py` looked up fixed"
+RunGeneralT3MassEigenMatchete,docs/T3_MASS_EIGEN_PROVENANCE_FIX.md,26,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenMatchete --all --prepare-only
+RunGeneralT3MassEigenMatchete,docs/T3_MASS_EIGEN_PROVENANCE_FIX.md,27,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenMatchete --model B_-1
+RunGeneralT3MassEigenMatchete,docs/T3_MASS_EIGEN_PROVENANCE_FIX.md,28,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenMatchete --model C_-1
+RunGeneralT3MassEigenMatchete,docs/T3_MASS_EIGEN_PROVENANCE_FIX.md,29,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenMatchete --all
+RunGeneralT3MassEigenMatchete,docs/T3_MASS_EIGEN_WOLFRAM_STAGE_DIAGNOSTICS.md,14,DOC_REFERENCE,- The existing `Lagrangian/RunGeneralT3MassEigenMatchete.wl` is replaced in
+RunGeneralT3MassEigenMatchete,docs/T3_MASS_EIGEN_WOLFRAM_STAGE_DIAGNOSTICS.md,18,DOC_REFERENCE,- The existing `scripts/RunGeneralT3MassEigenMatchete.py` is replaced in full.
+RunGeneralT3MassEigenMatchete,docs/T3_MASS_EIGEN_WOLFRAM_STAGE_DIAGNOSTICS.md,37,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenMatchete --model B_-1
+RunGeneralT3MassEigenMatchete,docs/T3_MATCHETE_EIGENFIELD_TYPED_INDEX_AND_BASELINE_ISOLATION.md,3,DOC_REFERENCE,"**Scope:** `B_-1`, `C_-1`, experimental `RunGeneralT3MassEigenMatchete` only."
+RunGeneralT3MassEigenMatchete,docs/T3_MATCHETE_EIGENFIELD_TYPED_INDEX_AND_BASELINE_ISOLATION.md,25,DOC_REFERENCE,- `Lagrangian/RunGeneralT3MassEigenMatchete.wl`
+RunGeneralT3MassEigenMatchete,docs/T3_MATCHETE_EIGENFIELD_TYPED_INDEX_AND_BASELINE_ISOLATION.md,40,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenMatchete --model B_-1
+RunGeneralT3MassEigenMatchete,docs/T3_MATCHETE_EIGENFIELD_TYPED_INDEX_AND_BASELINE_ISOLATION.md,41,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenMatchete --model C_-1
+RunGeneralT3MassEigenMatchete,docs/T3_MATCHETE_INTERNAL_OBJECTS_FIX.md,21,DOC_REFERENCE,Full replacement `Lagrangian/RunGeneralT3MassEigenMatchete.wl`:
+RunGeneralT3MassEigenMatchete,docs/T3_MATCHETE_INTERNAL_OBJECTS_FIX.md,54,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenMatchete --model B_-1
+RunGeneralT3MassEigenMatchete,docs/T3_MATCHETE_INTERNAL_OBJECTS_FIX.md,55,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenMatchete --model C_-1
+RunGeneralT3MassEigenMatchete,docs/T3_MATCHETE_NATIVE_H2_PORTAL_CG_FIX.md,37,DOC_REFERENCE,- `Lagrangian/RunGeneralT3MassEigenMatchete.wl`
+RunGeneralT3MassEigenMatchete,docs/T3_MATCHETE_NATIVE_H2_PORTAL_CG_FIX.md,38,DOC_REFERENCE,- `scripts/RunGeneralT3MassEigenMatchete.py`
+RunGeneralT3MassEigenMatchete,docs/T3_MATCHETE_NATIVE_H2_PORTAL_CG_FIX.md,48,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenMatchete --model B_-1
+RunGeneralT3MassEigenMatchete,docs/T3_MATCHETE_NATIVE_H2_PORTAL_CG_FIX.md,49,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenMatchete --model C_-1
+RunGeneralT3MassEigenMatchete,docs/T3_MATCHETE_NATIVE_S2_SCALAR_QUARTICS.md,8,DOC_REFERENCE,- `Lagrangian/RunGeneralT3MassEigenMatchete.wl`
+RunGeneralT3MassEigenMatchete,docs/T3_MATCHETE_NATIVE_S2_SCALAR_QUARTICS.md,9,DOC_REFERENCE,- `scripts/RunGeneralT3MassEigenMatchete.py`
+RunGeneralT3MassEigenMatchete,docs/T3_MATCHETE_NATIVE_S2_SCALAR_QUARTICS.md,45,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenMatchete --model B_-1
+RunGeneralT3MassEigenMatchete,docs/T3_MATCHETE_NATIVE_S2_SCALAR_QUARTICS.md,46,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenMatchete --model C_-1
+RunGeneralT3MassEigenMatchete,docs/T3_MATCHETE_NATIVE_TOPOLOGY_CG_FIX.md,51,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenMatchete --model B_-1
+RunGeneralT3MassEigenMatchete,docs/T3_MATCHETE_NATIVE_TOPOLOGY_CG_FIX.md,52,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenMatchete --model C_-1
+RunGeneralT3MassEigenMatchete,docs/T3_MATCHETE_NATIVE_YUKAWA1_AND_EXTRA_QUARTICS.md,42,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenMatchete --model B_-1
+RunGeneralT3MassEigenMatchete,docs/T3_MATCHETE_NATIVE_YUKAWA1_AND_EXTRA_QUARTICS.md,43,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenMatchete --model C_-1
+RunGeneralT3MassEigenMatchete,docs/T3_MATCHETE_NATIVE_YUKAWA2_CG_FIX.md,34,DOC_REFERENCE,- `Lagrangian/RunGeneralT3MassEigenMatchete.wl` (replacement)
+RunGeneralT3MassEigenMatchete,docs/T3_MATCHETE_NATIVE_YUKAWA2_CG_FIX.md,35,DOC_REFERENCE,- `scripts/RunGeneralT3MassEigenMatchete.py` (replacement)
+RunGeneralT3MassEigenMatchete,docs/T3_MATCHETE_SYMBOLIC_MIXING_INVARIANCE_DIAGNOSTIC.md,55,DOC_REFERENCE,- `Lagrangian/RunGeneralT3MassEigenMatchete.wl`
+RunGeneralT3MassEigenMatchete,docs/T3_MATCHETE_SYMBOLIC_MIXING_INVARIANCE_DIAGNOSTIC.md,56,DOC_REFERENCE,- `scripts/RunGeneralT3MassEigenMatchete.py`
+RunGeneralT3MassEigenMatchete,docs/T3_MATCHETE_SYMBOLIC_MIXING_INVARIANCE_DIAGNOSTIC.md,71,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenMatchete --model B_-1
+RunGeneralT3MassEigenMatchete,docs/T3_MATCHETE_SYMBOLIC_MIXING_INVARIANCE_DIAGNOSTIC.md,72,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenMatchete --model C_-1
+RunGeneralT3MassEigenMatchete,docs/T3_MATCHETE_SYMBOLIC_MIXING_INVARIANCE_DIAGNOSTIC.md,73,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenMatchete --all
+RunGeneralT3MassEigenMatchete,docs/T3_MATCHETE_TYPED_BRIDGE_INDICES_FIX.md,46,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenMatchete --model B_-1
+RunGeneralT3MassEigenMatchete,docs/T3_MATCHETE_TYPED_BRIDGE_INDICES_FIX.md,47,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenMatchete --model C_-1
+RunGeneralT3MassEigenMatchete,scripts/RunGeneralT3EFT1ScalarThresholdProbe.py,23,STATIC_IMPORT,"from scripts.RunGeneralT3MassEigenMatchete import ROOT, INPUT, OUTPUT, _read_json, prepare_model"
+RunGeneralT3MassEigenMatchete,scripts/RunGeneralT3FermionFirstEFT1OneLoop.py,22,STATIC_IMPORT,from scripts.RunGeneralT3MassEigenMatchete import (
+RunGeneralT3MassEigenMatchete,scripts/RunGeneralT3FermionFirstEFT1Tree.py,21,STATIC_IMPORT,from scripts.RunGeneralT3MassEigenMatchete import (
+RunGeneralT3MassEigenMatchete,scripts/RunGeneralT3MassEigenOneLoop.py,23,STATIC_IMPORT,from scripts.RunGeneralT3MassEigenMatchete import (
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,13,STATIC_IMPORT,from scripts import RunGeneralT3MassEigenMatchete as runner
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,283,TEST_REFERENCE,wolfram=root/'Lagrangian'/'RunGeneralT3MassEigenMatchete.wl'
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,316,TEST_REFERENCE,source=(Path(__file__).resolve().parents[2]/'Lagrangian'/'RunGeneralT3MassEigenMatchete.wl').read_text()
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,333,TEST_REFERENCE,'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text(encoding='utf-8')
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,346,TEST_REFERENCE,'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text(encoding='utf-8')
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,363,TEST_REFERENCE,'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text(encoding='utf-8')
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,376,TEST_REFERENCE,'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text(encoding='utf-8')
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,389,TEST_REFERENCE,'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text(encoding='utf-8')
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,399,TEST_REFERENCE,'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text(encoding='utf-8')
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,413,TEST_REFERENCE,'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text(encoding='utf-8')
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,428,TEST_REFERENCE,'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text(encoding='utf-8')
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,440,TEST_REFERENCE,'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text(encoding='utf-8')
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,457,TEST_REFERENCE,'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text(encoding='utf-8')
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,473,TEST_REFERENCE,'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text(encoding='utf-8')
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,488,TEST_REFERENCE,'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text(encoding='utf-8')
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,498,TEST_REFERENCE,'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text(encoding='utf-8')
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,519,TEST_REFERENCE,'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text(encoding='utf-8')
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,535,TEST_REFERENCE,'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text(encoding='utf-8')
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,548,TEST_REFERENCE,'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text(encoding='utf-8')
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,597,TEST_REFERENCE,'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text(encoding='utf-8')
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,619,TEST_REFERENCE,'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text(encoding='utf-8')
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,650,TEST_REFERENCE,'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text()
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,671,TEST_REFERENCE,'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text()
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,684,TEST_REFERENCE,'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text()
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,719,TEST_REFERENCE,'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text()
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,742,TEST_REFERENCE,'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text()
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,754,TEST_REFERENCE,'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text()
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,782,TEST_REFERENCE,'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text()
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,804,TEST_REFERENCE,'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text()
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,837,TEST_REFERENCE,'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text()
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,855,TEST_REFERENCE,'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text()
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,892,TEST_REFERENCE,'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text()
+RunGeneralT3MassEigenMatchete,tests/python/test_general_t3_mass_eigen_matchete.py,915,TEST_REFERENCE,'Lagrangian/RunGeneralT3MassEigenMatchete.wl').read_text()
+RunGeneralT3MassEigenMatchete,Lagrangian/RunGeneralT3MassEigenMatchete.wl,3,TEXT_REFERENCE,wolframscript -file Lagrangian/RunGeneralT3MassEigenMatchete.wl \
+RunGeneralT3MassEigenMatchete,Lagrangian/RunGeneralT3MassEigenMatchete.wl,17,TEXT_REFERENCE,"Print[""Usage: RunGeneralT3MassEigenMatchete.wl INPUT.json OUTPUT.json""];"
+RunGeneralT3MassEigenMatchete,Lagrangian/RunGeneralT3MassEigenOneLoop.wl,9,TEXT_REFERENCE,wolframscript -file Lagrangian/RunGeneralT3MassEigenMatchete.wl \
+RunGeneralT3MassEigenOneLoop,docs/T3_GENERAL_T3_DIRECT_C5_NUMERICAL_BENCHMARK.md,7,DOC_REFERENCE,`RunGeneralT3MassEigenOneLoop`. It evaluates *all* terms at arbitrary numeric
+RunGeneralT3MassEigenOneLoop,docs/T3_GENERAL_T3_ONE_LOOP_STATUS_AND_PROBE.md,20,DOC_REFERENCE,"- `Lagrangian/RunGeneralT3MassEigenOneLoop.wl`: forks the verified eigenfield construction in a fresh Wolfram process, rechecks `HeavyMassBasis`, calls the existing `Lagrangian/RunMatching.wl` entry point `RunT3Matching[lag,5,1]`, exports t"
+RunGeneralT3MassEigenOneLoop,docs/T3_GENERAL_T3_ONE_LOOP_STATUS_AND_PROBE.md,21,DOC_REFERENCE,"- `scripts/RunGeneralT3MassEigenOneLoop.py`: requires the previous successful local native heavy-basis result, rechecks the numerical mixing input/provenance, executes the symbolic probe, and validates the status and exported artifacts. Fai"
+RunGeneralT3MassEigenOneLoop,docs/T3_GENERAL_T3_ONE_LOOP_STATUS_AND_PROBE.md,32,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenOneLoop --model B_-1
+RunGeneralT3MassEigenOneLoop,docs/T3_GENERAL_T3_ONE_LOOP_STATUS_AND_PROBE.md,33,DOC_REFERENCE,python -m scripts.RunGeneralT3MassEigenOneLoop --model C_-1
+RunGeneralT3MassEigenOneLoop,tests/python/test_general_t3_mass_eigen_one_loop.py,10,STATIC_IMPORT,from scripts import RunGeneralT3MassEigenOneLoop as probe
+RunGeneralT3MassEigenOneLoop,tests/python/test_general_t3_mass_eigen_one_loop.py,84,TEST_REFERENCE,content=Path(__file__).resolve().parents[2]/'Lagrangian/RunGeneralT3MassEigenOneLoop.wl'
+RunGeneralT3MassEigenOneLoop,tests/python/test_general_t3_mass_eigen_one_loop.py,113,TEST_REFERENCE,p=root/'Lagrangian/RunGeneralT3MassEigenOneLoop.wl';p.write_text('WL content')
+RunGeneralT3MassEigenOneLoop,Lagrangian/RunGeneralT3MassEigenOneLoop.wl,23,TEXT_REFERENCE,"Print[""Usage: RunGeneralT3MassEigenOneLoop.wl INPUT.json OUTPUT.json""];"
+RunGeneralT3MixedScalarMassBasis,scripts/RunGeneralT3MassEigenMatchete.py,45,CODE_REFERENCE,fail(f'Missing {path}; first run scripts.RunGeneralT3MixedScalarMassBasis --all')
+RunGeneralT3MixedScalarMassBasis,docs/T3_MASS_EIGEN_MATCHING_PREPARATION.md,3,DOC_REFERENCE,This experimental batch follows the successful `RunGeneralT3MixedScalarMassBasis --all`
+RunGeneralT3MixedScalarMassBasis,docs/T3_MASS_EIGEN_PROVENANCE_FIX.md,5,DOC_REFERENCE,`scripts/RunGeneralT3MixedScalarMassBasis.py` originally serialized provenance
+RunGeneralT3MixedScalarMassBasis,docs/T3_MIXED_SCALAR_MASS_BASIS_BATCH.md,96,DOC_REFERENCE,- `scripts/RunGeneralT3MixedScalarMassBasis.py` (new)
+RunGeneralT3MixedScalarMassBasis,docs/T3_MIXED_SCALAR_MASS_BASIS_BATCH.md,104,DOC_REFERENCE,python -m scripts.RunGeneralT3MixedScalarMassBasis --model B_-1
+RunGeneralT3MixedScalarMassBasis,docs/T3_MIXED_SCALAR_MASS_BASIS_BATCH.md,105,DOC_REFERENCE,python -m scripts.RunGeneralT3MixedScalarMassBasis --model C_-1
+RunGeneralT3MixedScalarMassBasis,docs/T3_MIXED_SCALAR_MASS_BASIS_BATCH.md,106,DOC_REFERENCE,python -m scripts.RunGeneralT3MixedScalarMassBasis --all
+RunGeneralT3MixedScalarMassBasis,docs/T3_MIXED_SCALAR_MASS_BASIS_BATCH.md,109,DOC_REFERENCE,python -m scripts.RunGeneralT3MixedScalarMassBasis --all --which initial
+RunGeneralT3MixedScalarMassBasis,tests/python/test_general_t3_mixed_scalar_mass_basis.py,15,STATIC_IMPORT,from scripts import RunGeneralT3MixedScalarMassBasis as driver
+RunGeneralT3NumericalC5,docs/T3_GENERAL_T3_DIRECT_C5_NUMERICAL_BENCHMARK.md,65,DOC_REFERENCE,python -m scripts.RunGeneralT3NumericalC5 --all
+RunGeneralT3NumericalC5,docs/T3_GENERAL_T3_DIRECT_C5_NUMERICAL_BENCHMARK.md,66,DOC_REFERENCE,python -m scripts.RunGeneralT3NumericalC5 --model B_-1 --config configs\general_t3\c5_illustrative.json
+RunGeneralT3NumericalC5,docs/T3_GENERAL_T3_FROZEN_REFERENCE_YUKAWA_TRANSFER.md,57,DOC_REFERENCE,- `scripts/RunGeneralT3NumericalC5.py` — FULL replacement; supports a
+RunGeneralT3NumericalC5,docs/T3_GENERAL_T3_FROZEN_REFERENCE_YUKAWA_TRANSFER.md,79,DOC_REFERENCE,python -m scripts.RunGeneralT3NumericalC5 --all
+RunGeneralT3NumericalC5,docs/T3_GENERAL_T3_FROZEN_SCALAR_ALIGNED_ONE_SCALE.md,44,DOC_REFERENCE,| `scripts/RunGeneralT3NumericalC5.py` | Full replacement; adds strictly validated scalar-basis override |
+RunGeneralT3NumericalC5,docs/T3_GENERAL_T3_FROZEN_SCALAR_ALIGNED_ONE_SCALE.md,76,DOC_REFERENCE,`RunGeneralT3NumericalC5.py`.
+RunGeneralT3NumericalC5,scripts/AnalyzeT3BCMatchingConventions.py,211,STATIC_IMPORT,    from scripts.RunGeneralT3NumericalC5 import compile_coefficient
+RunGeneralT3NumericalC5,scripts/AnalyzeT3BCMatchingConventions.py,390,STATIC_IMPORT,    from scripts.RunGeneralT3NumericalC5 import DEFAULT_SOURCE
+RunGeneralT3NumericalC5,scripts/ContinueT3GeneralScalarBCExploratoryFit.py,213,STATIC_IMPORT,    from scripts.RunGeneralT3NumericalC5 import DEFAULT_SOURCE
+RunGeneralT3NumericalC5,scripts/FitT3BCUVHierarchyConstrained.py,264,STATIC_IMPORT,    from scripts.RunGeneralT3NumericalC5 import DEFAULT_SOURCE
+RunGeneralT3NumericalC5,scripts/ProbeT3BCUVNeutrinoNormalization.py,255,STATIC_IMPORT,    from scripts.RunGeneralT3NumericalC5 import DEFAULT_SOURCE
+RunGeneralT3NumericalC5,scripts/RunGeneralT3FrozenScalarC5.py,19,STATIC_IMPORT,from scripts.RunGeneralT3NumericalC5 import (
+RunGeneralT3NumericalC5,scripts/RunGeneralT3ReferenceC5.py,19,STATIC_IMPORT,from scripts.RunGeneralT3NumericalC5 import (
+RunGeneralT3NumericalC5,scripts/RunGeneralT3TwoThresholdNumericalC5.py,27,STATIC_IMPORT,from scripts.RunGeneralT3NumericalC5 import compile_coefficient
+RunGeneralT3NumericalC5,scripts/RunT3GeneralScalarBCExploratoryFit.py,139,STATIC_IMPORT,    from scripts.RunGeneralT3NumericalC5 import compile_coefficient
+RunGeneralT3NumericalC5,scripts/RunT3GeneralScalarBCExploratoryFit.py,278,STATIC_IMPORT,    from scripts.RunGeneralT3NumericalC5 import DEFAULT_SOURCE
+RunGeneralT3NumericalC5,scripts/RunT3GeneralScalarBCPilot.py,339,STATIC_IMPORT,"    from scripts.RunGeneralT3NumericalC5 import compile_coefficient, DEFAULT_SOURCE"
+RunGeneralT3NumericalC5,scripts/RunT3ZeroExtraBoundaryBenchmark.py,271,STATIC_IMPORT,    from scripts.RunGeneralT3NumericalC5 import (
+RunGeneralT3NumericalC5,scripts/ValidateT3BCGeneralScalarSixFits.py,263,STATIC_IMPORT,    from scripts.RunGeneralT3NumericalC5 import DEFAULT_SOURCE
+RunGeneralT3NumericalC5,tests/python/test_general_t3_frozen_scalar_c5.py,18,STATIC_IMPORT,from scripts import RunGeneralT3NumericalC5 as num
+RunGeneralT3NumericalC5,tests/python/test_general_t3_numerical_c5.py,13,STATIC_IMPORT,from scripts import RunGeneralT3NumericalC5 as num
+RunGeneralT3NumericalC5,tests/python/test_general_t3_reference_c5.py,12,STATIC_IMPORT,from scripts import RunGeneralT3NumericalC5 as num
+RunGeneralT3NumericalC5,tests/python/test_t3_bc_matching_conventions.py,252,TEST_REFERENCE,cp=types.ModuleType('scripts.RunGeneralT3NumericalC5')
+RunGeneralT3NumericalC5,tests/python/test_t3_bc_matching_conventions.py,257,TEST_REFERENCE,"monkeypatch.setitem(sys.modules,'scripts.RunGeneralT3NumericalC5',cp)"
+RunGeneralT3NumericalC5,tests/python/test_t3_bc_uv_hierarchy_constrained_fit.py,213,TEST_REFERENCE,fake_c5=ModuleType('scripts.RunGeneralT3NumericalC5')
+RunGeneralT3NumericalC5,tests/python/test_t3_general_scalar_bc_continuation.py,212,TEST_REFERENCE,coeff=ModuleType('scripts.RunGeneralT3NumericalC5')
+RunGeneralT3NumericalC5,tests/python/test_t3_general_scalar_bc_continuation.py,214,TEST_REFERENCE,"monkeypatch.setitem(sys.modules,'scripts.RunGeneralT3NumericalC5',coeff)"
+RunGeneralT3NumericalC5,tests/python/test_t3_general_scalar_bc_pilot.py,202,TEST_REFERENCE,matched=types.ModuleType('scripts.RunGeneralT3NumericalC5')
+RunGeneralT3NumericalC5,tests/python/test_t3_general_scalar_bc_pilot.py,208,TEST_REFERENCE,"monkeypatch.setitem(sys.modules,'scripts.RunGeneralT3NumericalC5',matched)"
+RunGeneralT3NumericalPilot,docs/GENERAL_T3_STAGE11_STATUS.md,26,DOC_REFERENCE,- `scripts/RunGeneralT3NumericalPilot.py`: writes a machine-readable
+RunGeneralT3NumericalPilot,scripts/RunGeneralT3Stage10.ps1,28,SHELL_REFERENCE,& $python (Join-Path $repo 'scripts\RunGeneralT3NumericalPilot.py') --root $trial --model $model --input $configFile --output (Join-Path $out ($model + '_matchete_hard_c5.json'))
+RunGeneralT3QuadraticAudit,docs/GENERAL_T3_STAGE20_STATUS.md,84,DOC_REFERENCE,python -m scripts.RunGeneralT3QuadraticAudit
+RunGeneralT3QuadraticEFT1,scripts/RunGeneralT3MixedScalarMassBasis.py,73,CODE_REFERENCE,fail(f'Missing {path}. Run RunGeneralT3QuadraticEFT1 first.')
+RunGeneralT3QuadraticEFT1,docs/GENERAL_T3_QUADRATIC_BATCH_NOTES.md,39,DOC_REFERENCE,"4. **EFT1 coupled numerical mass/quartic RG flow, experimental**: `scripts/RunGeneralT3QuadraticEFT1.py` reconstructs the hashed Stage33 threshold boundary and Stage29 sidecars; evolves `mS1Sq`, `mS2Sq`, 38 new / 12 reused quartic slots acr"
+RunGeneralT3QuadraticEFT1,docs/GENERAL_T3_QUADRATIC_BATCH_NOTES.md,73,DOC_REFERENCE,python -m scripts.RunGeneralT3QuadraticEFT1 --model B_-1 --mu2-fraction 0.01
+RunGeneralT3QuadraticEFT1,docs/GENERAL_T3_QUADRATIC_BATCH_NOTES.md,79,DOC_REFERENCE,python -m scripts.RunGeneralT3QuadraticEFT1 --all --mu2-fraction 0.01 --also-export-uv
+RunGeneralT3QuadraticEFT1,docs/T3_MIXED_SCALAR_MASS_BASIS_BATCH.md,17,DOC_REFERENCE,- `scripts/RunGeneralT3QuadraticEFT1.py`: recorded Stage EFT1 data at
+RunGeneralT3QuadraticEFT1,docs/T3_MIXED_SCALAR_MASS_BASIS_BATCH.md,113,DOC_REFERENCE,`python -m scripts.RunGeneralT3QuadraticEFT1 --all --mu2-fraction 0.01`.
+RunGeneralT3QuadraticEFT1,tests/python/test_general_t3_quadratic_full_batch.py,146,TEST_REFERENCE,src=ROOT/'scripts/RunGeneralT3QuadraticEFT1.py'
+RunGeneralT3QuadraticMatcheteAudit,README.txt,5,DOC_REFERENCE,scripts/RunGeneralT3QuadraticMatcheteAudit.py
+RunGeneralT3QuadraticMatcheteAudit,README.txt,18,DOC_REFERENCE,python -m scripts.RunGeneralT3QuadraticMatcheteAudit --model A_+0
+RunGeneralT3QuadraticMatcheteAudit,README.txt,19,DOC_REFERENCE,python -m scripts.RunGeneralT3QuadraticMatcheteAudit --model B_-1
+RunGeneralT3QuadraticMatcheteAudit,README.txt,20,DOC_REFERENCE,python -m scripts.RunGeneralT3QuadraticMatcheteAudit --all
+RunGeneralT3QuadraticMatcheteAudit,docs/GENERAL_T3_QUADRATIC_BATCH_NOTES.md,37,DOC_REFERENCE,"2. **Matchete audit, experimental**: `Lagrangian/RunGeneralQuadraticMatcheteAudit.wl`, builds the unchanged ordinary Lagrangian, all experimental quartics and the one allowed quadratic (if any), and validates individually and collectively u"
+RunGeneralT3QuadraticMatcheteAudit,docs/GENERAL_T3_QUADRATIC_BATCH_NOTES.md,85,DOC_REFERENCE,python -m scripts.RunGeneralT3QuadraticMatcheteAudit --model B_-1
+RunGeneralT3QuadraticMatcheteAudit,docs/GENERAL_T3_QUADRATIC_BATCH_NOTES.md,86,DOC_REFERENCE,python -m scripts.RunGeneralT3QuadraticMatcheteAudit --all
+RunGeneralT3QuadraticMatcheteAudit,docs/T3_MATCHETE_DETAILED_MASS_BASIS_AUDIT.md,60,DOC_REFERENCE,- `scripts/RunGeneralT3QuadraticMatcheteAudit.py` — full replacement
+RunGeneralT3QuadraticMatcheteAudit,docs/T3_MATCHETE_DETAILED_MASS_BASIS_AUDIT.md,73,DOC_REFERENCE,python -m scripts.RunGeneralT3QuadraticMatcheteAudit --model A_+0
+RunGeneralT3QuadraticMatcheteAudit,docs/T3_MATCHETE_DETAILED_MASS_BASIS_AUDIT.md,74,DOC_REFERENCE,python -m scripts.RunGeneralT3QuadraticMatcheteAudit --model B_-1
+RunGeneralT3QuadraticMatcheteAudit,docs/T3_MATCHETE_DETAILED_MASS_BASIS_AUDIT.md,75,DOC_REFERENCE,python -m scripts.RunGeneralT3QuadraticMatcheteAudit --model C_-1
+RunGeneralT3QuadraticMatcheteAudit,docs/T3_MATCHETE_DETAILED_MASS_BASIS_AUDIT.md,76,DOC_REFERENCE,python -m scripts.RunGeneralT3QuadraticMatcheteAudit --all
+RunGeneralT3QuadraticMatcheteAudit,docs/T3_MATCHEte_MIXED_MASS_BASIS.md,29,DOC_REFERENCE,- `scripts/RunGeneralT3QuadraticMatcheteAudit.py`
+RunGeneralT3QuadraticMatcheteAudit,docs/T3_MATCHEte_MIXED_MASS_BASIS.md,62,DOC_REFERENCE,python -m scripts.RunGeneralT3QuadraticMatcheteAudit --model B_-1
+RunGeneralT3QuadraticMatcheteAudit,docs/T3_MATCHEte_MIXED_MASS_BASIS.md,63,DOC_REFERENCE,python -m scripts.RunGeneralT3QuadraticMatcheteAudit --model C_-1
+RunGeneralT3QuadraticMatcheteAudit,docs/T3_MATCHEte_MIXED_MASS_BASIS.md,64,DOC_REFERENCE,python -m scripts.RunGeneralT3QuadraticMatcheteAudit --all
+RunGeneralT3QuadraticMatcheteAudit,tests/python/test_general_t3_matchete_mass_basis.py,18,TEST_REFERENCE,SOURCE = ROOT / 'scripts/RunGeneralT3QuadraticMatcheteAudit.py'
+RunGeneralT3RGSourcePilot,scripts/RunGeneralT3Stage10.ps1,34,SHELL_REFERENCE,& $python (Join-Path $repo 'scripts\RunGeneralT3RGSourcePilot.py') --proof $proof --model $model --input $configFile --output (Join-Path $out ($model + '_rgbeta_source.json'))
+RunGeneralT3ReferenceC5,docs/T3_GENERAL_T3_FROZEN_REFERENCE_YUKAWA_TRANSFER.md,61,DOC_REFERENCE,- `scripts/RunGeneralT3ReferenceC5.py` — NEW frozen-reference transfer CLI.
+RunGeneralT3ReferenceC5,docs/T3_GENERAL_T3_FROZEN_REFERENCE_YUKAWA_TRANSFER.md,73,DOC_REFERENCE,python -m scripts.RunGeneralT3ReferenceC5 --all
+RunGeneralT3ReferenceC5,scripts/RunGeneralT3FrozenScalarC5.py,23,STATIC_IMPORT,from scripts.RunGeneralT3ReferenceC5 import (
+RunGeneralT3ReferenceC5,scripts/RunT3ZeroExtraBoundaryBenchmark.py,274,STATIC_IMPORT,"    from scripts.RunGeneralT3ReferenceC5 import MANIFEST, REFERENCE_ID"
+RunGeneralT3ReferenceC5,tests/python/test_general_t3_frozen_scalar_c5.py,19,STATIC_IMPORT,from scripts import RunGeneralT3ReferenceC5 as ref
+RunGeneralT3ReferenceC5,tests/python/test_general_t3_reference_c5.py,13,STATIC_IMPORT,from scripts import RunGeneralT3ReferenceC5 as ref
+RunGeneralT3Stage12,docs/GENERAL_T3_STAGE12_STATUS.md,37,DOC_REFERENCE,"- `scripts/RunGeneralT3Stage12.py`: CLI for both models, JSON + CSV."
+RunGeneralT3Stage12,docs/GENERAL_T3_STAGE12_STATUS.md,38,DOC_REFERENCE,"- `scripts/RunGeneralT3Stage12.ps1`: PowerShell wrapper, reuses previous output."
+RunGeneralT3Stage12,docs/GENERAL_T3_STAGE12_STATUS.md,46,DOC_REFERENCE,powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3Stage12.ps1
+RunGeneralT3Stage12,docs/GENERAL_T3_TRIAL.md,403,DOC_REFERENCE,powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3Stage12.ps1
+RunGeneralT3Stage12,scripts/RunGeneralT3Stage12.ps1,18,SHELL_REFERENCE,& $python (Join-Path $repo 'scripts\RunGeneralT3Stage12.py') --input-root (Resolve-RepoPath $InputRoot) --output-root (Resolve-RepoPath $OutputRoot) --vev-gev $VevGeV
+RunGeneralT3Stage12,tests/python/test_general_t3_stage12.py,113,TEST_REFERENCE,"task=subprocess.run([sys.executable,str(root/'scripts/RunGeneralT3Stage12.py'),'--input-root',str(inp),'--output-root',str(out)],cwd=root,capture_output=True,text=True)"
+RunGeneralT3Stage12,tests/python/test_general_t3_stage12.py,124,TEST_REFERENCE,"proc=subprocess.run([sys.executable,str(root/'scripts/RunGeneralT3Stage12.py'),'--input-root',str(inp),'--output-root',str(out)],cwd=root,capture_output=True,text=True)"
+RunGeneralT3Stage13,docs/GENERAL_T3_STAGE13_STATUS.md,37,DOC_REFERENCE,powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3Stage13.ps1
+RunGeneralT3Stage13,docs/GENERAL_T3_TRIAL.md,415,DOC_REFERENCE,powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3Stage13.ps1
+RunGeneralT3Stage13,scripts/RunGeneralT3Stage13.ps1,13,SHELL_REFERENCE,"$argsList = @((Join-Path $repo 'scripts\RunGeneralT3Stage13.py'), '--config', $Config, '--output', $Output)"
+RunGeneralT3Stage13,tests/python/test_general_t3_stage13.py,110,TEST_REFERENCE,assert (ROOT/'scripts/RunGeneralT3Stage13.ps1').exists()
+RunGeneralT3Stage14,docs/GENERAL_T3_STAGE14_STATUS.md,50,DOC_REFERENCE,powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3Stage14.ps1
+RunGeneralT3Stage14,docs/GENERAL_T3_TRIAL.md,430,DOC_REFERENCE,then `powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3Stage14.ps1`.
+RunGeneralT3Stage14,scripts/RunGeneralT3Stage14.ps1,12,SHELL_REFERENCE,& $python (Join-Path $repo 'scripts\RunGeneralT3Stage14.py') --input $Config --output $Output
+RunGeneralT3Stage14,tests/python/test_general_t3_stage14.py,165,TEST_REFERENCE,source=(root/'scripts/RunGeneralT3Stage14.py').read_text()
+RunGeneralT3Stage14,tests/python/test_general_t3_stage14.py,169,TEST_REFERENCE,assert (root/'scripts/RunGeneralT3Stage14.ps1').exists()
+RunGeneralT3Stage15,docs/GENERAL_T3_STAGE15_STATUS.md,47,DOC_REFERENCE,powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3Stage15.ps1
+RunGeneralT3Stage15,docs/GENERAL_T3_STAGE15_STATUS.md,53,DOC_REFERENCE,powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3Stage15.ps1 -ConventionOnly
+RunGeneralT3Stage15,docs/GENERAL_T3_TRIAL.md,448,DOC_REFERENCE,powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3Stage15.ps1
+RunGeneralT3Stage15,scripts/RunGeneralT3Stage15.ps1,12,SHELL_REFERENCE,"$cmd = @((Join-Path $repo 'scripts\RunGeneralT3Stage15.py'), '--input', $InputConfig, '--output', $Output)"
+RunGeneralT3Stage15,tests/python/test_general_t3_stage15.py,259,TEST_REFERENCE,"command = [sys.executable,str(ROOT/'scripts/RunGeneralT3Stage15.py'),"
+RunGeneralT3Stage15,tests/python/test_general_t3_stage15.py,276,TEST_REFERENCE,text = (ROOT/'scripts/RunGeneralT3Stage15.ps1').read_text(encoding='utf-8-sig')
+RunGeneralT3Stage15,tests/python/test_general_t3_stage15.py,277,TEST_REFERENCE,assert 'RunGeneralT3Stage15.py' in text
+RunGeneralT3Stage16,docs/GENERAL_T3_STAGE16_STATUS.md,27,DOC_REFERENCE,powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3Stage16.ps1
+RunGeneralT3Stage16,docs/GENERAL_T3_STAGE16_STATUS.md,33,DOC_REFERENCE,powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3Stage16.ps1 -RenormalisableOnly
+RunGeneralT3Stage16,scripts/RunGeneralT3Stage16.ps1,9,SHELL_REFERENCE,"$command = @('-B', (Join-Path $repo 'scripts\RunGeneralT3Stage16.py'), '--config', $Config)"
+RunGeneralT3Stage17,docs/GENERAL_T3_STAGE17_STATUS.md,27,DOC_REFERENCE,powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3Stage17.ps1
+RunGeneralT3Stage17,scripts/RunGeneralT3Stage17.ps1,7,SHELL_REFERENCE,python .\scripts\RunGeneralT3Stage17.py
+RunGeneralT3Stage18,docs/GENERAL_T3_STAGE18_STATUS.md,42,DOC_REFERENCE,powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3Stage18.ps1
+RunGeneralT3Stage18,docs/GENERAL_T3_STAGE18_STATUS.md,48,DOC_REFERENCE,powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3Stage18.ps1 -Samples 33
+RunGeneralT3Stage18,scripts/RunGeneralT3Stage18.ps1,11,SHELL_REFERENCE,& $python (Join-Path $repo 'scripts\RunGeneralT3Stage18.py') --samples $Samples
+RunGeneralT3Stage19,docs/GENERAL_T3_STAGE19_STATUS.md,45,DOC_REFERENCE,powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3Stage19.ps1
+RunGeneralT3Stage19,docs/GENERAL_T3_STAGE19_STATUS.md,54,DOC_REFERENCE,- `scripts/RunGeneralT3Stage19.py`
+RunGeneralT3Stage19,docs/GENERAL_T3_STAGE19_STATUS.md,55,DOC_REFERENCE,- `scripts/RunGeneralT3Stage19.ps1`
+RunGeneralT3Stage19,scripts/RunGeneralT3Stage19.ps1,7,SHELL_REFERENCE,& $python (Join-Path $repo 'scripts\RunGeneralT3Stage19.py')
+RunGeneralT3Stage20,docs/GENERAL_T3_STAGE20_RGBETA_COMPAT_FIX.md,43,DOC_REFERENCE,"powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3Stage20.ps1 -ExportBetas -CheckGauge -Models B_-1,C_-1"
+RunGeneralT3Stage20,docs/GENERAL_T3_STAGE20_RGBETA_PROJECTED_BETAS.md,36,DOC_REFERENCE,"powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3Stage20.ps1 -ExportBetas -CheckGauge -Models B_-1,C_-1"
+RunGeneralT3Stage20,docs/GENERAL_T3_STAGE20_STATUS.md,83,DOC_REFERENCE,powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3Stage20.ps1
+RunGeneralT3Stage20,docs/GENERAL_T3_STAGE20_STATUS.md,91,DOC_REFERENCE,"powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3Stage20.ps1 -ExportBetas -CheckGauge -Models B_-1,C_-1"
+RunGeneralT3Stage20,docs/GENERAL_T3_STAGE20_STATUS.md,98,DOC_REFERENCE,powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3Stage20.ps1 -ExportBetas -CheckGauge
+RunGeneralT3Stage20,scripts/RunGeneralT3Stage20.ps1,11,SHELL_REFERENCE,"$arguments = @('-m', 'scripts.RunGeneralT3Stage20', '--stage', $Stage)"
+RunGeneralT3Stage20,tests/python/test_general_t3_stage20.py,14,STATIC_IMPORT,from scripts import RunGeneralT3Stage20 as runner
+RunGeneralT3Stage21,docs/GENERAL_T3_STAGE21_EXPORT_AUDIT.md,23,DOC_REFERENCE,powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3Stage21.ps1
+RunGeneralT3Stage21,docs/GENERAL_T3_STAGE21_EXPORT_AUDIT.md,29,DOC_REFERENCE,powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3Stage21.ps1 -NumericProbe
+RunGeneralT3Stage21,scripts/RunGeneralT3Stage21.ps1,8,SHELL_REFERENCE,"$argv = @('-m', 'scripts.RunGeneralT3Stage21')"
+RunGeneralT3Stage21,tests/python/test_general_t3_stage21.py,13,STATIC_IMPORT,from scripts import RunGeneralT3Stage21 as stage21
+RunGeneralT3Stage22,scripts/Stage22RGBetaExplicitBasis.py,4,CODE_REFERENCE,This is intentionally separate from RunGeneralT3Stage22 and does not write
+RunGeneralT3Stage22,docs/GENERAL_T3_STAGE22_110101_LOCAL_CORRECTION.md,65,DOC_REFERENCE,powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3Stage22.ps1 `
+RunGeneralT3Stage22,docs/GENERAL_T3_STAGE22_EXPLICIT_GEOMETRY.md,76,DOC_REFERENCE,Do not change `RunGeneralT3Stage22.py` to accept this provisional report as
+RunGeneralT3Stage22,docs/GENERAL_T3_STAGE22_TENSOR_CERTIFICATION.md,23,DOC_REFERENCE,"4. `scripts/RunGeneralT3Stage22.py` — **replacement**; rejects serialized Wolfram `Missing[...]` in both channels; validates explicit native four-field lists, compares corresponding native fields/invariants/coupling functions/arrangements b"
+RunGeneralT3Stage22,docs/GENERAL_T3_STAGE22_TENSOR_CERTIFICATION.md,34,DOC_REFERENCE,powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3Stage22.ps1 `
+RunGeneralT3Stage22,docs/GENERAL_T3_STAGE24_BC_LOCAL_CORRECTION.md,54,DOC_REFERENCE,powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3Stage22.ps1 -ExportRGBetaDeclarations -NativeDiagnosticsOnly
+RunGeneralT3Stage22,docs/GENERAL_T3_STAGE25_NATIVE_QUARTIC_ACTION.md,106,DOC_REFERENCE,powershell -ExecutionPolicy Bypass -File .\scripts\RunGeneralT3Stage22.ps1 `
+RunGeneralT3Stage22,scripts/RunGeneralT3Stage22.ps1,15,SHELL_REFERENCE,python -m scripts.RunGeneralT3Stage22 --static-only
+RunGeneralT3Stage22,scripts/RunGeneralT3Stage22.ps1,39,SHELL_REFERENCE,python -m scripts.RunGeneralT3Stage22 --inspect-native `
+RunGeneralT3Stage22,scripts/RunGeneralT3Stage22.ps1,46,SHELL_REFERENCE,python -m scripts.RunGeneralT3Stage22 --matchete-tensors $MatcheteTensors `
+RunGeneralT3Stage22,tests/python/test_general_t3_stage22.py,10,STATIC_IMPORT,from scripts.RunGeneralT3Stage22 import certify
+RunGeneralT3Stage22,tests/python/test_general_t3_stage22.py,88,STATIC_IMPORT,    from scripts.RunGeneralT3Stage22 import tensor_index
+RunGeneralT3Stage22,tests/python/test_general_t3_stage22.py,98,STATIC_IMPORT,    from scripts.RunGeneralT3Stage22 import tensor_index
+RunGeneralT3Stage22,tests/python/test_general_t3_stage22.py,144,STATIC_IMPORT,    from scripts.RunGeneralT3Stage22 import tensor_index
+RunGeneralT3Stage22,tests/python/test_general_t3_stage22.py,163,STATIC_IMPORT,    from scripts.RunGeneralT3Stage22 import audit_native_matchete
+RunGeneralT3Stage22,tests/python/test_general_t3_stage22.py,174,STATIC_IMPORT,    from scripts.RunGeneralT3Stage22 import audit_native_rgbeta_invariants
+RunGeneralT3Stage22,tests/python/test_general_t3_stage22.py,219,STATIC_IMPORT,"    from scripts.RunGeneralT3Stage22 import (audit_native_declarations,"
+RunGeneralT3Stage22,tests/python/test_general_t3_stage22.py,264,STATIC_IMPORT,    from scripts.RunGeneralT3Stage22 import audit_native_declarations
+RunGeneralT3Stage22,tests/python/test_general_t3_stage22.py,286,STATIC_IMPORT,    from scripts.RunGeneralT3Stage22 import audit_native_rgbeta_coherence
+RunGeneralT3TwoThresholdNumericalC5,docs/T3_GENERAL_TWO_THRESHOLD_NUMERICAL_C5.md,40,DOC_REFERENCE,python -m scripts.RunGeneralT3TwoThresholdNumericalC5 --all
+RunGeneralT3TwoThresholdNumericalC5,docs/T3_GENERAL_TWO_THRESHOLD_NUMERICAL_C5.md,43,DOC_REFERENCE,python -m scripts.RunGeneralT3TwoThresholdNumericalC5 --all --numeric
+RunGeneralT3TwoThresholdNumericalC5,tests/python/test_general_t3_two_threshold_numerical_c5.py,11,STATIC_IMPORT,from scripts.RunGeneralT3TwoThresholdNumericalC5 import (
+RunGeneralT3TwoThresholdNumericalC5,tests/python/test_general_t3_two_threshold_numerical_c5.py,132,STATIC_IMPORT,    from scripts.RunGeneralT3TwoThresholdNumericalC5 import check_conjugate_operator
+RunGeneralT3TwoThresholdPoleAssembly,docs/T3_GENERAL_TWO_THRESHOLD_RAW_POLE_ASSEMBLY.md,44,DOC_REFERENCE,python -m scripts.RunGeneralT3TwoThresholdPoleAssembly --all
+RunGeneralT3TwoThresholdPoleAssembly,docs/T3_GENERAL_TWO_THRESHOLD_RAW_POLE_ASSEMBLY.md,96,DOC_REFERENCE,New source: `scripts/RunGeneralT3TwoThresholdPoleAssembly.py`.
+RunGeneralT3TwoThresholdPoleAssembly,scripts/RunGeneralT3TwoThresholdNumericalC5.py,23,STATIC_IMPORT,from scripts.RunGeneralT3TwoThresholdPoleAssembly import (
+RunGeneralT3TwoThresholdPoleAssembly,tests/python/test_general_t3_two_threshold_numerical_c5.py,16,STATIC_IMPORT,from scripts.RunGeneralT3TwoThresholdPoleAssembly import split_terms
+RunGeneralT3TwoThresholdPoleAssembly,tests/python/test_general_t3_two_threshold_pole_assembly.py,10,STATIC_IMPORT,from scripts import RunGeneralT3TwoThresholdPoleAssembly as m
+RunT3BPlus1GeneralEFT1,scripts/FitT3BPlus1GeneralThreeStudies.py,472,CODE_REFERENCE,"root/'scripts/RunT3BPlus1GeneralEFT1.py',"
+RunT3BPlus1GeneralEFT1,docs/T3_B_PLUS1_COUPLED_EFT1_BATCH20.md,47,DOC_REFERENCE,| `scripts/RunT3BPlus1GeneralEFT1.py` | Provenance checks + coupled numerical running and control |
+RunT3BPlus1GeneralEFT1,docs/T3_B_PLUS1_COUPLED_EFT1_BATCH20.md,61,DOC_REFERENCE,python -m scripts.RunT3BPlus1GeneralEFT1 `
+RunT3BPlus1GeneralEFT1,output/studies/general_scalar_extended/large_uv_frozen_0p5/b_p1_three_fit_v1/fit.json,192,SAVED_RESULT_REFERENCE,"""scripts\\RunT3BPlus1GeneralEFT1.py"": ""8f81befee4e1e8ce488312247625043343525a453220c9670359508b86828cd4"","
+RunT3BPlus1GeneralEFT1,output/studies/general_scalar_extended/large_uv_frozen_0p5/b_p1_three_pilot_v1/fit.json,185,SAVED_RESULT_REFERENCE,"""scripts\\RunT3BPlus1GeneralEFT1.py"": ""8f81befee4e1e8ce488312247625043343525a453220c9670359508b86828cd4"","
+RunT3BPlus1GeneralEFT1,output/studies/general_scalar_extended/small_uv_frozen_5e-9/b_p1_three_fit_v1/fit.json,185,SAVED_RESULT_REFERENCE,"""scripts\\RunT3BPlus1GeneralEFT1.py"": ""8f81befee4e1e8ce488312247625043343525a453220c9670359508b86828cd4"","
+RunT3BPlus1GeneralEFT1,output/studies/general_scalar_extended/small_uv_frozen_5e-9/b_p1_three_pilot_v1/fit.json,185,SAVED_RESULT_REFERENCE,"""scripts\\RunT3BPlus1GeneralEFT1.py"": ""8f81befee4e1e8ce488312247625043343525a453220c9670359508b86828cd4"","
+RunT3BPlus1GeneralEFT1,output/studies/general_scalar_extended/small_uv_running_5e-9/b_p1_three_fit_v1/fit.json,95,SAVED_RESULT_REFERENCE,"""scripts\\RunT3BPlus1GeneralEFT1.py"": ""8f81befee4e1e8ce488312247625043343525a453220c9670359508b86828cd4"","
+RunT3BPlus1GeneralEFT1,output/studies/general_scalar_extended/small_uv_running_5e-9/b_p1_three_pilot_v1/fit.json,75,SAVED_RESULT_REFERENCE,"""scripts\\RunT3BPlus1GeneralEFT1.py"": ""8f81befee4e1e8ce488312247625043343525a453220c9670359508b86828cd4"","
+RunT3BPlus1GeneralEFT1,scripts/FitT3BPlus1GeneralThreeStudies.py,31,STATIC_IMPORT,from scripts import RunT3BPlus1GeneralEFT1 as b20
+RunT3BPlus1GeneralEFT1,scripts/RunT3GeneralScalar48Campaign.py,189,STATIC_IMPORT,            from scripts import RunT3BPlus1GeneralEFT1 as b20
+RunT3BPlus1GeneralEFT1,tests/python/test_t3_b_plus1_general_eft1.py,12,STATIC_IMPORT,from scripts import RunT3BPlus1GeneralEFT1 as b20
+RunT3BPlus1GeneralEFT1,tests/python/test_t3_b_plus1_general_eft1.py,185,TEST_REFERENCE,'scripts/RunT3BPlus1GeneralEFT1.py').read_text(encoding='utf-8')
+RunT3GeneralScalar48Campaign,scripts/ProbeT3ReducedUVScalarBoundaries.py,231,CODE_REFERENCE,"ROOT/'scripts/RunT3GeneralScalar48Campaign.py', *extra_paths]"
+RunT3GeneralScalar48Campaign,docs/SCRIPT_DEPENDENCY_AUDIT.md,49,DOC_REFERENCE,"In particular, `BuildT3ReducedScalarFinalResults.py` and `BuildReducedScalarExistingInteractiveReports.py` import `RunT3GeneralScalar48Campaign.py`. The script's historical name therefore does **not** make it obsolete. The original figure/r"
+RunT3GeneralScalar48Campaign,docs/T3_GENERAL_SCALAR_48_CAMPAIGN.md,37,DOC_REFERENCE,python -u -m scripts.RunT3GeneralScalar48Campaign `
+RunT3GeneralScalar48Campaign,docs/T3_GENERAL_SCALAR_48_CAMPAIGN.md,101,DOC_REFERENCE,python -u -m scripts.RunT3GeneralScalar48Campaign `
+RunT3GeneralScalar48Campaign,docs/T3_REDUCED_UV_SCALAR_BOUNDARY_PILOT.md,76,DOC_REFERENCE,"The script reuses `scripts/RunT3GeneralScalar48Campaign.py`, `scripts/RunT3ReducedScalarSobolComparison.py`, the existing Stage31 UV RGEs and the prior native EFT1 beta export. If the native EFT1 export is not already present, the previous "
+RunT3GeneralScalar48Campaign,output/studies/reduced_scalar_uv_boundary_pilot/a_m2_historical_v1/result.json,242,SAVED_RESULT_REFERENCE,"""scripts/RunT3GeneralScalar48Campaign.py"": ""2e2cc68822361e6186244af98ecf69faa26a689a78ad7c34f378d5c75d8c22da"""
+RunT3GeneralScalar48Campaign,scripts/BuildReducedScalarExistingInteractiveReports.py,134,STATIC_IMPORT,    from scripts import RunT3GeneralScalar48Campaign as bulk
+RunT3GeneralScalar48Campaign,scripts/BuildReducedScalarExistingInteractiveReports.py,427,STATIC_IMPORT,    from scripts import RunT3GeneralScalar48Campaign as bulk
+RunT3GeneralScalar48Campaign,scripts/BuildT3ReducedScalarFinalResults.py,275,STATIC_IMPORT,    from scripts import RunT3GeneralScalar48Campaign as bulk
+RunT3GeneralScalar48Campaign,scripts/BuildT3ReducedScalarFinalResults.py,400,STATIC_IMPORT,    from scripts import RunT3GeneralScalar48Campaign as bulk
+RunT3GeneralScalar48Campaign,scripts/ProbeT3ReducedUVScalarBoundaries.py,146,STATIC_IMPORT,    from scripts import RunT3GeneralScalar48Campaign as bulk
+RunT3GeneralScalar48Campaign,scripts/ProbeT3ReducedUVScalarBoundaries.py,171,STATIC_IMPORT,    from scripts import RunT3GeneralScalar48Campaign as bulk
+RunT3GeneralScalar48Campaign,scripts/ProbeT3ReducedUVScalarBoundaries.py,198,STATIC_IMPORT,    from scripts.RunT3GeneralScalar48Campaign import validate_eft_betas
+RunT3GeneralScalar48Campaign,scripts/RunT3ReducedScalarSobolComparison.py,37,STATIC_IMPORT,from scripts import RunT3GeneralScalar48Campaign as bulk
+RunT3GeneralScalar48Campaign,tests/python/test_t3_general_scalar_48_campaign.py,9,TEST_REFERENCE,SOURCE=ROOT/'scripts/RunT3GeneralScalar48Campaign.py'
+RunT3GeneralScalarBCExploratoryFit,docs/T3_BC_GENERAL_SCALAR_EXPLORATORY_REFIT_BATCH11.md,5,DOC_REFERENCE,**New independent numerical studies only.** `scripts/RunT3GeneralScalarBCExploratoryFit.py` reuses the verified historical fitted inputs and the **existing** Sobol / sensitivity-ranked (5/8/12 active-parameter) Yukawa optimiser. The scalar 
+RunT3GeneralScalarBCExploratoryFit,docs/T3_BC_GENERAL_SCALAR_EXPLORATORY_REFIT_BATCH11.md,38,DOC_REFERENCE,python -m scripts.RunT3GeneralScalarBCExploratoryFit `
+RunT3GeneralScalarBCExploratoryFit,docs/T3_BC_GENERAL_SCALAR_EXPLORATORY_REFIT_BATCH11.md,40,DOC_REFERENCE,python -m scripts.RunT3GeneralScalarBCExploratoryFit `
+RunT3GeneralScalarBCExploratoryFit,docs/T3_BC_GENERAL_SCALAR_EXPLORATORY_REFIT_BATCH11.md,45,DOC_REFERENCE,python -m scripts.RunT3GeneralScalarBCExploratoryFit `
+RunT3GeneralScalarBCExploratoryFit,docs/T3_BC_GENERAL_SCALAR_EXPLORATORY_REFIT_BATCH11.md,48,DOC_REFERENCE,python -m scripts.RunT3GeneralScalarBCExploratoryFit `
+RunT3GeneralScalarBCExploratoryFit,scripts/BuildReducedScalarExistingInteractiveReports.py,351,STATIC_IMPORT,    from scripts.RunT3GeneralScalarBCExploratoryFit import low_energy_fit
+RunT3GeneralScalarBCExploratoryFit,scripts/ContinueT3GeneralScalarBCExploratoryFit.py,25,STATIC_IMPORT,from scripts import RunT3GeneralScalarBCExploratoryFit as old
+RunT3GeneralScalarBCExploratoryFit,scripts/DiagnoseT3BCUVScalarHierarchy.py,27,STATIC_IMPORT,from scripts import RunT3GeneralScalarBCExploratoryFit as b11
+RunT3GeneralScalarBCExploratoryFit,scripts/FitT3BCUVHierarchyConstrained.py,22,STATIC_IMPORT,from scripts import RunT3GeneralScalarBCExploratoryFit as b11
+RunT3GeneralScalarBCExploratoryFit,scripts/FitT3BPlus1GeneralThreeStudies.py,373,STATIC_IMPORT,                from scripts.RunT3GeneralScalarBCExploratoryFit import low_energy_fit
+RunT3GeneralScalarBCExploratoryFit,scripts/ProbeT3BCUVNeutrinoNormalization.py,25,STATIC_IMPORT,from scripts import RunT3GeneralScalarBCExploratoryFit as b11
+RunT3GeneralScalarBCExploratoryFit,scripts/RunT3GeneralScalar48Campaign.py,404,STATIC_IMPORT,                from scripts.RunT3GeneralScalarBCExploratoryFit import low_energy_fit
+RunT3GeneralScalarBCExploratoryFit,scripts/RunT3GeneralScalarNumericalCampaign.py,280,STATIC_IMPORT,    from scripts import RunT3GeneralScalarBCExploratoryFit as runner
+RunT3GeneralScalarBCExploratoryFit,scripts/RunT3ReducedScalarSobolComparison.py,227,STATIC_IMPORT,                from scripts.RunT3GeneralScalarBCExploratoryFit import low_energy_fit
+RunT3GeneralScalarBCExploratoryFit,scripts/StudyT3BCUVScalarMassFeasibility.py,27,STATIC_IMPORT,from scripts import RunT3GeneralScalarBCExploratoryFit as b11
+RunT3GeneralScalarBCExploratoryFit,scripts/ValidateT3BCGeneralScalarSixFits.py,256,STATIC_IMPORT,    from scripts import RunT3GeneralScalarBCExploratoryFit as b11
+RunT3GeneralScalarBCExploratoryFit,tests/python/test_t3_general_scalar_bc_exploratory_fit.py,13,STATIC_IMPORT,from scripts import RunT3GeneralScalarBCExploratoryFit as fit
+RunT3GeneralScalarBCExploratoryFit,tests/python/test_t3_general_scalar_numerical_campaign.py,247,TEST_REFERENCE,name1='scripts.RunT3GeneralScalarBCExploratoryFit'
+RunT3GeneralScalarBCExploratoryFit,tests/python/test_t3_general_scalar_numerical_campaign.py,271,TEST_REFERENCE,"monkeypatch.setattr(scripts_package,'RunT3GeneralScalarBCExploratoryFit',r,"
+RunT3GeneralScalarBCPilot,docs/T3_GENERAL_SCALAR_BC_HISTORICAL_PILOT.md,97,DOC_REFERENCE,python -m scripts.RunT3GeneralScalarBCPilot --case small_uv_frozen_5e-9 --model B_-1 --run-id pilot_q0p1
+RunT3GeneralScalarBCPilot,docs/T3_GENERAL_SCALAR_BC_HISTORICAL_PILOT.md,100,DOC_REFERENCE,python -m scripts.RunT3GeneralScalarBCPilot --all --c5-preview --run-id pilot_q0p1_c5_unmixed_projection
+RunT3GeneralScalarBCPilot,docs/T3_GENERAL_SCALAR_BC_HISTORICAL_PILOT.md,103,DOC_REFERENCE,python -m scripts.RunT3GeneralScalarBCPilot --all --include-mixing --run-id pilot_q0p1_mu0p01
+RunT3GeneralScalarBCPilot,scripts/AnalyzeT3BCMatchingConventions.py,28,STATIC_IMPORT,from scripts import RunT3GeneralScalarBCPilot as b9
+RunT3GeneralScalarBCPilot,scripts/DiagnoseT3BCUVScalarHierarchy.py,26,STATIC_IMPORT,from scripts import RunT3GeneralScalarBCPilot as b9
+RunT3GeneralScalarBCPilot,scripts/FitT3BCUVHierarchyConstrained.py,23,STATIC_IMPORT,from scripts import RunT3GeneralScalarBCPilot as b9
+RunT3GeneralScalarBCPilot,scripts/ProbeT3BCUVNeutrinoNormalization.py,26,STATIC_IMPORT,from scripts import RunT3GeneralScalarBCPilot as b9
+RunT3GeneralScalarBCPilot,scripts/RunT3GeneralScalarBCExploratoryFit.py,27,STATIC_IMPORT,from scripts import RunT3GeneralScalarBCPilot as b9
+RunT3GeneralScalarBCPilot,scripts/StudyT3BCUVScalarMassFeasibility.py,26,STATIC_IMPORT,from scripts import RunT3GeneralScalarBCPilot as b9
+RunT3GeneralScalarBCPilot,scripts/ValidateT3BCGeneralScalarSixFits.py,257,STATIC_IMPORT,    from scripts import RunT3GeneralScalarBCPilot as b9
+RunT3GeneralScalarBCPilot,scripts/ValidateT3BCGeneralScalarSixFits.py,397,STATIC_IMPORT,    from scripts.RunT3GeneralScalarBCPilot import parse_run_id
+RunT3GeneralScalarBCPilot,tests/python/test_t3_general_scalar_bc_pilot.py,11,STATIC_IMPORT,from scripts import RunT3GeneralScalarBCPilot as p
+RunT3GeneralScalarBCPilot,tests/python/test_t3_bc_general_scalar_six_validation.py,178,TEST_REFERENCE,stub=types.ModuleType('scripts.RunT3GeneralScalarBCPilot')
+RunT3GeneralScalarBCPilot,tests/python/test_t3_bc_general_scalar_six_validation.py,207,TEST_REFERENCE,stub=types.ModuleType('scripts.RunT3GeneralScalarBCPilot')
+RunT3GeneralScalarNumericalCampaign,docs/T3_GENERAL_SCALAR_NUMERICAL_CAMPAIGN.md,22,DOC_REFERENCE,- `scripts/RunT3GeneralScalarNumericalCampaign.py` — read-only full inventory plus optional candidate B/C fitting campaign.
+RunT3GeneralScalarNumericalCampaign,docs/T3_GENERAL_SCALAR_NUMERICAL_CAMPAIGN.md,36,DOC_REFERENCE,python -m scripts.RunT3GeneralScalarNumericalCampaign --plan
+RunT3GeneralScalarNumericalCampaign,docs/T3_GENERAL_SCALAR_NUMERICAL_CAMPAIGN.md,39,DOC_REFERENCE,python -m scripts.RunT3GeneralScalarNumericalCampaign --run --campaign general_v1
+RunT3GeneralScalarNumericalCampaign,docs/T3_GENERAL_SCALAR_NUMERICAL_CAMPAIGN.md,43,DOC_REFERENCE,python -m scripts.RunT3GeneralScalarNumericalCampaign --run --campaign general_fresh_v1 --fresh
+RunT3GeneralScalarNumericalCampaign,tests/python/test_t3_general_scalar_numerical_campaign.py,15,STATIC_IMPORT,from scripts import RunT3GeneralScalarNumericalCampaign as p
+RunT3ReducedScalarSobolComparison,scripts/BuildReducedScalarExistingInteractiveReports.py,8,CODE_REFERENCE,used by RunT3ReducedScalarSobolComparison; original lambda report inputs are
+RunT3ReducedScalarSobolComparison,scripts/ProbeT3ReducedUVScalarBoundaries.py,230,CODE_REFERENCE,"uv_beta_path, eft_beta_path, ROOT/'scripts/RunT3ReducedScalarSobolComparison.py',"
+RunT3ReducedScalarSobolComparison,docs/NUMERICAL.md,5,DOC_REFERENCE,"**Source status (29 October 2026):** verified against the read-only repository commit `f21d15d2d38f4f313a0f2214bc52f90e1469dce2`, including `scripts/RunT3ReducedScalarSobolComparison.py`, `scripts/BuildT3ReducedScalarFinalResults.py`, `scri"
+RunT3ReducedScalarSobolComparison,docs/NUMERICAL.md,65,DOC_REFERENCE,The completed frozen source is `output/studies/reduced_scalar_sobol/reduced_frozen_overnight_v2/`. Its owner is `scripts/RunT3ReducedScalarSobolComparison.py`; the historical `reduced_48_v1` run also supplies **exploratory running-UV diagno
+RunT3ReducedScalarSobolComparison,docs/NUMERICAL.md,160,DOC_REFERENCE,python -m scripts.RunT3ReducedScalarSobolComparison --help
+RunT3ReducedScalarSobolComparison,docs/SCALAR_SECTOR.md,238,DOC_REFERENCE,"Authoritative campaign/report scripts: `scripts/RunT3ReducedScalarSobolComparison.py`, `scripts/BuildT3ReducedScalarFinalResults.py`."
+RunT3ReducedScalarSobolComparison,docs/SCALAR_SECTOR.md,282,DOC_REFERENCE,"| Reduced-Sobol fit campaign and final reporting | `scripts/RunT3ReducedScalarSobolComparison.py`, `scripts/BuildT3ReducedScalarFinalResults.py` |"
+RunT3ReducedScalarSobolComparison,docs/T3_REDUCED_UV_SCALAR_BOUNDARY_PILOT.md,76,DOC_REFERENCE,"The script reuses `scripts/RunT3GeneralScalar48Campaign.py`, `scripts/RunT3ReducedScalarSobolComparison.py`, the existing Stage31 UV RGEs and the prior native EFT1 beta export. If the native EFT1 export is not already present, the previous "
+RunT3ReducedScalarSobolComparison,output/studies/reduced_scalar_uv_boundary_pilot/a_m2_historical_v1/result.json,241,SAVED_RESULT_REFERENCE,"""scripts/RunT3ReducedScalarSobolComparison.py"": ""9ac87bedc754a66cad228215c49c0300d4eefa75c3a3e7d5c9acf123da6a6ebc"","
+RunT3ReducedScalarSobolComparison,scripts/BuildReducedScalarExistingInteractiveReports.py,135,STATIC_IMPORT,    from scripts import RunT3ReducedScalarSobolComparison as reduced
+RunT3ReducedScalarSobolComparison,scripts/ProbeT3ReducedUVScalarBoundaries.py,172,STATIC_IMPORT,    from scripts import RunT3ReducedScalarSobolComparison as reduced
+RunT3ReducedScalarSobolComparison,tests/python/test_t3_reduced_scalar_sobol_comparison.py,9,STATIC_IMPORT,from scripts import RunT3ReducedScalarSobolComparison as mod
+RunT3ZeroBoundaryLowEnergyC5,docs/T3_ZERO_BOUNDARY_LOW_ENERGY_BATCH8.md,18,DOC_REFERENCE,- `scripts/RunT3ZeroBoundaryLowEnergyC5.py` — new complete batch runner
+RunT3ZeroBoundaryLowEnergyC5,docs/T3_ZERO_BOUNDARY_LOW_ENERGY_BATCH8.md,31,DOC_REFERENCE,python -m scripts.RunT3ZeroBoundaryLowEnergyC5 --all
+RunT3ZeroBoundaryLowEnergyC5,tests/python/test_t3_zero_boundary_low_energy_batch8.py,13,STATIC_IMPORT,from scripts import RunT3ZeroBoundaryLowEnergyC5 as a
+RunT3ZeroExtraBoundaryBenchmark,docs/SCALAR_SECTOR.md,222,DOC_REFERENCE,The earlier `scripts/RunT3ZeroExtraBoundaryBenchmark.py` study examined **B(-1) and C(-1)** with all seven model-specific additional quartics and the one model-specific extra quadratic exactly zero at `muUV=10^7 GeV`; candidate one-loop UV 
+RunT3ZeroExtraBoundaryBenchmark,docs/T3_REDUCED_SCALAR_POTENTIAL_CONCLUSION.md,35,DOC_REFERENCE,"The user ran `python -m scripts.RunT3ZeroExtraBoundaryBenchmark --all --c5-preview`, and reported success for B(-1) and C(-1). The script integrates native candidate RGBeta from \(10^7\to 10^5\to10^3\) GeV and reuses a **tree-level** fermio"
+RunT3ZeroExtraBoundaryBenchmark,docs/T3_ZERO_BOUNDARY_LOW_ENERGY_BATCH8.md,23,DOC_REFERENCE,Existing production files are not replaced. The batch **depends on** the previously installed Batch 7 script (`scripts/RunT3ZeroExtraBoundaryBenchmark.py`) and the existing Stage31/Stage36 numerical modules.
+RunT3ZeroExtraBoundaryBenchmark,docs/T3_ZERO_BOUNDARY_LOW_ENERGY_BATCH8.md,38,DOC_REFERENCE,python -m scripts.RunT3ZeroExtraBoundaryBenchmark --all
+RunT3ZeroExtraBoundaryBenchmark,scripts/AnalyzeT3BCMatchingConventions.py,27,STATIC_IMPORT,from scripts import RunT3ZeroExtraBoundaryBenchmark as b7
+RunT3ZeroExtraBoundaryBenchmark,scripts/DiagnoseT3BCUVScalarHierarchy.py,25,STATIC_IMPORT,from scripts import RunT3ZeroExtraBoundaryBenchmark as b7
+RunT3ZeroExtraBoundaryBenchmark,scripts/DiagnoseT3BCUVScalarHierarchy.py,243,STATIC_IMPORT,    from scripts.RunT3ZeroExtraBoundaryBenchmark import complex_of
+RunT3ZeroExtraBoundaryBenchmark,scripts/FitT3BCUVHierarchyConstrained.py,24,STATIC_IMPORT,from scripts import RunT3ZeroExtraBoundaryBenchmark as b7
+RunT3ZeroExtraBoundaryBenchmark,scripts/ProbeT3BCUVNeutrinoNormalization.py,27,STATIC_IMPORT,from scripts import RunT3ZeroExtraBoundaryBenchmark as b7
+RunT3ZeroExtraBoundaryBenchmark,scripts/RunT3GeneralScalarBCExploratoryFit.py,26,STATIC_IMPORT,from scripts import RunT3ZeroExtraBoundaryBenchmark as b7
+RunT3ZeroExtraBoundaryBenchmark,scripts/RunT3GeneralScalarBCPilot.py,32,STATIC_IMPORT,from scripts import RunT3ZeroExtraBoundaryBenchmark as b7
+RunT3ZeroExtraBoundaryBenchmark,scripts/RunT3ZeroBoundaryLowEnergyC5.py,27,STATIC_IMPORT,from scripts import RunT3ZeroExtraBoundaryBenchmark as b7
+RunT3ZeroExtraBoundaryBenchmark,scripts/StudyT3BCUVScalarMassFeasibility.py,29,STATIC_IMPORT,from scripts import RunT3ZeroExtraBoundaryBenchmark as b7
+RunT3ZeroExtraBoundaryBenchmark,scripts/ValidateT3BCGeneralScalarSixFits.py,258,STATIC_IMPORT,    from scripts import RunT3ZeroExtraBoundaryBenchmark as b7
+RunT3ZeroExtraBoundaryBenchmark,tests/python/test_t3_bc_matching_conventions.py,12,STATIC_IMPORT,from scripts import RunT3ZeroExtraBoundaryBenchmark as b7
+RunT3ZeroExtraBoundaryBenchmark,tests/python/test_t3_general_scalar_bc_pilot.py,12,STATIC_IMPORT,from scripts import RunT3ZeroExtraBoundaryBenchmark as b7
+RunT3ZeroExtraBoundaryBenchmark,tests/python/test_t3_zero_extra_boundary_batch7.py,13,STATIC_IMPORT,from scripts import RunT3ZeroExtraBoundaryBenchmark as b
+Stage22RGBeta110101Covariance,docs/GENERAL_T3_STAGE22_110101_LOCAL_CORRECTION.md,33,DOC_REFERENCE,"- `scripts/Stage22RGBeta110101Covariance.py`: supports old and corrected native exports, never silently accepts other tensors."
+Stage22RGBeta110101Covariance,docs/GENERAL_T3_STAGE22_110101_LOCAL_CORRECTION.md,67,DOC_REFERENCE,python -m scripts.Stage22RGBeta110101Covariance
+Stage22RGBeta110101Covariance,docs/GENERAL_T3_STAGE22_110101_SU2_COVARIANCE.md,89,DOC_REFERENCE,python -m scripts.Stage22RGBeta110101Covariance
+Stage22RGBeta110101Covariance,scripts/VerifyGeneralT3Stage22Live110101Fix.py,11,STATIC_IMPORT,"from scripts.Stage22RGBeta110101Covariance import covariance, ORIGINAL_FIRST, ORIGINAL_REUSED, EXPECTED, PROPOSED, components, INDEX_GRID"
+Stage22RGBeta110101Covariance,tests/python/test_general_t3_stage22_110101_covariance.py,9,STATIC_IMPORT,from scripts.Stage22RGBeta110101Covariance import (
+Stage22RGBeta110101Covariance,tests/python/test_general_t3_stage22_live_110101_fix.py,36,STATIC_IMPORT,"    from scripts.Stage22RGBeta110101Covariance import PROPOSED,components,INDEX_GRID"
+Stage22RGBetaAlignedGeometry,docs/GENERAL_T3_STAGE22_110101_LOCAL_CORRECTION.md,34,DOC_REFERENCE,- `scripts/Stage22RGBetaAlignedGeometry.py`: supports historical obstruction or exact corrected 2D block.
+Stage22RGBetaAlignedGeometry,docs/GENERAL_T3_STAGE22_110101_LOCAL_CORRECTION.md,68,DOC_REFERENCE,python -m scripts.Stage22RGBetaAlignedGeometry
+Stage22RGBetaAlignedGeometry,docs/GENERAL_T3_STAGE22_ALIGNED_GEOMETRY.md,17,DOC_REFERENCE,python -m scripts.Stage22RGBetaAlignedGeometry
+Stage22RGBetaAlignedGeometry,docs/GENERAL_T3_STAGE24_BC_LOCAL_CORRECTION.md,22,DOC_REFERENCE,"`scripts/Stage22RGBetaAlignedGeometry.py` now recognises both the historical `J`-reindexed tensor candidates and the *fully* repaired Stage24 geometry profile. For the repaired profile, each of these eight slots has an **exact direct tensor"
+Stage22RGBetaAlignedGeometry,docs/GENERAL_T3_STAGE24_BC_LOCAL_CORRECTION.md,55,DOC_REFERENCE,python -m scripts.Stage22RGBetaAlignedGeometry
+Stage22RGBetaAlignedGeometry,docs/GENERAL_T3_STAGE25_NATIVE_QUARTIC_ACTION.md,108,DOC_REFERENCE,python -m scripts.Stage22RGBetaAlignedGeometry
+Stage22RGBetaAlignedGeometry,docs/GENERAL_T3_STAGE26_ACTION_IDENTITY.md,78,DOC_REFERENCE,- `python -m scripts.Stage22RGBetaAlignedGeometry`
+Stage22RGBetaAlignedGeometry,docs/GENERAL_T3_STAGE27_TRIPLET_INTERTWINER.md,9,DOC_REFERENCE,"- Inspected source: `Lagrangian/model/SU2Invariants.wl`, `Lagrangian/interactions/ScalarPotential.wl`, `RGE/running/rgbeta/T3RGBetaModel.wl`, and `scripts/Stage22RGBetaAlignedGeometry.py` from the project, plus RGBeta v1.2.0 `Package/Fields"
+Stage22RGBetaAlignedGeometry,scripts/Stage24BCRemainderCovariance.py,22,STATIC_IMPORT,from scripts.Stage22RGBetaAlignedGeometry import reindexed_doublet_tensor
+Stage22RGBetaAlignedGeometry,scripts/Stage26QuarticActionIdentity.py,30,STATIC_IMPORT,from scripts.Stage22RGBetaAlignedGeometry import triplet_tensor
+Stage22RGBetaAlignedGeometry,scripts/Stage27TripletIntertwiner.py,22,STATIC_IMPORT,from scripts.Stage22RGBetaAlignedGeometry import _e_native_pattern
+Stage22RGBetaAlignedGeometry,tests/python/test_general_t3_stage22_aligned_geometry.py,13,STATIC_IMPORT,from scripts.Stage22RGBetaAlignedGeometry import (
+Stage22RGBetaAlignedGeometry,tests/python/test_general_t3_stage23_prefactors.py,51,STATIC_IMPORT,    from scripts.Stage22RGBetaAlignedGeometry import analyze
+Stage22RGBetaAlignedGeometry,tests/python/test_general_t3_stage24_bc_covariance.py,80,STATIC_IMPORT,    from scripts.Stage22RGBetaAlignedGeometry import analyze
+Stage22RGBetaExplicitBasis,docs/GENERAL_T3_STAGE22_110101_LOCAL_CORRECTION.md,69,DOC_REFERENCE,python -m scripts.Stage22RGBetaExplicitBasis
+Stage22RGBetaExplicitBasis,docs/GENERAL_T3_STAGE22_EXPLICIT_GEOMETRY.md,6,DOC_REFERENCE,`scripts/Stage22RGBetaExplicitBasis.py`. It consumes existing native outputs:
+Stage22RGBetaExplicitBasis,docs/GENERAL_T3_STAGE22_EXPLICIT_GEOMETRY.md,73,DOC_REFERENCE,python -m scripts.Stage22RGBetaExplicitBasis
+Stage22RGBetaExplicitBasis,scripts/Stage22RGBeta110101Covariance.py,21,STATIC_IMPORT,"from scripts.Stage22RGBetaExplicitBasis import eval_component, parse_fields, verify_sources"
+Stage22RGBetaExplicitBasis,scripts/Stage22RGBetaAlignedGeometry.py,21,STATIC_IMPORT,from scripts.Stage22RGBetaExplicitBasis import (
+Stage22RGBetaExplicitBasis,scripts/Stage24BCRemainderCovariance.py,21,STATIC_IMPORT,"from scripts.Stage22RGBetaExplicitBasis import parse_fields, eval_component, SOURCE_ORDER"
+Stage22RGBetaExplicitBasis,scripts/Stage26QuarticActionIdentity.py,31,STATIC_IMPORT,from scripts.Stage22RGBetaExplicitBasis import reconstructed_tensor
+Stage22RGBetaExplicitBasis,scripts/Stage27TripletIntertwiner.py,21,STATIC_IMPORT,from scripts.Stage22RGBetaExplicitBasis import parse_fields
+Stage22RGBetaExplicitBasis,tests/python/test_general_t3_stage22_explicit_basis.py,7,STATIC_IMPORT,from scripts.Stage22RGBetaExplicitBasis import (
+Stage22RGBetaExplicitBasis,tests/python/test_general_t3_stage24_bc_postfix.py,48,STATIC_IMPORT,            from scripts.Stage22RGBetaExplicitBasis import SOURCE_ORDER
+Stage22TensorAlgebra,docs/GENERAL_T3_STAGE22_EXPLICIT_GEOMETRY.md,27,DOC_REFERENCE,existing Stage22TensorAlgebra solver. No floating point fitting.
+Stage22TensorAlgebra,scripts/RunGeneralT3Stage22.py,21,STATIC_IMPORT,"from scripts.Stage22TensorAlgebra import (TensorCertificateError, exact, potential_map,"
+Stage22TensorAlgebra,scripts/Stage22RGBeta110101Covariance.py,22,STATIC_IMPORT,"from scripts.Stage22TensorAlgebra import exact, solve_basis, TensorCertificateError"
+Stage22TensorAlgebra,scripts/Stage22RGBetaAlignedGeometry.py,24,STATIC_IMPORT,"from scripts.Stage22TensorAlgebra import TensorCertificateError, exact, solve_basis"
+Stage22TensorAlgebra,scripts/Stage22RGBetaExplicitBasis.py,17,STATIC_IMPORT,"from scripts.Stage22TensorAlgebra import exact, solve_basis, TensorCertificateError"
+Stage22TensorAlgebra,scripts/Stage24BCRemainderCovariance.py,23,STATIC_IMPORT,"from scripts.Stage22TensorAlgebra import solve_basis, TensorCertificateError, exact"
+Stage22TensorAlgebra,scripts/Stage26QuarticActionIdentity.py,29,STATIC_IMPORT,from scripts.Stage22TensorAlgebra import exact
+Stage22TensorAlgebra,scripts/Stage27TripletIntertwiner.py,23,STATIC_IMPORT,from scripts.Stage22TensorAlgebra import exact
+Stage22TensorAlgebra,scripts/VerifyGeneralT3Stage24BCPostFix.py,19,STATIC_IMPORT,"from scripts.Stage22TensorAlgebra import solve_basis, exact"
+Stage22TensorAlgebra,scripts/VerifyGeneralT3Stage24LiveBC.py,11,STATIC_IMPORT,from scripts.Stage22TensorAlgebra import exact
+Stage22TensorAlgebra,tests/python/test_general_t3_stage22.py,8,STATIC_IMPORT,"from scripts.Stage22TensorAlgebra import (TensorCertificateError, exact,"
+Stage22TensorAlgebra,tests/python/test_general_t3_stage22_110101_covariance.py,13,STATIC_IMPORT,from scripts.Stage22TensorAlgebra import exact
+Stage22TensorAlgebra,tests/python/test_general_t3_stage22_aligned_geometry.py,18,STATIC_IMPORT,from scripts.Stage22TensorAlgebra import exact
+Stage22TensorAlgebra,tests/python/test_general_t3_stage22_explicit_basis.py,56,STATIC_IMPORT,    from scripts.Stage22TensorAlgebra import solve_basis
+Stage23QuarticPrefactorAudit,docs/GENERAL_T3_STAGE23_QUARTIC_PREFACTORS.md,98,DOC_REFERENCE,python -m scripts.Stage23QuarticPrefactorAudit
+Stage23QuarticPrefactorAudit,docs/GENERAL_T3_STAGE24_BC_LOCAL_CORRECTION.md,24,DOC_REFERENCE,`scripts/Stage23QuarticPrefactorAudit.py` accepts the old and repaired **whole-model** classification profiles. It still emits a provisional signed matrix and retains `signed_physical_coupling_map_certified = false`. The shared potential-si
+Stage23QuarticPrefactorAudit,docs/GENERAL_T3_STAGE24_BC_LOCAL_CORRECTION.md,56,DOC_REFERENCE,python -m scripts.Stage23QuarticPrefactorAudit
+Stage23QuarticPrefactorAudit,docs/GENERAL_T3_STAGE24_BC_REUSED_COVARIANCE.md,32,DOC_REFERENCE,"The Python script calls the existing `Stage23QuarticPrefactorAudit.run()` first; this checks 16 models, 50 native slots, 46 blocks, registered RGBeta prefactors, Matchete tensor ranks, and the aligned geometry SHA-256 input hashes. It then "
+Stage23QuarticPrefactorAudit,docs/GENERAL_T3_STAGE25_NATIVE_QUARTIC_ACTION.md,109,DOC_REFERENCE,python -m scripts.Stage23QuarticPrefactorAudit
+Stage23QuarticPrefactorAudit,docs/GENERAL_T3_STAGE26_ACTION_IDENTITY.md,79,DOC_REFERENCE,- `python -m scripts.Stage23QuarticPrefactorAudit`
+Stage23QuarticPrefactorAudit,scripts/Stage24BCRemainderCovariance.py,24,STATIC_IMPORT,"from scripts.Stage23QuarticPrefactorAudit import FOLDER, run as run_stage23, compact"
+Stage23QuarticPrefactorAudit,scripts/Stage25QuarticActionAudit.py,17,STATIC_IMPORT,"from scripts.Stage23QuarticPrefactorAudit import parse_permutations, run as stage23_run"
+Stage23QuarticPrefactorAudit,scripts/Stage26QuarticActionIdentity.py,32,STATIC_IMPORT,"from scripts.Stage23QuarticPrefactorAudit import exact_matrix, run as stage23_run"
+Stage23QuarticPrefactorAudit,scripts/Stage29ConventionUVHandoff.py,23,STATIC_IMPORT,"from scripts.Stage23QuarticPrefactorAudit import exact_matrix, run as stage23_run"
+Stage23QuarticPrefactorAudit,tests/python/test_general_t3_stage23_prefactors.py,10,STATIC_IMPORT,from scripts.Stage23QuarticPrefactorAudit import (
+Stage23QuarticPrefactorAudit,tests/python/test_general_t3_stage24_bc_covariance.py,81,STATIC_IMPORT,"    from scripts.Stage23QuarticPrefactorAudit import INPUTS, CORRECTED, CORRECTED_FUNCTION"
+Stage23QuarticPrefactorAudit,tests/python/test_general_t3_stage24_bc_covariance.py,82,STATIC_IMPORT,    from scripts.Stage23QuarticPrefactorAudit import compact
+Stage24BCRemainderCovariance,docs/GENERAL_T3_STAGE24_BC_LOCAL_CORRECTION.md,26,DOC_REFERENCE,"The old `Stage24BCRemainderCovariance.py`, `ExportGeneralT3Stage24BCNativeCovariance.wl`, and `VerifyGeneralT3Stage24LiveBC.py` are historical **pre-fix** diagnostics; do not rerun them against repaired native exports. Use the new post-fix "
+Stage24BCRemainderCovariance,docs/GENERAL_T3_STAGE24_BC_REUSED_COVARIANCE.md,20,DOC_REFERENCE,The full native Mathematica expressions are in `scripts/ExportGeneralT3Stage24BCNativeCovariance.wl`; the explicit index-by-index Python expressions are in `scripts/Stage24BCRemainderCovariance.py`.
+Stage24BCRemainderCovariance,docs/GENERAL_T3_STAGE24_BC_REUSED_COVARIANCE.md,40,DOC_REFERENCE,- `scripts/Stage24BCRemainderCovariance.py`
+Stage24BCRemainderCovariance,docs/GENERAL_T3_STAGE24_BC_REUSED_COVARIANCE.md,54,DOC_REFERENCE,python -m scripts.Stage24BCRemainderCovariance
+Stage24BCRemainderCovariance,scripts/VerifyGeneralT3Stage24BCPostFix.py,16,STATIC_IMPORT,from scripts.Stage24BCRemainderCovariance import (
+Stage24BCRemainderCovariance,scripts/VerifyGeneralT3Stage24LiveBC.py,12,STATIC_IMPORT,"from scripts.Stage24BCRemainderCovariance import PROPOSED, OLD, MODELS, components, run as run_python"
+Stage24BCRemainderCovariance,tests/python/test_general_t3_stage24_bc_covariance.py,8,STATIC_IMPORT,from scripts.Stage24BCRemainderCovariance import (
+Stage24BCRemainderCovariance,tests/python/test_general_t3_stage24_bc_postfix.py,8,STATIC_IMPORT,"from scripts.Stage24BCRemainderCovariance import PROPOSED, FIELDS, MODELS, covariance, components"
+Stage25QuarticActionAudit,docs/GENERAL_T3_STAGE25_NATIVE_QUARTIC_ACTION.md,98,DOC_REFERENCE,python -m scripts.Stage25QuarticActionAudit
+Stage25QuarticActionAudit,docs/GENERAL_T3_STAGE26_ACTION_IDENTITY.md,80,DOC_REFERENCE,- `python -m scripts.Stage25QuarticActionAudit`
+Stage25QuarticActionAudit,scripts/Stage26QuarticActionIdentity.py,33,STATIC_IMPORT,from scripts.Stage25QuarticActionAudit import run as stage25_run
+Stage25QuarticActionAudit,tests/python/test_general_t3_stage25_quartic_action.py,7,STATIC_IMPORT,"from scripts.Stage25QuarticActionAudit import FORMAT, EXPECTED_STATUS, verify, run"
+Stage26QuarticActionIdentity,docs/GENERAL_T3_STAGE26_ACTION_IDENTITY.md,44,DOC_REFERENCE,`python -m scripts.Stage26QuarticActionIdentity`:
+Stage26QuarticActionIdentity,docs/GENERAL_T3_STAGE26_ACTION_IDENTITY.md,57,DOC_REFERENCE,- `scripts/Stage26QuarticActionIdentity.py` — complete new diagnostic
+Stage26QuarticActionIdentity,docs/GENERAL_T3_STAGE26_ACTION_IDENTITY.md,73,DOC_REFERENCE,python -m scripts.Stage26QuarticActionIdentity
+Stage26QuarticActionIdentity,scripts/Stage27TripletIntertwiner.py,24,STATIC_IMPORT,from scripts.Stage26QuarticActionIdentity import run as stage26_run
+Stage26QuarticActionIdentity,tests/python/test_general_t3_stage26_quartic_action.py,8,STATIC_IMPORT,from scripts.Stage26QuarticActionIdentity import (
+Stage26QuarticActionIdentity,tests/python/test_general_t3_stage26_quartic_action.py,69,STATIC_IMPORT,    import scripts.Stage26QuarticActionIdentity as stage26
+Stage26QuarticActionIdentity,tests/python/test_general_t3_stage26_quartic_action.py,83,STATIC_IMPORT,    import scripts.Stage26QuarticActionIdentity as stage26
+Stage26QuarticActionIdentity,tests/python/test_general_t3_stage26_quartic_action.py,97,STATIC_IMPORT,    import scripts.Stage26QuarticActionIdentity as stage26
+Stage26QuarticActionIdentity,tests/python/test_general_t3_stage26_quartic_action.py,107,STATIC_IMPORT,    import scripts.Stage26QuarticActionIdentity as stage26
+Stage27TripletIntertwiner,docs/GENERAL_T3_STAGE27_TRIPLET_INTERTWINER.md,80,DOC_REFERENCE,- `scripts/Stage27TripletIntertwiner.py`
+Stage27TripletIntertwiner,docs/GENERAL_T3_STAGE27_TRIPLET_INTERTWINER.md,88,DOC_REFERENCE,python -m scripts.Stage27TripletIntertwiner
+Stage27TripletIntertwiner,scripts/Stage28TripletNativeStructureAudit.py,19,STATIC_IMPORT,"from scripts.Stage27TripletIntertwiner import ALL, EPS, run as stage27_run, zero"
+Stage27TripletIntertwiner,tests/python/test_general_t3_stage27_triplet_intertwiner.py,9,STATIC_IMPORT,from scripts.Stage27TripletIntertwiner import (
+Stage27TripletIntertwiner,tests/python/test_general_t3_stage28_triplet_native_structure.py,8,STATIC_IMPORT,from scripts.Stage27TripletIntertwiner import audit as stage27_audit
+Stage28TripletNativeStructureAudit,docs/GENERAL_T3_STAGE28_RGBETA_S2_STRUCTURE.md,52,DOC_REFERENCE,python -m scripts.Stage28TripletNativeStructureAudit
+Stage28TripletNativeStructureAudit,scripts/Stage29ConventionUVHandoff.py,24,STATIC_IMPORT,from scripts.Stage28TripletNativeStructureAudit import run as stage28_run
+Stage28TripletNativeStructureAudit,tests/python/test_general_t3_stage28_triplet_native_structure.py,9,STATIC_IMPORT,"from scripts.Stage28TripletNativeStructureAudit import ALL, EXPECTED, report_for, run"
+Stage29ConventionUVHandoff,docs/GENERAL_T3_STAGE29_CONVENTIONAL_UV_HANDOFF.md,76,DOC_REFERENCE,python -m scripts.Stage29ConventionUVHandoff --extra-quartic 0.01
+Stage29ConventionUVHandoff,tests/python/test_general_t3_stage29_convention_uv_handoff.py,9,STATIC_IMPORT,from scripts.Stage29ConventionUVHandoff import (
+Stage30CoupledA0UVRunning,docs/GENERAL_T3_STAGE30_A0_COUPLED_UV_RUNNING.md,75,DOC_REFERENCE,python -m scripts.Stage30CoupledA0UVRunning
+Stage30CoupledA0UVRunning,docs/GENERAL_T3_STAGE33_FERMION_THRESHOLD_HANDOFF.md,5,DOC_REFERENCE,- Stage 30: `scripts/Stage30CoupledA0UVRunning.py` runs `A_+0` with five new complex quartic coordinates.
+Stage30CoupledA0UVRunning,scripts/BuildT3ReducedScalarFinalResults.py,277,STATIC_IMPORT,    from scripts import Stage30CoupledA0UVRunning as s30
+Stage30CoupledA0UVRunning,scripts/FitT3BPlus1GeneralThreeStudies.py,210,STATIC_IMPORT,    from scripts import Stage30CoupledA0UVRunning as s30
+Stage30CoupledA0UVRunning,scripts/RunT3GeneralScalar48Campaign.py,30,STATIC_IMPORT,from scripts import Stage30CoupledA0UVRunning as s30
+Stage30CoupledA0UVRunning,scripts/RunT3ReducedScalarSobolComparison.py,39,STATIC_IMPORT,from scripts import Stage30CoupledA0UVRunning as s30
+Stage30CoupledA0UVRunning,scripts/RunT3ZeroBoundaryLowEnergyC5.py,130,STATIC_IMPORT,    from scripts import Stage30CoupledA0UVRunning as s30
+Stage30CoupledA0UVRunning,scripts/RunT3ZeroExtraBoundaryBenchmark.py,328,STATIC_IMPORT,    from scripts import Stage30CoupledA0UVRunning as s30
+Stage30CoupledA0UVRunning,scripts/Stage31CoupledUVRunning.py,23,STATIC_IMPORT,from scripts.Stage30CoupledA0UVRunning import (
+Stage30CoupledA0UVRunning,scripts/Stage33FermionThresholdHandoff.py,27,STATIC_IMPORT,from scripts import Stage30CoupledA0UVRunning as s30
+Stage30CoupledA0UVRunning,tests/python/test_general_t3_stage30_coupled_a0_uv_running.py,10,STATIC_IMPORT,from scripts.Stage30CoupledA0UVRunning import (
+Stage30CoupledA0UVRunning,tests/python/test_general_t3_stage30_coupled_a0_uv_running.py,146,STATIC_IMPORT,    from scripts.Stage30CoupledA0UVRunning import combined_rhs
+Stage30CoupledA0UVRunning,tests/python/test_general_t3_stage30_coupled_a0_uv_running.py,189,STATIC_IMPORT,    from scripts.Stage30CoupledA0UVRunning import combined_rhs
+Stage30CoupledA0UVRunning,tests/python/test_general_t3_stage31_coupled_uv_running.py,23,STATIC_IMPORT,from scripts.Stage30CoupledA0UVRunning import integrate_vector
+Stage30CoupledA0UVRunning,tests/python/test_general_t3_stage30_coupled_a0_uv_running.py,128,TEST_REFERENCE,script=(root/'scripts/Stage30CoupledA0UVRunning.py').read_text(encoding='utf-8')
+Stage31CoupledUVRunning,docs/GENERAL_T3_STAGE31_16_MODEL_UV_RUNNING.md,46,DOC_REFERENCE,- `scripts/Stage31CoupledUVRunning.py`: single-model coupled UV integrator and
+Stage31CoupledUVRunning,docs/GENERAL_T3_STAGE33_FERMION_THRESHOLD_HANDOFF.md,6,DOC_REFERENCE,"- Stage 31: `scripts/Stage31CoupledUVRunning.py` runs the remaining 15 ordinary models, including B/C reused quartics and zero-extra cases."
+Stage31CoupledUVRunning,scripts/RunGeneralT3Stage31.ps1,23,SHELL_REFERENCE,& python -m scripts.Stage31CoupledUVRunning --model $model
+Stage31CoupledUVRunning,scripts/RunGeneralT3Stage31.ps1,27,SHELL_REFERENCE,& python -m scripts.Stage31CoupledUVRunning --summary
+Stage31CoupledUVRunning,scripts/BuildReducedScalarExistingInteractiveReports.py,339,STATIC_IMPORT,    from scripts import Stage31CoupledUVRunning as s31
+Stage31CoupledUVRunning,scripts/BuildT3ReducedScalarFinalResults.py,276,STATIC_IMPORT,    from scripts import Stage31CoupledUVRunning as s31
+Stage31CoupledUVRunning,scripts/FitT3BPlus1GeneralThreeStudies.py,196,STATIC_IMPORT,    from scripts import Stage31CoupledUVRunning as s31
+Stage31CoupledUVRunning,scripts/FitT3BPlus1GeneralThreeStudies.py,405,STATIC_IMPORT,    from scripts import Stage31CoupledUVRunning as s31
+Stage31CoupledUVRunning,scripts/ProbeT3ReducedUVScalarBoundaries.py,173,STATIC_IMPORT,    from scripts import Stage31CoupledUVRunning as s31
+Stage31CoupledUVRunning,scripts/RunT3GeneralScalar48Campaign.py,31,STATIC_IMPORT,from scripts import Stage31CoupledUVRunning as s31
+Stage31CoupledUVRunning,scripts/RunT3GeneralScalarBCPilot.py,74,STATIC_IMPORT,    from scripts import Stage31CoupledUVRunning as s31
+Stage31CoupledUVRunning,scripts/RunT3GeneralScalarBCPilot.py,148,STATIC_IMPORT,    from scripts import Stage31CoupledUVRunning as s31
+Stage31CoupledUVRunning,scripts/RunT3ReducedScalarSobolComparison.py,38,STATIC_IMPORT,from scripts import Stage31CoupledUVRunning as s31
+Stage31CoupledUVRunning,scripts/RunT3ZeroBoundaryLowEnergyC5.py,129,STATIC_IMPORT,    from scripts import Stage31CoupledUVRunning as s31
+Stage31CoupledUVRunning,scripts/RunT3ZeroExtraBoundaryBenchmark.py,327,STATIC_IMPORT,    from scripts import Stage31CoupledUVRunning as s31
+Stage31CoupledUVRunning,scripts/Stage33FermionThresholdHandoff.py,28,STATIC_IMPORT,from scripts import Stage31CoupledUVRunning as s31
+Stage31CoupledUVRunning,tests/python/test_general_t3_stage31_coupled_uv_running.py,18,STATIC_IMPORT,from scripts.Stage31CoupledUVRunning import (
+Stage31CoupledUVRunning,tests/python/test_general_t3_stage31_coupled_uv_running.py,162,STATIC_IMPORT,    import scripts.Stage31CoupledUVRunning as module
+Stage31CoupledUVRunning,tests/python/test_general_t3_stage31_coupled_uv_running.py,215,STATIC_IMPORT,    from scripts import Stage31CoupledUVRunning as module
+Stage31CoupledUVRunning,tests/python/test_general_t3_stage31_coupled_uv_running.py,209,TEST_REFERENCE,assert 'Stage31CoupledUVRunning --model' in s
+Stage31CoupledUVRunning,tests/python/test_general_t3_stage31_coupled_uv_running.py,210,TEST_REFERENCE,assert 'Stage31CoupledUVRunning --summary' in s
+Stage33FermionThresholdHandoff,docs/GENERAL_T3_EFT1_QUARTIC_FIX_NOTES.md,10,DOC_REFERENCE,"`scripts/{Stage33FermionThresholdHandoff,Stage34IntermediateEFTRunning,ExportGeneralT3Stage34EFT1OneLoop}.py/.wl`,"
+Stage33FermionThresholdHandoff,docs/GENERAL_T3_QUADRATIC_BATCH_NOTES.md,12,DOC_REFERENCE,"- `scripts/Stage33FermionThresholdHandoff.py`, `Stage34IntermediateEFTRunning.py`"
+Stage33FermionThresholdHandoff,docs/GENERAL_T3_STAGE33_FERMION_THRESHOLD_HANDOFF.md,34,DOC_REFERENCE,- `scripts/Stage33FermionThresholdHandoff.py`
+Stage33FermionThresholdHandoff,docs/GENERAL_T3_STAGE33_FERMION_THRESHOLD_HANDOFF.md,43,DOC_REFERENCE,python -m scripts.Stage33FermionThresholdHandoff --model A_+0
+Stage33FermionThresholdHandoff,docs/GENERAL_T3_STAGE33_FERMION_THRESHOLD_HANDOFF.md,44,DOC_REFERENCE,python -m scripts.Stage33FermionThresholdHandoff --all
+Stage33FermionThresholdHandoff,scripts/RunGeneralT3EFT1Quartics.py,26,STATIC_IMPORT,from scripts import Stage33FermionThresholdHandoff as s33
+Stage33FermionThresholdHandoff,scripts/RunGeneralT3QuadraticEFT1.py,28,STATIC_IMPORT,from scripts import Stage33FermionThresholdHandoff as s33
+Stage33FermionThresholdHandoff,scripts/RunT3BPlus1GeneralEFT1.py,199,STATIC_IMPORT,    from scripts import Stage33FermionThresholdHandoff as s33
+Stage33FermionThresholdHandoff,scripts/RunT3BPlus1GeneralEFT1.py,246,STATIC_IMPORT,    from scripts import Stage33FermionThresholdHandoff as s33
+Stage33FermionThresholdHandoff,scripts/Stage34IntermediateEFTRunning.py,24,STATIC_IMPORT,from scripts import Stage33FermionThresholdHandoff as s33
+Stage33FermionThresholdHandoff,tests/python/test_general_t3_stage33_fermion_threshold_handoff.py,15,STATIC_IMPORT,from scripts import Stage33FermionThresholdHandoff as stage
+Stage33FermionThresholdHandoff,tests/python/test_general_t3_stage33_fermion_threshold_handoff.py,161,TEST_REFERENCE,script=(Path(__file__).resolve().parents[2]/'scripts/Stage33FermionThresholdHandoff.py').read_text()
+Stage34IntermediateEFTRunning,docs/GENERAL_T3_EFT1_QUARTIC_FIX_NOTES.md,10,DOC_REFERENCE,"`scripts/{Stage33FermionThresholdHandoff,Stage34IntermediateEFTRunning,ExportGeneralT3Stage34EFT1OneLoop}.py/.wl`,"
+Stage34IntermediateEFTRunning,docs/GENERAL_T3_QUADRATIC_BATCH_NOTES.md,12,DOC_REFERENCE,"- `scripts/Stage33FermionThresholdHandoff.py`, `Stage34IntermediateEFTRunning.py`"
+Stage34IntermediateEFTRunning,docs/GENERAL_T3_STAGE34_INTERMEDIATE_EFT_RUNNING.md,15,DOC_REFERENCE,- `scripts/Stage34IntermediateEFTRunning.py`: verifies Stage 33 handoff and
+Stage34IntermediateEFTRunning,docs/GENERAL_T3_STAGE35_SCALAR_THRESHOLD_HANDOFF.md,27,DOC_REFERENCE,"`Stage34IntermediateEFTRunning.decode_intermediate_state` requires the input scale \(\mu_F\). To avoid changing that established API, Stage 35 validates the final scale \(\mu_S\), uses the decoder on a temporary representation with \(\mu_F\"
+Stage34IntermediateEFTRunning,docs/T3_B_PLUS1_COUPLED_EFT1_BATCH20.md,24,DOC_REFERENCE,the current `Stage34IntermediateEFTRunning.verify_boundary` implementation.
+Stage34IntermediateEFTRunning,scripts/RunGeneralT3Stage34.ps1,41,SHELL_REFERENCE,& python -m scripts.Stage34IntermediateEFTRunning --model $model
+Stage34IntermediateEFTRunning,scripts/RunGeneralT3Stage34.ps1,45,SHELL_REFERENCE,& python -m scripts.Stage34IntermediateEFTRunning --summary
+Stage34IntermediateEFTRunning,scripts/RunGeneralT3EFT1Quartics.py,27,STATIC_IMPORT,from scripts import Stage34IntermediateEFTRunning as s34
+Stage34IntermediateEFTRunning,scripts/RunGeneralT3QuadraticEFT1.py,29,STATIC_IMPORT,from scripts import Stage34IntermediateEFTRunning as s34
+Stage34IntermediateEFTRunning,scripts/RunT3BPlus1GeneralEFT1.py,242,STATIC_IMPORT,    from scripts import Stage34IntermediateEFTRunning as s34
+Stage34IntermediateEFTRunning,scripts/RunT3GeneralScalar48Campaign.py,32,STATIC_IMPORT,from scripts import Stage34IntermediateEFTRunning as s34
+Stage34IntermediateEFTRunning,scripts/Stage35ScalarThresholdHandoff.py,27,STATIC_IMPORT,from scripts import Stage34IntermediateEFTRunning as s34
+Stage34IntermediateEFTRunning,scripts/Stage36FinalWeinbergRunning.py,84,STATIC_IMPORT,    from scripts import Stage34IntermediateEFTRunning as s34
+Stage34IntermediateEFTRunning,tests/python/test_general_t3_stage34_intermediate_eft_running.py,15,STATIC_IMPORT,from scripts import Stage34IntermediateEFTRunning as stage
+Stage34IntermediateEFTRunning,tests/python/test_general_t3_stage34_intermediate_eft_running.py,236,TEST_REFERENCE,assert 'Stage34IntermediateEFTRunning' in runner
+Stage34IntermediateEFTRunning,tests/python/test_general_t3_stage35_scalar_threshold_handoff.py,224,TEST_REFERENCE,assert 'Stage34IntermediateEFTRunning' in source
+Stage35ScalarThresholdHandoff,docs/GENERAL_T3_STAGE35_SCALAR_THRESHOLD_HANDOFF.md,57,DOC_REFERENCE,python -m scripts.Stage35ScalarThresholdHandoff --model A_+0
+Stage35ScalarThresholdHandoff,docs/GENERAL_T3_STAGE35_SCALAR_THRESHOLD_HANDOFF.md,63,DOC_REFERENCE,python -m scripts.Stage35ScalarThresholdHandoff --all
+Stage35ScalarThresholdHandoff,docs/GENERAL_T3_STAGE35_SCALAR_THRESHOLD_HANDOFF.md,69,DOC_REFERENCE,python -m scripts.Stage35ScalarThresholdHandoff --summary
+Stage35ScalarThresholdHandoff,scripts/Stage36FinalWeinbergRunning.py,27,STATIC_IMPORT,from scripts import Stage35ScalarThresholdHandoff as s35
+Stage35ScalarThresholdHandoff,tests/python/test_general_t3_stage35_scalar_threshold_handoff.py,15,STATIC_IMPORT,from scripts import Stage35ScalarThresholdHandoff as stage
+Stage35ScalarThresholdHandoff,tests/python/test_general_t3_stage35_scalar_threshold_handoff.py,221,TEST_REFERENCE,source = (Path(__file__).resolve().parents[2]/'scripts/Stage35ScalarThresholdHandoff.py').read_text()
+Stage36FinalWeinbergRunning,docs/GENERAL_T3_STAGE36_EXISTING_C5_AND_WEINBERG.md,40,DOC_REFERENCE,- `scripts/Stage36FinalWeinbergRunning.py` — new complete runner.
+Stage36FinalWeinbergRunning,docs/GENERAL_T3_STAGE36_EXISTING_C5_AND_WEINBERG.md,63,DOC_REFERENCE,python -m scripts.Stage36FinalWeinbergRunning --model A_+0
+Stage36FinalWeinbergRunning,docs/GENERAL_T3_STAGE36_EXISTING_C5_AND_WEINBERG.md,69,DOC_REFERENCE,python -m scripts.Stage36FinalWeinbergRunning --all --allow-legacy
+Stage36FinalWeinbergRunning,docs/GENERAL_T3_STAGE36_EXISTING_C5_AND_WEINBERG.md,75,DOC_REFERENCE,python -m scripts.Stage36FinalWeinbergRunning --summary
+Stage36FinalWeinbergRunning,docs/T3_ZERO_BOUNDARY_LOW_ENERGY_BATCH8.md,13,DOC_REFERENCE,"5. Reuse SM+Weinberg one-loop evolution \(10^3 \to 100\) GeV and existing neutrino observables code, following `scripts/Stage36FinalWeinbergRunning.py`."
+Stage36FinalWeinbergRunning,scripts/FitT3BPlus1GeneralThreeStudies.py,247,STATIC_IMPORT,        from scripts.Stage36FinalWeinbergRunning import verify_hierarchical_artifact
+Stage36FinalWeinbergRunning,scripts/RunT3ZeroBoundaryLowEnergyC5.py,199,STATIC_IMPORT,    from scripts import Stage36FinalWeinbergRunning as s36
+Stage36FinalWeinbergRunning,scripts/RunT3ZeroBoundaryLowEnergyC5.py,244,STATIC_IMPORT,    from scripts import Stage36FinalWeinbergRunning as s36
+Stage36FinalWeinbergRunning,tests/python/test_general_t3_stage36_final_weinberg.py,14,STATIC_IMPORT,from scripts import Stage36FinalWeinbergRunning as stage
+Stage36FinalWeinbergRunning,tests/python/test_t3_zero_boundary_low_energy_batch8.py,135,TEST_REFERENCE,fake = types.ModuleType('scripts.Stage36FinalWeinbergRunning')
+Stage36FinalWeinbergRunning,tests/python/test_t3_zero_boundary_low_energy_batch8.py,138,TEST_REFERENCE,"monkeypatch.setitem(sys.modules, 'scripts.Stage36FinalWeinbergRunning',fake)"
+StudyT3BCUVScalarMassFeasibility,docs/T3_BC_UV_SCALAR_MASS_FEASIBILITY_BATCH15.md,28,DOC_REFERENCE,**New source:** `scripts/StudyT3BCUVScalarMassFeasibility.py`.
+StudyT3BCUVScalarMassFeasibility,docs/T3_BC_UV_SCALAR_MASS_FEASIBILITY_BATCH15.md,75,DOC_REFERENCE,- `scripts/StudyT3BCUVScalarMassFeasibility.py`
+StudyT3BCUVScalarMassFeasibility,docs/T3_BC_UV_SCALAR_MASS_FEASIBILITY_BATCH15.md,91,DOC_REFERENCE,python -m scripts.StudyT3BCUVScalarMassFeasibility --run-id uv_mass_feasibility_v1
+StudyT3BCUVScalarMassFeasibility,docs/T3_BC_UV_SCALAR_MASS_FEASIBILITY_BATCH15.md,99,DOC_REFERENCE,python -m scripts.StudyT3BCUVScalarMassFeasibility `
+StudyT3BCUVScalarMassFeasibility,scripts/ProbeT3BCUVNeutrinoNormalization.py,29,STATIC_IMPORT,from scripts import StudyT3BCUVScalarMassFeasibility as b15
+StudyT3BCUVScalarMassFeasibility,tests/python/test_t3_bc_uv_mass_feasibility.py,13,STATIC_IMPORT,from scripts import StudyT3BCUVScalarMassFeasibility as mod
+SummarizeGeneralT3Physics,scripts/RunGeneralT3Analysis.ps1,56,SHELL_REFERENCE,"(Join-Path $repo 'scripts\SummarizeGeneralT3Physics.py'),"
+SummarizeGeneralT3Physics,tests/python/test_general_scalar_c5_proof.py,10,STATIC_IMPORT,from scripts.SummarizeGeneralT3Physics import (  # noqa: E402
+ValidateT3BCGeneralScalarSixFits,docs/T3_BC_GENERAL_SCALAR_SIX_FIT_VALIDATION_BATCH18.md,44,DOC_REFERENCE,- `scripts/ValidateT3BCGeneralScalarSixFits.py`
+ValidateT3BCGeneralScalarSixFits,docs/T3_BC_GENERAL_SCALAR_SIX_FIT_VALIDATION_BATCH18.md,57,DOC_REFERENCE,python -m scripts.ValidateT3BCGeneralScalarSixFits --run-id bc_six_validation_v1
+ValidateT3BCGeneralScalarSixFits,docs/T3_BC_GENERAL_SCALAR_SIX_FIT_VALIDATION_BATCH18.md,65,DOC_REFERENCE,python -m scripts.ValidateT3BCGeneralScalarSixFits --run-id bc_six_saved_v1 --saved-only
+ValidateT3BCGeneralScalarSixFits,tests/python/test_t3_bc_general_scalar_six_validation.py,12,STATIC_IMPORT,from scripts import ValidateT3BCGeneralScalarSixFits as v
+ValidateT3BCGeneralScalarSixFits,tests/python/test_t3_bc_general_scalar_six_validation.py,220,TEST_REFERENCE,"monkeypatch.setattr(sys,'argv',['ValidateT3BCGeneralScalarSixFits',"
+VerifyGeneralT3Stage22Live110101Fix,docs/GENERAL_T3_STAGE22_110101_LOCAL_CORRECTION.md,35,DOC_REFERENCE,- `scripts/VerifyGeneralT3Stage22Live110101Fix.py`: strict check of independently generated live Wolfram native tensor components and covariance.
+VerifyGeneralT3Stage22Live110101Fix,docs/GENERAL_T3_STAGE22_110101_LOCAL_CORRECTION.md,57,DOC_REFERENCE,python -m scripts.VerifyGeneralT3Stage22Live110101Fix
+VerifyGeneralT3Stage22Live110101Fix,tests/python/test_general_t3_stage22_live_110101_fix.py,6,STATIC_IMPORT,from scripts.VerifyGeneralT3Stage22Live110101Fix import check
+VerifyGeneralT3Stage24BCPostFix,docs/GENERAL_T3_STAGE24_BC_LOCAL_CORRECTION.md,48,DOC_REFERENCE,python -m scripts.VerifyGeneralT3Stage24BCPostFix
+VerifyGeneralT3Stage24BCPostFix,tests/python/test_general_t3_stage24_bc_postfix.py,9,STATIC_IMPORT,"from scripts.VerifyGeneralT3Stage24BCPostFix import FORMAT, verify"
+VerifyGeneralT3Stage24LiveBC,docs/GENERAL_T3_STAGE24_BC_LOCAL_CORRECTION.md,26,DOC_REFERENCE,"The old `Stage24BCRemainderCovariance.py`, `ExportGeneralT3Stage24BCNativeCovariance.wl`, and `VerifyGeneralT3Stage24LiveBC.py` are historical **pre-fix** diagnostics; do not rerun them against repaired native exports. Use the new post-fix "
+VerifyGeneralT3Stage24LiveBC,docs/GENERAL_T3_STAGE24_BC_REUSED_COVARIANCE.md,36,DOC_REFERENCE,"The live exporter has **not yet been run in this environment**. After it runs, `VerifyGeneralT3Stage24LiveBC.py` checks all sixteen original/proposed component arrays (two models × four couplings × two versions) and all covariance statuses "
+VerifyGeneralT3Stage24LiveBC,docs/GENERAL_T3_STAGE24_BC_REUSED_COVARIANCE.md,42,DOC_REFERENCE,- `scripts/VerifyGeneralT3Stage24LiveBC.py`
+VerifyGeneralT3Stage24LiveBC,docs/GENERAL_T3_STAGE24_BC_REUSED_COVARIANCE.md,59,DOC_REFERENCE,python -m scripts.VerifyGeneralT3Stage24LiveBC
+VerifyGeneralT3Stage24LiveBC,tests/python/test_general_t3_stage24_bc_covariance.py,12,STATIC_IMPORT,from scripts.VerifyGeneralT3Stage24LiveBC import verify
+run_comparison_study,T3_COMMAND_REFERENCE.md,48,DOC_REFERENCE,python scripts/run_comparison_study.py --help
+run_comparison_study,T3_COMMAND_REFERENCE.md,162,DOC_REFERENCE,**Script:** [`scripts/run_comparison_study.py`](https://github.com/Frankyang2002/T3neutrinomassmodelpipeline/blob/7969f23/scripts/run_comparison_study.py).
+run_comparison_study,T3_COMMAND_REFERENCE.md,165,DOC_REFERENCE,python scripts/run_comparison_study.py `
+run_comparison_study,T3_COMMAND_REFERENCE.md,169,DOC_REFERENCE,python scripts/run_comparison_study.py `
+run_comparison_study,T3_COMMAND_REFERENCE.md,1254,DOC_REFERENCE,| Main symbolic physics pipeline | `pipeline.py`; `scripts/run_comparison_study.py` | [3](#3-master-pipeline-symbolic-matching-and-full-runs) |
+run_comparison_study,tests/test_final_refactor_contract.py,131,TEST_REFERENCE,"assert (PROJECT_ROOT / ""scripts/run_comparison_study.py"").is_file()"
+run_regression,T3_COMMAND_REFERENCE.md,1071,DOC_REFERENCE,python scripts/run_regression.py --no-rematch
+run_regression,T3_COMMAND_REFERENCE.md,1074,DOC_REFERENCE,python scripts/run_regression.py
+run_regression,T3_COMMAND_REFERENCE.md,1077,DOC_REFERENCE,"`run_regression.py` accepts `--no-rematch` and `--verbose`. **Do not use its `--verbose` flag with a rematch on this commit**: the wrapper passes `--verbose` through to `pipeline.py`, but the current pipeline parser in `common/PipelineCLI.p"
+run_regression,T3_COMMAND_REFERENCE.md,1229,DOC_REFERENCE,"| `python scripts/run_regression.py --verbose` with rematch | Regression forwards `--verbose` to `pipeline.py`, which **has no `--verbose` option** in its current parser; avoid it. Plain regression or `--no-rematch` is the meaningful comman"
+run_regression,T3_COMMAND_REFERENCE.md,1255,DOC_REFERENCE,| Full-run wrappers and regression | `scripts/FullStudyOrganised.py`; `scripts/FullStudyShortNames.py`; `scripts/FullRunWithWithinModelReports.ps1` (**stale import**); `scripts/run_regression.py` | [3](#3-master-pipeline-symbolic-matching-a
+run_regression,T3_COMMAND_REFERENCE.md,1272,DOC_REFERENCE,| Tests | `python -m pytest -q`; `python pipeline.py --smoke`; `python scripts/run_regression.py` | [12](#12-tests-and-regression) |
+run_regression,tests/test_final_refactor_contract.py,132,TEST_REFERENCE,"assert (PROJECT_ROOT / ""scripts/run_regression.py"").is_file()"

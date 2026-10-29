@@ -126,8 +126,8 @@ def validate_replay(saved: dict, replay: dict) -> None:
 
 def replay_full_states(model: str, saved: dict, *, n_points: int = 20):
     """Use Batch7 checked integrator; return UV(MF) and EFT1(MS) full states."""
-    from scripts import Stage31CoupledUVRunning as s31
-    from scripts import Stage30CoupledA0UVRunning as s30
+    from scripts import CoupledUVRunning as s31
+    from scripts import CoupledA0UVRunning as s30
     from Numerical.core.StateVector import unpack_uv_state
     from Numerical.experimental.GeneralT3ScalarRGState import (
         load_registry, GeneralT3ScalarRGState, pack_general_scalar_state,
@@ -196,7 +196,7 @@ def replay_full_states(model: str, saved: dict, *, n_points: int = 20):
 def verify_prior_stage36(prior: dict, model: str, artifact: Path,
                          *, root: Path = ROOT) -> None:
     """Stage36 is a benchmark comparison, never an arbitrary C5 matrix input."""
-    from scripts import Stage36FinalWeinbergRunning as s36
+    from scripts import FinalWeinbergRunning as s36
     require(prior.get('format') == s36.FORMAT and prior.get('status') == s36.STATUS
             and prior.get('model') == model
             and prior.get('source_existing_c5_used') is True
@@ -241,7 +241,7 @@ def fractional_matrix_change(reference: np.ndarray, candidate: np.ndarray) -> fl
 
 def run_model(model: str, *, batch7_dir: Path = B7_DIR,
               stage36_dir: Path = STAGE36_DIR, outdir: Path = OUT) -> dict:
-    from scripts import Stage36FinalWeinbergRunning as s36
+    from scripts import FinalWeinbergRunning as s36
     from Numerical.running.FinalC5TrajectoryAdapter import extract_final_c5_inputs
     from Numerical.running.SMWeinbergStage import evaluate_final_weinberg_json
     from Numerical.running.ScalarThresholdBoundary import (

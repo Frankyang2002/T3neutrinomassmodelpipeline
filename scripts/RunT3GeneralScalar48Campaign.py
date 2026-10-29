@@ -27,9 +27,9 @@ from scipy.optimize import least_squares
 from scipy.stats import qmc
 
 from scripts import FitT3BPlus1GeneralThreeStudies as b21
-from scripts import Stage30CoupledA0UVRunning as s30
-from scripts import Stage31CoupledUVRunning as s31
-from scripts import Stage34IntermediateEFTRunning as s34
+from scripts import CoupledA0UVRunning as s30
+from scripts import CoupledUVRunning as s31
+from scripts import IntermediateEFTRunning as s34
 
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = ROOT / 'RGE/general/generated/general_rgbeta_quartic_registry.json'

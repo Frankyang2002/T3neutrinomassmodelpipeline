@@ -132,10 +132,10 @@ def test_complex_matrix_check():
 
 def test_reject_wrong_prior(monkeypatch,tmp_path):
     import types
-    fake = types.ModuleType('scripts.Stage36FinalWeinbergRunning')
+    fake = types.ModuleType('scripts.FinalWeinbergRunning')
     fake.FORMAT = 'stage36-t3-existing-c5-sm-weinberg-v1'
     fake.STATUS = 'SuccessExistingC5WeinbergRunning'
-    monkeypatch.setitem(sys.modules, 'scripts.Stage36FinalWeinbergRunning',fake)
+    monkeypatch.setitem(sys.modules, 'scripts.FinalWeinbergRunning',fake)
     artifact = tmp_path/'source.json'
     artifact.write_text('matched')
     prior = {'format':fake.FORMAT,'status':fake.STATUS,'model':'B_-1',

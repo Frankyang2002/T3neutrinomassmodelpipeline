@@ -273,8 +273,8 @@ def sample_uv_trajectory(model, run_source):
     import numpy as np
     from scipy.integrate import solve_ivp
     from scripts import RunT3GeneralScalar48Campaign as bulk
-    from scripts import Stage31CoupledUVRunning as s31
-    from scripts import Stage30CoupledA0UVRunning as s30
+    from scripts import CoupledUVRunning as s31
+    from scripts import CoupledA0UVRunning as s30
     from Numerical.core.StateVector import unpack_uv_state
     registry=bulk.read(bulk.REGISTRY)
     entry,new,reused=bulk.inventory(registry,model)

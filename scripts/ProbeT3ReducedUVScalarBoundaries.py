@@ -170,7 +170,7 @@ def physical_rge_oracle(*, source, run_dir):
     """Prepare native candidate one-loop equations once and return RG(x)."""
     from scripts import RunT3GeneralScalar48Campaign as bulk
     from scripts import RunT3ReducedScalarSobolComparison as reduced
-    from scripts import Stage31CoupledUVRunning as s31
+    from scripts import CoupledUVRunning as s31
 
     reg = bulk.read(bulk.REGISTRY)
     require(len(reg.get('models', {})) == 16, 'unexpected quartic registry')

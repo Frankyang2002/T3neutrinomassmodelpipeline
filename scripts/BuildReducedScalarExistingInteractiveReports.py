@@ -336,7 +336,7 @@ def _low_running(ctx, uv, eft, c5, vev, n_points):
 
 def rge_record(ctx, mode, n_points):
     from Numerical.core.StateVector import unpack_uv_state
-    from scripts import Stage31CoupledUVRunning as s31
+    from scripts import CoupledUVRunning as s31
     vector, reference = chosen_parameters(ctx, mode)
     bulk = ctx["bulk"]
     cfg = bulk.update_yukawas(ctx["hist"], vector)

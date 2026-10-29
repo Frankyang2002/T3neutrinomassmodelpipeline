@@ -7,7 +7,7 @@ Files inspected: `RGE/general/generated/general_rgbeta_quartic_registry.json`,
 `Lagrangian/interactions/{GeneralScalarOperators,GeneralScalarVerifiedQuartics,ScalarPotential}.wl`,
 `RGE/running/rgbeta/{T3RGBetaModel,RunGeneralT3RGBeta}.wl`,
 `Numerical/experimental/GeneralT3ScalarRGState.py`,
-`scripts/{Stage33FermionThresholdHandoff,Stage34IntermediateEFTRunning,ExportGeneralT3Stage34EFT1OneLoop}.py/.wl`,
+`scripts/{FermionThresholdHandoff,IntermediateEFTRunning,ExportGeneralT3EFT1OneLoop}.py/.wl`,
 and documentation for Stages 22–29 and 34–36.
 
 The public source contains all 16 generated RGBeta extension files, the

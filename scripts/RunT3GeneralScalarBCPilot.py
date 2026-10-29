@@ -71,7 +71,7 @@ def finite_fraction(value: float, name: str, *, maximum: float) -> float:
 
 def study_source(case: str, model: str, registry: dict, *, root: Path = ROOT):
     """Read only the saved historical fitted config and fit, never fit again."""
-    from scripts import Stage31CoupledUVRunning as s31
+    from scripts import CoupledUVRunning as s31
     require(case in CASES and model in MODELS, 'unsupported study/model')
     entry, new, reused = s31.inventories(registry, model)
     source_root, uv_on, expected_lam = CASES[case]
@@ -145,7 +145,7 @@ def added_boundary(new: tuple[str,...], reused: tuple[str,...],
 
 def prepare_initial(record: dict, registry: dict, scenario: str,
                     quartic_fraction: float, mixing_fraction: float):
-    from scripts import Stage31CoupledUVRunning as s31
+    from scripts import CoupledUVRunning as s31
     from Numerical.core.StateVector import unpack_uv_state
     from Numerical.experimental.GeneralT3ScalarRGState import (
         GeneralT3ScalarRGState, pack_general_scalar_state)

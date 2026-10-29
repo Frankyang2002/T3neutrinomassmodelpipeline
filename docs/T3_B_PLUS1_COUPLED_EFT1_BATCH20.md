@@ -21,7 +21,7 @@ This batch fills precisely that gap, **for B(+1) only**:
   Matchete `lambdaT3ExtraQ022000I1`.
 - Reads the checked **Stage 33** fermion-threshold state and its nonzero sidecar
   boundary, enforcing the 16-model summary and the saved Stage31 hashes via
-  the current `Stage34IntermediateEFTRunning.verify_boundary` implementation.
+  the current `IntermediateEFTRunning.verify_boundary` implementation.
 - Uses the production InputForm beta evaluator and state/beta-vector conventions
   to integrate **all 18 baseline coordinates + one complex extra quartic**
   simultaneously from 100 TeV to 1 TeV, one-loop DOP853, rtol=1e-8,

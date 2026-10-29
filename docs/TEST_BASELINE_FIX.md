@@ -21,21 +21,21 @@ post-fix suite, which still needs to be executed in the user's Windows checkout.
 - `tests/test_t3b_exploratory_coupled_benchmark.py`: test the **net** diagonal
   Weinberg coefficient `g5 - 3(Ye Ye^dag)ii`. The previous `g5 - (Ye Ye^dag)ii`
   did not include both flavour-leg corrections; this changes a test, not an RGE.
-- `tests/python/test_general_t3_stage15.py`: explicitly require that the
+- `tests/python/test_general_t3_quartic_convention_c5.py`: explicitly require that the
   historical two-coupling source checker **reject** the post-Stage24 native
   RGBeta source rather than falsely calling the old map certified. Its
   independent synthetic source-contract tests are still retained.
-- `tests/python/test_general_t3_stage22_aligned_geometry.py`: preserve exact
+- `tests/python/test_general_t3_tensor_aligned_geometry.py`: preserve exact
   50-slot/46-block geometry checks, now accepting the registered post-Stage24
   `CorrectedBCReusedInvariantCandidate` status in addition to historical phases.
   Continue to require `physical_coupling_map_certified == False`.
-- `tests/python/test_general_t3_stage22_explicit_basis.py`: the JSON report
+- `tests/python/test_general_t3_tensor_explicit_basis.py`: the JSON report
   omits zero-count status fields; use zero defaults and an exhaustive slot sum
   rather than indexing `ExplicitGeometryMismatch` when it is absent.
-- `tests/python/test_general_t3_stage23_prefactors.py`: accept the documented
+- `tests/python/test_general_t3_prefactors.py`: accept the documented
   post-Stage24 classification while retaining the source-normalisation,
   physical-map uncertainty, and signed two-dimensional map tests.
-- `tests/python/test_general_t3_stage24_bc_covariance.py`: the historical
+- `tests/python/test_general_t3_bc_covariance.py`: the historical
   *pre-four-invariant-fix* synthetic reconstruction only applies to that
   source phase. Skip just this phase-dependent test if saved source expressions
   are already corrected, while keeping independent covariance and fail-closed
@@ -60,11 +60,11 @@ if ((git rev-parse HEAD).Trim() -ne $expected) { throw 'Different commit: inspec
 $targets = @(
     'tests/test_c12_group_factor_pdf_tables.py',
     'tests/test_t3b_exploratory_coupled_benchmark.py',
-    'tests/python/test_general_t3_stage15.py',
-    'tests/python/test_general_t3_stage22_aligned_geometry.py',
-    'tests/python/test_general_t3_stage22_explicit_basis.py',
-    'tests/python/test_general_t3_stage23_prefactors.py',
-    'tests/python/test_general_t3_stage24_bc_covariance.py',
+    'tests/python/test_general_t3_quartic_convention_c5.py',
+    'tests/python/test_general_t3_tensor_aligned_geometry.py',
+    'tests/python/test_general_t3_tensor_explicit_basis.py',
+    'tests/python/test_general_t3_prefactors.py',
+    'tests/python/test_general_t3_bc_covariance.py',
     'tests/python/test_t3_general_scalar_numerical_campaign.py'
 )
 if (git status --porcelain -- $targets) { throw 'Local test modifications detected: back up and inspect first' }

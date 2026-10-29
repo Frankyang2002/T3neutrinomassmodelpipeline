@@ -10,7 +10,7 @@ The same preexisting scalar/Yukawa/mass representation and the same frozen fitte
 2. Tree-project at the fermion threshold; native candidate scalar EFT1 one-loop RGBeta, \(10^5 \to 10^3\) GeV, including the allowed quadratic coefficient.
 3. Fail if saved Batch 7 input hashes or endpoint snapshots disagree, if scalar squared masses are nonpositive, or if the extra quadratic mixing is appreciable: the existing Stage36 matching presumes diagonal complex scalars.
 4. Reuse the model's **own existing validated hierarchical** fixed-order \(C_5\) artifact; evaluate it with the newly RG-evolved Yukawas, masses and baseline \(\lambda_{T3}\) using `Numerical/running/FinalC5TrajectoryAdapter.py` and `SMWeinbergStage.py`.
-5. Reuse SM+Weinberg one-loop evolution \(10^3 \to 100\) GeV and existing neutrino observables code, following `scripts/Stage36FinalWeinbergRunning.py`.
+5. Reuse SM+Weinberg one-loop evolution \(10^3 \to 100\) GeV and existing neutrino observables code, following `scripts/FinalWeinbergRunning.py`.
 6. Compare \(\|C_5^{\rm zero-boundary}-C_5^{\rm Stage36}\|_F/\|C_5^{\rm Stage36}\|_F\) at \(10^3\) and \(100\) GeV, and output both neutrino spectra. **This is a boundary-scenario comparison**: original Stage36 starts with nonzero Stage29 additional quartics, not the zero boundary. It is NOT \(\epsilon_{C_5}\) from inserting a generated extra quartic alone.
 
 ## Delivered project paths

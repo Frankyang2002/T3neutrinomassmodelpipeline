@@ -196,7 +196,7 @@ def integrate(initial: np.ndarray, layout: Any, betas: Mapping[str, str],
 
 def state_rows(solution: Any, layout: Any) -> tuple[list[dict], Any]:
     from Numerical.running.IntermediateScalarStateVector import unpack_intermediate_scalar_state
-    from scripts import Stage33FermionThresholdHandoff as s33
+    from scripts import FermionThresholdHandoff as s33
     rows = []
     for i, t in enumerate(solution.t):
         st = unpack_intermediate_scalar_state(solution.y[:layout.size, i], layout,
@@ -239,11 +239,11 @@ def baseline_control_compare(reference: Path, zero_state: Any,
 def execute(run_id: str, *, folder: Path = INPUT, root: Path = ROOT,
             wolframscript: str = 'wolframscript', timeout_sec: int = 3600,
             points: int = 24, output_root: Path | None = None) -> Path:
-    from scripts import Stage34IntermediateEFTRunning as s34
+    from scripts import IntermediateEFTRunning as s34
     from Numerical.running.IntermediateScalarStateVector import (
         pack_intermediate_scalar_state, unpack_intermediate_scalar_state,
     )
-    from scripts import Stage33FermionThresholdHandoff as s33
+    from scripts import FermionThresholdHandoff as s33
     from Numerical.running.ScalarThresholdBoundary import scalar_threshold_masses
 
     run_id = validate_run_id(run_id)

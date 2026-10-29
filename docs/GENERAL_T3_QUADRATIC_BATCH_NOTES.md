@@ -9,7 +9,7 @@ Read-only source reference: `Frankyang2002/T3neutrinomassmodelpipeline`, public 
 - `Lagrangian/interactions/GeneralScalarOperators.wl`, `GeneralScalarVerifiedQuartics.wl`
 - `RGE/running/rgbeta/T3RGBetaModel.wl`, `RunGeneralT3RGBeta.wl`
 - `Numerical/experimental/GeneralT3ScalarRGState.py`, `GeneralT3ScalarQuadraticMasses.py`
-- `scripts/Stage33FermionThresholdHandoff.py`, `Stage34IntermediateEFTRunning.py`
+- `scripts/FermionThresholdHandoff.py`, `IntermediateEFTRunning.py`
 - 16-model Stage29 registry and the Stage22–29 physical tensor-map documentation.
 
 The user separately reports a successful 16-model **full quartic EFT1** computation. This batch does not rerun/rebuild the original matching or numerical infrastructure, and it does not overwrite Stage34–36.

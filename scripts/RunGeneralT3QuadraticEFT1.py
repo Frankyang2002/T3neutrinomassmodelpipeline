@@ -25,8 +25,8 @@ from typing import Any
 import numpy as np
 from scipy.integrate import solve_ivp
 
-from scripts import Stage33FermionThresholdHandoff as s33
-from scripts import Stage34IntermediateEFTRunning as s34
+from scripts import FermionThresholdHandoff as s33
+from scripts import IntermediateEFTRunning as s34
 from Numerical.experimental.GeneralT3ScalarRGState import (
     GeneralT3ScalarRGState, load_registry, pack_general_scalar_state,
     unpack_general_scalar_state, registry_model,

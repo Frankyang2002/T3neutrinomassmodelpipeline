@@ -324,8 +324,8 @@ def one_scale_preview(model: str, end: dict, *, folder: Path) -> dict:
 
 def run_model(model: str, *, outdir: Path = OUT, preview: bool = False,
               n_points: int = 20) -> dict:
-    from scripts import Stage31CoupledUVRunning as s31
-    from scripts import Stage30CoupledA0UVRunning as s30
+    from scripts import CoupledUVRunning as s31
+    from scripts import CoupledA0UVRunning as s30
     from Numerical.core.StateVector import unpack_uv_state
     from Numerical.experimental.GeneralT3ScalarRGState import (
         load_registry, GeneralT3ScalarRGState,

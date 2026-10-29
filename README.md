@@ -19,13 +19,29 @@ This README is the **project entry point**, not a statement that every phenomeno
 
 ## Documentation
 
+### Current scientific reference
+
 - [`docs/PHYSICS.md`](docs/PHYSICS.md): model conventions, Lagrangian, matching, one-loop power counting, group factors and thresholds.
 - [`docs/SCALAR_SECTOR.md`](docs/SCALAR_SECTOR.md): **authoritative scalar-potential justification** — full operator inventory, leading-one-loop selection, zero-boundary power counting, quadratic mixing, numerical scope, and limitations.
 - [`docs/NUMERICAL.md`](docs/NUMERICAL.md): implementation ownership, benchmark evolution, fitting and testing.
 - [`docs/RESULTS.md`](docs/RESULTS.md): benchmark provenance, verified numerical findings, limitations and references.
 - [`docs/T3_THESIS_PLAN.md`](docs/T3_THESIS_PLAN.md): working thesis narrative and figure plan; individual historical statements must be checked against completed results.
 
-The earlier scalar Batch 1–8 documents and historical stage notes are **retained for now**. `docs/SCALAR_SECTOR.md` consolidates their scalar-relevance argument but does not replace the machine-readable scientific audits. Obsolete documentation will be archived only after reference and dependency verification; this documentation-only change does not delete it.
+### Historical research and implementation records
+
+Start with [`docs/RESEARCH_HISTORY_INDEX.md`](docs/RESEARCH_HISTORY_INDEX.md) to find an original research note by filename, locate its consolidated section, and check the recorded source hash. Historical records document experiments, corrections and provisional findings; they do **not** supersede the current scientific reference or certify unresolved calculations.
+
+| Topic | Consolidated record |
+|---|---|
+| SU(2) tensors, quartics and RGBeta conventions | [`RESEARCH_GENERAL_T3_TENSORS_AND_QUARTICS.md`](docs/RESEARCH_GENERAL_T3_TENSORS_AND_QUARTICS.md) |
+| UV running and matching | [`RESEARCH_GENERAL_T3_RUNNING_AND_MATCHING.md`](docs/RESEARCH_GENERAL_T3_RUNNING_AND_MATCHING.md) |
+| Matchete and mixed scalar mass eigenstates | [`RESEARCH_MATCHETE_AND_MASS_EIGEN.md`](docs/RESEARCH_MATCHETE_AND_MASS_EIGEN.md) |
+| EFT1 thresholds and Weinberg operator | [`RESEARCH_EFT1_THRESHOLDS_AND_WEINBERG.md`](docs/RESEARCH_EFT1_THRESHOLDS_AND_WEINBERG.md) |
+| Numerical fits, feasibility and benchmarks | [`RESEARCH_NUMERICAL_FITS_AND_BENCHMARKS.md`](docs/RESEARCH_NUMERICAL_FITS_AND_BENCHMARKS.md) |
+| General-scalar studies and pilots | [`RESEARCH_GENERAL_SCALAR_AND_PILOTS.md`](docs/RESEARCH_GENERAL_SCALAR_AND_PILOTS.md) |
+| Repository cleanup and migration history | [`REPOSITORY_MAINTENANCE_HISTORY.md`](docs/REPOSITORY_MAINTENANCE_HISTORY.md) |
+
+The historical documents have been consolidated by topic. The external archival manifests and Git history preserve original paths and provenance; saved machine-readable scientific audits and numerical results remain separate from these explanatory records. For report regeneration, see [`docs/REGENERATE_CURRENT_REPORTS.md`](docs/REGENERATE_CURRENT_REPORTS.md).
 
 ## PowerShell commands
 
@@ -62,5 +78,3 @@ The final reduced-scalar numerical report is under `output/studies/reduced_scala
 ## Source
 
 Repository: https://github.com/Frankyang2002/T3neutrinomassmodelpipeline
-
-This documentation consolidation is based on a read-only inspection of commit `aa4dd2b7b6d2c31494e45290a88004822a8c43c5`. No executable source file or saved scientific data is changed by the documentation ZIP.

@@ -7,7 +7,6 @@ old scalar report output, or manufacture uncomputed intermediate LLSS Wilson flo
 from __future__ import annotations
 
 import argparse
-import ast
 import csv
 import html
 import json
@@ -20,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / 'output/studies/general_scalar_extended/full_scalar_frozen_64'
 OUTPUT = ROOT / 'Reports/output/display_general_scalar_frozen_64'
 WEINBERG_FORMAT = 't3-frozen-64-saved-sm-weinberg-trajectory-v1'
+NARROW_GAMMA = tuple(round(0.95 + 0.01*i, 2) for i in range(11))
 
 CSS = '''
 :root{font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:#203048;background:#f4f7fb}
@@ -160,28 +160,24 @@ def table_rows(cells):
 
 
 def original_interactive_rge_template() -> str:
-    """Extract the ACTUAL original HTML canvas from InteractiveModelComparison.py.
+    """Read the EXACT visual layout provided as optimised_rge.html.
 
-    Do not fork the HTML/JS renderer. Fail if its source structure changes.
+    The bundled template retains the user's original HTML/CSS/canvas JavaScript.
+    Only the large embedded historical data, menu options, and title are tokens.
+    No reconstructed/forked drawing interface is used.
     """
-    src = ROOT / 'Numerical/plotting/InteractiveModelComparison.py'
-    tree = ast.parse(src.read_text(encoding='utf-8-sig'))
-    for node in tree.body:
-        if isinstance(node, ast.FunctionDef) and node.name == 'write_dashboard':
-            for statement in node.body:
-                if (isinstance(statement, ast.Assign)
-                    and any(isinstance(t, ast.Name) and t.id == 'template'
-                            for t in statement.targets)
-                    and isinstance(statement.value, ast.Constant)
-                    and isinstance(statement.value.value, str)):
-                    template = statement.value.value
-                    policy.require(all(t in template for t in
-                        ('__TITLE__','__OPTIONS__','__DATA__','__META__',
-                         'id="quantity"','id="plot"','id="zoomFinal"',
-                         'id="yScaleMode"','id="resetZoom"')),
-                         'original interactive RGE template contract changed')
-                    return template
-    raise RuntimeError('Missing original write_dashboard() template; no duplicate HTML fallback')
+    path = ROOT / 'Numerical/plotting/templates/T3OptimisedReferenceRGE.html'
+    template = path.read_text(encoding='utf-8')
+    policy.require(all(template.count(token) == expected for token, expected in (
+        ('__TITLE__', 2), ('__OPTIONS__', 1),
+        ('__DATA__', 1), ('__META__', 1))),
+        'uploaded RGE reference template markers missing or duplicated')
+    policy.require(all(token in template for token in (
+        'id="quantity"', 'id="plot"', 'id="zoomFinal"',
+        'id="yScaleMode"', 'id="resetZoom"', 'id="showComponents"',
+        'const COLORS=', 'function draw(){')),
+        'uploaded RGE canvas controls have changed')
+    return template
 
 
 def curve_from_points(points, field):
@@ -213,26 +209,36 @@ def curve_from_points(points, field):
 
 # Original-model selector keys retained where defined in InteractiveModelComparison.
 RGE_OPTIONS = (
-    ('Weinberg operator C5 (final SM EFT)', (
-        ('c5_norm','||C₅||F','GeV⁻¹'),
-        ('c5_11','|C₅₁₁|','GeV⁻¹'),('c5_12','|C₅₁₂|','GeV⁻¹'),
-        ('c5_13','|C₅₁₃|','GeV⁻¹'),('c5_22','|C₅₂₂|','GeV⁻¹'),
-        ('c5_23','|C₅₂₃|','GeV⁻¹'),('c5_33','|C₅₃₃|','GeV⁻¹'),
+    ('Weinberg operator — final SM EFT', (
+        ('c5_norm','||C₅||F — numerical final EFT','GeV⁻¹'),
+        ('c5_11','|C₅¹¹| — final EFT','GeV⁻¹'),
+        ('c5_12','|C₅¹²| — final EFT','GeV⁻¹'),
+        ('c5_13','|C₅¹³| — final EFT','GeV⁻¹'),
+        ('c5_22','|C₅²²| — final EFT','GeV⁻¹'),
+        ('c5_23','|C₅²³| — final EFT','GeV⁻¹'),
+        ('c5_33','|C₅³³| — final EFT','GeV⁻¹'),
     )),
-    ('Neutrino masses', (
-        ('m1','m₁','eV'),('m2','m₂','eV'),('m3','m₃','eV'),
-    )),
-    ('Neutrino oscillation observables', (
-        ('dm21','Δm²₂₁','eV²'),('dm3l','Δm²₃ℓ','eV²'),
+    ('Other running observables', (
+        ('dm21','Solar splitting Δm²₂₁','eV²'),
+        ('dm3l','Atmospheric splitting |Δm²₃ℓ|','eV²'),
         ('s12','sin²θ₁₂',''),('s13','sin²θ₁₃',''),
         ('s23','sin²θ₂₃',''),
+        ('m1','m₁','eV'),('m2','m₂','eV'),('m3','m₃','eV'),
     )),
 )
 
 
+def reference_model_name(model):
+    # Same model labels and colour/order mapping as uploaded optimised_rge.html.
+    family, alpha = model.split('_')
+    policy.require(alpha[0] in '+-' and alpha[1:].isdigit(),
+                   'invalid T3 model label')
+    return 'T3-' + family + '-' + ('p' if alpha[0] == '+' else 'm') + alpha[1:]
+
+
 def rge_payload(records):
     """Convert verified operator trajectories to original interactive RGE schema."""
-    data = {'models':list(policy.MODELS),
+    data = {'models':sorted(reference_model_name(m) for m in policy.MODELS),
             'scales':{'mu_uv':1e7,'mu_fermion_threshold':1e5,
                       'mu_scalar_threshold':1e3,'mu_low':100.},
             'quantities':{},'overlays':{},'matched':{},'components':{},
@@ -250,62 +256,55 @@ def rge_payload(records):
             for cell, _files, trajectory in records:
                 if trajectory is None:
                     continue
-                curves[cell['model']] = curve_from_points(trajectory['points'],key)
+                curves[reference_model_name(cell['model'])] = curve_from_points(trajectory['points'],key)
             if curves:
                 data['quantities'][key] = curves
             choices.append(f'<option value="{esc(key)}">{esc(label)}</option>')
         options.append(f'<optgroup label="{esc(group)}">'+''.join(choices)+'</optgroup>')
+    # The example report also has an analytic LLSS selector. Preserve it as
+    # an explicitly NON-numerical diagnostic; no C12 Wilson data exist here.
+    meta['llss_kernel'] = {'label': 'LLSS one-loop kernel η (not C₁₂)',
+                           'unit': 'dimensionless',
+                           'block': 'analytic_kernel', 'weinberg': False}
+    options.insert(1, '<optgroup label="Weinberg-like LLSS — analytic diagnostic">'
+                      '<option value="llss_kernel">LLSS one-loop kernel η '
+                      '(not numerical C₁₂)</option></optgroup>')
     return data, meta, ''.join(options)
 
 
 def render_original_interactive(template, benchmark, records):
-    """Use the source HTML/JS canvas; adapt DATA and textual physics labels only."""
+    """Keep the uploaded optimised_rge.html CSS, DOM and canvas unchanged."""
     policy.require(all(marker in template for marker in
                 ('__TITLE__','__OPTIONS__','__DATA__','__META__')),
-                'original interactive canvas placeholders missing')
+                'uploaded interactive canvas placeholders missing')
     data, meta, options = rge_payload(records)
-    title = 'T3 interactive RGE — C5 and neutrino observables — '+benchmark
+    title = 'T3 '+benchmark.replace('_',' ').title()+' - Interactive RGE Running'
     page = (template.replace('__TITLE__',esc(title))
             .replace('__OPTIONS__',options)
             .replace('__DATA__',json.dumps(data,allow_nan=False,separators=(',',':')).replace('<','\\u003c'))
             .replace('__META__',json.dumps(meta,allow_nan=False,separators=(',',':')).replace('<','\\u003c')))
-    # The ORIGINAL report defaults to a 1e7 -> 100 GeV view, appropriate for
-    # its multi-EFT dataset. Here every available trace begins at 1 TeV.
+    # Keep all original zoom controls. Actual frozen-64 SM+Weinberg series
+    # start at 1 TeV, not at the old reference file's 10^7 GeV UV scale.
     original = 'return [s.mu_uv||1e7,s.mu_low||100];'
-    policy.require(original in page, 'original RGE zoom logic changed')
-    page = page.replace(original, 'return [s.mu_scalar_threshold||1e3,s.mu_low||100];')
+    policy.require(original in page, 'reference RGE zoom logic changed')
+    page = page.replace(original, 'return [s.mu_scalar_threshold||1e3,s.mu_low||100];', 1)
+    # No additional cards, banners or custom canvas: the original styling is
+    # untouched. The existing header/caption communicates the data coverage.
     old_header = ('Numerical integration direction: UV → IR. Saved benchmark '
                   'trajectories; no matching or RGE recalculation.')
-    policy.require(old_header in page, 'original RGE header text changed')
-    page = page.replace(old_header,
-        'Original T3 interactive RGE renderer. Verified saved numerical SM+Weinberg '
-        'running at μ = 1 TeV → 100 GeV; no physics recomputation in HTML.')
-    # Original axis controls, checkbox model overlays, zoom buttons, scroll/
-    # double-click zoom, and y-axis scaling all remain owned by the old canvas.
+    policy.require(old_header in page, 'reference RGE header changed')
     count = sum(w is not None for _,_,w in records)
     outliers = [c['model'] for c,f,w in records
                 if endpoint_screen(f.get('neutrino')) == 'MASS_SCALE_OUTLIER']
-    banner = ('<div style="margin:12px 20px;padding:12px;border:1px solid #d6dee8;'
-              'font-size:13px;background:#f8fafc">'
-              '<strong>Numerical scope:</strong> final Weinberg coefficient C₅(μ) '
-              'and derived neutrino masses, gaps and mixing angles, 1 TeV → 100 GeV. '
-              'The intermediate EFT C₁₂ (LLSS) Wilson trajectory was <strong>not computed</strong> '
-              'for these frozen-64 cases; no η-kernel substitute is displayed. '
-              'UV is frozen. Model-specific general-scalar matching remains conditional; '
-              'six self-bilinear cases omit their mixing contribution. '
-              f'Verified SM+Weinberg trajectories: {count}/16. '
-              f'Mass-scale outliers: {len(outliers)}/16 '
-              f'({esc(", ".join(outliers)) if outliers else "none"}). '
-              '<a href="all_results.html">All numerical results</a> · '
-              '<a href="sensitivity_ovals.html">Sensitivity ovals</a> · '
-              '<a href="../index.html">All benchmarks</a>.</div>')
-    anchor = '<div class="layout"><aside>'
-    policy.require(anchor in page, 'original interactive layout marker changed')
-    page = page.replace(anchor,banner+anchor,1)
-    # Avoid accidentally leaving placeholders unresolved.
+    warning = (f'Saved SM+Weinberg running 1 TeV → 100 GeV ({count}/16 models). '
+               'Intermediate C₁₂ running NOT computed; LLSS η is analytic only. '
+               'Full general-scalar matching is NOT certified. '
+               f'Mass-scale outliers: {len(outliers)}/16. '
+               'Sensitivity and results: see benchmark index.')
+    page = page.replace(old_header, esc(warning), 1)
     policy.require(all(k not in page for k in
                   ('__TITLE__','__OPTIONS__','__DATA__','__META__')),
-                  'unresolved original interactive HTML placeholders')
+                  'reference RGE template contains unfilled tokens')
     return page
 
 
@@ -335,7 +334,13 @@ def scans_for(cell, files, root, scan_id):
                    'gamma scan is from an incompatible numerical source')
     with path.open(newline='',encoding='utf-8-sig') as f:
         lines=list(csv.DictReader(f))
-    required={(d,float(g)) for d in policy.DIRECTIONS for g in source['gamma']}
+    saved_gamma = tuple(float(x) for x in source['gamma'])
+    policy.require(len(saved_gamma) == len(NARROW_GAMMA) and
+                   all(math.isclose(x,y,rel_tol=0,abs_tol=1e-12)
+                       for x,y in zip(saved_gamma,NARROW_GAMMA)),
+                   'sensitivity must use newly calculated γ=0.95..1.05, Δγ=0.01; '
+                   'do not reuse 0.5..1.5 scans')
+    required={(d,float(g)) for d in policy.DIRECTIONS for g in saved_gamma}
     policy.require(len(lines)==len(required),'incomplete gamma scan')
     indexed={}
     for r in lines:
@@ -392,11 +397,11 @@ def sensitivity_html(benchmark,rows,base,scan_id):
     policy.require(text!=original.HTML,'missing sensitivity renderer placeholder')
     text=text.replace('Individually fitted T3 model sensitivity','Frozen general-scalar sensitivity — '+benchmark)
     text=text.replace('Each model uses its own fitted λT3, Yukawa matrices and other fitted parameters. Data from saved scans only — no RGE recomputation.',
-                'Genuine T1/T2/T3 perturbations at 100 TeV. Original historical Yukawa seeds are NOT reoptimised for the general scalar potential.')
+                'Genuine T1/T2/T3 perturbations at 100 TeV, γ=0.95–1.05 in steps of 0.01. Original historical Yukawa seeds are NOT reoptimised for the general scalar potential.')
     text=text.replace('fitted models plotted','frozen-general-scalar candidate models plotted')
     text=text.replace('about each fitted centre','about each saved gamma=1 centre')
     explanation=('<div style="margin:12px;padding:12px;background:#fff7e6;border:1px solid #ddc999">'
-                 '<b>Physics status:</b> General-scalar candidate RGE/matching only. '
+                 '<b>Sensitivity γ=0.95–1.05, Δγ=0.01:</b> New numerical T1/T2/T3 scans, not old 0.5–1.5 results. General-scalar candidate RGE/matching only. '
                  'Six A/D/E self-bilinear C5 calculations are restricted unmixed controls; '
                  'the B/C one-scale mixing result is conditional. No complete sequential EFT matching. '
                  'The blue NuFIT and orange JUNO ovals are historical Gaussian approximations, '
@@ -497,7 +502,7 @@ def write_report(run_id: str, scan_id: str, output_id: str, destination: Path) -
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--run-id', default='frozen_general64_v1')
-    parser.add_argument('--scan-id', default='gamma_scans_v1')
+    parser.add_argument('--scan-id', default='gamma_095_105_v1')
     parser.add_argument('--weinberg-output-id', default='weinberg_running_v1')
     parser.add_argument('--output', type=Path)
     args = parser.parse_args(argv)

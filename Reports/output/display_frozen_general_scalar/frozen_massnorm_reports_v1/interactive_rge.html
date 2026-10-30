@@ -1,0 +1,33 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Frozen interactive RGE report</title><style>
+body{font-family:Arial,sans-serif;margin:0;background:#f6f7fb;color:#111}
+header{padding:1rem 1.5rem;background:#1f2a44;color:#fff} main{padding:1rem 1.5rem}
+.panel{background:#fff;border:1px solid #d8deea;border-radius:10px;padding:1rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.row{display:flex;gap:1rem;flex-wrap:wrap}.col{flex:1 1 300px}
+label{font-weight:700;display:block;margin-bottom:.3rem} select{padding:.35rem .5rem;width:100%;max-width:28rem}
+svg{width:100%;height:460px;background:#fff;border:1px solid #d8deea;border-radius:8px}
+table{border-collapse:collapse;width:100%} th,td{border:1px solid #d8deea;padding:.35rem .45rem;font-size:.92rem} th{background:#eef2fa;cursor:pointer}
+small.mono, code{font-family:Consolas,monospace} .legend span{display:inline-flex;align-items:center;margin-right:1rem;font-size:.92rem}
+.sw{width:14px;height:3px;display:inline-block;margin-right:.4rem}.note{font-size:.92rem;color:#444}
+</style></head>
+<body><header><h1>Frozen general-scalar RGE report</h1><div class="note">Frozen UV input couplings are displayed as saved numerical trajectories. For frozen models the UV couplings are flat by construction.</div></header>
+<main><div class="panel row"><div class="col"><label>Model / case</label><select id="modelSel"></select></div><div class="col"><label>Quantity</label><select id="qtySel"></select></div></div>
+<div class="panel"><svg id="chart" viewBox="0 0 960 460"></svg><div class="legend" id="legend"></div></div>
+<div class="panel"><h2>Saved source note</h2><div class="note" id="note"></div></div>
+<script>const DATA=[];const QMAP={"y1_fro":"||Y1||F","y2_fro":"||Y2||F","max_abs_y":"max |Y|","effective_weinberg_proxy":"Weinberg proxy","mass_hi_ev":"Largest mass [eV]","delta_m21_sq_ev2":"Δm²21 [eV²]","delta_m3l_sq_ev2":"Δm²3ℓ [eV²]"};
+function fmt(x){return (x===null||x===undefined||Number.isNaN(x))?'' : Number(x).toPrecision(6)}
+function clear(el){while(el.firstChild) el.removeChild(el.firstChild)}
+function line(svg, x1,y1,x2,y2, stroke, width=2, dash=''){const e=document.createElementNS('http://www.w3.org/2000/svg','line');e.setAttribute('x1',x1);e.setAttribute('y1',y1);e.setAttribute('x2',x2);e.setAttribute('y2',y2);e.setAttribute('stroke',stroke);e.setAttribute('stroke-width',width);if(dash)e.setAttribute('stroke-dasharray',dash);svg.appendChild(e);return e}
+function text(svg,x,y,s,size=12,anchor='middle'){const e=document.createElementNS('http://www.w3.org/2000/svg','text');e.setAttribute('x',x);e.setAttribute('y',y);e.setAttribute('font-size',size);e.setAttribute('text-anchor',anchor);e.textContent=s;svg.appendChild(e);return e}
+function polyline(svg, pts, stroke, width=2){const e=document.createElementNS('http://www.w3.org/2000/svg','polyline');e.setAttribute('fill','none');e.setAttribute('stroke',stroke);e.setAttribute('stroke-width',width);e.setAttribute('points',pts.map(p=>p.join(',')).join(' '));svg.appendChild(e);return e}
+function circle(svg,x,y,r,fill){const e=document.createElementNS('http://www.w3.org/2000/svg','circle');e.setAttribute('cx',x);e.setAttribute('cy',y);e.setAttribute('r',r);e.setAttribute('fill',fill);svg.appendChild(e);return e}
+
+const colors={uv:'#2357d4', eft:'#d45523'};
+const modelSel=document.getElementById('modelSel'), qtySel=document.getElementById('qtySel'), svg=document.getElementById('chart');
+const note=document.getElementById('note'), legend=document.getElementById('legend');
+const byKey=new Map(DATA.map(d=>[[d.model,d.case].join(' | '),d]));
+for(const key of [...byKey.keys()]){const o=document.createElement('option');o.value=key;o.textContent=key;modelSel.appendChild(o)}
+for(const [k,v] of Object.entries(QMAP)){const o=document.createElement('option');o.value=k;o.textContent=v;qtySel.appendChild(o)}
+function collectPoints(tr, field){const rows=[];for(const seg of ['uv_trajectory','eft1_trajectory']){for(const p of (tr[seg]||[])){if(p[field]!==undefined&&p[field]!==null&&!Number.isNaN(Number(p[field]))&&p.scale_gev) rows.push({seg, scale:Number(p.scale_gev), value:Number(p[field])})}}return rows.sort((a,b)=>a.scale-b.scale)}
+function render(){clear(svg); legend.innerHTML=''; const tr=byKey.get(modelSel.value); if(!tr) return; const field=qtySel.value; const pts=collectPoints(tr, field); note.textContent=tr.note||''; if(!pts.length){text(svg,480,230,'No saved points for this quantity',16); return;} const m={l:80,r:20,t:20,b:50,w:860,h:390}; const xs=pts.map(p=>Math.log10(p.scale)), ys=pts.map(p=>p.value); const xmin=Math.min(...xs), xmax=Math.max(...xs), ymin=Math.min(...ys), ymax=Math.max(...ys); const dx=(xmax-xmin)||1, dy=(ymax-ymin)||1; const X=x=>m.l+(x-xmin)/dx*m.w; const Y=y=>m.t+m.h-(y-ymin)/dy*m.h; for(let i=0;i<=5;i++){const xx=m.l+i*m.w/5; line(svg,xx,m.t,xx,m.t+m.h,'#e5e9f2',1); const val=(xmin+i*dx/5).toFixed(2); text(svg,xx,m.t+m.h+20,'1e'+val,11)} for(let i=0;i<=5;i++){const yy=m.t+i*m.h/5; line(svg,m.l,yy,m.l+m.w,yy,'#e5e9f2',1); const val=(ymax-i*dy/5); text(svg,m.l-8,yy+4,Number(val).toPrecision(4),11,'end')} line(svg,m.l,m.t,m.l,m.t+m.h,'#444',1.4); line(svg,m.l,m.t+m.h,m.l+m.w,m.t+m.h,'#444',1.4); text(svg,480,450,'Scale [GeV]',13); text(svg,15,35,QMAP[field],13,'start');
+ const segs=['uv_trajectory','eft1_trajectory']; for(const seg of segs){ const arr=(tr[seg]||[]).filter(p=>p[field]!==undefined&&p[field]!==null&&!Number.isNaN(Number(p[field]))&&p.scale_gev).sort((a,b)=>a.scale_gev-b.scale_gev); if(!arr.length) continue; const col=seg==='uv_trajectory'?colors.uv:colors.eft; const points=arr.map(p=>[X(Math.log10(Number(p.scale_gev))),Y(Number(p[field]))]); polyline(svg,points,col,2.2); for(const p of points) circle(svg,p[0],p[1],2.8,col); const s=document.createElement('span'); s.innerHTML=`<span class="sw" style="background:${col}"></span>${seg==='uv_trajectory'?'Frozen UV':'EFT / low-energy proxy'}`; legend.appendChild(s); } }
+modelSel.onchange=render; qtySel.onchange=render; render();</script></main></body></html>

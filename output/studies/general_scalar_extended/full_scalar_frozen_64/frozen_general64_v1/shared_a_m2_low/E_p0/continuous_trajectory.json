@@ -1,0 +1,2193 @@
+{
+  "format": "t3-continuous-general-scalar-candidate-v1",
+  "status": "CandidateContinuousUVFermionThresholdEFT1Integrated",
+  "model": "E_+0",
+  "settings": {
+    "model": "E_+0",
+    "benchmark": "shared_a_m2_low",
+    "frozen_uv": true,
+    "scalar_boundary_kind": "historical_lambda_plus_stage29_illustrative_extras",
+    "historical_yukawas_reoptimised_for_full_scalar": false,
+    "mu2_fraction": 0.01,
+    "mu2_phase_rad": 0.0,
+    "saved_points_per_segment": 16,
+    "uv_start_gev": 10000000.0,
+    "fermion_threshold_gev": 100000.0,
+    "scalar_endpoint_gev": 1000.0
+  },
+  "input_sha256": {
+    "RGE/general/generated/general_rgbeta_quartic_registry.json": "86a096410384641efa8f751b2aa98e8fee4bb6d3cccb4cfd116c559b71182eea",
+    "docs/general_scalar_trial_operator_manifest.json": "25e07dec41a681d38b461272d136d41e2becd378b5bac4ded86832ea02d70582",
+    "output/general_t3_stage22/stage29_convention_uv_handoff.json": "233c06db6b4359a816f3f63f4dd6258def7c7c2519ff4e864f926afa8088c66a",
+    "output/studies/fermion_start_lambda_comparison/5e-9/fitted/T3_dS1_3_dS2_3_dF_2_alpha_p0.json": "f44b9b01042b801c6c3ac9ad4130c424c0694ab576b83b8a3105f08361eed009",
+    "output/studies/fermion_start_lambda_comparison/5e-9/fits/T3_dS1_3_dS2_3_dF_2_alpha_p0.json": "ad02c096586c65987f5c6a3dbcfb006b1e598dfb6202908c3f862e1023b6cd10",
+    "output/general_t3_quadratic_eft1/E_p0_eft1_quadratic_live_rgbeta.json": "0cabfd482e90bb4f80a0f88e7751cc2e00c7b4eb105c1f9f4b1bfdd6b1e32947",
+    "RGE/running/rgbeta/RunGeneralT3QuadraticRGBeta.wl": "15cb837f83850a76a3397d61a5e7ab97ee5a59901d0facc583d7e69e73ee1d57",
+    "scripts/RunT3FullScalarContinuous.py": "d418a371cb46ae589304b76a6dc4e2b9b71323494fd135625d64b57962cd9af0",
+    "scripts/RunT3FullScalarNeutrino.py": "9bf549179e90879644fe33bb906a7185815cbde63b074364b1438142b77d7abc",
+    "scripts/RunT3FrozenFullScalar64.py": "52106a3e2bdb6518f0f84fe087d3dea1e051d5c18ae0e2167b6bf3cf3f9877ba",
+    "output/studies/fermion_start_lambda_comparison/5e-9/fitted/T3_dS1_1_dS2_3_dF_2_alpha_m2.json": "db48f6f9f378daa8c892acda7feabf1ba0b4e13533cb4829ae103268e9e05864",
+    "output/studies/fermion_start_lambda_comparison/5e-9/fits/T3_dS1_1_dS2_3_dF_2_alpha_m2.json": "c311c811ba453e5b4a127a28d67a9600235cf0ef368091d27e9eed6bb8d7e3f7"
+  },
+  "boundary_mode": "FROZEN_UV",
+  "yukawa_mode": "shared_a_m2",
+  "yukawa_seed_status": "historical_frozen_fit_not_full_general_refit",
+  "additional_quartic_boundary_status": "Stage29 illustrative values imposed at muF",
+  "quadratic_kind": "self_s1",
+  "quadratic_mu2_uv_gev2": {
+    "real": 10000.0,
+    "imag": 0.0
+  },
+  "quadratic_mu2_at_fermion_threshold_gev2": {
+    "real": 10000.0,
+    "imag": 0.0
+  },
+  "quadratic_mu2_at_scalar_endpoint_gev2": {
+    "real": 19060.69721733147,
+    "imag": 0.0
+  },
+  "new_extra_quartics_evolved": 6,
+  "reused_extra_quartics_evolved": 0,
+  "extra_quadratic_terms_evolved": 1,
+  "uv_ode_evaluations": 0,
+  "eft1_ode_evaluations": 212,
+  "heavy_fermion_threshold_masses_gev": [
+    100000.0,
+    110000.0,
+    120000.0
+  ],
+  "uv_trajectory": [
+    {
+      "mu_gev": 10000000.0,
+      "mS1Sq_gev2": 1306122.448979592,
+      "mS2Sq_gev2": 1000000.0,
+      "extra_quartics": {
+        "lambdaT3GeneralQ000211I1": {
+          "real": -0.01044465935734187,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000211I2": {
+          "real": -0.004777670321329065,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000400I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ001300I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ021010I1": {
+          "real": -0.01414213562373095,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ110200I1": {
+          "real": -0.01,
+          "imag": 0.0
+        }
+      },
+      "ordinary_quartics": {
+        "lambdaS1": 0.1,
+        "lambdaS2": 0.12,
+        "lambdaH1": 0.02,
+        "lambdaH2": 0.03,
+        "lambda12": 0.01,
+        "lambdaT3": {
+          "real": 2.5e-09,
+          "imag": 0.0
+        },
+        "lambdaH1Adj": 0.0,
+        "lambdaH2Adj": 0.0,
+        "lambdaS1Adj": 0.0,
+        "lambdaS2Adj": 0.0,
+        "lambda12Adj": 0.0,
+        "lambda12Cross": 0.0
+      },
+      "mu2_gev2": {
+        "real": 10000.0,
+        "imag": 0.0
+      }
+    },
+    {
+      "mu_gev": 7356422.544596407,
+      "mS1Sq_gev2": 1306122.448979592,
+      "mS2Sq_gev2": 1000000.0,
+      "extra_quartics": {
+        "lambdaT3GeneralQ000211I1": {
+          "real": -0.01044465935734187,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000211I2": {
+          "real": -0.004777670321329065,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000400I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ001300I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ021010I1": {
+          "real": -0.01414213562373095,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ110200I1": {
+          "real": -0.01,
+          "imag": 0.0
+        }
+      },
+      "ordinary_quartics": {
+        "lambdaS1": 0.1,
+        "lambdaS2": 0.12,
+        "lambdaH1": 0.02,
+        "lambdaH2": 0.03,
+        "lambda12": 0.01,
+        "lambdaT3": {
+          "real": 2.5e-09,
+          "imag": 0.0
+        },
+        "lambdaH1Adj": 0.0,
+        "lambdaH2Adj": 0.0,
+        "lambdaS1Adj": 0.0,
+        "lambdaS2Adj": 0.0,
+        "lambda12Adj": 0.0,
+        "lambda12Cross": 0.0
+      },
+      "mu2_gev2": {
+        "real": 10000.0,
+        "imag": 0.0
+      }
+    },
+    {
+      "mu_gev": 5411695.265464637,
+      "mS1Sq_gev2": 1306122.448979592,
+      "mS2Sq_gev2": 1000000.0,
+      "extra_quartics": {
+        "lambdaT3GeneralQ000211I1": {
+          "real": -0.01044465935734187,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000211I2": {
+          "real": -0.004777670321329065,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000400I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ001300I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ021010I1": {
+          "real": -0.01414213562373095,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ110200I1": {
+          "real": -0.01,
+          "imag": 0.0
+        }
+      },
+      "ordinary_quartics": {
+        "lambdaS1": 0.1,
+        "lambdaS2": 0.12,
+        "lambdaH1": 0.02,
+        "lambdaH2": 0.03,
+        "lambda12": 0.01,
+        "lambdaT3": {
+          "real": 2.5e-09,
+          "imag": 0.0
+        },
+        "lambdaH1Adj": 0.0,
+        "lambdaH2Adj": 0.0,
+        "lambdaS1Adj": 0.0,
+        "lambdaS2Adj": 0.0,
+        "lambda12Adj": 0.0,
+        "lambda12Cross": 0.0
+      },
+      "mu2_gev2": {
+        "real": 10000.0,
+        "imag": 0.0
+      }
+    },
+    {
+      "mu_gev": 3981071.7055349695,
+      "mS1Sq_gev2": 1306122.448979592,
+      "mS2Sq_gev2": 1000000.0,
+      "extra_quartics": {
+        "lambdaT3GeneralQ000211I1": {
+          "real": -0.01044465935734187,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000211I2": {
+          "real": -0.004777670321329065,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000400I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ001300I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ021010I1": {
+          "real": -0.01414213562373095,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ110200I1": {
+          "real": -0.01,
+          "imag": 0.0
+        }
+      },
+      "ordinary_quartics": {
+        "lambdaS1": 0.1,
+        "lambdaS2": 0.12,
+        "lambdaH1": 0.02,
+        "lambdaH2": 0.03,
+        "lambda12": 0.01,
+        "lambdaT3": {
+          "real": 2.5e-09,
+          "imag": 0.0
+        },
+        "lambdaH1Adj": 0.0,
+        "lambdaH2Adj": 0.0,
+        "lambdaS1Adj": 0.0,
+        "lambdaS2Adj": 0.0,
+        "lambda12Adj": 0.0,
+        "lambda12Cross": 0.0
+      },
+      "mu2_gev2": {
+        "real": 10000.0,
+        "imag": 0.0
+      }
+    },
+    {
+      "mu_gev": 2928644.564625237,
+      "mS1Sq_gev2": 1306122.448979592,
+      "mS2Sq_gev2": 1000000.0,
+      "extra_quartics": {
+        "lambdaT3GeneralQ000211I1": {
+          "real": -0.01044465935734187,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000211I2": {
+          "real": -0.004777670321329065,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000400I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ001300I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ021010I1": {
+          "real": -0.01414213562373095,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ110200I1": {
+          "real": -0.01,
+          "imag": 0.0
+        }
+      },
+      "ordinary_quartics": {
+        "lambdaS1": 0.1,
+        "lambdaS2": 0.12,
+        "lambdaH1": 0.02,
+        "lambdaH2": 0.03,
+        "lambda12": 0.01,
+        "lambdaT3": {
+          "real": 2.5e-09,
+          "imag": 0.0
+        },
+        "lambdaH1Adj": 0.0,
+        "lambdaH2Adj": 0.0,
+        "lambdaS1Adj": 0.0,
+        "lambdaS2Adj": 0.0,
+        "lambda12Adj": 0.0,
+        "lambda12Cross": 0.0
+      },
+      "mu2_gev2": {
+        "real": 10000.0,
+        "imag": 0.0
+      }
+    },
+    {
+      "mu_gev": 2154434.6900318824,
+      "mS1Sq_gev2": 1306122.448979592,
+      "mS2Sq_gev2": 1000000.0,
+      "extra_quartics": {
+        "lambdaT3GeneralQ000211I1": {
+          "real": -0.01044465935734187,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000211I2": {
+          "real": -0.004777670321329065,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000400I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ001300I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ021010I1": {
+          "real": -0.01414213562373095,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ110200I1": {
+          "real": -0.01,
+          "imag": 0.0
+        }
+      },
+      "ordinary_quartics": {
+        "lambdaS1": 0.1,
+        "lambdaS2": 0.12,
+        "lambdaH1": 0.02,
+        "lambdaH2": 0.03,
+        "lambda12": 0.01,
+        "lambdaT3": {
+          "real": 2.5e-09,
+          "imag": 0.0
+        },
+        "lambdaH1Adj": 0.0,
+        "lambdaH2Adj": 0.0,
+        "lambdaS1Adj": 0.0,
+        "lambdaS2Adj": 0.0,
+        "lambda12Adj": 0.0,
+        "lambda12Cross": 0.0
+      },
+      "mu2_gev2": {
+        "real": 10000.0,
+        "imag": 0.0
+      }
+    },
+    {
+      "mu_gev": 1584893.1924611141,
+      "mS1Sq_gev2": 1306122.448979592,
+      "mS2Sq_gev2": 1000000.0,
+      "extra_quartics": {
+        "lambdaT3GeneralQ000211I1": {
+          "real": -0.01044465935734187,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000211I2": {
+          "real": -0.004777670321329065,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000400I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ001300I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ021010I1": {
+          "real": -0.01414213562373095,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ110200I1": {
+          "real": -0.01,
+          "imag": 0.0
+        }
+      },
+      "ordinary_quartics": {
+        "lambdaS1": 0.1,
+        "lambdaS2": 0.12,
+        "lambdaH1": 0.02,
+        "lambdaH2": 0.03,
+        "lambda12": 0.01,
+        "lambdaT3": {
+          "real": 2.5e-09,
+          "imag": 0.0
+        },
+        "lambdaH1Adj": 0.0,
+        "lambdaH2Adj": 0.0,
+        "lambdaS1Adj": 0.0,
+        "lambdaS2Adj": 0.0,
+        "lambda12Adj": 0.0,
+        "lambda12Cross": 0.0
+      },
+      "mu2_gev2": {
+        "real": 10000.0,
+        "imag": 0.0
+      }
+    },
+    {
+      "mu_gev": 1165914.401179831,
+      "mS1Sq_gev2": 1306122.448979592,
+      "mS2Sq_gev2": 1000000.0,
+      "extra_quartics": {
+        "lambdaT3GeneralQ000211I1": {
+          "real": -0.01044465935734187,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000211I2": {
+          "real": -0.004777670321329065,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000400I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ001300I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ021010I1": {
+          "real": -0.01414213562373095,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ110200I1": {
+          "real": -0.01,
+          "imag": 0.0
+        }
+      },
+      "ordinary_quartics": {
+        "lambdaS1": 0.1,
+        "lambdaS2": 0.12,
+        "lambdaH1": 0.02,
+        "lambdaH2": 0.03,
+        "lambda12": 0.01,
+        "lambdaT3": {
+          "real": 2.5e-09,
+          "imag": 0.0
+        },
+        "lambdaH1Adj": 0.0,
+        "lambdaH2Adj": 0.0,
+        "lambdaS1Adj": 0.0,
+        "lambdaS2Adj": 0.0,
+        "lambda12Adj": 0.0,
+        "lambda12Cross": 0.0
+      },
+      "mu2_gev2": {
+        "real": 10000.0,
+        "imag": 0.0
+      }
+    },
+    {
+      "mu_gev": 857695.8985908945,
+      "mS1Sq_gev2": 1306122.448979592,
+      "mS2Sq_gev2": 1000000.0,
+      "extra_quartics": {
+        "lambdaT3GeneralQ000211I1": {
+          "real": -0.01044465935734187,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000211I2": {
+          "real": -0.004777670321329065,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000400I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ001300I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ021010I1": {
+          "real": -0.01414213562373095,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ110200I1": {
+          "real": -0.01,
+          "imag": 0.0
+        }
+      },
+      "ordinary_quartics": {
+        "lambdaS1": 0.1,
+        "lambdaS2": 0.12,
+        "lambdaH1": 0.02,
+        "lambdaH2": 0.03,
+        "lambda12": 0.01,
+        "lambdaT3": {
+          "real": 2.5e-09,
+          "imag": 0.0
+        },
+        "lambdaH1Adj": 0.0,
+        "lambdaH2Adj": 0.0,
+        "lambdaS1Adj": 0.0,
+        "lambdaS2Adj": 0.0,
+        "lambda12Adj": 0.0,
+        "lambda12Cross": 0.0
+      },
+      "mu2_gev2": {
+        "real": 10000.0,
+        "imag": 0.0
+      }
+    },
+    {
+      "mu_gev": 630957.344480193,
+      "mS1Sq_gev2": 1306122.448979592,
+      "mS2Sq_gev2": 1000000.0,
+      "extra_quartics": {
+        "lambdaT3GeneralQ000211I1": {
+          "real": -0.01044465935734187,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000211I2": {
+          "real": -0.004777670321329065,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000400I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ001300I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ021010I1": {
+          "real": -0.01414213562373095,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ110200I1": {
+          "real": -0.01,
+          "imag": 0.0
+        }
+      },
+      "ordinary_quartics": {
+        "lambdaS1": 0.1,
+        "lambdaS2": 0.12,
+        "lambdaH1": 0.02,
+        "lambdaH2": 0.03,
+        "lambda12": 0.01,
+        "lambdaT3": {
+          "real": 2.5e-09,
+          "imag": 0.0
+        },
+        "lambdaH1Adj": 0.0,
+        "lambdaH2Adj": 0.0,
+        "lambdaS1Adj": 0.0,
+        "lambdaS2Adj": 0.0,
+        "lambda12Adj": 0.0,
+        "lambda12Cross": 0.0
+      },
+      "mu2_gev2": {
+        "real": 10000.0,
+        "imag": 0.0
+      }
+    },
+    {
+      "mu_gev": 464158.8833612782,
+      "mS1Sq_gev2": 1306122.448979592,
+      "mS2Sq_gev2": 1000000.0,
+      "extra_quartics": {
+        "lambdaT3GeneralQ000211I1": {
+          "real": -0.01044465935734187,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000211I2": {
+          "real": -0.004777670321329065,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000400I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ001300I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ021010I1": {
+          "real": -0.01414213562373095,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ110200I1": {
+          "real": -0.01,
+          "imag": 0.0
+        }
+      },
+      "ordinary_quartics": {
+        "lambdaS1": 0.1,
+        "lambdaS2": 0.12,
+        "lambdaH1": 0.02,
+        "lambdaH2": 0.03,
+        "lambda12": 0.01,
+        "lambdaT3": {
+          "real": 2.5e-09,
+          "imag": 0.0
+        },
+        "lambdaH1Adj": 0.0,
+        "lambdaH2Adj": 0.0,
+        "lambdaS1Adj": 0.0,
+        "lambdaS2Adj": 0.0,
+        "lambda12Adj": 0.0,
+        "lambda12Cross": 0.0
+      },
+      "mu2_gev2": {
+        "real": 10000.0,
+        "imag": 0.0
+      }
+    },
+    {
+      "mu_gev": 341454.88738336007,
+      "mS1Sq_gev2": 1306122.448979592,
+      "mS2Sq_gev2": 1000000.0,
+      "extra_quartics": {
+        "lambdaT3GeneralQ000211I1": {
+          "real": -0.01044465935734187,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000211I2": {
+          "real": -0.004777670321329065,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000400I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ001300I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ021010I1": {
+          "real": -0.01414213562373095,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ110200I1": {
+          "real": -0.01,
+          "imag": 0.0
+        }
+      },
+      "ordinary_quartics": {
+        "lambdaS1": 0.1,
+        "lambdaS2": 0.12,
+        "lambdaH1": 0.02,
+        "lambdaH2": 0.03,
+        "lambda12": 0.01,
+        "lambdaT3": {
+          "real": 2.5e-09,
+          "imag": 0.0
+        },
+        "lambdaH1Adj": 0.0,
+        "lambdaH2Adj": 0.0,
+        "lambdaS1Adj": 0.0,
+        "lambdaS2Adj": 0.0,
+        "lambda12Adj": 0.0,
+        "lambda12Cross": 0.0
+      },
+      "mu2_gev2": {
+        "real": 10000.0,
+        "imag": 0.0
+      }
+    },
+    {
+      "mu_gev": 251188.6431509582,
+      "mS1Sq_gev2": 1306122.448979592,
+      "mS2Sq_gev2": 1000000.0,
+      "extra_quartics": {
+        "lambdaT3GeneralQ000211I1": {
+          "real": -0.01044465935734187,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000211I2": {
+          "real": -0.004777670321329065,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000400I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ001300I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ021010I1": {
+          "real": -0.01414213562373095,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ110200I1": {
+          "real": -0.01,
+          "imag": 0.0
+        }
+      },
+      "ordinary_quartics": {
+        "lambdaS1": 0.1,
+        "lambdaS2": 0.12,
+        "lambdaH1": 0.02,
+        "lambdaH2": 0.03,
+        "lambda12": 0.01,
+        "lambdaT3": {
+          "real": 2.5e-09,
+          "imag": 0.0
+        },
+        "lambdaH1Adj": 0.0,
+        "lambdaH2Adj": 0.0,
+        "lambdaS1Adj": 0.0,
+        "lambdaS2Adj": 0.0,
+        "lambda12Adj": 0.0,
+        "lambda12Cross": 0.0
+      },
+      "mu2_gev2": {
+        "real": 10000.0,
+        "imag": 0.0
+      }
+    },
+    {
+      "mu_gev": 184784.97974222907,
+      "mS1Sq_gev2": 1306122.448979592,
+      "mS2Sq_gev2": 1000000.0,
+      "extra_quartics": {
+        "lambdaT3GeneralQ000211I1": {
+          "real": -0.01044465935734187,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000211I2": {
+          "real": -0.004777670321329065,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000400I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ001300I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ021010I1": {
+          "real": -0.01414213562373095,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ110200I1": {
+          "real": -0.01,
+          "imag": 0.0
+        }
+      },
+      "ordinary_quartics": {
+        "lambdaS1": 0.1,
+        "lambdaS2": 0.12,
+        "lambdaH1": 0.02,
+        "lambdaH2": 0.03,
+        "lambda12": 0.01,
+        "lambdaT3": {
+          "real": 2.5e-09,
+          "imag": 0.0
+        },
+        "lambdaH1Adj": 0.0,
+        "lambdaH2Adj": 0.0,
+        "lambdaS1Adj": 0.0,
+        "lambdaS2Adj": 0.0,
+        "lambda12Adj": 0.0,
+        "lambda12Cross": 0.0
+      },
+      "mu2_gev2": {
+        "real": 10000.0,
+        "imag": 0.0
+      }
+    },
+    {
+      "mu_gev": 135935.6390878524,
+      "mS1Sq_gev2": 1306122.448979592,
+      "mS2Sq_gev2": 1000000.0,
+      "extra_quartics": {
+        "lambdaT3GeneralQ000211I1": {
+          "real": -0.01044465935734187,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000211I2": {
+          "real": -0.004777670321329065,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000400I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ001300I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ021010I1": {
+          "real": -0.01414213562373095,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ110200I1": {
+          "real": -0.01,
+          "imag": 0.0
+        }
+      },
+      "ordinary_quartics": {
+        "lambdaS1": 0.1,
+        "lambdaS2": 0.12,
+        "lambdaH1": 0.02,
+        "lambdaH2": 0.03,
+        "lambda12": 0.01,
+        "lambdaT3": {
+          "real": 2.5e-09,
+          "imag": 0.0
+        },
+        "lambdaH1Adj": 0.0,
+        "lambdaH2Adj": 0.0,
+        "lambdaS1Adj": 0.0,
+        "lambdaS2Adj": 0.0,
+        "lambda12Adj": 0.0,
+        "lambda12Cross": 0.0
+      },
+      "mu2_gev2": {
+        "real": 10000.0,
+        "imag": 0.0
+      }
+    },
+    {
+      "mu_gev": 100000.0,
+      "mS1Sq_gev2": 1306122.448979592,
+      "mS2Sq_gev2": 1000000.0,
+      "extra_quartics": {
+        "lambdaT3GeneralQ000211I1": {
+          "real": -0.01044465935734187,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000211I2": {
+          "real": -0.004777670321329065,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000400I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ001300I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ021010I1": {
+          "real": -0.01414213562373095,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ110200I1": {
+          "real": -0.01,
+          "imag": 0.0
+        }
+      },
+      "ordinary_quartics": {
+        "lambdaS1": 0.1,
+        "lambdaS2": 0.12,
+        "lambdaH1": 0.02,
+        "lambdaH2": 0.03,
+        "lambda12": 0.01,
+        "lambdaT3": {
+          "real": 2.5e-09,
+          "imag": 0.0
+        },
+        "lambdaH1Adj": 0.0,
+        "lambdaH2Adj": 0.0,
+        "lambdaS1Adj": 0.0,
+        "lambdaS2Adj": 0.0,
+        "lambda12Adj": 0.0,
+        "lambda12Cross": 0.0
+      },
+      "mu2_gev2": {
+        "real": 10000.0,
+        "imag": 0.0
+      }
+    }
+  ],
+  "eft1_trajectory": [
+    {
+      "mu_gev": 100000.00000000001,
+      "mS1Sq_gev2": 1306122.448979592,
+      "mS2Sq_gev2": 1000000.0,
+      "extra_quartics": {
+        "lambdaT3GeneralQ000211I1": {
+          "real": -0.01044465935734187,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000211I2": {
+          "real": -0.004777670321329065,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000400I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ001300I1": {
+          "real": -0.01,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ021010I1": {
+          "real": -0.01414213562373095,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ110200I1": {
+          "real": -0.01,
+          "imag": 0.0
+        }
+      },
+      "mu2_gev2": {
+        "real": 10000.0,
+        "imag": 0.0
+      },
+      "ordinary_quartics": {
+        "lambdaS1": 0.1,
+        "lambdaS2": 0.12,
+        "lambdaH1": 0.02,
+        "lambdaH2": 0.03,
+        "lambda12": 0.01,
+        "lambdaT3": {
+          "real": 2.5e-09,
+          "imag": 0.0
+        },
+        "lambdaH1Adj": 0.0,
+        "lambdaH2Adj": 0.0,
+        "lambdaS1Adj": 0.0,
+        "lambdaS2Adj": 0.0,
+        "lambda12Adj": 0.0,
+        "lambda12Cross": 0.0
+      }
+    },
+    {
+      "mu_gev": 73564.2254459642,
+      "mS1Sq_gev2": 1314871.40709637,
+      "mS2Sq_gev2": 1008058.2504290895,
+      "extra_quartics": {
+        "lambdaT3GeneralQ000211I1": {
+          "real": -0.010615012454529034,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000211I2": {
+          "real": -0.004862833325455583,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000400I1": {
+          "real": -0.010147037603573189,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ001300I1": {
+          "real": -0.010139036833428039,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ021010I1": {
+          "real": -0.014232218812102074,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ110200I1": {
+          "real": -0.01003281852761554,
+          "imag": 0.0
+        }
+      },
+      "mu2_gev2": {
+        "real": 10487.508830884277,
+        "imag": 0.0
+      },
+      "ordinary_quartics": {
+        "lambdaS1": 0.09590141362299094,
+        "lambdaS2": 0.1152803867021527,
+        "lambdaH1": 0.01856376209334979,
+        "lambdaH2": 0.028507030915141982,
+        "lambda12": 0.007032908827791989,
+        "lambdaT3": {
+          "real": -3.1133451769731294e-06,
+          "imag": 0.0
+        },
+        "lambdaH1Adj": 3.487435696761815e-07,
+        "lambdaH2Adj": -0.0004036393886679923,
+        "lambdaS1Adj": 0.0005112443274995055,
+        "lambdaS2Adj": -0.00031961631328384954,
+        "lambda12Adj": 1.3157075789017763e-07,
+        "lambda12Cross": -0.0012585184134011596
+      }
+    },
+    {
+      "mu_gev": 54116.95265464635,
+      "mS1Sq_gev2": 1323832.3553640635,
+      "mS2Sq_gev2": 1016332.7196355711,
+      "extra_quartics": {
+        "lambdaT3GeneralQ000211I1": {
+          "real": -0.010791204113325506,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000211I2": {
+          "real": -0.004950968505377715,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000400I1": {
+          "real": -0.010297787696277611,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ001300I1": {
+          "real": -0.010283233887678942,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ021010I1": {
+          "real": -0.014322484682988485,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ110200I1": {
+          "real": -0.010066073328806591,
+          "imag": 0.0
+        }
+      },
+      "mu2_gev2": {
+        "real": 10988.777968815431,
+        "imag": 0.0
+      },
+      "ordinary_quartics": {
+        "lambdaS1": 0.09173054214154465,
+        "lambdaS2": 0.11047891835446001,
+        "lambdaH1": 0.017118180097033635,
+        "lambdaH2": 0.027003643443946443,
+        "lambda12": 0.0040090050815267085,
+        "lambdaT3": {
+          "real": -6.290545447244706e-06,
+          "imag": 0.0
+        },
+        "lambdaH1Adj": 7.03747516183612e-07,
+        "lambdaH2Adj": -0.0008092150282066782,
+        "lambdaS1Adj": 0.001032981642713913,
+        "lambdaS2Adj": -0.000640794935448978,
+        "lambda12Adj": 2.6713803545812657e-07,
+        "lambda12Cross": -0.0025457075138120484
+      }
+    },
+    {
+      "mu_gev": 39810.71705534974,
+      "mS1Sq_gev2": 1333011.4502615298,
+      "mS2Sq_gev2": 1024830.2333265928,
+      "extra_quartics": {
+        "lambdaT3GeneralQ000211I1": {
+          "real": -0.01097347909584052,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000211I2": {
+          "real": -0.005042208879279286,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000400I1": {
+          "real": -0.01045237532432613,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ001300I1": {
+          "real": -0.010432811368386532,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ021010I1": {
+          "real": -0.014412901534081406,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ110200I1": {
+          "real": -0.010099760147510572,
+          "imag": 0.0
+        }
+      },
+      "mu2_gev2": {
+        "real": 11504.373104682469,
+        "imag": 0.0
+      },
+      "ordinary_quartics": {
+        "lambdaS1": 0.08748458544808205,
+        "lambdaS2": 0.10559220909427372,
+        "lambdaH1": 0.0156630039907703,
+        "lambdaH2": 0.02548951357832966,
+        "lambda12": 0.0009259220005776859,
+        "lambdaT3": {
+          "real": -9.530208194596086e-06,
+          "imag": 0.0
+        },
+        "lambdaH1Adj": 1.06506060704382e-06,
+        "lambdaH2Adj": -0.001216743795753484,
+        "lambdaS1Adj": 0.001565542201528531,
+        "lambdaS2Adj": -0.000963660369336792,
+        "lambda12Adj": 4.0682161616932043e-07,
+        "lambda12Cross": -0.0038624988175098122
+      }
+    },
+    {
+      "mu_gev": 29286.44564625235,
+      "mS1Sq_gev2": 1342415.126033597,
+      "mS2Sq_gev2": 1033557.9334200347,
+      "extra_quartics": {
+        "lambdaT3GeneralQ000211I1": {
+          "real": -0.011162095856674648,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000211I2": {
+          "real": -0.0051366950783320415,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000400I1": {
+          "real": -0.010610931130750404,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ001300I1": {
+          "real": -0.01058800222556739,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ021010I1": {
+          "real": -0.014503435483621601,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ110200I1": {
+          "real": -0.010133874361222393,
+          "imag": 0.0
+        }
+      },
+      "mu2_gev2": {
+        "real": 12034.888829860325,
+        "imag": 0.0
+      },
+      "ordinary_quartics": {
+        "lambdaS1": 0.08316061721920281,
+        "lambdaS2": 0.10061671802738958,
+        "lambdaH1": 0.014197983437794997,
+        "lambdaH2": 0.02396431453918711,
+        "lambda12": -0.002218821703863536,
+        "lambdaT3": {
+          "real": -1.2833446788804742e-05,
+          "imag": 0.0
+        },
+        "lambdaH1Adj": 1.4327274881048235e-06,
+        "lambdaH2Adj": -0.001626240392433718,
+        "lambdaS1Adj": 0.002109269598879426,
+        "lambdaS2Adj": -0.0012883414525044436,
+        "lambda12Adj": 5.507452286281509e-07,
+        "lambda12Cross": -0.005209863771790816
+      }
+    },
+    {
+      "mu_gev": 21544.346900318837,
+      "mS1Sq_gev2": 1352050.1102828125,
+      "mS2Sq_gev2": 1042523.296127802,
+      "extra_quartics": {
+        "lambdaT3GeneralQ000211I1": {
+          "real": -0.011357327472348439,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000211I2": {
+          "real": -0.0052345758704520715,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000400I1": {
+          "real": -0.010773591671950475,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ001300I1": {
+          "real": -0.010749053033511254,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ021010I1": {
+          "real": -0.014594050323856083,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ110200I1": {
+          "real": -0.010168410940638872,
+          "imag": 0.0
+        }
+      },
+      "mu2_gev2": {
+        "real": 12580.950495604022,
+        "imag": 0.0
+      },
+      "ordinary_quartics": {
+        "lambdaS1": 0.07875557710698607,
+        "lambdaS2": 0.09554873938723708,
+        "lambdaH1": 0.012722867984639194,
+        "lambdaH2": 0.02242771684561602,
+        "lambda12": -0.00542782920674833,
+        "lambdaT3": {
+          "real": -1.620137920539693e-05,
+          "imag": 0.0
+        },
+        "lambdaH1Adj": 1.806788260197197e-06,
+        "lambdaH2Adj": -0.002037717155940303,
+        "lambdaS1Adj": 0.002664521488811285,
+        "lambdaS2Adj": -0.0016149716175919227,
+        "lambda12Adj": 6.990367085769005e-07,
+        "lambda12Cross": -0.006588815974240724
+      }
+    },
+    {
+      "mu_gev": 15848.931924611119,
+      "mS1Sq_gev2": 1361923.440662357,
+      "mS2Sq_gev2": 1051734.1513254873,
+      "extra_quartics": {
+        "lambdaT3GeneralQ000211I1": {
+          "real": -0.011559462646589405,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000211I2": {
+          "real": -0.005336008726627495,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000400I1": {
+          "real": -0.010940499756351833,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ001300I1": {
+          "real": -0.010916224943363846,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ021010I1": {
+          "real": -0.014684707362928732,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ110200I1": {
+          "real": -0.010203364405057792,
+          "imag": 0.0
+        }
+      },
+      "mu2_gev2": {
+        "real": 13143.2162157067,
+        "imag": 0.0
+      },
+      "ordinary_quartics": {
+        "lambdaS1": 0.07426626235447213,
+        "lambdaS2": 0.09038439195891548,
+        "lambdaH1": 0.01123740729748808,
+        "lambdaH2": 0.020879388414238954,
+        "lambda12": -0.008703833485022525,
+        "lambdaT3": {
+          "real": -1.963512645929788e-05,
+          "imag": 0.0
+        },
+        "lambdaH1Adj": 2.1872780210636304e-06,
+        "lambdaH2Adj": -0.002451183855658384,
+        "lambdaS1Adj": 0.003231670352984364,
+        "lambdaS2Adj": -0.0019436891693859724,
+        "lambda12Adj": 8.518281698182046e-07,
+        "lambda12Cross": -0.008000413544388551
+      }
+    },
+    {
+      "mu_gev": 11659.144011798313,
+      "mS1Sq_gev2": 1372042.4827624883,
+      "mS2Sq_gev2": 1061198.7033168531,
+      "extra_quartics": {
+        "lambdaT3GeneralQ000211I1": {
+          "real": -0.011768806798692447,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000211I2": {
+          "real": -0.005441160433822952,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000400I1": {
+          "real": -0.011111804807023413,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ001300I1": {
+          "real": -0.011089794715357404,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ021010I1": {
+          "real": -0.014775365254092634,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ110200I1": {
+          "real": -0.01023872877299141,
+          "imag": 0.0
+        }
+      },
+      "mu2_gev2": {
+        "real": 13722.379025411732,
+        "imag": 0.0
+      },
+      "ordinary_quartics": {
+        "lambdaS1": 0.06968931878441148,
+        "lambdaS2": 0.08511960770228473,
+        "lambdaH1": 0.009741351439929689,
+        "lambdaH2": 0.019318994693054207,
+        "lambda12": -0.012049705841557533,
+        "lambdaT3": {
+          "real": -2.3135810830217924e-05,
+          "imag": 0.0
+        },
+        "lambdaH1Adj": 2.5742263694938563e-06,
+        "lambdaH2Adj": -0.0028666474685513895,
+        "lambdaS1Adj": 0.003811104321606318,
+        "lambdaS2Adj": -0.0022746375799414993,
+        "lambda12Adj": 1.0092561847232023e-06,
+        "lambda12Cross": -0.009445761660324705
+      }
+    },
+    {
+      "mu_gev": 8576.958985908945,
+      "mS1Sq_gev2": 1382414.9492919494,
+      "mS2Sq_gev2": 1070925.5531122666,
+      "extra_quartics": {
+        "lambdaT3GeneralQ000211I1": {
+          "real": -0.011985683242957203,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000211I2": {
+          "real": -0.005550207758897027,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000400I1": {
+          "real": -0.011287663250292762,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ001300I1": {
+          "real": -0.011270055838406267,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ021010I1": {
+          "real": -0.014865979811003039,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ110200I1": {
+          "real": -0.010274497507377064,
+          "imag": 0.0
+        }
+      },
+      "mu2_gev2": {
+        "real": 14319.169210926299,
+        "imag": 0.0
+      },
+      "ordinary_quartics": {
+        "lambdaS1": 0.06502123110516171,
+        "lambdaS2": 0.07975011950153688,
+        "lambdaH1": 0.008234451197599758,
+        "lambdaH2": 0.017746198834909313,
+        "lambda12": -0.015468465092547411,
+        "lambdaT3": {
+          "real": -2.670455385473511e-05,
+          "imag": 0.0
+        },
+        "lambdaH1Adj": 2.967656868277755e-06,
+        "lambdaH2Adj": -0.003284111933811106,
+        "lambdaS1Adj": 0.004403228051149591,
+        "lambdaS2Adj": -0.0026079658032491133,
+        "lambda12Adj": 1.1714619750489834e-06,
+        "lambda12Cross": -0.010926015274080209
+      }
+    },
+    {
+      "mu_gev": 6309.5734448019275,
+      "mS1Sq_gev2": 1393048.9206658592,
+      "mS2Sq_gev2": 1080923.7223521103,
+      "extra_quartics": {
+        "lambdaT3GeneralQ000211I1": {
+          "real": -0.012210434468091226,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000211I2": {
+          "real": -0.005663338168451568,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000400I1": {
+          "real": -0.011468238932597845,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ001300I1": {
+          "real": -0.011457319745640966,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ021010I1": {
+          "real": -0.014956503807703182,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ110200I1": {
+          "real": -0.010310663454678041,
+          "imag": 0.0
+        }
+      },
+      "mu2_gev2": {
+        "real": 14934.356825401655,
+        "imag": 0.0
+      },
+      "ordinary_quartics": {
+        "lambdaS1": 0.06025831247180227,
+        "lambdaS2": 0.07427144796109802,
+        "lambdaH1": 0.006716458456026202,
+        "lambdaH2": 0.016160661916473303,
+        "lambda12": -0.01896328747956531,
+        "lambdaT3": {
+          "real": -3.034247405673266e-05,
+          "imag": 0.0
+        },
+        "lambdaH1Adj": 3.367586462230205e-06,
+        "lambdaH2Adj": -0.003703577884030177,
+        "lambdaS1Adj": 0.0050084636636426715,
+        "lambdaS2Adj": -0.0029438286110791646,
+        "lambda12Adj": 1.3385916138568667e-06,
+        "lambda12Cross": -0.012442382020915752
+      }
+    },
+    {
+      "mu_gev": 4641.588833612778,
+      "mS1Sq_gev2": 1403952.8671228376,
+      "mS2Sq_gev2": 1091202.679019417,
+      "extra_quartics": {
+        "lambdaT3GeneralQ000211I1": {
+          "real": -0.012443423526464513,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000211I2": {
+          "real": -0.005780750610074073,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000400I1": {
+          "real": -0.01165370356804204,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ001300I1": {
+          "real": -0.01165191713541777,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ021010I1": {
+          "real": -0.015046886761748132,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ110200I1": {
+          "real": -0.010347218777063669,
+          "imag": 0.0
+        }
+      },
+      "mu2_gev2": {
+        "real": 15568.754408946194,
+        "imag": 0.0
+      },
+      "ordinary_quartics": {
+        "lambdaS1": 0.05539669323403496,
+        "lambdaS2": 0.06867888715922801,
+        "lambdaH1": 0.005187126638901667,
+        "lambdaH2": 0.014562043209487816,
+        "lambda12": -0.02253751737397712,
+        "lambdaT3": {
+          "real": -3.405068438405851e-05,
+          "imag": 0.0
+        },
+        "lambdaH1Adj": 3.7740248471363535e-06,
+        "lambdaH2Adj": -0.0041250423503769625,
+        "lambdaS1Adj": 0.0056272517528000625,
+        "lambdaS2Adj": -0.0032823869517902464,
+        "lambda12Adj": 1.5107962393984661e-06,
+        "lambda12Cross": -0.013996125339174091
+      }
+    },
+    {
+      "mu_gev": 3414.5488738336035,
+      "mS1Sq_gev2": 1415135.6725066546,
+      "mS2Sq_gev2": 1101772.365100769,
+      "extra_quartics": {
+        "lambdaT3GeneralQ000211I1": {
+          "real": -0.012685035544223818,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000211I2": {
+          "real": -0.005902656361044084,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000400I1": {
+          "real": -0.011844237219372075,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ001300I1": {
+          "real": -0.0118541994084264,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ021010I1": {
+          "real": -0.015137074698720951,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ110200I1": {
+          "real": -0.010384154876736421,
+          "imag": 0.0
+        }
+      },
+      "mu2_gev2": {
+        "real": 16223.219932145317,
+        "imag": 0.0
+      },
+      "ordinary_quartics": {
+        "lambdaS1": 0.05043230879515802,
+        "lambdaS2": 0.06296748926118002,
+        "lambdaH1": 0.0036462112150877956,
+        "lambdaH2": 0.012950000512132392,
+        "lambda12": -0.026194678848700075,
+        "lambdaT3": {
+          "real": -3.783028931490766e-05,
+          "imag": 0.0
+        },
+        "lambdaH1Adj": 4.1869737850081925e-06,
+        "lambdaH2Adj": -0.004548498438933948,
+        "lambdaS1Adj": 0.006260052462786776,
+        "lambdaS2Adj": -0.0036238083340656684,
+        "lambda12Adj": 1.6882322819201883e-06,
+        "lambda12Cross": -0.015588567819025574
+      }
+    },
+    {
+      "mu_gev": 2511.886431509579,
+      "mS1Sq_gev2": 1426606.6598616908,
+      "mS2Sq_gev2": 1112643.2263709966,
+      "extra_quartics": {
+        "lambdaT3GeneralQ000211I1": {
+          "real": -0.012935679364542542,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000211I2": {
+          "real": -0.006029279951261108,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000400I1": {
+          "real": -0.012040028815382223,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ001300I1": {
+          "real": -0.012064540232744031,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ021010I1": {
+          "real": -0.015227009896176787,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ110200I1": {
+          "real": -0.010421462311332026,
+          "imag": 0.0
+        }
+      },
+      "mu2_gev2": {
+        "real": 16898.659984705682,
+        "imag": 0.0
+      },
+      "ordinary_quartics": {
+        "lambdaS1": 0.04536088649823531,
+        "lambdaS2": 0.057132047883112734,
+        "lambdaH1": 0.0020934702839041914,
+        "lambdaH2": 0.011324190549570009,
+        "lambda12": -0.029938488200479018,
+        "lambdaT3": {
+          "real": -4.1682381592389955e-05,
+          "imag": 0.0
+        },
+        "lambdaH1Adj": 4.606426360524424e-06,
+        "lambdaH2Adj": -0.0049739349749951395,
+        "lambdaS1Adj": 0.0069073466460065,
+        "lambdaS2Adj": -0.003968267237736318,
+        "lambda12Adj": 1.8710617044298334e-06,
+        "lambda12Cross": -0.017221094800307243
+      }
+    },
+    {
+      "mu_gev": 1847.8497974222912,
+      "mS1Sq_gev2": 1438375.6190071576,
+      "mS2Sq_gev2": 1123826.24449568,
+      "extra_quartics": {
+        "lambdaT3GeneralQ000211I1": {
+          "real": -0.013195789337714623,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000211I2": {
+          "real": -0.006160860167926099,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000400I1": {
+          "real": -0.012241276708065558,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ001300I1": {
+          "real": -0.012283337250068874,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ021010I1": {
+          "real": -0.015316630604799484,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ110200I1": {
+          "real": -0.010459130699152826,
+          "imag": 0.0
+        }
+      },
+      "mu2_gev2": {
+        "real": 17596.033233253464,
+        "imag": 0.0
+      },
+      "ordinary_quartics": {
+        "lambdaS1": 0.040177931446407064,
+        "lambdaS2": 0.05116708008595493,
+        "lambdaH1": 0.0005286652497128478,
+        "lambdaH2": 0.009684269454178556,
+        "lambda12": -0.03377286751505702,
+        "lambdaT3": {
+          "real": -4.560803853991903e-05,
+          "imag": 0.0
+        },
+        "lambdaH1Adj": 5.0323661729360815e-06,
+        "lambdaH2Adj": -0.005401336111697439,
+        "lambdaS1Adj": 0.007569637106965794,
+        "lambdaS2Adj": -0.00431594555406653,
+        "lambda12Adj": 2.0594522585724966e-06,
+        "lambda12Cross": -0.018895158241746243
+      }
+    },
+    {
+      "mu_gev": 1359.3563908785256,
+      "mS1Sq_gev2": 1450452.836272576,
+      "mS2Sq_gev2": 1135332.9716661775,
+      "extra_quartics": {
+        "lambdaT3GeneralQ000211I1": {
+          "real": -0.013465827273422848,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000211I2": {
+          "real": -0.006297651150383301,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000400I1": {
+          "real": -0.012448189273189424,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ001300I1": {
+          "real": -0.012511013937934927,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ021010I1": {
+          "real": -0.015405870744266258,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ110200I1": {
+          "real": -0.010497148612799996,
+          "imag": 0.0
+        }
+      },
+      "mu2_gev2": {
+        "real": 18316.35417503442,
+        "imag": 0.0
+      },
+      "ordinary_quartics": {
+        "lambdaS1": 0.034878711153968185,
+        "lambdaS2": 0.04506680686491878,
+        "lambdaH1": -0.0010484384014883056,
+        "lambdaH2": 0.008029893337661964,
+        "lambda12": -0.03770195937798168,
+        "lambdaT3": {
+          "real": -4.9608317903302095e-05,
+          "imag": 0.0
+        },
+        "lambdaH1Adj": 5.4647664570486455e-06,
+        "lambdaH2Adj": -0.005830680898876251,
+        "lambdaS1Adj": 0.00824744994000988,
+        "lambdaS2Adj": -0.004667033058122858,
+        "lambda12Adj": 2.2535777568782805e-06,
+        "lambda12Cross": -0.020612280886198157
+      }
+    },
+    {
+      "mu_gev": 999.9999999999998,
+      "mS1Sq_gev2": 1462849.1265966967,
+      "mS2Sq_gev2": 1147175.5680051,
+      "extra_quartics": {
+        "lambdaT3GeneralQ000211I1": {
+          "real": -0.013746284572351362,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000211I2": {
+          "real": -0.006439923584518981,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ000400I1": {
+          "real": -0.012660985558372733,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ001300I1": {
+          "real": -0.012748021644487864,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ021010I1": {
+          "real": -0.015494659570982306,
+          "imag": 0.0
+        },
+        "lambdaT3GeneralQ110200I1": {
+          "real": -0.010535503459541339,
+          "imag": 0.0
+        }
+      },
+      "mu2_gev2": {
+        "real": 19060.69721733147,
+        "imag": 0.0
+      },
+      "ordinary_quartics": {
+        "lambdaS1": 0.029458238913209617,
+        "lambdaS2": 0.03882513198513507,
+        "lambdaH1": -0.0026380702087533793,
+        "lambdaH2": 0.00636071896921781,
+        "lambda12": -0.04173014284547736,
+        "lambdaT3": {
+          "real": -5.368425315755685e-05,
+          "imag": 0.0
+        },
+        "lambdaH1Adj": 5.903589126123672e-06,
+        "lambdaH2Adj": -0.006261942807474898,
+        "lambdaS1Adj": 0.008941335969559015,
+        "lambdaS2Adj": -0.005021727916117916,
+        "lambda12Adj": 2.453618362772907e-06,
+        "lambda12Cross": -0.02237406074915267
+      }
+    }
+  ],
+  "uv_fermion_threshold_state": {
+    "mu_gev": 100000.0,
+    "representation": {
+      "d_s1": 3,
+      "d_s2": 3,
+      "d_f": 2,
+      "alpha": 0,
+      "shared_scalar": false
+    },
+    "sm": {
+      "gY": 0.38265,
+      "g2": 0.59493,
+      "g3": 0.7649,
+      "lambdaH": 0.25,
+      "yu": {
+        "real": [
+          [
+            4.39e-06,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.00222,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.6462
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "yd": {
+        "real": [
+          [
+            9.7e-06,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.000193,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.00961
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "ye": {
+        "real": [
+          [
+            2.8681e-06,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.00060421,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.010264
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      }
+    },
+    "y1": {
+      "real": [
+        [
+          -0.11666285854033775,
+          0.14587794984149927,
+          0.19142706167508372
+        ],
+        [
+          -0.42055925209039646,
+          0.28212632011320427,
+          -0.12441950023319492
+        ],
+        [
+          -0.13834075940006985,
+          0.2380071942116846,
+          -0.06749741277262444
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    "y2": {
+      "real": [
+        [
+          0.15659534125888008,
+          0.27417485531696695,
+          -0.1324805316307125
+        ],
+        [
+          0.08758654362727203,
+          -0.028027002976266147,
+          0.5879029085144918
+        ],
+        [
+          0.29970852209836174,
+          -0.3435266279350242,
+          0.3114294074405288
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    "MF": {
+      "real": [
+        [
+          100000.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          110000.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          120000.0
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    "mS1Sq": 1306122.448979592,
+    "mS2Sq": 1000000.0,
+    "lambdaS1": 0.1,
+    "lambdaS2": 0.12,
+    "lambdaH1": 0.02,
+    "lambdaH2": 0.03,
+    "lambda12": 0.01,
+    "lambdaT3": {
+      "real": 2.5e-09,
+      "imag": 0.0
+    },
+    "lambdaH1Adj": 0.0,
+    "lambdaH2Adj": 0.0,
+    "lambdaS1Adj": 0.0,
+    "lambdaS2Adj": 0.0,
+    "lambda12Adj": 0.0,
+    "lambda12Cross": 0.0,
+    "lambdaHHdagS2S2": null,
+    "lambdaHHdagS1barS1bar": null,
+    "lambdaS1bar2S2bar2": null,
+    "lambdaS1barS2S2bar2": null,
+    "lambdaS1S1bar2S2bar": null,
+    "lambdaHHdagS1barS2barCross": null
+  },
+  "eft1_scalar_endpoint_state": {
+    "mu_gev": 1000.0,
+    "representation": {
+      "d_s1": 3,
+      "d_s2": 3,
+      "d_f": 2,
+      "alpha": 0,
+      "shared_scalar": false
+    },
+    "sm": {
+      "gY": 0.37045929080369033,
+      "g2": 0.6065180837295883,
+      "g3": 0.8767494625726088,
+      "lambdaH": 0.27749412353171454,
+      "yu": {
+        "real": [
+          [
+            5.0711421192295955e-06,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0025644493684980835,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.7312269880337493
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "yd": {
+        "real": [
+          [
+            1.1158811611406412e-05,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.00022202589404539259,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.01128562466415571
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "ye": {
+        "real": [
+          [
+            2.8621071610052238e-06,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.000602947505367884,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.010242506388573545
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      }
+    },
+    "mS1Sq": 1462849.1265966967,
+    "mS2Sq": 1147175.5680051,
+    "lambdaS1": 0.029458238913209617,
+    "lambdaS2": 0.03882513198513507,
+    "lambdaH1": -0.0026380702087533793,
+    "lambdaH2": 0.00636071896921781,
+    "lambda12": -0.04173014284547736,
+    "lambdaT3": {
+      "real": -5.368425315755685e-05,
+      "imag": 0.0
+    },
+    "lambdaH1Adj": 5.903589126123672e-06,
+    "lambdaH2Adj": -0.006261942807474898,
+    "lambdaS1Adj": 0.008941335969559015,
+    "lambdaS2Adj": -0.005021727916117916,
+    "lambda12Adj": 2.453618362772907e-06,
+    "lambda12Cross": -0.02237406074915267,
+    "lambdaHHdagS2S2": null,
+    "lambdaHHdagS1barS1bar": null,
+    "lambdaS1bar2S2bar2": null,
+    "lambdaS1barS2S2bar2": null,
+    "lambdaS1S1bar2S2bar": null,
+    "lambdaHHdagS1barS2barCross": null
+  },
+  "scalar_endpoint_physically_admissible": true,
+  "scalar_endpoint_spectrum": {
+    "status": "SphericalBasisQuadraticPrototype",
+    "model": "E_+0",
+    "quadratic_kind": "self_s1",
+    "additional_quadratic_structures": 1,
+    "dimensions": [
+      3,
+      3
+    ],
+    "extra_mass_coefficient_gev2": {
+      "real": 19060.69721733147,
+      "imag": 0.0
+    },
+    "mass_squared_eigenvalues_gev2": [
+      1147175.5680051,
+      1147175.5680051,
+      1147175.5680051,
+      1147175.5680051,
+      1147175.5680051,
+      1147175.5680051,
+      1424727.7321620337,
+      1424727.7321620337,
+      1424727.7321620337,
+      1500970.5210313597,
+      1500970.5210313597,
+      1500970.5210313597
+    ],
+    "analytic_mass_squared_eigenvalues_gev2": [
+      1147175.5680051,
+      1147175.5680051,
+      1147175.5680051,
+      1147175.5680051,
+      1147175.5680051,
+      1147175.5680051,
+      1424727.7321620337,
+      1424727.7321620337,
+      1424727.7321620337,
+      1500970.5210313597,
+      1500970.5210313597,
+      1500970.5210313597
+    ],
+    "analytic_spectrum_verified": true,
+    "minimum_mass_squared_gev2": 1147175.5680051,
+    "tachyonic": false,
+    "su2_component_basis": "chosen spherical m=j,...,-j",
+    "quadratic_potential_prefactor": "mu2 * invariant + h.c.; no 1/2",
+    "matchete_mass_basis_verified": false,
+    "rgbeta_mass_normalisation_verified": false,
+    "included_in_threshold_matching": false
+  },
+  "saved_candidate_eft1_endpoint": "E_p0_eft1_quadratic_running.json",
+  "mass_bilinear_tree_threshold_prescription": "frozen at muF, then candidate EFT1 running",
+  "physical_matchete_rgbeta_mapping_certified": false,
+  "fermion_threshold_wilson_matching_performed": false,
+  "scalar_threshold_wilson_matching_performed": false,
+  "full_sequential_neutrino_mass_prediction": false,
+  "limitations": [
+    "Stage29 extra-scalar couplings are illustrative and reimposed at muF, not fitted",
+    "Historical optimized/shared A(-2) Yukawas are seeds, not full-general refits",
+    "Frozen UV segment is a held boundary, not a solved UV RGE",
+    "Full Matchete/RGBeta scalar normalization and sequential Wilson matching uncertified",
+    "Six A/D/E self-bilinear C5 corrections absent from existing neutrino kernel"
+  ]
+}

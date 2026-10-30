@@ -1,0 +1,84 @@
+{
+  "format": "t3-a-minus2-bilinear-convention-and-loop-shape-v1",
+  "status": "A2NativeBilinearMassMapAndOneScaleKernelShapeChecked",
+  "symbolic_run_id": "all16_v1",
+  "model": "A_-2",
+  "input_reference_fitted_mass_squared_gev2": 1000000.0,
+  "beta_exports": {
+    "uv": {
+      "beta_count": 26,
+      "mass_beta": "2*lambdaT3GeneralQ001102I1*mS1Sq + 10*lambdaT3GeneralQ000013I1*mS2Sq - 12*g2^2*muT3GeneralS2Sq + 2*lambdaS2*muT3GeneralS2Sq - 4*lambdaS2Adj*muT3GeneralS2Sq + 40*lambdaT3GeneralQ000004I1*Bar[muT3GeneralS2Sq] + 2*muT3GeneralS2Sq*Tr[y2 . Trans[Bar[y2]]]",
+      "sha256": "a17dd4782de3c6ed45230c88048192814f55dd4fde30125753853514b10fa684"
+    },
+    "eft1": {
+      "beta_count": 23,
+      "mass_beta": "2*lambdaT3GeneralQ001102I1*mS1Sq + 10*lambdaT3GeneralQ000013I1*mS2Sq - 12*g2^2*muT3GeneralS2Sq + 2*lambdaS2*muT3GeneralS2Sq - 4*lambdaS2Adj*muT3GeneralS2Sq + 40*lambdaT3GeneralQ000004I1*Bar[muT3GeneralS2Sq]",
+      "sha256": "2357f514e10a9a0ef7c6c1a6b78ee4f1c476bd8d4c41eeae81ee94ba3d6018f3"
+    }
+  },
+  "source_conventions": {
+    "matchete_extra_bilinear_is_plus_in_lagrangian": true,
+    "rgbeta_bilinear_is_plus_in_potential": true,
+    "relative_sign_if_same_canonical_field_basis": -1,
+    "matchete_source_sha256": "45d0bdf6fc1565b5601abd74b0f68649ffa78a8eeda6328e0c2f94cbcdb8b470",
+    "rgbeta_source_sha256": "15cb837f83850a76a3397d61a5e7ab97ee5a59901d0facc583d7e69e73ee1d57"
+  },
+  "mass_basis": {
+    "matchete_bilinear_cg_factor": {
+      "real": 1.0,
+      "imag": 0.0
+    },
+    "mass_map_in_matchete_native_metric_convention": "mu_RGBeta = -k_native * mu_Matchete",
+    "matchete_mass_parameter_gev2": {
+      "real": -9393.727128473789,
+      "imag": -3428.9780745545136
+    },
+    "rgbeta_mass_parameter_gev2": {
+      "real": 9393.727128473789,
+      "imag": 3428.9780745545136
+    },
+    "masses_squared_gev2": [
+      1020000.0,
+      980000.0
+    ],
+    "mass_splitting_squared_gev2": 40000.0,
+    "potential_max_relative_error": 6.481242127557694e-16,
+    "spherical_triplet_metric_matches_declared_real_basis": true,
+    "full_matchete_rgbeta_gauge_vertex_map_certified": false
+  },
+  "mass_dependent_one_scale_kernel": {
+    "status": "OneScaleLoopMassDependenceRatioChecked",
+    "mass_response_ratios_matchete": [
+      {
+        "real": 0.9988802943179079,
+        "imag": 0.0
+      },
+      {
+        "real": 1.0011340789704712,
+        "imag": 0.0
+      }
+    ],
+    "mass_response_ratios_integral": [
+      0.9988802943179079,
+      1.0011340789704712
+    ],
+    "maximum_relative_ratio_error": 2.627434620609032e-46,
+    "unit_normal_kernel_over_center": {
+      "real": 1.0000071866441895,
+      "imag": 0.0
+    },
+    "unit_anomalous_spectral_difference_over_center": {
+      "real": -0.001126892326281631,
+      "imag": 0.0
+    },
+    "source_sha256": "7f192897409fe14b6111fc1fa1e263ee4d99be378fc7497180698d9816c50cc5",
+    "full_one_loop_matchete_mass_eigen_matching_performed": false
+  },
+  "native_matchete_certificate_sha256": "d1c46eb1ddac2ee4371c0202bb90586fe4098353dafdf4d0678f0b82618419d6",
+  "native_tensor_source": "C:/thesistemp/T3neutrinomassmodelpipeline/output/studies/general_scalar_extended/a2_bilinear_normalization/a2_norm_v1/native_matchete_bilinear.json",
+  "scope": "Native Matchete self-pair metric, declared RGBeta spherical mass convention, source-level opposite Lagrangian/potential sign, and one-scale scalar-mass response. No complete physical CG intertwiners or matched bilinear C5 derivation.",
+  "physical_matchete_rgbeta_entire_vertex_map_certified": false,
+  "independent_one_loop_mass_eigenstate_matching_performed": false,
+  "complete_sequential_EFT_matching_performed": false,
+  "existing_benchmarks_changed": false
+}

@@ -1,0 +1,627 @@
+\documentclass[9pt,a4paper]{article}
+\usepackage[a4paper,margin=17mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,booktabs,longtable,array,hyperref,listings,xcolor,adjustbox}
+\hypersetup{colorlinks=true,linkcolor=blue,urlcolor=blue}
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=true,breakatwhitespace=false,columns=fullflexible,keepspaces=true,frame=single,framesep=4pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\sloppy
+\begin{document}
+\section*{T3 UV group factors: additional scalar tensor structures}
+\textbf{Provenance:} saved 16-model operator registry and candidate one-loop RGBeta UV/EFT1 exports. Source beta expressions are algebraically parsed from saved InputForm and typeset in paper coupling notation. No implicit Matchete rescaling.
+\textbf{Status:} candidate tensor basis. General scalar RGBeta--Matchete mapping, quadratic mass-basis matching and full sequential Wilson matching are not certified.
+\textit{Operator tensor basis and candidate beta coefficients. This does not claim an independently normalised Matchete/RGBeta group-factor map.}
+\bigskip
+\section*{What can be reported reliably}
+The original $SU(2)_L\times U(1)_Y$ representations have not changed. The existing gauge and Yukawa group-factor tables therefore remain the reference for the original interactions at the same loop order.
+\[C_2(d)=\frac{d^2-1}{4},\qquad T(d)=\frac{d(d^2-1)}{12}.\]
+For the extra scalar operators, the registry supplies candidate invariant tensor contractions and multiplicities. These are listed below. \textbf{They are not independent, certified Matchete-to-RGBeta group factors.} The one-loop coefficients occurring in the exported beta equations are source-calculated candidate coefficients, not re-derived in this report.
+\section*{Scalar coupling notation}
+The original topology interaction remains $\lambda_5$. Original scalar and portal interactions retain the notation of the earlier analytical reports. Additional quartic structures use $\lambda_7$--$\lambda_{12}$ where these symbols already exist, followed by $\lambda_{13},\lambda_{14},\ldots$ for newly named operators. All labels refer to RGBeta potential coefficients in the saved source convention; the Matchete--RGBeta mapping is not fully certified.
+\begin{longtable}{@{}p{0.21\linewidth}p{0.46\linewidth}p{0.23\linewidth}@{}}
+\toprule
+Symbol & Scalar field structure & Models \\
+\midrule
+\endhead
+$\lambda_{7}$ & $\left(H^\dagger\right)^{2}\, \left(S_1^\dagger\right)^{2}$ & B-1, C-1 \\
+$\lambda_{8}$ & $\left(H^\dagger\right)^{2}\, S_2^{2}$ & B-1, C-1 \\
+$\lambda_{9}$ & $\left(S_1^\dagger\right)^{2}\, \left(S_2^\dagger\right)^{2}$ & B-1, C-1 \\
+$\lambda_{10}$ & $S_1^\dagger\, S_2\, \left(S_2^\dagger\right)^{2}$ & B-1, C-1 \\
+$\lambda_{11}$ & $S_1\, \left(S_1^\dagger\right)^{2}\, S_2^\dagger$ & B-1, C-1 \\
+$\lambda_{12}$ & $H\, H^\dagger\, S_1^\dagger\, S_2^\dagger$ & B-1, C-1 \\
+$\lambda_{13}$ & $\left(S_2^\dagger\right)^{4}$ & A-2, D-2, E-2 \\
+$\lambda_{14}$ & $S_2\, \left(S_2^\dagger\right)^{3}$ & A-2, D-2, E-2 \\
+$\lambda_{15}$ & $\left(S_1^\dagger\right)^{2}\, S_2\, S_2^\dagger$ & A+0, D+0, E+0 \\
+$\lambda_{16}$ & $\left(S_1^\dagger\right)^{2}\, S_2\, S_2^\dagger$ & E+0 \\
+$\lambda_{17}$ & $\left(S_1^\dagger\right)^{4}$ & A+0, D+0, E+0 \\
+$\lambda_{18}$ & $S_1\, S_1^\dagger\, \left(S_2^\dagger\right)^{2}$ & A-2, D-2, E-2 \\
+$\lambda_{19}$ & $S_1\, S_1^\dagger\, \left(S_2^\dagger\right)^{2}$ & E-2 \\
+$\lambda_{20}$ & $S_1\, \left(S_1^\dagger\right)^{3}$ & A+0, D+0, E+0 \\
+$\lambda_{21}$ & $\left(H^\dagger\right)^{2}\, \left(S_2^\dagger\right)^{2}$ & B-3, C-3 \\
+$\lambda_{22}$ & $\left(H^\dagger\right)^{2}\, S_1^\dagger\, S_2^\dagger$ & A-2, D-2, E-2 \\
+$\lambda_{23}$ & $\left(H^\dagger\right)^{2}\, S_1\, S_2$ & A+0, D+0, E+0 \\
+$\lambda_{24}$ & $\left(H^\dagger\right)^{2}\, S_1^{2}$ & B+1, C+1 \\
+$\lambda_{25}$ & $H\, H^\dagger\, \left(S_2^\dagger\right)^{2}$ & A-2, D-2, E-2 \\
+$\lambda_{26}$ & $H\, H^\dagger\, S_1^\dagger\, S_2^\dagger$ & B-1, C-1 \\
+$\lambda_{27}$ & $H\, H^\dagger\, \left(S_1^\dagger\right)^{2}$ & A+0, D+0, E+0 \\
+\bottomrule
+\end{longtable}
+For distinct SU(2) contractions with the same field content, numbered superscripts/index labels remain independent. These symbols denote model-dependent invariant tensors, not universal Clebsch coefficients.
+\section*{Operator and invariant tensor inventory}
+\begin{longtable}{@{}lrrrrrr@{}}
+\toprule
+Model & $d_{S_1}$ & $d_{S_2}$ & $d_F$ & $\alpha$ & extra $\lambda$ & extra $m^2$\\
+\midrule
+\endfirsthead
+\toprule
+Model & $d_{S_1}$ & $d_{S_2}$ & $d_F$ & $\alpha$ & extra $\lambda$ & extra $m^2$\\
+\midrule
+\endhead
+$\mathrm{T3-A}\,(\alpha=-4)$ & 1 & 3 & 2 & -4 & 0 & 0 \\
+$\mathrm{T3-A}\,(\alpha=-2)$ & 1 & 3 & 2 & -2 & 5 & 1 \\
+$\mathrm{T3-A}\,(\alpha=0)$ & 1 & 3 & 2 & 0 & 5 & 1 \\
+$\mathrm{T3-B}\,(\alpha=-3)$ & 2 & 2 & 1 & -3 & 1 & 0 \\
+$\mathrm{T3-B}\,(\alpha=-1)$ & 2 & 2 & 1 & -1 & 7 & 1 \\
+$\mathrm{T3-B}\,(\alpha=1)$ & 2 & 2 & 1 & 1 & 1 & 0 \\
+$\mathrm{T3-C}\,(\alpha=-3)$ & 2 & 2 & 3 & -3 & 1 & 0 \\
+$\mathrm{T3-C}\,(\alpha=-1)$ & 2 & 2 & 3 & -1 & 7 & 1 \\
+$\mathrm{T3-C}\,(\alpha=1)$ & 2 & 2 & 3 & 1 & 1 & 0 \\
+$\mathrm{T3-D}\,(\alpha=-2)$ & 3 & 1 & 2 & -2 & 5 & 1 \\
+$\mathrm{T3-D}\,(\alpha=0)$ & 3 & 1 & 2 & 0 & 5 & 1 \\
+$\mathrm{T3-D}\,(\alpha=2)$ & 3 & 1 & 2 & 2 & 0 & 0 \\
+$\mathrm{T3-E}\,(\alpha=-4)$ & 3 & 3 & 2 & -4 & 0 & 0 \\
+$\mathrm{T3-E}\,(\alpha=-2)$ & 3 & 3 & 2 & -2 & 6 & 1 \\
+$\mathrm{T3-E}\,(\alpha=0)$ & 3 & 3 & 2 & 0 & 6 & 1 \\
+$\mathrm{T3-E}\,(\alpha=2)$ & 3 & 3 & 2 & 2 & 0 & 0 \\
+\bottomrule
+\end{longtable}
+\subsection*{$ \mathrm{T3-A}\,(\alpha=-4) $}
+\begin{longtable}{@{}p{0.42\linewidth}p{0.36\linewidth}p{0.13\linewidth}@{}}
+\toprule
+Coupling / class & field content & count / basis\\
+\midrule
+\endhead
+\multicolumn{3}{l}{No additional scalar quartic operators in this assignment.}\\
+\bottomrule
+\end{longtable}
+\subsection*{$ \mathrm{T3-A}\,(\alpha=-2) $}
+\begin{longtable}{@{}p{0.42\linewidth}p{0.36\linewidth}p{0.13\linewidth}@{}}
+\toprule
+Coupling / class & field content & count / basis\\
+\midrule
+\endhead
+$\lambda_{13}$ (new) & $\left(S_2^\dagger\right)^{4}$ & 1 \\
+$\lambda_{14}$ (new) & $S_2\, \left(S_2^\dagger\right)^{3}$ & 1 \\
+$\lambda_{18}$ (new) & $S_1\, S_1^\dagger\, \left(S_2^\dagger\right)^{2}$ & 1 \\
+$\lambda_{22}$ (new) & $\left(H^\dagger\right)^{2}\, S_1^\dagger\, S_2^\dagger$ & 1 \\
+$\lambda_{25}$ (new) & $H\, H^\dagger\, \left(S_2^\dagger\right)^{2}$ & 1 \\
+\bottomrule
+\end{longtable}
+\textbf{Additional quadratic operators:}
+$\left(S_2^\dagger\right)^{2}$ (candidate, with Hermitian conjugates).
+\textbf{$ \lambda_{13} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+((1/3) * (del[SU2L @ S2, #1, #2] * del[SU2L @ S2, #3, #4]) + (1/3) * (del[SU2L @ S2, #1, #3] * del[SU2L @ S2, #2, #4]) + (1/3) * (del[SU2L @ S2, #1, #4] * del[SU2L @ S2, #2, #3]))
+\end{lstlisting}
+
+\textbf{$ \lambda_{14} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+((1/3) * (del[SU2L @ S2, #1, #2] * del[SU2L @ S2, #3, #4]) + (1/3) * (del[SU2L @ S2, #1, #3] * del[SU2L @ S2, #2, #4]) + (1/3) * (del[SU2L @ S2, #1, #4] * del[SU2L @ S2, #2, #3]))
+\end{lstlisting}
+
+\textbf{$ \lambda_{18} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+del[SU2L @ S2, #3, #4]
+\end{lstlisting}
+
+\textbf{$ \lambda_{22} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+delS2[SU2L, #4, #1, #2]
+\end{lstlisting}
+
+\textbf{$ \lambda_{25} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+(del[SU2L @ fund, #2, #1] * del[SU2L @ S2, #3, #4])
+\end{lstlisting}
+
+\subsection*{$ \mathrm{T3-A}\,(\alpha=0) $}
+\begin{longtable}{@{}p{0.42\linewidth}p{0.36\linewidth}p{0.13\linewidth}@{}}
+\toprule
+Coupling / class & field content & count / basis\\
+\midrule
+\endhead
+$\lambda_{15}$ (new) & $\left(S_1^\dagger\right)^{2}\, S_2\, S_2^\dagger$ & 1 \\
+$\lambda_{17}$ (new) & $\left(S_1^\dagger\right)^{4}$ & 1 \\
+$\lambda_{20}$ (new) & $S_1\, \left(S_1^\dagger\right)^{3}$ & 1 \\
+$\lambda_{23}$ (new) & $\left(H^\dagger\right)^{2}\, S_1\, S_2$ & 1 \\
+$\lambda_{27}$ (new) & $H\, H^\dagger\, \left(S_1^\dagger\right)^{2}$ & 1 \\
+\bottomrule
+\end{longtable}
+\textbf{Additional quadratic operators:}
+$\left(S_1^\dagger\right)^{2}$ (candidate, with Hermitian conjugates).
+\textbf{$ \lambda_{15} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+del[SU2L @ S2, #3, #4]
+\end{lstlisting}
+
+\textbf{$ \lambda_{17} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+1
+\end{lstlisting}
+
+\textbf{$ \lambda_{20} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+1
+\end{lstlisting}
+
+\textbf{$ \lambda_{23} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+delS2[SU2L, #4, #1, #2]
+\end{lstlisting}
+
+\textbf{$ \lambda_{27} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+del[SU2L @ fund, #2, #1]
+\end{lstlisting}
+
+\subsection*{$ \mathrm{T3-B}\,(\alpha=-3) $}
+\begin{longtable}{@{}p{0.42\linewidth}p{0.36\linewidth}p{0.13\linewidth}@{}}
+\toprule
+Coupling / class & field content & count / basis\\
+\midrule
+\endhead
+$\lambda_{21}$ (new) & $\left(H^\dagger\right)^{2}\, \left(S_2^\dagger\right)^{2}$ & 1 \\
+\bottomrule
+\end{longtable}
+\textbf{$ \lambda_{21} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+((1/2) * (eps[SU2L @ fund, #1, #3] * eps[SU2L @ fund, #2, #4]) + (1/2) * (eps[SU2L @ fund, #1, #4] * eps[SU2L @ fund, #2, #3]))
+\end{lstlisting}
+
+\subsection*{$ \mathrm{T3-B}\,(\alpha=-1) $}
+\begin{longtable}{@{}p{0.42\linewidth}p{0.36\linewidth}p{0.13\linewidth}@{}}
+\toprule
+Coupling / class & field content & count / basis\\
+\midrule
+\endhead
+$\lambda_{26}$ (new) & $H\, H^\dagger\, S_1^\dagger\, S_2^\dagger$ & 2 \\
+$\lambda_{10}$ (reused) & $S_1^\dagger\, S_2\, \left(S_2^\dagger\right)^{2}$ & 1 candidate coordinate \\
+$\lambda_{9}$ (reused) & $\left(S_1^\dagger\right)^{2}\, \left(S_2^\dagger\right)^{2}$ & 1 candidate coordinate \\
+$\lambda_{11}$ (reused) & $S_1\, \left(S_1^\dagger\right)^{2}\, S_2^\dagger$ & 1 candidate coordinate \\
+$\lambda_{8}$ (reused) & $\left(H^\dagger\right)^{2}\, S_2^{2}$ & 1 candidate coordinate \\
+$\lambda_{7}$ (reused) & $\left(H^\dagger\right)^{2}\, \left(S_1^\dagger\right)^{2}$ & 1 candidate coordinate \\
+$\lambda_{12}$ (reused) & $H\, H^\dagger\, S_1^\dagger\, S_2^\dagger$ & 1 candidate coordinate \\
+\bottomrule
+\end{longtable}
+\textbf{Additional quadratic operators:}
+$S_1^\dagger\, S_2^\dagger$ (candidate, with Hermitian conjugates).
+\textbf{$ \lambda_{26} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+(del[SU2L @ fund, #4, #1] * eps[SU2L @ fund, #2, #3])
+\end{lstlisting}
+
+\subsection*{$ \mathrm{T3-B}\,(\alpha=1) $}
+\begin{longtable}{@{}p{0.42\linewidth}p{0.36\linewidth}p{0.13\linewidth}@{}}
+\toprule
+Coupling / class & field content & count / basis\\
+\midrule
+\endhead
+$\lambda_{24}$ (new) & $\left(H^\dagger\right)^{2}\, S_1^{2}$ & 1 \\
+\bottomrule
+\end{longtable}
+\textbf{$ \lambda_{24} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+((1/2) * (del[SU2L @ fund, #1, #3] * del[SU2L @ fund, #2, #4]) + (1/2) * (del[SU2L @ fund, #1, #4] * del[SU2L @ fund, #2, #3]))
+\end{lstlisting}
+
+\subsection*{$ \mathrm{T3-C}\,(\alpha=-3) $}
+\begin{longtable}{@{}p{0.42\linewidth}p{0.36\linewidth}p{0.13\linewidth}@{}}
+\toprule
+Coupling / class & field content & count / basis\\
+\midrule
+\endhead
+$\lambda_{21}$ (new) & $\left(H^\dagger\right)^{2}\, \left(S_2^\dagger\right)^{2}$ & 1 \\
+\bottomrule
+\end{longtable}
+\textbf{$ \lambda_{21} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+((1/2) * (eps[SU2L @ fund, #1, #3] * eps[SU2L @ fund, #2, #4]) + (1/2) * (eps[SU2L @ fund, #1, #4] * eps[SU2L @ fund, #2, #3]))
+\end{lstlisting}
+
+\subsection*{$ \mathrm{T3-C}\,(\alpha=-1) $}
+\begin{longtable}{@{}p{0.42\linewidth}p{0.36\linewidth}p{0.13\linewidth}@{}}
+\toprule
+Coupling / class & field content & count / basis\\
+\midrule
+\endhead
+$\lambda_{26}$ (new) & $H\, H^\dagger\, S_1^\dagger\, S_2^\dagger$ & 2 \\
+$\lambda_{10}$ (reused) & $S_1^\dagger\, S_2\, \left(S_2^\dagger\right)^{2}$ & 1 candidate coordinate \\
+$\lambda_{9}$ (reused) & $\left(S_1^\dagger\right)^{2}\, \left(S_2^\dagger\right)^{2}$ & 1 candidate coordinate \\
+$\lambda_{11}$ (reused) & $S_1\, \left(S_1^\dagger\right)^{2}\, S_2^\dagger$ & 1 candidate coordinate \\
+$\lambda_{8}$ (reused) & $\left(H^\dagger\right)^{2}\, S_2^{2}$ & 1 candidate coordinate \\
+$\lambda_{7}$ (reused) & $\left(H^\dagger\right)^{2}\, \left(S_1^\dagger\right)^{2}$ & 1 candidate coordinate \\
+$\lambda_{12}$ (reused) & $H\, H^\dagger\, S_1^\dagger\, S_2^\dagger$ & 1 candidate coordinate \\
+\bottomrule
+\end{longtable}
+\textbf{Additional quadratic operators:}
+$S_1^\dagger\, S_2^\dagger$ (candidate, with Hermitian conjugates).
+\textbf{$ \lambda_{26} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+(del[SU2L @ fund, #4, #1] * eps[SU2L @ fund, #2, #3])
+\end{lstlisting}
+
+\subsection*{$ \mathrm{T3-C}\,(\alpha=1) $}
+\begin{longtable}{@{}p{0.42\linewidth}p{0.36\linewidth}p{0.13\linewidth}@{}}
+\toprule
+Coupling / class & field content & count / basis\\
+\midrule
+\endhead
+$\lambda_{24}$ (new) & $\left(H^\dagger\right)^{2}\, S_1^{2}$ & 1 \\
+\bottomrule
+\end{longtable}
+\textbf{$ \lambda_{24} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+((1/2) * (del[SU2L @ fund, #1, #3] * del[SU2L @ fund, #2, #4]) + (1/2) * (del[SU2L @ fund, #1, #4] * del[SU2L @ fund, #2, #3]))
+\end{lstlisting}
+
+\subsection*{$ \mathrm{T3-D}\,(\alpha=-2) $}
+\begin{longtable}{@{}p{0.42\linewidth}p{0.36\linewidth}p{0.13\linewidth}@{}}
+\toprule
+Coupling / class & field content & count / basis\\
+\midrule
+\endhead
+$\lambda_{13}$ (new) & $\left(S_2^\dagger\right)^{4}$ & 1 \\
+$\lambda_{14}$ (new) & $S_2\, \left(S_2^\dagger\right)^{3}$ & 1 \\
+$\lambda_{18}$ (new) & $S_1\, S_1^\dagger\, \left(S_2^\dagger\right)^{2}$ & 1 \\
+$\lambda_{22}$ (new) & $\left(H^\dagger\right)^{2}\, S_1^\dagger\, S_2^\dagger$ & 1 \\
+$\lambda_{25}$ (new) & $H\, H^\dagger\, \left(S_2^\dagger\right)^{2}$ & 1 \\
+\bottomrule
+\end{longtable}
+\textbf{Additional quadratic operators:}
+$\left(S_2^\dagger\right)^{2}$ (candidate, with Hermitian conjugates).
+\textbf{$ \lambda_{13} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+1
+\end{lstlisting}
+
+\textbf{$ \lambda_{14} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+1
+\end{lstlisting}
+
+\textbf{$ \lambda_{18} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+del[SU2L @ S2, #1, #2]
+\end{lstlisting}
+
+\textbf{$ \lambda_{22} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+delS2[SU2L, #3, #1, #2]
+\end{lstlisting}
+
+\textbf{$ \lambda_{25} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+del[SU2L @ fund, #2, #1]
+\end{lstlisting}
+
+\subsection*{$ \mathrm{T3-D}\,(\alpha=0) $}
+\begin{longtable}{@{}p{0.42\linewidth}p{0.36\linewidth}p{0.13\linewidth}@{}}
+\toprule
+Coupling / class & field content & count / basis\\
+\midrule
+\endhead
+$\lambda_{15}$ (new) & $\left(S_1^\dagger\right)^{2}\, S_2\, S_2^\dagger$ & 1 \\
+$\lambda_{17}$ (new) & $\left(S_1^\dagger\right)^{4}$ & 1 \\
+$\lambda_{20}$ (new) & $S_1\, \left(S_1^\dagger\right)^{3}$ & 1 \\
+$\lambda_{23}$ (new) & $\left(H^\dagger\right)^{2}\, S_1\, S_2$ & 1 \\
+$\lambda_{27}$ (new) & $H\, H^\dagger\, \left(S_1^\dagger\right)^{2}$ & 1 \\
+\bottomrule
+\end{longtable}
+\textbf{Additional quadratic operators:}
+$\left(S_1^\dagger\right)^{2}$ (candidate, with Hermitian conjugates).
+\textbf{$ \lambda_{15} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+del[SU2L @ S2, #1, #2]
+\end{lstlisting}
+
+\textbf{$ \lambda_{17} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+((1/3) * (del[SU2L @ S2, #1, #2] * del[SU2L @ S2, #3, #4]) + (1/3) * (del[SU2L @ S2, #1, #3] * del[SU2L @ S2, #2, #4]) + (1/3) * (del[SU2L @ S2, #1, #4] * del[SU2L @ S2, #2, #3]))
+\end{lstlisting}
+
+\textbf{$ \lambda_{20} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+((1/3) * (del[SU2L @ S2, #1, #2] * del[SU2L @ S2, #3, #4]) + (1/3) * (del[SU2L @ S2, #1, #3] * del[SU2L @ S2, #2, #4]) + (1/3) * (del[SU2L @ S2, #1, #4] * del[SU2L @ S2, #2, #3]))
+\end{lstlisting}
+
+\textbf{$ \lambda_{23} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+delS2[SU2L, #3, #1, #2]
+\end{lstlisting}
+
+\textbf{$ \lambda_{27} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+(del[SU2L @ fund, #2, #1] * del[SU2L @ S2, #3, #4])
+\end{lstlisting}
+
+\subsection*{$ \mathrm{T3-D}\,(\alpha=2) $}
+\begin{longtable}{@{}p{0.42\linewidth}p{0.36\linewidth}p{0.13\linewidth}@{}}
+\toprule
+Coupling / class & field content & count / basis\\
+\midrule
+\endhead
+\multicolumn{3}{l}{No additional scalar quartic operators in this assignment.}\\
+\bottomrule
+\end{longtable}
+\subsection*{$ \mathrm{T3-E}\,(\alpha=-4) $}
+\begin{longtable}{@{}p{0.42\linewidth}p{0.36\linewidth}p{0.13\linewidth}@{}}
+\toprule
+Coupling / class & field content & count / basis\\
+\midrule
+\endhead
+\multicolumn{3}{l}{No additional scalar quartic operators in this assignment.}\\
+\bottomrule
+\end{longtable}
+\subsection*{$ \mathrm{T3-E}\,(\alpha=-2) $}
+\begin{longtable}{@{}p{0.42\linewidth}p{0.36\linewidth}p{0.13\linewidth}@{}}
+\toprule
+Coupling / class & field content & count / basis\\
+\midrule
+\endhead
+$\lambda_{13}$ (new) & $\left(S_2^\dagger\right)^{4}$ & 1 \\
+$\lambda_{14}$ (new) & $S_2\, \left(S_2^\dagger\right)^{3}$ & 1 \\
+$\lambda_{18}$ (new) & $S_1\, S_1^\dagger\, \left(S_2^\dagger\right)^{2}$ & 2 \\
+$\lambda_{19}$ (new) & $S_1\, S_1^\dagger\, \left(S_2^\dagger\right)^{2}$ & 2 \\
+$\lambda_{22}$ (new) & $\left(H^\dagger\right)^{2}\, S_1^\dagger\, S_2^\dagger$ & 1 \\
+$\lambda_{25}$ (new) & $H\, H^\dagger\, \left(S_2^\dagger\right)^{2}$ & 1 \\
+\bottomrule
+\end{longtable}
+\textbf{Additional quadratic operators:}
+$\left(S_2^\dagger\right)^{2}$ (candidate, with Hermitian conjugates).
+\textbf{$ \lambda_{13} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+((1/3) * (del[SU2L @ S2, #1, #2] * del[SU2L @ S2, #3, #4]) + (1/3) * (del[SU2L @ S2, #1, #3] * del[SU2L @ S2, #2, #4]) + (1/3) * (del[SU2L @ S2, #1, #4] * del[SU2L @ S2, #2, #3]))
+\end{lstlisting}
+
+\textbf{$ \lambda_{14} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+((1/3) * (del[SU2L @ S2, #1, #2] * del[SU2L @ S2, #3, #4]) + (1/3) * (del[SU2L @ S2, #1, #3] * del[SU2L @ S2, #2, #4]) + (1/3) * (del[SU2L @ S2, #1, #4] * del[SU2L @ S2, #2, #3]))
+\end{lstlisting}
+
+\textbf{$ \lambda_{18} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+(del[SU2L @ S2, #1, #2] * del[SU2L @ S2, #3, #4])
+\end{lstlisting}
+
+\textbf{$ \lambda_{19} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+((1/2) * (del[SU2L @ S2, #1, #3] * del[SU2L @ S2, #2, #4]) + (1/2) * (del[SU2L @ S2, #1, #4] * del[SU2L @ S2, #2, #3]))
+\end{lstlisting}
+
+\textbf{$ \lambda_{22} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+(delS2[SU2L, a, #1, #2] * T3RGBetaS2TripleInvariant[a, #3, #4])
+\end{lstlisting}
+
+\textbf{$ \lambda_{25} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+(del[SU2L @ fund, #2, #1] * del[SU2L @ S2, #3, #4])
+\end{lstlisting}
+
+\subsection*{$ \mathrm{T3-E}\,(\alpha=0) $}
+\begin{longtable}{@{}p{0.42\linewidth}p{0.36\linewidth}p{0.13\linewidth}@{}}
+\toprule
+Coupling / class & field content & count / basis\\
+\midrule
+\endhead
+$\lambda_{15}$ (new) & $\left(S_1^\dagger\right)^{2}\, S_2\, S_2^\dagger$ & 2 \\
+$\lambda_{16}$ (new) & $\left(S_1^\dagger\right)^{2}\, S_2\, S_2^\dagger$ & 2 \\
+$\lambda_{17}$ (new) & $\left(S_1^\dagger\right)^{4}$ & 1 \\
+$\lambda_{20}$ (new) & $S_1\, \left(S_1^\dagger\right)^{3}$ & 1 \\
+$\lambda_{23}$ (new) & $\left(H^\dagger\right)^{2}\, S_1\, S_2$ & 1 \\
+$\lambda_{27}$ (new) & $H\, H^\dagger\, \left(S_1^\dagger\right)^{2}$ & 1 \\
+\bottomrule
+\end{longtable}
+\textbf{Additional quadratic operators:}
+$\left(S_1^\dagger\right)^{2}$ (candidate, with Hermitian conjugates).
+\textbf{$ \lambda_{15} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+(del[SU2L @ S2, #1, #2] * del[SU2L @ S2, #3, #4])
+\end{lstlisting}
+
+\textbf{$ \lambda_{16} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+((1/2) * (del[SU2L @ S2, #1, #3] * del[SU2L @ S2, #2, #4]) + (1/2) * (del[SU2L @ S2, #1, #4] * del[SU2L @ S2, #2, #3]))
+\end{lstlisting}
+
+\textbf{$ \lambda_{17} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+((1/3) * (del[SU2L @ S2, #1, #2] * del[SU2L @ S2, #3, #4]) + (1/3) * (del[SU2L @ S2, #1, #3] * del[SU2L @ S2, #2, #4]) + (1/3) * (del[SU2L @ S2, #1, #4] * del[SU2L @ S2, #2, #3]))
+\end{lstlisting}
+
+\textbf{$ \lambda_{20} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+((1/3) * (del[SU2L @ S2, #1, #2] * del[SU2L @ S2, #3, #4]) + (1/3) * (del[SU2L @ S2, #1, #3] * del[SU2L @ S2, #2, #4]) + (1/3) * (del[SU2L @ S2, #1, #4] * del[SU2L @ S2, #2, #3]))
+\end{lstlisting}
+
+\textbf{$ \lambda_{23} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+(delS2[SU2L, a, #1, #2] * T3RGBetaS2TripleInvariant[a, #3, #4])
+\end{lstlisting}
+
+\textbf{$ \lambda_{27} $}: candidate SU(2) contraction in registry notation:
+\begin{lstlisting}[mathescape=true]
+(del[SU2L @ fund, #2, #1] * del[SU2L @ S2, #3, #4])
+\end{lstlisting}
+
+\subsection*{$ \mathrm{T3-E}\,(\alpha=2) $}
+\begin{longtable}{@{}p{0.42\linewidth}p{0.36\linewidth}p{0.13\linewidth}@{}}
+\toprule
+Coupling / class & field content & count / basis\\
+\midrule
+\endhead
+\multicolumn{3}{l}{No additional scalar quartic operators in this assignment.}\\
+\bottomrule
+\end{longtable}
+\section*{How the extra scalar terms enter topology-quartic running}
+The following are the complete saved candidate UV expressions for $16\pi^2\,d\lambda_{5}/d\ln\mu$, typeset in mathematical notation. Use these as an audit of source coefficients; this is not an independent group-factor proof.
+\subsection*{$ \mathrm{T3-A}\,(\alpha=-4) $}
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \beta_{\lambda_{5}}^{(1)} = -\;\frac{21 g_2^{2} \lambda_{5}}{2}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;-\;\frac{33 g_1^{2} \lambda_{5}}{2}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{12}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{1} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{HS_1}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{HS_2}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;\lambda_{5} \left(4 \lambda_{HS_2}^{(A)} + 2 \operatorname{Tr}\!\left[y_1\,\left(y_1^{*}\right)^{T}\right] + \operatorname{Tr}\!\left[y_2\,\left(y_2^{*}\right)^{T}\right] + 6 \operatorname{Tr}\!\left[Y_d\,\left(Y_d^{*}\right)^{T}\right] + 2 \operatorname{Tr}\!\left[Y_e\,\left(Y_e^{*}\right)^{T}\right] + 6 \operatorname{Tr}\!\left[Y_u\,\left(Y_u^{*}\right)^{T}\right]\right)$}\par
+
+\subsection*{$ \mathrm{T3-A}\,(\alpha=-2) $}
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \beta_{\lambda_{5}}^{(1)} = -\;\frac{21 g_2^{2} \lambda_{5}}{2}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;-\;\frac{9 g_1^{2} \lambda_{5}}{2}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{12}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{1} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{HS_1}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{HS_2}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;\lambda_{5} \left(4 \lambda_{HS_2}^{(A)} + 2 \operatorname{Tr}\!\left[y_1\,\left(y_1^{*}\right)^{T}\right] + \operatorname{Tr}\!\left[y_2\,\left(y_2^{*}\right)^{T}\right] + 6 \operatorname{Tr}\!\left[Y_d\,\left(Y_d^{*}\right)^{T}\right] + 2 \operatorname{Tr}\!\left[Y_e\,\left(Y_e^{*}\right)^{T}\right] + 6 \operatorname{Tr}\!\left[Y_u\,\left(Y_u^{*}\right)^{T}\right]\right)$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{18} \lambda_{22}^{*}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;8 \lambda_{25} \lambda_{22}^{*}$}\par
+
+\subsection*{$ \mathrm{T3-A}\,(\alpha=0) $}
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \beta_{\lambda_{5}}^{(1)} = -\;\frac{21 g_2^{2} \lambda_{5}}{2}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;-\;\frac{9 g_1^{2} \lambda_{5}}{2}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{12}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{1} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{HS_1}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{HS_2}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;\lambda_{5} \left(4 \lambda_{HS_2}^{(A)} + 2 \operatorname{Tr}\!\left[y_1\,\left(y_1^{*}\right)^{T}\right] + \operatorname{Tr}\!\left[y_2\,\left(y_2^{*}\right)^{T}\right] + 6 \operatorname{Tr}\!\left[Y_d\,\left(Y_d^{*}\right)^{T}\right] + 2 \operatorname{Tr}\!\left[Y_e\,\left(Y_e^{*}\right)^{T}\right] + 6 \operatorname{Tr}\!\left[Y_u\,\left(Y_u^{*}\right)^{T}\right]\right)$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \left(\lambda_{15}^{*} + 2 \lambda_{27}^{*}\right) \lambda_{23}^{*}$}\par
+
+\subsection*{$ \mathrm{T3-B}\,(\alpha=-3) $}
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \beta_{\lambda_{5}}^{(1)} = -\;9 g_2^{2} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;-\;9 g_1^{2} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{12}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{1} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{HS_1}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{HS_2}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;\lambda_{5} \left(\frac{\lambda_{12}^{(A)}}{6} + \frac{2 \lambda_{HS_1}^{(A)}}{3} + 2 \lambda_{HS_2}^{(A)} + \operatorname{Tr}\!\left[y_1\,\left(y_1^{*}\right)^{T}\right] + \operatorname{Tr}\!\left[y_2\,\left(y_2^{*}\right)^{T}\right] + 6 \operatorname{Tr}\!\left[Y_d\,\left(Y_d^{*}\right)^{T}\right] + 2 \operatorname{Tr}\!\left[Y_e\,\left(Y_e^{*}\right)^{T}\right] + 6 \operatorname{Tr}\!\left[Y_u\,\left(Y_u^{*}\right)^{T}\right]\right)$}\par
+
+\subsection*{$ \mathrm{T3-B}\,(\alpha=-1) $}
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \beta_{\lambda_{5}}^{(1)} = -\;9 g_2^{2} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;-\;3 g_1^{2} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{12}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{1} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{HS_1}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{HS_2}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;\lambda_{5} \left(\frac{\lambda_{12}^{(A)}}{6} + \frac{2 \lambda_{HS_1}^{(A)}}{3} + 2 \lambda_{HS_2}^{(A)} + \operatorname{Tr}\!\left[y_1\,\left(y_1^{*}\right)^{T}\right] + \operatorname{Tr}\!\left[y_2\,\left(y_2^{*}\right)^{T}\right] + 6 \operatorname{Tr}\!\left[Y_d\,\left(Y_d^{*}\right)^{T}\right] + 2 \operatorname{Tr}\!\left[Y_e\,\left(Y_e^{*}\right)^{T}\right] + 6 \operatorname{Tr}\!\left[Y_u\,\left(Y_u^{*}\right)^{T}\right]\right)$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;-\;\frac{2 \lambda_{7}^{*} \operatorname{Tr}\!\left[y_2\,\left(y_1^{*}\right)^{T}\right]}{3}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{8}^{*} \operatorname{Tr}\!\left[y_1\,\left(y_2^{*}\right)^{T}\right]$}\par
+
+\subsection*{$ \mathrm{T3-B}\,(\alpha=1) $}
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \beta_{\lambda_{5}}^{(1)} = -\;9 g_2^{2} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;-\;9 g_1^{2} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{12}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{1} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{HS_1}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{HS_2}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;\lambda_{5} \left(\frac{\lambda_{12}^{(A)}}{6} + \frac{2 \lambda_{HS_1}^{(A)}}{3} + 2 \lambda_{HS_2}^{(A)} + \operatorname{Tr}\!\left[y_1\,\left(y_1^{*}\right)^{T}\right] + \operatorname{Tr}\!\left[y_2\,\left(y_2^{*}\right)^{T}\right] + 6 \operatorname{Tr}\!\left[Y_d\,\left(Y_d^{*}\right)^{T}\right] + 2 \operatorname{Tr}\!\left[Y_e\,\left(Y_e^{*}\right)^{T}\right] + 6 \operatorname{Tr}\!\left[Y_u\,\left(Y_u^{*}\right)^{T}\right]\right)$}\par
+
+\subsection*{$ \mathrm{T3-C}\,(\alpha=-3) $}
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \beta_{\lambda_{5}}^{(1)} = -\;9 g_2^{2} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;-\;9 g_1^{2} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{12}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{1} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{HS_1}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{HS_2}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;\lambda_{5} \left(\frac{\lambda_{12}^{(A)}}{6} + \frac{2 \lambda_{HS_1}^{(A)}}{3} + 2 \lambda_{HS_2}^{(A)} + \frac{3 \operatorname{Tr}\!\left[y_1\,\left(y_1^{*}\right)^{T}\right]}{2} + \frac{3 \operatorname{Tr}\!\left[y_2\,\left(y_2^{*}\right)^{T}\right]}{2} + 6 \operatorname{Tr}\!\left[Y_d\,\left(Y_d^{*}\right)^{T}\right] + 2 \operatorname{Tr}\!\left[Y_e\,\left(Y_e^{*}\right)^{T}\right] + 6 \operatorname{Tr}\!\left[Y_u\,\left(Y_u^{*}\right)^{T}\right]\right)$}\par
+
+\subsection*{$ \mathrm{T3-C}\,(\alpha=-1) $}
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \beta_{\lambda_{5}}^{(1)} = -\;9 g_2^{2} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;-\;3 g_1^{2} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{12}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{1} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{HS_1}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{HS_2}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;\lambda_{5} \left(\frac{\lambda_{12}^{(A)}}{6} + \frac{2 \lambda_{HS_1}^{(A)}}{3} + 2 \lambda_{HS_2}^{(A)} + \frac{3 \operatorname{Tr}\!\left[y_1\,\left(y_1^{*}\right)^{T}\right]}{2} + \frac{3 \operatorname{Tr}\!\left[y_2\,\left(y_2^{*}\right)^{T}\right]}{2} + 6 \operatorname{Tr}\!\left[Y_d\,\left(Y_d^{*}\right)^{T}\right] + 2 \operatorname{Tr}\!\left[Y_e\,\left(Y_e^{*}\right)^{T}\right] + 6 \operatorname{Tr}\!\left[Y_u\,\left(Y_u^{*}\right)^{T}\right]\right)$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;-\;\lambda_{7}^{*} \operatorname{Tr}\!\left[y_2\,\left(y_1^{*}\right)^{T}\right]$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;3 \lambda_{8}^{*} \operatorname{Tr}\!\left[y_1\,\left(y_2^{*}\right)^{T}\right]$}\par
+
+\subsection*{$ \mathrm{T3-C}\,(\alpha=1) $}
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \beta_{\lambda_{5}}^{(1)} = -\;9 g_2^{2} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;-\;9 g_1^{2} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{12}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{1} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{HS_1}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{HS_2}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;\lambda_{5} \left(\frac{\lambda_{12}^{(A)}}{6} + \frac{2 \lambda_{HS_1}^{(A)}}{3} + 2 \lambda_{HS_2}^{(A)} + \frac{3 \operatorname{Tr}\!\left[y_1\,\left(y_1^{*}\right)^{T}\right]}{2} + \frac{3 \operatorname{Tr}\!\left[y_2\,\left(y_2^{*}\right)^{T}\right]}{2} + 6 \operatorname{Tr}\!\left[Y_d\,\left(Y_d^{*}\right)^{T}\right] + 2 \operatorname{Tr}\!\left[Y_e\,\left(Y_e^{*}\right)^{T}\right] + 6 \operatorname{Tr}\!\left[Y_u\,\left(Y_u^{*}\right)^{T}\right]\right)$}\par
+
+\subsection*{$ \mathrm{T3-D}\,(\alpha=-2) $}
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \beta_{\lambda_{5}}^{(1)} = -\;\frac{21 g_2^{2} \lambda_{5}}{2}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;-\;\frac{9 g_1^{2} \lambda_{5}}{2}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{12}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{1} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{HS_1}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{HS_2}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;\lambda_{5} \left(- 4 \lambda_{HS_1}^{(A)} + \operatorname{Tr}\!\left[y_1\,\left(y_1^{*}\right)^{T}\right] + 2 \operatorname{Tr}\!\left[y_2\,\left(y_2^{*}\right)^{T}\right] + 6 \operatorname{Tr}\!\left[Y_d\,\left(Y_d^{*}\right)^{T}\right] + 2 \operatorname{Tr}\!\left[Y_e\,\left(Y_e^{*}\right)^{T}\right] + 6 \operatorname{Tr}\!\left[Y_u\,\left(Y_u^{*}\right)^{T}\right]\right)$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{18} \lambda_{22}^{*}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;8 \lambda_{25} \lambda_{22}^{*}$}\par
+
+\subsection*{$ \mathrm{T3-D}\,(\alpha=0) $}
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \beta_{\lambda_{5}}^{(1)} = -\;\frac{21 g_2^{2} \lambda_{5}}{2}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;-\;\frac{9 g_1^{2} \lambda_{5}}{2}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{12}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{1} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{HS_1}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{HS_2}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;\lambda_{5} \left(- 4 \lambda_{HS_1}^{(A)} + \operatorname{Tr}\!\left[y_1\,\left(y_1^{*}\right)^{T}\right] + 2 \operatorname{Tr}\!\left[y_2\,\left(y_2^{*}\right)^{T}\right] + 6 \operatorname{Tr}\!\left[Y_d\,\left(Y_d^{*}\right)^{T}\right] + 2 \operatorname{Tr}\!\left[Y_e\,\left(Y_e^{*}\right)^{T}\right] + 6 \operatorname{Tr}\!\left[Y_u\,\left(Y_u^{*}\right)^{T}\right]\right)$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \left(\lambda_{15}^{*} + 2 \lambda_{27}^{*}\right) \lambda_{23}^{*}$}\par
+
+\subsection*{$ \mathrm{T3-D}\,(\alpha=2) $}
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \beta_{\lambda_{5}}^{(1)} = -\;\frac{21 g_2^{2} \lambda_{5}}{2}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;-\;\frac{33 g_1^{2} \lambda_{5}}{2}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{12}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{1} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{HS_1}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{HS_2}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;\lambda_{5} \left(- 4 \lambda_{HS_1}^{(A)} + \operatorname{Tr}\!\left[y_1\,\left(y_1^{*}\right)^{T}\right] + 2 \operatorname{Tr}\!\left[y_2\,\left(y_2^{*}\right)^{T}\right] + 6 \operatorname{Tr}\!\left[Y_d\,\left(Y_d^{*}\right)^{T}\right] + 2 \operatorname{Tr}\!\left[Y_e\,\left(Y_e^{*}\right)^{T}\right] + 6 \operatorname{Tr}\!\left[Y_u\,\left(Y_u^{*}\right)^{T}\right]\right)$}\par
+
+\subsection*{$ \mathrm{T3-E}\,(\alpha=-4) $}
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \beta_{\lambda_{5}}^{(1)} = -\;\frac{33 g_2^{2} \lambda_{5}}{2}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;-\;\frac{33 g_1^{2} \lambda_{5}}{2}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{12}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{1} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{HS_1}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{HS_2}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;\lambda_{5} \left(- \frac{4 \lambda_{12}^{(A)}}{3} - 2 \lambda_{12}^{(\times)} - 2 \lambda_{HS_1}^{(A)} - \frac{4 \lambda_{HS_2}^{(A)}}{3} + \operatorname{Tr}\!\left[y_1\,\left(y_1^{*}\right)^{T}\right] + \operatorname{Tr}\!\left[y_2\,\left(y_2^{*}\right)^{T}\right] + 6 \operatorname{Tr}\!\left[Y_d\,\left(Y_d^{*}\right)^{T}\right] + 2 \operatorname{Tr}\!\left[Y_e\,\left(Y_e^{*}\right)^{T}\right] + 6 \operatorname{Tr}\!\left[Y_u\,\left(Y_u^{*}\right)^{T}\right]\right)$}\par
+
+\subsection*{$ \mathrm{T3-E}\,(\alpha=-2) $}
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \beta_{\lambda_{5}}^{(1)} = -\;\frac{33 g_2^{2} \lambda_{5}}{2}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;-\;\frac{9 g_1^{2} \lambda_{5}}{2}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{12}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{1} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{HS_1}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{HS_2}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;\lambda_{5} \left(- \frac{4 \lambda_{12}^{(A)}}{3} - 2 \lambda_{12}^{(\times)} - 2 \lambda_{HS_1}^{(A)} - \frac{4 \lambda_{HS_2}^{(A)}}{3} + \operatorname{Tr}\!\left[y_1\,\left(y_1^{*}\right)^{T}\right] + \operatorname{Tr}\!\left[y_2\,\left(y_2^{*}\right)^{T}\right] + 6 \operatorname{Tr}\!\left[Y_d\,\left(Y_d^{*}\right)^{T}\right] + 2 \operatorname{Tr}\!\left[Y_e\,\left(Y_e^{*}\right)^{T}\right] + 6 \operatorname{Tr}\!\left[Y_u\,\left(Y_u^{*}\right)^{T}\right]\right)$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{18} \lambda_{22}^{*}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;-\;2 \lambda_{19} \lambda_{22}^{*}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;8 \lambda_{25} \lambda_{22}^{*}$}\par
+
+\subsection*{$ \mathrm{T3-E}\,(\alpha=0) $}
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \beta_{\lambda_{5}}^{(1)} = -\;\frac{33 g_2^{2} \lambda_{5}}{2}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;-\;\frac{9 g_1^{2} \lambda_{5}}{2}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{12}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{1} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{HS_1}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{HS_2}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;\lambda_{5} \left(- \frac{4 \lambda_{12}^{(A)}}{3} - 2 \lambda_{12}^{(\times)} - 2 \lambda_{HS_1}^{(A)} - \frac{4 \lambda_{HS_2}^{(A)}}{3} + \operatorname{Tr}\!\left[y_1\,\left(y_1^{*}\right)^{T}\right] + \operatorname{Tr}\!\left[y_2\,\left(y_2^{*}\right)^{T}\right] + 6 \operatorname{Tr}\!\left[Y_d\,\left(Y_d^{*}\right)^{T}\right] + 2 \operatorname{Tr}\!\left[Y_e\,\left(Y_e^{*}\right)^{T}\right] + 6 \operatorname{Tr}\!\left[Y_u\,\left(Y_u^{*}\right)^{T}\right]\right)$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \left(2 \lambda_{15}^{*} - \lambda_{16}^{*} + 4 \lambda_{27}^{*}\right) \lambda_{23}^{*}$}\par
+
+\subsection*{$ \mathrm{T3-E}\,(\alpha=2) $}
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \beta_{\lambda_{5}}^{(1)} = -\;\frac{33 g_2^{2} \lambda_{5}}{2}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;-\;\frac{33 g_1^{2} \lambda_{5}}{2}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{12}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;2 \lambda_{1} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{HS_1}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;4 \lambda_{HS_2}^{(1)} \lambda_{5}$}\par
+\noindent\adjustbox{max width=\linewidth}{$\displaystyle \phantom{\beta_{\lambda_{5}}^{(1)}}\;+\;\lambda_{5} \left(- \frac{4 \lambda_{12}^{(A)}}{3} - 2 \lambda_{12}^{(\times)} - 2 \lambda_{HS_1}^{(A)} - \frac{4 \lambda_{HS_2}^{(A)}}{3} + \operatorname{Tr}\!\left[y_1\,\left(y_1^{*}\right)^{T}\right] + \operatorname{Tr}\!\left[y_2\,\left(y_2^{*}\right)^{T}\right] + 6 \operatorname{Tr}\!\left[Y_d\,\left(Y_d^{*}\right)^{T}\right] + 2 \operatorname{Tr}\!\left[Y_e\,\left(Y_e^{*}\right)^{T}\right] + 6 \operatorname{Tr}\!\left[Y_u\,\left(Y_u^{*}\right)^{T}\right]\right)$}\par
+
+\end{document}

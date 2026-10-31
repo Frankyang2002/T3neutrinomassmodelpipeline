@@ -1,0 +1,865 @@
+{
+  "format": "t3-workstream-a-final-uv-evidence-v1",
+  "status": "ConditionalUVOperatorEvidencePassedNotFullCompleteness",
+  "source_provenance": [
+    {
+      "path": "Reports\\output\\workstream_a\\uv_closure_stage\\uv_closure_stage.json",
+      "sha256": "148df629a01bbbf843f49d41030f8d5dd4ec7878cf52fb7774a51e95e26828b4"
+    },
+    {
+      "path": "Lagrangian\\interactions\\GeneralScalarOperators.wl",
+      "sha256": "45d0bdf6fc1565b5601abd74b0f68649ffa78a8eeda6328e0c2f94cbcdb8b470"
+    },
+    {
+      "path": "Lagrangian\\interactions\\T3Topology.wl",
+      "sha256": "e6e24c4a673bddff980885f8354b388ceaa19e53c8b2faa79ba3289a87de1511"
+    },
+    {
+      "path": "Lagrangian\\model\\T3ModelCatalog.wl",
+      "sha256": "3ea4006b38617d1c603c564b209a0e0cedb324da127214fe434e18fd9953febc"
+    },
+    {
+      "path": "Lagrangian\\model\\T3Fields.wl",
+      "sha256": "2f27f080ab02d1225aab7e5928aba19f238ec6d5dcdd41b72ee2d2c7298e24ab"
+    },
+    {
+      "path": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_t3_stage22\\matchete_tensors.json",
+      "sha256": "72e3af99beced8497a419c03f1f543dd80f071e950ca72cc65892d69f16eba0f"
+    }
+  ],
+  "reused_prior_16_model_closure": true,
+  "independent_fermionic_yukawa_count": 38,
+  "additional_fermionic_yukawa_matrices": 6,
+  "matchete_native_extra_quartic_slots_checked": 50,
+  "matchete_native_extra_quartic_invariant_rank_checked": true,
+  "symbolic_quadratic_parameter_identities": {
+    "passed": true,
+    "bc_characteristic_polynomial": "-a**2 - b**2 + m1*m2 - m1*x - m2*x + x**2",
+    "bc_squared_mass_eigenvalues": [
+      "m1/2 + m2/2 - sqrt(4*a**2 + 4*b**2 + (m1 - m2)**2)/2",
+      "m1/2 + m2/2 + sqrt(4*a**2 + 4*b**2 + (m1 - m2)**2)/2"
+    ],
+    "self_original_potential_identity": "msq*(I**2 + R**2)/2 + rho*(-I**2 + R**2)",
+    "self_eigen_potential_identity": "I**2*(msq - 2*rho)/2 + R**2*(msq + 2*rho)/2",
+    "self_conditions": "rho=abs(-kappa*lambda_extra), phase^2=(-kappa*lambda_extra)/rho; nonzero rho (rho=0 arbitrary phase)",
+    "implemented_as_constraints_on_matchete_symbols": false
+  },
+  "exceptional_native_quartic_tensor_transport_models": 8,
+  "unresolved_for_full_certificate": [
+    "A symbolic Matchete equality tying the eigenmass and phase spurions to original UV couplings",
+    "Native source tensor transport for all baseline quartics and the actual Yukawa/topology CG tensors, including conventions",
+    "Matchete-to-RGBeta field and coupling dictionary and prefactor normalization",
+    "Explicit Z2 symmetry registration/selection rules in Matchete rather than only direct parity of assembled terms",
+    "General flavour/CP field-redefinition conventions for Dirac and Majorana fermion families"
+  ],
+  "workstream_a_complete_uv_physical_equivalence_certified": false,
+  "physical_eft_matching_performed": false,
+  "rows": [
+    {
+      "model": "A_m4",
+      "scalar_basis_passed": true,
+      "actual_native_z2_parity_passed": true,
+      "actual_builder_yukawa_quartic_inventory_crosschecked": true,
+      "fermionic_census": {
+        "model": "A_m4",
+        "passed": true,
+        "fermion_type": "Dirac",
+        "canonical_yukawa_operators": [
+          [
+            "Lbar",
+            "F",
+            "S2dag"
+          ],
+          [
+            "Lbar",
+            "Fc",
+            "S1"
+          ]
+        ],
+        "number_of_yukawa_coupling_matrices": 2,
+        "additional_to_topology": 0,
+        "raw_gauge_orientations_before_majorana_identification": 2,
+        "majorana_identifies_F_and_Fc": false,
+        "charged_SM_fermion_chirality_tested": "ebar",
+        "colored_SM_fermions_excluded_by_color": [
+          "Qbar",
+          "ubar",
+          "dbar"
+        ],
+        "ff_higgs_su2_singlets": 0,
+        "bsm_sm_mass_mixing_forbidden_by_z2": true,
+        "assumptions": "Exact Z2; BSM SU3 singlets; modeled Lbar/F/Fc chirality; no new SM fermion families; renormalizable operators",
+        "full_lorentz_flavour_tensor_normalization_certified": false
+      },
+      "native_extra_quartics": {
+        "passed": true,
+        "actual_native_extra_tensors_checked": 0,
+        "source_independent_invariant_ranks_verified": true,
+        "all_source_plus_hc_couplings_have_prefactor_one": true
+      },
+      "heavy_eigenbasis_reverified": true,
+      "physical_matching_performed": false,
+      "explicit_z2_registry_in_matchete": false,
+      "matchete_rgbeta_operator_normalization_certified": false
+    },
+    {
+      "model": "A_m2",
+      "scalar_basis_passed": true,
+      "actual_native_z2_parity_passed": true,
+      "actual_builder_yukawa_quartic_inventory_crosschecked": true,
+      "fermionic_census": {
+        "model": "A_m2",
+        "passed": true,
+        "fermion_type": "Dirac",
+        "canonical_yukawa_operators": [
+          [
+            "Lbar",
+            "F",
+            "S2"
+          ],
+          [
+            "Lbar",
+            "F",
+            "S2dag"
+          ],
+          [
+            "Lbar",
+            "Fc",
+            "S1"
+          ]
+        ],
+        "number_of_yukawa_coupling_matrices": 3,
+        "additional_to_topology": 1,
+        "raw_gauge_orientations_before_majorana_identification": 3,
+        "majorana_identifies_F_and_Fc": false,
+        "charged_SM_fermion_chirality_tested": "ebar",
+        "colored_SM_fermions_excluded_by_color": [
+          "Qbar",
+          "ubar",
+          "dbar"
+        ],
+        "ff_higgs_su2_singlets": 0,
+        "bsm_sm_mass_mixing_forbidden_by_z2": true,
+        "assumptions": "Exact Z2; BSM SU3 singlets; modeled Lbar/F/Fc chirality; no new SM fermion families; renormalizable operators",
+        "full_lorentz_flavour_tensor_normalization_certified": false
+      },
+      "native_extra_quartics": {
+        "passed": true,
+        "actual_native_extra_tensors_checked": 5,
+        "source_independent_invariant_ranks_verified": true,
+        "all_source_plus_hc_couplings_have_prefactor_one": true,
+        "trials_per_tensor": 5,
+        "max_relative_residual": 1.1804226856794203e-15,
+        "native_basis": "Matchete Cartesian neutral scalar; exact native component tensors"
+      },
+      "heavy_eigenbasis_reverified": true,
+      "physical_matching_performed": false,
+      "explicit_z2_registry_in_matchete": false,
+      "matchete_rgbeta_operator_normalization_certified": false
+    },
+    {
+      "model": "A_p0",
+      "scalar_basis_passed": true,
+      "actual_native_z2_parity_passed": true,
+      "actual_builder_yukawa_quartic_inventory_crosschecked": true,
+      "fermionic_census": {
+        "model": "A_p0",
+        "passed": true,
+        "fermion_type": "Dirac",
+        "canonical_yukawa_operators": [
+          [
+            "Lbar",
+            "F",
+            "S2dag"
+          ],
+          [
+            "Lbar",
+            "Fc",
+            "S1"
+          ],
+          [
+            "Lbar",
+            "Fc",
+            "S1dag"
+          ]
+        ],
+        "number_of_yukawa_coupling_matrices": 3,
+        "additional_to_topology": 1,
+        "raw_gauge_orientations_before_majorana_identification": 3,
+        "majorana_identifies_F_and_Fc": false,
+        "charged_SM_fermion_chirality_tested": "ebar",
+        "colored_SM_fermions_excluded_by_color": [
+          "Qbar",
+          "ubar",
+          "dbar"
+        ],
+        "ff_higgs_su2_singlets": 0,
+        "bsm_sm_mass_mixing_forbidden_by_z2": true,
+        "assumptions": "Exact Z2; BSM SU3 singlets; modeled Lbar/F/Fc chirality; no new SM fermion families; renormalizable operators",
+        "full_lorentz_flavour_tensor_normalization_certified": false
+      },
+      "native_extra_quartics": {
+        "passed": true,
+        "actual_native_extra_tensors_checked": 5,
+        "source_independent_invariant_ranks_verified": true,
+        "all_source_plus_hc_couplings_have_prefactor_one": true,
+        "trials_per_tensor": 5,
+        "max_relative_residual": 5.046774757090399e-16,
+        "native_basis": "Matchete Cartesian neutral scalar; exact native component tensors"
+      },
+      "heavy_eigenbasis_reverified": true,
+      "physical_matching_performed": false,
+      "explicit_z2_registry_in_matchete": false,
+      "matchete_rgbeta_operator_normalization_certified": false
+    },
+    {
+      "model": "B_m3",
+      "scalar_basis_passed": true,
+      "actual_native_z2_parity_passed": true,
+      "actual_builder_yukawa_quartic_inventory_crosschecked": true,
+      "fermionic_census": {
+        "model": "B_m3",
+        "passed": true,
+        "fermion_type": "Dirac",
+        "canonical_yukawa_operators": [
+          [
+            "Lbar",
+            "F",
+            "S2dag"
+          ],
+          [
+            "Lbar",
+            "Fc",
+            "S1"
+          ]
+        ],
+        "number_of_yukawa_coupling_matrices": 2,
+        "additional_to_topology": 0,
+        "raw_gauge_orientations_before_majorana_identification": 2,
+        "majorana_identifies_F_and_Fc": false,
+        "charged_SM_fermion_chirality_tested": "ebar",
+        "colored_SM_fermions_excluded_by_color": [
+          "Qbar",
+          "ubar",
+          "dbar"
+        ],
+        "ff_higgs_su2_singlets": 0,
+        "bsm_sm_mass_mixing_forbidden_by_z2": true,
+        "assumptions": "Exact Z2; BSM SU3 singlets; modeled Lbar/F/Fc chirality; no new SM fermion families; renormalizable operators",
+        "full_lorentz_flavour_tensor_normalization_certified": false
+      },
+      "native_extra_quartics": {
+        "passed": true,
+        "actual_native_extra_tensors_checked": 1,
+        "source_independent_invariant_ranks_verified": true,
+        "all_source_plus_hc_couplings_have_prefactor_one": true
+      },
+      "heavy_eigenbasis_reverified": true,
+      "physical_matching_performed": false,
+      "explicit_z2_registry_in_matchete": false,
+      "matchete_rgbeta_operator_normalization_certified": false
+    },
+    {
+      "model": "B_m1",
+      "scalar_basis_passed": true,
+      "actual_native_z2_parity_passed": true,
+      "actual_builder_yukawa_quartic_inventory_crosschecked": true,
+      "fermionic_census": {
+        "model": "B_m1",
+        "passed": true,
+        "fermion_type": "Majorana",
+        "canonical_yukawa_operators": [
+          [
+            "Lbar",
+            "F",
+            "S1"
+          ],
+          [
+            "Lbar",
+            "F",
+            "S2dag"
+          ]
+        ],
+        "number_of_yukawa_coupling_matrices": 2,
+        "additional_to_topology": 0,
+        "raw_gauge_orientations_before_majorana_identification": 4,
+        "majorana_identifies_F_and_Fc": true,
+        "charged_SM_fermion_chirality_tested": "ebar",
+        "colored_SM_fermions_excluded_by_color": [
+          "Qbar",
+          "ubar",
+          "dbar"
+        ],
+        "ff_higgs_su2_singlets": 0,
+        "bsm_sm_mass_mixing_forbidden_by_z2": true,
+        "assumptions": "Exact Z2; BSM SU3 singlets; modeled Lbar/F/Fc chirality; no new SM fermion families; renormalizable operators",
+        "full_lorentz_flavour_tensor_normalization_certified": false
+      },
+      "native_extra_quartics": {
+        "passed": true,
+        "actual_native_extra_tensors_checked": 7,
+        "source_independent_invariant_ranks_verified": true,
+        "all_source_plus_hc_couplings_have_prefactor_one": true,
+        "trials_per_tensor": 5,
+        "max_relative_residual": 2.6645352591003757e-15,
+        "native_basis": "Matchete doublets transported with epsilon and saved SU2 structure"
+      },
+      "heavy_eigenbasis_reverified": true,
+      "physical_matching_performed": false,
+      "explicit_z2_registry_in_matchete": false,
+      "matchete_rgbeta_operator_normalization_certified": false
+    },
+    {
+      "model": "B_p1",
+      "scalar_basis_passed": true,
+      "actual_native_z2_parity_passed": true,
+      "actual_builder_yukawa_quartic_inventory_crosschecked": true,
+      "fermionic_census": {
+        "model": "B_p1",
+        "passed": true,
+        "fermion_type": "Dirac",
+        "canonical_yukawa_operators": [
+          [
+            "Lbar",
+            "F",
+            "S2dag"
+          ],
+          [
+            "Lbar",
+            "Fc",
+            "S1"
+          ]
+        ],
+        "number_of_yukawa_coupling_matrices": 2,
+        "additional_to_topology": 0,
+        "raw_gauge_orientations_before_majorana_identification": 2,
+        "majorana_identifies_F_and_Fc": false,
+        "charged_SM_fermion_chirality_tested": "ebar",
+        "colored_SM_fermions_excluded_by_color": [
+          "Qbar",
+          "ubar",
+          "dbar"
+        ],
+        "ff_higgs_su2_singlets": 0,
+        "bsm_sm_mass_mixing_forbidden_by_z2": true,
+        "assumptions": "Exact Z2; BSM SU3 singlets; modeled Lbar/F/Fc chirality; no new SM fermion families; renormalizable operators",
+        "full_lorentz_flavour_tensor_normalization_certified": false
+      },
+      "native_extra_quartics": {
+        "passed": true,
+        "actual_native_extra_tensors_checked": 1,
+        "source_independent_invariant_ranks_verified": true,
+        "all_source_plus_hc_couplings_have_prefactor_one": true
+      },
+      "heavy_eigenbasis_reverified": true,
+      "physical_matching_performed": false,
+      "explicit_z2_registry_in_matchete": false,
+      "matchete_rgbeta_operator_normalization_certified": false
+    },
+    {
+      "model": "C_m3",
+      "scalar_basis_passed": true,
+      "actual_native_z2_parity_passed": true,
+      "actual_builder_yukawa_quartic_inventory_crosschecked": true,
+      "fermionic_census": {
+        "model": "C_m3",
+        "passed": true,
+        "fermion_type": "Dirac",
+        "canonical_yukawa_operators": [
+          [
+            "Lbar",
+            "F",
+            "S2dag"
+          ],
+          [
+            "Lbar",
+            "Fc",
+            "S1"
+          ]
+        ],
+        "number_of_yukawa_coupling_matrices": 2,
+        "additional_to_topology": 0,
+        "raw_gauge_orientations_before_majorana_identification": 2,
+        "majorana_identifies_F_and_Fc": false,
+        "charged_SM_fermion_chirality_tested": "ebar",
+        "colored_SM_fermions_excluded_by_color": [
+          "Qbar",
+          "ubar",
+          "dbar"
+        ],
+        "ff_higgs_su2_singlets": 0,
+        "bsm_sm_mass_mixing_forbidden_by_z2": true,
+        "assumptions": "Exact Z2; BSM SU3 singlets; modeled Lbar/F/Fc chirality; no new SM fermion families; renormalizable operators",
+        "full_lorentz_flavour_tensor_normalization_certified": false
+      },
+      "native_extra_quartics": {
+        "passed": true,
+        "actual_native_extra_tensors_checked": 1,
+        "source_independent_invariant_ranks_verified": true,
+        "all_source_plus_hc_couplings_have_prefactor_one": true
+      },
+      "heavy_eigenbasis_reverified": true,
+      "physical_matching_performed": false,
+      "explicit_z2_registry_in_matchete": false,
+      "matchete_rgbeta_operator_normalization_certified": false
+    },
+    {
+      "model": "C_m1",
+      "scalar_basis_passed": true,
+      "actual_native_z2_parity_passed": true,
+      "actual_builder_yukawa_quartic_inventory_crosschecked": true,
+      "fermionic_census": {
+        "model": "C_m1",
+        "passed": true,
+        "fermion_type": "Majorana",
+        "canonical_yukawa_operators": [
+          [
+            "Lbar",
+            "F",
+            "S1"
+          ],
+          [
+            "Lbar",
+            "F",
+            "S2dag"
+          ]
+        ],
+        "number_of_yukawa_coupling_matrices": 2,
+        "additional_to_topology": 0,
+        "raw_gauge_orientations_before_majorana_identification": 4,
+        "majorana_identifies_F_and_Fc": true,
+        "charged_SM_fermion_chirality_tested": "ebar",
+        "colored_SM_fermions_excluded_by_color": [
+          "Qbar",
+          "ubar",
+          "dbar"
+        ],
+        "ff_higgs_su2_singlets": 0,
+        "bsm_sm_mass_mixing_forbidden_by_z2": true,
+        "assumptions": "Exact Z2; BSM SU3 singlets; modeled Lbar/F/Fc chirality; no new SM fermion families; renormalizable operators",
+        "full_lorentz_flavour_tensor_normalization_certified": false
+      },
+      "native_extra_quartics": {
+        "passed": true,
+        "actual_native_extra_tensors_checked": 7,
+        "source_independent_invariant_ranks_verified": true,
+        "all_source_plus_hc_couplings_have_prefactor_one": true,
+        "trials_per_tensor": 5,
+        "max_relative_residual": 2.6645352591003757e-15,
+        "native_basis": "Matchete doublets transported with epsilon and saved SU2 structure"
+      },
+      "heavy_eigenbasis_reverified": true,
+      "physical_matching_performed": false,
+      "explicit_z2_registry_in_matchete": false,
+      "matchete_rgbeta_operator_normalization_certified": false
+    },
+    {
+      "model": "C_p1",
+      "scalar_basis_passed": true,
+      "actual_native_z2_parity_passed": true,
+      "actual_builder_yukawa_quartic_inventory_crosschecked": true,
+      "fermionic_census": {
+        "model": "C_p1",
+        "passed": true,
+        "fermion_type": "Dirac",
+        "canonical_yukawa_operators": [
+          [
+            "Lbar",
+            "F",
+            "S2dag"
+          ],
+          [
+            "Lbar",
+            "Fc",
+            "S1"
+          ]
+        ],
+        "number_of_yukawa_coupling_matrices": 2,
+        "additional_to_topology": 0,
+        "raw_gauge_orientations_before_majorana_identification": 2,
+        "majorana_identifies_F_and_Fc": false,
+        "charged_SM_fermion_chirality_tested": "ebar",
+        "colored_SM_fermions_excluded_by_color": [
+          "Qbar",
+          "ubar",
+          "dbar"
+        ],
+        "ff_higgs_su2_singlets": 0,
+        "bsm_sm_mass_mixing_forbidden_by_z2": true,
+        "assumptions": "Exact Z2; BSM SU3 singlets; modeled Lbar/F/Fc chirality; no new SM fermion families; renormalizable operators",
+        "full_lorentz_flavour_tensor_normalization_certified": false
+      },
+      "native_extra_quartics": {
+        "passed": true,
+        "actual_native_extra_tensors_checked": 1,
+        "source_independent_invariant_ranks_verified": true,
+        "all_source_plus_hc_couplings_have_prefactor_one": true
+      },
+      "heavy_eigenbasis_reverified": true,
+      "physical_matching_performed": false,
+      "explicit_z2_registry_in_matchete": false,
+      "matchete_rgbeta_operator_normalization_certified": false
+    },
+    {
+      "model": "D_m2",
+      "scalar_basis_passed": true,
+      "actual_native_z2_parity_passed": true,
+      "actual_builder_yukawa_quartic_inventory_crosschecked": true,
+      "fermionic_census": {
+        "model": "D_m2",
+        "passed": true,
+        "fermion_type": "Dirac",
+        "canonical_yukawa_operators": [
+          [
+            "Lbar",
+            "F",
+            "S2"
+          ],
+          [
+            "Lbar",
+            "F",
+            "S2dag"
+          ],
+          [
+            "Lbar",
+            "Fc",
+            "S1"
+          ]
+        ],
+        "number_of_yukawa_coupling_matrices": 3,
+        "additional_to_topology": 1,
+        "raw_gauge_orientations_before_majorana_identification": 3,
+        "majorana_identifies_F_and_Fc": false,
+        "charged_SM_fermion_chirality_tested": "ebar",
+        "colored_SM_fermions_excluded_by_color": [
+          "Qbar",
+          "ubar",
+          "dbar"
+        ],
+        "ff_higgs_su2_singlets": 0,
+        "bsm_sm_mass_mixing_forbidden_by_z2": true,
+        "assumptions": "Exact Z2; BSM SU3 singlets; modeled Lbar/F/Fc chirality; no new SM fermion families; renormalizable operators",
+        "full_lorentz_flavour_tensor_normalization_certified": false
+      },
+      "native_extra_quartics": {
+        "passed": true,
+        "actual_native_extra_tensors_checked": 5,
+        "source_independent_invariant_ranks_verified": true,
+        "all_source_plus_hc_couplings_have_prefactor_one": true,
+        "trials_per_tensor": 5,
+        "max_relative_residual": 5.000161903928893e-16,
+        "native_basis": "Matchete Cartesian neutral scalar; exact native component tensors"
+      },
+      "heavy_eigenbasis_reverified": true,
+      "physical_matching_performed": false,
+      "explicit_z2_registry_in_matchete": false,
+      "matchete_rgbeta_operator_normalization_certified": false
+    },
+    {
+      "model": "D_p0",
+      "scalar_basis_passed": true,
+      "actual_native_z2_parity_passed": true,
+      "actual_builder_yukawa_quartic_inventory_crosschecked": true,
+      "fermionic_census": {
+        "model": "D_p0",
+        "passed": true,
+        "fermion_type": "Dirac",
+        "canonical_yukawa_operators": [
+          [
+            "Lbar",
+            "F",
+            "S2dag"
+          ],
+          [
+            "Lbar",
+            "Fc",
+            "S1"
+          ],
+          [
+            "Lbar",
+            "Fc",
+            "S1dag"
+          ]
+        ],
+        "number_of_yukawa_coupling_matrices": 3,
+        "additional_to_topology": 1,
+        "raw_gauge_orientations_before_majorana_identification": 3,
+        "majorana_identifies_F_and_Fc": false,
+        "charged_SM_fermion_chirality_tested": "ebar",
+        "colored_SM_fermions_excluded_by_color": [
+          "Qbar",
+          "ubar",
+          "dbar"
+        ],
+        "ff_higgs_su2_singlets": 0,
+        "bsm_sm_mass_mixing_forbidden_by_z2": true,
+        "assumptions": "Exact Z2; BSM SU3 singlets; modeled Lbar/F/Fc chirality; no new SM fermion families; renormalizable operators",
+        "full_lorentz_flavour_tensor_normalization_certified": false
+      },
+      "native_extra_quartics": {
+        "passed": true,
+        "actual_native_extra_tensors_checked": 5,
+        "source_independent_invariant_ranks_verified": true,
+        "all_source_plus_hc_couplings_have_prefactor_one": true,
+        "trials_per_tensor": 5,
+        "max_relative_residual": 7.709889005281494e-16,
+        "native_basis": "Matchete Cartesian neutral scalar; exact native component tensors"
+      },
+      "heavy_eigenbasis_reverified": true,
+      "physical_matching_performed": false,
+      "explicit_z2_registry_in_matchete": false,
+      "matchete_rgbeta_operator_normalization_certified": false
+    },
+    {
+      "model": "D_p2",
+      "scalar_basis_passed": true,
+      "actual_native_z2_parity_passed": true,
+      "actual_builder_yukawa_quartic_inventory_crosschecked": true,
+      "fermionic_census": {
+        "model": "D_p2",
+        "passed": true,
+        "fermion_type": "Dirac",
+        "canonical_yukawa_operators": [
+          [
+            "Lbar",
+            "F",
+            "S2dag"
+          ],
+          [
+            "Lbar",
+            "Fc",
+            "S1"
+          ]
+        ],
+        "number_of_yukawa_coupling_matrices": 2,
+        "additional_to_topology": 0,
+        "raw_gauge_orientations_before_majorana_identification": 2,
+        "majorana_identifies_F_and_Fc": false,
+        "charged_SM_fermion_chirality_tested": "ebar",
+        "colored_SM_fermions_excluded_by_color": [
+          "Qbar",
+          "ubar",
+          "dbar"
+        ],
+        "ff_higgs_su2_singlets": 0,
+        "bsm_sm_mass_mixing_forbidden_by_z2": true,
+        "assumptions": "Exact Z2; BSM SU3 singlets; modeled Lbar/F/Fc chirality; no new SM fermion families; renormalizable operators",
+        "full_lorentz_flavour_tensor_normalization_certified": false
+      },
+      "native_extra_quartics": {
+        "passed": true,
+        "actual_native_extra_tensors_checked": 0,
+        "source_independent_invariant_ranks_verified": true,
+        "all_source_plus_hc_couplings_have_prefactor_one": true
+      },
+      "heavy_eigenbasis_reverified": true,
+      "physical_matching_performed": false,
+      "explicit_z2_registry_in_matchete": false,
+      "matchete_rgbeta_operator_normalization_certified": false
+    },
+    {
+      "model": "E_m4",
+      "scalar_basis_passed": true,
+      "actual_native_z2_parity_passed": true,
+      "actual_builder_yukawa_quartic_inventory_crosschecked": true,
+      "fermionic_census": {
+        "model": "E_m4",
+        "passed": true,
+        "fermion_type": "Dirac",
+        "canonical_yukawa_operators": [
+          [
+            "Lbar",
+            "F",
+            "S2dag"
+          ],
+          [
+            "Lbar",
+            "Fc",
+            "S1"
+          ]
+        ],
+        "number_of_yukawa_coupling_matrices": 2,
+        "additional_to_topology": 0,
+        "raw_gauge_orientations_before_majorana_identification": 2,
+        "majorana_identifies_F_and_Fc": false,
+        "charged_SM_fermion_chirality_tested": "ebar",
+        "colored_SM_fermions_excluded_by_color": [
+          "Qbar",
+          "ubar",
+          "dbar"
+        ],
+        "ff_higgs_su2_singlets": 0,
+        "bsm_sm_mass_mixing_forbidden_by_z2": true,
+        "assumptions": "Exact Z2; BSM SU3 singlets; modeled Lbar/F/Fc chirality; no new SM fermion families; renormalizable operators",
+        "full_lorentz_flavour_tensor_normalization_certified": false
+      },
+      "native_extra_quartics": {
+        "passed": true,
+        "actual_native_extra_tensors_checked": 0,
+        "source_independent_invariant_ranks_verified": true,
+        "all_source_plus_hc_couplings_have_prefactor_one": true
+      },
+      "heavy_eigenbasis_reverified": true,
+      "physical_matching_performed": false,
+      "explicit_z2_registry_in_matchete": false,
+      "matchete_rgbeta_operator_normalization_certified": false
+    },
+    {
+      "model": "E_m2",
+      "scalar_basis_passed": true,
+      "actual_native_z2_parity_passed": true,
+      "actual_builder_yukawa_quartic_inventory_crosschecked": true,
+      "fermionic_census": {
+        "model": "E_m2",
+        "passed": true,
+        "fermion_type": "Dirac",
+        "canonical_yukawa_operators": [
+          [
+            "Lbar",
+            "F",
+            "S2"
+          ],
+          [
+            "Lbar",
+            "F",
+            "S2dag"
+          ],
+          [
+            "Lbar",
+            "Fc",
+            "S1"
+          ]
+        ],
+        "number_of_yukawa_coupling_matrices": 3,
+        "additional_to_topology": 1,
+        "raw_gauge_orientations_before_majorana_identification": 3,
+        "majorana_identifies_F_and_Fc": false,
+        "charged_SM_fermion_chirality_tested": "ebar",
+        "colored_SM_fermions_excluded_by_color": [
+          "Qbar",
+          "ubar",
+          "dbar"
+        ],
+        "ff_higgs_su2_singlets": 0,
+        "bsm_sm_mass_mixing_forbidden_by_z2": true,
+        "assumptions": "Exact Z2; BSM SU3 singlets; modeled Lbar/F/Fc chirality; no new SM fermion families; renormalizable operators",
+        "full_lorentz_flavour_tensor_normalization_certified": false
+      },
+      "native_extra_quartics": {
+        "passed": true,
+        "actual_native_extra_tensors_checked": 6,
+        "source_independent_invariant_ranks_verified": true,
+        "all_source_plus_hc_couplings_have_prefactor_one": true,
+        "trials_per_tensor": 5,
+        "max_relative_residual": 2.907383894862838e-15,
+        "native_basis": "Matchete Cartesian neutral scalar; exact native component tensors"
+      },
+      "heavy_eigenbasis_reverified": true,
+      "physical_matching_performed": false,
+      "explicit_z2_registry_in_matchete": false,
+      "matchete_rgbeta_operator_normalization_certified": false
+    },
+    {
+      "model": "E_p0",
+      "scalar_basis_passed": true,
+      "actual_native_z2_parity_passed": true,
+      "actual_builder_yukawa_quartic_inventory_crosschecked": true,
+      "fermionic_census": {
+        "model": "E_p0",
+        "passed": true,
+        "fermion_type": "Dirac",
+        "canonical_yukawa_operators": [
+          [
+            "Lbar",
+            "F",
+            "S2dag"
+          ],
+          [
+            "Lbar",
+            "Fc",
+            "S1"
+          ],
+          [
+            "Lbar",
+            "Fc",
+            "S1dag"
+          ]
+        ],
+        "number_of_yukawa_coupling_matrices": 3,
+        "additional_to_topology": 1,
+        "raw_gauge_orientations_before_majorana_identification": 3,
+        "majorana_identifies_F_and_Fc": false,
+        "charged_SM_fermion_chirality_tested": "ebar",
+        "colored_SM_fermions_excluded_by_color": [
+          "Qbar",
+          "ubar",
+          "dbar"
+        ],
+        "ff_higgs_su2_singlets": 0,
+        "bsm_sm_mass_mixing_forbidden_by_z2": true,
+        "assumptions": "Exact Z2; BSM SU3 singlets; modeled Lbar/F/Fc chirality; no new SM fermion families; renormalizable operators",
+        "full_lorentz_flavour_tensor_normalization_certified": false
+      },
+      "native_extra_quartics": {
+        "passed": true,
+        "actual_native_extra_tensors_checked": 6,
+        "source_independent_invariant_ranks_verified": true,
+        "all_source_plus_hc_couplings_have_prefactor_one": true,
+        "trials_per_tensor": 5,
+        "max_relative_residual": 1.0121914540950443e-15,
+        "native_basis": "Matchete Cartesian neutral scalar; exact native component tensors"
+      },
+      "heavy_eigenbasis_reverified": true,
+      "physical_matching_performed": false,
+      "explicit_z2_registry_in_matchete": false,
+      "matchete_rgbeta_operator_normalization_certified": false
+    },
+    {
+      "model": "E_p2",
+      "scalar_basis_passed": true,
+      "actual_native_z2_parity_passed": true,
+      "actual_builder_yukawa_quartic_inventory_crosschecked": true,
+      "fermionic_census": {
+        "model": "E_p2",
+        "passed": true,
+        "fermion_type": "Dirac",
+        "canonical_yukawa_operators": [
+          [
+            "Lbar",
+            "F",
+            "S2dag"
+          ],
+          [
+            "Lbar",
+            "Fc",
+            "S1"
+          ]
+        ],
+        "number_of_yukawa_coupling_matrices": 2,
+        "additional_to_topology": 0,
+        "raw_gauge_orientations_before_majorana_identification": 2,
+        "majorana_identifies_F_and_Fc": false,
+        "charged_SM_fermion_chirality_tested": "ebar",
+        "colored_SM_fermions_excluded_by_color": [
+          "Qbar",
+          "ubar",
+          "dbar"
+        ],
+        "ff_higgs_su2_singlets": 0,
+        "bsm_sm_mass_mixing_forbidden_by_z2": true,
+        "assumptions": "Exact Z2; BSM SU3 singlets; modeled Lbar/F/Fc chirality; no new SM fermion families; renormalizable operators",
+        "full_lorentz_flavour_tensor_normalization_certified": false
+      },
+      "native_extra_quartics": {
+        "passed": true,
+        "actual_native_extra_tensors_checked": 0,
+        "source_independent_invariant_ranks_verified": true,
+        "all_source_plus_hc_couplings_have_prefactor_one": true
+      },
+      "heavy_eigenbasis_reverified": true,
+      "physical_matching_performed": false,
+      "explicit_z2_registry_in_matchete": false,
+      "matchete_rgbeta_operator_normalization_certified": false
+    }
+  ]
+}

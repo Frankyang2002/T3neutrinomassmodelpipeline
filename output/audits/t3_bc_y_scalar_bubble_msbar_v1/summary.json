@@ -1,0 +1,2426 @@
+{
+  "format": "t3bc-y-scalar-bubble-msbar-counterterm-audit-v1",
+  "model_results": {
+    "B_-1": {
+      "format": "t3bc-y-native-scalar-bubble-msbar-subtraction-v1",
+      "model": "B_-1",
+      "source_sha256": {
+        "LLSS": "ecf3be7974ef80b791aa5f94e75bdbd4f0454802031c06da61e54ce984cb6ce1",
+        "EOMEFT": "5fd5bce10f879e65e075fb433a3cd6db43e5c92bcda8b83cd0b6da122de8bed1",
+        "CG": "a87b18f26cd25117c566362d9f2694521d588c57ad059470d1b36f76c36052e1",
+        "pole": "cfcbcdd6c601a1f9ec67a6ef13faefa5fed68a5645e82784fe37f2c001825414",
+        "formal_finite": "214bb8755f4d094b90e69bb7a64a3c1ace3559915044f776bdb173654311dd3f"
+      },
+      "counts": {
+        "LLSS": 20,
+        "HHSS": 42
+      },
+      "nonzero_component_monomials": {
+        "YY": 18,
+        "XY": 32,
+        "native_pole": 50,
+        "native_formal_finite": 32
+      },
+      "mass_ratio_r": 0.7591898814350788,
+      "bubble_finite_reference_at_muY": {
+        "YY": 0,
+        "XY_massless_X": 1,
+        "XY_both_masses_kept": 0.13143449188717826,
+        "strict_dimension5_vs_full_mass_difference": 0.8685655081128217
+      },
+      "uv_proof": {
+        "euclidean_integral": "J(L;a,b)=integral_0^L [t dt / ((t+a)(t+b))], L=Lambda^2",
+        "uv_log_slope": "lim_(L->infinity) dJ/dlnL = 1 for a>0,b>=0",
+        "massless_X_IR_integrand": "t/((t+MY^2)*t) -> 1/MY^2 at t->0, no IR pole",
+        "YY_IR_integrand": "t/(t+MY^2)^2 -> 0 at t->0, no IR pole",
+        "scheme": "MSbar; 1/epsilon_bar subtracted, +hbar loop convention",
+        "MSbar_pole_coefficient_per_Wick_contracted_pair": "1",
+        "independent_of_native_Matchete_pole": true
+      },
+      "tree_WQ_kernel_equals_native_Y_pole": true,
+      "independent_bubble_MSbar_CT_cancels_tree_WQ_UV": true,
+      "independent_bubble_MSbar_CT_cancels_native_Y_pole": true,
+      "Y_formal_finite_equals_XY_kernel_at_muY": true,
+      "UV_comparison_mismatches": [],
+      "CT_cancel_mismatches": [],
+      "native_CT_cancel_mismatches": [],
+      "finite_comparison_mismatches": [],
+      "independent_bubble_sector_CT_without_hbar_and_inverse_MF": [
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU12",
+            "bar_T3MEU11",
+            "bar_T3MEU12",
+            "bar_lambdaT3ExtraQ020200I1",
+            "bar_y1",
+            "bar_y1"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU12",
+            "bar_T3MEU11",
+            "bar_T3MEU12",
+            "lambdaT3ExtraQ020200I1",
+            "y1",
+            "y1"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU12",
+            "bar_T3MEU11",
+            "bar_T3MEU22",
+            "bar_lambdaT3",
+            "y1",
+            "y1"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU12",
+            "bar_T3MEU11",
+            "bar_T3MEU22",
+            "bar_lambdaT3ExtraQ020200I1",
+            "bar_y1",
+            "bar_y2"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU12",
+            "bar_T3MEU12",
+            "bar_T3MEU21",
+            "bar_lambdaT3",
+            "y1",
+            "y1"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU12",
+            "bar_T3MEU12",
+            "bar_T3MEU21",
+            "bar_lambdaT3ExtraQ020200I1",
+            "bar_y1",
+            "bar_y2"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU12",
+            "bar_T3MEU21",
+            "bar_T3MEU22",
+            "bar_lambdaT3ExtraQ020200I1",
+            "bar_y2",
+            "bar_y2"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU12",
+            "bar_T3MEU21",
+            "bar_T3MEU22",
+            "lambdaT3ExtraQ020020I1",
+            "y1",
+            "y1"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU22",
+            "bar_T3MEU11",
+            "bar_T3MEU12",
+            "bar_y1",
+            "bar_y1",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU22",
+            "bar_T3MEU11",
+            "bar_T3MEU12",
+            "lambdaT3ExtraQ020200I1",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU22",
+            "bar_T3MEU11",
+            "bar_T3MEU22",
+            "bar_lambdaT3",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU22",
+            "bar_T3MEU11",
+            "bar_T3MEU22",
+            "bar_y1",
+            "bar_y2",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU22",
+            "bar_T3MEU12",
+            "bar_T3MEU21",
+            "bar_lambdaT3",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU22",
+            "bar_T3MEU12",
+            "bar_T3MEU21",
+            "bar_y1",
+            "bar_y2",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU22",
+            "bar_T3MEU21",
+            "bar_T3MEU22",
+            "bar_y2",
+            "bar_y2",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU22",
+            "bar_T3MEU21",
+            "bar_T3MEU22",
+            "lambdaT3ExtraQ020020I1",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU12",
+            "bar_T3MEU12",
+            "bar_T3MEU12",
+            "bar_lambdaT3ExtraQ020200I1",
+            "bar_y1",
+            "bar_y1"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU12",
+            "bar_T3MEU12",
+            "bar_T3MEU12",
+            "lambdaT3ExtraQ020200I1",
+            "y1",
+            "y1"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU12",
+            "bar_T3MEU12",
+            "bar_T3MEU22",
+            "bar_lambdaT3",
+            "y1",
+            "y1"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU12",
+            "bar_T3MEU12",
+            "bar_T3MEU22",
+            "bar_lambdaT3ExtraQ020200I1",
+            "bar_y1",
+            "bar_y2"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU12",
+            "bar_T3MEU22",
+            "bar_T3MEU22",
+            "bar_lambdaT3ExtraQ020200I1",
+            "bar_y2",
+            "bar_y2"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU12",
+            "bar_T3MEU22",
+            "bar_T3MEU22",
+            "lambdaT3ExtraQ020020I1",
+            "y1",
+            "y1"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU21",
+            "bar_T3MEU11",
+            "bar_T3MEU12",
+            "bar_y1",
+            "bar_y1",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU21",
+            "bar_T3MEU11",
+            "bar_T3MEU12",
+            "lambdaT3ExtraQ020200I1",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU21",
+            "bar_T3MEU11",
+            "bar_T3MEU22",
+            "bar_lambdaT3",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU21",
+            "bar_T3MEU11",
+            "bar_T3MEU22",
+            "bar_y1",
+            "bar_y2",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU21",
+            "bar_T3MEU12",
+            "bar_T3MEU21",
+            "bar_lambdaT3",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU21",
+            "bar_T3MEU12",
+            "bar_T3MEU21",
+            "bar_y1",
+            "bar_y2",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU21",
+            "bar_T3MEU21",
+            "bar_T3MEU22",
+            "bar_y2",
+            "bar_y2",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU21",
+            "bar_T3MEU21",
+            "bar_T3MEU22",
+            "lambdaT3ExtraQ020020I1",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU22",
+            "bar_T3MEU12",
+            "bar_T3MEU12",
+            "bar_y1",
+            "bar_y1",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU22",
+            "bar_T3MEU12",
+            "bar_T3MEU12",
+            "lambdaT3ExtraQ020200I1",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU22",
+            "bar_T3MEU12",
+            "bar_T3MEU22",
+            "bar_lambdaT3",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU22",
+            "bar_T3MEU12",
+            "bar_T3MEU22",
+            "bar_y1",
+            "bar_y2",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU22",
+            "bar_T3MEU22",
+            "bar_T3MEU22",
+            "bar_y2",
+            "bar_y2",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU22",
+            "bar_T3MEU22",
+            "bar_T3MEU22",
+            "lambdaT3ExtraQ020020I1",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU21",
+            "T3MEU22",
+            "bar_T3MEU11",
+            "bar_T3MEU12",
+            "bar_lambdaT3ExtraQ020020I1",
+            "bar_y1",
+            "bar_y1"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU21",
+            "T3MEU22",
+            "bar_T3MEU11",
+            "bar_T3MEU12",
+            "lambdaT3ExtraQ020200I1",
+            "y2",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU21",
+            "T3MEU22",
+            "bar_T3MEU11",
+            "bar_T3MEU22",
+            "bar_lambdaT3",
+            "y2",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU21",
+            "T3MEU22",
+            "bar_T3MEU11",
+            "bar_T3MEU22",
+            "bar_lambdaT3ExtraQ020020I1",
+            "bar_y1",
+            "bar_y2"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU21",
+            "T3MEU22",
+            "bar_T3MEU12",
+            "bar_T3MEU21",
+            "bar_lambdaT3",
+            "y2",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU21",
+            "T3MEU22",
+            "bar_T3MEU12",
+            "bar_T3MEU21",
+            "bar_lambdaT3ExtraQ020020I1",
+            "bar_y1",
+            "bar_y2"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU21",
+            "T3MEU22",
+            "bar_T3MEU21",
+            "bar_T3MEU22",
+            "bar_lambdaT3ExtraQ020020I1",
+            "bar_y2",
+            "bar_y2"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU21",
+            "T3MEU22",
+            "bar_T3MEU21",
+            "bar_T3MEU22",
+            "lambdaT3ExtraQ020020I1",
+            "y2",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU22",
+            "T3MEU22",
+            "bar_T3MEU12",
+            "bar_T3MEU12",
+            "bar_lambdaT3ExtraQ020020I1",
+            "bar_y1",
+            "bar_y1"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU22",
+            "T3MEU22",
+            "bar_T3MEU12",
+            "bar_T3MEU12",
+            "lambdaT3ExtraQ020200I1",
+            "y2",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU22",
+            "T3MEU22",
+            "bar_T3MEU12",
+            "bar_T3MEU22",
+            "bar_lambdaT3",
+            "y2",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU22",
+            "T3MEU22",
+            "bar_T3MEU12",
+            "bar_T3MEU22",
+            "bar_lambdaT3ExtraQ020020I1",
+            "bar_y1",
+            "bar_y2"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU22",
+            "T3MEU22",
+            "bar_T3MEU22",
+            "bar_T3MEU22",
+            "bar_lambdaT3ExtraQ020020I1",
+            "bar_y2",
+            "bar_y2"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU22",
+            "T3MEU22",
+            "bar_T3MEU22",
+            "bar_T3MEU22",
+            "lambdaT3ExtraQ020020I1",
+            "y2",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-1"
+        }
+      ],
+      "independent_bubble_sector_MSbar_hard_finite_at_muY_without_hbar_and_inverse_MF": [
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU12",
+            "bar_T3MEU11",
+            "bar_T3MEU12",
+            "bar_lambdaT3ExtraQ020200I1",
+            "bar_y1",
+            "bar_y1"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU12",
+            "bar_T3MEU11",
+            "bar_T3MEU12",
+            "lambdaT3ExtraQ020200I1",
+            "y1",
+            "y1"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU12",
+            "bar_T3MEU11",
+            "bar_T3MEU22",
+            "bar_lambdaT3",
+            "y1",
+            "y1"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU12",
+            "bar_T3MEU11",
+            "bar_T3MEU22",
+            "bar_lambdaT3ExtraQ020200I1",
+            "bar_y1",
+            "bar_y2"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU12",
+            "bar_T3MEU12",
+            "bar_T3MEU21",
+            "bar_lambdaT3",
+            "y1",
+            "y1"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU12",
+            "bar_T3MEU12",
+            "bar_T3MEU21",
+            "bar_lambdaT3ExtraQ020200I1",
+            "bar_y1",
+            "bar_y2"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU12",
+            "bar_T3MEU21",
+            "bar_T3MEU22",
+            "bar_lambdaT3ExtraQ020200I1",
+            "bar_y2",
+            "bar_y2"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU12",
+            "bar_T3MEU21",
+            "bar_T3MEU22",
+            "lambdaT3ExtraQ020020I1",
+            "y1",
+            "y1"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU22",
+            "bar_T3MEU11",
+            "bar_T3MEU12",
+            "bar_y1",
+            "bar_y1",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU22",
+            "bar_T3MEU11",
+            "bar_T3MEU12",
+            "lambdaT3ExtraQ020200I1",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU22",
+            "bar_T3MEU11",
+            "bar_T3MEU22",
+            "bar_lambdaT3",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU22",
+            "bar_T3MEU11",
+            "bar_T3MEU22",
+            "bar_y1",
+            "bar_y2",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU22",
+            "bar_T3MEU12",
+            "bar_T3MEU21",
+            "bar_lambdaT3",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU22",
+            "bar_T3MEU12",
+            "bar_T3MEU21",
+            "bar_y1",
+            "bar_y2",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU22",
+            "bar_T3MEU21",
+            "bar_T3MEU22",
+            "bar_y2",
+            "bar_y2",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU22",
+            "bar_T3MEU21",
+            "bar_T3MEU22",
+            "lambdaT3ExtraQ020020I1",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU21",
+            "bar_T3MEU11",
+            "bar_T3MEU12",
+            "bar_y1",
+            "bar_y1",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU21",
+            "bar_T3MEU11",
+            "bar_T3MEU12",
+            "lambdaT3ExtraQ020200I1",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU21",
+            "bar_T3MEU11",
+            "bar_T3MEU22",
+            "bar_lambdaT3",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU21",
+            "bar_T3MEU11",
+            "bar_T3MEU22",
+            "bar_y1",
+            "bar_y2",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU21",
+            "bar_T3MEU12",
+            "bar_T3MEU21",
+            "bar_lambdaT3",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU21",
+            "bar_T3MEU12",
+            "bar_T3MEU21",
+            "bar_y1",
+            "bar_y2",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU21",
+            "bar_T3MEU21",
+            "bar_T3MEU22",
+            "bar_y2",
+            "bar_y2",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU21",
+            "bar_T3MEU21",
+            "bar_T3MEU22",
+            "lambdaT3ExtraQ020020I1",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU21",
+            "T3MEU22",
+            "bar_T3MEU11",
+            "bar_T3MEU12",
+            "bar_lambdaT3ExtraQ020020I1",
+            "bar_y1",
+            "bar_y1"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU21",
+            "T3MEU22",
+            "bar_T3MEU11",
+            "bar_T3MEU12",
+            "lambdaT3ExtraQ020200I1",
+            "y2",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU21",
+            "T3MEU22",
+            "bar_T3MEU11",
+            "bar_T3MEU22",
+            "bar_lambdaT3",
+            "y2",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU21",
+            "T3MEU22",
+            "bar_T3MEU11",
+            "bar_T3MEU22",
+            "bar_lambdaT3ExtraQ020020I1",
+            "bar_y1",
+            "bar_y2"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU21",
+            "T3MEU22",
+            "bar_T3MEU12",
+            "bar_T3MEU21",
+            "bar_lambdaT3",
+            "y2",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-1"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU21",
+            "T3MEU22",
+            "bar_T3MEU12",
+            "bar_T3MEU21",
+            "bar_lambdaT3ExtraQ020020I1",
+            "bar_y1",
+            "bar_y2"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU21",
+            "T3MEU22",
+            "bar_T3MEU21",
+            "bar_T3MEU22",
+            "bar_lambdaT3ExtraQ020020I1",
+            "bar_y2",
+            "bar_y2"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "2"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU21",
+            "T3MEU22",
+            "bar_T3MEU21",
+            "bar_T3MEU22",
+            "lambdaT3ExtraQ020020I1",
+            "y2",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "2"
+        }
+      ],
+      "operator_convention": "native ordered LLHH neutral component, GammaCC/Proj[+/-1], hbar/MF factored out",
+      "derived_CT_operator_definition": "delta L_LLHH = (hbar/MF) * (-K_YY-K_XY) / epsilon_bar, in the native ordered neutral component at order quartic*LLSS",
+      "derived_hard_finite_operator_definition": "Delta L_LLHH^bubble,MSbar(muY) = (hbar/MF)*K_XY, strict massless X at dimension-5; YY term vanishes at muY",
+      "scalar_bubble_sector_CT_derived_independently": true,
+      "UV_IR_separated_for_YY_XY_scalar_bubbles": true,
+      "EFT1_all_operator_counterterms_derived": false,
+      "EFT1_EFT2_full_counterterm_difference_derived": false,
+      "EFT2_light_loop_soft_overlap_checked": false,
+      "higher_dim_mass_corrections_included": false,
+      "Majorana_GammaCC_to_symmetric_Weinberg_normalization_certified": false,
+      "physical_C5_Y": null,
+      "physical_matching_certified": false
+    },
+    "C_-1": {
+      "format": "t3bc-y-native-scalar-bubble-msbar-subtraction-v1",
+      "model": "C_-1",
+      "source_sha256": {
+        "LLSS": "3513532a01a30d9e3cacb46352c74687fd140802257fb8e8b01f7b82a7cee859",
+        "EOMEFT": "bbe592b3b5f43ebe0587e63df13e89d4dd80623847196d1dde9f2988ea146e96",
+        "CG": "485ec725ecdf92780c551e74790f3de9540b432d9abb82a0bf1b5f85d39e083b",
+        "pole": "2a508ac14ed0c9bea87dc8f1b119a1e2cd0c5f58e8adbb430371a23f304dbd7c",
+        "formal_finite": "d47c26faf5be630cfa9d532867238f0b5aa01dd24918e8e1684aa1933f490ce1"
+      },
+      "counts": {
+        "LLSS": 24,
+        "HHSS": 42
+      },
+      "nonzero_component_monomials": {
+        "YY": 18,
+        "XY": 32,
+        "native_pole": 50,
+        "native_formal_finite": 32
+      },
+      "mass_ratio_r": 0.7580657291175412,
+      "bubble_finite_reference_at_muY": {
+        "YY": 0,
+        "XY_massless_X": 1,
+        "XY_both_masses_kept": 0.1321073525076243,
+        "strict_dimension5_vs_full_mass_difference": 0.8678926474923757
+      },
+      "uv_proof": {
+        "euclidean_integral": "J(L;a,b)=integral_0^L [t dt / ((t+a)(t+b))], L=Lambda^2",
+        "uv_log_slope": "lim_(L->infinity) dJ/dlnL = 1 for a>0,b>=0",
+        "massless_X_IR_integrand": "t/((t+MY^2)*t) -> 1/MY^2 at t->0, no IR pole",
+        "YY_IR_integrand": "t/(t+MY^2)^2 -> 0 at t->0, no IR pole",
+        "scheme": "MSbar; 1/epsilon_bar subtracted, +hbar loop convention",
+        "MSbar_pole_coefficient_per_Wick_contracted_pair": "1",
+        "independent_of_native_Matchete_pole": true
+      },
+      "tree_WQ_kernel_equals_native_Y_pole": true,
+      "independent_bubble_MSbar_CT_cancels_tree_WQ_UV": true,
+      "independent_bubble_MSbar_CT_cancels_native_Y_pole": true,
+      "Y_formal_finite_equals_XY_kernel_at_muY": true,
+      "UV_comparison_mismatches": [],
+      "CT_cancel_mismatches": [],
+      "native_CT_cancel_mismatches": [],
+      "finite_comparison_mismatches": [],
+      "independent_bubble_sector_CT_without_hbar_and_inverse_MF": [
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU12",
+            "bar_T3MEU11",
+            "bar_T3MEU12",
+            "bar_lambdaT3ExtraQ020200I1",
+            "bar_y1",
+            "bar_y1"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU12",
+            "bar_T3MEU11",
+            "bar_T3MEU12",
+            "lambdaT3ExtraQ020200I1",
+            "y1",
+            "y1"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU12",
+            "bar_T3MEU11",
+            "bar_T3MEU22",
+            "bar_lambdaT3",
+            "y1",
+            "y1"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU12",
+            "bar_T3MEU11",
+            "bar_T3MEU22",
+            "bar_lambdaT3ExtraQ020200I1",
+            "bar_y1",
+            "bar_y2"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU12",
+            "bar_T3MEU12",
+            "bar_T3MEU21",
+            "bar_lambdaT3",
+            "y1",
+            "y1"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU12",
+            "bar_T3MEU12",
+            "bar_T3MEU21",
+            "bar_lambdaT3ExtraQ020200I1",
+            "bar_y1",
+            "bar_y2"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU12",
+            "bar_T3MEU21",
+            "bar_T3MEU22",
+            "bar_lambdaT3ExtraQ020200I1",
+            "bar_y2",
+            "bar_y2"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU12",
+            "bar_T3MEU21",
+            "bar_T3MEU22",
+            "lambdaT3ExtraQ020020I1",
+            "y1",
+            "y1"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU22",
+            "bar_T3MEU11",
+            "bar_T3MEU12",
+            "bar_y1",
+            "bar_y1",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU22",
+            "bar_T3MEU11",
+            "bar_T3MEU12",
+            "lambdaT3ExtraQ020200I1",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU22",
+            "bar_T3MEU11",
+            "bar_T3MEU22",
+            "bar_lambdaT3",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU22",
+            "bar_T3MEU11",
+            "bar_T3MEU22",
+            "bar_y1",
+            "bar_y2",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU22",
+            "bar_T3MEU12",
+            "bar_T3MEU21",
+            "bar_lambdaT3",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU22",
+            "bar_T3MEU12",
+            "bar_T3MEU21",
+            "bar_y1",
+            "bar_y2",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU22",
+            "bar_T3MEU21",
+            "bar_T3MEU22",
+            "bar_y2",
+            "bar_y2",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU22",
+            "bar_T3MEU21",
+            "bar_T3MEU22",
+            "lambdaT3ExtraQ020020I1",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU12",
+            "bar_T3MEU12",
+            "bar_T3MEU12",
+            "bar_lambdaT3ExtraQ020200I1",
+            "bar_y1",
+            "bar_y1"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU12",
+            "bar_T3MEU12",
+            "bar_T3MEU12",
+            "lambdaT3ExtraQ020200I1",
+            "y1",
+            "y1"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU12",
+            "bar_T3MEU12",
+            "bar_T3MEU22",
+            "bar_lambdaT3",
+            "y1",
+            "y1"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU12",
+            "bar_T3MEU12",
+            "bar_T3MEU22",
+            "bar_lambdaT3ExtraQ020200I1",
+            "bar_y1",
+            "bar_y2"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU12",
+            "bar_T3MEU22",
+            "bar_T3MEU22",
+            "bar_lambdaT3ExtraQ020200I1",
+            "bar_y2",
+            "bar_y2"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU12",
+            "bar_T3MEU22",
+            "bar_T3MEU22",
+            "lambdaT3ExtraQ020020I1",
+            "y1",
+            "y1"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU21",
+            "bar_T3MEU11",
+            "bar_T3MEU12",
+            "bar_y1",
+            "bar_y1",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU21",
+            "bar_T3MEU11",
+            "bar_T3MEU12",
+            "lambdaT3ExtraQ020200I1",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU21",
+            "bar_T3MEU11",
+            "bar_T3MEU22",
+            "bar_lambdaT3",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU21",
+            "bar_T3MEU11",
+            "bar_T3MEU22",
+            "bar_y1",
+            "bar_y2",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU21",
+            "bar_T3MEU12",
+            "bar_T3MEU21",
+            "bar_lambdaT3",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU21",
+            "bar_T3MEU12",
+            "bar_T3MEU21",
+            "bar_y1",
+            "bar_y2",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU21",
+            "bar_T3MEU21",
+            "bar_T3MEU22",
+            "bar_y2",
+            "bar_y2",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU21",
+            "bar_T3MEU21",
+            "bar_T3MEU22",
+            "lambdaT3ExtraQ020020I1",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU22",
+            "bar_T3MEU12",
+            "bar_T3MEU12",
+            "bar_y1",
+            "bar_y1",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU22",
+            "bar_T3MEU12",
+            "bar_T3MEU12",
+            "lambdaT3ExtraQ020200I1",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU22",
+            "bar_T3MEU12",
+            "bar_T3MEU22",
+            "bar_lambdaT3",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU22",
+            "bar_T3MEU12",
+            "bar_T3MEU22",
+            "bar_y1",
+            "bar_y2",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU22",
+            "bar_T3MEU22",
+            "bar_T3MEU22",
+            "bar_y2",
+            "bar_y2",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU22",
+            "bar_T3MEU22",
+            "bar_T3MEU22",
+            "lambdaT3ExtraQ020020I1",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU21",
+            "T3MEU22",
+            "bar_T3MEU11",
+            "bar_T3MEU12",
+            "bar_lambdaT3ExtraQ020020I1",
+            "bar_y1",
+            "bar_y1"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU21",
+            "T3MEU22",
+            "bar_T3MEU11",
+            "bar_T3MEU12",
+            "lambdaT3ExtraQ020200I1",
+            "y2",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU21",
+            "T3MEU22",
+            "bar_T3MEU11",
+            "bar_T3MEU22",
+            "bar_lambdaT3",
+            "y2",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU21",
+            "T3MEU22",
+            "bar_T3MEU11",
+            "bar_T3MEU22",
+            "bar_lambdaT3ExtraQ020020I1",
+            "bar_y1",
+            "bar_y2"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU21",
+            "T3MEU22",
+            "bar_T3MEU12",
+            "bar_T3MEU21",
+            "bar_lambdaT3",
+            "y2",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU21",
+            "T3MEU22",
+            "bar_T3MEU12",
+            "bar_T3MEU21",
+            "bar_lambdaT3ExtraQ020020I1",
+            "bar_y1",
+            "bar_y2"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU21",
+            "T3MEU22",
+            "bar_T3MEU21",
+            "bar_T3MEU22",
+            "bar_lambdaT3ExtraQ020020I1",
+            "bar_y2",
+            "bar_y2"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU21",
+            "T3MEU22",
+            "bar_T3MEU21",
+            "bar_T3MEU22",
+            "lambdaT3ExtraQ020020I1",
+            "y2",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU22",
+            "T3MEU22",
+            "bar_T3MEU12",
+            "bar_T3MEU12",
+            "bar_lambdaT3ExtraQ020020I1",
+            "bar_y1",
+            "bar_y1"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU22",
+            "T3MEU22",
+            "bar_T3MEU12",
+            "bar_T3MEU12",
+            "lambdaT3ExtraQ020200I1",
+            "y2",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU22",
+            "T3MEU22",
+            "bar_T3MEU12",
+            "bar_T3MEU22",
+            "bar_lambdaT3",
+            "y2",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU22",
+            "T3MEU22",
+            "bar_T3MEU12",
+            "bar_T3MEU22",
+            "bar_lambdaT3ExtraQ020020I1",
+            "bar_y1",
+            "bar_y2"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU22",
+            "T3MEU22",
+            "bar_T3MEU22",
+            "bar_T3MEU22",
+            "bar_lambdaT3ExtraQ020020I1",
+            "bar_y2",
+            "bar_y2"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU22",
+            "T3MEU22",
+            "bar_T3MEU22",
+            "bar_T3MEU22",
+            "lambdaT3ExtraQ020020I1",
+            "y2",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-sqrt(3)/3"
+        }
+      ],
+      "independent_bubble_sector_MSbar_hard_finite_at_muY_without_hbar_and_inverse_MF": [
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU12",
+            "bar_T3MEU11",
+            "bar_T3MEU12",
+            "bar_lambdaT3ExtraQ020200I1",
+            "bar_y1",
+            "bar_y1"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU12",
+            "bar_T3MEU11",
+            "bar_T3MEU12",
+            "lambdaT3ExtraQ020200I1",
+            "y1",
+            "y1"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU12",
+            "bar_T3MEU11",
+            "bar_T3MEU22",
+            "bar_lambdaT3",
+            "y1",
+            "y1"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU12",
+            "bar_T3MEU11",
+            "bar_T3MEU22",
+            "bar_lambdaT3ExtraQ020200I1",
+            "bar_y1",
+            "bar_y2"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU12",
+            "bar_T3MEU12",
+            "bar_T3MEU21",
+            "bar_lambdaT3",
+            "y1",
+            "y1"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU12",
+            "bar_T3MEU12",
+            "bar_T3MEU21",
+            "bar_lambdaT3ExtraQ020200I1",
+            "bar_y1",
+            "bar_y2"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU12",
+            "bar_T3MEU21",
+            "bar_T3MEU22",
+            "bar_lambdaT3ExtraQ020200I1",
+            "bar_y2",
+            "bar_y2"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU12",
+            "bar_T3MEU21",
+            "bar_T3MEU22",
+            "lambdaT3ExtraQ020020I1",
+            "y1",
+            "y1"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU22",
+            "bar_T3MEU11",
+            "bar_T3MEU12",
+            "bar_y1",
+            "bar_y1",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU22",
+            "bar_T3MEU11",
+            "bar_T3MEU12",
+            "lambdaT3ExtraQ020200I1",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU22",
+            "bar_T3MEU11",
+            "bar_T3MEU22",
+            "bar_lambdaT3",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU22",
+            "bar_T3MEU11",
+            "bar_T3MEU22",
+            "bar_y1",
+            "bar_y2",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU22",
+            "bar_T3MEU12",
+            "bar_T3MEU21",
+            "bar_lambdaT3",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU22",
+            "bar_T3MEU12",
+            "bar_T3MEU21",
+            "bar_y1",
+            "bar_y2",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU22",
+            "bar_T3MEU21",
+            "bar_T3MEU22",
+            "bar_y2",
+            "bar_y2",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU11",
+            "T3MEU22",
+            "bar_T3MEU21",
+            "bar_T3MEU22",
+            "lambdaT3ExtraQ020020I1",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU21",
+            "bar_T3MEU11",
+            "bar_T3MEU12",
+            "bar_y1",
+            "bar_y1",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU21",
+            "bar_T3MEU11",
+            "bar_T3MEU12",
+            "lambdaT3ExtraQ020200I1",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU21",
+            "bar_T3MEU11",
+            "bar_T3MEU22",
+            "bar_lambdaT3",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU21",
+            "bar_T3MEU11",
+            "bar_T3MEU22",
+            "bar_y1",
+            "bar_y2",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU21",
+            "bar_T3MEU12",
+            "bar_T3MEU21",
+            "bar_lambdaT3",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU21",
+            "bar_T3MEU12",
+            "bar_T3MEU21",
+            "bar_y1",
+            "bar_y2",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU21",
+            "bar_T3MEU21",
+            "bar_T3MEU22",
+            "bar_y2",
+            "bar_y2",
+            "lambdaT3"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU12",
+            "T3MEU21",
+            "bar_T3MEU21",
+            "bar_T3MEU22",
+            "lambdaT3ExtraQ020020I1",
+            "y1",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU21",
+            "T3MEU22",
+            "bar_T3MEU11",
+            "bar_T3MEU12",
+            "bar_lambdaT3ExtraQ020020I1",
+            "bar_y1",
+            "bar_y1"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU21",
+            "T3MEU22",
+            "bar_T3MEU11",
+            "bar_T3MEU12",
+            "lambdaT3ExtraQ020200I1",
+            "y2",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU21",
+            "T3MEU22",
+            "bar_T3MEU11",
+            "bar_T3MEU22",
+            "bar_lambdaT3",
+            "y2",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU21",
+            "T3MEU22",
+            "bar_T3MEU11",
+            "bar_T3MEU22",
+            "bar_lambdaT3ExtraQ020020I1",
+            "bar_y1",
+            "bar_y2"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU21",
+            "T3MEU22",
+            "bar_T3MEU12",
+            "bar_T3MEU21",
+            "bar_lambdaT3",
+            "y2",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "-sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU21",
+            "T3MEU22",
+            "bar_T3MEU12",
+            "bar_T3MEU21",
+            "bar_lambdaT3ExtraQ020020I1",
+            "bar_y1",
+            "bar_y2"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "-2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU21",
+            "T3MEU22",
+            "bar_T3MEU21",
+            "bar_T3MEU22",
+            "bar_lambdaT3ExtraQ020020I1",
+            "bar_y2",
+            "bar_y2"
+          ],
+          "chirality": "PL",
+          "H_bar_count": 0,
+          "coefficient_without_hbar_and_inverse_MF": "2*sqrt(3)/3"
+        },
+        {
+          "coupling_factors": [
+            "T3MEU21",
+            "T3MEU22",
+            "bar_T3MEU21",
+            "bar_T3MEU22",
+            "lambdaT3ExtraQ020020I1",
+            "y2",
+            "y2"
+          ],
+          "chirality": "PR",
+          "H_bar_count": 2,
+          "coefficient_without_hbar_and_inverse_MF": "2*sqrt(3)/3"
+        }
+      ],
+      "operator_convention": "native ordered LLHH neutral component, GammaCC/Proj[+/-1], hbar/MF factored out",
+      "derived_CT_operator_definition": "delta L_LLHH = (hbar/MF) * (-K_YY-K_XY) / epsilon_bar, in the native ordered neutral component at order quartic*LLSS",
+      "derived_hard_finite_operator_definition": "Delta L_LLHH^bubble,MSbar(muY) = (hbar/MF)*K_XY, strict massless X at dimension-5; YY term vanishes at muY",
+      "scalar_bubble_sector_CT_derived_independently": true,
+      "UV_IR_separated_for_YY_XY_scalar_bubbles": true,
+      "EFT1_all_operator_counterterms_derived": false,
+      "EFT1_EFT2_full_counterterm_difference_derived": false,
+      "EFT2_light_loop_soft_overlap_checked": false,
+      "higher_dim_mass_corrections_included": false,
+      "Majorana_GammaCC_to_symmetric_Weinberg_normalization_certified": false,
+      "physical_C5_Y": null,
+      "physical_matching_certified": false
+    }
+  },
+  "diagnostic_scope": "independent source-vertex scalar bubble CT only; NOT full EFT matching",
+  "physical_C5_Y": null,
+  "full_EFT1_EFT2_counterterm_difference_certified": false
+}

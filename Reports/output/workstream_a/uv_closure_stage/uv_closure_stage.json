@@ -1,10 +1,10 @@
 {
   "format": "t3-workstream-a-uv-closure-stage-v1",
-  "status": "PartialOrFailedEvidence",
+  "status": "StructuralAndNumericalStagePassed",
   "source": "IndependentSU2SymmetricPowerCounter+ExistingMatcheteZ2AndEigenReports",
   "catalog_file": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\Lagrangian\\interactions\\GeneralScalarVerifiedQuartics.wl",
   "catalog_sha256": "ca9f0a88cb29a22abcca4b7079b69923a6a6a2ab4a5d9429d9c2ccbfb78e3d3a",
-  "z2_driver_sha256": "fe2d83698e46e7b79f881d916ed6ded6cda0c5e5848c225c66d052435137d1e3",
+  "z2_driver_sha256": "95d3164268ea306ab1c32fecc1479e1cb4ab0033a0df1b8d29e65b850d0446cb",
   "scalar_basis_totals": {
     "models": 16,
     "quartic_slots": 50,
@@ -12,7 +12,7 @@
     "scalar_cubic_slots": 0,
     "all_models_match_manifest": true
   },
-  "native_z2_pass_count": 14,
+  "native_z2_pass_count": 16,
   "prior_eigenbasis_pass_count": 8,
   "remaining_requirements": [
     "Symbolic original-to-eigenmass and phase parameter relation in native Matchete",
@@ -51,21 +51,33 @@
             "expanded_term_count": 15,
             "odd_bsm_term_count": 0,
             "no_bsm_field_term_count": 0,
+            "unsupported_bsm_field_power_count": 0,
+            "power_compressed_term_count": 1,
+            "naive_unweighted_odd_bsm_term_count": 0,
             "bsm_field_count_distribution": {
-              "2": 12,
-              "4": 3
+              "2": 11,
+              "4": 4
             },
             "odd_term_examples_inputform": [],
+            "power_compressed_examples_inputform": [
+              "(Bar[Field[NewScalar1, Scalar, {}, {}]]^2*Coupling[lambdaS1Inv1, {}, 0]*Field[NewScalar1, Scalar, {}, {}]^2)/2"
+            ],
+            "unsupported_power_examples_inputform": [],
             "zero_field_examples_inputform": []
           },
           "free_terms": {
             "expanded_term_count": 6,
             "odd_bsm_term_count": 0,
             "no_bsm_field_term_count": 0,
+            "unsupported_bsm_field_power_count": 0,
+            "power_compressed_term_count": 0,
+            "naive_unweighted_odd_bsm_term_count": 0,
             "bsm_field_count_distribution": {
               "2": 6
             },
             "odd_term_examples_inputform": [],
+            "power_compressed_examples_inputform": [],
+            "unsupported_power_examples_inputform": [],
             "zero_field_examples_inputform": []
           },
           "indexed_mf_in_original_free_lagrangian": true,
@@ -75,6 +87,7 @@
           "extra_yukawas_included": 0,
           "extra_quartics_included": 0,
           "extra_quadratics_included": 0,
+          "field_power_multiplicities_counted": true,
           "discrete_z2_explicitly_registered_in_matchete": false,
           "physical_matching_performed": false
         },
@@ -170,21 +183,33 @@
             "expanded_term_count": 27,
             "odd_bsm_term_count": 0,
             "no_bsm_field_term_count": 0,
+            "unsupported_bsm_field_power_count": 0,
+            "power_compressed_term_count": 1,
+            "naive_unweighted_odd_bsm_term_count": 0,
             "bsm_field_count_distribution": {
-              "4": 9,
-              "2": 18
+              "4": 10,
+              "2": 17
             },
             "odd_term_examples_inputform": [],
+            "power_compressed_examples_inputform": [
+              "(Bar[Field[NewScalar1, Scalar, {}, {}]]^2*Coupling[lambdaS1Inv1, {}, 0]*Field[NewScalar1, Scalar, {}, {}]^2)/2"
+            ],
+            "unsupported_power_examples_inputform": [],
             "zero_field_examples_inputform": []
           },
           "free_terms": {
             "expanded_term_count": 6,
             "odd_bsm_term_count": 0,
             "no_bsm_field_term_count": 0,
+            "unsupported_bsm_field_power_count": 0,
+            "power_compressed_term_count": 0,
+            "naive_unweighted_odd_bsm_term_count": 0,
             "bsm_field_count_distribution": {
               "2": 6
             },
             "odd_term_examples_inputform": [],
+            "power_compressed_examples_inputform": [],
+            "unsupported_power_examples_inputform": [],
             "zero_field_examples_inputform": []
           },
           "indexed_mf_in_original_free_lagrangian": true,
@@ -194,6 +219,7 @@
           "extra_yukawas_included": 1,
           "extra_quartics_included": 5,
           "extra_quadratics_included": 0,
+          "field_power_multiplicities_counted": true,
           "discrete_z2_explicitly_registered_in_matchete": false,
           "physical_matching_performed": false
         },
@@ -311,40 +337,48 @@
         }
       },
       "z2_parity_of_actual_unrotated_bsm_terms": {
-        "status": "TermParityOrBuilderFailed",
-        "passed": false,
+        "status": "PassedActualBSMTermParityAndMatchete",
+        "passed": true,
         "data": {
           "format": "t3-workstream-a-term-parity-v1",
           "model": "A_p0",
-          "status": "TermParityOrBuilderFailed",
+          "status": "PassedActualBSMTermParityAndMatchete",
           "builder_status": "Success",
           "matchete_full_check_passed": true,
           "interaction_terms": {
             "expanded_term_count": 27,
-            "odd_bsm_term_count": 6,
+            "odd_bsm_term_count": 0,
             "no_bsm_field_term_count": 0,
+            "unsupported_bsm_field_power_count": 0,
+            "power_compressed_term_count": 9,
+            "naive_unweighted_odd_bsm_term_count": 6,
             "bsm_field_count_distribution": {
-              "1": 4,
-              "2": 18,
-              "3": 2,
-              "4": 3
+              "4": 10,
+              "2": 17
             },
-            "odd_term_examples_inputform": [
+            "odd_term_examples_inputform": [],
+            "power_compressed_examples_inputform": [
               "Bar[Field[NewScalar1, Scalar, {}, {}]]^4*Coupling[lambdaT3ExtraQ000400I1, {}, 0]",
               "Bar[Field[H, Scalar, {Index[d$$1, SU2L[fund]]}, {}]]*Bar[Field[NewScalar1, Scalar, {}, {}]]^2*CG[T3ExtraCGQ110200I1, {Bar[Index[d$$2, SU2L[fund]]], Index[d$$1, SU2L[fund]]}]*Coupling[lambdaT3ExtraQ110200I1, {}, 0]*Field[H, Scalar, {Index[d$$2, SU2L[fund]]}, {}]",
-              "Bar[Coupling[lambdaT3ExtraQ110200I1, {}, 0]]*Bar[Field[H, Scalar, {Index[d$$1, SU2L[fund]]}, {}]]*CG[T3ExtraCGQ110200I1, {Bar[Index[d$$2, SU2L[fund]]], Index[d$$1, SU2L[fund]]}]*Field[H, Scalar, {Index[d$$2, SU2L[fund]]}, {}]*Field[NewScalar1, Scalar, {}, {}]^2",
-              "Bar[Coupling[lambdaT3ExtraQ000400I1, {}, 0]]*Field[NewScalar1, Scalar, {}, {}]^4"
+              "Bar[Field[NewScalar1, Scalar, {}, {}]]^3*Coupling[lambdaT3ExtraQ001300I1, {}, 0]*Field[NewScalar1, Scalar, {}, {}]",
+              "(Bar[Field[NewScalar1, Scalar, {}, {}]]^2*Coupling[lambdaS1Inv1, {}, 0]*Field[NewScalar1, Scalar, {}, {}]^2)/2"
             ],
+            "unsupported_power_examples_inputform": [],
             "zero_field_examples_inputform": []
           },
           "free_terms": {
             "expanded_term_count": 6,
             "odd_bsm_term_count": 0,
             "no_bsm_field_term_count": 0,
+            "unsupported_bsm_field_power_count": 0,
+            "power_compressed_term_count": 0,
+            "naive_unweighted_odd_bsm_term_count": 0,
             "bsm_field_count_distribution": {
               "2": 6
             },
             "odd_term_examples_inputform": [],
+            "power_compressed_examples_inputform": [],
+            "unsupported_power_examples_inputform": [],
             "zero_field_examples_inputform": []
           },
           "indexed_mf_in_original_free_lagrangian": true,
@@ -354,6 +388,7 @@
           "extra_yukawas_included": 1,
           "extra_quartics_included": 5,
           "extra_quadratics_included": 0,
+          "field_power_multiplicities_counted": true,
           "discrete_z2_explicitly_registered_in_matchete": false,
           "physical_matching_performed": false
         },
@@ -439,21 +474,31 @@
             "expanded_term_count": 16,
             "odd_bsm_term_count": 0,
             "no_bsm_field_term_count": 0,
+            "unsupported_bsm_field_power_count": 0,
+            "power_compressed_term_count": 0,
+            "naive_unweighted_odd_bsm_term_count": 0,
             "bsm_field_count_distribution": {
               "2": 12,
               "4": 4
             },
             "odd_term_examples_inputform": [],
+            "power_compressed_examples_inputform": [],
+            "unsupported_power_examples_inputform": [],
             "zero_field_examples_inputform": []
           },
           "free_terms": {
             "expanded_term_count": 6,
             "odd_bsm_term_count": 0,
             "no_bsm_field_term_count": 0,
+            "unsupported_bsm_field_power_count": 0,
+            "power_compressed_term_count": 0,
+            "naive_unweighted_odd_bsm_term_count": 0,
             "bsm_field_count_distribution": {
               "2": 6
             },
             "odd_term_examples_inputform": [],
+            "power_compressed_examples_inputform": [],
+            "unsupported_power_examples_inputform": [],
             "zero_field_examples_inputform": []
           },
           "indexed_mf_in_original_free_lagrangian": true,
@@ -463,6 +508,7 @@
           "extra_yukawas_included": 0,
           "extra_quartics_included": 1,
           "extra_quadratics_included": 0,
+          "field_power_multiplicities_counted": true,
           "discrete_z2_explicitly_registered_in_matchete": false,
           "physical_matching_performed": false
         },
@@ -569,21 +615,31 @@
             "expanded_term_count": 28,
             "odd_bsm_term_count": 0,
             "no_bsm_field_term_count": 0,
+            "unsupported_bsm_field_power_count": 0,
+            "power_compressed_term_count": 0,
+            "naive_unweighted_odd_bsm_term_count": 0,
             "bsm_field_count_distribution": {
               "4": 10,
               "2": 18
             },
             "odd_term_examples_inputform": [],
+            "power_compressed_examples_inputform": [],
+            "unsupported_power_examples_inputform": [],
             "zero_field_examples_inputform": []
           },
           "free_terms": {
             "expanded_term_count": 6,
             "odd_bsm_term_count": 0,
             "no_bsm_field_term_count": 0,
+            "unsupported_bsm_field_power_count": 0,
+            "power_compressed_term_count": 0,
+            "naive_unweighted_odd_bsm_term_count": 0,
             "bsm_field_count_distribution": {
               "2": 6
             },
             "odd_term_examples_inputform": [],
+            "power_compressed_examples_inputform": [],
+            "unsupported_power_examples_inputform": [],
             "zero_field_examples_inputform": []
           },
           "indexed_mf_in_original_free_lagrangian": true,
@@ -593,6 +649,7 @@
           "extra_yukawas_included": 0,
           "extra_quartics_included": 7,
           "extra_quadratics_included": 0,
+          "field_power_multiplicities_counted": true,
           "discrete_z2_explicitly_registered_in_matchete": false,
           "physical_matching_performed": false
         },
@@ -692,21 +749,31 @@
             "expanded_term_count": 16,
             "odd_bsm_term_count": 0,
             "no_bsm_field_term_count": 0,
+            "unsupported_bsm_field_power_count": 0,
+            "power_compressed_term_count": 0,
+            "naive_unweighted_odd_bsm_term_count": 0,
             "bsm_field_count_distribution": {
               "2": 12,
               "4": 4
             },
             "odd_term_examples_inputform": [],
+            "power_compressed_examples_inputform": [],
+            "unsupported_power_examples_inputform": [],
             "zero_field_examples_inputform": []
           },
           "free_terms": {
             "expanded_term_count": 6,
             "odd_bsm_term_count": 0,
             "no_bsm_field_term_count": 0,
+            "unsupported_bsm_field_power_count": 0,
+            "power_compressed_term_count": 0,
+            "naive_unweighted_odd_bsm_term_count": 0,
             "bsm_field_count_distribution": {
               "2": 6
             },
             "odd_term_examples_inputform": [],
+            "power_compressed_examples_inputform": [],
+            "unsupported_power_examples_inputform": [],
             "zero_field_examples_inputform": []
           },
           "indexed_mf_in_original_free_lagrangian": true,
@@ -716,6 +783,7 @@
           "extra_yukawas_included": 0,
           "extra_quartics_included": 1,
           "extra_quadratics_included": 0,
+          "field_power_multiplicities_counted": true,
           "discrete_z2_explicitly_registered_in_matchete": false,
           "physical_matching_performed": false
         },
@@ -767,21 +835,31 @@
             "expanded_term_count": 16,
             "odd_bsm_term_count": 0,
             "no_bsm_field_term_count": 0,
+            "unsupported_bsm_field_power_count": 0,
+            "power_compressed_term_count": 0,
+            "naive_unweighted_odd_bsm_term_count": 0,
             "bsm_field_count_distribution": {
               "2": 12,
               "4": 4
             },
             "odd_term_examples_inputform": [],
+            "power_compressed_examples_inputform": [],
+            "unsupported_power_examples_inputform": [],
             "zero_field_examples_inputform": []
           },
           "free_terms": {
             "expanded_term_count": 6,
             "odd_bsm_term_count": 0,
             "no_bsm_field_term_count": 0,
+            "unsupported_bsm_field_power_count": 0,
+            "power_compressed_term_count": 0,
+            "naive_unweighted_odd_bsm_term_count": 0,
             "bsm_field_count_distribution": {
               "2": 6
             },
             "odd_term_examples_inputform": [],
+            "power_compressed_examples_inputform": [],
+            "unsupported_power_examples_inputform": [],
             "zero_field_examples_inputform": []
           },
           "indexed_mf_in_original_free_lagrangian": true,
@@ -791,6 +869,7 @@
           "extra_yukawas_included": 0,
           "extra_quartics_included": 1,
           "extra_quadratics_included": 0,
+          "field_power_multiplicities_counted": true,
           "discrete_z2_explicitly_registered_in_matchete": false,
           "physical_matching_performed": false
         },
@@ -897,21 +976,31 @@
             "expanded_term_count": 28,
             "odd_bsm_term_count": 0,
             "no_bsm_field_term_count": 0,
+            "unsupported_bsm_field_power_count": 0,
+            "power_compressed_term_count": 0,
+            "naive_unweighted_odd_bsm_term_count": 0,
             "bsm_field_count_distribution": {
               "4": 10,
               "2": 18
             },
             "odd_term_examples_inputform": [],
+            "power_compressed_examples_inputform": [],
+            "unsupported_power_examples_inputform": [],
             "zero_field_examples_inputform": []
           },
           "free_terms": {
             "expanded_term_count": 6,
             "odd_bsm_term_count": 0,
             "no_bsm_field_term_count": 0,
+            "unsupported_bsm_field_power_count": 0,
+            "power_compressed_term_count": 0,
+            "naive_unweighted_odd_bsm_term_count": 0,
             "bsm_field_count_distribution": {
               "2": 6
             },
             "odd_term_examples_inputform": [],
+            "power_compressed_examples_inputform": [],
+            "unsupported_power_examples_inputform": [],
             "zero_field_examples_inputform": []
           },
           "indexed_mf_in_original_free_lagrangian": true,
@@ -921,6 +1010,7 @@
           "extra_yukawas_included": 0,
           "extra_quartics_included": 7,
           "extra_quadratics_included": 0,
+          "field_power_multiplicities_counted": true,
           "discrete_z2_explicitly_registered_in_matchete": false,
           "physical_matching_performed": false
         },
@@ -1020,21 +1110,31 @@
             "expanded_term_count": 16,
             "odd_bsm_term_count": 0,
             "no_bsm_field_term_count": 0,
+            "unsupported_bsm_field_power_count": 0,
+            "power_compressed_term_count": 0,
+            "naive_unweighted_odd_bsm_term_count": 0,
             "bsm_field_count_distribution": {
               "2": 12,
               "4": 4
             },
             "odd_term_examples_inputform": [],
+            "power_compressed_examples_inputform": [],
+            "unsupported_power_examples_inputform": [],
             "zero_field_examples_inputform": []
           },
           "free_terms": {
             "expanded_term_count": 6,
             "odd_bsm_term_count": 0,
             "no_bsm_field_term_count": 0,
+            "unsupported_bsm_field_power_count": 0,
+            "power_compressed_term_count": 0,
+            "naive_unweighted_odd_bsm_term_count": 0,
             "bsm_field_count_distribution": {
               "2": 6
             },
             "odd_term_examples_inputform": [],
+            "power_compressed_examples_inputform": [],
+            "unsupported_power_examples_inputform": [],
             "zero_field_examples_inputform": []
           },
           "indexed_mf_in_original_free_lagrangian": true,
@@ -1044,6 +1144,7 @@
           "extra_yukawas_included": 0,
           "extra_quartics_included": 1,
           "extra_quadratics_included": 0,
+          "field_power_multiplicities_counted": true,
           "discrete_z2_explicitly_registered_in_matchete": false,
           "physical_matching_performed": false
         },
@@ -1127,40 +1228,48 @@
         }
       },
       "z2_parity_of_actual_unrotated_bsm_terms": {
-        "status": "TermParityOrBuilderFailed",
-        "passed": false,
+        "status": "PassedActualBSMTermParityAndMatchete",
+        "passed": true,
         "data": {
           "format": "t3-workstream-a-term-parity-v1",
           "model": "D_m2",
-          "status": "TermParityOrBuilderFailed",
+          "status": "PassedActualBSMTermParityAndMatchete",
           "builder_status": "Success",
           "matchete_full_check_passed": true,
           "interaction_terms": {
             "expanded_term_count": 27,
-            "odd_bsm_term_count": 6,
+            "odd_bsm_term_count": 0,
             "no_bsm_field_term_count": 0,
+            "unsupported_bsm_field_power_count": 0,
+            "power_compressed_term_count": 9,
+            "naive_unweighted_odd_bsm_term_count": 6,
             "bsm_field_count_distribution": {
-              "1": 4,
-              "2": 18,
-              "3": 2,
-              "4": 3
+              "4": 10,
+              "2": 17
             },
-            "odd_term_examples_inputform": [
+            "odd_term_examples_inputform": [],
+            "power_compressed_examples_inputform": [
               "Bar[Field[NewScalar2, Scalar, {}, {}]]^4*Coupling[lambdaT3ExtraQ000004I1, {}, 0]",
               "Bar[Field[H, Scalar, {Index[d$$1, SU2L[fund]]}, {}]]*Bar[Field[NewScalar2, Scalar, {}, {}]]^2*CG[T3ExtraCGQ110002I1, {Bar[Index[d$$2, SU2L[fund]]], Index[d$$1, SU2L[fund]]}]*Coupling[lambdaT3ExtraQ110002I1, {}, 0]*Field[H, Scalar, {Index[d$$2, SU2L[fund]]}, {}]",
               "Bar[Field[NewScalar1, Scalar, {Index[d$$1, T3BSMd3]}, {}]]*Bar[Field[NewScalar2, Scalar, {}, {}]]^2*CG[T3ExtraCGQ001102I1, {Index[d$$2, T3BSMd3], Index[d$$1, T3BSMd3]}]*Coupling[lambdaT3ExtraQ001102I1, {}, 0]*Field[NewScalar1, Scalar, {Index[d$$2, T3BSMd3]}, {}]",
-              "Bar[Coupling[lambdaT3ExtraQ110002I1, {}, 0]]*Bar[Field[H, Scalar, {Index[d$$1, SU2L[fund]]}, {}]]*CG[T3ExtraCGQ110002I1, {Bar[Index[d$$2, SU2L[fund]]], Index[d$$1, SU2L[fund]]}]*Field[H, Scalar, {Index[d$$2, SU2L[fund]]}, {}]*Field[NewScalar2, Scalar, {}, {}]^2"
+              "Bar[Field[NewScalar2, Scalar, {}, {}]]^3*Coupling[lambdaT3ExtraQ000013I1, {}, 0]*Field[NewScalar2, Scalar, {}, {}]"
             ],
+            "unsupported_power_examples_inputform": [],
             "zero_field_examples_inputform": []
           },
           "free_terms": {
             "expanded_term_count": 6,
             "odd_bsm_term_count": 0,
             "no_bsm_field_term_count": 0,
+            "unsupported_bsm_field_power_count": 0,
+            "power_compressed_term_count": 0,
+            "naive_unweighted_odd_bsm_term_count": 0,
             "bsm_field_count_distribution": {
               "2": 6
             },
             "odd_term_examples_inputform": [],
+            "power_compressed_examples_inputform": [],
+            "unsupported_power_examples_inputform": [],
             "zero_field_examples_inputform": []
           },
           "indexed_mf_in_original_free_lagrangian": true,
@@ -1170,6 +1279,7 @@
           "extra_yukawas_included": 1,
           "extra_quartics_included": 5,
           "extra_quadratics_included": 0,
+          "field_power_multiplicities_counted": true,
           "discrete_z2_explicitly_registered_in_matchete": false,
           "physical_matching_performed": false
         },
@@ -1299,21 +1409,33 @@
             "expanded_term_count": 27,
             "odd_bsm_term_count": 0,
             "no_bsm_field_term_count": 0,
+            "unsupported_bsm_field_power_count": 0,
+            "power_compressed_term_count": 1,
+            "naive_unweighted_odd_bsm_term_count": 0,
             "bsm_field_count_distribution": {
-              "4": 9,
-              "2": 18
+              "4": 10,
+              "2": 17
             },
             "odd_term_examples_inputform": [],
+            "power_compressed_examples_inputform": [
+              "(Bar[Field[NewScalar2, Scalar, {}, {}]]^2*Coupling[lambdaS2Inv1, {}, 0]*Field[NewScalar2, Scalar, {}, {}]^2)/2"
+            ],
+            "unsupported_power_examples_inputform": [],
             "zero_field_examples_inputform": []
           },
           "free_terms": {
             "expanded_term_count": 6,
             "odd_bsm_term_count": 0,
             "no_bsm_field_term_count": 0,
+            "unsupported_bsm_field_power_count": 0,
+            "power_compressed_term_count": 0,
+            "naive_unweighted_odd_bsm_term_count": 0,
             "bsm_field_count_distribution": {
               "2": 6
             },
             "odd_term_examples_inputform": [],
+            "power_compressed_examples_inputform": [],
+            "unsupported_power_examples_inputform": [],
             "zero_field_examples_inputform": []
           },
           "indexed_mf_in_original_free_lagrangian": true,
@@ -1323,6 +1445,7 @@
           "extra_yukawas_included": 1,
           "extra_quartics_included": 5,
           "extra_quadratics_included": 0,
+          "field_power_multiplicities_counted": true,
           "discrete_z2_explicitly_registered_in_matchete": false,
           "physical_matching_performed": false
         },
@@ -1396,21 +1519,33 @@
             "expanded_term_count": 15,
             "odd_bsm_term_count": 0,
             "no_bsm_field_term_count": 0,
+            "unsupported_bsm_field_power_count": 0,
+            "power_compressed_term_count": 1,
+            "naive_unweighted_odd_bsm_term_count": 0,
             "bsm_field_count_distribution": {
-              "2": 12,
-              "4": 3
+              "2": 11,
+              "4": 4
             },
             "odd_term_examples_inputform": [],
+            "power_compressed_examples_inputform": [
+              "(Bar[Field[NewScalar2, Scalar, {}, {}]]^2*Coupling[lambdaS2Inv1, {}, 0]*Field[NewScalar2, Scalar, {}, {}]^2)/2"
+            ],
+            "unsupported_power_examples_inputform": [],
             "zero_field_examples_inputform": []
           },
           "free_terms": {
             "expanded_term_count": 6,
             "odd_bsm_term_count": 0,
             "no_bsm_field_term_count": 0,
+            "unsupported_bsm_field_power_count": 0,
+            "power_compressed_term_count": 0,
+            "naive_unweighted_odd_bsm_term_count": 0,
             "bsm_field_count_distribution": {
               "2": 6
             },
             "odd_term_examples_inputform": [],
+            "power_compressed_examples_inputform": [],
+            "unsupported_power_examples_inputform": [],
             "zero_field_examples_inputform": []
           },
           "indexed_mf_in_original_free_lagrangian": true,
@@ -1420,6 +1555,7 @@
           "extra_yukawas_included": 0,
           "extra_quartics_included": 0,
           "extra_quadratics_included": 0,
+          "field_power_multiplicities_counted": true,
           "discrete_z2_explicitly_registered_in_matchete": false,
           "physical_matching_performed": false
         },
@@ -1459,21 +1595,31 @@
             "expanded_term_count": 21,
             "odd_bsm_term_count": 0,
             "no_bsm_field_term_count": 0,
+            "unsupported_bsm_field_power_count": 0,
+            "power_compressed_term_count": 0,
+            "naive_unweighted_odd_bsm_term_count": 0,
             "bsm_field_count_distribution": {
               "2": 14,
               "4": 7
             },
             "odd_term_examples_inputform": [],
+            "power_compressed_examples_inputform": [],
+            "unsupported_power_examples_inputform": [],
             "zero_field_examples_inputform": []
           },
           "free_terms": {
             "expanded_term_count": 6,
             "odd_bsm_term_count": 0,
             "no_bsm_field_term_count": 0,
+            "unsupported_bsm_field_power_count": 0,
+            "power_compressed_term_count": 0,
+            "naive_unweighted_odd_bsm_term_count": 0,
             "bsm_field_count_distribution": {
               "2": 6
             },
             "odd_term_examples_inputform": [],
+            "power_compressed_examples_inputform": [],
+            "unsupported_power_examples_inputform": [],
             "zero_field_examples_inputform": []
           },
           "indexed_mf_in_original_free_lagrangian": true,
@@ -1483,6 +1629,7 @@
           "extra_yukawas_included": 0,
           "extra_quartics_included": 0,
           "extra_quadratics_included": 0,
+          "field_power_multiplicities_counted": true,
           "discrete_z2_explicitly_registered_in_matchete": false,
           "physical_matching_performed": false
         },
@@ -1578,21 +1725,31 @@
             "expanded_term_count": 35,
             "odd_bsm_term_count": 0,
             "no_bsm_field_term_count": 0,
+            "unsupported_bsm_field_power_count": 0,
+            "power_compressed_term_count": 0,
+            "naive_unweighted_odd_bsm_term_count": 0,
             "bsm_field_count_distribution": {
               "4": 15,
               "2": 20
             },
             "odd_term_examples_inputform": [],
+            "power_compressed_examples_inputform": [],
+            "unsupported_power_examples_inputform": [],
             "zero_field_examples_inputform": []
           },
           "free_terms": {
             "expanded_term_count": 6,
             "odd_bsm_term_count": 0,
             "no_bsm_field_term_count": 0,
+            "unsupported_bsm_field_power_count": 0,
+            "power_compressed_term_count": 0,
+            "naive_unweighted_odd_bsm_term_count": 0,
             "bsm_field_count_distribution": {
               "2": 6
             },
             "odd_term_examples_inputform": [],
+            "power_compressed_examples_inputform": [],
+            "unsupported_power_examples_inputform": [],
             "zero_field_examples_inputform": []
           },
           "indexed_mf_in_original_free_lagrangian": true,
@@ -1602,6 +1759,7 @@
           "extra_yukawas_included": 1,
           "extra_quartics_included": 6,
           "extra_quadratics_included": 0,
+          "field_power_multiplicities_counted": true,
           "discrete_z2_explicitly_registered_in_matchete": false,
           "physical_matching_performed": false
         },
@@ -1731,21 +1889,31 @@
             "expanded_term_count": 35,
             "odd_bsm_term_count": 0,
             "no_bsm_field_term_count": 0,
+            "unsupported_bsm_field_power_count": 0,
+            "power_compressed_term_count": 0,
+            "naive_unweighted_odd_bsm_term_count": 0,
             "bsm_field_count_distribution": {
               "4": 15,
               "2": 20
             },
             "odd_term_examples_inputform": [],
+            "power_compressed_examples_inputform": [],
+            "unsupported_power_examples_inputform": [],
             "zero_field_examples_inputform": []
           },
           "free_terms": {
             "expanded_term_count": 6,
             "odd_bsm_term_count": 0,
             "no_bsm_field_term_count": 0,
+            "unsupported_bsm_field_power_count": 0,
+            "power_compressed_term_count": 0,
+            "naive_unweighted_odd_bsm_term_count": 0,
             "bsm_field_count_distribution": {
               "2": 6
             },
             "odd_term_examples_inputform": [],
+            "power_compressed_examples_inputform": [],
+            "unsupported_power_examples_inputform": [],
             "zero_field_examples_inputform": []
           },
           "indexed_mf_in_original_free_lagrangian": true,
@@ -1755,6 +1923,7 @@
           "extra_yukawas_included": 1,
           "extra_quartics_included": 6,
           "extra_quadratics_included": 0,
+          "field_power_multiplicities_counted": true,
           "discrete_z2_explicitly_registered_in_matchete": false,
           "physical_matching_performed": false
         },
@@ -1828,21 +1997,31 @@
             "expanded_term_count": 21,
             "odd_bsm_term_count": 0,
             "no_bsm_field_term_count": 0,
+            "unsupported_bsm_field_power_count": 0,
+            "power_compressed_term_count": 0,
+            "naive_unweighted_odd_bsm_term_count": 0,
             "bsm_field_count_distribution": {
               "2": 14,
               "4": 7
             },
             "odd_term_examples_inputform": [],
+            "power_compressed_examples_inputform": [],
+            "unsupported_power_examples_inputform": [],
             "zero_field_examples_inputform": []
           },
           "free_terms": {
             "expanded_term_count": 6,
             "odd_bsm_term_count": 0,
             "no_bsm_field_term_count": 0,
+            "unsupported_bsm_field_power_count": 0,
+            "power_compressed_term_count": 0,
+            "naive_unweighted_odd_bsm_term_count": 0,
             "bsm_field_count_distribution": {
               "2": 6
             },
             "odd_term_examples_inputform": [],
+            "power_compressed_examples_inputform": [],
+            "unsupported_power_examples_inputform": [],
             "zero_field_examples_inputform": []
           },
           "indexed_mf_in_original_free_lagrangian": true,
@@ -1852,6 +2031,7 @@
           "extra_yukawas_included": 0,
           "extra_quartics_included": 0,
           "extra_quadratics_included": 0,
+          "field_power_multiplicities_counted": true,
           "discrete_z2_explicitly_registered_in_matchete": false,
           "physical_matching_performed": false
         },

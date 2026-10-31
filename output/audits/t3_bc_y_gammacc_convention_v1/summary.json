@@ -1,0 +1,72 @@
+{
+  "format": "t3-bc-conditional-majorana-mass-normalization-v1",
+  "status": "GrassmannAndVEVFactorsProved_NativeGammaCCFactorOutstanding",
+  "models": [
+    {
+      "model": "B_-1",
+      "source_sha256": "8f519acc058cb95f58995b301e462e500d963d31ac0b4edcde1972163c914002"
+    },
+    {
+      "model": "C_-1",
+      "source_sha256": "ac65c9577bfd7e8a2bc7b5e4b29ccfd9c566b9d91e09348ee789744e779f6f28"
+    }
+  ],
+  "exact_grassmann_proof": {
+    "anticommuting_bilinear_exchange": "B_ij = B_ji",
+    "identical_flavour_bilinear_multiplicity": 2,
+    "prefactor_map_for_L5_equal_Aij_Qij_plus_hc": "C5=A+A^T when L5=(1/2)*C5*Q+h.c.",
+    "example_A": [
+      [
+        "2",
+        "3"
+      ],
+      [
+        "5",
+        "7"
+      ]
+    ],
+    "example_C5": [
+      [
+        "4",
+        "8"
+      ],
+      [
+        "8",
+        "14"
+      ]
+    ]
+  },
+  "installed_source_probe": {
+    "status": "GammaCCSourceLocated_NotYetInterpreted",
+    "source_files": [
+      ".\\Package\\DiracAlgebra.m",
+      ".\\Package\\Export\\UFO\\ExportUFO.m",
+      ".\\Package\\FeynmanRules.m",
+      ".\\Package\\FunctionalTools.m",
+      ".\\Package\\Lagrangians.m",
+      ".\\Package\\Matching.m",
+      ".\\Package\\NCM.m",
+      ".\\Package\\Printing.m",
+      ".\\Package\\Simplifications.m",
+      ".\\Package\\SSB.m"
+    ],
+    "occurrences": 84,
+    "source_root": "C:\\Users\\popok\\AppData\\Roaming\\Wolfram\\Applications\\Matchete",
+    "gammacc_definition_interpreted": false
+  },
+  "epsilon_21_squared": "(-1)^2=1",
+  "neutral_higgs_vev": "H_2=v/sqrt(2)",
+  "neutral_Warsaw_Q": "Q_ij -> (v^2/2)*B_ij",
+  "canonical_mass_lagrangian": "L_mass=-(1/2)*m_ij*B_ij + h.c.",
+  "mass_map_conditional_on_native_Q_identification": "m_ij=-(v^2/2)*(A_ij+A_ji)",
+  "if_lagrangian_uses_half_C5": "m_ij=-(v^2/2)*C5_ij",
+  "if_lagrangian_uses_C5_without_half": "m_ij=-v^2*C5_ij for C5 symmetric",
+  "matchete_hbar_equals_one_over_16pi2": "DOCUMENTED_BY_MATCHeTE_QUICKSTART",
+  "native_PR_and_PL_added_as_independent_C5": false,
+  "native_GammaCC_to_Warsaw_prefactor_certified": false,
+  "operator_sign_and_projector_reference_certified": false,
+  "all_EFT1_EFT2_counterterms_certified": false,
+  "physical_C5": null,
+  "physical_neutrino_mass_matrix": null,
+  "next_required_step": "review installed GammaCC source definitions and calibrate native NCM vs explicit Warsaw Q"
+}

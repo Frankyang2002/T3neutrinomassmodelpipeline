@@ -1,19 +1,19 @@
 # Workstream A — UV closure stage
 
-Outcome: **PartialOrFailedEvidence**. This is not a full UV certificate.
+Outcome: **StructuralAndNumericalStagePassed**. This is not a full UV certificate.
 
 | Model | Extra quartics | Extra bilinear | Scalar structure | Actual Z2 terms | Eigenbasis |
 |---|---:|---:|---|---|---|
 | A_m4 | 0 | 0 | PASS | PASS | PASS |
 | A_m2 | 5 | 1 | PASS | PASS | PASS |
-| A_p0 | 5 | 1 | PASS | TermParityOrBuilderFailed | PASS |
+| A_p0 | 5 | 1 | PASS | PASS | PASS |
 | B_m3 | 1 | 0 | PASS | PASS | PASS |
 | B_m1 | 7 | 1 | PASS | PASS | PASS |
 | B_p1 | 1 | 0 | PASS | PASS | PASS |
 | C_m3 | 1 | 0 | PASS | PASS | PASS |
 | C_m1 | 7 | 1 | PASS | PASS | PASS |
 | C_p1 | 1 | 0 | PASS | PASS | PASS |
-| D_m2 | 5 | 1 | PASS | TermParityOrBuilderFailed | PASS |
+| D_m2 | 5 | 1 | PASS | PASS | PASS |
 | D_p0 | 5 | 1 | PASS | PASS | PASS |
 | D_p2 | 0 | 0 | PASS | PASS | PASS |
 | E_m4 | 0 | 0 | PASS | PASS | PASS |

@@ -1,4 +1,4 @@
-(* Workstream A: 16-model read-only Z2 term audit.
+(* Workstream A: 16-model read-only Z2 term audit; multiplicity-aware v1.1.
    wolframscript -file Lagrangian/RunT3UVZ2TermAudit.wl OUTPUT.json A|B|C|D|E m4|m3|m2|m1|p0|p1|p2
 
    Rebuilds the COMPLETE BSM free+interaction Lagrangian with general fermions,
@@ -36,22 +36,69 @@ Get[FileNameJoin[{$T3ZADir,"model","LagrangianBuilder.wl"}]];
 T3ZATerms[expr_] := Module[{expanded=Expand[expr]},
   If[Head[expanded]===Plus,List@@expanded,{expanded}]
 ];
-T3ZABSMFields[term_] := Cases[term,
-  HoldPattern[Field[name_Symbol,___]] /;
-    MemberQ[{NewFermion,NewScalar1,NewScalar2},name] :> SymbolName[name],
-  {0,Infinity}];
-T3ZAInspect[expr_] := Module[{terms,fields,count,odd,zero,distribution},
+(* Position/ancestor-based counting is necessary for SU(2) singlet powers.
+   Mathematica canonicalises S^4 as Power[Field[...],4], so counting the
+   Field[...] node once falsely labels the term Z2-odd.  This occurs
+   specifically in the neutral-singlet A(0) and D(-2) quartic sectors.
+   Count one factor per field with a multiplicity from EVERY positive-integer
+   Power ancestor, including powers of Bar[Field[...]].  Negative/fractional
+   field powers are not renormalizable monomials and fail this audit closed. *)
+T3ZABSMPositions[term_] := Position[
+  term,
+  HoldPattern[Field[name_Symbol, ___]] /;
+    MemberQ[{NewFermion, NewScalar1, NewScalar2}, name],
+  {0, Infinity}
+];
+T3ZAAncestorPowerInfo[term_, pos_List] := Module[
+  {weight=1, bad=False, parent, exponent},
+  Do[
+    parent=Extract[term, Take[pos,k]];
+    If[Head[parent]===Power,
+      exponent=parent[[2]];
+      If[IntegerQ[exponent] && exponent>0,
+        weight*=exponent,
+        bad=True
+      ];
+    ],
+    {k,0,Length[pos]-1}
+  ];
+  If[bad, Missing["UnsupportedFieldPower"], weight]
+];
+T3ZABSMFieldData[term_] := Module[
+  {positions=T3ZABSMPositions[term], name, weight},
+  Table[
+    name=SymbolName[Extract[term,pos][[1]]];
+    weight=T3ZAAncestorPowerInfo[term,pos];
+    <|"field"->name, "multiplicity"->weight|>,
+    {pos, positions}
+  ]
+];
+T3ZAInspect[expr_] := Module[
+  {terms, fieldData, weightLists, counts, naiveCounts, odd, zero, distribution,
+   unsupported, compressed},
   terms=T3ZATerms[expr];
-  fields=T3ZABSMFields /@ terms;
-  count=Length /@ fields;
-  odd=Flatten@Position[Mod[count,2],1];
-  zero=Flatten@Position[count,0];
-  distribution=Counts[count];
+  fieldData=T3ZABSMFieldData /@ terms;
+  unsupported=Flatten@Position[
+    Map[!AllTrue[Lookup[#, "multiplicity", {}], IntegerQ[#] && #>0 &] &,
+        fieldData], True
+  ];
+  weightLists=Lookup[#, "multiplicity", {}] & /@ fieldData;
+  counts=Total /@ weightLists;
+  naiveCounts=Length /@ fieldData;
+  odd=Flatten@Position[Mod[counts,2],1];
+  zero=Flatten@Position[counts,0];
+  compressed=Flatten@Position[MapThread[Unequal,{counts,naiveCounts}],True];
+  distribution=Counts[counts];
   <|"expanded_term_count"->Length[terms],
     "odd_bsm_term_count"->Length[odd],
     "no_bsm_field_term_count"->Length[zero],
+    "unsupported_bsm_field_power_count"->Length[unsupported],
+    "power_compressed_term_count"->Length[compressed],
+    "naive_unweighted_odd_bsm_term_count"->Count[Mod[naiveCounts,2],1],
     "bsm_field_count_distribution"->Association@KeyValueMap[ToString[#1]->#2&,distribution],
     "odd_term_examples_inputform"->(ToString[terms[[#]],InputForm]& /@ Take[odd,UpTo[4]]),
+    "power_compressed_examples_inputform"->(ToString[terms[[#]],InputForm]& /@ Take[compressed,UpTo[4]]),
+    "unsupported_power_examples_inputform"->(ToString[terms[[#]],InputForm]& /@ Take[unsupported,UpTo[4]]),
     "zero_field_examples_inputform"->(ToString[terms[[#]],InputForm]& /@ Take[zero,UpTo[4]])|>
 ];
 T3ZAExecute[] := Module[{model,built,int,free,ok,status,rep,mfIndices,indexedMF},
@@ -69,7 +116,9 @@ T3ZAExecute[] := Module[{model,built,int,free,ok,status,rep,mfIndices,indexedMF}
   ok=indexedMF && built["Status"]==="Success" && TrueQ[built["FullValidation"]] &&
     int["expanded_term_count"]>0 && free["expanded_term_count"]>0 &&
     int["odd_bsm_term_count"]===0 && free["odd_bsm_term_count"]===0 &&
-    int["no_bsm_field_term_count"]===0 && free["no_bsm_field_term_count"]===0;
+    int["no_bsm_field_term_count"]===0 && free["no_bsm_field_term_count"]===0 &&
+    int["unsupported_bsm_field_power_count"]===0 &&
+    free["unsupported_bsm_field_power_count"]===0;
   status=If[ok,"PassedActualBSMTermParityAndMatchete","TermParityOrBuilderFailed"];
   <|"status"->status,"model"->$T3ZAModel,
     "builder_status"->Lookup[built,"Status","Missing"],
@@ -80,6 +129,7 @@ T3ZAExecute[] := Module[{model,built,int,free,ok,status,rep,mfIndices,indexedMF}
     "extra_yukawas_included"->Lookup[built,"AdditionalYukawasIncluded",-1],
     "extra_quartics_included"->Lookup[built,"AdditionalQuarticsIncluded",-1],
     "extra_quadratics_included"->Lookup[built,"AdditionalQuadraticsIncluded",-1],
+    "field_power_multiplicities_counted"->True,
     "discrete_z2_explicitly_registered_in_matchete"->False,
     "physical_matching_performed"->False|>
 ];
@@ -90,6 +140,11 @@ If[!DirectoryQ[DirectoryName[$T3ZAOut]],
 Export[$T3ZAOut,Join[<|"format"->"t3-workstream-a-term-parity-v1",
   "model"->$T3ZAModel|>,$T3ZAResult],"RawJSON"];
 Print[$T3ZAModel,": ",Lookup[$T3ZAResult,"status","Missing"]];
+If[KeyExistsQ[$T3ZAResult,"interaction_terms"],
+  Print["T3ZA parity: int odd=",$T3ZAResult["interaction_terms","odd_bsm_term_count"],
+    ", power-compressed=",$T3ZAResult["interaction_terms","power_compressed_term_count"],
+    ", naive odd=",$T3ZAResult["interaction_terms","naive_unweighted_odd_bsm_term_count"]];
+];
 If[Lookup[$T3ZAResult,"status",""]=!="PassedActualBSMTermParityAndMatchete",
   Exit[6]];
 Exit[0];

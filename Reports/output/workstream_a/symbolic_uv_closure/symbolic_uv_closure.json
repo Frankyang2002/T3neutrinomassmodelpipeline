@@ -1,0 +1,168 @@
+{
+  "format": "t3-workstream-a-symbolic-uv-closure-v1",
+  "status": "ConditionalSymbolicUVClosurePassedPhysicalRGBetaDictionaryBlocked",
+  "source_sha256": [
+    {
+      "path": "RGE\\running\\rgbeta\\T3RGBetaModel.wl",
+      "sha256": "03be4fd7dffa73b16675ef6d5ceb48f48445dbe75d74d2a8851679fb91161c37"
+    },
+    {
+      "path": "output\\general_t3_stage22\\stage23_quartic_prefactor_candidates.json",
+      "sha256": "f443587dae570f740dac2cf0aab587f41ed8d4088615ad000e30244127570a42"
+    },
+    {
+      "path": "output\\general_t3_stage22\\stage25_native_quartic_assembly_diagnostics.json",
+      "sha256": "0a67d887ec0a5369512ffdd4b794391be15484c121ef77ff89ca4739980c7147"
+    },
+    {
+      "path": "output\\general_t3_stage22\\stage26_conditional_quartic_action.json",
+      "sha256": "fa190cb12e3b792caefb2942ffc9f7f9ddb77c14a13c95e99e95d6940dd5ac85"
+    },
+    {
+      "path": "output\\general_t3_stage22\\stage28_live_rgbeta_triplet_structure.json",
+      "sha256": "13e601a7ce3f2e3b806e89bf86a987ecbdc8c9d3ba8a2eaa194f2b5d69bbea30"
+    },
+    {
+      "path": "Reports\\output\\workstream_a\\native_cg_bridge\\native_cg_bridge.json",
+      "sha256": "8ca702e47ed3ccc36fc47baee076b051bb3099028f5eff65fe414ebf71cafed0"
+    },
+    {
+      "path": "Reports\\output\\workstream_a\\triplet_coordinate_gate\\triplet_coordinate_gate.json",
+      "sha256": "34af710cb560e16d0b8fd53f317cdffa1741d0bfeb9d64ccc616347ec2d16d74"
+    }
+  ],
+  "previous_stage_evidence": {
+    "previous_closure_models": 16,
+    "independent_fermionic_matrix_types": 38,
+    "previous_native_yukawa_and_topology_CGs": 48,
+    "previous_exact_scalar_basis_models": 8,
+    "previous_native_triplet_witness_models": 6,
+    "previous_native_RGBeta_numeric_triplet_components": false
+  },
+  "derived_reference_triplet": {
+    "status": "ExactAbstractSymmetricDoubletTripletReferenceVerified",
+    "basis": [
+      "H0 H0",
+      "(H0 H1+H1 H0)/sqrt(2)",
+      "H1 H1"
+    ],
+    "spin_one_generators": [
+      [
+        [
+          "0",
+          "sqrt(2)/2",
+          "0"
+        ],
+        [
+          "sqrt(2)/2",
+          "0",
+          "sqrt(2)/2"
+        ],
+        [
+          "0",
+          "sqrt(2)/2",
+          "0"
+        ]
+      ],
+      [
+        [
+          "0",
+          "-sqrt(2)*I/2",
+          "0"
+        ],
+        [
+          "sqrt(2)*I/2",
+          "0",
+          "-sqrt(2)*I/2"
+        ],
+        [
+          "0",
+          "sqrt(2)*I/2",
+          "0"
+        ]
+      ],
+      [
+        [
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "-1"
+        ]
+      ]
+    ],
+    "conjugation_intertwiner_K": [
+      [
+        "0",
+        "0",
+        "1"
+      ],
+      [
+        "0",
+        "-1",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ]
+    ],
+    "delS2_symmetric_doublet_projector_exact": true,
+    "delS2_spin_one_covariance_exact": true,
+    "triplet_su2_commutators_casimir_trace_exact": true,
+    "barred_tGen_minus_complex_conjugate_equivalence_exact": true,
+    "native_RGBeta_triplet_component_basis_extracted": false,
+    "physical_intertwiner_to_RGBeta_verified": false
+  },
+  "live_rgbeta_symbolic_representation_evidence": {
+    "live_rgbeta_abstract_triplet_representation_probed": true,
+    "native_symbolic_representation_models": 6,
+    "symbolic_barred_generator_and_delS2_probes": true,
+    "native_numeric_component_matrices_available": false,
+    "abstract_reference_is_not_independently_matched_to_RGBeta_basis": true
+  },
+  "guarded_rgbeta_model_source_coverage": {
+    "rgbeta_source_native_delS2_tGen_used": true,
+    "rgbeta_baseline_yukawa_registration_count": 2,
+    "rgbeta_extra_conjugate_scalar_yukawa_registrations": 0,
+    "matchete_extra_yukawa_matrix_types_outside_current_rgbeta_builder": 6,
+    "rgbeta_matchete_complete_fermionic_dictionary_certified": false,
+    "proof_type": "guarded source inspection; not live independent native component proof"
+  },
+  "full_signed_quartic_action_recomputation": {
+    "recomputed_signed_action_blocks": 46,
+    "native_quartic_coupling_slots_covered": 50,
+    "models_with_native_scalar_inventories": 16,
+    "rgbeta_live_native_permutation_rules_checked": 474,
+    "hermitian_conjugate_terms_included": true,
+    "negative_controls_from_stage26": "wrong sign and spurious 1/4 rejected",
+    "all_recomputed_blocks_identical_to_saved_stage26": true,
+    "reconstruction_basis_conditional": true,
+    "global_rgbeta_matchete_physical_component_basis_certified": false,
+    "physical_signed_coupling_map_certified": false
+  },
+  "source_includes_separately_implemented_extra_yukawa_matrices_in_rgbeta": false,
+  "full_matchete_rgbeta_physical_component_basis_certified": false,
+  "full_matchete_rgbeta_signed_physical_coupling_dictionary_certified": false,
+  "exact_original_vs_rotated_full_wolfram_lagrangian_identity_certified": false,
+  "explicit_Z2_registered_in_matchete": false,
+  "full_renormalizable_uv_completeness_unconditional_certificate": false,
+  "physical_matching_performed": false,
+  "production_modified": false,
+  "remaining_blockers": [
+    "RGBeta does not expose independent triplet CG/generator numeric component coordinates; Sym^2 reference is an explicit candidate, not a runtime basis identification",
+    "Stage23/26 signed maps are exact only in the declared provisional/common SU(2) component convention",
+    "The current RGBeta UV model registers y1,y2 but not all six conjugate-neutral-scalar Yukawa matrix types present in generalized Matchete UV models",
+    "No one-session equality of the complete native Matchete and RGBeta actions, including full baseline Yukawa/topology normalization, has been certified",
+    "Z2 is checked as parity of actual assembled terms, not explicitly registered in Matchete"
+  ]
+}

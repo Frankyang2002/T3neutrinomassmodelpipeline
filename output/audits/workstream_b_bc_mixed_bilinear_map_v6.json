@@ -1,0 +1,109 @@
+{
+  "format": "t3-bc-independent-mixed-bilinear-convention-audit-v1",
+  "status": "NativeSourceAndSameComponentActionMapCheckedConditionalNotPhysicalCertificate",
+  "models": [
+    {
+      "model": "B_-1",
+      "native_matchete_registered_cg": [
+        [
+          "0",
+          "1"
+        ],
+        [
+          "-1",
+          "0"
+        ]
+      ],
+      "matchete_over_declared_epsilon_exact": "1",
+      "conditional_mu_rgbeta_over_mu_matchete_exact": "-1",
+      "conditional_mu_matchete_over_mu_rgbeta_exact": "-1",
+      "requires_conjugation_under_same_holomorphic_field_word": false,
+      "holomorphic_field_order": [
+        "S1dag",
+        "S2dag"
+      ],
+      "basis_rotation": "(S1, epsilon * conjugate(S2)) = U (X,Y)",
+      "rgbeta_mass_meta": {
+        "evaluated_mass_coupling_function_inputform": "12*muT3GeneralS1S2",
+        "internal_real_tensor_factor": 12,
+        "distinct_massive_Lam_arrangements": 12,
+        "massive_Lam_witness_count": 24,
+        "physical_complex_potential_prefactor_under_package_convention": 1,
+        "native_epsilon_component_phase_verified": false
+      },
+      "tests": {
+        "max_action_relative_residual": 0.0,
+        "max_real_hessian_difference": 0.0,
+        "max_mass_eigenvalue_residual": 6.217248937900877e-15,
+        "wrong_complex_conjugation_negative_control": 7.14649417457713,
+        "wrong_factor_two_negative_control": 1.0,
+        "numerical_trials": 24
+      },
+      "physical_mapping_certified": false
+    },
+    {
+      "model": "C_-1",
+      "native_matchete_registered_cg": [
+        [
+          "0",
+          "1"
+        ],
+        [
+          "-1",
+          "0"
+        ]
+      ],
+      "matchete_over_declared_epsilon_exact": "1",
+      "conditional_mu_rgbeta_over_mu_matchete_exact": "-1",
+      "conditional_mu_matchete_over_mu_rgbeta_exact": "-1",
+      "requires_conjugation_under_same_holomorphic_field_word": false,
+      "holomorphic_field_order": [
+        "S1dag",
+        "S2dag"
+      ],
+      "basis_rotation": "(S1, epsilon * conjugate(S2)) = U (X,Y)",
+      "rgbeta_mass_meta": {
+        "evaluated_mass_coupling_function_inputform": "12*muT3GeneralS1S2",
+        "internal_real_tensor_factor": 12,
+        "distinct_massive_Lam_arrangements": 12,
+        "massive_Lam_witness_count": 24,
+        "physical_complex_potential_prefactor_under_package_convention": 1,
+        "native_epsilon_component_phase_verified": false
+      },
+      "tests": {
+        "max_action_relative_residual": 0.0,
+        "max_real_hessian_difference": 0.0,
+        "max_mass_eigenvalue_residual": 6.217248937900877e-15,
+        "wrong_complex_conjugation_negative_control": 7.14649417457713,
+        "wrong_factor_two_negative_control": 1.0,
+        "numerical_trials": 24
+      },
+      "physical_mapping_certified": false
+    }
+  ],
+  "source_sha256": {
+    "Lagrangian/interactions/GeneralScalarOperators.wl": "45d0bdf6fc1565b5601abd74b0f68649ffa78a8eeda6328e0c2f94cbcdb8b470",
+    "RGE/running/rgbeta/RunGeneralT3QuadraticRGBeta.wl": "15cb837f83850a76a3397d61a5e7ab97ee5a59901d0facc583d7e69e73ee1d57",
+    "RGE/running/rgbeta/T3RGBetaModel.wl": "03be4fd7dffa73b16675ef6d5ceb48f48445dbe75d74d2a8851679fb91161c37"
+  },
+  "assumptions": [
+    "Canonical RGBeta component epsilon_12=+1 aligned with Matchete labeled components",
+    "RGBeta -V sign and massive Lam/4! internal tensor reconstruction",
+    "Matchete extra operator enters +PlusHc with no factor 1/2"
+  ],
+  "limitations": [
+    "No independently live-verified RGBeta epsilon component-phase map",
+    "No full Matchete-RGBeta kinetic/generator intertwiner certificate",
+    "No native full mass-basis Matchete matching for these running values",
+    "No Workstream A final operator-basis certificate supplied"
+  ],
+  "live_matchete_cg_tensor_checked": true,
+  "live_rgbeta_massive_lam_symbol_detected": true,
+  "cross_tool_same_component_action_identity_checked": true,
+  "physical_mapping_certified": false,
+  "production_modified": false,
+  "live_evidence_sha256": {
+    "output\\audits\\workstream_b_bc_mixed_matchete_v1.json": "5094f7d1fd26816245f51edda986d9e9f46c0922deb32eb140505b8968d3510a",
+    "output\\audits\\workstream_b_bc_mixed_rgbeta_v5.json": "af3e767e3497131776d64758458782bef847591ec65e727881b1670bafcd56e6"
+  }
+}

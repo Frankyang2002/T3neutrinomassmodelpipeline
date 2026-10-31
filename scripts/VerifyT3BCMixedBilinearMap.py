@@ -126,15 +126,29 @@ def check_rgbeta(payload: dict, model: str) -> dict:
             item.get("physical_mapping_certified") is False,
             model + ": RGBeta native source contract incomplete")
     coefficient = item.get("rgbeta_mass_coupling_function_inputform", "")
-    require(''.join(coefficient.split()) == "12*Matrix[muT3GeneralS1S2][]",
-            model + ": internal real mass-tensor normalization not 12")
+    require(isinstance(coefficient, str),
+            model + ": native scalar-mass coupling is not a string")
+    # RGBeta's AddScalarMass first constructs 24*(1/Sqrt[2])^2=12.
+    # In the installed RGBeta Package/GroupsAndIndices.m,
+    #   Matrix[m_][] = m
+    # so evaluating the *nullary* registered Coupling function gives
+    #   12*muT3GeneralS1S2,
+    # NOT the unevaluated 12*Matrix[muT3GeneralS1S2][].
+    # Retain an exact contract (including the factor, sign and symbol),
+    # allowing only Wolfram's optional explicit Global` qualifier.
+    compact = "".join(coefficient.split())
+    require(re.fullmatch(r"12\*(?:Global`)?muT3GeneralS1S2", compact) is not None,
+            model + ": evaluated native mass-tensor normalization/symbol "
+                    "is not exactly +12*muT3GeneralS1S2; observed: "
+                    + repr(coefficient))
     invariant = ''.join(item.get("rgbeta_invariant_inputform", "").split())
     require(invariant in ("eps[SU2L[fund],i,j]", "eps[SU2L@fund,i,j]"),
             model + ": native epsilon invariant changed")
     require(item.get("rgbeta_potential_convention") ==
             "+muR * eps * Bar[S1] Bar[S2] + h.c.; - sign in Lagrangian",
             model + ": RGBeta source sign convention changed")
-    return {"internal_real_tensor_factor": 12,
+    return {"evaluated_mass_coupling_function_inputform": coefficient,
+            "internal_real_tensor_factor": 12,
             "distinct_massive_Lam_arrangements": 12,
             "massive_Lam_witness_count": item["native_lam_mass_sparse_array_rules_count"],
             "physical_complex_potential_prefactor_under_package_convention": 1,

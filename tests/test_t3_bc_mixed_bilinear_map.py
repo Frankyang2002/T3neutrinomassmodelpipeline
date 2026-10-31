@@ -35,7 +35,7 @@ def synthetic_live(k: str = "1/Sqrt[2]"):
             "native_massive_lam_evaluated":True,
             "native_lam_mass_sparse_array_rules_count":12,
             "native_rgbeta_epsilon_component_phase_verified":False,
-            "rgbeta_mass_coupling_function_inputform":"12*Matrix[muT3GeneralS1S2][]",
+            "rgbeta_mass_coupling_function_inputform":"12*muT3GeneralS1S2",
             "rgbeta_invariant_inputform":"eps[SU2L[fund],i,j]",
             "rgbeta_potential_convention":"+muR * eps * Bar[S1] Bar[S2] + h.c.; - sign in Lagrangian",
             "physical_mapping_certified":False}
@@ -65,13 +65,40 @@ def test_rgbeta_factor_and_field_order_fail_closed():
     _,rgb=synthetic_live()
     assert audit.check_rgbeta(rgb,"C_-1")["internal_real_tensor_factor"]==12
     wrong=deepcopy(rgb)
-    wrong["models"]["C_-1"]["rgbeta_mass_coupling_function_inputform"]="24*Matrix[muT3GeneralS1S2][]"
+    wrong["models"]["C_-1"]["rgbeta_mass_coupling_function_inputform"]="24*muT3GeneralS1S2"
     with pytest.raises(ValueError,match="normalization"):
         audit.check_rgbeta(wrong,"C_-1")
     wrong=deepcopy(rgb)
     wrong["models"]["C_-1"]["rgbeta_fields"]=["Bar[S2]","Bar[S1]"]
     with pytest.raises(ValueError,match="contract"):
         audit.check_rgbeta(wrong,"C_-1")
+
+
+@pytest.mark.parametrize("form", (
+    "12*muT3GeneralS1S2",
+    "12*Global`muT3GeneralS1S2",
+))
+def test_evaluated_rgbeta_scalar_mass_factor_twelve(form):
+    _, rgb = synthetic_live()
+    rgb["models"]["B_-1"]["rgbeta_mass_coupling_function_inputform"] = form
+    result = audit.check_rgbeta(rgb,"B_-1")
+    assert result["internal_real_tensor_factor"] == 12
+    assert result["evaluated_mass_coupling_function_inputform"] == form
+
+
+@pytest.mark.parametrize("form", (
+    "12*Matrix[muT3GeneralS1S2][]",  # unevaluated: RGBeta collapses Matrix[m_][]
+    "12*Matrix[muT3GeneralS1S2]",
+    "6*muT3GeneralS1S2", "24*muT3GeneralS1S2",
+    "-12*muT3GeneralS1S2", "12*Bar[muT3GeneralS1S2]",
+    "12*muT3GeneralS1S2+0*otherSymbol",
+    "12*muT3GeneralS2S1",
+))
+def test_reject_non_native_factor_or_symbol(form):
+    _, rgb = synthetic_live()
+    rgb["models"]["B_-1"]["rgbeta_mass_coupling_function_inputform"] = form
+    with pytest.raises(ValueError,match="normalization/symbol"):
+        audit.check_rgbeta(rgb,"B_-1")
 
 
 def test_no_runtime_evidence_never_accepted():

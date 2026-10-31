@@ -18,10 +18,19 @@ SetT3HeavyFields[fields_List] := Module[{allowed},
   True
 ];
 
-T3MassSpec[label_String, mass_] := If[
-  MemberQ[$T3HeavyFields, label],
-  {Heavy, mass},
-  {Light, mass}
+(* Opt-in only. The default remains {Heavy|Light, MF} so existing matching,
+   RGE and numerical workstreams retain their previous conventions.
+   A flavour-indexed mass specifies independent diagonal eigenvalues after
+   flavour rotations; it is not a general off-diagonal mass matrix. *)
+T3ExperimentalFlavorMassesQ[] :=
+  Environment["T3_EXPERIMENTAL_FLAVOR_MASSES"] === "1";
+
+T3MassSpec[label_String, mass_] := Module[{kind},
+  kind = If[MemberQ[$T3HeavyFields, label], Heavy, Light];
+  If[label === "F" && TrueQ[T3ExperimentalFlavorMassesQ[]],
+    {kind, mass, {NFlavor}},
+    {kind, mass}
+  ]
 ];
 
 DefineT3Couplings[] := Module[{},

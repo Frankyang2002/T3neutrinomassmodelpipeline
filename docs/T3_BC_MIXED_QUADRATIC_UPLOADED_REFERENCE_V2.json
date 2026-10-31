@@ -1,0 +1,31 @@
+{
+  "format": "uploaded-bc-kernel-diagnostic-v2",
+  "scope": "Kernel-only; native Matchete tensors and v22 weights not independently executed here",
+  "input_report_sha256": {
+    "B_-1": "c9a7f1f0da28dc0a0f86990750e75a0828064332ce77a877d676582639ab0d9f",
+    "C_-1": "1edac0e4188b0386f9bd23554afcb271eb808238b7d0343b5cfd572a71202c48"
+  },
+  "models": [
+    {
+      "model": "B_-1",
+      "status": "KernelOnlyPartialExplicitSkips",
+      "mass_resummation_error_max": 2.3351700399759273e-13,
+      "omitted_mixing_kernel_error_max": 0.0010652133100239808,
+      "strict_mass_function_difference_max": 0.0002882798916962584,
+      "native_quartics": "NativeSourceAuditSkippedByExplicitOption",
+      "C5_strict_vs_full_source": null,
+      "complex_MF_spinor_choice_relative_C5_change": null
+    },
+    {
+      "model": "C_-1",
+      "status": "KernelOnlyPartialExplicitSkips",
+      "mass_resummation_error_max": 2.2680585929557178e-13,
+      "omitted_mixing_kernel_error_max": 0.0010323166226858958,
+      "strict_mass_function_difference_max": 0.00022534646136618594,
+      "native_quartics": "NativeSourceAuditSkippedByExplicitOption",
+      "C5_strict_vs_full_source": null,
+      "complex_MF_spinor_choice_relative_C5_change": null
+    }
+  ],
+  "physical_C5_certified": false
+}

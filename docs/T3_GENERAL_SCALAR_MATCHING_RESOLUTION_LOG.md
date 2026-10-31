@@ -520,3 +520,107 @@ fresh direct live `CG` evaluation; consequently the full live cross-tool
 action and physical coupling normalization remain **uncertified** until
 that last independent native CG-to-action component test is done. Nothing
 in the production RGEs, neutrino candidates or remote GitHub changes.
+
+## BC-CROSS-ACTION-07: user-local PASS (2026-10-31)
+
+User ran `pytest` on `tests/test_t3_bc_live_110101_action_bridge.py`:
+**11/11 passed**, then `python -u -X utf8 -m
+scripts.AuditT3BCLive110101ActionBridge --run-id bc_live_action_bridge_v1`.
+B(−1) and C(−1) each passed **64/64 exact exported-basis action
+coefficient identities**, with the sign and spurious extra-factor controls
+rejected. The summary was written to
+`output/audits/t3_bc_110101_live_action_bridge/bc_live_action_bridge_v1/summary.json`.
+This records the **user's terminal output**; the raw JSON was not uploaded.
+The live registered Matchete CG components were not part of that run.
+
+## BC-LIVE-CG-08: new live registered CG gate (prepared, not run)
+
+`ProbeT3BCMatchete110101RegisteredCG.wl` reconstructs the same two Matchete
+`PlusHc` interactions using the original builder, verifies both CG symbols
+occur in those interactions, then calls Matchete's **live `GetCGTensor`**
+accessor (not `T3ExtendedBosonicTensorBasis`) for both B/C models inside a
+single `UsingFrontEnd` scope. The saved report records 4 registered tensors,
+32 components per model, and on extraction failure writes a **blocked**
+diagnostic instead of falsely passing. The Python verifier revalidates the
+live Matchete/RGBeta prior reports, the successful exported-basis action
+bridge, source hashes and exact Stage22 native tensors; it compares all
+registered CG components exactly, then repeats the signed action identity
+with those **live-extracted Matchete tensors** and the saved live-RGBeta
+covariance source. No production RGE or Lagrangian changes are made.
+
+Not yet executed in live Mathematica. In particular, the GetCGTensor return
+shape is a runtime check, not assumed verified by local Python fixtures.
+Even on success, off-diagonal heavy mass-basis Matchete matching,
+fermion/scalar threshold matching, and physical neutrino predictions are NOT
+certified. No remote GitHub modifications.
+
+## User-local confirmation: BC-CG-08 registered Matchete CGs (2026-10-31)
+
+The user ran `ProbeT3BCMatchete110101RegisteredCG.wl` followed by
+`VerifyT3BCMatchete110101RegisteredCG` with run ID
+`bc_live_registered_cg_v1`.
+
+- B(−1): native registered Matchete CG tensors **2/2**; exact components
+  **32/32**; signed direct + Hermitian-conjugate coefficients **64/64**.
+- C(−1): identical passes (**2/2**, **32/32**, **64/64**).
+- The prior exported-component bridge also passed **64/64 per model**, with
+  incorrect-sign and extra-factor controls rejected.
+- This closes the B/C `110101` exported-basis quartic conventions for the
+  stated checks. It does not perform direct live action subtraction or
+  sequential physical matching.
+
+## BC-MASS-EIGEN-YUKAWA-09: reuse the existing full Lagrangian and one-scale C5
+
+Source inspection confirms that `Lagrangian/RunGeneralT3MassEigenMatchete.wl`
+**already** constructs the complete B/C heavy mass-eigenstate Lagrangian,
+with 17 quartics, both native Yukawa CG vertices and a detailed
+`HeavyMassBasis` check. Current saved B/C reports have status
+`MatcheteMassEigenHeavyBasisPassedPhysicalMatchingNotPerformed` and
+`heavy_mass_basis_detailed_check_passed=true`. Thus rebuilding the same
+Lagrangian would duplicate an existing implementation.
+
+This package adds the new **read-only**
+`scripts/RunT3BCMassEigenYukawaC5Handoff.py` to extract physically distinct
+Y1/Y2 matrices in the X/Y basis from verified native tensor factors,
+check the existing matched one-scale ordered Weinberg expression provenance,
+and check/replay saved candidate B/C neutrino mass matrices.
+
+The native Yukawa-2 CG epsilon factor differs: B(−1) `−1`, C(−1) `+1`.
+Including the `−epsilon` field-replacement sign, the y2 mass-eigenstate
+vertex weights are `+U[1,a]` for B and `−U[1,a]` for C. Both have y1
+weights `U[0,a]`. These are coefficients in the respective native CG/spinor
+bases; not a claim that the two independent Yukawa spinor vertices add.
+
+Saved one-scale candidate Takagi masses (eV):
+
+- B(−1): `0.027341038758356372, 0.02072521457148339, 0.003616690047615204`
+- C(−1): `0.05353064456270797, 0.029391040942796477, 0.005611724480334992`
+
+The new handoff is **prepared, not yet user-local run**. Optional
+`--recompute-c5` uses the existing numerical Matchete one-loop coefficient.
+No full physical EFT matching, individual X/Y thresholds or physical
+prediction certification is claimed. No production files are modified.
+
+## BC-MIXED-THRESHOLD-10: running scalar thresholds, same one-scale source (2026-10-31)
+
+**User-local validation preceding this package:**
+`scripts.RunT3BCMassEigenYukawaC5Handoff --all --run-id bc_yukawa_c5_v1`
+completed for B(−1), C(−1). The repeated run
+`--run-id bc_yukawa_c5_replay_v1 --recompute-c5` returned `C5 replay=True`
+for both, reproducing the saved conditional one-scale Takagi spectra.
+Physical sequential EFT matching remained `NOT CERTIFIED`.
+
+**This package:** new read-only `scripts/RunT3BCSeparatedScalarThresholds.py`
+reintegrates the *same* `output/general_t3_quadratic_eft1` benchmark, not the
+differently initialized `continuous_v1` candidate. It checks a stored beta
+source SHA, saved full scalar endpoint, native Matchete X/Y Yukawa phases,
+one-scale benchmark SHA and mass spectrum. Then it solves the running
+Y and X mass-eigenvalue crossing equations, exporting exact numerical mixing
+matrices, scalar flavour projectors and native Yukawa weights at those scales.
+
+**Strict limit:** Y threshold lies inside the two-scalar EFT1 and is a genuine
+candidate running crossing. The X solution below Y continues that un-decoupled
+EFT1, so its scale is **provisional** until a matched, X-only EFT2 is available.
+No Y/X Wilson boundary was matched, no finite scalar threshold computed, no
+new neutrino mass predicted, and no production/remote GitHub file modified.
+The new script is prepared; the user's local numerical run is pending.

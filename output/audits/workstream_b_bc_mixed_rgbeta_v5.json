@@ -1,0 +1,130 @@
+{
+	"format":"t3-bc-live-mixed-rgbeta-bilinear-v1",
+	"status":"LiveRGBetaNativeMassTensorDiagnostic",
+	"source_sha256":{
+		"RGE\/running\/rgbeta\/RunGeneralT3QuadraticRGBeta.wl":"15cb837f83850a76a3397d61a5e7ab97ee5a59901d0facc583d7e69e73ee1d57",
+		"RGE\/running\/rgbeta\/T3RGBetaModel.wl":"03be4fd7dffa73b16675ef6d5ceb48f48445dbe75d74d2a8851679fb91161c37"
+	},
+	"wolfram_version":"15.0.1 for Microsoft Windows (64-bit) (July 2, 2026)",
+	"probe_revision":"inspect-native-sparse-rules-with-block-diagnostics-v4",
+	"installed_rgbeta_package_file":"\"C:\\\\Users\\\\popok\\\\AppData\\\\Roaming\\\\Wolfram\\\\Applications\\\\RGBeta\\\\Kernel\\\\init.m\"",
+	"models":{
+		"B_-1":{
+			"model":"B_-1",
+			"status":"LiveRGBetaMixedBilinearRegisteredAndLamDetected",
+			"rgbeta_mass_symbol":"muT3GeneralS1S2",
+			"rgbeta_fields":[
+				"Bar[S1]",
+				"Bar[S2]"
+			],
+			"rgbeta_invariant_inputform":"eps[SU2L[fund], i, j]",
+			"rgbeta_mass_coupling_function_inputform":"12*muT3GeneralS1S2",
+			"rgbeta_unique_permutations":12,
+			"rgbeta_self_conjugate":false,
+			"native_lam_symbol":"RGBeta`PackageScope`Lam",
+			"native_lam_definition_count":1,
+			"native_massive_lam_evaluated":true,
+			"native_lam_mass_sparse_array_rules_count":24,
+			"native_lam_runtime_diagnostics":{
+				"native_lam_head_inputform":"RGBeta`PackageScope`TStructure[RGBeta`PackageScope`$scalar[t3BMa], RGBeta`PackageScope`$scalar[t3BMb], RGBeta`PackageScope`$scalar[t3BMc], RGBeta`PackageScope`$scalar[t3BMd]]",
+				"native_lam_leaf_count":10,
+				"native_lam_top_level_freeq_mass_symbol":true,
+				"native_lam_sparse_array_count":1,
+				"native_lam_total_sparse_array_rules_count":295,
+				"native_lam_mass_sparse_array_rules_count":24,
+				"native_lam_sparse_rule_examples_inputform":[
+					"{1, 2, 2, 1} -> (lambdaH*del[SU2L[fund], t3BMa, t3BMc]*del[SU2L[fund], t3BMb, t3BMd])\/4 + (lambdaH*del[SU2L[fund], t3BMa, t3BMb]*del[SU2L[fund], t3BMc, t3BMd])\/4",
+					"{1, 2, 1, 2} -> (lambdaH*del[SU2L[fund], t3BMa, t3BMd]*del[SU2L[fund], t3BMb, t3BMc])\/4 + (lambdaH*del[SU2L[fund], t3BMa, t3BMb]*del[SU2L[fund], t3BMc, t3BMd])\/4",
+					"{1, 1, 2, 2} -> (lambdaH*del[SU2L[fund], t3BMa, t3BMd]*del[SU2L[fund], t3BMb, t3BMc])\/4 + (lambdaH*del[SU2L[fund], t3BMa, t3BMc]*del[SU2L[fund], t3BMb, t3BMd])\/4",
+					"{1, 2, 4, 3} -> (lambdaH1*del[SU2L[fund], t3BMa, t3BMb]*del[SU2L[fund], t3BMc, t3BMd])\/4 + (lambdaH1Adj*(del[SU2L[fund], t3BMa, t3BMc]*del[SU2L[fund], t3BMb, t3BMd] - (del[SU2L[fund], t3BMa, t3BMb]*del[SU2L[fund], t3BMc, t3BMd])\/2))\/8",
+					"{1, 2, 3, 4} -> (lambdaH1*del[SU2L[fund], t3BMa, t3BMb]*del[SU2L[fund], t3BMc, t3BMd])\/4 + (lambdaH1Adj*(del[SU2L[fund], t3BMa, t3BMd]*del[SU2L[fund], t3BMb, t3BMc] - (del[SU2L[fund], t3BMa, t3BMb]*del[SU2L[fund], t3BMc, t3BMd])\/2))\/8",
+					"{1, 4, 2, 3} -> (lambdaH1*del[SU2L[fund], t3BMa, t3BMc]*del[SU2L[fund], t3BMb, t3BMd])\/4 + (lambdaH1Adj*(-1\/2*(del[SU2L[fund], t3BMa, t3BMc]*del[SU2L[fund], t3BMb, t3BMd]) + del[SU2L[fund], t3BMa, t3BMb]*del[SU2L[fund], t3BMc, t3BMd]))\/8",
+					"{1, 3, 2, 4} -> (lambdaH1*del[SU2L[fund], t3BMa, t3BMc]*del[SU2L[fund], t3BMb, t3BMd])\/4 + (lambdaH1Adj*(del[SU2L[fund], t3BMa, t3BMd]*del[SU2L[fund], t3BMb, t3BMc] - (del[SU2L[fund], t3BMa, t3BMc]*del[SU2L[fund], t3BMb, t3BMd])\/2))\/8",
+					"{1, 4, 3, 2} -> (lambdaH1*del[SU2L[fund], t3BMa, t3BMd]*del[SU2L[fund], t3BMb, t3BMc])\/4 + (lambdaH1Adj*(-1\/2*(del[SU2L[fund], t3BMa, t3BMd]*del[SU2L[fund], t3BMb, t3BMc]) + del[SU2L[fund], t3BMa, t3BMb]*del[SU2L[fund], t3BMc, t3BMd]))\/8",
+					"{1, 3, 4, 2} -> (lambdaH1*del[SU2L[fund], t3BMa, t3BMd]*del[SU2L[fund], t3BMb, t3BMc])\/4 + (lambdaH1Adj*(-1\/2*(del[SU2L[fund], t3BMa, t3BMd]*del[SU2L[fund], t3BMb, t3BMc]) + del[SU2L[fund], t3BMa, t3BMc]*del[SU2L[fund], t3BMb, t3BMd]))\/8",
+					"{1, 2, 6, 5} -> (lambdaH2*del[SU2L[fund], t3BMa, t3BMb]*del[SU2L[fund], t3BMc, t3BMd])\/4 + (lambdaH2Adj*(del[SU2L[fund], t3BMa, t3BMc]*del[SU2L[fund], t3BMb, t3BMd] - (del[SU2L[fund], t3BMa, t3BMb]*del[SU2L[fund], t3BMc, t3BMd])\/2))\/8",
+					"{1, 2, 5, 6} -> (lambdaH2*del[SU2L[fund], t3BMa, t3BMb]*del[SU2L[fund], t3BMc, t3BMd])\/4 + (lambdaH2Adj*(del[SU2L[fund], t3BMa, t3BMd]*del[SU2L[fund], t3BMb, t3BMc] - (del[SU2L[fund], t3BMa, t3BMb]*del[SU2L[fund], t3BMc, t3BMd])\/2))\/8",
+					"{1, 6, 2, 5} -> (lambdaH2*del[SU2L[fund], t3BMa, t3BMc]*del[SU2L[fund], t3BMb, t3BMd])\/4 + (lambdaH2Adj*(-1\/2*(del[SU2L[fund], t3BMa, t3BMc]*del[SU2L[fund], t3BMb, t3BMd]) + del[SU2L[fund], t3BMa, t3BMb]*del[SU2L[fund], t3BMc, t3BMd]))\/8"
+				],
+				"native_lam_excerpt_inputform":"RGBeta`PackageScope`TStructure[RGBeta`PackageScope`$scalar[t3BMa], RGBeta`PackageScope`$scalar[t3BMb], RGBeta`PackageScope`$scalar[t3BMc], RGBeta`PackageScope`$scalar[t3BMd]][SparseArray[Automatic, {8, 8, 8, 8}, 0, {1, {{0, 39, 78, 126, 174, 222, 270, 294, 294}, {{2, 2, 1}, {2, 1, 2}, {1, 2, 2}, {2, 4, 3}, {2, 3, 4}, {4, 2, 3}, {3, 2, 4}, {4, 3, 2}, {3, 4, 2}, {2, 6, 5}, {2, 5, 6}, {6, 2, 5}, {5, 2, 6}, {6, 5, 2}, {5, 6, 2}, {1, 3, 6}, {1, 6, 3}, {3, 1, 6}, {6, 1, 3}, {3, 6, 1}, {6, 3, 1}, {1, 6, 6}, {6, 1, 6}, {6, 6, 1}, {1, 3, 3}, {3, 1, 3}, {3, 3, 1}, {2, 4, 6}, {2, 6, 4}, {4, 2, 6}, {6, 2, 4}, {4, 6, 2}, {6, 4, 2}, {2, 3, 5}, {2, 5, 3}, {3, 2, 5}, {5, 2, 3}, {3, 5, 2}, {5, 3, 2}, {1, 2, 1}, {1, 1, 2}, {2, 1, 1}, {1, 4, 3}, {1, 3, 4}, {4, 1, 3}, {3, 1, 4}, {4, 3, 1}, {3, 4, 1}, {1, 6, 5}, {1, 5, 6}, {6, 1, 5}, {5, 1, 6}, {6, 5, 1}, {5, 6, 1}, {2, 4, 5}, {2, 5, 4}, {4, 2, 5}, {5, 2, 4}, {4, 5, 2}, {5, 4, 2}, {2, 5, 5}, {5, 2, 5}, {5, 5, 2}, {2, 4, 4}, {4, 2, 4}, {4, 4, 2}, {1, 4, 6}, {1, 6, 4}, {4, 1, 6}, {6, 1, 4}, {4, 6, 1}, {6, 4, 1}, {1, 3, 5}, {1, 5, 3}, {3, 1, 5}, {5, 1, 3}, {3, 5, 1}, {5, 3, 1}, {4, 4, 3}, {4, 3, 4}, {3, 4, 4}, {2, 1, 4}, {2, 4, 1}, {1, 2, 4}, {4, 2, 1}, {1, 4, 2}, {4, 1, 2}, {4, 6, 5}, {4, 5, 6}, {6, 4, 5}, {5, 4, 6}, {6, 5, 4}, {5, 6, 4}, {1, 1, 6}, {1, 6, 1}, {6, 1, 1}, {1, 1, 3}, {1, 3, 1}, {3, 1, 1}, {3, 5, 5}, {5, 3, 5}, {5, 5, 3}, {6, 5, 5}, {5, 6, 5}, {5, 5, 6}, {4, 4, 6}, {4, 6, 4}, {6, 4, 4}, {4, 3, 5}, {4, 5, 3}, {3, 4, 5}, {5, 4, 3}, {3, ",
+				"native_mass_registry_keys_inputform":[
+					"mS1Sq",
+					"mS2Sq",
+					"muT3GeneralS1S2"
+				]
+			},
+			"native_lam_mass_rule_samples_inputform":[
+				"{3, 5, 7, 7} -> Bar[muT3GeneralS1S2]*eps[SU2L[fund], t3BMa, t3BMb]",
+				"{3, 7, 5, 7} -> Bar[muT3GeneralS1S2]*eps[SU2L[fund], t3BMa, t3BMc]",
+				"{3, 7, 7, 5} -> Bar[muT3GeneralS1S2]*eps[SU2L[fund], t3BMa, t3BMd]",
+				"{4, 6, 7, 7} -> muT3GeneralS1S2*eps[SU2L[fund], t3BMa, t3BMb]",
+				"{4, 7, 6, 7} -> muT3GeneralS1S2*eps[SU2L[fund], t3BMa, t3BMc]",
+				"{4, 7, 7, 6} -> muT3GeneralS1S2*eps[SU2L[fund], t3BMa, t3BMd]",
+				"{5, 3, 7, 7} -> Bar[muT3GeneralS1S2]*eps[SU2L[fund], t3BMb, t3BMa]",
+				"{5, 7, 3, 7} -> Bar[muT3GeneralS1S2]*eps[SU2L[fund], t3BMc, t3BMa]"
+			],
+			"rgbeta_potential_convention":"+muR * eps * Bar[S1] Bar[S2] + h.c.; - sign in Lagrangian",
+			"native_rgbeta_epsilon_component_phase_verified":false,
+			"physical_mapping_certified":false
+		},
+		"C_-1":{
+			"model":"C_-1",
+			"status":"LiveRGBetaMixedBilinearRegisteredAndLamDetected",
+			"rgbeta_mass_symbol":"muT3GeneralS1S2",
+			"rgbeta_fields":[
+				"Bar[S1]",
+				"Bar[S2]"
+			],
+			"rgbeta_invariant_inputform":"eps[SU2L[fund], i, j]",
+			"rgbeta_mass_coupling_function_inputform":"12*muT3GeneralS1S2",
+			"rgbeta_unique_permutations":12,
+			"rgbeta_self_conjugate":false,
+			"native_lam_symbol":"RGBeta`PackageScope`Lam",
+			"native_lam_definition_count":1,
+			"native_massive_lam_evaluated":true,
+			"native_lam_mass_sparse_array_rules_count":24,
+			"native_lam_runtime_diagnostics":{
+				"native_lam_head_inputform":"RGBeta`PackageScope`TStructure[RGBeta`PackageScope`$scalar[t3BMa], RGBeta`PackageScope`$scalar[t3BMb], RGBeta`PackageScope`$scalar[t3BMc], RGBeta`PackageScope`$scalar[t3BMd]]",
+				"native_lam_leaf_count":10,
+				"native_lam_top_level_freeq_mass_symbol":true,
+				"native_lam_sparse_array_count":1,
+				"native_lam_total_sparse_array_rules_count":295,
+				"native_lam_mass_sparse_array_rules_count":24,
+				"native_lam_sparse_rule_examples_inputform":[
+					"{1, 2, 2, 1} -> (lambdaH*del[SU2L[fund], t3BMa, t3BMc]*del[SU2L[fund], t3BMb, t3BMd])\/4 + (lambdaH*del[SU2L[fund], t3BMa, t3BMb]*del[SU2L[fund], t3BMc, t3BMd])\/4",
+					"{1, 2, 1, 2} -> (lambdaH*del[SU2L[fund], t3BMa, t3BMd]*del[SU2L[fund], t3BMb, t3BMc])\/4 + (lambdaH*del[SU2L[fund], t3BMa, t3BMb]*del[SU2L[fund], t3BMc, t3BMd])\/4",
+					"{1, 1, 2, 2} -> (lambdaH*del[SU2L[fund], t3BMa, t3BMd]*del[SU2L[fund], t3BMb, t3BMc])\/4 + (lambdaH*del[SU2L[fund], t3BMa, t3BMc]*del[SU2L[fund], t3BMb, t3BMd])\/4",
+					"{1, 2, 4, 3} -> (lambdaH1*del[SU2L[fund], t3BMa, t3BMb]*del[SU2L[fund], t3BMc, t3BMd])\/4 + (lambdaH1Adj*(del[SU2L[fund], t3BMa, t3BMc]*del[SU2L[fund], t3BMb, t3BMd] - (del[SU2L[fund], t3BMa, t3BMb]*del[SU2L[fund], t3BMc, t3BMd])\/2))\/8",
+					"{1, 2, 3, 4} -> (lambdaH1*del[SU2L[fund], t3BMa, t3BMb]*del[SU2L[fund], t3BMc, t3BMd])\/4 + (lambdaH1Adj*(del[SU2L[fund], t3BMa, t3BMd]*del[SU2L[fund], t3BMb, t3BMc] - (del[SU2L[fund], t3BMa, t3BMb]*del[SU2L[fund], t3BMc, t3BMd])\/2))\/8",
+					"{1, 4, 2, 3} -> (lambdaH1*del[SU2L[fund], t3BMa, t3BMc]*del[SU2L[fund], t3BMb, t3BMd])\/4 + (lambdaH1Adj*(-1\/2*(del[SU2L[fund], t3BMa, t3BMc]*del[SU2L[fund], t3BMb, t3BMd]) + del[SU2L[fund], t3BMa, t3BMb]*del[SU2L[fund], t3BMc, t3BMd]))\/8",
+					"{1, 3, 2, 4} -> (lambdaH1*del[SU2L[fund], t3BMa, t3BMc]*del[SU2L[fund], t3BMb, t3BMd])\/4 + (lambdaH1Adj*(del[SU2L[fund], t3BMa, t3BMd]*del[SU2L[fund], t3BMb, t3BMc] - (del[SU2L[fund], t3BMa, t3BMc]*del[SU2L[fund], t3BMb, t3BMd])\/2))\/8",
+					"{1, 4, 3, 2} -> (lambdaH1*del[SU2L[fund], t3BMa, t3BMd]*del[SU2L[fund], t3BMb, t3BMc])\/4 + (lambdaH1Adj*(-1\/2*(del[SU2L[fund], t3BMa, t3BMd]*del[SU2L[fund], t3BMb, t3BMc]) + del[SU2L[fund], t3BMa, t3BMb]*del[SU2L[fund], t3BMc, t3BMd]))\/8",
+					"{1, 3, 4, 2} -> (lambdaH1*del[SU2L[fund], t3BMa, t3BMd]*del[SU2L[fund], t3BMb, t3BMc])\/4 + (lambdaH1Adj*(-1\/2*(del[SU2L[fund], t3BMa, t3BMd]*del[SU2L[fund], t3BMb, t3BMc]) + del[SU2L[fund], t3BMa, t3BMc]*del[SU2L[fund], t3BMb, t3BMd]))\/8",
+					"{1, 2, 6, 5} -> (lambdaH2*del[SU2L[fund], t3BMa, t3BMb]*del[SU2L[fund], t3BMc, t3BMd])\/4 + (lambdaH2Adj*(del[SU2L[fund], t3BMa, t3BMc]*del[SU2L[fund], t3BMb, t3BMd] - (del[SU2L[fund], t3BMa, t3BMb]*del[SU2L[fund], t3BMc, t3BMd])\/2))\/8",
+					"{1, 2, 5, 6} -> (lambdaH2*del[SU2L[fund], t3BMa, t3BMb]*del[SU2L[fund], t3BMc, t3BMd])\/4 + (lambdaH2Adj*(del[SU2L[fund], t3BMa, t3BMd]*del[SU2L[fund], t3BMb, t3BMc] - (del[SU2L[fund], t3BMa, t3BMb]*del[SU2L[fund], t3BMc, t3BMd])\/2))\/8",
+					"{1, 6, 2, 5} -> (lambdaH2*del[SU2L[fund], t3BMa, t3BMc]*del[SU2L[fund], t3BMb, t3BMd])\/4 + (lambdaH2Adj*(-1\/2*(del[SU2L[fund], t3BMa, t3BMc]*del[SU2L[fund], t3BMb, t3BMd]) + del[SU2L[fund], t3BMa, t3BMb]*del[SU2L[fund], t3BMc, t3BMd]))\/8"
+				],
+				"native_lam_excerpt_inputform":"RGBeta`PackageScope`TStructure[RGBeta`PackageScope`$scalar[t3BMa], RGBeta`PackageScope`$scalar[t3BMb], RGBeta`PackageScope`$scalar[t3BMc], RGBeta`PackageScope`$scalar[t3BMd]][SparseArray[Automatic, {8, 8, 8, 8}, 0, {1, {{0, 39, 78, 126, 174, 222, 270, 294, 294}, {{2, 2, 1}, {2, 1, 2}, {1, 2, 2}, {2, 4, 3}, {2, 3, 4}, {4, 2, 3}, {3, 2, 4}, {4, 3, 2}, {3, 4, 2}, {2, 6, 5}, {2, 5, 6}, {6, 2, 5}, {5, 2, 6}, {6, 5, 2}, {5, 6, 2}, {1, 3, 6}, {1, 6, 3}, {3, 1, 6}, {6, 1, 3}, {3, 6, 1}, {6, 3, 1}, {1, 6, 6}, {6, 1, 6}, {6, 6, 1}, {1, 3, 3}, {3, 1, 3}, {3, 3, 1}, {2, 4, 6}, {2, 6, 4}, {4, 2, 6}, {6, 2, 4}, {4, 6, 2}, {6, 4, 2}, {2, 3, 5}, {2, 5, 3}, {3, 2, 5}, {5, 2, 3}, {3, 5, 2}, {5, 3, 2}, {1, 2, 1}, {1, 1, 2}, {2, 1, 1}, {1, 4, 3}, {1, 3, 4}, {4, 1, 3}, {3, 1, 4}, {4, 3, 1}, {3, 4, 1}, {1, 6, 5}, {1, 5, 6}, {6, 1, 5}, {5, 1, 6}, {6, 5, 1}, {5, 6, 1}, {2, 4, 5}, {2, 5, 4}, {4, 2, 5}, {5, 2, 4}, {4, 5, 2}, {5, 4, 2}, {2, 5, 5}, {5, 2, 5}, {5, 5, 2}, {2, 4, 4}, {4, 2, 4}, {4, 4, 2}, {1, 4, 6}, {1, 6, 4}, {4, 1, 6}, {6, 1, 4}, {4, 6, 1}, {6, 4, 1}, {1, 3, 5}, {1, 5, 3}, {3, 1, 5}, {5, 1, 3}, {3, 5, 1}, {5, 3, 1}, {4, 4, 3}, {4, 3, 4}, {3, 4, 4}, {2, 1, 4}, {2, 4, 1}, {1, 2, 4}, {4, 2, 1}, {1, 4, 2}, {4, 1, 2}, {4, 6, 5}, {4, 5, 6}, {6, 4, 5}, {5, 4, 6}, {6, 5, 4}, {5, 6, 4}, {1, 1, 6}, {1, 6, 1}, {6, 1, 1}, {1, 1, 3}, {1, 3, 1}, {3, 1, 1}, {3, 5, 5}, {5, 3, 5}, {5, 5, 3}, {6, 5, 5}, {5, 6, 5}, {5, 5, 6}, {4, 4, 6}, {4, 6, 4}, {6, 4, 4}, {4, 3, 5}, {4, 5, 3}, {3, 4, 5}, {5, 4, 3}, {3, ",
+				"native_mass_registry_keys_inputform":[
+					"mS1Sq",
+					"mS2Sq",
+					"muT3GeneralS1S2"
+				]
+			},
+			"native_lam_mass_rule_samples_inputform":[
+				"{3, 5, 7, 7} -> Bar[muT3GeneralS1S2]*eps[SU2L[fund], t3BMa, t3BMb]",
+				"{3, 7, 5, 7} -> Bar[muT3GeneralS1S2]*eps[SU2L[fund], t3BMa, t3BMc]",
+				"{3, 7, 7, 5} -> Bar[muT3GeneralS1S2]*eps[SU2L[fund], t3BMa, t3BMd]",
+				"{4, 6, 7, 7} -> muT3GeneralS1S2*eps[SU2L[fund], t3BMa, t3BMb]",
+				"{4, 7, 6, 7} -> muT3GeneralS1S2*eps[SU2L[fund], t3BMa, t3BMc]",
+				"{4, 7, 7, 6} -> muT3GeneralS1S2*eps[SU2L[fund], t3BMa, t3BMd]",
+				"{5, 3, 7, 7} -> Bar[muT3GeneralS1S2]*eps[SU2L[fund], t3BMb, t3BMa]",
+				"{5, 7, 3, 7} -> Bar[muT3GeneralS1S2]*eps[SU2L[fund], t3BMc, t3BMa]"
+			],
+			"rgbeta_potential_convention":"+muR * eps * Bar[S1] Bar[S2] + h.c.; - sign in Lagrangian",
+			"native_rgbeta_epsilon_component_phase_verified":false,
+			"physical_mapping_certified":false
+		}
+	},
+	"physical_mapping_certified":false
+}

@@ -1,0 +1,114 @@
+{
+	"format":"t3-fermion-heavy-mass-probe-v3",
+	"status":"Passed",
+	"majorana_indexed_mass_basis_passed":true,
+	"dirac_indexed_mass_basis_passed":true,
+	"cases":[
+		{
+			"fermion":"Majorana",
+			"method":"predefined",
+			"status":"FieldDefinitionRejected",
+			"predefinition_result":"True",
+			"field_definition_result":"$Aborted",
+			"mass_option_inputform":"{Heavy, MFProbeMajPre}",
+			"mass_indices_inputform":[],
+			"check_lagrangian_inputform":"$Failed",
+			"free_lagrangian_inputform":"$Failed"
+		},
+		{
+			"fermion":"Majorana",
+			"method":"mass-third-list",
+			"status":"PassedIndexedMassBasis",
+			"predefinition_result":"\"NotPredefined\"",
+			"field_definition_result":"True",
+			"mass_option_inputform":"{Heavy, MFProbeMajList, {MassProbeFlavor}}",
+			"mass_indices_inputform":[
+				"{Index[d$$1, MassProbeFlavor]}"
+			],
+			"check_lagrangian_inputform":"True",
+			"free_lagrangian_inputform":"-1\/2*(Coupling[MFProbeMajList, {Index[d$$1, MassProbeFlavor]}, 0]*NCM[Transp[Field[FProbeMajorana, Fermion, {Index[d$$1, MassProbeFlavor]}, {}]], DiracProduct[GammaCC], Field[FProbeMajorana, Fermion, {Index[d$$1, MassProbeFlavor]}, {}]]) + (I\/2)*NCM[Transp[Field[FProbeMajorana, Fermion, {Index[d$$1, MassProbeFlavor]}, {}]], DiracProduct[GammaCC, GammaM[Index[d$$1, Lorentz]]], Field[FProbeMajorana, Fermion, {Index[d$$1, MassProbeFlavor]}, {Index[d$$1, Lorentz]}]]"
+		},
+		{
+			"fermion":"Majorana",
+			"method":"mass-third-type",
+			"status":"FieldDefinitionRejected",
+			"predefinition_result":"\"NotPredefined\"",
+			"field_definition_result":"$Failed",
+			"mass_option_inputform":"{Heavy, MFProbeMajType, MassProbeFlavor}",
+			"mass_indices_inputform":[],
+			"check_lagrangian_inputform":"$Failed",
+			"free_lagrangian_inputform":"$Failed"
+		},
+		{
+			"fermion":"Majorana",
+			"method":"baseline",
+			"status":"MassNotSingleFlavorIndexed",
+			"predefinition_result":"\"NotPredefined\"",
+			"field_definition_result":"True",
+			"mass_option_inputform":"{Heavy, MFProbeMajBase}",
+			"mass_indices_inputform":[
+				"{}"
+			],
+			"check_lagrangian_inputform":"True",
+			"free_lagrangian_inputform":"-1\/2*(Coupling[MFProbeMajBase, {}, 0]*NCM[Transp[Field[FProbeMajorana, Fermion, {Index[d$$1, MassProbeFlavor]}, {}]], DiracProduct[GammaCC], Field[FProbeMajorana, Fermion, {Index[d$$1, MassProbeFlavor]}, {}]]) + (I\/2)*NCM[Transp[Field[FProbeMajorana, Fermion, {Index[d$$1, MassProbeFlavor]}, {}]], DiracProduct[GammaCC, GammaM[Index[d$$1, Lorentz]]], Field[FProbeMajorana, Fermion, {Index[d$$1, MassProbeFlavor]}, {Index[d$$1, Lorentz]}]]"
+		},
+		{
+			"fermion":"Dirac",
+			"method":"predefined",
+			"status":"FieldDefinitionRejected",
+			"predefinition_result":"True",
+			"field_definition_result":"$Aborted",
+			"mass_option_inputform":"{Heavy, MFProbeDirPre}",
+			"mass_indices_inputform":[],
+			"check_lagrangian_inputform":"$Failed",
+			"free_lagrangian_inputform":"$Failed"
+		},
+		{
+			"fermion":"Dirac",
+			"method":"mass-third-list",
+			"status":"PassedIndexedMassBasis",
+			"predefinition_result":"\"NotPredefined\"",
+			"field_definition_result":"True",
+			"mass_option_inputform":"{Heavy, MFProbeDirList, {MassProbeFlavor}}",
+			"mass_indices_inputform":[
+				"{Index[d$$1, MassProbeFlavor]}"
+			],
+			"check_lagrangian_inputform":"True",
+			"free_lagrangian_inputform":"-(Coupling[MFProbeDirList, {Index[d$$1, MassProbeFlavor]}, 0]*NCM[Bar[Field[FProbeDirac, Fermion, {Index[d$$1, SU2L[fund]], Index[d$$1, MassProbeFlavor]}, {}]], Field[FProbeDirac, Fermion, {Index[d$$1, SU2L[fund]], Index[d$$1, MassProbeFlavor]}, {}]]) + I*NCM[Bar[Field[FProbeDirac, Fermion, {Index[d$$1, SU2L[fund]], Index[d$$1, MassProbeFlavor]}, {}]], DiracProduct[GammaM[Index[d$$1, Lorentz]]], Field[FProbeDirac, Fermion, {Index[d$$1, SU2L[fund]], Index[d$$1, MassProbeFlavor]}, {Index[d$$1, Lorentz]}]]"
+		},
+		{
+			"fermion":"Dirac",
+			"method":"mass-third-type",
+			"status":"FieldDefinitionRejected",
+			"predefinition_result":"\"NotPredefined\"",
+			"field_definition_result":"$Failed",
+			"mass_option_inputform":"{Heavy, MFProbeDirType, MassProbeFlavor}",
+			"mass_indices_inputform":[],
+			"check_lagrangian_inputform":"$Failed",
+			"free_lagrangian_inputform":"$Failed"
+		},
+		{
+			"fermion":"Dirac",
+			"method":"baseline",
+			"status":"MassNotSingleFlavorIndexed",
+			"predefinition_result":"\"NotPredefined\"",
+			"field_definition_result":"True",
+			"mass_option_inputform":"{Heavy, MFProbeDirBase}",
+			"mass_indices_inputform":[
+				"{}"
+			],
+			"check_lagrangian_inputform":"True",
+			"free_lagrangian_inputform":"-(Coupling[MFProbeDirBase, {}, 0]*NCM[Bar[Field[FProbeDirac, Fermion, {Index[d$$1, SU2L[fund]], Index[d$$1, MassProbeFlavor]}, {}]], Field[FProbeDirac, Fermion, {Index[d$$1, SU2L[fund]], Index[d$$1, MassProbeFlavor]}, {}]]) + I*NCM[Bar[Field[FProbeDirac, Fermion, {Index[d$$1, SU2L[fund]], Index[d$$1, MassProbeFlavor]}, {}]], DiracProduct[GammaM[Index[d$$1, Lorentz]]], Field[FProbeDirac, Fermion, {Index[d$$1, SU2L[fund]], Index[d$$1, MassProbeFlavor]}, {Index[d$$1, Lorentz]}]]"
+		}
+	],
+	"source_files_modified":false,
+	"matching_performed":false,
+	"full_flavour_mass_generality_certified":false,
+	"notes":[
+		"This file tests candidate Mass option conventions, not a production change.",
+		"A successful one-index coupling is a diagonal mass-basis check only.",
+		"Predefined coupling and alternative Mass option forms are tested independently.",
+		"Mass indices are detected by a structural Coupling pattern; inspect free_lagrangian_inputform when no indexed mass is found.",
+		"See console log and each case's mass_option_inputform if definitions fail."
+	]
+}

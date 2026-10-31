@@ -1,0 +1,2930 @@
+{
+  "format": "general-t3-running-heavy-mass-crossing-audit-v1",
+  "source_root": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\studies\\general_scalar_extended\\continuous_full_scalar\\continuous_v1",
+  "status": "CandidateAuditComplete",
+  "numerical_stage": "UndecoupledFullUVThenSavedScalarEFT1",
+  "physical_matching_certified": false,
+  "models": [
+    {
+      "model": "A_-4",
+      "status": "CandidateRunningFermionCrossingAuditNoMatching",
+      "quadratic_kind": "none",
+      "grouped_F_spectrum_status": "positive",
+      "uv_scalar_crossings": [],
+      "eft1_scalar_crossings": [
+        {
+          "particle": "scalar:S1",
+          "kind": "scalar",
+          "scale_gev": 1244.4106966019824,
+          "real_dof": 2,
+          "relative_mass_scale_residual": 4.707345624410664e-14,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S2",
+          "kind": "scalar",
+          "scale_gev": 1148.1965123690304,
+          "real_dof": 6,
+          "relative_mass_scale_residual": 4.440892098500626e-16,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        }
+      ],
+      "uv_fermion_crossings": [
+        {
+          "particle": "fermion:2",
+          "kind": "fermion",
+          "scale_gev": 131684.05825520674,
+          "mass_gev": 131684.05825520676,
+          "relative_mass_scale_residual": 2.220446049250313e-16,
+          "mass_order_at_crossing_gev": [
+            109736.71521047219,
+            120710.38671038554,
+            131684.05825520676
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:1",
+          "kind": "fermion",
+          "scale_gev": 120920.99328890441,
+          "mass_gev": 120920.9932889044,
+          "relative_mass_scale_residual": 1.1102230246251565e-16,
+          "mass_order_at_crossing_gev": [
+            109928.17573683873,
+            120920.9932889044,
+            131913.81088690716
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:0",
+          "kind": "fermion",
+          "scale_gev": 110137.92117780678,
+          "mass_gev": 110137.92117780677,
+          "relative_mass_scale_residual": 1.1102230246251565e-16,
+          "mass_order_at_crossing_gev": [
+            110137.92117780677,
+            121151.71327343547,
+            132165.50541613548
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        }
+      ],
+      "unresolved_fermion_crossings": [],
+      "all_fermion_crossings_bracketed": true,
+      "candidate_event_order": [
+        {
+          "particle": "fermion:2",
+          "kind": "fermion",
+          "scale_gev": 131684.05825520674,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:1",
+          "kind": "fermion",
+          "scale_gev": 120920.99328890441,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:0",
+          "kind": "fermion",
+          "scale_gev": 110137.92117780678,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S1",
+          "kind": "scalar",
+          "scale_gev": 1244.4106966019824,
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S2",
+          "kind": "scalar",
+          "scale_gev": 1148.1965123690304,
+          "status": "matching_required_not_applied"
+        }
+      ],
+      "full_uv_mass_diagnostic": {
+        "crossings": [
+          {
+            "particle": "fermion:2",
+            "kind": "fermion",
+            "scale_gev": 131684.05825520674,
+            "mass_gev": 131684.05825520676,
+            "relative_mass_scale_residual": 2.220446049250313e-16,
+            "mass_order_at_crossing_gev": [
+              109736.71521047219,
+              120710.38671038554,
+              131684.05825520676
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          },
+          {
+            "particle": "fermion:1",
+            "kind": "fermion",
+            "scale_gev": 120920.99328890441,
+            "mass_gev": 120920.9932889044,
+            "relative_mass_scale_residual": 1.1102230246251565e-16,
+            "mass_order_at_crossing_gev": [
+              109928.17573683873,
+              120920.9932889044,
+              131913.81088690716
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          },
+          {
+            "particle": "fermion:0",
+            "kind": "fermion",
+            "scale_gev": 110137.92117780678,
+            "mass_gev": 110137.92117780677,
+            "relative_mass_scale_residual": 1.1102230246251565e-16,
+            "mass_order_at_crossing_gev": [
+              110137.92117780677,
+              121151.71327343547,
+              132165.50541613548
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          }
+        ],
+        "unresolved_crossings": [],
+        "fermion_mass_method": "vectorlike MF -> biunitary singular masses",
+        "scan_points": 65,
+        "mu_uv_start_gev": 10000000.0,
+        "mu_grouped_fermion_endpoint_gev": 100000.0,
+        "masses_at_uv_start_gev": [
+          100000.0,
+          110000.0,
+          120000.0
+        ],
+        "masses_at_grouped_F_gev": [
+          110354.78119794997,
+          121390.25929503763,
+          132425.73744037666
+        ],
+        "all_three_crossings_bracketed": true,
+        "sequential_heavy_field_decoupling_performed": false,
+        "physical_matching_applied": false,
+        "saved_uv_sample_max_relative_replay_error": 0.0,
+        "saved_grouped_F_mass_relative_parity_error": 0.0,
+        "uv_replay_nfev": 212,
+        "uv_beta_export_sha256": "7f2a11330c43cb4a28b5475e5192896038971c9a4df383f38bed684242dddbd1",
+        "original_continuous_source_hashes_verified": true
+      },
+      "candidate_basis_not_physically_certified": true,
+      "full_uv_background_kept_below_first_crossing": true,
+      "sequential_fermion_matching_performed": false,
+      "finite_scalar_matching_performed": false,
+      "physical_neutrino_mass_prediction": false
+    },
+    {
+      "model": "A_-2",
+      "status": "CandidateRunningFermionCrossingAuditNoMatching",
+      "quadratic_kind": "self_s2",
+      "grouped_F_spectrum_status": "positive",
+      "uv_scalar_crossings": [],
+      "eft1_scalar_crossings": [
+        {
+          "particle": "scalar:S1",
+          "kind": "scalar",
+          "scale_gev": 1155.8883201830572,
+          "real_dof": 2,
+          "relative_mass_scale_residual": 8.881784197001252e-16,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S2_plus",
+          "kind": "scalar",
+          "scale_gev": 1138.9179854522508,
+          "real_dof": 3,
+          "relative_mass_scale_residual": 4.440892098500626e-16,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S2_minus",
+          "kind": "scalar",
+          "scale_gev": 1095.7458161362104,
+          "real_dof": 3,
+          "relative_mass_scale_residual": 4.440892098500626e-16,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        }
+      ],
+      "uv_fermion_crossings": [
+        {
+          "particle": "fermion:2",
+          "kind": "fermion",
+          "scale_gev": 126176.12414741443,
+          "mass_gev": 126176.12414741436,
+          "relative_mass_scale_residual": 5.551115123125783e-16,
+          "mass_order_at_crossing_gev": [
+            105146.77012080161,
+            115661.44712758715,
+            126176.12414741436
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:1",
+          "kind": "fermion",
+          "scale_gev": 115775.73204715722,
+          "mass_gev": 115775.73204715831,
+          "relative_mass_scale_residual": 9.325873406851315e-15,
+          "mass_order_at_crossing_gev": [
+            105250.66550233436,
+            115775.73204715831,
+            126300.79860530693
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:0",
+          "kind": "fermion",
+          "scale_gev": 105364.59016702676,
+          "mass_gev": 105364.5901670268,
+          "relative_mass_scale_residual": 4.440892098500626e-16,
+          "mass_order_at_crossing_gev": [
+            105364.5901670268,
+            115901.0491781936,
+            126437.50820299644
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        }
+      ],
+      "unresolved_fermion_crossings": [],
+      "all_fermion_crossings_bracketed": true,
+      "candidate_event_order": [
+        {
+          "particle": "fermion:2",
+          "kind": "fermion",
+          "scale_gev": 126176.12414741443,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:1",
+          "kind": "fermion",
+          "scale_gev": 115775.73204715722,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:0",
+          "kind": "fermion",
+          "scale_gev": 105364.59016702676,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S1",
+          "kind": "scalar",
+          "scale_gev": 1155.8883201830572,
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S2_plus",
+          "kind": "scalar",
+          "scale_gev": 1138.9179854522508,
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S2_minus",
+          "kind": "scalar",
+          "scale_gev": 1095.7458161362104,
+          "status": "matching_required_not_applied"
+        }
+      ],
+      "full_uv_mass_diagnostic": {
+        "crossings": [
+          {
+            "particle": "fermion:2",
+            "kind": "fermion",
+            "scale_gev": 126176.12414741443,
+            "mass_gev": 126176.12414741436,
+            "relative_mass_scale_residual": 5.551115123125783e-16,
+            "mass_order_at_crossing_gev": [
+              105146.77012080161,
+              115661.44712758715,
+              126176.12414741436
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          },
+          {
+            "particle": "fermion:1",
+            "kind": "fermion",
+            "scale_gev": 115775.73204715722,
+            "mass_gev": 115775.73204715831,
+            "relative_mass_scale_residual": 9.325873406851315e-15,
+            "mass_order_at_crossing_gev": [
+              105250.66550233436,
+              115775.73204715831,
+              126300.79860530693
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          },
+          {
+            "particle": "fermion:0",
+            "kind": "fermion",
+            "scale_gev": 105364.59016702676,
+            "mass_gev": 105364.5901670268,
+            "relative_mass_scale_residual": 4.440892098500626e-16,
+            "mass_order_at_crossing_gev": [
+              105364.5901670268,
+              115901.0491781936,
+              126437.50820299644
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          }
+        ],
+        "unresolved_crossings": [],
+        "fermion_mass_method": "vectorlike MF -> biunitary singular masses",
+        "scan_points": 65,
+        "mu_uv_start_gev": 10000000.0,
+        "mu_grouped_fermion_endpoint_gev": 100000.0,
+        "masses_at_uv_start_gev": [
+          100000.0,
+          110000.0,
+          120000.0
+        ],
+        "masses_at_grouped_F_gev": [
+          105427.82386915998,
+          115970.60625046975,
+          126513.38864558883
+        ],
+        "all_three_crossings_bracketed": true,
+        "sequential_heavy_field_decoupling_performed": false,
+        "physical_matching_applied": false,
+        "saved_uv_sample_max_relative_replay_error": 0.0,
+        "saved_grouped_F_mass_relative_parity_error": 0.0,
+        "uv_replay_nfev": 212,
+        "uv_beta_export_sha256": "a17dd4782de3c6ed45230c88048192814f55dd4fde30125753853514b10fa684",
+        "original_continuous_source_hashes_verified": true
+      },
+      "candidate_basis_not_physically_certified": true,
+      "full_uv_background_kept_below_first_crossing": true,
+      "sequential_fermion_matching_performed": false,
+      "finite_scalar_matching_performed": false,
+      "physical_neutrino_mass_prediction": false
+    },
+    {
+      "model": "A_+0",
+      "status": "CandidateRunningFermionCrossingAuditNoMatching",
+      "quadratic_kind": "self_s1",
+      "grouped_F_spectrum_status": "positive",
+      "uv_scalar_crossings": [],
+      "eft1_scalar_crossings": [
+        {
+          "particle": "scalar:S2",
+          "kind": "scalar",
+          "scale_gev": 1149.244605101033,
+          "real_dof": 6,
+          "relative_mass_scale_residual": 6.661338147750939e-16,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S1_plus",
+          "kind": "scalar",
+          "scale_gev": 1145.2678316150798,
+          "real_dof": 1,
+          "relative_mass_scale_residual": 5.551115123125783e-16,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S1_minus",
+          "kind": "scalar",
+          "scale_gev": 1111.871472781635,
+          "real_dof": 1,
+          "relative_mass_scale_residual": 4.440892098500626e-16,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        }
+      ],
+      "uv_fermion_crossings": [
+        {
+          "particle": "fermion:2",
+          "kind": "fermion",
+          "scale_gev": 126174.26730924407,
+          "mass_gev": 126174.26730924398,
+          "relative_mass_scale_residual": 6.661338147750939e-16,
+          "mass_order_at_crossing_gev": [
+            105145.22275565476,
+            115659.74502591533,
+            126174.26730924398
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:1",
+          "kind": "fermion",
+          "scale_gev": 115773.9639061761,
+          "mass_gev": 115773.96390617717,
+          "relative_mass_scale_residual": 9.325873406851315e-15,
+          "mass_order_at_crossing_gev": [
+            105249.05810145207,
+            115773.96390617717,
+            126298.86972425412
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:0",
+          "kind": "fermion",
+          "scale_gev": 105362.91575307591,
+          "mass_gev": 105362.91575307594,
+          "relative_mass_scale_residual": 2.220446049250313e-16,
+          "mass_order_at_crossing_gev": [
+            105362.91575307594,
+            115899.20732283688,
+            126435.49890626146
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        }
+      ],
+      "unresolved_fermion_crossings": [],
+      "all_fermion_crossings_bracketed": true,
+      "candidate_event_order": [
+        {
+          "particle": "fermion:2",
+          "kind": "fermion",
+          "scale_gev": 126174.26730924407,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:1",
+          "kind": "fermion",
+          "scale_gev": 115773.9639061761,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:0",
+          "kind": "fermion",
+          "scale_gev": 105362.91575307591,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S2",
+          "kind": "scalar",
+          "scale_gev": 1149.244605101033,
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S1_plus",
+          "kind": "scalar",
+          "scale_gev": 1145.2678316150798,
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S1_minus",
+          "kind": "scalar",
+          "scale_gev": 1111.871472781635,
+          "status": "matching_required_not_applied"
+        }
+      ],
+      "full_uv_mass_diagnostic": {
+        "crossings": [
+          {
+            "particle": "fermion:2",
+            "kind": "fermion",
+            "scale_gev": 126174.26730924407,
+            "mass_gev": 126174.26730924398,
+            "relative_mass_scale_residual": 6.661338147750939e-16,
+            "mass_order_at_crossing_gev": [
+              105145.22275565476,
+              115659.74502591533,
+              126174.26730924398
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          },
+          {
+            "particle": "fermion:1",
+            "kind": "fermion",
+            "scale_gev": 115773.9639061761,
+            "mass_gev": 115773.96390617717,
+            "relative_mass_scale_residual": 9.325873406851315e-15,
+            "mass_order_at_crossing_gev": [
+              105249.05810145207,
+              115773.96390617717,
+              126298.86972425412
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          },
+          {
+            "particle": "fermion:0",
+            "kind": "fermion",
+            "scale_gev": 105362.91575307591,
+            "mass_gev": 105362.91575307594,
+            "relative_mass_scale_residual": 2.220446049250313e-16,
+            "mass_order_at_crossing_gev": [
+              105362.91575307594,
+              115899.20732283688,
+              126435.49890626146
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          }
+        ],
+        "unresolved_crossings": [],
+        "fermion_mass_method": "vectorlike MF -> biunitary singular masses",
+        "scan_points": 65,
+        "mu_uv_start_gev": 10000000.0,
+        "mu_grouped_fermion_endpoint_gev": 100000.0,
+        "masses_at_uv_start_gev": [
+          100000.0,
+          110000.0,
+          120000.0
+        ],
+        "masses_at_grouped_F_gev": [
+          105426.09208323807,
+          115968.70128594477,
+          126511.31050248868
+        ],
+        "all_three_crossings_bracketed": true,
+        "sequential_heavy_field_decoupling_performed": false,
+        "physical_matching_applied": false,
+        "saved_uv_sample_max_relative_replay_error": 0.0,
+        "saved_grouped_F_mass_relative_parity_error": 0.0,
+        "uv_replay_nfev": 212,
+        "uv_beta_export_sha256": "2f31e1c83fce2270fbc77815a02d016f380f0b4044384433f48f66a28dfc5122",
+        "original_continuous_source_hashes_verified": true
+      },
+      "candidate_basis_not_physically_certified": true,
+      "full_uv_background_kept_below_first_crossing": true,
+      "sequential_fermion_matching_performed": false,
+      "finite_scalar_matching_performed": false,
+      "physical_neutrino_mass_prediction": false
+    },
+    {
+      "model": "B_-3",
+      "status": "CandidateRunningFermionCrossingAuditNoMatching",
+      "quadratic_kind": "none",
+      "grouped_F_spectrum_status": "positive",
+      "uv_scalar_crossings": [],
+      "eft1_scalar_crossings": [
+        {
+          "particle": "scalar:S1",
+          "kind": "scalar",
+          "scale_gev": 1251.8488697167809,
+          "real_dof": 4,
+          "relative_mass_scale_residual": 2.6201263381153694e-14,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S2",
+          "kind": "scalar",
+          "scale_gev": 1036.0044227397466,
+          "real_dof": 4,
+          "relative_mass_scale_residual": 4.440892098500626e-16,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        }
+      ],
+      "uv_fermion_crossings": [
+        {
+          "particle": "fermion:2",
+          "kind": "fermion",
+          "scale_gev": 122829.67295767518,
+          "mass_gev": 122829.6729576752,
+          "relative_mass_scale_residual": 2.220446049250313e-16,
+          "mass_order_at_crossing_gev": [
+            102358.06079048038,
+            112593.86687044041,
+            122829.6729576752
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:1",
+          "kind": "fermion",
+          "scale_gev": 112643.04422509174,
+          "mass_gev": 112643.0442250918,
+          "relative_mass_scale_residual": 4.440892098500626e-16,
+          "mass_order_at_crossing_gev": [
+            102402.7674765098,
+            112643.0442250918,
+            122883.3209811005
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:0",
+          "kind": "fermion",
+          "scale_gev": 102451.66775183017,
+          "mass_gev": 102451.66775183016,
+          "relative_mass_scale_residual": 1.1102230246251565e-16,
+          "mass_order_at_crossing_gev": [
+            102451.66775183016,
+            112696.83452796504,
+            122942.00131169352
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        }
+      ],
+      "unresolved_fermion_crossings": [],
+      "all_fermion_crossings_bracketed": true,
+      "candidate_event_order": [
+        {
+          "particle": "fermion:2",
+          "kind": "fermion",
+          "scale_gev": 122829.67295767518,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:1",
+          "kind": "fermion",
+          "scale_gev": 112643.04422509174,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:0",
+          "kind": "fermion",
+          "scale_gev": 102451.66775183017,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S1",
+          "kind": "scalar",
+          "scale_gev": 1251.8488697167809,
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S2",
+          "kind": "scalar",
+          "scale_gev": 1036.0044227397466,
+          "status": "matching_required_not_applied"
+        }
+      ],
+      "full_uv_mass_diagnostic": {
+        "crossings": [
+          {
+            "particle": "fermion:2",
+            "kind": "fermion",
+            "scale_gev": 122829.67295767518,
+            "mass_gev": 122829.6729576752,
+            "relative_mass_scale_residual": 2.220446049250313e-16,
+            "mass_order_at_crossing_gev": [
+              102358.06079048038,
+              112593.86687044041,
+              122829.6729576752
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          },
+          {
+            "particle": "fermion:1",
+            "kind": "fermion",
+            "scale_gev": 112643.04422509174,
+            "mass_gev": 112643.0442250918,
+            "relative_mass_scale_residual": 4.440892098500626e-16,
+            "mass_order_at_crossing_gev": [
+              102402.7674765098,
+              112643.0442250918,
+              122883.3209811005
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          },
+          {
+            "particle": "fermion:0",
+            "kind": "fermion",
+            "scale_gev": 102451.66775183017,
+            "mass_gev": 102451.66775183016,
+            "relative_mass_scale_residual": 1.1102230246251565e-16,
+            "mass_order_at_crossing_gev": [
+              102451.66775183016,
+              112696.83452796504,
+              122942.00131169352
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          }
+        ],
+        "unresolved_crossings": [],
+        "fermion_mass_method": "vectorlike MF -> biunitary singular masses",
+        "scan_points": 65,
+        "mu_uv_start_gev": 10000000.0,
+        "mu_grouped_fermion_endpoint_gev": 100000.0,
+        "masses_at_uv_start_gev": [
+          100000.0,
+          110000.0,
+          120000.0
+        ],
+        "masses_at_grouped_F_gev": [
+          102464.145390601,
+          112710.55993061836,
+          122956.97447827196
+        ],
+        "all_three_crossings_bracketed": true,
+        "sequential_heavy_field_decoupling_performed": false,
+        "physical_matching_applied": false,
+        "saved_uv_sample_max_relative_replay_error": 0.0,
+        "saved_grouped_F_mass_relative_parity_error": 0.0,
+        "uv_replay_nfev": 212,
+        "uv_beta_export_sha256": "2df890805dc052e22dc8ee913b6a4054787a672796e912f1274c47553ef1d9ba",
+        "original_continuous_source_hashes_verified": true
+      },
+      "candidate_basis_not_physically_certified": true,
+      "full_uv_background_kept_below_first_crossing": true,
+      "sequential_fermion_matching_performed": false,
+      "finite_scalar_matching_performed": false,
+      "physical_neutrino_mass_prediction": false
+    },
+    {
+      "model": "B_-1",
+      "status": "CandidateRunningFermionCrossingAuditNoMatching",
+      "quadratic_kind": "mixed",
+      "grouped_F_spectrum_status": "positive",
+      "uv_scalar_crossings": [],
+      "eft1_scalar_crossings": [
+        {
+          "particle": "scalar:Y",
+          "kind": "scalar",
+          "scale_gev": 1187.8080152229597,
+          "real_dof": 4,
+          "relative_mass_scale_residual": 6.661338147750939e-16,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:X",
+          "kind": "scalar",
+          "scale_gev": 1035.2031939681797,
+          "real_dof": 4,
+          "relative_mass_scale_residual": 4.440892098500626e-16,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        }
+      ],
+      "uv_fermion_crossings": [
+        {
+          "particle": "fermion:2",
+          "kind": "fermion",
+          "scale_gev": 119999.9998593906,
+          "mass_gev": 119999.99985939052,
+          "relative_mass_scale_residual": 7.771561172376096e-16,
+          "mass_order_at_crossing_gev": [
+            99999.99964206315,
+            109999.99975004426,
+            119999.99985939052
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:1",
+          "kind": "fermion",
+          "scale_gev": 109999.99974499451,
+          "mass_gev": 109999.99974499458,
+          "relative_mass_scale_residual": 6.661338147750939e-16,
+          "mass_order_at_crossing_gev": [
+            99999.99963483197,
+            109999.99974499458,
+            119999.99985654988
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        }
+      ],
+      "unresolved_fermion_crossings": [
+        {
+          "particle": "fermion:0",
+          "status": "below_saved_UV_stop_undetermined",
+          "mass_at_UV_start_gev": 100000.0,
+          "mass_at_grouped_F_gev": 99999.99962690244,
+          "mass_over_scale_minus_one_at_grouped_F": -3.7309757505710195e-09
+        }
+      ],
+      "all_fermion_crossings_bracketed": false,
+      "candidate_event_order": [
+        {
+          "particle": "fermion:2",
+          "kind": "fermion",
+          "scale_gev": 119999.9998593906,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:1",
+          "kind": "fermion",
+          "scale_gev": 109999.99974499451,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:Y",
+          "kind": "scalar",
+          "scale_gev": 1187.8080152229597,
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:X",
+          "kind": "scalar",
+          "scale_gev": 1035.2031939681797,
+          "status": "matching_required_not_applied"
+        }
+      ],
+      "full_uv_mass_diagnostic": {
+        "crossings": [
+          {
+            "particle": "fermion:2",
+            "kind": "fermion",
+            "scale_gev": 119999.9998593906,
+            "mass_gev": 119999.99985939052,
+            "relative_mass_scale_residual": 7.771561172376096e-16,
+            "mass_order_at_crossing_gev": [
+              99999.99964206315,
+              109999.99975004426,
+              119999.99985939052
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          },
+          {
+            "particle": "fermion:1",
+            "kind": "fermion",
+            "scale_gev": 109999.99974499451,
+            "mass_gev": 109999.99974499458,
+            "relative_mass_scale_residual": 6.661338147750939e-16,
+            "mass_order_at_crossing_gev": [
+              99999.99963483197,
+              109999.99974499458,
+              119999.99985654988
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          }
+        ],
+        "unresolved_crossings": [
+          {
+            "particle": "fermion:0",
+            "status": "below_saved_UV_stop_undetermined",
+            "mass_at_UV_start_gev": 100000.0,
+            "mass_at_grouped_F_gev": 99999.99962690244,
+            "mass_over_scale_minus_one_at_grouped_F": -3.7309757505710195e-09
+          }
+        ],
+        "fermion_mass_method": "Majorana complex-symmetric MF -> singular/Takagi masses",
+        "scan_points": 65,
+        "mu_uv_start_gev": 10000000.0,
+        "mu_grouped_fermion_endpoint_gev": 100000.0,
+        "masses_at_uv_start_gev": [
+          100000.0,
+          110000.0,
+          120000.0
+        ],
+        "masses_at_grouped_F_gev": [
+          99999.99962690244,
+          109999.99973945714,
+          119999.99985343487
+        ],
+        "all_three_crossings_bracketed": false,
+        "sequential_heavy_field_decoupling_performed": false,
+        "physical_matching_applied": false,
+        "saved_uv_sample_max_relative_replay_error": 0.0,
+        "saved_grouped_F_mass_relative_parity_error": 0.0,
+        "uv_replay_nfev": 212,
+        "uv_beta_export_sha256": "5508a9a2bdaab3354e7191c83bd082e60f4089edff40588f54823456a32ca33d",
+        "original_continuous_source_hashes_verified": true
+      },
+      "candidate_basis_not_physically_certified": true,
+      "full_uv_background_kept_below_first_crossing": true,
+      "sequential_fermion_matching_performed": false,
+      "finite_scalar_matching_performed": false,
+      "physical_neutrino_mass_prediction": false
+    },
+    {
+      "model": "B_+1",
+      "status": "CandidateRunningFermionCrossingAuditNoMatching",
+      "quadratic_kind": "none",
+      "grouped_F_spectrum_status": "positive",
+      "uv_scalar_crossings": [],
+      "eft1_scalar_crossings": [
+        {
+          "particle": "scalar:S1",
+          "kind": "scalar",
+          "scale_gev": 1187.1865973604972,
+          "real_dof": 4,
+          "relative_mass_scale_residual": 2.220446049250313e-16,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S2",
+          "kind": "scalar",
+          "scale_gev": 1092.8475144772017,
+          "real_dof": 4,
+          "relative_mass_scale_residual": 6.661338147750939e-16,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        }
+      ],
+      "uv_fermion_crossings": [
+        {
+          "particle": "fermion:2",
+          "kind": "fermion",
+          "scale_gev": 122829.67295601389,
+          "mass_gev": 122829.67295601398,
+          "relative_mass_scale_residual": 6.661338147750939e-16,
+          "mass_order_at_crossing_gev": [
+            102358.06079077971,
+            112593.86687044195,
+            122829.67295601398
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:1",
+          "kind": "fermion",
+          "scale_gev": 112643.04422508573,
+          "mass_gev": 112643.04422508556,
+          "relative_mass_scale_residual": 1.5543122344752192e-15,
+          "mass_order_at_crossing_gev": [
+            102402.76747680828,
+            112643.04422508556,
+            122883.32097939609
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:0",
+          "kind": "fermion",
+          "scale_gev": 102451.66775213374,
+          "mass_gev": 102451.6677521338,
+          "relative_mass_scale_residual": 6.661338147750939e-16,
+          "mass_order_at_crossing_gev": [
+            102451.6677521338,
+            112696.83452795708,
+            122942.001309949
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        }
+      ],
+      "unresolved_fermion_crossings": [],
+      "all_fermion_crossings_bracketed": true,
+      "candidate_event_order": [
+        {
+          "particle": "fermion:2",
+          "kind": "fermion",
+          "scale_gev": 122829.67295601389,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:1",
+          "kind": "fermion",
+          "scale_gev": 112643.04422508573,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:0",
+          "kind": "fermion",
+          "scale_gev": 102451.66775213374,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S1",
+          "kind": "scalar",
+          "scale_gev": 1187.1865973604972,
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S2",
+          "kind": "scalar",
+          "scale_gev": 1092.8475144772017,
+          "status": "matching_required_not_applied"
+        }
+      ],
+      "full_uv_mass_diagnostic": {
+        "crossings": [
+          {
+            "particle": "fermion:2",
+            "kind": "fermion",
+            "scale_gev": 122829.67295601389,
+            "mass_gev": 122829.67295601398,
+            "relative_mass_scale_residual": 6.661338147750939e-16,
+            "mass_order_at_crossing_gev": [
+              102358.06079077971,
+              112593.86687044195,
+              122829.67295601398
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          },
+          {
+            "particle": "fermion:1",
+            "kind": "fermion",
+            "scale_gev": 112643.04422508573,
+            "mass_gev": 112643.04422508556,
+            "relative_mass_scale_residual": 1.5543122344752192e-15,
+            "mass_order_at_crossing_gev": [
+              102402.76747680828,
+              112643.04422508556,
+              122883.32097939609
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          },
+          {
+            "particle": "fermion:0",
+            "kind": "fermion",
+            "scale_gev": 102451.66775213374,
+            "mass_gev": 102451.6677521338,
+            "relative_mass_scale_residual": 6.661338147750939e-16,
+            "mass_order_at_crossing_gev": [
+              102451.6677521338,
+              112696.83452795708,
+              122942.001309949
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          }
+        ],
+        "unresolved_crossings": [],
+        "fermion_mass_method": "vectorlike MF -> biunitary singular masses",
+        "scan_points": 65,
+        "mu_uv_start_gev": 10000000.0,
+        "mu_grouped_fermion_endpoint_gev": 100000.0,
+        "masses_at_uv_start_gev": [
+          100000.0,
+          110000.0,
+          120000.0
+        ],
+        "masses_at_grouped_F_gev": [
+          102464.14539090787,
+          112710.55993061203,
+          122956.97447651943
+        ],
+        "all_three_crossings_bracketed": true,
+        "sequential_heavy_field_decoupling_performed": false,
+        "physical_matching_applied": false,
+        "saved_uv_sample_max_relative_replay_error": 0.0,
+        "saved_grouped_F_mass_relative_parity_error": 0.0,
+        "uv_replay_nfev": 212,
+        "uv_beta_export_sha256": "7cd60f4ad04abdee7a9f5ac566576e5fe9951acecff2b954d8e22754bab49f61",
+        "original_continuous_source_hashes_verified": true
+      },
+      "candidate_basis_not_physically_certified": true,
+      "full_uv_background_kept_below_first_crossing": true,
+      "sequential_fermion_matching_performed": false,
+      "finite_scalar_matching_performed": false,
+      "physical_neutrino_mass_prediction": false
+    },
+    {
+      "model": "C_-3",
+      "status": "CandidateRunningFermionCrossingAuditNoMatching",
+      "quadratic_kind": "none",
+      "grouped_F_spectrum_status": "positive",
+      "uv_scalar_crossings": [],
+      "eft1_scalar_crossings": [
+        {
+          "particle": "scalar:S1",
+          "kind": "scalar",
+          "scale_gev": 1240.9428687266877,
+          "real_dof": 4,
+          "relative_mass_scale_residual": 5.928590951498336e-14,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S2",
+          "kind": "scalar",
+          "scale_gev": 1029.4441293918032,
+          "real_dof": 4,
+          "relative_mass_scale_residual": 8.881784197001252e-16,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        }
+      ],
+      "uv_fermion_crossings": [
+        {
+          "particle": "fermion:2",
+          "kind": "fermion",
+          "scale_gev": 136951.69166225116,
+          "mass_gev": 136951.6916622511,
+          "relative_mass_scale_residual": 4.440892098500626e-16,
+          "mass_order_at_crossing_gev": [
+            114126.40963923064,
+            125539.05059553524,
+            136951.6916622511
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:1",
+          "kind": "fermion",
+          "scale_gev": 125849.55052201344,
+          "mass_gev": 125849.55052201345,
+          "relative_mass_scale_residual": 2.220446049250313e-16,
+          "mass_order_at_crossing_gev": [
+            114408.68229983195,
+            125849.55052201345,
+            137290.41885726145
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:0",
+          "kind": "fermion",
+          "scale_gev": 114718.06664028387,
+          "mass_gev": 114718.06664028396,
+          "relative_mass_scale_residual": 6.661338147750939e-16,
+          "mass_order_at_crossing_gev": [
+            114718.06664028396,
+            126189.87329630845,
+            137661.68006833075
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        }
+      ],
+      "unresolved_fermion_crossings": [],
+      "all_fermion_crossings_bracketed": true,
+      "candidate_event_order": [
+        {
+          "particle": "fermion:2",
+          "kind": "fermion",
+          "scale_gev": 136951.69166225116,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:1",
+          "kind": "fermion",
+          "scale_gev": 125849.55052201344,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:0",
+          "kind": "fermion",
+          "scale_gev": 114718.06664028387,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S1",
+          "kind": "scalar",
+          "scale_gev": 1240.9428687266877,
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S2",
+          "kind": "scalar",
+          "scale_gev": 1029.4441293918032,
+          "status": "matching_required_not_applied"
+        }
+      ],
+      "full_uv_mass_diagnostic": {
+        "crossings": [
+          {
+            "particle": "fermion:2",
+            "kind": "fermion",
+            "scale_gev": 136951.69166225116,
+            "mass_gev": 136951.6916622511,
+            "relative_mass_scale_residual": 4.440892098500626e-16,
+            "mass_order_at_crossing_gev": [
+              114126.40963923064,
+              125539.05059553524,
+              136951.6916622511
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          },
+          {
+            "particle": "fermion:1",
+            "kind": "fermion",
+            "scale_gev": 125849.55052201344,
+            "mass_gev": 125849.55052201345,
+            "relative_mass_scale_residual": 2.220446049250313e-16,
+            "mass_order_at_crossing_gev": [
+              114408.68229983195,
+              125849.55052201345,
+              137290.41885726145
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          },
+          {
+            "particle": "fermion:0",
+            "kind": "fermion",
+            "scale_gev": 114718.06664028387,
+            "mass_gev": 114718.06664028396,
+            "relative_mass_scale_residual": 6.661338147750939e-16,
+            "mass_order_at_crossing_gev": [
+              114718.06664028396,
+              126189.87329630845,
+              137661.68006833075
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          }
+        ],
+        "unresolved_crossings": [],
+        "fermion_mass_method": "vectorlike MF -> biunitary singular masses",
+        "scan_points": 65,
+        "mu_uv_start_gev": 10000000.0,
+        "mu_grouped_fermion_endpoint_gev": 100000.0,
+        "masses_at_uv_start_gev": [
+          100000.0,
+          110000.0,
+          120000.0
+        ],
+        "masses_at_grouped_F_gev": [
+          115177.10451130387,
+          126694.81495412739,
+          138212.52551733915
+        ],
+        "all_three_crossings_bracketed": true,
+        "sequential_heavy_field_decoupling_performed": false,
+        "physical_matching_applied": false,
+        "saved_uv_sample_max_relative_replay_error": 0.0,
+        "saved_grouped_F_mass_relative_parity_error": 0.0,
+        "uv_replay_nfev": 212,
+        "uv_beta_export_sha256": "294174aa03935ca16e6c19a7c71ab4fc70f5c35d757d7f5a58cabc365a4283b0",
+        "original_continuous_source_hashes_verified": true
+      },
+      "candidate_basis_not_physically_certified": true,
+      "full_uv_background_kept_below_first_crossing": true,
+      "sequential_fermion_matching_performed": false,
+      "finite_scalar_matching_performed": false,
+      "physical_neutrino_mass_prediction": false
+    },
+    {
+      "model": "C_-1",
+      "status": "CandidateRunningFermionCrossingAuditNoMatching",
+      "quadratic_kind": "mixed",
+      "grouped_F_spectrum_status": "positive",
+      "uv_scalar_crossings": [],
+      "eft1_scalar_crossings": [
+        {
+          "particle": "scalar:Y",
+          "kind": "scalar",
+          "scale_gev": 1185.3951653596189,
+          "real_dof": 4,
+          "relative_mass_scale_residual": 7.771561172376096e-16,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:X",
+          "kind": "scalar",
+          "scale_gev": 1032.2669635209136,
+          "real_dof": 4,
+          "relative_mass_scale_residual": 2.220446049250313e-16,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        }
+      ],
+      "uv_fermion_crossings": [
+        {
+          "particle": "fermion:2",
+          "kind": "fermion",
+          "scale_gev": 134569.6606420858,
+          "mass_gev": 134569.6606420858,
+          "relative_mass_scale_residual": 0.0,
+          "mass_order_at_crossing_gev": [
+            112141.38384561306,
+            123355.52199762981,
+            134569.6606420858
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:1",
+          "kind": "fermion",
+          "scale_gev": 123630.86103967248,
+          "mass_gev": 123630.86103967245,
+          "relative_mass_scale_residual": 2.220446049250313e-16,
+          "mass_order_at_crossing_gev": [
+            112391.69207064876,
+            123630.86103967245,
+            134870.03051277518
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:0",
+          "kind": "fermion",
+          "scale_gev": 112666.3931998952,
+          "mass_gev": 112666.39319989513,
+          "relative_mass_scale_residual": 6.661338147750939e-16,
+          "mass_order_at_crossing_gev": [
+            112666.39319989513,
+            123933.03227577766,
+            135199.6718685842
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        }
+      ],
+      "unresolved_fermion_crossings": [],
+      "all_fermion_crossings_bracketed": true,
+      "candidate_event_order": [
+        {
+          "particle": "fermion:2",
+          "kind": "fermion",
+          "scale_gev": 134569.6606420858,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:1",
+          "kind": "fermion",
+          "scale_gev": 123630.86103967248,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:0",
+          "kind": "fermion",
+          "scale_gev": 112666.3931998952,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:Y",
+          "kind": "scalar",
+          "scale_gev": 1185.3951653596189,
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:X",
+          "kind": "scalar",
+          "scale_gev": 1032.2669635209136,
+          "status": "matching_required_not_applied"
+        }
+      ],
+      "full_uv_mass_diagnostic": {
+        "crossings": [
+          {
+            "particle": "fermion:2",
+            "kind": "fermion",
+            "scale_gev": 134569.6606420858,
+            "mass_gev": 134569.6606420858,
+            "relative_mass_scale_residual": 0.0,
+            "mass_order_at_crossing_gev": [
+              112141.38384561306,
+              123355.52199762981,
+              134569.6606420858
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          },
+          {
+            "particle": "fermion:1",
+            "kind": "fermion",
+            "scale_gev": 123630.86103967248,
+            "mass_gev": 123630.86103967245,
+            "relative_mass_scale_residual": 2.220446049250313e-16,
+            "mass_order_at_crossing_gev": [
+              112391.69207064876,
+              123630.86103967245,
+              134870.03051277518
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          },
+          {
+            "particle": "fermion:0",
+            "kind": "fermion",
+            "scale_gev": 112666.3931998952,
+            "mass_gev": 112666.39319989513,
+            "relative_mass_scale_residual": 6.661338147750939e-16,
+            "mass_order_at_crossing_gev": [
+              112666.39319989513,
+              123933.03227577766,
+              135199.6718685842
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          }
+        ],
+        "unresolved_crossings": [],
+        "fermion_mass_method": "Majorana complex-symmetric MF -> singular/Takagi masses",
+        "scan_points": 65,
+        "mu_uv_start_gev": 10000000.0,
+        "mu_grouped_fermion_endpoint_gev": 100000.0,
+        "masses_at_uv_start_gev": [
+          100000.0,
+          110000.0,
+          120000.0
+        ],
+        "masses_at_grouped_F_gev": [
+          113019.9532339545,
+          124321.94830538427,
+          135623.94391037978
+        ],
+        "all_three_crossings_bracketed": true,
+        "sequential_heavy_field_decoupling_performed": false,
+        "physical_matching_applied": false,
+        "saved_uv_sample_max_relative_replay_error": 0.0,
+        "saved_grouped_F_mass_relative_parity_error": 0.0,
+        "uv_replay_nfev": 212,
+        "uv_beta_export_sha256": "f5ab3557c0f7a88edcf82d20fca673fdcd6c4e9f5beb28010db57c4cab3d1f0c",
+        "original_continuous_source_hashes_verified": true
+      },
+      "candidate_basis_not_physically_certified": true,
+      "full_uv_background_kept_below_first_crossing": true,
+      "sequential_fermion_matching_performed": false,
+      "finite_scalar_matching_performed": false,
+      "physical_neutrino_mass_prediction": false
+    },
+    {
+      "model": "C_+1",
+      "status": "CandidateRunningFermionCrossingAuditNoMatching",
+      "quadratic_kind": "none",
+      "grouped_F_spectrum_status": "positive",
+      "uv_scalar_crossings": [],
+      "eft1_scalar_crossings": [
+        {
+          "particle": "scalar:S1",
+          "kind": "scalar",
+          "scale_gev": 1179.9262173984691,
+          "real_dof": 4,
+          "relative_mass_scale_residual": 6.661338147750939e-16,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S2",
+          "kind": "scalar",
+          "scale_gev": 1083.07894169665,
+          "real_dof": 4,
+          "relative_mass_scale_residual": 4.440892098500626e-16,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        }
+      ],
+      "uv_fermion_crossings": [
+        {
+          "particle": "fermion:2",
+          "kind": "fermion",
+          "scale_gev": 136951.69155379038,
+          "mass_gev": 136951.69155379036,
+          "relative_mass_scale_residual": 2.220446049250313e-16,
+          "mass_order_at_crossing_gev": [
+            114126.40968620474,
+            125539.05066504747,
+            136951.69155379036
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:1",
+          "kind": "fermion",
+          "scale_gev": 125849.55058828504,
+          "mass_gev": 125849.55058828492,
+          "relative_mass_scale_residual": 8.881784197001252e-16,
+          "mass_order_at_crossing_gev": [
+            114408.68234346983,
+            125849.55058828492,
+            137290.41874083335
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:0",
+          "kind": "fermion",
+          "scale_gev": 114718.06668553918,
+          "mass_gev": 114718.06668553926,
+          "relative_mass_scale_residual": 6.661338147750939e-16,
+          "mass_order_at_crossing_gev": [
+            114718.06668553926,
+            126189.87336483265,
+            137661.67994946727
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        }
+      ],
+      "unresolved_fermion_crossings": [],
+      "all_fermion_crossings_bracketed": true,
+      "candidate_event_order": [
+        {
+          "particle": "fermion:2",
+          "kind": "fermion",
+          "scale_gev": 136951.69155379038,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:1",
+          "kind": "fermion",
+          "scale_gev": 125849.55058828504,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:0",
+          "kind": "fermion",
+          "scale_gev": 114718.06668553918,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S1",
+          "kind": "scalar",
+          "scale_gev": 1179.9262173984691,
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S2",
+          "kind": "scalar",
+          "scale_gev": 1083.07894169665,
+          "status": "matching_required_not_applied"
+        }
+      ],
+      "full_uv_mass_diagnostic": {
+        "crossings": [
+          {
+            "particle": "fermion:2",
+            "kind": "fermion",
+            "scale_gev": 136951.69155379038,
+            "mass_gev": 136951.69155379036,
+            "relative_mass_scale_residual": 2.220446049250313e-16,
+            "mass_order_at_crossing_gev": [
+              114126.40968620474,
+              125539.05066504747,
+              136951.69155379036
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          },
+          {
+            "particle": "fermion:1",
+            "kind": "fermion",
+            "scale_gev": 125849.55058828504,
+            "mass_gev": 125849.55058828492,
+            "relative_mass_scale_residual": 8.881784197001252e-16,
+            "mass_order_at_crossing_gev": [
+              114408.68234346983,
+              125849.55058828492,
+              137290.41874083335
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          },
+          {
+            "particle": "fermion:0",
+            "kind": "fermion",
+            "scale_gev": 114718.06668553918,
+            "mass_gev": 114718.06668553926,
+            "relative_mass_scale_residual": 6.661338147750939e-16,
+            "mass_order_at_crossing_gev": [
+              114718.06668553926,
+              126189.87336483265,
+              137661.67994946727
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          }
+        ],
+        "unresolved_crossings": [],
+        "fermion_mass_method": "vectorlike MF -> biunitary singular masses",
+        "scan_points": 65,
+        "mu_uv_start_gev": 10000000.0,
+        "mu_grouped_fermion_endpoint_gev": 100000.0,
+        "masses_at_uv_start_gev": [
+          100000.0,
+          110000.0,
+          120000.0
+        ],
+        "masses_at_grouped_F_gev": [
+          115177.1045596402,
+          126694.81502675019,
+          138212.5253956187
+        ],
+        "all_three_crossings_bracketed": true,
+        "sequential_heavy_field_decoupling_performed": false,
+        "physical_matching_applied": false,
+        "saved_uv_sample_max_relative_replay_error": 0.0,
+        "saved_grouped_F_mass_relative_parity_error": 0.0,
+        "uv_replay_nfev": 212,
+        "uv_beta_export_sha256": "c698df346003c30f402afdca122d3575d06cc9ff6be35fb796b984cc4c33e10c",
+        "original_continuous_source_hashes_verified": true
+      },
+      "candidate_basis_not_physically_certified": true,
+      "full_uv_background_kept_below_first_crossing": true,
+      "sequential_fermion_matching_performed": false,
+      "finite_scalar_matching_performed": false,
+      "physical_neutrino_mass_prediction": false
+    },
+    {
+      "model": "D_-2",
+      "status": "CandidateRunningFermionCrossingAuditNoMatching",
+      "quadratic_kind": "self_s2",
+      "grouped_F_spectrum_status": "positive",
+      "uv_scalar_crossings": [],
+      "eft1_scalar_crossings": [
+        {
+          "particle": "scalar:S1",
+          "kind": "scalar",
+          "scale_gev": 1318.1201406329822,
+          "real_dof": 6,
+          "relative_mass_scale_residual": 2.220446049250313e-16,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S2_plus",
+          "kind": "scalar",
+          "scale_gev": 1003.6941214911259,
+          "real_dof": 1,
+          "relative_mass_scale_residual": 3.774758283725532e-15,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        }
+      ],
+      "uv_fermion_crossings": [
+        {
+          "particle": "fermion:2",
+          "kind": "fermion",
+          "scale_gev": 126174.26731439526,
+          "mass_gev": 126174.26731439518,
+          "relative_mass_scale_residual": 5.551115123125783e-16,
+          "mass_order_at_crossing_gev": [
+            105145.22275411476,
+            115659.74503608145,
+            126174.26731439518
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:1",
+          "kind": "fermion",
+          "scale_gev": 115773.96391649982,
+          "mass_gev": 115773.96391650093,
+          "relative_mass_scale_residual": 9.547918011776346e-15,
+          "mass_order_at_crossing_gev": [
+            105249.0580998213,
+            115773.96391650093,
+            126298.86972944836
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:0",
+          "kind": "fermion",
+          "scale_gev": 105362.91575153501,
+          "mass_gev": 105362.91575153497,
+          "relative_mass_scale_residual": 4.440892098500626e-16,
+          "mass_order_at_crossing_gev": [
+            105362.91575153497,
+            115899.20733354244,
+            126435.49891173046
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        }
+      ],
+      "unresolved_fermion_crossings": [],
+      "all_fermion_crossings_bracketed": true,
+      "candidate_event_order": [
+        {
+          "particle": "fermion:2",
+          "kind": "fermion",
+          "scale_gev": 126174.26731439526,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:1",
+          "kind": "fermion",
+          "scale_gev": 115773.96391649982,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:0",
+          "kind": "fermion",
+          "scale_gev": 105362.91575153501,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S1",
+          "kind": "scalar",
+          "scale_gev": 1318.1201406329822,
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S2_plus",
+          "kind": "scalar",
+          "scale_gev": 1003.6941214911259,
+          "status": "matching_required_not_applied"
+        }
+      ],
+      "full_uv_mass_diagnostic": {
+        "crossings": [
+          {
+            "particle": "fermion:2",
+            "kind": "fermion",
+            "scale_gev": 126174.26731439526,
+            "mass_gev": 126174.26731439518,
+            "relative_mass_scale_residual": 5.551115123125783e-16,
+            "mass_order_at_crossing_gev": [
+              105145.22275411476,
+              115659.74503608145,
+              126174.26731439518
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          },
+          {
+            "particle": "fermion:1",
+            "kind": "fermion",
+            "scale_gev": 115773.96391649982,
+            "mass_gev": 115773.96391650093,
+            "relative_mass_scale_residual": 9.547918011776346e-15,
+            "mass_order_at_crossing_gev": [
+              105249.0580998213,
+              115773.96391650093,
+              126298.86972944836
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          },
+          {
+            "particle": "fermion:0",
+            "kind": "fermion",
+            "scale_gev": 105362.91575153501,
+            "mass_gev": 105362.91575153497,
+            "relative_mass_scale_residual": 4.440892098500626e-16,
+            "mass_order_at_crossing_gev": [
+              105362.91575153497,
+              115899.20733354244,
+              126435.49891173046
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          }
+        ],
+        "unresolved_crossings": [],
+        "fermion_mass_method": "vectorlike MF -> biunitary singular masses",
+        "scan_points": 65,
+        "mu_uv_start_gev": 10000000.0,
+        "mu_grouped_fermion_endpoint_gev": 100000.0,
+        "masses_at_uv_start_gev": [
+          100000.0,
+          110000.0,
+          120000.0
+        ],
+        "masses_at_grouped_F_gev": [
+          105426.09208165959,
+          115968.70129676657,
+          126511.31050800563
+        ],
+        "all_three_crossings_bracketed": true,
+        "sequential_heavy_field_decoupling_performed": false,
+        "physical_matching_applied": false,
+        "saved_uv_sample_max_relative_replay_error": 0.0,
+        "saved_grouped_F_mass_relative_parity_error": 0.0,
+        "uv_replay_nfev": 212,
+        "uv_beta_export_sha256": "c397bdfdb927a9c9ee2213c81f583bcdbaebf0d2375d728881899bc80ace93a1",
+        "original_continuous_source_hashes_verified": true
+      },
+      "candidate_basis_not_physically_certified": true,
+      "full_uv_background_kept_below_first_crossing": true,
+      "sequential_fermion_matching_performed": false,
+      "finite_scalar_matching_performed": false,
+      "physical_neutrino_mass_prediction": false
+    },
+    {
+      "model": "D_+0",
+      "status": "CandidateRunningFermionCrossingAuditNoMatching",
+      "quadratic_kind": "self_s1",
+      "grouped_F_spectrum_status": "positive",
+      "uv_scalar_crossings": [],
+      "eft1_scalar_crossings": [
+        {
+          "particle": "scalar:S1_plus",
+          "kind": "scalar",
+          "scale_gev": 1302.3817531461607,
+          "real_dof": 3,
+          "relative_mass_scale_residual": 0.0,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S1_minus",
+          "kind": "scalar",
+          "scale_gev": 1261.2045244824485,
+          "real_dof": 3,
+          "relative_mass_scale_residual": 1.2434497875801753e-14,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S2",
+          "kind": "scalar",
+          "scale_gev": 1008.2684554843619,
+          "real_dof": 2,
+          "relative_mass_scale_residual": 3.26405569239796e-14,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        }
+      ],
+      "uv_fermion_crossings": [
+        {
+          "particle": "fermion:2",
+          "kind": "fermion",
+          "scale_gev": 126176.12415248726,
+          "mass_gev": 126176.12415248726,
+          "relative_mass_scale_residual": 0.0,
+          "mass_order_at_crossing_gev": [
+            105146.7701192505,
+            115661.44713775604,
+            126176.12415248726
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:1",
+          "kind": "fermion",
+          "scale_gev": 115775.73205748273,
+          "mass_gev": 115775.7320574839,
+          "relative_mass_scale_residual": 9.992007221626409e-15,
+          "mass_order_at_crossing_gev": [
+            105250.66550069141,
+            115775.7320574839,
+            126300.79861042013
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:0",
+          "kind": "fermion",
+          "scale_gev": 105364.59016547349,
+          "mass_gev": 105364.5901654736,
+          "relative_mass_scale_residual": 8.881784197001252e-16,
+          "mass_order_at_crossing_gev": [
+            105364.5901654736,
+            115901.04918890138,
+            126437.50820838279
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        }
+      ],
+      "unresolved_fermion_crossings": [],
+      "all_fermion_crossings_bracketed": true,
+      "candidate_event_order": [
+        {
+          "particle": "fermion:2",
+          "kind": "fermion",
+          "scale_gev": 126176.12415248726,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:1",
+          "kind": "fermion",
+          "scale_gev": 115775.73205748273,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:0",
+          "kind": "fermion",
+          "scale_gev": 105364.59016547349,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S1_plus",
+          "kind": "scalar",
+          "scale_gev": 1302.3817531461607,
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S1_minus",
+          "kind": "scalar",
+          "scale_gev": 1261.2045244824485,
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S2",
+          "kind": "scalar",
+          "scale_gev": 1008.2684554843619,
+          "status": "matching_required_not_applied"
+        }
+      ],
+      "full_uv_mass_diagnostic": {
+        "crossings": [
+          {
+            "particle": "fermion:2",
+            "kind": "fermion",
+            "scale_gev": 126176.12415248726,
+            "mass_gev": 126176.12415248726,
+            "relative_mass_scale_residual": 0.0,
+            "mass_order_at_crossing_gev": [
+              105146.7701192505,
+              115661.44713775604,
+              126176.12415248726
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          },
+          {
+            "particle": "fermion:1",
+            "kind": "fermion",
+            "scale_gev": 115775.73205748273,
+            "mass_gev": 115775.7320574839,
+            "relative_mass_scale_residual": 9.992007221626409e-15,
+            "mass_order_at_crossing_gev": [
+              105250.66550069141,
+              115775.7320574839,
+              126300.79861042013
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          },
+          {
+            "particle": "fermion:0",
+            "kind": "fermion",
+            "scale_gev": 105364.59016547349,
+            "mass_gev": 105364.5901654736,
+            "relative_mass_scale_residual": 8.881784197001252e-16,
+            "mass_order_at_crossing_gev": [
+              105364.5901654736,
+              115901.04918890138,
+              126437.50820838279
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          }
+        ],
+        "unresolved_crossings": [],
+        "fermion_mass_method": "vectorlike MF -> biunitary singular masses",
+        "scan_points": 65,
+        "mu_uv_start_gev": 10000000.0,
+        "mu_grouped_fermion_endpoint_gev": 100000.0,
+        "masses_at_uv_start_gev": [
+          100000.0,
+          110000.0,
+          120000.0
+        ],
+        "masses_at_grouped_F_gev": [
+          105427.82386756898,
+          115970.60626129371,
+          126513.38865102195
+        ],
+        "all_three_crossings_bracketed": true,
+        "sequential_heavy_field_decoupling_performed": false,
+        "physical_matching_applied": false,
+        "saved_uv_sample_max_relative_replay_error": 0.0,
+        "saved_grouped_F_mass_relative_parity_error": 0.0,
+        "uv_replay_nfev": 212,
+        "uv_beta_export_sha256": "359e6d30dba81e82d87cf0e222fc605e64d01ada535071b638e3d3b7c10eed91",
+        "original_continuous_source_hashes_verified": true
+      },
+      "candidate_basis_not_physically_certified": true,
+      "full_uv_background_kept_below_first_crossing": true,
+      "sequential_fermion_matching_performed": false,
+      "finite_scalar_matching_performed": false,
+      "physical_neutrino_mass_prediction": false
+    },
+    {
+      "model": "D_+2",
+      "status": "CandidateRunningFermionCrossingAuditNoMatching",
+      "quadratic_kind": "none",
+      "grouped_F_spectrum_status": "positive",
+      "uv_scalar_crossings": [],
+      "eft1_scalar_crossings": [
+        {
+          "particle": "scalar:S1",
+          "kind": "scalar",
+          "scale_gev": 1316.004339322311,
+          "real_dof": 6,
+          "relative_mass_scale_residual": 4.440892098500626e-16,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S2",
+          "kind": "scalar",
+          "scale_gev": 1089.2230495249264,
+          "real_dof": 2,
+          "relative_mass_scale_residual": 4.440892098500626e-16,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        }
+      ],
+      "uv_fermion_crossings": [
+        {
+          "particle": "fermion:2",
+          "kind": "fermion",
+          "scale_gev": 131684.05823766429,
+          "mass_gev": 131684.05823766437,
+          "relative_mass_scale_residual": 6.661338147750939e-16,
+          "mass_order_at_crossing_gev": [
+            109736.7152127821,
+            120710.38671703794,
+            131684.05823766437
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:1",
+          "kind": "fermion",
+          "scale_gev": 120920.99329524313,
+          "mass_gev": 120920.99329524316,
+          "relative_mass_scale_residual": 2.220446049250313e-16,
+          "mass_order_at_crossing_gev": [
+            109928.17573877794,
+            120920.99329524316,
+            131913.81086845428
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:0",
+          "kind": "fermion",
+          "scale_gev": 110137.9211798724,
+          "mass_gev": 110137.92117987234,
+          "relative_mass_scale_residual": 5.551115123125783e-16,
+          "mass_order_at_crossing_gev": [
+            110137.92117987234,
+            121151.71328001711,
+            132165.50539732116
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        }
+      ],
+      "unresolved_fermion_crossings": [],
+      "all_fermion_crossings_bracketed": true,
+      "candidate_event_order": [
+        {
+          "particle": "fermion:2",
+          "kind": "fermion",
+          "scale_gev": 131684.05823766429,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:1",
+          "kind": "fermion",
+          "scale_gev": 120920.99329524313,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:0",
+          "kind": "fermion",
+          "scale_gev": 110137.9211798724,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S1",
+          "kind": "scalar",
+          "scale_gev": 1316.004339322311,
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S2",
+          "kind": "scalar",
+          "scale_gev": 1089.2230495249264,
+          "status": "matching_required_not_applied"
+        }
+      ],
+      "full_uv_mass_diagnostic": {
+        "crossings": [
+          {
+            "particle": "fermion:2",
+            "kind": "fermion",
+            "scale_gev": 131684.05823766429,
+            "mass_gev": 131684.05823766437,
+            "relative_mass_scale_residual": 6.661338147750939e-16,
+            "mass_order_at_crossing_gev": [
+              109736.7152127821,
+              120710.38671703794,
+              131684.05823766437
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          },
+          {
+            "particle": "fermion:1",
+            "kind": "fermion",
+            "scale_gev": 120920.99329524313,
+            "mass_gev": 120920.99329524316,
+            "relative_mass_scale_residual": 2.220446049250313e-16,
+            "mass_order_at_crossing_gev": [
+              109928.17573877794,
+              120920.99329524316,
+              131913.81086845428
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          },
+          {
+            "particle": "fermion:0",
+            "kind": "fermion",
+            "scale_gev": 110137.9211798724,
+            "mass_gev": 110137.92117987234,
+            "relative_mass_scale_residual": 5.551115123125783e-16,
+            "mass_order_at_crossing_gev": [
+              110137.92117987234,
+              121151.71328001711,
+              132165.50539732116
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          }
+        ],
+        "unresolved_crossings": [],
+        "fermion_mass_method": "vectorlike MF -> biunitary singular masses",
+        "scan_points": 65,
+        "mu_uv_start_gev": 10000000.0,
+        "mu_grouped_fermion_endpoint_gev": 100000.0,
+        "masses_at_uv_start_gev": [
+          100000.0,
+          110000.0,
+          120000.0
+        ],
+        "masses_at_grouped_F_gev": [
+          110354.7812001105,
+          121390.25930183177,
+          132425.73742114252
+        ],
+        "all_three_crossings_bracketed": true,
+        "sequential_heavy_field_decoupling_performed": false,
+        "physical_matching_applied": false,
+        "saved_uv_sample_max_relative_replay_error": 0.0,
+        "saved_grouped_F_mass_relative_parity_error": 0.0,
+        "uv_replay_nfev": 212,
+        "uv_beta_export_sha256": "c0e84387218e590c9a355337da014216d1f5048fea6a9ef91ff4c77379027fdc",
+        "original_continuous_source_hashes_verified": true
+      },
+      "candidate_basis_not_physically_certified": true,
+      "full_uv_background_kept_below_first_crossing": true,
+      "sequential_fermion_matching_performed": false,
+      "finite_scalar_matching_performed": false,
+      "physical_neutrino_mass_prediction": false
+    },
+    {
+      "model": "E_-4",
+      "status": "CandidateRunningFermionCrossingAuditNoMatching",
+      "quadratic_kind": "none",
+      "grouped_F_spectrum_status": "positive",
+      "uv_scalar_crossings": [],
+      "eft1_scalar_crossings": [
+        {
+          "particle": "scalar:S1",
+          "kind": "scalar",
+          "scale_gev": 1461.7301557231199,
+          "real_dof": 6,
+          "relative_mass_scale_residual": 4.440892098500626e-16,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S2",
+          "kind": "scalar",
+          "scale_gev": 1171.0498203792447,
+          "real_dof": 6,
+          "relative_mass_scale_residual": 6.661338147750939e-16,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        }
+      ],
+      "uv_fermion_crossings": [
+        {
+          "particle": "fermion:2",
+          "kind": "fermion",
+          "scale_gev": 131590.68391018608,
+          "mass_gev": 131590.68391018608,
+          "relative_mass_scale_residual": 0.0,
+          "mass_order_at_crossing_gev": [
+            109658.9031560837,
+            120624.79353528471,
+            131590.68391018608
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:1",
+          "kind": "fermion",
+          "scale_gev": 120832.1036400819,
+          "mass_gev": 120832.10364008186,
+          "relative_mass_scale_residual": 3.3306690738754696e-16,
+          "mass_order_at_crossing_gev": [
+            109847.3668863947,
+            120832.10364008186,
+            131816.84038937103
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:0",
+          "kind": "fermion",
+          "scale_gev": 110053.76773913606,
+          "mass_gev": 110053.76773913606,
+          "relative_mass_scale_residual": 0.0,
+          "mass_order_at_crossing_gev": [
+            110053.76773913606,
+            121059.14457970072,
+            132064.52141575888
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        }
+      ],
+      "unresolved_fermion_crossings": [],
+      "all_fermion_crossings_bracketed": true,
+      "candidate_event_order": [
+        {
+          "particle": "fermion:2",
+          "kind": "fermion",
+          "scale_gev": 131590.68391018608,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:1",
+          "kind": "fermion",
+          "scale_gev": 120832.1036400819,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:0",
+          "kind": "fermion",
+          "scale_gev": 110053.76773913606,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S1",
+          "kind": "scalar",
+          "scale_gev": 1461.7301557231199,
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S2",
+          "kind": "scalar",
+          "scale_gev": 1171.0498203792447,
+          "status": "matching_required_not_applied"
+        }
+      ],
+      "full_uv_mass_diagnostic": {
+        "crossings": [
+          {
+            "particle": "fermion:2",
+            "kind": "fermion",
+            "scale_gev": 131590.68391018608,
+            "mass_gev": 131590.68391018608,
+            "relative_mass_scale_residual": 0.0,
+            "mass_order_at_crossing_gev": [
+              109658.9031560837,
+              120624.79353528471,
+              131590.68391018608
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          },
+          {
+            "particle": "fermion:1",
+            "kind": "fermion",
+            "scale_gev": 120832.1036400819,
+            "mass_gev": 120832.10364008186,
+            "relative_mass_scale_residual": 3.3306690738754696e-16,
+            "mass_order_at_crossing_gev": [
+              109847.3668863947,
+              120832.10364008186,
+              131816.84038937103
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          },
+          {
+            "particle": "fermion:0",
+            "kind": "fermion",
+            "scale_gev": 110053.76773913606,
+            "mass_gev": 110053.76773913606,
+            "relative_mass_scale_residual": 0.0,
+            "mass_order_at_crossing_gev": [
+              110053.76773913606,
+              121059.14457970072,
+              132064.52141575888
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          }
+        ],
+        "unresolved_crossings": [],
+        "fermion_mass_method": "vectorlike MF -> biunitary singular masses",
+        "scan_points": 65,
+        "mu_uv_start_gev": 10000000.0,
+        "mu_grouped_fermion_endpoint_gev": 100000.0,
+        "masses_at_uv_start_gev": [
+          100000.0,
+          110000.0,
+          120000.0
+        ],
+        "masses_at_grouped_F_gev": [
+          110265.34692472359,
+          121291.88168550112,
+          132318.41644166046
+        ],
+        "all_three_crossings_bracketed": true,
+        "sequential_heavy_field_decoupling_performed": false,
+        "physical_matching_applied": false,
+        "saved_uv_sample_max_relative_replay_error": 0.0,
+        "saved_grouped_F_mass_relative_parity_error": 0.0,
+        "uv_replay_nfev": 212,
+        "uv_beta_export_sha256": "87fad714aa568268273db31ab352d7d9d4a32710e0e045a14b3c4e7f4bbe881f",
+        "original_continuous_source_hashes_verified": true
+      },
+      "candidate_basis_not_physically_certified": true,
+      "full_uv_background_kept_below_first_crossing": true,
+      "sequential_fermion_matching_performed": false,
+      "finite_scalar_matching_performed": false,
+      "physical_neutrino_mass_prediction": false
+    },
+    {
+      "model": "E_-2",
+      "status": "CandidateRunningFermionCrossingAuditNoMatching",
+      "quadratic_kind": "self_s2",
+      "grouped_F_spectrum_status": "positive",
+      "uv_scalar_crossings": [],
+      "eft1_scalar_crossings": [
+        {
+          "particle": "scalar:S1",
+          "kind": "scalar",
+          "scale_gev": 1325.2579389829998,
+          "real_dof": 6,
+          "relative_mass_scale_residual": 2.220446049250313e-16,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S2_plus",
+          "kind": "scalar",
+          "scale_gev": 1158.5760425892533,
+          "real_dof": 3,
+          "relative_mass_scale_residual": 4.440892098500626e-16,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S2_minus",
+          "kind": "scalar",
+          "scale_gev": 1102.611780052258,
+          "real_dof": 3,
+          "relative_mass_scale_residual": 2.220446049250313e-16,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        }
+      ],
+      "uv_fermion_crossings": [
+        {
+          "particle": "fermion:2",
+          "kind": "fermion",
+          "scale_gev": 126138.16332424263,
+          "mass_gev": 126138.16332424247,
+          "relative_mass_scale_residual": 1.2212453270876722e-15,
+          "mass_order_at_crossing_gev": [
+            105115.13605230307,
+            115626.64963684163,
+            126138.16332424247
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:1",
+          "kind": "fermion",
+          "scale_gev": 115739.51666844214,
+          "mass_gev": 115739.51666844287,
+          "relative_mass_scale_residual": 6.217248937900877e-15,
+          "mass_order_at_crossing_gev": [
+            105217.74244507575,
+            115739.51666844287,
+            126261.290996903
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:0",
+          "kind": "fermion",
+          "scale_gev": 105330.22416443223,
+          "mass_gev": 105330.22416443232,
+          "relative_mass_scale_residual": 8.881784197001252e-16,
+          "mass_order_at_crossing_gev": [
+            105330.22416443232,
+            115863.2465592416,
+            126396.26906159706
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        }
+      ],
+      "unresolved_fermion_crossings": [],
+      "all_fermion_crossings_bracketed": true,
+      "candidate_event_order": [
+        {
+          "particle": "fermion:2",
+          "kind": "fermion",
+          "scale_gev": 126138.16332424263,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:1",
+          "kind": "fermion",
+          "scale_gev": 115739.51666844214,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:0",
+          "kind": "fermion",
+          "scale_gev": 105330.22416443223,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S1",
+          "kind": "scalar",
+          "scale_gev": 1325.2579389829998,
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S2_plus",
+          "kind": "scalar",
+          "scale_gev": 1158.5760425892533,
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S2_minus",
+          "kind": "scalar",
+          "scale_gev": 1102.611780052258,
+          "status": "matching_required_not_applied"
+        }
+      ],
+      "full_uv_mass_diagnostic": {
+        "crossings": [
+          {
+            "particle": "fermion:2",
+            "kind": "fermion",
+            "scale_gev": 126138.16332424263,
+            "mass_gev": 126138.16332424247,
+            "relative_mass_scale_residual": 1.2212453270876722e-15,
+            "mass_order_at_crossing_gev": [
+              105115.13605230307,
+              115626.64963684163,
+              126138.16332424247
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          },
+          {
+            "particle": "fermion:1",
+            "kind": "fermion",
+            "scale_gev": 115739.51666844214,
+            "mass_gev": 115739.51666844287,
+            "relative_mass_scale_residual": 6.217248937900877e-15,
+            "mass_order_at_crossing_gev": [
+              105217.74244507575,
+              115739.51666844287,
+              126261.290996903
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          },
+          {
+            "particle": "fermion:0",
+            "kind": "fermion",
+            "scale_gev": 105330.22416443223,
+            "mass_gev": 105330.22416443232,
+            "relative_mass_scale_residual": 8.881784197001252e-16,
+            "mass_order_at_crossing_gev": [
+              105330.22416443232,
+              115863.2465592416,
+              126396.26906159706
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          }
+        ],
+        "unresolved_crossings": [],
+        "fermion_mass_method": "vectorlike MF -> biunitary singular masses",
+        "scan_points": 65,
+        "mu_uv_start_gev": 10000000.0,
+        "mu_grouped_fermion_endpoint_gev": 100000.0,
+        "masses_at_uv_start_gev": [
+          100000.0,
+          110000.0,
+          120000.0
+        ],
+        "masses_at_grouped_F_gev": [
+          105392.24494720311,
+          115931.4694200167,
+          126470.69400173253
+        ],
+        "all_three_crossings_bracketed": true,
+        "sequential_heavy_field_decoupling_performed": false,
+        "physical_matching_applied": false,
+        "saved_uv_sample_max_relative_replay_error": 0.0,
+        "saved_grouped_F_mass_relative_parity_error": 0.0,
+        "uv_replay_nfev": 212,
+        "uv_beta_export_sha256": "156dacdfc27eff888b17042030ab63bafdfe5e9c2d04cc25f041ac3e20211481",
+        "original_continuous_source_hashes_verified": true
+      },
+      "candidate_basis_not_physically_certified": true,
+      "full_uv_background_kept_below_first_crossing": true,
+      "sequential_fermion_matching_performed": false,
+      "finite_scalar_matching_performed": false,
+      "physical_neutrino_mass_prediction": false
+    },
+    {
+      "model": "E_+0",
+      "status": "CandidateRunningFermionCrossingAuditNoMatching",
+      "quadratic_kind": "self_s1",
+      "grouped_F_spectrum_status": "positive",
+      "uv_scalar_crossings": [],
+      "eft1_scalar_crossings": [
+        {
+          "particle": "scalar:S1_plus",
+          "kind": "scalar",
+          "scale_gev": 1314.1699986460803,
+          "real_dof": 3,
+          "relative_mass_scale_residual": 2.220446049250313e-16,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S1_minus",
+          "kind": "scalar",
+          "scale_gev": 1264.5680638876802,
+          "real_dof": 3,
+          "relative_mass_scale_residual": 8.659739592076221e-15,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S2",
+          "kind": "scalar",
+          "scale_gev": 1161.84171354005,
+          "real_dof": 6,
+          "relative_mass_scale_residual": 6.661338147750939e-16,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        }
+      ],
+      "uv_fermion_crossings": [
+        {
+          "particle": "fermion:2",
+          "kind": "fermion",
+          "scale_gev": 126138.16332443667,
+          "mass_gev": 126138.1633244366,
+          "relative_mass_scale_residual": 5.551115123125783e-16,
+          "mass_order_at_crossing_gev": [
+            105115.13605387651,
+            115626.64963798736,
+            126138.1633244366
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:1",
+          "kind": "fermion",
+          "scale_gev": 115739.5166696017,
+          "mass_gev": 115739.51666960231,
+          "relative_mass_scale_residual": 5.329070518200751e-15,
+          "mass_order_at_crossing_gev": [
+            105217.74244667325,
+            115739.51666960231,
+            126261.29099708915
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:0",
+          "kind": "fermion",
+          "scale_gev": 105330.2241660608,
+          "mass_gev": 105330.22416606087,
+          "relative_mass_scale_residual": 6.661338147750939e-16,
+          "mass_order_at_crossing_gev": [
+            105330.22416606087,
+            115863.24656042126,
+            126396.26906178014
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        }
+      ],
+      "unresolved_fermion_crossings": [],
+      "all_fermion_crossings_bracketed": true,
+      "candidate_event_order": [
+        {
+          "particle": "fermion:2",
+          "kind": "fermion",
+          "scale_gev": 126138.16332443667,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:1",
+          "kind": "fermion",
+          "scale_gev": 115739.5166696017,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:0",
+          "kind": "fermion",
+          "scale_gev": 105330.2241660608,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S1_plus",
+          "kind": "scalar",
+          "scale_gev": 1314.1699986460803,
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S1_minus",
+          "kind": "scalar",
+          "scale_gev": 1264.5680638876802,
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S2",
+          "kind": "scalar",
+          "scale_gev": 1161.84171354005,
+          "status": "matching_required_not_applied"
+        }
+      ],
+      "full_uv_mass_diagnostic": {
+        "crossings": [
+          {
+            "particle": "fermion:2",
+            "kind": "fermion",
+            "scale_gev": 126138.16332443667,
+            "mass_gev": 126138.1633244366,
+            "relative_mass_scale_residual": 5.551115123125783e-16,
+            "mass_order_at_crossing_gev": [
+              105115.13605387651,
+              115626.64963798736,
+              126138.1633244366
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          },
+          {
+            "particle": "fermion:1",
+            "kind": "fermion",
+            "scale_gev": 115739.5166696017,
+            "mass_gev": 115739.51666960231,
+            "relative_mass_scale_residual": 5.329070518200751e-15,
+            "mass_order_at_crossing_gev": [
+              105217.74244667325,
+              115739.51666960231,
+              126261.29099708915
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          },
+          {
+            "particle": "fermion:0",
+            "kind": "fermion",
+            "scale_gev": 105330.2241660608,
+            "mass_gev": 105330.22416606087,
+            "relative_mass_scale_residual": 6.661338147750939e-16,
+            "mass_order_at_crossing_gev": [
+              105330.22416606087,
+              115863.24656042126,
+              126396.26906178014
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          }
+        ],
+        "unresolved_crossings": [],
+        "fermion_mass_method": "vectorlike MF -> biunitary singular masses",
+        "scan_points": 65,
+        "mu_uv_start_gev": 10000000.0,
+        "mu_grouped_fermion_endpoint_gev": 100000.0,
+        "masses_at_uv_start_gev": [
+          100000.0,
+          110000.0,
+          120000.0
+        ],
+        "masses_at_grouped_F_gev": [
+          105392.24494887088,
+          115931.46942123178,
+          126470.69400194031
+        ],
+        "all_three_crossings_bracketed": true,
+        "sequential_heavy_field_decoupling_performed": false,
+        "physical_matching_applied": false,
+        "saved_uv_sample_max_relative_replay_error": 0.0,
+        "saved_grouped_F_mass_relative_parity_error": 0.0,
+        "uv_replay_nfev": 212,
+        "uv_beta_export_sha256": "79225a374a52b42400b64dbe80364edf3cd3990616ac0866893f2a27b80353c3",
+        "original_continuous_source_hashes_verified": true
+      },
+      "candidate_basis_not_physically_certified": true,
+      "full_uv_background_kept_below_first_crossing": true,
+      "sequential_fermion_matching_performed": false,
+      "finite_scalar_matching_performed": false,
+      "physical_neutrino_mass_prediction": false
+    },
+    {
+      "model": "E_+2",
+      "status": "CandidateRunningFermionCrossingAuditNoMatching",
+      "quadratic_kind": "none",
+      "grouped_F_spectrum_status": "positive",
+      "uv_scalar_crossings": [],
+      "eft1_scalar_crossings": [
+        {
+          "particle": "scalar:S1",
+          "kind": "scalar",
+          "scale_gev": 1329.4653077161015,
+          "real_dof": 6,
+          "relative_mass_scale_residual": 2.220446049250313e-16,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S2",
+          "kind": "scalar",
+          "scale_gev": 1284.971636121279,
+          "real_dof": 6,
+          "relative_mass_scale_residual": 2.220446049250313e-16,
+          "method": "linear running quadratic entries in ln(mu); numerical root",
+          "status": "matching_required_not_applied"
+        }
+      ],
+      "uv_fermion_crossings": [
+        {
+          "particle": "fermion:2",
+          "kind": "fermion",
+          "scale_gev": 131590.68391018608,
+          "mass_gev": 131590.68391018608,
+          "relative_mass_scale_residual": 0.0,
+          "mass_order_at_crossing_gev": [
+            109658.90315558924,
+            120624.79353503221,
+            131590.68391018608
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:1",
+          "kind": "fermion",
+          "scale_gev": 120832.10363982884,
+          "mass_gev": 120832.10363982871,
+          "relative_mass_scale_residual": 1.1102230246251565e-15,
+          "mass_order_at_crossing_gev": [
+            109847.36688589354,
+            120832.10363982871,
+            131816.84038937656
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:0",
+          "kind": "fermion",
+          "scale_gev": 110053.76773862797,
+          "mass_gev": 110053.76773862803,
+          "relative_mass_scale_residual": 4.440892098500626e-16,
+          "mass_order_at_crossing_gev": [
+            110053.76773862803,
+            121059.14457944733,
+            132064.52141577113
+          ],
+          "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+          "status": "candidate_crossing_matching_required_not_applied"
+        }
+      ],
+      "unresolved_fermion_crossings": [],
+      "all_fermion_crossings_bracketed": true,
+      "candidate_event_order": [
+        {
+          "particle": "fermion:2",
+          "kind": "fermion",
+          "scale_gev": 131590.68391018608,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:1",
+          "kind": "fermion",
+          "scale_gev": 120832.10363982884,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "fermion:0",
+          "kind": "fermion",
+          "scale_gev": 110053.76773862797,
+          "status": "candidate_crossing_matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S1",
+          "kind": "scalar",
+          "scale_gev": 1329.4653077161015,
+          "status": "matching_required_not_applied"
+        },
+        {
+          "particle": "scalar:S2",
+          "kind": "scalar",
+          "scale_gev": 1284.971636121279,
+          "status": "matching_required_not_applied"
+        }
+      ],
+      "full_uv_mass_diagnostic": {
+        "crossings": [
+          {
+            "particle": "fermion:2",
+            "kind": "fermion",
+            "scale_gev": 131590.68391018608,
+            "mass_gev": 131590.68391018608,
+            "relative_mass_scale_residual": 0.0,
+            "mass_order_at_crossing_gev": [
+              109658.90315558924,
+              120624.79353503221,
+              131590.68391018608
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          },
+          {
+            "particle": "fermion:1",
+            "kind": "fermion",
+            "scale_gev": 120832.10363982884,
+            "mass_gev": 120832.10363982871,
+            "relative_mass_scale_residual": 1.1102230246251565e-15,
+            "mass_order_at_crossing_gev": [
+              109847.36688589354,
+              120832.10363982871,
+              131816.84038937656
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          },
+          {
+            "particle": "fermion:0",
+            "kind": "fermion",
+            "scale_gev": 110053.76773862797,
+            "mass_gev": 110053.76773862803,
+            "relative_mass_scale_residual": 4.440892098500626e-16,
+            "mass_order_at_crossing_gev": [
+              110053.76773862803,
+              121059.14457944733,
+              132064.52141577113
+            ],
+            "method": "dense full-UV RGBeta ODE; re-SVD of running MF; brentq in ln(mu)",
+            "status": "candidate_crossing_matching_required_not_applied"
+          }
+        ],
+        "unresolved_crossings": [],
+        "fermion_mass_method": "vectorlike MF -> biunitary singular masses",
+        "scan_points": 65,
+        "mu_uv_start_gev": 10000000.0,
+        "mu_grouped_fermion_endpoint_gev": 100000.0,
+        "masses_at_uv_start_gev": [
+          100000.0,
+          110000.0,
+          120000.0
+        ],
+        "masses_at_grouped_F_gev": [
+          110265.34692419249,
+          121291.88168522996,
+          132318.4164416604
+        ],
+        "all_three_crossings_bracketed": true,
+        "sequential_heavy_field_decoupling_performed": false,
+        "physical_matching_applied": false,
+        "saved_uv_sample_max_relative_replay_error": 0.0,
+        "saved_grouped_F_mass_relative_parity_error": 0.0,
+        "uv_replay_nfev": 212,
+        "uv_beta_export_sha256": "946704a5c0c030d1e8227c28fecee60dc2c191a61b0c560a72ca6b5d7b68d85d",
+        "original_continuous_source_hashes_verified": true
+      },
+      "candidate_basis_not_physically_certified": true,
+      "full_uv_background_kept_below_first_crossing": true,
+      "sequential_fermion_matching_performed": false,
+      "finite_scalar_matching_performed": false,
+      "physical_neutrino_mass_prediction": false
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "format": "t3-bc-eft1-component-hermiticity-y-handoff-v1",
+  "status": "EFT1ComponentHermiticityEstablishedYRenormalizationOutstanding",
+  "scope": "All 25 renormalizable residual sectors plus exact inherited Majorana operators",
+  "assumptions": [
+    "Matchete source fields interpreted as commuting complex scalar components",
+    "SU(2) CG tensors as exported from the original DefineCG registration",
+    "Identical-boson exchange symmetry and standard complex conjugation",
+    "Canonical reconstruction built using the same physical scalar basis"
+  ],
+  "not_a_matchete_CheckLagrangian_pass_for_saved_eomeft": true,
+  "source_replacement_performed": false,
+  "renormalized_Y_amplitude_subtraction_performed": false,
+  "MSbar_counterterm_subtraction_performed": false,
+  "EFT1_running_performed": false,
+  "physical_C5": null,
+  "models": [
+    {
+      "model": "B_-1",
+      "source_residual_sha256": "e79385dd73112d6e37c715941e627cd86df2fb0d9442a156ad57d1771ee9cc01",
+      "full_residual_terms": 137,
+      "structural_sectors": 25,
+      "component_residual_zero": true,
+      "original_vs_canonical_component_equivalence_established": true,
+      "original_hermiticity_by_component_equivalence": true,
+      "native_matchete_original_hermiticity_check_still_false": true,
+      "representation_discrepancy_interpretation": "Consistent with native CG/index simplifier not identifying Bose-equivalent expressions; source mechanism not independently isolated",
+      "native": {
+        "native_tensor_file": "output\\audits\\t3_bc_su2_component_equivalence_v1\\native\\B_m1_nativeCG_native_cross_cg_arrays.inputform.txt",
+        "native_tensor_sha256": "09662ab4926ef68620f49c49b47da8e979a72149b25371c5c7f39af6f78b8689",
+        "cross_inv1_coefficients_A_B": [
+          "1",
+          "-1"
+        ],
+        "cross_inv2_common_coefficient": "sqrt(3)/3",
+        "native_entries_independently_verified": 32,
+        "cross_inv1_equals_A_minus_B": true,
+        "cross_inv2_equals_gamma_times_A_plus_B": true
+      },
+      "y_evidence": {
+        "original_matchete_hermiticity_check": false,
+        "independent_canonical_matchete_hermiticity_check": true,
+        "original_canonical_check_passing": true,
+        "canonical_reconstruction_preserves_saved_majorana_terms": true,
+        "raw_Y_LLHH_terms": 132,
+        "Y_tree_and_one_loop_executed": true,
+        "Y_UV_EFT_counterterms_combined": false,
+        "EFT1_running_performed": false,
+        "renormalized_Y_C5_available": false,
+        "Y_input_json_member": "output/general_t3_mass_eigen_matchete/eft1_scalar_Y_only_canonical_probe/B_m1_final_y_only_canonical_match.json"
+      },
+      "physical_Y_C5": null,
+      "physical_Y_matching_certified": false
+    },
+    {
+      "model": "C_-1",
+      "source_residual_sha256": "e79385dd73112d6e37c715941e627cd86df2fb0d9442a156ad57d1771ee9cc01",
+      "full_residual_terms": 137,
+      "structural_sectors": 25,
+      "component_residual_zero": true,
+      "original_vs_canonical_component_equivalence_established": true,
+      "original_hermiticity_by_component_equivalence": true,
+      "native_matchete_original_hermiticity_check_still_false": true,
+      "representation_discrepancy_interpretation": "Consistent with native CG/index simplifier not identifying Bose-equivalent expressions; source mechanism not independently isolated",
+      "native": {
+        "native_tensor_file": "output\\audits\\t3_bc_su2_component_equivalence_v1\\native\\C_m1_nativeCG_native_cross_cg_arrays.inputform.txt",
+        "native_tensor_sha256": "09662ab4926ef68620f49c49b47da8e979a72149b25371c5c7f39af6f78b8689",
+        "cross_inv1_coefficients_A_B": [
+          "1",
+          "-1"
+        ],
+        "cross_inv2_common_coefficient": "sqrt(3)/3",
+        "native_entries_independently_verified": 32,
+        "cross_inv1_equals_A_minus_B": true,
+        "cross_inv2_equals_gamma_times_A_plus_B": true
+      },
+      "y_evidence": {
+        "original_matchete_hermiticity_check": false,
+        "independent_canonical_matchete_hermiticity_check": true,
+        "original_canonical_check_passing": true,
+        "canonical_reconstruction_preserves_saved_majorana_terms": true,
+        "raw_Y_LLHH_terms": 132,
+        "Y_tree_and_one_loop_executed": true,
+        "Y_UV_EFT_counterterms_combined": false,
+        "EFT1_running_performed": false,
+        "renormalized_Y_C5_available": false,
+        "Y_input_json_member": "output/general_t3_mass_eigen_matchete/eft1_scalar_Y_only_canonical_probe/C_m1_final_y_only_canonical_match.json"
+      },
+      "physical_Y_C5": null,
+      "physical_Y_matching_certified": false
+    }
+  ]
+}

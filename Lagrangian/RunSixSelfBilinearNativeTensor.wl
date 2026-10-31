@@ -1,10 +1,25 @@
 (* Six ordinary A/D/E self-bilinear models: independent native Matchete
    operator and CG extraction, including the gauge-singlet case.
-   Usage: wolframscript -file Lagrangian/RunSixSelfBilinearNativeTensor.wl OUTPUT.json A -2
+   Usage: wolframscript -file Lagrangian/RunSixSelfBilinearNativeTensor.wl OUTPUT.json A 0-2
    This never invokes Match[] and never modifies production output.
+
+   WolframScript may consume a literal negative positional argument ("-2") as
+   a command-line option before constructing $ScriptCommandLine. The existing
+   Python batch passes -2 literally. Recover that value only when the complete
+   command line ends with -2, or when the two surviving arguments identify the
+   batch's exact <family>_m2 output directory. This preserves the original
+   Python CLI, output format, native extraction and physical calculations.
 *)
 ClearAll["Global`*"];
 args = Rest[$ScriptCommandLine];
+If[Length[args] === 2 &&
+   MemberQ[{"A", "D", "E"}, ToUpperCase[args[[2]]]] &&
+   (TrueQ[Length[$CommandLine] > 0 && Last[$CommandLine] === "-2"] ||
+    FileNameTake[DirectoryName[ExpandFileName[args[[1]]]]] ===
+      ToUpperCase[args[[2]]] <> "_m2"),
+  args = Append[args, "-2"];
+  Print["Recovered alpha=-2 positional argument for six-self native tensor batch"];
+];
 If[Length[args] =!= 3, Print["Usage: OUTPUT.json A|D|E -2|0"]; Exit[2]];
 out = ExpandFileName[args[[1]]];
 class = ToUpperCase[args[[2]]];

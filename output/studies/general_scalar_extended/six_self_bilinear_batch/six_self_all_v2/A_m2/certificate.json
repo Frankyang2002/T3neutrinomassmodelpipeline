@@ -1,0 +1,323 @@
+{
+  "format": "t3-six-self-bilinear-rge-tensor-c5-candidate-v1",
+  "status": "SixSelfCandidateOneScaleTensorAndRGVerified",
+  "model": "A_-2",
+  "inputs_are_illustrative_not_fitted": true,
+  "reference_benchmark_sha256": "9cd1dd65546f045268ee429b81815301e2e65fd680c4abe5aba74c6f20ff0c54",
+  "reference_heavy_masses_gev": [
+    100000.0,
+    110000.0,
+    120000.0
+  ],
+  "reference_scalar_masses_squared_gev2": {
+    "S1": 1306122.448979592,
+    "S2": 1000000.0
+  },
+  "reference_lambda_t3": {
+    "real": 0.1,
+    "imag": 0.0
+  },
+  "extra_quartic_rgbeta": {
+    "real": 0.02,
+    "imag": 0.01
+  },
+  "mu2_fraction": 0.01,
+  "mu2_phase_rad": 0.35,
+  "mass": {
+    "native_bilinear_coefficient": {
+      "real": 1.0,
+      "imag": 0.0
+    },
+    "matchete_mass_coefficient": {
+      "real": -9393.727128473789,
+      "imag": -3428.9780745545136
+    },
+    "rgbeta_mass_coefficient": {
+      "real": 9393.727128473789,
+      "imag": 3428.9780745545136
+    },
+    "eigen_mass_squared_gev2": [
+      1020000.0,
+      980000.0
+    ],
+    "mass_potential_max_relative_error": 7.210170388192128e-16,
+    "basis_metric_intertwiner_verified": true,
+    "all_yukawa_and_quartic_vertices_mapped": false
+  },
+  "symbolic_rg": {
+    "mass_symbol": "muT3GeneralS2Sq",
+    "uv": {
+      "beta_count": 26,
+      "mass_beta": "2*lambdaT3GeneralQ001102I1*mS1Sq + 10*lambdaT3GeneralQ000013I1*mS2Sq - 12*g2^2*muT3GeneralS2Sq + 2*lambdaS2*muT3GeneralS2Sq - 4*lambdaS2Adj*muT3GeneralS2Sq + 40*lambdaT3GeneralQ000004I1*Bar[muT3GeneralS2Sq] + 2*muT3GeneralS2Sq*Tr[y2 . Trans[Bar[y2]]]",
+      "source_sha256": "a17dd4782de3c6ed45230c88048192814f55dd4fde30125753853514b10fa684"
+    },
+    "eft1": {
+      "beta_count": 23,
+      "mass_beta": "2*lambdaT3GeneralQ001102I1*mS1Sq + 10*lambdaT3GeneralQ000013I1*mS2Sq - 12*g2^2*muT3GeneralS2Sq + 2*lambdaS2*muT3GeneralS2Sq - 4*lambdaS2Adj*muT3GeneralS2Sq + 40*lambdaT3GeneralQ000004I1*Bar[muT3GeneralS2Sq]",
+      "source_sha256": "2357f514e10a9a0ef7c6c1a6b78ee4f1c476bd8d4c41eeae81ee94ba3d6018f3"
+    }
+  },
+  "source_conventions": {
+    "matchete_mass_operator": "+muMat Q+h.c. in Lagrangian",
+    "rgbeta_mass_operator": "+muRGB Q+h.c. in scalar potential",
+    "conditional_mass_map": "muRGB = -kNative*muMat after component-basis alignment",
+    "conditional_extra_quartic_map": "lambdaMat = -lambdaRGB after component-basis alignment",
+    "matchete_extra": "lambdaT3ExtraQ020101I1",
+    "rgbeta_extra": "lambdaT3GeneralQ020101I1",
+    "matchete_source_sha256": "45d0bdf6fc1565b5601abd74b0f68649ffa78a8eeda6328e0c2f94cbcdb8b470",
+    "rgbeta_source_sha256": "15cb837f83850a76a3397d61a5e7ab97ee5a59901d0facc583d7e69e73ee1d57",
+    "registry_sha256": "86a096410384641efa8f751b2aa98e8fee4bb6d3cccb4cfd116c559b71182eea",
+    "triplet_component_basis_mapping_certified": false
+  },
+  "native_tensors": {
+    "anomalous_to_topology_factor": {
+      "real": 1.0,
+      "imag": 0.0
+    },
+    "relative_tensor_residual": 0.0,
+    "native_self_metric_residual": 0.0,
+    "stage22_sha256": "72e3af99beced8497a419c03f1f543dd80f071e950ca72cc65892d69f16eba0f",
+    "group_cg_sha256": "cbc28cb9c58bb16d315d1f28f69fefd3a45010e0f5e96c155c308742f9f4d963",
+    "native_bilinear_sha256": "1941d32da1b060fb525e8e0ef5cf01e2b3c5953478d930f2731f51f71705cd1b"
+  },
+  "one_scale_kernel": {
+    "kernel_mass_dependence_verified": true,
+    "source_su2_coefficient_from_matchete": {
+      "real": -1.1547005383792515,
+      "imag": 0.0
+    },
+    "coefficient_constancy_max_relative_error": 1.0850072518492462e-52,
+    "independent_triangle_integral_points": 6,
+    "comparison": [
+      {
+        "heavy_generation": 1,
+        "mass_gev": 100000.0,
+        "branch": "plus",
+        "source_kernel_gev_inverse": -5.896439715193378e-07,
+        "integral_hbar_MF_gev_inverse": 5.106466585240946e-07,
+        "source_over_integral": {
+          "real": -1.1547005383792515,
+          "imag": 0.0
+        }
+      },
+      {
+        "heavy_generation": 1,
+        "mass_gev": 100000.0,
+        "branch": "minus",
+        "source_kernel_gev_inverse": -5.909743917318962e-07,
+        "integral_hbar_MF_gev_inverse": 5.117988362258784e-07,
+        "source_over_integral": {
+          "real": -1.1547005383792515,
+          "imag": 0.0
+        }
+      },
+      {
+        "heavy_generation": 2,
+        "mass_gev": 110000.0,
+        "branch": "plus",
+        "source_kernel_gev_inverse": -5.486908875487967e-07,
+        "integral_hbar_MF_gev_inverse": 4.7518024744228873e-07,
+        "source_over_integral": {
+          "real": -1.1547005383792515,
+          "imag": 0.0
+        }
+      },
+      {
+        "heavy_generation": 2,
+        "mass_gev": 110000.0,
+        "branch": "minus",
+        "source_kernel_gev_inverse": -5.499006702290797e-07,
+        "integral_hbar_MF_gev_inverse": 4.762279499764722e-07,
+        "source_over_integral": {
+          "real": -1.1547005383792515,
+          "imag": 0.0
+        }
+      },
+      {
+        "heavy_generation": 3,
+        "mass_gev": 120000.0,
+        "branch": "plus",
+        "source_kernel_gev_inverse": -5.135561040763202e-07,
+        "integral_hbar_MF_gev_inverse": 4.4475263239865836e-07,
+        "source_over_integral": {
+          "real": -1.1547005383792515,
+          "imag": 0.0
+        }
+      },
+      {
+        "heavy_generation": 3,
+        "mass_gev": 120000.0,
+        "branch": "minus",
+        "source_kernel_gev_inverse": -5.146652933574656e-07,
+        "integral_hbar_MF_gev_inverse": 4.4571321849373573e-07,
+        "source_over_integral": {
+          "real": -1.1547005383792515,
+          "imag": 0.0
+        }
+      }
+    ],
+    "absolute_su2_coefficient_independently_derived": false,
+    "source_sha256": "7f192897409fe14b6111fc1fa1e263ee4d99be378fc7497180698d9816c50cc5"
+  },
+  "normal_c5": {
+    "real": [
+      [
+        8.688702153348915e-17,
+        -4.283533775436013e-17,
+        3.550525751180853e-16
+      ],
+      [
+        -4.283533775436015e-17,
+        6.84448250330589e-16,
+        8.732543964522837e-16
+      ],
+      [
+        3.550525751180853e-16,
+        8.732543964522837e-16,
+        7.054071056128549e-16
+      ]
+    ],
+    "imag": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ],
+    "frobenius_norm": 1.6596863628120172e-15
+  },
+  "anomalous_c5": {
+    "real": [
+      [
+        2.254232901064916e-20,
+        -5.7995584136891426e-21,
+        8.973156067451807e-20
+      ],
+      [
+        -5.799558413702286e-21,
+        1.626491296563229e-19,
+        2.1297014953269428e-19
+      ],
+      [
+        8.97315606745312e-20,
+        2.1297014953269428e-19,
+        1.733198174902089e-19
+      ]
+    ],
+    "imag": [
+      [
+        -2.5729686413890414e-21,
+        6.619583063168334e-22,
+        -1.0241909416252658e-20
+      ],
+      [
+        6.619583063183337e-22,
+        -1.856467936197901e-20,
+        -2.4308292015465416e-20
+      ],
+      [
+        -1.0241909416254158e-20,
+        -2.4308292015465416e-20,
+        -1.978262561614246e-20
+      ]
+    ],
+    "frobenius_norm": 4.074568390534737e-19
+  },
+  "total_c5": {
+    "real": [
+      [
+        8.69095638624998e-17,
+        -4.284113731277382e-17,
+        3.5514230667875977e-16
+      ],
+      [
+        -4.284113731277385e-17,
+        6.846108994602452e-16,
+        8.734673666018164e-16
+      ],
+      [
+        3.551423066787598e-16,
+        8.734673666018164e-16,
+        7.055804254303451e-16
+      ]
+    ],
+    "imag": [
+      [
+        -2.5729686413890414e-21,
+        6.619583063168334e-22,
+        -1.0241909416252658e-20
+      ],
+      [
+        6.619583063183337e-22,
+        -1.856467936197901e-20,
+        -2.4308292015465416e-20
+      ],
+      [
+        -1.0241909416254158e-20,
+        -2.4308292015465416e-20,
+        -1.978262561614246e-20
+      ]
+    ],
+    "frobenius_norm": 1.6600910872453436e-15
+  },
+  "relative_anomalous_to_normal": 0.00024550231187241725,
+  "anomalous_scalar_phase": {
+    "real": 0.9393727128473789,
+    "imag": 0.34289780745545134
+  },
+  "opposite_sign_scenario_total_c5": {
+    "real": [
+      [
+        8.68644792044785e-17,
+        -4.282953819594644e-17,
+        3.549628435574108e-16
+      ],
+      [
+        -4.2829538195946447e-17,
+        6.842856012009327e-16,
+        8.73041426302751e-16
+      ],
+      [
+        3.5496284355741074e-16,
+        8.73041426302751e-16,
+        7.052337857953647e-16
+      ]
+    ],
+    "imag": [
+      [
+        2.5729686413890414e-21,
+        -6.619583063168334e-22,
+        1.0241909416252658e-20
+      ],
+      [
+        -6.619583063183337e-22,
+        1.856467936197901e-20,
+        2.4308292015465416e-20
+      ],
+      [
+        1.0241909416254158e-20,
+        2.4308292015465416e-20,
+        1.978262561614246e-20
+      ]
+    ],
+    "frobenius_norm": 1.6592816397161425e-15
+  },
+  "opposite_sign_scenario_not_claimed_physical": true,
+  "rgbeta_matchete_full_component_basis_map_certified": false,
+  "quartic_source_potential_relative_sign_verified_given_same_component_fields": true,
+  "independent_one_loop_mass_eigen_matchete_matching_performed": false,
+  "sequential_EFT_Wilson_matching_performed": false,
+  "UV_and_EFT1_running_evaluated_on_this_benchmark": false,
+  "neutrino_masses_fitted_or_predicted": false,
+  "scope": "Conditional source-convention spectral one-scale continuation with native Matchete SU2 tensors; RGEs checked for completeness but not evaluated as a trajectory."
+}

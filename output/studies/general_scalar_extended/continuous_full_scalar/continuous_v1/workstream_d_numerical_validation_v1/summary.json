@@ -1,0 +1,67 @@
+{
+  "format": "general-t3-workstream-d-stage4-contract-validation-v1",
+  "status": "NumericalInterfacesValidatedPhysicalMatchingMissing",
+  "source_stage2_sha256": "ba2167a383564cd6355a30d8416718505f5f094c779e0d5e332fe755b98ccc49",
+  "physical_neutrino_predictions_certified": false,
+  "full_sequential_particle_decoupling_performed": false,
+  "running_and_matching_callbacks_supplied_by_B_C": false,
+  "numerical_inventory": {
+    "models_checked": 16,
+    "candidate_mass_roots_found": 84,
+    "models_with_complete_candidate_inventories": 14,
+    "unresolved_candidate_branches": {
+      "B_-1": [
+        "fermion:0"
+      ],
+      "D_-2": [
+        "scalar:S2_minus"
+      ]
+    },
+    "sequential_particle_matching_executed": false
+  },
+  "bc_conditional_c5_takagi_regressions": {
+    "B_-1": {
+      "model": "B_-1",
+      "status": "ConditionalSpectrumRecomputedFromSavedC5",
+      "mu_Y_gev": 1187.8057822106773,
+      "mu_X_gev": 1035.7777547082292,
+      "masses_ev_descending": [
+        0.03853362292521312,
+        0.01561382145082619,
+        0.00045848474457153946
+      ],
+      "recomputed_c5_takagi_masses_ev_descending": [
+        0.038533622925213104,
+        0.01561382145082619,
+        0.0004584847445715378
+      ],
+      "c5_takagi_residual": 1.6282873100518938e-16,
+      "physical_neutrino_mass_prediction_certified": false,
+      "finite_Y_X_matching_missing": true
+    },
+    "C_-1": {
+      "model": "C_-1",
+      "status": "ConditionalSpectrumRecomputedFromSavedC5",
+      "mu_Y_gev": 1185.393345448753,
+      "mu_X_gev": 1032.8552350947916,
+      "masses_ev_descending": [
+        0.046405741900074446,
+        0.045923847867146636,
+        0.021684644219742994
+      ],
+      "recomputed_c5_takagi_masses_ev_descending": [
+        0.04640574190007445,
+        0.045923847867146636,
+        0.021684644219743008
+      ],
+      "c5_takagi_residual": 2.292378268676937e-16,
+      "physical_neutrino_mass_prediction_certified": false,
+      "finite_Y_X_matching_missing": true
+    }
+  },
+  "remaining_physics_dependencies": [
+    "B: verified EFT RGEs below individual heavy-fermion thresholds and scalar thresholds",
+    "C: certified per-particle matching including B/C finite Y and X corrections",
+    "A/B/C: verified operator-field basis maps and Wilson coefficient normalizations"
+  ]
+}

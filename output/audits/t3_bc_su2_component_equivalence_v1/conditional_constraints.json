@@ -1,0 +1,797 @@
+{
+  "format": "t3-bc-su2-residual-component-constraints-v1",
+  "source_zip": "/mnt/data/T3BC_FullEFT1Residual_Outputs.zip",
+  "status": "ConditionalComponentCancellationNativeTensorEvidencePending",
+  "assumptions": [
+    "SU(2) doublet fundamental/anti-fundamental epsilon and delta conventions",
+    "Four-boson tensors symmetrized on identical source-field legs",
+    "Conjugate CG component tensors use the conjugate source values",
+    "All four component-field variables and all spurion/coupling variables are symbolic and independent"
+  ],
+  "physical_matching_certified": false,
+  "renormalized_finite_C5_computed": false,
+  "models": [
+    {
+      "model": "B_-1",
+      "residual_sha256": "e79385dd73112d6e37c715941e627cd86df2fb0d9442a156ad57d1771ee9cc01",
+      "raw_terms": 137,
+      "sector_count": 25,
+      "tensor_family_count": 9,
+      "constructive_all_25_sectors_zero_under_required_tensors": true,
+      "noncross_bose_symmetric_families_cancelled": 7,
+      "exact_mixed_tensor_condition_1": "CrossInv1 = A - B",
+      "exact_mixed_tensor_condition_2": "CrossInv2 = gamma*(A + B), gamma nonzero",
+      "basis_A": "delta(i,j)*delta(k,l)",
+      "basis_B": "delta(i,k)*delta(j,l)",
+      "linear_constraints": {
+        "T3MENativeCrossCGInv1": {
+          "status": "UNIQUE",
+          "n_equations": 64,
+          "rank": 2,
+          "matrix_rank": 2,
+          "augmented_rank": 2,
+          "required_coefficients": [
+            "1",
+            "-1"
+          ],
+          "contradiction": []
+        },
+        "T3MENativeCrossCGInv2": {
+          "status": "NONUNIQUE",
+          "n_equations": 8,
+          "rank": 2,
+          "matrix_rank": 1,
+          "augmented_rank": 1,
+          "required_coefficients": [
+            "tau0",
+            "tau0"
+          ],
+          "contradiction": []
+        },
+        "T3Scalar1SelfCGInv1": {
+          "status": "NONUNIQUE",
+          "n_equations": 0,
+          "rank": 1,
+          "matrix_rank": 0,
+          "augmented_rank": 0,
+          "required_coefficients": [],
+          "contradiction": []
+        },
+        "T3MENativeS2SelfCGInv1": {
+          "status": "NONUNIQUE",
+          "n_equations": 0,
+          "rank": 1,
+          "matrix_rank": 0,
+          "augmented_rank": 0,
+          "required_coefficients": [],
+          "contradiction": []
+        },
+        "T3MENativeExtraQ000112I1CG": {
+          "status": "NONUNIQUE",
+          "n_equations": 0,
+          "rank": 1,
+          "matrix_rank": 0,
+          "augmented_rank": 0,
+          "required_coefficients": [],
+          "contradiction": []
+        },
+        "T3MENativeExtraQ000202I1CG": {
+          "status": "NONUNIQUE",
+          "n_equations": 0,
+          "rank": 1,
+          "matrix_rank": 0,
+          "augmented_rank": 0,
+          "required_coefficients": [],
+          "contradiction": []
+        },
+        "T3MENativeExtraQ001201I1CG": {
+          "status": "NONUNIQUE",
+          "n_equations": 0,
+          "rank": 1,
+          "matrix_rank": 0,
+          "augmented_rank": 0,
+          "required_coefficients": [],
+          "contradiction": []
+        },
+        "T3MENativeExtraQ020020I1CG": {
+          "status": "NONUNIQUE",
+          "n_equations": 0,
+          "rank": 1,
+          "matrix_rank": 0,
+          "augmented_rank": 0,
+          "required_coefficients": [],
+          "contradiction": []
+        },
+        "T3MENativeExtraQ020200I1CG": {
+          "status": "NONUNIQUE",
+          "n_equations": 0,
+          "rank": 1,
+          "matrix_rank": 0,
+          "augmented_rank": 0,
+          "required_coefficients": [],
+          "contradiction": []
+        }
+      },
+      "sector_inventory": [
+        {
+          "sector": "lambda12Inv1__Plus[1, NewScalarX]_Plus[3, NewScalarY]",
+          "raw_terms": 3,
+          "cg": "T3MENativeCrossCGInv1",
+          "rank": 2,
+          "n_equations": 12,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            12,
+            12
+          ]
+        },
+        {
+          "sector": "lambda12Inv1__Plus[2, NewScalarX]_Plus[2, NewScalarY]",
+          "raw_terms": 14,
+          "cg": "T3MENativeCrossCGInv1",
+          "rank": 2,
+          "n_equations": 30,
+          "n_base_monomials": 16,
+          "n_cg_monomials_per_basis": [
+            22,
+            22
+          ]
+        },
+        {
+          "sector": "lambda12Inv1__Plus[3, NewScalarX]_Plus[1, NewScalarY]",
+          "raw_terms": 4,
+          "cg": "T3MENativeCrossCGInv1",
+          "rank": 2,
+          "n_equations": 16,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            16,
+            16
+          ]
+        },
+        {
+          "sector": "lambda12Inv1__Plus[4, NewScalarX]",
+          "raw_terms": 1,
+          "cg": "T3MENativeCrossCGInv1",
+          "rank": 2,
+          "n_equations": 3,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            3,
+            3
+          ]
+        },
+        {
+          "sector": "lambda12Inv1__Plus[4, NewScalarY]",
+          "raw_terms": 1,
+          "cg": "T3MENativeCrossCGInv1",
+          "rank": 2,
+          "n_equations": 3,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            3,
+            3
+          ]
+        },
+        {
+          "sector": "lambda12Inv2__Plus[1, NewScalarX]_Plus[3, NewScalarY]",
+          "raw_terms": 2,
+          "cg": "T3MENativeCrossCGInv2",
+          "rank": 2,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0,
+            0
+          ]
+        },
+        {
+          "sector": "lambda12Inv2__Plus[2, NewScalarX]_Plus[2, NewScalarY]",
+          "raw_terms": 10,
+          "cg": "T3MENativeCrossCGInv2",
+          "rank": 2,
+          "n_equations": 8,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            8,
+            8
+          ]
+        },
+        {
+          "sector": "lambda12Inv2__Plus[3, NewScalarX]_Plus[1, NewScalarY]",
+          "raw_terms": 4,
+          "cg": "T3MENativeCrossCGInv2",
+          "rank": 2,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0,
+            0
+          ]
+        },
+        {
+          "sector": "lambdaS1Inv1__Plus[1, NewScalarX]_Plus[3, NewScalarY]",
+          "raw_terms": 2,
+          "cg": "T3Scalar1SelfCGInv1",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        },
+        {
+          "sector": "lambdaS1Inv1__Plus[2, NewScalarX]_Plus[2, NewScalarY]",
+          "raw_terms": 4,
+          "cg": "T3Scalar1SelfCGInv1",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        },
+        {
+          "sector": "lambdaS1Inv1__Plus[3, NewScalarX]_Plus[1, NewScalarY]",
+          "raw_terms": 4,
+          "cg": "T3Scalar1SelfCGInv1",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        },
+        {
+          "sector": "lambdaS2Inv1__Plus[1, NewScalarX]_Plus[3, NewScalarY]",
+          "raw_terms": 4,
+          "cg": "T3MENativeS2SelfCGInv1",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        },
+        {
+          "sector": "lambdaS2Inv1__Plus[2, NewScalarX]_Plus[2, NewScalarY]",
+          "raw_terms": 4,
+          "cg": "T3MENativeS2SelfCGInv1",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        },
+        {
+          "sector": "lambdaS2Inv1__Plus[3, NewScalarX]_Plus[1, NewScalarY]",
+          "raw_terms": 2,
+          "cg": "T3MENativeS2SelfCGInv1",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        },
+        {
+          "sector": "lambdaT3ExtraQ000112I1__Plus[1, NewScalarX]_Plus[3, NewScalarY]",
+          "raw_terms": 8,
+          "cg": "T3MENativeExtraQ000112I1CG",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        },
+        {
+          "sector": "lambdaT3ExtraQ000112I1__Plus[2, NewScalarX]_Plus[2, NewScalarY]",
+          "raw_terms": 10,
+          "cg": "T3MENativeExtraQ000112I1CG",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        },
+        {
+          "sector": "lambdaT3ExtraQ000112I1__Plus[3, NewScalarX]_Plus[1, NewScalarY]",
+          "raw_terms": 8,
+          "cg": "T3MENativeExtraQ000112I1CG",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        },
+        {
+          "sector": "lambdaT3ExtraQ000202I1__Plus[1, NewScalarX]_Plus[3, NewScalarY]",
+          "raw_terms": 8,
+          "cg": "T3MENativeExtraQ000202I1CG",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        },
+        {
+          "sector": "lambdaT3ExtraQ000202I1__Plus[2, NewScalarX]_Plus[2, NewScalarY]",
+          "raw_terms": 8,
+          "cg": "T3MENativeExtraQ000202I1CG",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        },
+        {
+          "sector": "lambdaT3ExtraQ000202I1__Plus[3, NewScalarX]_Plus[1, NewScalarY]",
+          "raw_terms": 8,
+          "cg": "T3MENativeExtraQ000202I1CG",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        },
+        {
+          "sector": "lambdaT3ExtraQ001201I1__Plus[1, NewScalarX]_Plus[3, NewScalarY]",
+          "raw_terms": 8,
+          "cg": "T3MENativeExtraQ001201I1CG",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        },
+        {
+          "sector": "lambdaT3ExtraQ001201I1__Plus[2, NewScalarX]_Plus[2, NewScalarY]",
+          "raw_terms": 8,
+          "cg": "T3MENativeExtraQ001201I1CG",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        },
+        {
+          "sector": "lambdaT3ExtraQ001201I1__Plus[3, NewScalarX]_Plus[1, NewScalarY]",
+          "raw_terms": 4,
+          "cg": "T3MENativeExtraQ001201I1CG",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        },
+        {
+          "sector": "lambdaT3ExtraQ020020I1__Plus[2, H]_Plus[1, NewScalarX]_Plus[1, NewScalarY]",
+          "raw_terms": 4,
+          "cg": "T3MENativeExtraQ020020I1CG",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        },
+        {
+          "sector": "lambdaT3ExtraQ020200I1__Plus[2, H]_Plus[1, NewScalarX]_Plus[1, NewScalarY]",
+          "raw_terms": 4,
+          "cg": "T3MENativeExtraQ020200I1CG",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        }
+      ],
+      "native_tensor_test": null,
+      "component_equivalence_proven": false,
+      "matchete_lagrangian_check_original_passed": false,
+      "physical_matching_certified": false
+    },
+    {
+      "model": "C_-1",
+      "residual_sha256": "e79385dd73112d6e37c715941e627cd86df2fb0d9442a156ad57d1771ee9cc01",
+      "raw_terms": 137,
+      "sector_count": 25,
+      "tensor_family_count": 9,
+      "constructive_all_25_sectors_zero_under_required_tensors": true,
+      "noncross_bose_symmetric_families_cancelled": 7,
+      "exact_mixed_tensor_condition_1": "CrossInv1 = A - B",
+      "exact_mixed_tensor_condition_2": "CrossInv2 = gamma*(A + B), gamma nonzero",
+      "basis_A": "delta(i,j)*delta(k,l)",
+      "basis_B": "delta(i,k)*delta(j,l)",
+      "linear_constraints": {
+        "T3MENativeCrossCGInv1": {
+          "status": "UNIQUE",
+          "n_equations": 64,
+          "rank": 2,
+          "matrix_rank": 2,
+          "augmented_rank": 2,
+          "required_coefficients": [
+            "1",
+            "-1"
+          ],
+          "contradiction": []
+        },
+        "T3MENativeCrossCGInv2": {
+          "status": "NONUNIQUE",
+          "n_equations": 8,
+          "rank": 2,
+          "matrix_rank": 1,
+          "augmented_rank": 1,
+          "required_coefficients": [
+            "tau0",
+            "tau0"
+          ],
+          "contradiction": []
+        },
+        "T3Scalar1SelfCGInv1": {
+          "status": "NONUNIQUE",
+          "n_equations": 0,
+          "rank": 1,
+          "matrix_rank": 0,
+          "augmented_rank": 0,
+          "required_coefficients": [],
+          "contradiction": []
+        },
+        "T3MENativeS2SelfCGInv1": {
+          "status": "NONUNIQUE",
+          "n_equations": 0,
+          "rank": 1,
+          "matrix_rank": 0,
+          "augmented_rank": 0,
+          "required_coefficients": [],
+          "contradiction": []
+        },
+        "T3MENativeExtraQ000112I1CG": {
+          "status": "NONUNIQUE",
+          "n_equations": 0,
+          "rank": 1,
+          "matrix_rank": 0,
+          "augmented_rank": 0,
+          "required_coefficients": [],
+          "contradiction": []
+        },
+        "T3MENativeExtraQ000202I1CG": {
+          "status": "NONUNIQUE",
+          "n_equations": 0,
+          "rank": 1,
+          "matrix_rank": 0,
+          "augmented_rank": 0,
+          "required_coefficients": [],
+          "contradiction": []
+        },
+        "T3MENativeExtraQ001201I1CG": {
+          "status": "NONUNIQUE",
+          "n_equations": 0,
+          "rank": 1,
+          "matrix_rank": 0,
+          "augmented_rank": 0,
+          "required_coefficients": [],
+          "contradiction": []
+        },
+        "T3MENativeExtraQ020020I1CG": {
+          "status": "NONUNIQUE",
+          "n_equations": 0,
+          "rank": 1,
+          "matrix_rank": 0,
+          "augmented_rank": 0,
+          "required_coefficients": [],
+          "contradiction": []
+        },
+        "T3MENativeExtraQ020200I1CG": {
+          "status": "NONUNIQUE",
+          "n_equations": 0,
+          "rank": 1,
+          "matrix_rank": 0,
+          "augmented_rank": 0,
+          "required_coefficients": [],
+          "contradiction": []
+        }
+      },
+      "sector_inventory": [
+        {
+          "sector": "lambda12Inv1__Plus[1, NewScalarX]_Plus[3, NewScalarY]",
+          "raw_terms": 3,
+          "cg": "T3MENativeCrossCGInv1",
+          "rank": 2,
+          "n_equations": 12,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            12,
+            12
+          ]
+        },
+        {
+          "sector": "lambda12Inv1__Plus[2, NewScalarX]_Plus[2, NewScalarY]",
+          "raw_terms": 14,
+          "cg": "T3MENativeCrossCGInv1",
+          "rank": 2,
+          "n_equations": 30,
+          "n_base_monomials": 16,
+          "n_cg_monomials_per_basis": [
+            22,
+            22
+          ]
+        },
+        {
+          "sector": "lambda12Inv1__Plus[3, NewScalarX]_Plus[1, NewScalarY]",
+          "raw_terms": 4,
+          "cg": "T3MENativeCrossCGInv1",
+          "rank": 2,
+          "n_equations": 16,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            16,
+            16
+          ]
+        },
+        {
+          "sector": "lambda12Inv1__Plus[4, NewScalarX]",
+          "raw_terms": 1,
+          "cg": "T3MENativeCrossCGInv1",
+          "rank": 2,
+          "n_equations": 3,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            3,
+            3
+          ]
+        },
+        {
+          "sector": "lambda12Inv1__Plus[4, NewScalarY]",
+          "raw_terms": 1,
+          "cg": "T3MENativeCrossCGInv1",
+          "rank": 2,
+          "n_equations": 3,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            3,
+            3
+          ]
+        },
+        {
+          "sector": "lambda12Inv2__Plus[1, NewScalarX]_Plus[3, NewScalarY]",
+          "raw_terms": 2,
+          "cg": "T3MENativeCrossCGInv2",
+          "rank": 2,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0,
+            0
+          ]
+        },
+        {
+          "sector": "lambda12Inv2__Plus[2, NewScalarX]_Plus[2, NewScalarY]",
+          "raw_terms": 10,
+          "cg": "T3MENativeCrossCGInv2",
+          "rank": 2,
+          "n_equations": 8,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            8,
+            8
+          ]
+        },
+        {
+          "sector": "lambda12Inv2__Plus[3, NewScalarX]_Plus[1, NewScalarY]",
+          "raw_terms": 4,
+          "cg": "T3MENativeCrossCGInv2",
+          "rank": 2,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0,
+            0
+          ]
+        },
+        {
+          "sector": "lambdaS1Inv1__Plus[1, NewScalarX]_Plus[3, NewScalarY]",
+          "raw_terms": 2,
+          "cg": "T3Scalar1SelfCGInv1",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        },
+        {
+          "sector": "lambdaS1Inv1__Plus[2, NewScalarX]_Plus[2, NewScalarY]",
+          "raw_terms": 4,
+          "cg": "T3Scalar1SelfCGInv1",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        },
+        {
+          "sector": "lambdaS1Inv1__Plus[3, NewScalarX]_Plus[1, NewScalarY]",
+          "raw_terms": 4,
+          "cg": "T3Scalar1SelfCGInv1",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        },
+        {
+          "sector": "lambdaS2Inv1__Plus[1, NewScalarX]_Plus[3, NewScalarY]",
+          "raw_terms": 4,
+          "cg": "T3MENativeS2SelfCGInv1",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        },
+        {
+          "sector": "lambdaS2Inv1__Plus[2, NewScalarX]_Plus[2, NewScalarY]",
+          "raw_terms": 4,
+          "cg": "T3MENativeS2SelfCGInv1",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        },
+        {
+          "sector": "lambdaS2Inv1__Plus[3, NewScalarX]_Plus[1, NewScalarY]",
+          "raw_terms": 2,
+          "cg": "T3MENativeS2SelfCGInv1",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        },
+        {
+          "sector": "lambdaT3ExtraQ000112I1__Plus[1, NewScalarX]_Plus[3, NewScalarY]",
+          "raw_terms": 8,
+          "cg": "T3MENativeExtraQ000112I1CG",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        },
+        {
+          "sector": "lambdaT3ExtraQ000112I1__Plus[2, NewScalarX]_Plus[2, NewScalarY]",
+          "raw_terms": 10,
+          "cg": "T3MENativeExtraQ000112I1CG",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        },
+        {
+          "sector": "lambdaT3ExtraQ000112I1__Plus[3, NewScalarX]_Plus[1, NewScalarY]",
+          "raw_terms": 8,
+          "cg": "T3MENativeExtraQ000112I1CG",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        },
+        {
+          "sector": "lambdaT3ExtraQ000202I1__Plus[1, NewScalarX]_Plus[3, NewScalarY]",
+          "raw_terms": 8,
+          "cg": "T3MENativeExtraQ000202I1CG",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        },
+        {
+          "sector": "lambdaT3ExtraQ000202I1__Plus[2, NewScalarX]_Plus[2, NewScalarY]",
+          "raw_terms": 8,
+          "cg": "T3MENativeExtraQ000202I1CG",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        },
+        {
+          "sector": "lambdaT3ExtraQ000202I1__Plus[3, NewScalarX]_Plus[1, NewScalarY]",
+          "raw_terms": 8,
+          "cg": "T3MENativeExtraQ000202I1CG",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        },
+        {
+          "sector": "lambdaT3ExtraQ001201I1__Plus[1, NewScalarX]_Plus[3, NewScalarY]",
+          "raw_terms": 8,
+          "cg": "T3MENativeExtraQ001201I1CG",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        },
+        {
+          "sector": "lambdaT3ExtraQ001201I1__Plus[2, NewScalarX]_Plus[2, NewScalarY]",
+          "raw_terms": 8,
+          "cg": "T3MENativeExtraQ001201I1CG",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        },
+        {
+          "sector": "lambdaT3ExtraQ001201I1__Plus[3, NewScalarX]_Plus[1, NewScalarY]",
+          "raw_terms": 4,
+          "cg": "T3MENativeExtraQ001201I1CG",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        },
+        {
+          "sector": "lambdaT3ExtraQ020020I1__Plus[2, H]_Plus[1, NewScalarX]_Plus[1, NewScalarY]",
+          "raw_terms": 4,
+          "cg": "T3MENativeExtraQ020020I1CG",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        },
+        {
+          "sector": "lambdaT3ExtraQ020200I1__Plus[2, H]_Plus[1, NewScalarX]_Plus[1, NewScalarY]",
+          "raw_terms": 4,
+          "cg": "T3MENativeExtraQ020200I1CG",
+          "rank": 1,
+          "n_equations": 0,
+          "n_base_monomials": 0,
+          "n_cg_monomials_per_basis": [
+            0
+          ]
+        }
+      ],
+      "native_tensor_test": null,
+      "component_equivalence_proven": false,
+      "matchete_lagrangian_check_original_passed": false,
+      "physical_matching_certified": false
+    }
+  ]
+}

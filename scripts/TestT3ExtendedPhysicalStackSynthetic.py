@@ -77,12 +77,12 @@ def main():
         assert batch.previous_runs(r)['status']=='Previous16RGESucceededSixNativeTargetsAvailable'
         with patch.object(batch.subprocess,'run',side_effect=fake_native_run):
             for model in batch.SPECS:
-                rec=batch.run_one(model,heavy_flavours=1,wl='fake-wolfram',timeout=5,
+                rec=batch.run_one(model,heavy_flavours=3,wl='fake-wolfram',timeout=5,
                                   root=r,output=r/'native_outputs')
                 assert rec['status']==batch.SUCCESS and rec['exit_code']==0,rec
         with patch.object(batch.subprocess,'run',return_value=SimpleNamespace(
                 stdout='NATIVE_EXT_C5_STAGE: match\nMatchete native error\n',returncode=6)):
-            failure=batch.run_one('A_p0',heavy_flavours=1,wl='fake-wolfram',timeout=5,
+            failure=batch.run_one('A_p0',heavy_flavours=3,wl='fake-wolfram',timeout=5,
                                   root=r,output=r/'native_outputs')
             assert failure['status']=='Blocked' and 'Matchete native error' in failure['log_tail']
         # Negative provenance control: a single missing model must block.

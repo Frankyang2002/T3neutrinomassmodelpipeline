@@ -148,6 +148,8 @@ def tail(log:str,lines:int=16)->str:
 
 def run_one(model:str,*,heavy_flavours:int,wl:str,timeout:int,root:Path=ROOT,
             output:Path=OUTPUT)->dict:
+    need(heavy_flavours in (2,3),
+         'Matchete DefineFlavorIndex requires NFlavor > 1; choose 2 or 3')
     cl,tag,extra=SPECS[model]
     native_output=output/'native'/f'{model}_h{heavy_flavours}.json'
     log=output/'logs'/f'{model}_h{heavy_flavours}.log'
@@ -207,7 +209,7 @@ def self_test():
         t=Path(td)
         nat=t/'native.json'
         content={'format':'t3-extended-c5-native-matchete-one-step-v1',
-                 'model':'A_p0','heavy_flavours':1,'status':SUCCESS,
+                 'model':'A_p0','heavy_flavours':3,'status':SUCCESS,
                  'additional_yukawa':'y1Conj',
                  'one_loop_matching_performed':True,
                  'native_matchete_lagrangian_check_passed':True,
@@ -221,20 +223,29 @@ def self_test():
             path=t/(key+'.txt');path.write_text('1 + 2 y1Conj',encoding='utf-8')
             content[key]=str(path)
         atomic(nat,content)
-        valid=validate_native('A_p0',nat,heavy_flavours=1)
+        valid=validate_native('A_p0',nat,heavy_flavours=3)
         need(valid['status']==SUCCESS,'Synthetic native witness rejected')
         content['cross_package_numeric_substitution_authorized']=True
         atomic(nat,content)
-        try:validate_native('A_p0',nat,heavy_flavours=1)
+        try:validate_native('A_p0',nat,heavy_flavours=3)
         except ValueError:pass
         else:raise AssertionError('Overclaimed physical mapping accepted')
         content['cross_package_numeric_substitution_authorized']=False
         content['model']='B_m1';atomic(nat,content)
-        try:validate_native('A_p0',nat,heavy_flavours=1)
+        try:validate_native('A_p0',nat,heavy_flavours=3)
         except ValueError:pass
         else:raise AssertionError('Wrong model accepted')
         need(tail('1\n2\n3',2)=='2\n3','Log tail error')
+    with tempfile.TemporaryDirectory() as td:
+        try:
+            run_one('A_p0',heavy_flavours=1,wl='not-called',timeout=1,
+                    root=Path(td),output=Path(td))
+        except ValueError as exc:
+            need('NFlavor > 1' in str(exc), 'Dimension-one rejection changed')
+        else:
+            raise AssertionError('Matchete-unsupported NFlavor=1 accepted')
     print('PASS: six-model source registry, native evidence schema, no-physical-overclaim controls')
+    print('PASS: NFlavor=1 refused; 2 or 3 supported; default 3')
 
 
 def main()->int:
@@ -246,7 +257,7 @@ def main()->int:
     g.add_argument('--all',action='store_true')
     g.add_argument('--proxy-only',action='store_true')
     g.add_argument('--model',choices=list(SPECS))
-    ap.add_argument('--heavy-flavours',type=int,choices=(1,3),default=1)
+    ap.add_argument('--heavy-flavours',type=int,choices=(2,3),default=3)
     ap.add_argument('--wolframscript',default='wolframscript')
     ap.add_argument('--timeout-seconds',type=int,default=3600)
     args=ap.parse_args()

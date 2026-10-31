@@ -1,17 +1,17 @@
 (* Native, standalone one-loop Matchete extraction for the six extra-Yukawa T3 models.
    No RGBeta->Matchete identification is made here. This is a full one-step
    heavy-particle matching pilot, NOT the hierarchical two-threshold EFT.
-   Usage: wolframscript -file Lagrangian/RunT3ExtendedC5Native.wl OUT.json A|D|E m2|p0 1|3
+   Usage: wolframscript -file Lagrangian/RunT3ExtendedC5Native.wl OUT.json A|D|E m2|p0 2|3
    Must enable GENERAL_FERMIONS, GENERAL_QUARTICS, FLAVOR_MASSES and disable GENERAL_QUADRATICS.
 *)
 ClearAll["Global`*"];
 args = Rest[$ScriptCommandLine];
 If[Length[args] =!= 4,
-  Print["Usage: OUT.json A|D|E m2|p0 1|3"]; Exit[2]];
+  Print["Usage: OUT.json A|D|E m2|p0 2|3"]; Exit[2]];
 out = ExpandFileName[args[[1]]];
 cl = ToUpperCase[args[[2]]];
 tag = args[[3]];
-nHeavy = If[MemberQ[{"1", "3"}, args[[4]]], ToExpression[args[[4]]], $Failed];
+nHeavy = If[MemberQ[{"2", "3"}, args[[4]]], ToExpression[args[[4]]], $Failed];
 allowed = <|"A_m2" -> -2, "A_p0" -> 0, "D_m2" -> -2,
   "D_p0" -> 0, "E_m2" -> -2, "E_p0" -> 0|>;
 key = cl <> "_" <> tag;
@@ -46,12 +46,30 @@ NativeSave[data_Association] := Module[{p = Join[<|
   Print[key,": ",Lookup[p,"status","Unknown"]," -> ",out];p];
 NativeFail[msg_String] := Throw[<|"status"->"NativeExtendedC5Blocked",
   "reason"->msg,"failed_step"->step|>,"T3NativeC5Stop"];
+(* CRITICAL: Matchete must be loaded as its own COMPLETED top-level
+   expression. Wolfram reads/parses the entire following Module BEFORE
+   evaluating its body. If Needs["Matchete`"] is placed inside that Module,
+   Bar[Coupling[...]] below is parsed as Global`Bar / Global`Coupling,
+   producing Bar::shdw, Coupling::shdw and an aborted Matchete load.
+   Do not move this package load back into the Module. *)
 NativeStep["load-Matchete"];
+nativeMatcheteLoad = CheckAbort[
+  Check[UsingFrontEnd[Needs["Matchete`"]; True], $Failed],
+  $Aborted
+];
+If[nativeMatcheteLoad =!= True,
+  NativeSave[<|
+    "status" -> "NativeExtendedC5Blocked",
+    "reason" -> "Could not load native Matchete in its own top-level expression",
+    "failed_step" -> step
+  |>];
+  Exit[6]
+];
+(* New top-level expression: now Matchete`Bar and Matchete`Coupling
+   resolve in the installed package context, not a premature Global` context. *)
 res = CheckAbort[Catch[Module[
-  {loaded,model,built,matched,ext,coef,withZero,extraPiece,terms,
-   interesting, fullPath,zeroPath,diffPath,sourceText,zeroRules,sourceInfo},
-  loaded=CheckAbort[Check[UsingFrontEnd[Needs["Matchete`"];True],$Failed],$Aborted];
-  If[loaded =!= True,NativeFail["Could not load native Matchete"]];
+  {model,built,matched,ext,coef,withZero,extraPiece,terms,
+   interesting, fullPath,zeroPath,diffPath,zeroRules},
   Get[FileNameJoin[{dir,"model","T3ModelCatalog.wl"}]];
   Get[FileNameJoin[{dir,"model","LagrangianBuilder.wl"}]];
   Get[FileNameJoin[{dir,"RunMatching.wl"}]];

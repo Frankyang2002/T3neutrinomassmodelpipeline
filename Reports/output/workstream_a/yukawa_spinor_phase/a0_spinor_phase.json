@@ -1,0 +1,77 @@
+{
+  "format": "t3-workstream-a-a0-spinor-phase-witness-v1",
+  "status": "NativeChargeConjugationCheckedCanonicalWeylPhaseFixedByChoicePhysicalDictionaryPending",
+  "model": "A_p0",
+  "matchete_native_abstract_cc_algebra_verified": true,
+  "matchete_native": {
+    "native_checks_passed": 6,
+    "native_charge_conjugate_bilinear": "NCM[Bar[Field[l, Fermion, {Index[i, SU2L[fund]], Index[p, Flavor]}, {}]], DiracProduct[GammaCC, Proj[1]], Transp[Bar[Field[NewFermion, Fermion, {Index[j, T3BSMd2], Index[r, NFlavor]}, {}]]]]"
+  },
+  "exact_weyl_component_witness": {
+    "clifford_identity_verified": true,
+    "charge_conjugation_matrix_4_by_4": [
+      [
+        "0",
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "-1",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "0",
+        "0",
+        "0",
+        "-1"
+      ],
+      [
+        "0",
+        "0",
+        "1",
+        "0"
+      ]
+    ],
+    "cc_antisymmetry_and_square_verified": true,
+    "cc_gamma_intertwiner_verified": true,
+    "weyl_spinor_epsilon": [
+      [
+        0,
+        1
+      ],
+      [
+        -1,
+        0
+      ]
+    ],
+    "four_component_to_weyl_bilinear_exact": true,
+    "identity_in_declared_weyl_basis": "Bar[L] C (Bar[F])^T = (l_0 chi_1 - l_1 chi_0)^dagger",
+    "bilinear_grassmann_monomials": 2,
+    "explicit_cc_sign_choice": "C = +i gamma^2 gamma^0",
+    "opposite_cc_sign_negative_control_rejected": true,
+    "weyl_bilinear_eta_in_chosen_basis": "+1",
+    "matchete_abstract_cc_sign_is_native_fixed": false,
+    "rgbeta_abstract_eps_12_plus_one_is_native_fixed": false,
+    "conditional_y1R_over_y1M_in_chosen_basis_with_rho_plus_one": "-1",
+    "conditional_y1ConjR_over_y1ConjM_in_chosen_basis_with_rho_plus_one": "-1"
+  },
+  "matched_existing_a0_action_dictionary": true,
+  "coupling_dictionary_in_explicitly_chosen_CC_and_epsilon_basis": {
+    "y1_R": "-y1_M",
+    "y1Conj_R": "-y1Conj_M",
+    "depends_on": [
+      "C = +i gamma2 gamma0",
+      "eps_12 = +1",
+      "identical phase choice for the left-Weyl heavy field"
+    ]
+  },
+  "matchete_installed_concrete_CC_orientation_proved": false,
+  "rgbeta_installed_numeric_epsilon_orientation_proved": false,
+  "global_dirac_mass_and_y2_phase_transport_proved": false,
+  "physical_cross_package_yukawa_dictionary_certified": false,
+  "production_files_modified": false,
+  "next_gate": "Transport one common heavy-fermion/Weyl phase through y2 and MF and fix RGBeta eps component orientation"
+}

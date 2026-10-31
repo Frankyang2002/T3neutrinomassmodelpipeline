@@ -1,0 +1,646 @@
+{
+  "format": "t3-bc-one-loop-llhh-topology-completeness-v20",
+  "status": "RestrictedY2LambdaOneLoopGraphInventoryAudited",
+  "scope": "unbroken gauge phase, two original T3 Yukawas and one HHSS quartic, LNV Majorana F, diagonal tree-level scalar propagators",
+  "source_contract_sha256": {
+    "Lagrangian/model/T3ModelCatalog.wl": "3ea4006b38617d1c603c564b209a0e0cedb324da127214fe434e18fd9953febc",
+    "Lagrangian/model/LagrangianBuilder.wl": "dbe102874c84c0ae8013eeceb78571e0ae3d44f35e95cf9c8d1e0ba952f32e8b",
+    "Lagrangian/interactions/T3Topology.wl": "e6e24c4a673bddff980885f8354b388ceaa19e53c8b2faa79ba3289a87de1511",
+    "Lagrangian/interactions/GeneralScalarOperators.wl": "45d0bdf6fc1565b5601abd74b0f68649ffa78a8eeda6328e0c2f94cbcdb8b470",
+    "Lagrangian/RunGeneralT3FermionFirstEFT1OneLoop.wl": "a2d4f3c3cbd67909dd036e7a9ec69e575b310506cac43b10c260c2603d7fbd29"
+  },
+  "preexisting_Wick_audit_reused_and_source_hashes_verified": true,
+  "new_graph_enumeration_performed": true,
+  "renormalizable_one_loop_topological_valence_budget": {
+    "external_legs": 4,
+    "I_minus_V_plus_one": 1,
+    "sum_over_vertices_valence_minus_two": 4,
+    "two_required_BSM_Yukawas_contribute": 2,
+    "remaining_valence_budget": 2,
+    "combinatorial_classes": [
+      {
+        "extra_vertices": "one quartic",
+        "status": "enumerated_all_HHSS_in_operator_manifest"
+      },
+      {
+        "extra_vertices": "two trivalent",
+        "status": "SM_and_BSM_single_H_attachments_not_exhaustively_certified"
+      }
+    ],
+    "quadratic_mass_insertions": "arbitrary number at same graph-loop order; require propagator resummation"
+  },
+  "full_matchete_loop_source_files_scanned": true,
+  "three_triangle_channels_exhaustive_within_specified_vertex_truncation": true,
+  "all_one_loop_SM_BSM_diagrams_exhaustively_generated": false,
+  "two_single_H_trivalent_vertex_graphs_exhaustively_excluded": false,
+  "extra_scalar_quadratic_nonzero_allowed_generally": true,
+  "assumed_zero_extra_quadratic_at_this_benchmark_boundary": true,
+  "no_extra_original_Yukawas_BC_alpha_minus_one": true,
+  "one_loop_field_counterterm_times_C5_tree_necessary": false,
+  "physical_C5_certified": false,
+  "physical_C5": null,
+  "models": {
+    "B_m1": {
+      "model": "B_-1",
+      "UV_operator_family_counts": {
+        "baseline_topology": 1,
+        "baseline_quadratic": 2,
+        "baseline_quartic_family": 5,
+        "additional_quartic": 7,
+        "additional_quadratic": 1
+      },
+      "one_loop_triangle_graphs": [
+        {
+          "channel": "y1_y1",
+          "vertex": "lambdaT3ExtraQ020200I1",
+          "vertex_orientation": "native",
+          "external": [
+            "l",
+            "l",
+            "Hdag",
+            "Hdag"
+          ],
+          "internal_lines": [
+            "F",
+            "scalar",
+            "scalar"
+          ],
+          "V": 3,
+          "I": 3,
+          "loops": 1,
+          "quartic_species_counts": [
+            0,
+            2,
+            0,
+            2,
+            0,
+            0
+          ]
+        },
+        {
+          "channel": "y1_y2",
+          "vertex": "lambdaT3",
+          "vertex_orientation": "h.c.",
+          "external": [
+            "l",
+            "l",
+            "Hdag",
+            "Hdag"
+          ],
+          "internal_lines": [
+            "F",
+            "scalar",
+            "scalar"
+          ],
+          "V": 3,
+          "I": 3,
+          "loops": 1,
+          "quartic_species_counts": [
+            2,
+            0,
+            1,
+            0,
+            0,
+            1
+          ]
+        },
+        {
+          "channel": "y2_y2",
+          "vertex": "lambdaT3ExtraQ020020I1",
+          "vertex_orientation": "native",
+          "external": [
+            "l",
+            "l",
+            "Hdag",
+            "Hdag"
+          ],
+          "internal_lines": [
+            "F",
+            "scalar",
+            "scalar"
+          ],
+          "V": 3,
+          "I": 3,
+          "loops": 1,
+          "quartic_species_counts": [
+            0,
+            2,
+            0,
+            0,
+            2,
+            0
+          ]
+        }
+      ],
+      "direct_quartic_wick_sector_exhaustive": true,
+      "not_direct_in_this_graph": [
+        {
+          "vertex": "lambdaS1Inv*",
+          "reason": "portal or scalar quartic not direct holomorphic single-vertex triangle",
+          "kind": "baseline_quartic_family"
+        },
+        {
+          "vertex": "lambdaS2Inv*",
+          "reason": "portal or scalar quartic not direct holomorphic single-vertex triangle",
+          "kind": "baseline_quartic_family"
+        },
+        {
+          "vertex": "lambdaH1Inv*",
+          "reason": "portal or scalar quartic not direct holomorphic single-vertex triangle",
+          "kind": "baseline_quartic_family"
+        },
+        {
+          "vertex": "lambdaH2Inv*",
+          "reason": "portal or scalar quartic not direct holomorphic single-vertex triangle",
+          "kind": "baseline_quartic_family"
+        },
+        {
+          "vertex": "lambda12Inv*",
+          "reason": "portal or scalar quartic not direct holomorphic single-vertex triangle",
+          "kind": "baseline_quartic_family"
+        },
+        {
+          "vertex": "lambdaT3ExtraQ000112I1",
+          "reason": "No pair of Higgs legs",
+          "kind": "additional_quartic"
+        },
+        {
+          "vertex": "lambdaT3ExtraQ000202I1",
+          "reason": "No pair of Higgs legs",
+          "kind": "additional_quartic"
+        },
+        {
+          "vertex": "lambdaT3ExtraQ001201I1",
+          "reason": "No pair of Higgs legs",
+          "kind": "additional_quartic"
+        },
+        {
+          "vertex": "lambdaT3ExtraQ110101I1",
+          "reason": "Higgs-or-scalar Wick orientation",
+          "kind": "additional_quartic"
+        },
+        {
+          "vertex": "lambdaT3ExtraQ110101I2",
+          "reason": "Higgs-or-scalar Wick orientation",
+          "kind": "additional_quartic"
+        }
+      ],
+      "additional_tree_quadratic_not_excluded": [
+        {
+          "vertex": "mu2_extra_000101_I1",
+          "counts": [
+            0,
+            0,
+            0,
+            1,
+            0,
+            1
+          ],
+          "status": "unexcluded tree-level mass insertion"
+        }
+      ],
+      "source_quadratic_requires_zero_boundary_or_resummed_verified_mass_basis": true,
+      "F_Y_X_matching_sector_scan": {
+        "F_raw": {
+          "source_additive_terms": 204,
+          "selected_llhh_GammaCC_terms": 204,
+          "pole_log_constant_counts": {
+            "constant": 68,
+            "pole": 68,
+            "log": 68
+          },
+          "quartic_term_counts": {
+            "lambdaT3": 84,
+            "lambdaT3ExtraQ020020I1": 60,
+            "lambdaT3ExtraQ020200I1": 60
+          },
+          "Yukawa_channel_term_counts": {
+            "y1_y1": 60,
+            "y1_y2": 84,
+            "y2_y2": 60
+          },
+          "unclassified_LLHH_without_GammaCC": 0,
+          "operator_basis_Fierz_completeness_certified": false
+        },
+        "F_full": {
+          "source_additive_terms": 9438,
+          "selected_llhh_GammaCC_terms": 204,
+          "pole_log_constant_counts": {
+            "constant": 68,
+            "pole": 68,
+            "log": 68
+          },
+          "quartic_term_counts": {
+            "lambdaT3": 84,
+            "lambdaT3ExtraQ020020I1": 60,
+            "lambdaT3ExtraQ020200I1": 60
+          },
+          "Yukawa_channel_term_counts": {
+            "y1_y1": 60,
+            "y1_y2": 84,
+            "y2_y2": 60
+          },
+          "unclassified_LLHH_without_GammaCC": 0,
+          "operator_basis_Fierz_completeness_certified": false
+        },
+        "Y_raw": {
+          "source_additive_terms": 132,
+          "selected_llhh_GammaCC_terms": 132,
+          "pole_log_constant_counts": {
+            "constant": 32,
+            "pole": 50,
+            "log": 50
+          },
+          "quartic_term_counts": {
+            "lambdaT3": 60,
+            "lambdaT3ExtraQ020020I1": 36,
+            "lambdaT3ExtraQ020200I1": 36
+          },
+          "Yukawa_channel_term_counts": {
+            "y1_y1": 36,
+            "y1_y2": 60,
+            "y2_y2": 36
+          },
+          "unclassified_LLHH_without_GammaCC": 0,
+          "operator_basis_Fierz_completeness_certified": false
+        },
+        "Y_full": {
+          "source_additive_terms": 5865,
+          "selected_llhh_GammaCC_terms": 132,
+          "pole_log_constant_counts": {
+            "constant": 32,
+            "pole": 50,
+            "log": 50
+          },
+          "quartic_term_counts": {
+            "lambdaT3": 60,
+            "lambdaT3ExtraQ020020I1": 36,
+            "lambdaT3ExtraQ020200I1": 36
+          },
+          "Yukawa_channel_term_counts": {
+            "y1_y1": 36,
+            "y1_y2": 60,
+            "y2_y2": 36
+          },
+          "unclassified_LLHH_without_GammaCC": 0,
+          "operator_basis_Fierz_completeness_certified": false
+        },
+        "X_raw": {
+          "source_additive_terms": 36,
+          "selected_llhh_GammaCC_terms": 36,
+          "pole_log_constant_counts": {
+            "pole": 18,
+            "log": 18
+          },
+          "quartic_term_counts": {
+            "lambdaT3": 12,
+            "lambdaT3ExtraQ020020I1": 12,
+            "lambdaT3ExtraQ020200I1": 12
+          },
+          "Yukawa_channel_term_counts": {
+            "y1_y1": 12,
+            "y1_y2": 12,
+            "y2_y2": 12
+          },
+          "unclassified_LLHH_without_GammaCC": 0,
+          "operator_basis_Fierz_completeness_certified": false
+        },
+        "X_full": {
+          "source_additive_terms": 126,
+          "selected_llhh_GammaCC_terms": 36,
+          "pole_log_constant_counts": {
+            "pole": 18,
+            "log": 18
+          },
+          "quartic_term_counts": {
+            "lambdaT3": 12,
+            "lambdaT3ExtraQ020020I1": 12,
+            "lambdaT3ExtraQ020200I1": 12
+          },
+          "Yukawa_channel_term_counts": {
+            "y1_y1": 12,
+            "y1_y2": 12,
+            "y2_y2": 12
+          },
+          "unclassified_LLHH_without_GammaCC": 0,
+          "operator_basis_Fierz_completeness_certified": false
+        }
+      },
+      "source_matching_sha256": {
+        "F_raw": "dceaa8c40af8eb2885715a2fc9719188c22220b020ab75c3487e641203337b0c",
+        "F_full": "e9023c4fb2013da51035cfa385eb0df6d80a255ae617bda37f14e03c81ac196f",
+        "Y_raw": "8f519acc058cb95f58995b301e462e500d963d31ac0b4edcde1972163c914002",
+        "Y_full": "6471d4b8a0fdf2c5e40a6726a0856725edbe4fac2aa39dc32b3a1f8137db1169",
+        "X_raw": "cecfcf94488e4c60b96d6190d49907bfc6a88b310264114d603b99720d983cd5",
+        "X_full": "21dff1c3a84f668e24f4865f74de59e988a53b64213a9f34d9e56e3708ecf778"
+      },
+      "source_verified_three_channels_are_present_at_every_boundary": true,
+      "restricted_one_loop_hard_soft_identity_v19": true,
+      "complete_BC_leading_one_loop_C5_certified": false
+    },
+    "C_m1": {
+      "model": "C_-1",
+      "UV_operator_family_counts": {
+        "baseline_topology": 1,
+        "baseline_quadratic": 2,
+        "baseline_quartic_family": 5,
+        "additional_quartic": 7,
+        "additional_quadratic": 1
+      },
+      "one_loop_triangle_graphs": [
+        {
+          "channel": "y1_y1",
+          "vertex": "lambdaT3ExtraQ020200I1",
+          "vertex_orientation": "native",
+          "external": [
+            "l",
+            "l",
+            "Hdag",
+            "Hdag"
+          ],
+          "internal_lines": [
+            "F",
+            "scalar",
+            "scalar"
+          ],
+          "V": 3,
+          "I": 3,
+          "loops": 1,
+          "quartic_species_counts": [
+            0,
+            2,
+            0,
+            2,
+            0,
+            0
+          ]
+        },
+        {
+          "channel": "y1_y2",
+          "vertex": "lambdaT3",
+          "vertex_orientation": "h.c.",
+          "external": [
+            "l",
+            "l",
+            "Hdag",
+            "Hdag"
+          ],
+          "internal_lines": [
+            "F",
+            "scalar",
+            "scalar"
+          ],
+          "V": 3,
+          "I": 3,
+          "loops": 1,
+          "quartic_species_counts": [
+            2,
+            0,
+            1,
+            0,
+            0,
+            1
+          ]
+        },
+        {
+          "channel": "y2_y2",
+          "vertex": "lambdaT3ExtraQ020020I1",
+          "vertex_orientation": "native",
+          "external": [
+            "l",
+            "l",
+            "Hdag",
+            "Hdag"
+          ],
+          "internal_lines": [
+            "F",
+            "scalar",
+            "scalar"
+          ],
+          "V": 3,
+          "I": 3,
+          "loops": 1,
+          "quartic_species_counts": [
+            0,
+            2,
+            0,
+            0,
+            2,
+            0
+          ]
+        }
+      ],
+      "direct_quartic_wick_sector_exhaustive": true,
+      "not_direct_in_this_graph": [
+        {
+          "vertex": "lambdaS1Inv*",
+          "reason": "portal or scalar quartic not direct holomorphic single-vertex triangle",
+          "kind": "baseline_quartic_family"
+        },
+        {
+          "vertex": "lambdaS2Inv*",
+          "reason": "portal or scalar quartic not direct holomorphic single-vertex triangle",
+          "kind": "baseline_quartic_family"
+        },
+        {
+          "vertex": "lambdaH1Inv*",
+          "reason": "portal or scalar quartic not direct holomorphic single-vertex triangle",
+          "kind": "baseline_quartic_family"
+        },
+        {
+          "vertex": "lambdaH2Inv*",
+          "reason": "portal or scalar quartic not direct holomorphic single-vertex triangle",
+          "kind": "baseline_quartic_family"
+        },
+        {
+          "vertex": "lambda12Inv*",
+          "reason": "portal or scalar quartic not direct holomorphic single-vertex triangle",
+          "kind": "baseline_quartic_family"
+        },
+        {
+          "vertex": "lambdaT3ExtraQ000112I1",
+          "reason": "No pair of Higgs legs",
+          "kind": "additional_quartic"
+        },
+        {
+          "vertex": "lambdaT3ExtraQ000202I1",
+          "reason": "No pair of Higgs legs",
+          "kind": "additional_quartic"
+        },
+        {
+          "vertex": "lambdaT3ExtraQ001201I1",
+          "reason": "No pair of Higgs legs",
+          "kind": "additional_quartic"
+        },
+        {
+          "vertex": "lambdaT3ExtraQ110101I1",
+          "reason": "Higgs-or-scalar Wick orientation",
+          "kind": "additional_quartic"
+        },
+        {
+          "vertex": "lambdaT3ExtraQ110101I2",
+          "reason": "Higgs-or-scalar Wick orientation",
+          "kind": "additional_quartic"
+        }
+      ],
+      "additional_tree_quadratic_not_excluded": [
+        {
+          "vertex": "mu2_extra_000101_I1",
+          "counts": [
+            0,
+            0,
+            0,
+            1,
+            0,
+            1
+          ],
+          "status": "unexcluded tree-level mass insertion"
+        }
+      ],
+      "source_quadratic_requires_zero_boundary_or_resummed_verified_mass_basis": true,
+      "F_Y_X_matching_sector_scan": {
+        "F_raw": {
+          "source_additive_terms": 204,
+          "selected_llhh_GammaCC_terms": 204,
+          "pole_log_constant_counts": {
+            "constant": 68,
+            "pole": 68,
+            "log": 68
+          },
+          "quartic_term_counts": {
+            "lambdaT3": 84,
+            "lambdaT3ExtraQ020020I1": 60,
+            "lambdaT3ExtraQ020200I1": 60
+          },
+          "Yukawa_channel_term_counts": {
+            "y1_y1": 60,
+            "y1_y2": 84,
+            "y2_y2": 60
+          },
+          "unclassified_LLHH_without_GammaCC": 0,
+          "operator_basis_Fierz_completeness_certified": false
+        },
+        "F_full": {
+          "source_additive_terms": 9380,
+          "selected_llhh_GammaCC_terms": 204,
+          "pole_log_constant_counts": {
+            "constant": 68,
+            "pole": 68,
+            "log": 68
+          },
+          "quartic_term_counts": {
+            "lambdaT3": 84,
+            "lambdaT3ExtraQ020020I1": 60,
+            "lambdaT3ExtraQ020200I1": 60
+          },
+          "Yukawa_channel_term_counts": {
+            "y1_y1": 60,
+            "y1_y2": 84,
+            "y2_y2": 60
+          },
+          "unclassified_LLHH_without_GammaCC": 0,
+          "operator_basis_Fierz_completeness_certified": false
+        },
+        "Y_raw": {
+          "source_additive_terms": 132,
+          "selected_llhh_GammaCC_terms": 132,
+          "pole_log_constant_counts": {
+            "constant": 32,
+            "pole": 50,
+            "log": 50
+          },
+          "quartic_term_counts": {
+            "lambdaT3": 60,
+            "lambdaT3ExtraQ020020I1": 36,
+            "lambdaT3ExtraQ020200I1": 36
+          },
+          "Yukawa_channel_term_counts": {
+            "y1_y1": 36,
+            "y1_y2": 60,
+            "y2_y2": 36
+          },
+          "unclassified_LLHH_without_GammaCC": 0,
+          "operator_basis_Fierz_completeness_certified": false
+        },
+        "Y_full": {
+          "source_additive_terms": 5757,
+          "selected_llhh_GammaCC_terms": 132,
+          "pole_log_constant_counts": {
+            "constant": 32,
+            "pole": 50,
+            "log": 50
+          },
+          "quartic_term_counts": {
+            "lambdaT3": 60,
+            "lambdaT3ExtraQ020020I1": 36,
+            "lambdaT3ExtraQ020200I1": 36
+          },
+          "Yukawa_channel_term_counts": {
+            "y1_y1": 36,
+            "y1_y2": 60,
+            "y2_y2": 36
+          },
+          "unclassified_LLHH_without_GammaCC": 0,
+          "operator_basis_Fierz_completeness_certified": false
+        },
+        "X_raw": {
+          "source_additive_terms": 36,
+          "selected_llhh_GammaCC_terms": 36,
+          "pole_log_constant_counts": {
+            "pole": 18,
+            "log": 18
+          },
+          "quartic_term_counts": {
+            "lambdaT3": 12,
+            "lambdaT3ExtraQ020020I1": 12,
+            "lambdaT3ExtraQ020200I1": 12
+          },
+          "Yukawa_channel_term_counts": {
+            "y1_y1": 12,
+            "y1_y2": 12,
+            "y2_y2": 12
+          },
+          "unclassified_LLHH_without_GammaCC": 0,
+          "operator_basis_Fierz_completeness_certified": false
+        },
+        "X_full": {
+          "source_additive_terms": 126,
+          "selected_llhh_GammaCC_terms": 36,
+          "pole_log_constant_counts": {
+            "pole": 18,
+            "log": 18
+          },
+          "quartic_term_counts": {
+            "lambdaT3": 12,
+            "lambdaT3ExtraQ020020I1": 12,
+            "lambdaT3ExtraQ020200I1": 12
+          },
+          "Yukawa_channel_term_counts": {
+            "y1_y1": 12,
+            "y1_y2": 12,
+            "y2_y2": 12
+          },
+          "unclassified_LLHH_without_GammaCC": 0,
+          "operator_basis_Fierz_completeness_certified": false
+        }
+      },
+      "source_matching_sha256": {
+        "F_raw": "c043dac85e99f99ec88ebc474137c6ff95eca923621c25ea6868999851f24e32",
+        "F_full": "9f9252958f200cff5d558b5f3e7f718c675689b1a79f4a3d67607866bd69c56c",
+        "Y_raw": "ac65c9577bfd7e8a2bc7b5e4b29ccfd9c566b9d91e09348ee789744e779f6f28",
+        "Y_full": "bf38225c4b2b649155091a8374aeae3f00cc54c75c740bf875e8c34bc372391a",
+        "X_raw": "3cfaae8ef14fa9f98bd4a21f1225808578d6289b362731dc8542761b7303a660",
+        "X_full": "06e6f59320b65b3b42846603d64a3826761d4df1ba9ddc35e5ea9a9dfd3da2c7"
+      },
+      "source_verified_three_channels_are_present_at_every_boundary": true,
+      "restricted_one_loop_hard_soft_identity_v19": true,
+      "complete_BC_leading_one_loop_C5_certified": false
+    }
+  },
+  "remaining_certification": [
+    "The remaining two-trivalent-vertex one-loop graph class needs an explicit SM+BSM charge/chirality connectivity exclusion, including SM charged-lepton Yukawa and gauge interactions",
+    "Independent UV-to-EFT coefficient comparison for all allowed tensor and EOM structures, not just raw GammaCC LLHH selection",
+    "Nonzero additional quadratic mass mixing must be incorporated in the propagator/eigenbasis before completeness can be extended",
+    "Renormalized EFT1/EFT2 running and finite scheme/field/parameter maps not certified"
+  ]
+}

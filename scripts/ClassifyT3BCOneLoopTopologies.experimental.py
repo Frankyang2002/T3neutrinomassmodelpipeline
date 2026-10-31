@@ -88,7 +88,23 @@ def classify_model(operators, model):
          model+': unexpected UV bosonic operator inventory '+str(kinds))
     diagrams=[]; screened=[]; mass=[]
     for o in selected:
-        kind=o['kind']; name=o['coupling']; counts=tuple(o['counts_H_Hdag_S1_S1dag_S2_S2dag'])
+        kind=o['kind']; name=o['coupling']
+        # The project's actual 16-model operator manifest intentionally uses
+        # JSON null for baseline masses and baseline quartic *families*.  Only
+        # vertices with explicit species multiplicities can be Wick-counted.
+        # Requiring counts for those three single-vertex classes avoids ever
+        # interpreting a missing physical quartic/mixed-bilinear signature as
+        # a screened zero contribution.
+        raw_counts=o.get('counts_H_Hdag_S1_S1dag_S2_S2dag')
+        if kind in ('baseline_topology','additional_quartic','additional_quadratic'):
+            need(isinstance(raw_counts,list) and len(raw_counts)==6 and
+                 all(type(x) is int and x>=0 for x in raw_counts),
+                 model+': invalid explicit boson species counts for '+name)
+            counts=tuple(raw_counts)
+        else:
+            need(raw_counts is None,
+                 model+': baseline family changed from expected null inventory: '+name)
+            counts=None
         if kind in ('baseline_topology','additional_quartic'):
             if sum(counts[:2])==2:
                 candidate=direct_triangle_channel(counts)
@@ -362,6 +378,45 @@ def self_test():
         except CompletenessError:
             continue
         raise CompletenessError('Tampered source not rejected: '+x)
+    # Regression for the actual GitHub operator_classification.json schema:
+    # both baseline quadratic masses and all five baseline quartic families
+    # have counts=null; individual physical quartics and the mixed quadratic
+    # always supply six integer species counts.
+    def entry(kind,name,counts=None,classification=None,observed=None):
+        record={'model':'B_-1','kind':kind,'coupling':name,
+                'counts_H_Hdag_S1_S1dag_S2_S2dag':counts}
+        if classification is not None:record['classification']=classification
+        if observed is not None:record['observed_in_saved_C5']=observed
+        return record
+    mock=[entry('baseline_topology','lambdaT3',[2,0,1,0,0,1],
+                'leading_one_loop_topology')]
+    mock += [entry('baseline_quadratic',n) for n in ('MS1','MS2')]
+    mock += [entry('baseline_quartic_family',n) for n in
+             ('lambdaS1Inv*','lambdaS2Inv*','lambdaH1Inv*',
+              'lambdaH2Inv*','lambda12Inv*')]
+    mock += [entry('additional_quartic',n,c,'observed_in_saved_one_loop_C5',True)
+             for n,c in (('lambdaT3ExtraQ020020I1',[0,2,0,0,2,0]),
+                         ('lambdaT3ExtraQ020200I1',[0,2,0,2,0,0]))]
+    mock += [entry('additional_quartic',n,c,'not_direct',False) for n,c in (
+        ('lambdaT3ExtraQ000112I1',[0,0,0,1,1,2]),
+        ('lambdaT3ExtraQ000202I1',[0,0,0,2,0,2]),
+        ('lambdaT3ExtraQ001201I1',[0,0,1,2,0,1]),
+        ('lambdaT3ExtraQ110101I1',[1,1,0,1,0,1]),
+        ('lambdaT3ExtraQ110101I2',[1,1,0,1,0,1]))]
+    mock.append(entry('additional_quadratic','mu2_extra_000101_I1',
+                      [0,0,0,1,0,1]))
+    model_audit=classify_model(mock,'B_-1')
+    need(len(model_audit['one_loop_triangle_graphs'])==3 and
+         len(model_audit['additional_tree_quadratic_not_excluded'])==1,
+         'Actual-manifest null baseline schema regression')
+    for wrong in ('additional_quartic','baseline_topology','additional_quadratic'):
+        altered=[dict(v) for v in mock]
+        victim=next(v for v in altered if v['kind']==wrong)
+        victim['counts_H_Hdag_S1_S1dag_S2_S2dag']=None
+        try: classify_model(altered,'B_-1')
+        except CompletenessError:pass
+        else:raise CompletenessError('Required counts-null mutation accepted: '+wrong)
+    print('PASS: actual manifest null baseline fields; required quartic and quadratic signatures remain strict')
     print('PASS: independent quartic Wick orientations and three graph channels')
     print('PASS: full matched-source LLHH selection, missing quartic and bilinear tamper rejected')
     need(2*(3-2)+(4-2)==4,'Wrong one-loop renormalizable valence budget')

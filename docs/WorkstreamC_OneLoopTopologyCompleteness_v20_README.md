@@ -1,4 +1,4 @@
-# Workstream C — v20: source-level one-loop LLHH topology completeness
+# Workstream C — v20.1: source-level one-loop LLHH topology completeness
 
 ## Scope
 
@@ -32,6 +32,10 @@ additional bilinear per model. The bilinear `mu2_extra_000101_I1` has species
 requires re-diagonalization, not loop-counting suppression. The zero-mixed-mass
 boundary is an assumption of the earlier scalar relevance benchmark, not a
 general constraint imposed by the UV symmetries.
+
+## v20.1 source-schema correction
+
+The source manifest records `counts_H_Hdag_S1_S1dag_S2_S2dag: null` for the baseline quadratic masses (`MS1`, `MS2`) and five baseline quartic *families*. These families are not concrete four-field vertices. v20 erroneously called `tuple(null)` before branching by operator type, causing `NoneType object is not iterable`. v20.1 leaves these entries in the category inventory and demands an explicit six-integer species vector only for the baseline topology, additional quartics and additional mixed quadratic. The regression test reproduces the exact repository category counts (1 + 2 + 5 + 7 + 1). No physical matching, term selection or status criteria are relaxed.
 
 ## What the batch does
 
@@ -68,7 +72,7 @@ Matchete symbolic EOMEFT algebraic equality pass.
 
 ```powershell
 cd C:\thesistemp\T3neutrinomassmodelpipeline
-Expand-Archive -LiteralPath "$HOME\Downloads\T3_WorkstreamC_OneLoopTopologyCompleteness_v20.zip" -DestinationPath . -Force
+Expand-Archive -LiteralPath "$HOME\Downloads\T3_WorkstreamC_OneLoopTopologyCompleteness_v20_1.zip" -DestinationPath . -Force
 & .\scripts\RunT3BCOneLoopTopologies.ps1
 ```
 

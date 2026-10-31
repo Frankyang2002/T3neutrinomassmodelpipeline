@@ -285,10 +285,14 @@ T3RGBetaAddMasses[
             Chirality -> Right
         ],
 
-        fermionInvariant = If[
-            dF === 1,
-            (1 &),
-            (del[T3RGBetaRep[dF], #1, #2] &)
+        (* F and Fc are both registered as unbarred SU(2) fundamentals
+           when dF == 2. Their invariant Dirac mass needs epsilon, not
+           delta. The singlet and real triplet cases retain their forms. *)
+        fermionInvariant = Which[
+            dF === 1, (1 &),
+            dF === 2, (eps[T3RGBetaRep[dF], #1, #2] &),
+            dF === 3, (del[T3RGBetaRep[dF], #1, #2] &),
+            True, Return[$Failed]
         ];
 
         AddFermionMass[

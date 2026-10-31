@@ -1,0 +1,406 @@
+"""Workstream A: six-model experimental real-scalar heavy eigenbasis audit.
+
+Runs Lagrangian/RunSixSelfBilinearEigenMatchete.wl in SEPARATE Wolfram kernels
+for A/D/E at alpha=-2,0. Reads its actual JSON and checks a numerical
+native-Cartesian potential/spectrum benchmark including a complex bilinear.
+
+No project source, production flags, GitHub state or B/C/D output is changed.
+The four experimental environment flags are scoped to each Wolfram subprocess.
+
+Run from the repository root:
+    python Lagrangian/RunSixSelfBilinearEigenAudit.py --self-test
+    python Lagrangian/RunSixSelfBilinearEigenAudit.py --all
+    python Lagrangian/RunSixSelfBilinearEigenAudit.py --model A_-2
+"""
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import math
+import os
+from pathlib import Path
+import subprocess
+import sys
+from typing import Any
+
+import numpy as np
+
+ROOT = Path(__file__).resolve().parents[1]
+# When invoked as `python Lagrangian\RunSixSelfBilinearEigenAudit.py`, sys.path[0]
+# is Lagrangian rather than the repository root.  Add the repository root
+# explicitly so the existing Numerical.experimental package is importable.
+# This changes only this runner process; no production code or PYTHONPATH.
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+DRIVER = ROOT / "Lagrangian" / "RunSixSelfBilinearEigenMatchete.wl"
+MODELS = ("A_-2", "A_+0", "D_-2", "D_+0", "E_-2", "E_+0")
+SUCCESS = "MatcheteSelfEigenHeavyBasisPassedMatchingNotPerformed"
+FLAGS = (
+    "T3_EXPERIMENTAL_FLAVOR_MASSES",
+    "T3_EXPERIMENTAL_GENERAL_FERMIONS",
+    "T3_EXPERIMENTAL_GENERAL_QUARTICS",
+    "T3_EXPERIMENTAL_GENERAL_QUADRATICS",
+)
+
+
+def require(condition: bool, message: str) -> None:
+    if not condition:
+        raise ValueError(message)
+
+
+def slug(model: str) -> str:
+    require(model in MODELS, "Unsupported six-self-bilinear model: " + model)
+    return model.replace("_-2", "_m2").replace("_+0", "_p0")
+
+
+def native_dim(model: str) -> int:
+    require(model in MODELS, "Unsupported model")
+    # Source T3ModelCatalog.wl representation families: A=(1,3),
+    # D=(3,1), E=(3,3) for (S1,S2).
+    family, alpha = model.split("_")
+    scalar_dims = {"A": (1, 3), "D": (3, 1), "E": (3, 3)}[family]
+    return scalar_dims[1 if alpha == "-2" else 0]
+
+
+def parse_native_factor(value: str) -> complex:
+    # The existing native-expression parser accepts only explicit exact
+    # Mathematica numeric InputForm, NOT general Wolfram expressions.
+    from Numerical.experimental.T3SelfBilinearMassBasis import parse_matchete_constant
+    return parse_matchete_constant(value)
+
+
+def native_cartesian_benchmark(dim: int, factor: complex) -> dict[str, Any]:
+    """Independent potential check of the native delta_ij self tensor.
+
+    Matchete source interaction has +lambda_L Sdag Sdag + h.c.; our
+    numerical potential uses mu_V=-lambda_L*f.  The sign convention is
+    EXPLICIT and is not asserted by the Wolfram UV consistency check.
+    No physical Matchete/RGBeta component map is certified here.
+    """
+    require(dim in (1, 3), "The selected scalar must be a real SU(2) irrep")
+    require(math.isfinite(factor.real) and math.isfinite(factor.imag)
+            and abs(factor) > 0, "Invalid native bilinear tensor factor")
+    m_sq = 900.0**2
+    lam_lagrangian = 120.0**2 * np.exp(0.37j)
+    mu_potential = -lam_lagrangian * factor
+    mass_plus = float(m_sq + 2 * abs(mu_potential))
+    mass_minus = float(m_sq - 2 * abs(mu_potential))
+    require(mass_minus > 0, "Chosen benchmark is tachyonic")
+    phase = complex(np.exp(0.5j * np.angle(mu_potential)))
+    rng = np.random.default_rng(20261031 + dim)
+    errors = []
+    for _ in range(24):
+        real = rng.normal(size=dim)
+        imag = rng.normal(size=dim)
+        scalar = phase * (real + 1j * imag) / math.sqrt(2)
+        v_original = (m_sq * np.vdot(scalar, scalar).real
+                      + 2.0 * (mu_potential * np.dot(scalar.conj(), scalar.conj())).real)
+        v_diagonal = 0.5 * (mass_plus * np.dot(real, real)
+                            + mass_minus * np.dot(imag, imag))
+        errors.append(abs(v_original - v_diagonal))
+    scale = max(1.0, m_sq * dim * 100.0)
+    max_error = float(max(errors))
+    require(max_error < 2e-10 * scale,
+            f"Cartesian bilinear mass potential did not diagonalize: {max_error}")
+
+    p_sq = (215.0)**2
+    g_plus, g_minus = 1.0 / (p_sq + mass_plus), 1.0 / (p_sq + mass_minus)
+    normal = (g_plus + g_minus) * np.eye(dim) / 2.0
+    anomalous = phase**2 * (g_plus - g_minus) * np.eye(dim) / 2.0
+    require(np.allclose(normal, normal.T.conj(), atol=1e-16)
+            and np.allclose(anomalous, anomalous.T, atol=1e-16),
+            "Normal/anomalous native propagator symmetry failed")
+    # mu_V=0 limit: plus/minus degenerate and anomalous propagator vanishes.
+    return {
+        "potential_convention": "V2=m2*Sdag*S+muV*Sdag_i*Sdag_i+h.c.",
+        "source_lagrangian_to_potential_assumption": "muV=-lambdaL*native_factor",
+        "squared_mass_central_gev2": m_sq,
+        "lambda_lagrangian_real_gev2": float(lam_lagrangian.real),
+        "lambda_lagrangian_imag_gev2": float(lam_lagrangian.imag),
+        "mu_potential_real_gev2": float(mu_potential.real),
+        "mu_potential_imag_gev2": float(mu_potential.imag),
+        "mass_plus_squared_gev2": mass_plus,
+        "mass_minus_squared_gev2": mass_minus,
+        "real_multiplet_dimension": dim,
+        "potential_diagonalization_max_abs_residual_gev2": max_error,
+        "normal_propagator_00_gev_minus2": float(normal[0, 0].real),
+        "anomalous_propagator_00_real_gev_minus2": float(anomalous[0, 0].real),
+        "anomalous_propagator_00_imag_gev_minus2": float(anomalous[0, 0].imag),
+        "native_component_map_certified": False,
+    }
+
+
+def static_selftest() -> None:
+    text = DRIVER.read_text(encoding="utf-8")
+    anchors = (
+        'T3SBPerform[] := Module[',
+        'T3SBStage["remove-only-holomorphic-bilinear"]',
+        'T3SBStage["rotate-complete-interaction-inventory"]',
+        'T3SBStage["rebuild-diagonal-free-Lagrangian"]',
+        'T3SBStage["matchete-ordinary-check"]',
+        'T3SBStage["matchete-detailed-check"]',
+        'T3SBCheckFlavorMass[free]',
+        'T3SBLoadPreflight[] := Module[',
+        'T3SB_STAGE: load-Matchete-before-API-symbol-parsing',
+        'Names["Matchete`" <> name]',
+        '"status"->"MatcheteReadyPreflight"',
+        '"native_bilinear_metric_proportional_identity"->True',
+        '"mass_parameter_relation_imposed_in_matchete"->False',
+    )
+    for anchor in anchors:
+        require(text.count(anchor) == 1, f"Missing/duplicated native builder anchor: {anchor}")
+    # A held function definition mentioning Field/DefineField/FreeLag before
+    # Needs creates conflicting Global` symbols; require the standalone load
+    # at top level before all Matchete-dependent helper definitions.
+    pos_load = text.index('$T3SBNeedsResult = CheckAbort[')
+    pos_helpers = text.index('T3SBHasLabelQ[expr_, label_Symbol]')
+    pos_preflight = text.index('T3SBLoadPreflight[] := Module[')
+    require(pos_load < pos_helpers < pos_preflight,
+            "Matchete load no longer precedes API-symbol parsing")
+    require('Names["*`" <> name]' not in text,
+            "Context-blind Matchete API detection reintroduced")
+    require(text.count('Needs["Matchete`"]') == 1,
+            "Matchete must be loaded exactly once at top level")
+    require(len(MODELS) == 6 and len({slug(m) for m in MODELS}) == 6,
+            "Incorrect model inventory")
+    # Regression: the original --all run raised ModuleNotFoundError on
+    # `Numerical` after A_-2 produced its Wolfram report.  Exercise the
+    # real repository module import even under direct script invocation.
+    require((ROOT / "Numerical/experimental/T3SelfBilinearMassBasis.py").is_file(),
+            "Missing source parser: Numerical/experimental/T3SelfBilinearMassBasis.py")
+    for raw, expected in (("1", 1.0 + 0j),
+                          ("-1/Sqrt[3]", -1.0 / math.sqrt(3)),
+                          ("I/Sqrt[3]", 1j / math.sqrt(3))):
+        require(abs(parse_native_factor(raw) - expected) < 1e-12,
+                "Native Matchete factor import/parser regression: " + raw)
+    for d in (1, 3):
+        for factor in (1.0 + 0j, -1.0 / np.sqrt(3), 1j / np.sqrt(3)):
+            native_cartesian_benchmark(d, complex(factor))
+    # Check non-unit mass-factor normalization is not silently discarded.
+    a = native_cartesian_benchmark(3, 1 / np.sqrt(3))
+    b = native_cartesian_benchmark(3, 1)
+    require(a["mass_plus_squared_gev2"] != b["mass_plus_squared_gev2"],
+            "Native tensor factor was not retained in splitting")
+    print("PASS: source anchors, repository import path, native factor parser and numerical self-test")
+    print("NOTE: no Wolfram kernel was run; Matchete eigenbasis acceptance remains unverified")
+
+
+def read_report(path: Path, model: str) -> dict[str, Any]:
+    require(path.is_file(), f"Missing Wolfram JSON report: {path}")
+    report = json.loads(path.read_text(encoding="utf-8-sig"))
+    require(isinstance(report, dict), "Wolfram report is not a JSON object")
+    require(report.get("format") == "t3-six-self-eigen-matchete-v1", "Wrong Wolfram schema")
+    require(report.get("model") == model, "Wrong Wolfram model name")
+    return report
+
+
+def evaluate_report(report: dict[str, Any], model: str) -> dict[str, Any]:
+    status = report.get("status", "MissingStatus")
+    row: dict[str, Any] = {
+        "model": model,
+        "status": status,
+        "passed": False,
+        "native_bilinear_metric_factor_inputform": report.get(
+            "native_bilinear_metric_factor_inputform"),
+    }
+    if status != SUCCESS:
+        row["failure_stage"] = report.get("last_stage", "Unknown")
+        row["diagnostic"] = report.get("diagnostic", report.get("detailed_check_inputform", ""))
+        return row
+    require(report.get("native_dimension") == native_dim(model),
+            "Native scalar irrep dimension differs from catalogue")
+    require(report.get("neutral_original_field") == ("NewScalar2" if model.endswith("-2")
+              else "NewScalar1"), "Incorrect neutral scalar selected")
+    for name in ("ordinary_matchete_check_passed", "detailed_heavy_mass_basis_passed",
+                 "neutral_scalar_removed_from_final_expression", "final_indexed_fermion_mass_present",
+                 "interaction_coupling_labels_preserved", "native_bilinear_metric_proportional_identity"):
+        require(report.get(name) is True, "Claimed pass lacks: " + name)
+    for name in ("physical_matching_performed", "matchete_rgbeta_normalization_certified",
+                 "native_component_identification_certified", "mass_parameter_relation_imposed_in_matchete"):
+        require(report.get(name) is False, "Unsupported certificate asserted: " + name)
+    require(report.get("additional_quartics_retained") == (6 if model.startswith("E") else 5),
+            "Wrong extra-quartic count")
+    require(report.get("additional_yukawas_retained") == 1, "Third Yukawa not preserved")
+    raw_factor = report.get("native_bilinear_metric_factor_inputform")
+    factor = parse_native_factor(raw_factor)
+    row["native_factor"] = {"real": factor.real, "imag": factor.imag}
+    row["numerical_benchmark"] = native_cartesian_benchmark(native_dim(model), factor)
+    row["passed"] = True
+    return row
+
+
+def run_preflight(*, out_dir: Path, wolframscript: str,
+                  timeout_seconds: int) -> dict[str, Any]:
+    """Single lightweight Matchete startup test before any six-model run."""
+    path = out_dir / "preflight.json"
+    log = out_dir / "preflight.log"
+    cmd = [wolframscript, "-file", str(DRIVER), str(path), "A", "m2"]
+    env = os.environ.copy()
+    env.update({flag: "1" for flag in FLAGS})
+    env["T3SB_PREFLIGHT_ONLY"] = "1"
+    print("PREFLIGHT: inspect Matchete load, front end and public APIs", flush=True)
+    try:
+        p = subprocess.run(cmd, cwd=ROOT, env=env, stdout=subprocess.PIPE,
+                           stderr=subprocess.STDOUT, encoding="utf-8", errors="replace",
+                           check=False, timeout=timeout_seconds)
+        log.write_text(p.stdout, encoding="utf-8")
+        exit_code = p.returncode
+    except subprocess.TimeoutExpired as exc:
+        s = exc.stdout or b""
+        log.write_text(s.decode("utf-8", "replace") if isinstance(s, bytes) else s,
+                       encoding="utf-8")
+        return {"status": "PreflightTimeout", "passed": False,
+                "diagnostic": "Matchete startup timed out", "log_file": str(log)}
+    except OSError as exc:
+        log.write_text(str(exc) + "\n", encoding="utf-8")
+        return {"status": "PreflightLaunchFailed", "passed": False,
+                "diagnostic": str(exc), "log_file": str(log)}
+    try:
+        data = read_report(path, "A_-2")
+        status = str(data.get("status", "MissingStatus"))
+        info = data.get("matchete_load_diagnostic")
+        ready = (status == "MatcheteReadyPreflight" and
+                 isinstance(info, dict) and info.get("ready") is True)
+        row = {"status": status, "passed": bool(ready and exit_code == 0),
+               "matchete_load_diagnostic": info}
+    except (ValueError, TypeError, KeyError, OSError, json.JSONDecodeError) as exc:
+        row = {"status": "PreflightReportVerificationFailed", "passed": False,
+               "diagnostic": str(exc)}
+    row.update({"wolfram_exit_code": exit_code, "report_file": str(path),
+                "log_file": str(log)})
+    if not row["passed"]:
+        if not row.get("diagnostic"):
+            row["diagnostic"] = "Matchete preflight failed before mass-eigenbasis construction"
+        # Include actual startup messages, not just a generic MatcheteUnavailable.
+        last_lines = log.read_text(encoding="utf-8", errors="replace").splitlines()[-24:]
+        print("PREFLIGHT FAILURE — recent Wolfram output:", flush=True)
+        for line in last_lines:
+            print("  " + line[:350], flush=True)
+    print(f"PREFLIGHT: {row['status']}; passed={row['passed']}; log={log}", flush=True)
+    return row
+
+
+def run_model(model: str, *, out_dir: Path, wolframscript: str,
+              timeout_seconds: int) -> dict[str, Any]:
+    name = slug(model)
+    report_path = out_dir / (name + ".json")
+    log_path = out_dir / (name + ".log")
+    family, alpha = model.split("_")
+    alpha_arg = "m2" if alpha == "-2" else "p0"
+    command = [wolframscript, "-file", str(DRIVER), str(report_path), family, alpha_arg]
+    env = os.environ.copy()
+    # A child-only opt-in; no persistent shell flags or production-process state.
+    env.update({flag: "1" for flag in FLAGS})
+    print(f"RUN {model}: native mass eigenbasis + full Matchete UV check", flush=True)
+    print("  Command: " + " ".join(command), flush=True)
+    try:
+        result = subprocess.run(command, cwd=ROOT, env=env, stdout=subprocess.PIPE,
+                                stderr=subprocess.STDOUT, encoding="utf-8", errors="replace",
+                                check=False, timeout=timeout_seconds)
+        log_path.write_text(result.stdout, encoding="utf-8")
+        exit_code = result.returncode
+    except subprocess.TimeoutExpired as exc:
+        output = exc.stdout or b""
+        if isinstance(output, bytes):
+            output = output.decode("utf-8", "replace")
+        log_path.write_text(output + "\nTIMEOUT\n", encoding="utf-8")
+        return {"model": model, "status": "WolframTimeout", "passed": False,
+                "log_file": str(log_path), "report_file": str(report_path)}
+    except OSError as exc:
+        log_path.write_text(str(exc) + "\n", encoding="utf-8")
+        return {"model": model, "status": "WolframLaunchFailed", "passed": False,
+                "diagnostic": str(exc), "log_file": str(log_path),
+                "report_file": str(report_path)}
+    try:
+        report = read_report(report_path, model)
+        row = evaluate_report(report, model)
+    except (ValueError, TypeError, KeyError, OSError, ImportError,
+            json.JSONDecodeError) as exc:
+        row = {"model": model, "status": "ReportVerificationFailed", "passed": False,
+               "diagnostic": str(exc)}
+    row.update({"wolfram_exit_code": exit_code, "report_file": str(report_path),
+                "log_file": str(log_path)})
+    if exit_code != 0:
+        row["passed"] = False
+        row["diagnostic"] = (row.get("diagnostic", "") +
+                             f" Wolfram exit code {exit_code}").strip()
+    print(f"  {model}: {row['status']}; passed={row['passed']}; log={log_path}", flush=True)
+    return row
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--self-test", action="store_true")
+    parser.add_argument("--all", action="store_true", help="Run all six cases")
+    parser.add_argument("--preflight", action="store_true",
+                        help="Diagnose Matchete startup only, no physics runs")
+    parser.add_argument("--model", choices=MODELS, action="append",
+                        help="Individual model; repeat to select several")
+    parser.add_argument("--output-dir", type=Path,
+                        default=ROOT / "Reports/output/workstream_a/six_self_eigenbasis")
+    parser.add_argument("--wolframscript", default="wolframscript")
+    parser.add_argument("--timeout-seconds", type=int, default=2400)
+    parser.add_argument("--overwrite", action="store_true",
+                        help="Allow replacing only this audit's existing report/log/summary files")
+    args = parser.parse_args()
+    if args.self_test:
+        static_selftest()
+        return 0
+    if sum([bool(args.all), bool(args.model), bool(args.preflight)]) != 1:
+        parser.error("Select exactly one of --all, --model or --preflight")
+    require(args.timeout_seconds > 0, "timeout must be positive")
+    require(DRIVER.is_file(), "The complete WL driver must be installed beside this runner")
+    selected = MODELS if args.all else (() if args.preflight else tuple(dict.fromkeys(args.model)))
+    out_dir = args.output_dir.resolve()
+    report_files = [out_dir / (slug(m) + ext) for m in selected for ext in (".json", ".log")]
+    summary = out_dir / "summary.json"
+    preflight_files = [out_dir / "preflight.json", out_dir / "preflight.log"]
+    candidate_files = preflight_files if args.preflight else [*report_files, summary, *preflight_files]
+    collisions = [str(x) for x in candidate_files if x.exists()]
+    if collisions and not args.overwrite:
+        raise FileExistsError("Existing audit results would be replaced. Pass --overwrite "
+                              "only after reviewing: " + ", ".join(collisions))
+    out_dir.mkdir(parents=True, exist_ok=True)
+    preflight = run_preflight(out_dir=out_dir, wolframscript=args.wolframscript,
+                              timeout_seconds=min(args.timeout_seconds, 240))
+    if args.preflight:
+        return 0 if preflight["passed"] else 3
+    rows = []
+    if preflight["passed"]:
+        for model in selected:
+            row = run_model(model, out_dir=out_dir, wolframscript=args.wolframscript,
+                            timeout_seconds=args.timeout_seconds)
+            rows.append(row)
+            # Global environment / license failures should not be repeated six times.
+            if row["status"] in ("MatcheteUnavailable", "WolframLaunchFailed"):
+                print("EARLY STOP: common Matchete startup failure; remaining models not run")
+                break
+    result = {
+        "format": "t3-six-self-eigenbasis-batch-v1",
+        "source": "WorkstreamAExperimentalMatcheteAndNativeCartesianNumericalCheck",
+        "models_requested": list(selected),
+        "models_passed": sum(bool(row.get("passed")) for row in rows),
+        "models_failed": sum(not bool(row.get("passed")) for row in rows),
+        "models_attempted": len(rows),
+        "models_skipped": len(selected) - len(rows),
+        "matchete_preflight": preflight,
+        "wolfram_driver_sha256": hashlib.sha256(DRIVER.read_bytes()).hexdigest(),
+        "physical_matching_performed": False,
+        "native_matchete_rgbeta_component_map_certified": False,
+        "eigenmass_relation_imposed_in_wolfram": False,
+        "results": rows,
+    }
+    summary.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n", encoding="utf-8")
+    print(f"SUMMARY: {result['models_passed']}/{len(selected)} passed; "
+          f"{result['models_attempted']} attempted, {result['models_skipped']} skipped; {summary}")
+    return 0 if (preflight["passed"] and len(rows) == len(selected) and
+                 result["models_failed"] == 0) else 6
+
+
+if __name__ == "__main__":
+    try:
+        sys.exit(main())
+    except (OSError, ValueError) as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        sys.exit(2)

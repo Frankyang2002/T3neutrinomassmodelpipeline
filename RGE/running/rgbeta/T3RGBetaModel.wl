@@ -259,6 +259,67 @@ T3RGBetaAddScalarMasses[
     ];
 ];
 
+(* Opt-in Workstream A general-fermion Yukawas.  The original restricted
+   topology is preserved unless T3_EXPERIMENTAL_GENERAL_FERMIONS=1.
+   CheckInvariance is deliberately not invoked: RGBeta v1.2.0's symbolic
+   diagnostic is not a certified Ward check for these component tensors.
+   Independent exact component Ward evidence lives in Workstream A reports.
+   This DOES NOT establish a physical Matchete/RGBeta coupling dictionary. *)
+T3RGBetaAddGeneralFermionYukawas[
+    dS1_Integer, dS2_Integer, dF_Integer, yF_
+] := Module[{which, extra, fields, invariant, scalarY, fermionY,
+             expectedName, countBefore, registered},
+    If[Environment["T3_EXPERIMENTAL_GENERAL_FERMIONS"] =!= "1",
+        Return[{}]
+    ];
+    (* Hypercharges of S1 and S2 are yF-1/2 and yF+1/2. *)
+    which = Which[
+        TrueQ[yF === 1/2], 1,
+        TrueQ[yF === -1/2], 2,
+        True, 0
+    ];
+    If[which === 0, Return[{}]];
+    If[dF =!= 2 || !MemberQ[{1, 3}, If[which === 1, dS1, dS2]],
+        Print["Invalid general-fermion Yukawa representation: ",
+            {dS1, dS2, dF, yF}];
+        Return[$Failed]
+    ];
+    invariant = T3RGBetaYukawaInvariant[If[which === 1, dS1, dS2], dF];
+    If[which === 1,
+        extra = y1Conj;
+        fields = {S1, l, F};
+        scalarY = yF - 1/2;
+        fermionY = yF,
+        extra = y2Conj;
+        fields = {Bar[S2], l, Fc};
+        scalarY = -(yF + 1/2);
+        fermionY = -yF
+    ];
+    If[!TrueQ[FullSimplify[-1/2 + scalarY + fermionY == 0]],
+        Print["General Yukawa U1Y test failed"];
+        Return[$Failed]
+    ];
+    expectedName = If[which === 1, y1, y2];
+    If[!AssociationQ[$yukawas] || Length[$yukawas] =!= 5 ||
+       !KeyExistsQ[$yukawas, expectedName] || KeyExistsQ[$yukawas, extra],
+        Print["Unexpected RGBeta Yukawa registry before optional extension"];
+        Return[$Failed]
+    ];
+    countBefore = Length[$yukawas];
+    registered = CheckAbort[Check[
+        AddYukawa[extra, fields,
+            GroupInvariant -> invariant,
+            CouplingIndices -> ({gen[#2], heavy[#3]} &),
+            Chirality -> Right]; True,
+        $Failed], $Aborted];
+    If[registered =!= True || Length[$yukawas] =!= countBefore + 1 ||
+       !KeyExistsQ[$yukawas, extra],
+        Print["Extra RGBeta Yukawa registration failed"];
+        Return[$Failed]
+    ];
+    {extra}
+];
+
 (* We add scalar and fermion mass term *)
 T3RGBetaAddMasses[
     dS1_Integer,
@@ -653,6 +714,10 @@ T3RGBetaBuild[
     ];
 
     T3RGBetaAddT3Yukawas[dS1, dS2, dF, yF];
+    (* Extension is opt-in; disabled mode produces the original five Yukawas. *)
+    If[T3RGBetaAddGeneralFermionYukawas[dS1, dS2, dF, yF] === $Failed,
+        Return[$Failed]
+    ];
     T3RGBetaAddMasses[dS1, dS2, dF, yF];
 
     T3RGBetaAddBasicQuartics[dS1, dS2];
@@ -929,6 +994,14 @@ T3RGBetaOneLoopBetas[] := Module[
         ];
     ];
 
+    (* These one-loop beta functions must be included in the same UV system
+       if their independent flavour matrices have been registered. *)
+    If[KeyExistsQ[$yukawas, y1Conj],
+        AssociateTo[result, "y1Conj" -> Quiet[BetaTerm[y1Conj, 1]]]
+    ];
+    If[KeyExistsQ[$yukawas, y2Conj],
+        AssociateTo[result, "y2Conj" -> Quiet[BetaTerm[y2Conj, 1]]]
+    ];
     result
 ];
 

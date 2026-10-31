@@ -1,0 +1,37 @@
+{
+  "format": "bc-leading-order-validation-gate-v1",
+  "utc_time": "2026-10-31T22:40:06.653738+00:00",
+  "source": "scripts\\DirectVsSequentialOneLoop.experimental.py",
+  "native_output": "output\\audits\\t3_bc_direct_vs_sequential_full_mass_v22\\summary.json",
+  "matchete_direct_vs_sequential_test": "PASS_LIMITED_SCOPE",
+  "physical_rg_evolved_mass_certified": false,
+  "full_renormalized_threshold_matching_certified": false,
+  "notes": [
+    "Compares frozen-parameter one-loop Matchete direct and F/Y/X sequential results.",
+    "Not an external Feynman-rule derivation or validation of the running five-mass numerical spectra."
+  ],
+  "selftest": {
+    "exit_code": 0,
+    "stdout_tail": "PASS: safe Matchete direct InputForm arithmetic and C triplet prefactor\nPASS: 3 ordered flavour channels, arbitrary code/tamper rejection, Majorana transpose\nPASS: physical-C5 certification remains blocked\n",
+    "stderr_tail": ""
+  },
+  "comparison": {
+    "exit_code": 0,
+    "stdout_tail": "B_-1: direct 480 terms; 12 independent comparisons; max relative residual 2.8642e-16; agreement PASS\nC_-1: direct 480 terms; 12 independent comparisons; max relative residual 5.9415e-16; agreement PASS\nSaved: C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\audits\\t3_bc_direct_vs_sequential_full_mass_v22\\summary.json\nPASS: direct all-heavy vs sequential full-mass A numerical equality in tested channels; NO complete physical C5\n",
+    "stderr_tail": ""
+  },
+  "native_status": "DirectAllHeavyVsSequentialComparisonCompleted",
+  "model_results": {
+    "B_m1": {
+      "pass": true,
+      "max_relative_residual": 2.8641851388304746e-16,
+      "matrix_relative_residual": 2.0735434119586761e-16
+    },
+    "C_m1": {
+      "pass": true,
+      "max_relative_residual": 5.941468556643733e-16,
+      "matrix_relative_residual": 2.6487228631849397e-16
+    }
+  },
+  "failures": []
+}

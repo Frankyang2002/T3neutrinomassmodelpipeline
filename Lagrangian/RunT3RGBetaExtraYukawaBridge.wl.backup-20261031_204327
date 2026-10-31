@@ -1,0 +1,155 @@
+(* Workstream A, experimental RGBeta GENERAL-FERMION Yukawa coverage.
+   Executed separately for six neutral-scalar models, one new coupling each.
+   Does not modify T3RGBetaModel.wl or export beta functions.
+   wolframscript -file Lagrangian/RunT3RGBetaExtraYukawaBridge.wl OUTPUT.json A m2
+   Model tags: A_m2,A_p0,D_m2,D_p0,E_m2,E_p0.
+   A valid native registration is not a Matchete-RGBeta coupling certificate. *)
+ClearAll["Global`*"];
+$T3RYArgs = Rest[$ScriptCommandLine];
+If[Length[$T3RYArgs] =!= 3, Print["Usage: OUTPUT.json A|D|E m2|p0"]; Exit[2]];
+$T3RYOut = ExpandFileName[$T3RYArgs[[1]]];
+$T3RYLabel = ToUpperCase[$T3RYArgs[[2]]] <> "_" <> $T3RYArgs[[3]];
+$T3RYSpecs = <|
+ "A_m2" -> {1, 3, 2, -2}, "A_p0" -> {1, 3, 2, 0},
+ "D_m2" -> {3, 1, 2, -2}, "D_p0" -> {3, 1, 2, 0},
+ "E_m2" -> {3, 3, 2, -2}, "E_p0" -> {3, 3, 2, 0}|>;
+If[!KeyExistsQ[$T3RYSpecs, $T3RYLabel],
+  Print["Unsupported neutral-scalar model: ", $T3RYLabel]; Exit[2]];
+$T3RYDir = DirectoryName @ ExpandFileName[$InputFileName];
+$T3RYRoot = DirectoryName[$T3RYDir];
+(* Needs must execute BEFORE parsing helper definitions that contain RGBeta APIs. *)
+$T3RYLoad = CheckAbort[Check[Needs["RGBeta`"]; True, $Failed], $Aborted];
+If[$T3RYLoad =!= True, Print["RGBeta package could not load"]; Exit[3]];
+Get[FileNameJoin[{$T3RYRoot, "RGE", "running", "rgbeta", "T3RGBetaModel.wl"}]];
+
+ClearAll[T3RYFail, T3RYKeyName, T3RYRead, T3RYRun];
+$T3RYStep = "initialization";
+T3RYFail[msg_String] := Throw[<|"status"->"NativeRGBetaYukawaRegistrationBlocked",
+  "reason"->msg, "failed_step"->$T3RYStep,
+  "native_ward_check_passed"->False,
+  "physical_matchete_rgbeta_coupling_map_certified"->False,
+  "one_loop_beta_evaluated"->False|>, "T3RYStop"];
+T3RYKeyName[k_] := Last[StringSplit[ToString[k,InputForm], "`"]];
+T3RYRead[r_Association, key_String] := Module[{ks},
+  ks=Select[Keys[r], T3RYKeyName[#] === key &];
+  If[Length[ks] =!= 1, T3RYFail["Missing/duplicate native key "<>key]];
+  Lookup[r, First[ks], Missing["NoNativeKey",key]]
+];
+T3RYRun[] := Module[
+  {dims, d1,d2,df,alpha,built,existing,coupling,baseline,
+   expectedExtra,expectedBase,inv,reg,keysBefore,keysAfter,
+   old,added,extraField,baseField,newRecord,baseRecord,
+   nativeFields,nativeBaseFields,nativeInv,nativeBaseInv,expectedName,wardOptions},
+  $T3RYStep = "resolve-model";
+  dims = $T3RYSpecs[$T3RYLabel];
+  {d1,d2,df,alpha}=dims;
+  $T3RYStep = "base-model-build";
+  built=CheckAbort[Check[T3RGBetaBuild[d1,d2,df,alpha],$Failed],$Aborted];
+  If[!AssociationQ[built],T3RYFail["RGBeta base model build failed"]];
+  If[alpha === 0,
+    coupling=y1Conj; baseline=y1;
+    expectedExtra={S1,l,F}; expectedBase={Bar[S1],l,F};
+    inv=T3RGBetaYukawaInvariant[d1,df]; expectedName="y1Conj";
+    extraField="S1"; baseField="Bar[S1]",
+    coupling=y2Conj; baseline=y2;
+    expectedExtra={Bar[S2],l,Fc}; expectedBase={S2,l,Fc};
+    inv=T3RGBetaYukawaInvariant[d2,df]; expectedName="y2Conj";
+    extraField="Bar[S2]"; baseField="S2"
+  ];
+  $T3RYStep = "baseline-yukawa-registry";
+  keysBefore=Keys[$yukawas];
+  If[Length[keysBefore] =!= 5 || !KeyExistsQ[$yukawas,baseline] ||
+     KeyExistsQ[$yukawas,coupling],
+     T3RYFail["Expected five pre-existing SM/T3 Yukawas and absent extra coupling"]];
+  baseRecord = Lookup[$yukawas, baseline, Missing["NoBaseYukawa"]];
+  If[!AssociationQ[baseRecord], T3RYFail["Missing native baseline record"]];
+  nativeBaseFields = T3RYRead[baseRecord, "Fields"];
+  If[!SameQ[nativeBaseFields,expectedBase],
+    T3RYFail["Baseline native RGBeta field order changed: "<>
+      ToString[nativeBaseFields,InputForm]]];
+  nativeBaseInv=T3RYRead[baseRecord,"Invariant"];
+  If[!SameQ[nativeBaseInv,inv],
+    T3RYFail["Native baseline Yukawa invariant differs from source function"]];
+  (* CheckInvariance is a NON-EXPORTED native RGBeta option in the inspected
+     upstream package. Resolve its exact symbolic context from Options,
+     rather than accidentally passing Global`CheckInvariance (ignored). *)
+  $T3RYStep = "resolve-native-ward-option";
+  wardOptions=Select[First /@ Options[AddYukawa],
+    T3RYKeyName[#] === "CheckInvariance" &];
+  If[Length[wardOptions] =!= 1,
+     T3RYFail["Could not resolve exactly one native CheckInvariance option"]];
+  (* RGBeta's native Ward check emits AddYukawa::gaugeInv on violation.
+     Any Mathematica message blocks this audit; no silent disable. *)
+  $T3RYStep = "register-extra-yukawa-with-native-ward-check";
+  reg=With[{wardOption=First[wardOptions]},
+    CheckAbort[Check[
+      AddYukawa[coupling,expectedExtra,
+        GroupInvariant -> inv,
+        CouplingIndices -> ({gen[#2],heavy[#3]} &),
+        Chirality -> Right,
+        wardOption -> True]; True,
+      $Failed],$Aborted]];
+  If[reg =!= True, T3RYFail["AddYukawa or native CheckInvariance emitted a message/failed"]];
+  $T3RYStep = "validate-registered-yukawa";
+  keysAfter=Keys[$yukawas];
+  If[Length[keysAfter] =!= 6 || !KeyExistsQ[$yukawas,coupling] ||
+    Complement[keysAfter,keysBefore] =!= {coupling},
+    T3RYFail["Native RGBeta Yukawa registry does not contain exactly one new key"]];
+  newRecord=Lookup[$yukawas,coupling,Missing["NoExtraYukawa"]];
+  If[!AssociationQ[newRecord],T3RYFail["Missing native extra-Yukawa record"]];
+  nativeFields=T3RYRead[newRecord,"Fields"];
+  nativeInv=T3RYRead[newRecord,"Invariant"];
+  If[!SameQ[nativeFields,expectedExtra] || !SameQ[nativeInv,nativeBaseInv] ||
+    !SameQ[T3RYRead[newRecord,"Chirality"],Right] ||
+    !SameQ[T3RYRead[newRecord,"Indices"],T3RYRead[baseRecord,"Indices"]],
+    T3RYFail["Native field order/invariant/chirality/flavour structure changed"]];
+  <|
+    "status"->"ExtraYukawaRegisteredNativeWardCheckPassed",
+    "last_completed_step"->"validate-registered-yukawa",
+    "model"->$T3RYLabel,
+    "dimensions_alpha"->dims,
+    "hypercharge_scalar_extra"->0,
+    "hypercharge_fermion"->(alpha+1)/2,
+    "extra_yukawa"->expectedName,
+    "baseline_yukawa"->If[alpha===0,"y1","y2"],
+    "registered_yukawas_before"->Length[keysBefore],
+    "registered_yukawas_after"->Length[keysAfter],
+    "extra_fields_inputform"->ToString[nativeFields,InputForm],
+    "baseline_fields_inputform"->ToString[nativeBaseFields,InputForm],
+    "extra_invariant_inputform"->ToString[nativeInv[t3ry1,t3ry2,t3ry3],InputForm],
+    "baseline_invariant_inputform"->ToString[nativeBaseInv[t3ry1,t3ry2,t3ry3],InputForm],
+    "same_native_su2_invariant_as_baseline"->True,
+    "native_ward_check_invoked"->True,
+    "native_ward_check_passed"->True,
+    "independent_flavour_matrix_registered"->True,
+    "one_loop_beta_evaluated"->False,
+    "physical_matchete_rgbeta_coupling_map_certified"->False,
+    "physical_component_basis_certified"->False,
+    "production_state_modified"->False
+  |>
+];
+(* Do NOT wrap Catch in Check: a message emitted inside a failing native
+   check can make Check replace an otherwise useful Throw association with
+   $Failed. Catch must retain T3RYFail's precise diagnostic. The specific
+   native API calls above already use Check and fail closed. *)
+$T3RYRes=CheckAbort[Catch[T3RYRun[],"T3RYStop"],$Aborted];
+If[!AssociationQ[$T3RYRes], $T3RYRes=<|
+  "status"->"NativeRGBetaYukawaRegistrationBlocked",
+  "reason"->If[$T3RYRes === $Aborted,
+    "Wolfram evaluation aborted unexpectedly",
+    "Wolfram native call returned a non-association result: "<>
+       ToString[$T3RYRes,InputForm]],
+  "failed_step"->$T3RYStep,
+  "native_ward_check_passed"->False,
+  "physical_matchete_rgbeta_coupling_map_certified"->False|>];
+$T3RYRes=Join[<|
+  "format"->"t3-workstream-a-rgbeta-extra-yukawa-registration-v1",
+  "model"->$T3RYLabel|>,$T3RYRes];
+If[!DirectoryQ[DirectoryName[$T3RYOut]],
+  CreateDirectory[DirectoryName[$T3RYOut],CreateIntermediateDirectories->True]];
+Export[$T3RYOut,$T3RYRes,"RawJSON"];
+Print[$T3RYLabel,": ",Lookup[$T3RYRes,"status","Invalid"],
+  "; source-only experimental registration, no RGE/matching run"];
+If[Lookup[$T3RYRes,"status",""] =!=
+  "ExtraYukawaRegisteredNativeWardCheckPassed", Exit[6]];
+Exit[0];

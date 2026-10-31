@@ -1,8 +1,12 @@
-(* Construct ordinary T3 UV Lagrangians from validated independent SU(2)
-   invariants.  An opt-in general-scalar build never silently discards an
-   allowed holomorphic quadratic.  B/C(-1) off-diagonal scalar masses cannot
-   pass Matchete's HeavyMassBasis test without diagonalization.  Such a
-   Lagrangian is exported as a blocked symbolic object, NOT passed to Match. *)
+(* Construct ordinary T3 UV Lagrangians from validated SU(2) invariants.
+   Scalar quartics/quadratics and additional fermionic Yukawas are opt-in.
+   Do not interpret a successful Matchete CheckLagrangian as proof of
+   renormalizable operator-basis completeness. The one-symbol MF flavour
+   mass parameter and mixed scalar mass basis remain separate limitations.
+
+   B/C(-1) off-diagonal scalar masses cannot pass Matchete's HeavyMassBasis
+   test without diagonalization. Such a Lagrangian is exported as a blocked
+   symbolic object, NOT passed to Match. *)
 ClearAll[
   ValidateT3Candidate,
   SelectFirstValidByGroup,
@@ -49,7 +53,9 @@ BuildT3Lagrangian[model_Association] := Module[
    LInt, LBSM, LUV, fullValidation, ingredientsPresent,
    massRequested, massExpected, massCandidates, massAccepted,
    rejectedRequired, mixedHeavy, massBasisBlocked, massIncluded,
-   assembled, status},
+   assembled, status, extraYRequested, extraYExpected, extraYCandidates,
+   extraYAccepted, extraYIncluded, extraYAllValid, quarticExpected,
+   quarticIncluded, scalarAllRequested},
 
   ResetAll[];
   Print["Build stage 1/4: load SM"];
@@ -76,6 +82,18 @@ BuildT3Lagrangian[model_Association] := Module[
     candidates;
   validated = ValidateT3Candidate[#, LSM, LFree] & /@ candidates;
 
+  extraYRequested = TrueQ[T3ExperimentalGeneralFermionsQ[]];
+  extraYExpected = T3GeneralExtraYukawaCount[model];
+  extraYCandidates = Select[validated,
+    Lookup[#, "Class", ""] === "ExtraYukawa" &];
+  extraYAccepted = Select[extraYCandidates, TrueQ[#["Valid"]] &];
+  If[extraYRequested && Length[extraYCandidates] =!= extraYExpected,
+    Print["ERROR: generated extra-Yukawa count does not match gauge inventory."];
+    Return[$Failed]
+  ];
+  extraYAllValid = extraYRequested &&
+    Length[extraYAccepted] === extraYExpected;
+
   massRequested = TrueQ[T3ExperimentalGeneralQuadraticsQ[]];
   massExpected = If[massRequested,
     Length[T3ExtendedExtraQuadraticStructures[model]], 0];
@@ -86,9 +104,9 @@ BuildT3Lagrangian[model_Association] := Module[
     Return[$Failed]
   ];
 
-  (* B/C(-1) has a non-diagonal charged scalar mass term.  Its operator is
+  (* B/C(-1) has a non-diagonal charged scalar mass term. Its operator is
      kept in the symbolic expression, but ordinary Matchete validation
-     cannot authorize matching.  Other rejections remain hard errors. *)
+     cannot authorize matching. Other rejections remain hard errors. *)
   mixedHeavy = massRequested &&
     model["Alpha"] === -1 &&
     model["Scalar1", "SU2"] === 2 &&
@@ -99,13 +117,16 @@ BuildT3Lagrangian[model_Association] := Module[
   rejectedRequired = Select[validated,
     !TrueQ[#["Valid"]] &&
     (Lookup[#, "Class", ""] === "ExtraQuartic" ||
-      (Lookup[#, "Class", ""] === "ExtraQuadratic" && !mixedHeavy)) &];
+      (Lookup[#, "Class", ""] === "ExtraQuadratic" && !mixedHeavy) ||
+      (Lookup[#, "Class", ""] === "ExtraYukawa")) &];
 
   valid = SelectFirstValidByGroup @ Select[validated, TrueQ[#["Valid"]] &];
-  (* Include a blocked B/C mixed mass in the symbolic LUV; never drop it. *)
+  (* Include a blocked B/C mixed mass in symbolic LUV; never drop it. *)
   assembled = If[mixedHeavy, Join[valid, massBasisBlocked], valid];
   massIncluded = Count[assembled,
     _?(Lookup[#, "Class", ""] === "ExtraQuadratic" &)];
+  extraYIncluded = Count[assembled,
+    _?(Lookup[#, "Class", ""] === "ExtraYukawa" &)];
   rejected = Select[validated, !TrueQ[#["Valid"]] &];
 
   LInt = Total[Lookup[assembled, "Expression", {}]] // Expand // RelabelIndices;
@@ -114,9 +135,22 @@ BuildT3Lagrangian[model_Association] := Module[
   fullValidation = CheckAbort[Check[CheckLagrangian[LUV], $Failed], $Aborted];
   ingredientsPresent = T3IngredientsPresentQ[valid];
 
+  (* Structure inventory is not identical to a physical-basis certificate. *)
+  quarticExpected = T3ExtendedVerifiedStructureCount[model];
+  quarticIncluded = Count[assembled,
+    _?(Lookup[#, "Class", ""] === "ExtraQuartic" &)];
+  scalarAllRequested = TrueQ[T3ExperimentalGeneralQuadraticsQ[]] &&
+    IntegerQ[quarticExpected] && quarticIncluded === quarticExpected;
+
   status = Which[
+    !ingredientsPresent, "RequiredTopologyOperatorRejected",
+    Length[rejectedRequired] > 0 &&
+      AnyTrue[rejectedRequired, Lookup[#, "Class", ""] === "ExtraYukawa" &],
+      "RequiredGeneralFermionOperatorRejected",
     Length[rejectedRequired] > 0 || massIncluded =!= massExpected,
       "RequiredGeneralScalarOperatorRejected",
+    extraYRequested && extraYIncluded =!= extraYExpected,
+      "RequiredGeneralFermionOperatorRejected",
     Length[massBasisBlocked] > 0 && mixedHeavy,
       "RequiresMixedScalarMassDiagonalization",
     TrueQ[fullValidation], "Success",
@@ -138,12 +172,25 @@ BuildT3Lagrangian[model_Association] := Module[
     "RejectedInteractions" -> Lookup[rejected, "Name", {}],
     "T3IngredientsPresent" -> ingredientsPresent,
     "WeinbergIngredientsPresent" -> ingredientsPresent,
+    "AdditionalYukawasExpected" -> extraYExpected,
+    "AdditionalYukawasRequested" -> extraYRequested,
+    "AdditionalYukawasIncluded" -> extraYIncluded,
+    "AdditionalYukawasIndividuallyValidated" -> Length[extraYAccepted],
+    "FermionYukawaInventoryAssembled" -> (extraYExpected === 0 ||
+      TrueQ[extraYAllValid] && extraYIncluded === extraYExpected),
     "AdditionalQuadraticsRequested" -> massRequested,
     "AdditionalQuadraticsExpected" -> massExpected,
     "AdditionalQuadraticsIncluded" -> massIncluded,
     "AdditionalQuadraticsIndividuallyValidated" -> Length[massAccepted],
     "AdditionalQuadraticsHeavyMassBasisBlocked" -> Length[massBasisBlocked],
+    "AdditionalQuarticsExpected" -> quarticExpected,
+    "AdditionalQuarticsIncluded" -> quarticIncluded,
+    "AllScalarExtensionsRequested" -> scalarAllRequested,
     "MatchingMassBasisReady" -> (status === "Success"),
-    "FullValidation" -> fullValidation
+    "FullValidation" -> fullValidation,
+    (* A mass FLAVOR certificate and complete operator proof are not yet
+       available. Do not promote the inventory result to certification. *)
+    "FermionFlavorMassGeneralityCertified" -> False,
+    "FullSymmetryCompletenessCertified" -> False
   |>
 ];

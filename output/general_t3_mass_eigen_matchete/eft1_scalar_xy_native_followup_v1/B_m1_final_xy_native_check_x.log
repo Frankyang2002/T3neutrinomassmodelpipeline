@@ -1,0 +1,160 @@
+command: wolframscript -file C:\thesistemp\T3neutrinomassmodelpipeline\Lagrangian\RunT3BCXYNativeFollowup.experimental.wl C:\thesistemp\T3neutrinomassmodelpipeline\output\general_t3_mass_eigen_matchete\B_m1_final_parameters.json C:\thesistemp\T3neutrinomassmodelpipeline\output\general_t3_mass_eigen_matchete\eft1_fermion_first_tree\B_m1_final_eft1_fermion_first_tree_eft1_transition_eom.inputform.txt C:\thesistemp\T3neutrinomassmodelpipeline\output\general_t3_mass_eigen_matchete\eft1_scalar_xy_native_followup_v1\B_m1_final_xy_native_check_x.json
+exit=0
+stdout:
+T3ME_STAGE: script-initialized
+T3ME_STAGE: matchete-load-start
+by Javier Fuentes-Marti'n, Matthias Ko"nig, Julie Page`s, Anders Eller Thomsen, and Felix Wilsch 
+Contributors:   Lukas Born, Luis Hourtz, Tamilarasan Ketheeswaran, Javier Lo'pez Miras, Adria'n Moreno-Sa'nchez, and Philip Weber 
+Reference:      Hyperlink[arXiv:2212.04510, https://arxiv.org/abs/2212.04510]
+Documentation:  Hyperlink[open, paclet:Matchete/guide/Matchete]
+Website:        Hyperlink[https://matchete.gitlab.io, https://matchete.gitlab.io]
+Model database: Hyperlink[https://gitlab.com/matchete/model-database, https://gitlab.com/matchete/model-database]
+Repository:     Hyperlink[https://gitlab.com/matchete/matchete, https://gitlab.com/matchete/matchete]
+T3ME_STAGE: matchete-load-returned
+T3ME_STAGE: source-files-loaded
+T3ME_STAGE: saved-EFT1-tree-source-preflight-started
+T3ME_STAGE: saved-EFT1-tree-source-preflight-passed
+T3ME_STAGE: baseline-build-started
+Build stage 1/4: load SM
+Build stage 2/4: define BSM fields
+  Defined BSM SU(2) representation T3BSMd2 with d=2, Dynkin={1}
+Build stage 3/4: define couplings
+Build stage 4/4: define SU(2) CG tensors
+  CG T3Y1CG: dims={2, 1, 2}, oriented algebra reps=InputForm[{CRep[{1}], {1}}], CG reps=InputForm[{SU2L[fund], Bar[T3BSMd2]}], symmetric positions={}
+    InvariantTensors result head: List, count=1
+    DefineCG result: InputForm[T3Y1CG]
+  CG T3Y2CG: dims={2, 1, 2}, oriented algebra reps=InputForm[{CRep[{1}], CRep[{1}]}], CG reps=InputForm[{SU2L[fund], T3BSMd2}], symmetric positions={}
+    InvariantTensors result head: List, count=1
+    DefineCG result: InputForm[T3Y2CG]
+  CG T3MixCG: dims={2, 2, 2, 2}, oriented algebra reps=InputForm[{{1}, {1}, {1}, CRep[{1}]}], CG reps=InputForm[{Bar[SU2L[fund]], Bar[SU2L[fund]], Bar[T3BSMd2], T3BSMd2}], symmetric positions={1, 2}
+    InvariantTensors result head: List, count=1
+    DefineCG result: InputForm[T3MixCG]
+  lambdaS1: raw SU(2) invariants=2, physical invariants=1
+  lambdaS2: raw SU(2) invariants=2, physical invariants=1
+  lambdaH1: raw SU(2) invariants=2, physical invariants=2
+  lambdaH2: raw SU(2) invariants=2, physical invariants=2
+  lambda12: raw SU(2) invariants=2, physical invariants=2
+Checking candidate: Yukawa1_GenericCG
+  result: InputForm[True]
+Checking candidate: Yukawa2_GenericCG
+  result: InputForm[True]
+Checking candidate: Scalar1SelfInv1
+  result: InputForm[True]
+Checking candidate: Scalar2SelfInv1
+  result: InputForm[True]
+Checking candidate: HiggsPortal1Inv1
+  result: InputForm[True]
+Checking candidate: HiggsPortal1Inv2
+  result: InputForm[True]
+Checking candidate: HiggsPortal2Inv1
+  result: InputForm[True]
+Checking candidate: HiggsPortal2Inv2
+  result: InputForm[True]
+Checking candidate: ScalarCrossPortalInv1
+  result: InputForm[True]
+Checking candidate: ScalarCrossPortalInv2
+  result: InputForm[True]
+Checking candidate: T3ScalarMix_GenericCG
+  result: InputForm[True]
+T3ME_STAGE: extra-quartic-generation-started
+General scalar structure {S1dag, S2, S2dag, S2dag}: SU(2) singlets=1, expected=1
+General scalar structure {S1dag, S1dag, S2dag, S2dag}: SU(2) singlets=1, expected=1
+General scalar structure {S1, S1dag, S1dag, S2dag}: SU(2) singlets=1, expected=1
+General scalar structure {Hdag, Hdag, S2, S2}: SU(2) singlets=1, expected=1
+General scalar structure {Hdag, Hdag, S1dag, S1dag}: SU(2) singlets=1, expected=1
+General scalar structure {H, Hdag, S1dag, S2dag}: SU(2) singlets=2, expected=2
+T3ME_STAGE: original-interaction-assembly-started
+Internalized-source representative objects: <|"raw_source_field_examples" -> {"Field[NewScalar1, Scalar, {Index[d$$1, T3BSMd2]}, {}]", "Field[NewScalar1, Scalar, {Index[d$$2, T3BSMd2]}, {}]", "Field[NewScalar2, Scalar, {Index[d$$3, T3BSMd2]}, {}]", "Field[NewScalar2, Scalar, {Index[d$$4, T3BSMd2]}, {}]"}, "raw_source_coupling_example" -> {"Coupling[lambdaT3ExtraQ000202I1, {}, 0]", "Coupling[lambdaT3ExtraQ020200I1, {}, 0]"}|>
+T3ME_STAGE: bridge-barred-started
+T3ME_STAGE: bridge-unbarred-started
+T3ME_STAGE: remove-old-scalar-1-started
+T3ME_STAGE: remove-old-scalar-2-started
+T3ME_STAGE: register-mixing-spurions-started
+T3ME_STAGE: register-light-X-for-fermion-first-started
+T3ME_STAGE: register-light-Y-for-fermion-first-started
+T3ME_STAGE: fermion-heavy-two-scalars-light-FreeLag-started
+T3ME_STAGE: native-topology-basis-started
+T3ME_STAGE: native-H2-portals-started
+T3ME_STAGE: native-S2-scalar-quartics-started
+T3ME_STAGE: native-Yukawa2-basis-started
+T3ME_STAGE: native-Yukawa1-basis-started
+T3ME_STAGE: native-extra-quartics-started
+T3ME_STAGE: scalar-threshold-remove-integrated-F-started
+T3ME_STAGE: saved-EFT1-tree-parse-started
+T3ME_STAGE: saved-EFT1-tree-parse-returned
+T3ME_STAGE: scalar-threshold-light-EFT1-hermiticity-preflight-started
+T3ME_STAGE: scalar-threshold-light-EFT1-hermiticity-preflight-returned
+Saved canonical EFT1 before heavy reclassification: <|"Hermiticity" -> False, "CanonicallyNormalized" -> True|>
+T3ME_STAGE: scalar-threshold-light-scalar-FreeLag-capture-started
+T3ME_STAGE: scalar-threshold-light-scalar-FreeLag-capture-returned
+T3ME_STAGE: scalar-threshold-reclassify-X-Y-started
+T3ME_STAGE: scalar-threshold-heavy-scalar-FreeLag-capture-started
+T3ME_STAGE: scalar-threshold-heavy-scalar-FreeLag-capture-returned
+T3ME_STAGE: Y-only-full-EFT-free-rebase-started
+T3ME_STAGE: Y-only-full-EFT-free-rebase-returned
+T3ME_STAGE: scalar-threshold-EFT1-lagrangian-check-started
+
+CheckLagrangian::Hermiticity: The input Lagrangian is not hermitian. The non-Hermitian part \[ScriptCapitalL]-\[ScriptCapitalL]\[ConjugateTranspose] is StyleBox[RowBox[{-, RowBox[{OverscriptBox[T3MEU11, StyleBox[_, FontWeight -> Bold]],  , T3MEU12,  , FormBox[StyleBox[RowBox[{(, RowBox[{RowBox[{OverscriptBox[lambdaT3ExtraQ001201I1, StyleBox[_, FontWeight -> Bold]],  , T3MEU11,  , OverscriptBox[T3MEU21, StyleBox[_, FontWeight -> Bold]]}], +, RowBox[{lambdaT3ExtraQ001201I1,  , OverscriptBox[T3MEU11, StyleBox[_, FontWeight -> Bold]],  , T3MEU21}]}], )}], SpanSymmetric -> False], StandardForm],  , SubsuperscriptBox[T3MENativeExtraQ001201I1CG, StyleBox[TemplateBox[{w, x}, RowDefault], FontSize -> 10], StyleBox[TemplateBox[{u, v}, RowDefault], FontSize -> 10]],  , SubscriptBox[OverscriptBox[NewScalarX, StyleBox[_, FontWeight -> Bold]], StyleBox[u, FontSize -> 10]],  , SubscriptBox[OverscriptBox[NewScalarX, StyleBox[_, FontWeight -> Bold]], StyleBox[v, FontSize -> 10]],  , SuperscriptBox[NewScalarX, StyleBox[x, FontSize -> 10]],  , SuperscriptBox[NewScalarY, StyleBox[w, FontSize -> 10]]}], +, RowBox[{FractionBox[1, 2],  , lambdaS2Inv1,  , T3MEU21,  , T3MEU22,  , SuperscriptBox[OverscriptBox[T3MEU21, StyleBox[_, FontWeight -> Bold]], 2],  , SubsuperscriptBox[T3MENativeS2SelfCGInv1, StyleBox[TemplateBox[{w, x}, RowDefault], FontSize -> 10], StyleBox[TemplateBox[{u, v}, RowDefault], FontSize -> 10]],  , SubscriptBox[OverscriptBox[NewScalarX, StyleBox[_, FontWeight -> Bold]], StyleBox[u, FontSize -> 10]],  , SubscriptBox[OverscriptBox[NewScalarX, StyleBox[_, FontWeight -> Bold]], StyleBox[v, FontSize -> 10]],  , SuperscriptBox[NewScalarX, StyleBox[x, FontSize -> 10]],  , SuperscriptBox[NewScalarY, StyleBox[w, FontSize -> 10]]}], +, RowBox[{OverscriptBox[T3MEU11, StyleBox[_, FontWeight -> Bold]],  , T3MEU12,  , FormBox[StyleBox[RowBox[{(, RowBox[{RowBox[{OverscriptBox[lambdaT3ExtraQ001201I1, StyleBox[_, FontWeight -> Bold]],  , T3MEU11,  , OverscriptBox[T3MEU21, StyleBox[_, FontWeight -> Bold]]}], +, RowBox[{lambdaT3ExtraQ001201I1,  , OverscriptBox[T3MEU11, StyleBox[_, FontWeight -> Bold]],  , T3MEU21}]}], )}], SpanSymmetric -> False], StandardForm],  , SubsuperscriptBox[T3MENativeExtraQ001201I1CG, StyleBox[TemplateBox[{w, x}, RowDefault], FontSize -> 10], StyleBox[TemplateBox[{u, v}, RowDefault], FontSize -> 10]],  , SubscriptBox[OverscriptBox[NewScalarX, StyleBox[_, FontWeight -> Bold]], StyleBox[u, FontSize -> 10]],  , SubscriptBox[OverscriptBox[NewScalarX, StyleBox[_, FontWeight -> Bold]], StyleBox[v, FontSize -> 10]],  , SuperscriptBox[NewScalarX, StyleBox[w, FontSize -> 10]],  , SuperscriptBox[NewScalarY, StyleBox[x, FontSize -> 10]]}], -, RowBox[{FractionBox[1, 2],  , lambdaS2Inv1,  , T3MEU21,  , T3MEU22,  , SuperscriptBox[OverscriptBox[T3MEU21, StyleBox[_, FontWeight -> Bold]], 2],  , SubsuperscriptBox[T3MENativeS2SelfCGInv1, StyleBox[TemplateBox[{w, x}, RowDefault], FontSize -> 10], StyleBox[TemplateBox[{u, v}, RowDefault], FontSize -> 10]],  , SubscriptBox[OverscriptBox[NewScalarX, StyleBox[_, FontWeight -> Bold]], StyleBox[u, FontSize -> 10]],  , SubscriptBox[OverscriptBox[NewScalarX, StyleBox[_, FontWeight -> Bold]], StyleBox[v, FontSize -> 10]],  , SuperscriptBox[NewScalarX, StyleBox[w, FontSize -> 10]],  , SuperscriptBox[NewScalarY, StyleBox[x, FontSize -> 10]]}], +, RowBox[{FractionBox[1, 2],  , lambdaS1Inv1,  , OverscriptBox[T3MEU11, StyleBox[_, FontWeight -> Bold]],  , OverscriptBox[T3MEU12, StyleBox[_, FontWeight -> Bold]],  , SuperscriptBox[T3MEU12, 2],  , SubsuperscriptBox[T3Scalar1SelfCGInv1, StyleBox[TemplateBox[{w, x}, RowDefault], FontSize -> 10], StyleBox[TemplateBox[{u, v}, RowDefault], FontSize -> 10]],  , SubscriptBox[OverscriptBox[NewScalarX, StyleBox[_, FontWeight -> Bold]], StyleBox[u, FontSize -> 10]],  , SubscriptBox[OverscriptBox[NewScalarY, StyleBox[_, FontWeight -> Bold]], StyleBox[v, FontSize -> 10]],  , SuperscriptBox[NewScalarY, StyleBox[w, FontSize -> 10]],  , SuperscriptBox[NewScalarY, StyleBox[x, FontSize -> 10]]}], -, RowBox[{FractionBox[1, 2],  , lambdaS1Inv1,  , OverscriptBox[T3MEU11, StyleBox[_, FontWeight -> Bold]],  , OverscriptBox[T3MEU12, StyleBox[_, FontWeight -> Bold]],  , SuperscriptBox[T3MEU12, 2],  , SubsuperscriptBox[T3Scalar1SelfCGInv1, StyleBox[TemplateBox[{w, x}, RowDefault], FontSize -> 10], StyleBox[TemplateBox[{v, u}, RowDefault], FontSize -> 10]],  , SubscriptBox[OverscriptBox[NewScalarX, StyleBox[_, FontWeight -> Bold]], StyleBox[u, FontSize -> 10]],  , SubscriptBox[OverscriptBox[NewScalarY, StyleBox[_, FontWeight -> Bold]], StyleBox[v, FontSize -> 10]],  , SuperscriptBox[NewScalarY, StyleBox[w, FontSize -> 10]],  , SuperscriptBox[NewScalarY, StyleBox[x, FontSize -> 10]]}], +, RowBox[{lambda12Inv2,  , OverscriptBox[T3MEU11, StyleBox[_, FontWeight -> Bold]],  , T3MEU12,  , OverscriptBox[T3MEU22, StyleBox[_, FontWeight -> Bold]],  , T3MEU22,  , SubsuperscriptBox[T3MENativeCrossCGInv2, StyleBox[TemplateBox[{w, x}, RowDefault], FontSize -> 10], StyleBox[TemplateBox[{u, v}, RowDefault], FontSize -> 10]],  , SubscriptBox[OverscriptBox[NewScalarX, StyleBox[_, FontWeight -> Bold]], StyleBox[u, FontSize -> 10]],  , SubscriptBox[OverscriptBox[NewScalarY, StyleBox[_, FontWeight -> Bold]], StyleBox[v, FontSize -> 10]],  , SuperscriptBox[NewScalarY, StyleBox[w, FontSize -> 10]],  , SuperscriptBox[NewScalarY, StyleBox[x, FontSize -> 10]]}], -, RowBox[{lambda12Inv2,  , OverscriptBox[T3MEU11, StyleBox[_, FontWeight -> Bold]],  , T3MEU12,  , OverscriptBox[T3MEU22, StyleBox[_, FontWeight -> Bold]],  , T3MEU22,  , SubsuperscriptBox[T3MENativeCrossCGInv2, StyleBox[TemplateBox[{w, x}, RowDefault], FontSize -> 10], StyleBox[TemplateBox[{v, u}, RowDefault], FontSize -> 10]],  , SubscriptBox[OverscriptBox[NewScalarX, StyleBox[_, FontWeight -> Bold]], StyleBox[u, FontSize -> 10]],  , SubscriptBox[OverscriptBox[NewScalarY, StyleBox[_, FontWeight -> Bold]], StyleBox[v, FontSize -> 10]],  , SuperscriptBox[NewScalarY, StyleBox[w, FontSize -> 10]],  , SuperscriptBox[NewScalarY, StyleBox[x, FontSize -> 10]]}]}], StandardForm]
+T3ME_STAGE: scalar-threshold-ordinary-lagrangian-check-returned
+
+CheckLagrangian::Hermiticity: The input Lagrangian is not hermitian. The non-Hermitian part \[ScriptCapitalL]-\[ScriptCapitalL]\[ConjugateTranspose] is StyleBox[RowBox[{-, RowBox[{OverscriptBox[T3MEU11, StyleBox[_, FontWeight -> Bold]],  , T3MEU12,  , FormBox[StyleBox[RowBox[{(, RowBox[{RowBox[{OverscriptBox[lambdaT3ExtraQ001201I1, StyleBox[_, FontWeight -> Bold]],  , T3MEU11,  , OverscriptBox[T3MEU21, StyleBox[_, FontWeight -> Bold]]}], +, RowBox[{lambdaT3ExtraQ001201I1,  , OverscriptBox[T3MEU11, StyleBox[_, FontWeight -> Bold]],  , T3MEU21}]}], )}], SpanSymmetric -> False], StandardForm],  , SubsuperscriptBox[T3MENativeExtraQ001201I1CG, StyleBox[TemplateBox[{w, x}, RowDefault], FontSize -> 10], StyleBox[TemplateBox[{u, v}, RowDefault], FontSize -> 10]],  , SubscriptBox[OverscriptBox[NewScalarX, StyleBox[_, FontWeight -> Bold]], StyleBox[u, FontSize -> 10]],  , SubscriptBox[OverscriptBox[NewScalarX, StyleBox[_, FontWeight -> Bold]], StyleBox[v, FontSize -> 10]],  , SuperscriptBox[NewScalarX, StyleBox[x, FontSize -> 10]],  , SuperscriptBox[NewScalarY, StyleBox[w, FontSize -> 10]]}], +, RowBox[{FractionBox[1, 2],  , lambdaS2Inv1,  , T3MEU21,  , T3MEU22,  , SuperscriptBox[OverscriptBox[T3MEU21, StyleBox[_, FontWeight -> Bold]], 2],  , SubsuperscriptBox[T3MENativeS2SelfCGInv1, StyleBox[TemplateBox[{w, x}, RowDefault], FontSize -> 10], StyleBox[TemplateBox[{u, v}, RowDefault], FontSize -> 10]],  , SubscriptBox[OverscriptBox[NewScalarX, StyleBox[_, FontWeight -> Bold]], StyleBox[u, FontSize -> 10]],  , SubscriptBox[OverscriptBox[NewScalarX, StyleBox[_, FontWeight -> Bold]], StyleBox[v, FontSize -> 10]],  , SuperscriptBox[NewScalarX, StyleBox[x, FontSize -> 10]],  , SuperscriptBox[NewScalarY, StyleBox[w, FontSize -> 10]]}], +, RowBox[{OverscriptBox[T3MEU11, StyleBox[_, FontWeight -> Bold]],  , T3MEU12,  , FormBox[StyleBox[RowBox[{(, RowBox[{RowBox[{OverscriptBox[lambdaT3ExtraQ001201I1, StyleBox[_, FontWeight -> Bold]],  , T3MEU11,  , OverscriptBox[T3MEU21, StyleBox[_, FontWeight -> Bold]]}], +, RowBox[{lambdaT3ExtraQ001201I1,  , OverscriptBox[T3MEU11, StyleBox[_, FontWeight -> Bold]],  , T3MEU21}]}], )}], SpanSymmetric -> False], StandardForm],  , SubsuperscriptBox[T3MENativeExtraQ001201I1CG, StyleBox[TemplateBox[{w, x}, RowDefault], FontSize -> 10], StyleBox[TemplateBox[{u, v}, RowDefault], FontSize -> 10]],  , SubscriptBox[OverscriptBox[NewScalarX, StyleBox[_, FontWeight -> Bold]], StyleBox[u, FontSize -> 10]],  , SubscriptBox[OverscriptBox[NewScalarX, StyleBox[_, FontWeight -> Bold]], StyleBox[v, FontSize -> 10]],  , SuperscriptBox[NewScalarX, StyleBox[w, FontSize -> 10]],  , SuperscriptBox[NewScalarY, StyleBox[x, FontSize -> 10]]}], -, RowBox[{FractionBox[1, 2],  , lambdaS2Inv1,  , T3MEU21,  , T3MEU22,  , SuperscriptBox[OverscriptBox[T3MEU21, StyleBox[_, FontWeight -> Bold]], 2],  , SubsuperscriptBox[T3MENativeS2SelfCGInv1, StyleBox[TemplateBox[{w, x}, RowDefault], FontSize -> 10], StyleBox[TemplateBox[{u, v}, RowDefault], FontSize -> 10]],  , SubscriptBox[OverscriptBox[NewScalarX, StyleBox[_, FontWeight -> Bold]], StyleBox[u, FontSize -> 10]],  , SubscriptBox[OverscriptBox[NewScalarX, StyleBox[_, FontWeight -> Bold]], StyleBox[v, FontSize -> 10]],  , SuperscriptBox[NewScalarX, StyleBox[w, FontSize -> 10]],  , SuperscriptBox[NewScalarY, StyleBox[x, FontSize -> 10]]}], +, RowBox[{FractionBox[1, 2],  , lambdaS1Inv1,  , OverscriptBox[T3MEU11, StyleBox[_, FontWeight -> Bold]],  , OverscriptBox[T3MEU12, StyleBox[_, FontWeight -> Bold]],  , SuperscriptBox[T3MEU12, 2],  , SubsuperscriptBox[T3Scalar1SelfCGInv1, StyleBox[TemplateBox[{w, x}, RowDefault], FontSize -> 10], StyleBox[TemplateBox[{u, v}, RowDefault], FontSize -> 10]],  , SubscriptBox[OverscriptBox[NewScalarX, StyleBox[_, FontWeight -> Bold]], StyleBox[u, FontSize -> 10]],  , SubscriptBox[OverscriptBox[NewScalarY, StyleBox[_, FontWeight -> Bold]], StyleBox[v, FontSize -> 10]],  , SuperscriptBox[NewScalarY, StyleBox[w, FontSize -> 10]],  , SuperscriptBox[NewScalarY, StyleBox[x, FontSize -> 10]]}], -, RowBox[{FractionBox[1, 2],  , lambdaS1Inv1,  , OverscriptBox[T3MEU11, StyleBox[_, FontWeight -> Bold]],  , OverscriptBox[T3MEU12, StyleBox[_, FontWeight -> Bold]],  , SuperscriptBox[T3MEU12, 2],  , SubsuperscriptBox[T3Scalar1SelfCGInv1, StyleBox[TemplateBox[{w, x}, RowDefault], FontSize -> 10], StyleBox[TemplateBox[{v, u}, RowDefault], FontSize -> 10]],  , SubscriptBox[OverscriptBox[NewScalarX, StyleBox[_, FontWeight -> Bold]], StyleBox[u, FontSize -> 10]],  , SubscriptBox[OverscriptBox[NewScalarY, StyleBox[_, FontWeight -> Bold]], StyleBox[v, FontSize -> 10]],  , SuperscriptBox[NewScalarY, StyleBox[w, FontSize -> 10]],  , SuperscriptBox[NewScalarY, StyleBox[x, FontSize -> 10]]}], +, RowBox[{lambda12Inv2,  , OverscriptBox[T3MEU11, StyleBox[_, FontWeight -> Bold]],  , T3MEU12,  , OverscriptBox[T3MEU22, StyleBox[_, FontWeight -> Bold]],  , T3MEU22,  , SubsuperscriptBox[T3MENativeCrossCGInv2, StyleBox[TemplateBox[{w, x}, RowDefault], FontSize -> 10], StyleBox[TemplateBox[{u, v}, RowDefault], FontSize -> 10]],  , SubscriptBox[OverscriptBox[NewScalarX, StyleBox[_, FontWeight -> Bold]], StyleBox[u, FontSize -> 10]],  , SubscriptBox[OverscriptBox[NewScalarY, StyleBox[_, FontWeight -> Bold]], StyleBox[v, FontSize -> 10]],  , SuperscriptBox[NewScalarY, StyleBox[w, FontSize -> 10]],  , SuperscriptBox[NewScalarY, StyleBox[x, FontSize -> 10]]}], -, RowBox[{lambda12Inv2,  , OverscriptBox[T3MEU11, StyleBox[_, FontWeight -> Bold]],  , T3MEU12,  , OverscriptBox[T3MEU22, StyleBox[_, FontWeight -> Bold]],  , T3MEU22,  , SubsuperscriptBox[T3MENativeCrossCGInv2, StyleBox[TemplateBox[{w, x}, RowDefault], FontSize -> 10], StyleBox[TemplateBox[{v, u}, RowDefault], FontSize -> 10]],  , SubscriptBox[OverscriptBox[NewScalarX, StyleBox[_, FontWeight -> Bold]], StyleBox[u, FontSize -> 10]],  , SubscriptBox[OverscriptBox[NewScalarY, StyleBox[_, FontWeight -> Bold]], StyleBox[v, FontSize -> 10]],  , SuperscriptBox[NewScalarY, StyleBox[w, FontSize -> 10]],  , SuperscriptBox[NewScalarY, StyleBox[x, FontSize -> 10]]}]}], StandardForm]
+T3ME_STAGE: scalar-threshold-detailed-lagrangian-check-returned
+Scalar-threshold CheckLagrangian: InputForm[False]
+T3ME_STAGE: scalar-threshold-hermiticity-equivalence-OriginalRelabel-started
+T3ME_STAGE: scalar-threshold-hermiticity-equivalence-ExpandOnly-started
+T3ME_STAGE: scalar-threshold-hermiticity-equivalence-ExpandRelabel-started
+T3ME_STAGE: scalar-threshold-hermiticity-equivalence-HcSimplify-started
+T3ME_STAGE: scalar-threshold-hermiticity-equivalence-GreensSimplify-started
+T3ME_STAGE: scalar-threshold-verified-renormalizable-reconstruction-started
+T3ME_STAGE: scalar-threshold-verified-renormalizable-reconstruction-returned
+Scalar-threshold reconstruction: <|"status" -> "IndependentCanonicalReassemblyValidatedEOMEquivalenceUnproved", "algebraic_equality_proven" -> False, "independent_matchete_check_passed" -> True|>
+T3ME_STAGE: independent-canonical-full-EFT-candidate-started
+T3ME_STAGE: independent-canonical-full-EFT-candidate-verified
+Scalar-threshold Hermiticity audit: <|"light_EFT1_hermiticity" -> False, "heavy_EFT1_original_hermiticity" -> False, "equivalence_rewrite_accepted" -> "IndependentCanonicalSourceNotProvenEquivalentToSavedEOMEFT", "final_hermiticity" -> True|>
+T3ME_STAGE: scalar-threshold-match-loader-started
+T3ME_STAGE: scalar-threshold-tree-Match-started
+
+Running Matchete matching...
+EFT order: 5; loop order: 0
+Running Match...
+  Match result head: Times
+Running GreensSimplify...
+  GreensSimplify result head: Plus
+Running EOMSimplify...
+  EOMSimplify result head: Plus
+Running EvaluateLoopFunctions...
+  EvaluateLoopFunctions result head: Plus
+Running ReplaceEffectiveCouplings...
+  ReplaceEffectiveCouplings result head: Plus
+Matching pipeline completed successfully.
+T3ME_STAGE: scalar-threshold-tree-Match-returned
+T3ME_STAGE: scalar-threshold-one-loop-Match-started
+
+Running Matchete matching...
+EFT order: 5; loop order: 1
+Running Match...
+  Match result head: Times
+Running GreensSimplify...
+  GreensSimplify result head: Plus
+Running EOMSimplify...
+  EOMSimplify result head: Plus
+Running EvaluateLoopFunctions...
+  EvaluateLoopFunctions result head: Plus
+Running ReplaceEffectiveCouplings...
+  ReplaceEffectiveCouplings result head: Plus
+Matching pipeline completed successfully.
+T3ME_STAGE: scalar-threshold-one-loop-Match-returned
+T3ME_STAGE: scalar-threshold-LLHH-extract-started
+T3ME_STAGE: scalar-threshold-LLHH-extract-returned
+T3 scalar-threshold tree+loop matching: total loop terms=5865; raw LLHH candidates=132
+Y-only EFT2 raw Wilson sector counts: <|LLHH -> 132, LLHX -> 0, LLXX -> 666|>
+T3ME_STAGE: x-followup-input-export-started
+T3ME_STAGE: x-followup-light-EFT2-check-started
+T3ME_STAGE: x-followup-X-free-lagrangian-rebase-started
+T3ME_STAGE: x-followup-rebased-check-started
+
+AssociateTo::argrx: AssociateTo called with 5 arguments; 2 arguments are expected.
+Native X followup status: XFollowupRebasedEFT2CheckFailed
+Mass-eigenstate Matchete result: YOnlyIndependentCanonicalRawEFT2NotCertified -> C:\thesistemp\T3neutrinomassmodelpipeline\output\general_t3_mass_eigen_matchete\eft1_scalar_xy_native_followup_v1\B_m1_final_xy_native_check_x.json
+
+stderr:

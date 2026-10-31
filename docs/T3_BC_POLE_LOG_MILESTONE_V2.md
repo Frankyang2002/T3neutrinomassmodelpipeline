@@ -1,0 +1,4 @@
+
+## Formal native B/C Y/X pole–log coefficient consistency (v2, 2026-10-31)
+
+The existing native Matchete scalar threshold amplitude outputs were audited through an exact rational monomial parser that treats each full CG/Field/Coupling/Bar/NCM expression as an opaque factor. B(-1) and C(-1) both satisfy formal pole residue = coefficient of `Log[mubar2/MS_heavy^2]` across all Y/LLHH, Y/LLXX and X/LLHH sectors. Y/LLHX is zero. Finite scale-equal-mass Y terms partition into three LLHH source quartics (32 terms) and six LLXX source quartics (186 terms), with individual exact InputForm groups exported. The X/LLHH raw local constant is zero. Tests and two-model archival replay passed. This is **not** MS-bar renormalization, operator projection, numerical matching, or proof of physical one-loop threshold consistency. Existing B/C numerical neutrino masses are unchanged.

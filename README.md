@@ -1,47 +1,54 @@
-# Candidate scalar endpoint to one-scale neutrino mass: B(-1)/C(-1)
+# T3 radiative neutrino-mass model pipeline
 
-## New paths (DO NOT overwrite root README.md)
+This repository constructs ordinary T3 models, exports matching and RGE inputs, evolves renormalisable couplings across UV/EFT regimes, and evaluates the Weinberg coefficient and neutrino observables.
 
-- `scripts/RunT3QuadraticEndpointC5.py`
-- `tests/test_t3_quadratic_endpoint_c5.py`
+## Start here
 
-All older scripts and outputs are unchanged. Extract ZIP into the repository root.
+- **Architecture, research progression, and status:** [`docs/PROJECT_GUIDE.md`](docs/PROJECT_GUIDE.md)
+- **Physics and conventions:** [`docs/PHYSICS.md`](docs/PHYSICS.md)
+- **Numerical implementation:** [`docs/NUMERICAL.md`](docs/NUMERICAL.md)
+- **Saved results and their scope:** [`docs/RESULTS.md`](docs/RESULTS.md)
+- **Historical research record:** [`docs/RESEARCH_HISTORY_INDEX.md`](docs/RESEARCH_HISTORY_INDEX.md)
+- **Regeneration notes:** [`docs/REGENERATE_CURRENT_REPORTS.md`](docs/REGENERATE_CURRENT_REPORTS.md) (historical saved-data report rebuild; not a verified fresh symbolic rebuild)
 
-## Prerequisites
+## Software entry points
 
-Existing Stage 33 boundary, frozen fitted-reference files, experimental Matchete mass-basis certificates and **saved** Stage quadratic EFT1 flow from `scripts.RunGeneralT3QuadraticEFT1`. This runner deliberately does not launch Wolfram or refit Yukawas.
+- `pipeline.py` — orchestration of model construction, RGEs, matching and optional numerical stages. Inspect `python pipeline.py --help` for study options.
+- `Numerical/fitting/ScanCLI.py` — execute ordinary split-scalar numerical studies from JSON configs.
+- `Numerical/orchestration/PipelineNumericalResults.py` — numerical diagnostics and reports inside the production pipeline.
+- `scripts/maintenance/SmokeTestFullPipeline.py` — one-point operational test using existing generated artifacts.
 
-For missing endpoint flow outputs, generate the two candidates first (Wolfram required):
+### Verified operational smoke test
 
-```powershell
-python -m scripts.RunGeneralT3QuadraticEFT1 --model B_-1 --mu2-fraction 0.01
-python -m scripts.RunGeneralT3QuadraticEFT1 --model C_-1 --mu2-fraction 0.01
-```
+One existing ordinary T3-B (`alpha=-1`) configuration executed successfully through UV running, intermediate EFT1, matched `C5`, SM + Weinberg running, and oscillation-observable evaluation, returning `PASS_END_TO_END_OPERATIONAL`. This establishes software operation for **one benchmark using existing inputs**; it does not certify the physical matching conventions, all representations, or regenerability of those inputs from scratch.
 
-Use already saved outputs when available; do not regenerate unnecessarily.
-
-## Run
-
-```powershell
-python -X utf8 -m pytest -q tests/test_t3_quadratic_endpoint_c5.py
-python -m scripts.RunT3QuadraticEndpointC5 --all
-```
-
-Output: `output/studies/general_scalar_extended/quadratic_endpoint_c5/summary.json` and separate B/C reports. For the zero-extra-quartic control:
+From a Python environment with project dependencies installed:
 
 ```powershell
-python -m scripts.RunT3QuadraticEndpointC5 --all --zero-extra-quartics
+$env:PYTHONUTF8 = '1'
+python scripts/maintenance/SmokeTestFullPipeline.py
 ```
 
-**Note:** Running `--zero-extra-quartics` into the default output directory replaces this *new experimental output folder's* B/C files; use `--output-dir output/studies/general_scalar_extended/quadratic_endpoint_c5_zero_extra` to preserve both.
+**If legacy outputs were archived, this command may fail because its saved Matchete/RGBeta JSON inputs are absent.** Regenerate required artifacts first or restore them from the external archive; absence of inputs is distinct from a broken numerical integrator.
 
-## What the calculation actually does
+## Directory roles
 
-1. Reads saved candidate running scalar masses, extra mixed quadratic coefficient and quartics at the EFT1 endpoint.
-2. Constructs and verifies the B/C complex-doublet mass eigenbasis.
-3. Loads SHA256-checked frozen fitted-reference Yukawas/fermion masses (not Yukawa running on the candidate background).
-4. Evaluates the already extracted **direct one-scale** Matchete ordered coefficient using the endpoint eigenmasses and mixing matrix.
-5. Compares the original `lambdaT3`-only C5 with the two extra C5-active quartics, mapped by the existing source-level sign convention `lambda_matchete = -lambda_rgbeta`.
-6. Records Takagi masses and the relative Frobenius norm of the response.
+| Directory | Purpose |
+| --- | --- |
+| `Lagrangian/` | Model, interactions, symbolic construction and matching |
+| `RGE/` | RGBeta inputs, symbolic RGE generation and intermediate EFT definitions |
+| `Numerical/core/`, `Numerical/running/` | Numerical state and coupled scale evolution |
+| `Numerical/fitting/`, `Numerical/orchestration/` | Benchmarks, scans, orchestration and output |
+| `physics/` | Mass matrices and neutrino observables |
+| `configs/` | Input configurations and benchmark definitions |
+| `tests/` | Regression tests |
+| `docs/` | Current documentation and consolidated research history |
+| `output/`, `Reports/output/` | Generated artifacts; historical contents may have been archived outside the repo |
 
-**Not implemented/certified here:** full sequential EFT1 matching or Wilson running, complete field-component/Matchete-RGBeta normalisation, genuine physical predictions, self-bilinear A/D/E threshold treatment. Reports explicitly say so. The nonzero-extra-quartic result is a *conditional sensitivity probe*.
+## Status and scope
+
+The production ordinary split-scalar numerical path is operational for the tested configuration. The separate general-coupling and exploratory paths may require unverified RGBeta–Matchete basis conversions or different matching approximations. Do not interpret their conditional outputs as fully validated physical predictions. See the project guide for details.
+
+## Repository housekeeping
+
+The cleanup and archival operations are **local-only** and should be performed with a preview, an external archive, and a manifest. Never move a file used by source generation, tests or configs solely because its name contains `stage`, `probe` or `experimental`.

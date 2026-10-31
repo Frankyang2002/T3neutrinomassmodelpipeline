@@ -1,0 +1,533 @@
+{
+  "timestamp_utc": "2026-10-31T23:00:19.948653+00:00",
+  "repo_root": "C:\\thesistemp\\T3neutrinomassmodelpipeline",
+  "scope": "Executable source gates and targeted tests; no physical-basis certification",
+  "components": {
+    "general_uv": {
+      "path": "Numerical/experimental/T3GeneralYukawaCoupledUV.py",
+      "exists": true,
+      "functions": [
+        "__init__",
+        "call_function",
+        "encode",
+        "endpoint_for",
+        "evaluate_betas",
+        "evaluator",
+        "integrate",
+        "kind",
+        "load_case",
+        "matrix",
+        "norm",
+        "pack",
+        "pack_derivative",
+        "prepare_state",
+        "require",
+        "rhs",
+        "run_model",
+        "scalar",
+        "self_test",
+        "unpack"
+      ],
+      "imports": [
+        "Numerical.core",
+        "__future__",
+        "dataclasses",
+        "json",
+        "math",
+        "numpy",
+        "pathlib",
+        "scipy.integrate",
+        "typing"
+      ],
+      "constants": {
+        "SPECS": {
+          "type": "dictionary",
+          "keys": [
+            "A_m4",
+            "A_m2",
+            "A_p0",
+            "B_m3",
+            "B_m1",
+            "B_p1",
+            "C_m3",
+            "C_m1",
+            "C_p1",
+            "D_m2",
+            "D_p0",
+            "D_p2",
+            "E_m4",
+            "E_m2",
+            "E_p0",
+            "E_p2"
+          ]
+        }
+      },
+      "lines": 429,
+      "source_has_fixed_reference": true,
+      "source_uses_solve_ivp": true
+    },
+    "extended_c5": {
+      "path": "Numerical/experimental/T3RGAssistedExtendedC5.py",
+      "exists": true,
+      "functions": [
+        "_matrix_from_result",
+        "_obs",
+        "check",
+        "check_rgbeta_quartic",
+        "compare_solution",
+        "encode",
+        "evaluate_hypothetically_transported_c5",
+        "from_json",
+        "heavy_rotate",
+        "mat_json",
+        "pair",
+        "read_scenario",
+        "run_model",
+        "self_test",
+        "to_matchete_inputs",
+        "validate_endpoint",
+        "vectorlike_basis",
+        "zvalue"
+      ],
+      "imports": [
+        "Numerical.experimental",
+        "__future__",
+        "copy",
+        "dataclasses",
+        "hashlib",
+        "json",
+        "math",
+        "numpy",
+        "pathlib",
+        "physics.NeutrinoObservables",
+        "physics.NeutrinoTrajectory",
+        "re",
+        "typing"
+      ],
+      "constants": {
+        "SCHEMA": "t3-conditional-rgbeta-matchete-bridge-scenario-v1",
+        "STATUS": "ConditionalUVEndpointOneStepExtendedC5_NotPhysicalPrediction"
+      },
+      "lines": 373,
+      "source_has_fixed_reference": true,
+      "source_uses_solve_ivp": false
+    },
+    "low_energy": {
+      "path": "Numerical/experimental/T3ExtendedLowEnergyStudy.py",
+      "exists": true,
+      "functions": [
+        "_sm_initial",
+        "complex_matrix_json",
+        "evaluate_endpoint",
+        "finite",
+        "load_study",
+        "need",
+        "observe",
+        "run_model",
+        "self_test",
+        "threshold_diagnostic",
+        "transport"
+      ],
+      "imports": [
+        "Numerical.experimental",
+        "Numerical.running.SMWeinbergEvolution",
+        "__future__",
+        "dataclasses",
+        "hashlib",
+        "json",
+        "math",
+        "numpy",
+        "pathlib",
+        "physics.NeutrinoObservables",
+        "physics.NeutrinoTrajectory",
+        "typing"
+      ],
+      "constants": {
+        "STATUS": "ConditionalSuddenDecouplingSMWeinbergCompleted_NotHierarchicalPrediction"
+      },
+      "lines": 247,
+      "source_has_fixed_reference": true,
+      "source_uses_solve_ivp": false
+    },
+    "c5_observables": {
+      "path": "Numerical/experimental/T3ExtendedC5Observables.py",
+      "exists": true,
+      "functions": [
+        "complex_matrix",
+        "encoded",
+        "from_object",
+        "main",
+        "need",
+        "save",
+        "self_test"
+      ],
+      "imports": [
+        "__future__",
+        "argparse",
+        "hashlib",
+        "json",
+        "math",
+        "numpy",
+        "pathlib",
+        "physics.NeutrinoObservables",
+        "physics.NeutrinoTrajectory",
+        "sys",
+        "typing"
+      ],
+      "constants": {},
+      "lines": 183,
+      "source_has_fixed_reference": false,
+      "source_uses_solve_ivp": false
+    },
+    "production": {
+      "path": "Numerical/orchestration/PipelineNumericalResults.py",
+      "exists": true,
+      "functions": [
+        "_build_default_uv_state",
+        "_load_json_object",
+        "_matrix_diagnostic_payload",
+        "_record_artifact",
+        "_report_figure_dir",
+        "_run_and_build_payload",
+        "_validate_record_against_config",
+        "_write_neutrino_failure_diagnostic",
+        "is_pipeline_numerical_results_config",
+        "run_pipeline_numerical_results"
+      ],
+      "imports": [
+        "Numerical.core.RGBetaEvaluator",
+        "Numerical.diagnostics.FinalC5ContributionDiagnostics",
+        "Numerical.diagnostics.IntermediateWeinbergDiagnostics",
+        "Numerical.diagnostics.RunningDiagnostics",
+        "Numerical.fitting.BenchmarkSensitivity",
+        "Numerical.fitting.ScanCLI",
+        "Numerical.fitting.SobolBenchmarkSearch",
+        "Numerical.plotting.RunningResultFigures",
+        "Numerical.running.FinalC5TrajectoryAdapter",
+        "Numerical.running.ScalarThresholdBoundary",
+        "Numerical.running.T3Trajectory",
+        "Numerical.running.WeinbergTrajectory",
+        "__future__",
+        "common.RunRecords",
+        "json",
+        "numpy",
+        "pathlib",
+        "physics.NeutrinoObservables",
+        "physics.NeutrinoTrajectory",
+        "types",
+        "typing"
+      ],
+      "constants": {},
+      "lines": 637,
+      "source_has_fixed_reference": false,
+      "source_uses_solve_ivp": false
+    },
+    "coupled_b": {
+      "path": "Numerical/orchestration/T3BIntegratedCoupledPipeline.py",
+      "exists": true,
+      "functions": [
+        "_intermediate_samples",
+        "_load_json",
+        "_low_energy_comparison",
+        "_make_record",
+        "_matrix_json",
+        "_matrix_read",
+        "_model_check",
+        "_model_from_payload",
+        "_neutrino_summary",
+        "_relative",
+        "_scalar_complex_json",
+        "compute_opt_in_coupled",
+        "main",
+        "run"
+      ],
+      "imports": [
+        "Numerical.core.RGBetaEvaluator",
+        "Numerical.diagnostics.FinalC5ContributionDiagnostics",
+        "Numerical.diagnostics.RunningDiagnostics",
+        "Numerical.diagnostics.T3BExploratoryCoupledBenchmark",
+        "Numerical.diagnostics.T3BHeavyLogAlignment",
+        "Numerical.diagnostics.T3BPerturbativeAccuracy",
+        "Numerical.fitting.ScanCLI",
+        "Numerical.orchestration.PipelineNumericalResults",
+        "Numerical.running.FinalC5TrajectoryAdapter",
+        "Numerical.running.SMWeinbergEvolution",
+        "Numerical.running.ScalarThresholdBoundary",
+        "Numerical.running.T3Trajectory",
+        "Reports.GroupFactorCoupledHTML",
+        "__future__",
+        "argparse",
+        "common.RunRecords",
+        "json",
+        "numpy",
+        "pathlib",
+        "physics.NeutrinoObservables",
+        "physics.NeutrinoTrajectory",
+        "types"
+      ],
+      "constants": {},
+      "lines": 398,
+      "source_has_fixed_reference": false,
+      "source_uses_solve_ivp": false
+    },
+    "mass_observables": {
+      "path": "physics/NeutrinoObservables.py",
+      "exists": true,
+      "functions": [
+        "_complex_matrix_from_file",
+        "_label_mass_eigenstates",
+        "calculate_neutrino_observables",
+        "run_neutrino_observables_stage",
+        "takagi_factorization"
+      ],
+      "imports": [
+        "__future__",
+        "dataclasses",
+        "json",
+        "numpy",
+        "pathlib"
+      ],
+      "constants": {},
+      "lines": 230,
+      "source_has_fixed_reference": false,
+      "source_uses_solve_ivp": false
+    },
+    "charged_basis": {
+      "path": "physics/NeutrinoTrajectory.py",
+      "exists": true,
+      "functions": [
+        "charged_lepton_mass_basis_matrix",
+        "n_points",
+        "neutrino_mass_from_c5",
+        "point_at_index",
+        "scale_dependent_neutrino_observables"
+      ],
+      "imports": [
+        "__future__",
+        "dataclasses",
+        "numpy",
+        "physics.NeutrinoMass",
+        "physics.NeutrinoObservables",
+        "typing"
+      ],
+      "constants": {},
+      "lines": 132,
+      "source_has_fixed_reference": false,
+      "source_uses_solve_ivp": false
+    },
+    "eft1_wilson": {
+      "path": "Numerical/experimental/T3BCCoupledWilsonTensor.py",
+      "exists": true,
+      "functions": [
+        "_matchete_complex",
+        "_symmetric_lookup",
+        "_sympy_expression_lambdas",
+        "build",
+        "build_static_kinetics",
+        "evaluate",
+        "extra_matchete_templates",
+        "finite_complex",
+        "flavor_pairs",
+        "flavor_to_matrix",
+        "fun",
+        "independent_tensor",
+        "integrate_coupled",
+        "interpolate_kernels",
+        "kernels",
+        "matchete_from_rgbeta",
+        "require",
+        "rhs_master",
+        "weinberg_projection"
+      ],
+      "imports": [
+        "Numerical.experimental.GeneralT3ExtraEFT1Mixing",
+        "RGE.general.GaugeGenerators",
+        "RGE.running.intermediate.IntermediateMatcheteParsing",
+        "__future__",
+        "dataclasses",
+        "itertools",
+        "json",
+        "math",
+        "numpy",
+        "pathlib",
+        "scipy.integrate",
+        "sympy",
+        "typing"
+      ],
+      "constants": {},
+      "lines": 405,
+      "source_has_fixed_reference": false,
+      "source_uses_solve_ivp": true
+    },
+    "general_state": {
+      "path": "Numerical/experimental/T3GeneralMatrixBeta.py",
+      "exists": true,
+      "functions": [
+        "__post_init__",
+        "all_names",
+        "decode_matrix",
+        "derivative",
+        "encode_matrix",
+        "environment",
+        "finite_complex",
+        "finite_matrix",
+        "initial_vector",
+        "require",
+        "size",
+        "split",
+        "summary",
+        "trial_extra_seed"
+      ],
+      "imports": [
+        "Numerical.core.BetaVector",
+        "Numerical.core.RGBetaEvaluator",
+        "Numerical.core.StateVector",
+        "__future__",
+        "dataclasses",
+        "math",
+        "numpy",
+        "typing"
+      ],
+      "constants": {},
+      "lines": 186,
+      "source_has_fixed_reference": false,
+      "source_uses_solve_ivp": false
+    }
+  },
+  "test_runs": [
+    {
+      "label": "tests/python/test_general_t3_eft1_hard_pole_audit.py",
+      "command": [
+        "C:\\thesistemp\\T3neutrinomassmodelpipeline\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "-q",
+        "-rA",
+        "tests/python/test_general_t3_eft1_hard_pole_audit.py"
+      ],
+      "returncode": 1,
+      "stdout_tail": "key,value', [\n        ('status','Success'), ('model','C_-1'),\n        ('raw_hard_llhh_candidate_term_count', 0),\n        ('raw_hard_llhh_pole_rge_certified',True),\n        ('physical_C5_computed',True),\n        ('scalar_threshold_matching_performed',True),\n    ])\n    def test_certificate_not_trusted_if_inconsistent(tmp_path,key,value):\n>       write_sources(tmp_path)\n\ntests\\python\\test_general_t3_eft1_hard_pole_audit.py:179: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\ntests\\python\\test_general_t3_eft1_hard_pole_audit.py:76: in write_sources\n    (folder / (stem + '_raw_hard_llhh_sector.inputform.txt')).write_text(sample())\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = WindowsPath('C:/Users/popok/AppData/Local/Temp/pytest-of-popok/pytest-202/test_certificate_not_trusted_i3/B_m1_final_eft1_fermion_first_oneloop_raw_hard_llhh_sector.inputform.txt')\ndata = '(hbar*Coupling[lambdaT3, {}, 0]*Field[H, Scalar, {Index[a, SU2L]}, {}]*Field[H, Scalar, {Index[b, SU2L]}, {}]*Field[l..., Flavor]}, {}]*Field[l, Fermion, {Index[b, Flavor]}, {}]*NCM[DiracProduct[GammaCC, Proj[1]]])/(\\u03f5*Coupling[MF, {}, 0])'\nencoding = 'locale', errors = None, newline = None\n\n    def write_text(self, data, encoding=None, errors=None, newline=None):\n        \"\"\"\n        Open the file in text mode, write to it, and close the file.\n        \"\"\"\n        if not isinstance(data, str):\n            raise TypeError('data must be str, not %s' %\n                            data.__class__.__name__)\n        encoding = io.text_encoding(encoding)\n        with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:\n>           return f.write(data)\n                   ^^^^^^^^^^^^^\nE           UnicodeEncodeError: 'cp932' codec can't encode character '\\u03f5' in position 774: illegal multibyte sequence\n\nC:\\Users\\popok\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\pathlib.py:1048: UnicodeEncodeError\n___ test_certificate_not_trusted_if_inconsistent[physical_C5_computed-True] ___\n\ntmp_path = WindowsPath('C:/Users/popok/AppData/Local/Temp/pytest-of-popok/pytest-202/test_certificate_not_trusted_i4')\nkey = 'physical_C5_computed', value = True\n\n    @pytest.mark.parametrize('key,value', [\n        ('status','Success'), ('model','C_-1'),\n        ('raw_hard_llhh_candidate_term_count', 0),\n        ('raw_hard_llhh_pole_rge_certified',True),\n        ('physical_C5_computed',True),\n        ('scalar_threshold_matching_performed',True),\n    ])\n    def test_certificate_not_trusted_if_inconsistent(tmp_path,key,value):\n>       write_sources(tmp_path)\n\ntests\\python\\test_general_t3_eft1_hard_pole_audit.py:179: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\ntests\\python\\test_general_t3_eft1_hard_pole_audit.py:76: in write_sources\n    (folder / (stem + '_raw_hard_llhh_sector.inputform.txt')).write_text(sample())\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = WindowsPath('C:/Users/popok/AppData/Local/Temp/pytest-of-popok/pytest-202/test_certificate_not_trusted_i4/B_m1_final_eft1_fermion_first_oneloop_raw_hard_llhh_sector.inputform.txt')\ndata = '(hbar*Coupling[lambdaT3, {}, 0]*Field[H, Scalar, {Index[a, SU2L]}, {}]*Field[H, Scalar, {Index[b, SU2L]}, {}]*Field[l..., Flavor]}, {}]*Field[l, Fermion, {Index[b, Flavor]}, {}]*NCM[DiracProduct[GammaCC, Proj[1]]])/(\\u03f5*Coupling[MF, {}, 0])'\nencoding = 'locale', errors = None, newline = None\n\n    def write_text(self, data, encoding=None, errors=None, newline=None):\n        \"\"\"\n        Open the file in text mode, write to it, and close the file.\n        \"\"\"\n        if not isinstance(data, str):\n            raise TypeError('data must be str, not %s' %\n                            data.__class__.__name__)\n        encoding = io.text_encoding(encoding)\n        with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:\n>           return f.write(data)\n                   ^^^^^^^^^^^^^\nE           UnicodeEncodeError: 'cp932' codec can't encode character '\\u03f5' in position 774: illegal multibyte sequence\n\nC:\\Users\\popok\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\pathlib.py:1048: UnicodeEncodeError\n_ test_certificate_not_trusted_if_inconsistent[scalar_threshold_matching_performed-True] _\n\ntmp_path = WindowsPath('C:/Users/popok/AppData/Local/Temp/pytest-of-popok/pytest-202/test_certificate_not_trusted_i5')\nkey = 'scalar_threshold_matching_performed', value = True\n\n    @pytest.mark.parametrize('key,value', [\n        ('status','Success'), ('model','C_-1'),\n        ('raw_hard_llhh_candidate_term_count', 0),\n        ('raw_hard_llhh_pole_rge_certified',True),\n        ('physical_C5_computed',True),\n        ('scalar_threshold_matching_performed',True),\n    ])\n    def test_certificate_not_trusted_if_inconsistent(tmp_path,key,value):\n>       write_sources(tmp_path)\n\ntests\\python\\test_general_t3_eft1_hard_pole_audit.py:179: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\ntests\\python\\test_general_t3_eft1_hard_pole_audit.py:76: in write_sources\n    (folder / (stem + '_raw_hard_llhh_sector.inputform.txt')).write_text(sample())\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = WindowsPath('C:/Users/popok/AppData/Local/Temp/pytest-of-popok/pytest-202/test_certificate_not_trusted_i5/B_m1_final_eft1_fermion_first_oneloop_raw_hard_llhh_sector.inputform.txt')\ndata = '(hbar*Coupling[lambdaT3, {}, 0]*Field[H, Scalar, {Index[a, SU2L]}, {}]*Field[H, Scalar, {Index[b, SU2L]}, {}]*Field[l..., Flavor]}, {}]*Field[l, Fermion, {Index[b, Flavor]}, {}]*NCM[DiracProduct[GammaCC, Proj[1]]])/(\\u03f5*Coupling[MF, {}, 0])'\nencoding = 'locale', errors = None, newline = None\n\n    def write_text(self, data, encoding=None, errors=None, newline=None):\n        \"\"\"\n        Open the file in text mode, write to it, and close the file.\n        \"\"\"\n        if not isinstance(data, str):\n            raise TypeError('data must be str, not %s' %\n                            data.__class__.__name__)\n        encoding = io.text_encoding(encoding)\n        with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:\n>           return f.write(data)\n                   ^^^^^^^^^^^^^\nE           UnicodeEncodeError: 'cp932' codec can't encode character '\\u03f5' in position 774: illegal multibyte sequence\n\nC:\\Users\\popok\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\pathlib.py:1048: UnicodeEncodeError\n___________ test_raw_sector_must_be_exact_subset_of_full_difference ___________\n\ntmp_path = WindowsPath('C:/Users/popok/AppData/Local/Temp/pytest-of-popok/pytest-202/test_raw_sector_must_be_exact_0')\nmonkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002C1C3A9A7B0>\n\n    def test_raw_sector_must_be_exact_subset_of_full_difference(tmp_path, monkeypatch):\n>       write_sources(tmp_path)\n\ntests\\python\\test_general_t3_eft1_hard_pole_audit.py:187: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\ntests\\python\\test_general_t3_eft1_hard_pole_audit.py:76: in write_sources\n    (folder / (stem + '_raw_hard_llhh_sector.inputform.txt')).write_text(sample())\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = WindowsPath('C:/Users/popok/AppData/Local/Temp/pytest-of-popok/pytest-202/test_raw_sector_must_be_exact_0/B_m1_final_eft1_fermion_first_oneloop_raw_hard_llhh_sector.inputform.txt')\ndata = '(hbar*Coupling[lambdaT3, {}, 0]*Field[H, Scalar, {Index[a, SU2L]}, {}]*Field[H, Scalar, {Index[b, SU2L]}, {}]*Field[l..., Flavor]}, {}]*Field[l, Fermion, {Index[b, Flavor]}, {}]*NCM[DiracProduct[GammaCC, Proj[1]]])/(\\u03f5*Coupling[MF, {}, 0])'\nencoding = 'locale', errors = None, newline = None\n\n    def write_text(self, data, encoding=None, errors=None, newline=None):\n        \"\"\"\n        Open the file in text mode, write to it, and close the file.\n        \"\"\"\n        if not isinstance(data, str):\n            raise TypeError('data must be str, not %s' %\n                            data.__class__.__name__)\n        encoding = io.text_encoding(encoding)\n        with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:\n>           return f.write(data)\n                   ^^^^^^^^^^^^^\nE           UnicodeEncodeError: 'cp932' codec can't encode character '\\u03f5' in position 774: illegal multibyte sequence\n\nC:\\Users\\popok\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\pathlib.py:1048: UnicodeEncodeError\n__________________ test_certificate_source_read_and_validate __________________\n\ntmp_path = WindowsPath('C:/Users/popok/AppData/Local/Temp/pytest-of-popok/pytest-202/test_certificate_source_read_a0')\n\n    def test_certificate_source_read_and_validate(tmp_path):\n>       write_sources(tmp_path)\n\ntests\\python\\test_general_t3_eft1_hard_pole_audit.py:197: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\ntests\\python\\test_general_t3_eft1_hard_pole_audit.py:76: in write_sources\n    (folder / (stem + '_raw_hard_llhh_sector.inputform.txt')).write_text(sample())\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = WindowsPath('C:/Users/popok/AppData/Local/Temp/pytest-of-popok/pytest-202/test_certificate_source_read_a0/B_m1_final_eft1_fermion_first_oneloop_raw_hard_llhh_sector.inputform.txt')\ndata = '(hbar*Coupling[lambdaT3, {}, 0]*Field[H, Scalar, {Index[a, SU2L]}, {}]*Field[H, Scalar, {Index[b, SU2L]}, {}]*Field[l..., Flavor]}, {}]*Field[l, Fermion, {Index[b, Flavor]}, {}]*NCM[DiracProduct[GammaCC, Proj[1]]])/(\\u03f5*Coupling[MF, {}, 0])'\nencoding = 'locale', errors = None, newline = None\n\n    def write_text(self, data, encoding=None, errors=None, newline=None):\n        \"\"\"\n        Open the file in text mode, write to it, and close the file.\n        \"\"\"\n        if not isinstance(data, str):\n            raise TypeError('data must be str, not %s' %\n                            data.__class__.__name__)\n        encoding = io.text_encoding(encoding)\n        with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:\n>           return f.write(data)\n                   ^^^^^^^^^^^^^\nE           UnicodeEncodeError: 'cp932' codec can't encode character '\\u03f5' in position 774: illegal multibyte sequence\n\nC:\\Users\\popok\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\pathlib.py:1048: UnicodeEncodeError\n=================================== PASSES ====================================\n=========================== short test summary info ===========================\nPASSED tests/python/test_general_t3_eft1_hard_pole_audit.py::test_model_stem[B_-1]\nPASSED tests/python/test_general_t3_eft1_hard_pole_audit.py::test_model_stem[C_-1]\nPASSED tests/python/test_general_t3_eft1_hard_pole_audit.py::test_unsupported_stems[A_+0-final]\nPASSED tests/python/test_general_t3_eft1_hard_pole_audit.py::test_unsupported_stems[B_-1-other]\nPASSED tests/python/test_general_t3_eft1_hard_pole_audit.py::test_valid_triplets_and_chirality_split\nPASSED tests/python/test_general_t3_eft1_hard_pole_audit.py::test_exact_source_roundtrip\nPASSED tests/python/test_general_t3_eft1_hard_pole_audit.py::test_log_and_pole_coefficients_are_same_multiset\nPASSED tests/python/test_general_t3_eft1_hard_pole_audit.py::test_unknown_log_fails[Log[other]]\nPASSED tests/python/test_general_t3_eft1_hard_pole_audit.py::test_unknown_log_fails[Log[\\u03bcbar2/MSX^2]]\nPASSED tests/python/test_general_t3_eft1_hard_pole_audit.py::test_unknown_log_fails[Log[\\u03bcbar2/MF^2]^2]\nPASSED tests/python/test_general_t3_eft1_hard_pole_audit.py::test_unknown_pole_symbol_or_power_fails[\\u03b5*]\nPASSED tests/python/test_general_t3_eft1_hard_pole_audit.py::test_unknown_pole_symbol_or_power_fails[epsilon*]\nPASSED tests/python/test_general_t3_eft1_hard_pole_audit.py::test_unknown_pole_symbol_or_power_fails[\\u03f5^2*]\nPASSED tests/python/test_general_t3_eft1_hard_pole_audit.py::test_unknown_pole_symbol_or_power_fails[\\u03f5*\\u03f5*]\nPASSED tests/python/test_general_t3_eft1_hard_pole_audit.py::test_mismatched_pole_coupling_fails\nPASSED tests/python/test_general_t3_eft1_hard_pole_audit.py::test_missing_term_or_sign_mismatch_fails\nPASSED tests/python/test_general_t3_eft1_hard_pole_audit.py::test_wrong_operator_is_rejected[GammaCC-Gamma]\nPASSED tests/python/test_general_t3_eft1_hard_pole_audit.py::test_wrong_operator_is_rejected[hbar-hbar^2]\nPASSED tests/python/test_general_t3_eft1_hard_pole_audit.py::test_wrong_operator_is_rejected[Field[H, Scalar-Field[NewScalarX, Scalar]\nPASSED tests/python/test_general_t3_eft1_hard_pole_audit.py::test_wrong_operator_is_rejected[Proj[-1]-Proj[7]]\nPASSED tests/python/test_general_t3_eft1_hard_pole_audit.py::test_corrupted_top_level_parser_fails\nPASSED tests/python/test_general_t3_eft1_hard_pole_audit.py::test_residue_normalization_for_B_and_C\nPASSED tests/python/test_general_t3_eft1_hard_pole_audit.py::test_code_does_not_claim_physical_c5\nFAILED tests/python/test_general_t3_eft1_hard_pole_audit.py::test_certificate_not_trusted_if_inconsistent[status-Success]\nFAILED tests/python/test_general_t3_eft1_hard_pole_audit.py::test_certificate_not_trusted_if_inconsistent[model-C_-1]\nFAILED tests/python/test_general_t3_eft1_hard_pole_audit.py::test_certificate_not_trusted_if_inconsistent[raw_hard_llhh_candidate_term_count-0]\nFAILED tests/python/test_general_t3_eft1_hard_pole_audit.py::test_certificate_not_trusted_if_inconsistent[raw_hard_llhh_pole_rge_certified-True]\nFAILED tests/python/test_general_t3_eft1_hard_pole_audit.py::test_certificate_not_trusted_if_inconsistent[physical_C5_computed-True]\nFAILED tests/python/test_general_t3_eft1_hard_pole_audit.py::test_certificate_not_trusted_if_inconsistent[scalar_threshold_matching_performed-True]\nFAILED tests/python/test_general_t3_eft1_hard_pole_audit.py::test_raw_sector_must_be_exact_subset_of_full_difference\nFAILED tests/python/test_general_t3_eft1_hard_pole_audit.py::test_certificate_source_read_and_validate\n8 failed, 23 passed in 0.29s\n",
+      "stderr_tail": ""
+    },
+    {
+      "label": "tests/python/test_general_t3_quartic_action_identity.py",
+      "command": [
+        "C:\\thesistemp\\T3neutrinomassmodelpipeline\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "-q",
+        "-rA",
+        "tests/python/test_general_t3_quartic_action_identity.py"
+      ],
+      "returncode": 1,
+      "stdout_tail": "..........FF                                                             [100%]\n================================== FAILURES ===================================\n__________________ test_project_source_validation_if_present __________________\n\n    def test_project_source_validation_if_present():\n        if not (ROOT/'Lagrangian/model/LagrangianBuilder.wl').is_file():\n            pytest.skip('Requires local project Matchete source files')\n>       assert verify_matchete_source(ROOT)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\ntests\\python\\test_general_t3_quartic_action_identity.py:134: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\nscripts\\QuarticActionIdentity.py:73: in verify_matchete_source\n    fail('Matchete Lagrangian construction or exported quartic coefficient convention changed')\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nmessage = 'Matchete Lagrangian construction or exported quartic coefficient convention changed'\n\n    def fail(message: str):\n>       raise ValueError('Stage26 fail-closed: ' + message)\nE       ValueError: Stage26 fail-closed: Matchete Lagrangian construction or exported quartic coefficient convention changed\n\nscripts\\QuarticActionIdentity.py:42: ValueError\n___________________ test_live_stage26_optional_integration ____________________\n\n    def test_live_stage26_optional_integration():\n        path=ROOT/'output/general_t3_stage22/stage25_live_native_quartic_assembly.json'\n        if not path.is_file():\n            pytest.skip('Requires user-generated Stage25 live Mathematica evidence')\n>       result=run(ROOT/'output/general_t3_stage22',None,ROOT)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\ntests\\python\\test_general_t3_quartic_action_identity.py:141: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\nscripts\\QuarticActionIdentity.py:248: in run\n    verify_matchete_source(root)\nscripts\\QuarticActionIdentity.py:73: in verify_matchete_source\n    fail('Matchete Lagrangian construction or exported quartic coefficient convention changed')\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nmessage = 'Matchete Lagrangian construction or exported quartic coefficient convention changed'\n\n    def fail(message: str):\n>       raise ValueError('Stage26 fail-closed: ' + message)\nE       ValueError: Stage26 fail-closed: Matchete Lagrangian construction or exported quartic coefficient convention changed\n\nscripts\\QuarticActionIdentity.py:42: ValueError\n=================================== PASSES ====================================\n=========================== short test summary info ===========================\nPASSED tests/python/test_general_t3_quartic_action_identity.py::test_exact_normalisation_conventions\nPASSED tests/python/test_general_t3_quartic_action_identity.py::test_identical_bosons_collect_without_factorial\nPASSED tests/python/test_general_t3_quartic_action_identity.py::test_explicit_hermitian_conjugate_includes_complex_coefficient\nPASSED tests/python/test_general_t3_quartic_action_identity.py::test_formal_conjugation_round_trip\nPASSED tests/python/test_general_t3_quartic_action_identity.py::test_one_dimensional_signed_candidate_identifies_full_action\nPASSED tests/python/test_general_t3_quartic_action_identity.py::test_two_coupling_signed_map_has_no_factor_4\nPASSED tests/python/test_general_t3_quartic_action_identity.py::test_wrong_signed_mapping_is_rejected\nPASSED tests/python/test_general_t3_quartic_action_identity.py::test_component_mutation_is_rejected\nPASSED tests/python/test_general_t3_quartic_action_identity.py::test_raw_quartic_multiplicity_negative_control\nPASSED tests/python/test_general_t3_quartic_action_identity.py::test_unreviewed_geometry_class_refused\nFAILED tests/python/test_general_t3_quartic_action_identity.py::test_project_source_validation_if_present\nFAILED tests/python/test_general_t3_quartic_action_identity.py::test_live_stage26_optional_integration\n2 failed, 10 passed in 0.79s\n",
+      "stderr_tail": ""
+    },
+    {
+      "label": "tests/python/test_general_t3_triplet_intertwiner.py",
+      "command": [
+        "C:\\thesistemp\\T3neutrinomassmodelpipeline\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "-q",
+        "-rA",
+        "tests/python/test_general_t3_triplet_intertwiner.py"
+      ],
+      "returncode": 1,
+      "stdout_tail": "...........F                                                             [100%]\n================================== FAILURES ===================================\n__________________ test_full_local_integration_if_available ___________________\n\n    def test_full_local_integration_if_available():\n        if not (FILES/'stage26_conditional_quartic_action.json').is_file() or \\\n           not (FILES/'stage25_live_native_quartic_assembly.json').is_file():\n            pytest.skip('User-generated live Stage25/26 evidence not present')\n>       d=run(FILES,None)\n          ^^^^^^^^^^^^^^^\n\ntests\\python\\test_general_t3_triplet_intertwiner.py:112: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\nscripts\\TripletIntertwiner.py:261: in run\n    fresh=stage26_run(folder,None)\n          ^^^^^^^^^^^^^^^^^^^^^^^^\nscripts\\QuarticActionIdentity.py:248: in run\n    verify_matchete_source(root)\nscripts\\QuarticActionIdentity.py:73: in verify_matchete_source\n    fail('Matchete Lagrangian construction or exported quartic coefficient convention changed')\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nmessage = 'Matchete Lagrangian construction or exported quartic coefficient convention changed'\n\n    def fail(message: str):\n>       raise ValueError('Stage26 fail-closed: ' + message)\nE       ValueError: Stage26 fail-closed: Matchete Lagrangian construction or exported quartic coefficient convention changed\n\nscripts\\QuarticActionIdentity.py:42: ValueError\n=================================== PASSES ====================================\n=========================== short test summary info ===========================\nPASSED tests/python/test_general_t3_triplet_intertwiner.py::test_reference_symmetric_basis_orthonormal\nPASSED tests/python/test_general_t3_triplet_intertwiner.py::test_spin_half_commutator\nPASSED tests/python/test_general_t3_triplet_intertwiner.py::test_native_six_triplet_witness\nPASSED tests/python/test_general_t3_triplet_intertwiner.py::test_extracted_unitary_is_nontrivial\nPASSED tests/python/test_general_t3_triplet_intertwiner.py::test_tampered_triplet_matchete_component_rejected\nPASSED tests/python/test_general_t3_triplet_intertwiner.py::test_model_specific_triplet_rephasing_rejected\nPASSED tests/python/test_general_t3_triplet_intertwiner.py::test_native_triple_invariant_changed_rejected\nPASSED tests/python/test_general_t3_triplet_intertwiner.py::test_e_series_component_rejected\nPASSED tests/python/test_general_t3_triplet_intertwiner.py::test_reference_cg_disallows_scaled_singular_basis\nPASSED tests/python/test_general_t3_triplet_intertwiner.py::test_generators_reject_wrong_local_cg_sign\nPASSED tests/python/test_general_t3_triplet_intertwiner.py::test_runtime_fail_closed_without_stage26\nFAILED tests/python/test_general_t3_triplet_intertwiner.py::test_full_local_integration_if_available\n1 failed, 11 passed in 1.52s\n",
+      "stderr_tail": ""
+    },
+    {
+      "label": "tests/python/test_general_t3_triplet_native_structure.py",
+      "command": [
+        "C:\\thesistemp\\T3neutrinomassmodelpipeline\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "-q",
+        "-rA",
+        "tests/python/test_general_t3_triplet_native_structure.py"
+      ],
+      "returncode": 1,
+      "stdout_tail": "...............F                                                         [100%]\n================================== FAILURES ===================================\n________________ test_real_live_stage28_and_stage27_if_present ________________\n\n    def test_real_live_stage28_and_stage27_if_present():\n        if not (FOLDER/'stage28_live_rgbeta_triplet_structure.json').is_file() or not \\\n           (FOLDER/'stage27_triplet_generator_witness.json').is_file() or not \\\n           (FOLDER/'stage26_conditional_quartic_action.json').is_file():\n            pytest.skip('User Wolfram output and complete Stage25-27 evidence needed')\n>       result=run(FOLDER,None)\n               ^^^^^^^^^^^^^^^^\n\ntests\\python\\test_general_t3_triplet_native_structure.py:109: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\nscripts\\RGBetaTripletNativeStructureAudit.py:171: in run\n    fresh = stage27_run(folder, None, check_stage26=True)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nscripts\\TripletIntertwiner.py:261: in run\n    fresh=stage26_run(folder,None)\n          ^^^^^^^^^^^^^^^^^^^^^^^^\nscripts\\QuarticActionIdentity.py:248: in run\n    verify_matchete_source(root)\nscripts\\QuarticActionIdentity.py:73: in verify_matchete_source\n    fail('Matchete Lagrangian construction or exported quartic coefficient convention changed')\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nmessage = 'Matchete Lagrangian construction or exported quartic coefficient convention changed'\n\n    def fail(message: str):\n>       raise ValueError('Stage26 fail-closed: ' + message)\nE       ValueError: Stage26 fail-closed: Matchete Lagrangian construction or exported quartic coefficient convention changed\n\nscripts\\QuarticActionIdentity.py:42: ValueError\n=================================== PASSES ====================================\n=========================== short test summary info ===========================\nPASSED tests/python/test_general_t3_triplet_native_structure.py::test_metric_and_generator_invariance_exact\nPASSED tests/python/test_general_t3_triplet_native_structure.py::test_six_model_and_all_triplet_field_counts\nPASSED tests/python/test_general_t3_triplet_native_structure.py::test_never_promotes_numerical_component_certificate\nPASSED tests/python/test_general_t3_triplet_native_structure.py::test_reject_tampered_native_source_claim[dimension-4]\nPASSED tests/python/test_general_t3_triplet_native_structure.py::test_reject_tampered_native_source_claim[quadratic_casimir-3]\nPASSED tests/python/test_general_t3_triplet_native_structure.py::test_reject_tampered_native_source_claim[trace_normalisation-1]\nPASSED tests/python/test_general_t3_triplet_native_structure.py::test_reject_tampered_native_source_claim[native_generator_is_symbolic-False]\nPASSED tests/python/test_general_t3_triplet_native_structure.py::test_reject_tampered_native_source_claim[native_conjugate_generator_minus_transpose-False]\nPASSED tests/python/test_general_t3_triplet_native_structure.py::test_reject_tampered_native_source_claim[native_delS2_orthogonality-False]\nPASSED tests/python/test_general_t3_triplet_native_structure.py::test_reject_tampered_native_source_claim[native_complex_conjugate_metric_two-False]\nPASSED tests/python/test_general_t3_triplet_native_structure.py::test_reject_tampered_native_source_claim[native_numerical_generator_components_exported-True]\nPASSED tests/python/test_general_t3_triplet_native_structure.py::test_reject_wrong_triplet_species\nPASSED tests/python/test_general_t3_triplet_native_structure.py::test_reject_false_certificate\nPASSED tests/python/test_general_t3_triplet_native_structure.py::test_reject_duplicate_model\nPASSED tests/python/test_general_t3_triplet_native_structure.py::test_fail_closed_when_live_export_missing\nFAILED tests/python/test_general_t3_triplet_native_structure.py::test_real_live_stage28_and_stage27_if_present\n1 failed, 15 passed in 7.94s\n",
+      "stderr_tail": ""
+    },
+    {
+      "label": "tests/python/test_general_t3_coupled_uv_running.py",
+      "command": [
+        "C:\\thesistemp\\T3neutrinomassmodelpipeline\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "-q",
+        "-rA",
+        "tests/python/test_general_t3_coupled_uv_running.py"
+      ],
+      "returncode": 0,
+      "stdout_tail": ".....................................s..                                 [100%]\n=================================== PASSES ====================================\n=========================== short test summary info ===========================\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_inventory_complete_and_disjoint\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_each_registered_model_inventory_and_config_path[A_-2]\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_each_registered_model_inventory_and_config_path[A_-4]\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_each_registered_model_inventory_and_config_path[B_+1]\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_each_registered_model_inventory_and_config_path[B_-1]\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_each_registered_model_inventory_and_config_path[B_-3]\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_each_registered_model_inventory_and_config_path[C_+1]\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_each_registered_model_inventory_and_config_path[C_-1]\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_each_registered_model_inventory_and_config_path[C_-3]\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_each_registered_model_inventory_and_config_path[D_+0]\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_each_registered_model_inventory_and_config_path[D_+2]\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_each_registered_model_inventory_and_config_path[D_-2]\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_each_registered_model_inventory_and_config_path[E_+0]\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_each_registered_model_inventory_and_config_path[E_+2]\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_each_registered_model_inventory_and_config_path[E_-2]\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_each_registered_model_inventory_and_config_path[E_-4]\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_zero_extra_models_require_real_base_running[A_-4]\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_zero_extra_models_require_real_base_running[D_+2]\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_zero_extra_models_require_real_base_running[E_+2]\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_zero_extra_models_require_real_base_running[E_-4]\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_reused_quartics_are_separate_from_one_new_slot[B_-1]\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_reused_quartics_are_separate_from_one_new_slot[C_-1]\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_reject_tampered_registry[<lambda>-model selection]\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_reject_tampered_registry[<lambda>-totals]\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_reject_tampered_registry[<lambda>-inventory0]\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_reject_tampered_registry[<lambda>-inventory1]\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_reject_bad_stage29_exact_or_certification\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_reject_corrupt_live_rgbeta_export[metadata-<lambda>]\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_reject_corrupt_live_rgbeta_export[source-<lambda>]\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_reject_corrupt_live_rgbeta_export[inventory-<lambda>]\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_reject_corrupt_live_rgbeta_export[certification-<lambda>]\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_reject_corrupt_live_rgbeta_export[reused-<lambda>]\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_both_reused_benchmark_values_are_overwritten_in_memory\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_backward_integrator_for_zero_and_six_new_complex_slots\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_wolfram_export_uses_projected_native_quartic_betas_without_headless_check\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_runner_only_targets_15_and_summary_does_not_fake_completion\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_summary_fails_closed_without_saved_results\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_wolfram_registry_empty_symbol_lists_preserved\nPASSED tests/python/test_general_t3_coupled_uv_running.py::test_stage31_empty_inventory_models_are_in_real_registry\nSKIPPED [1] tests\\python\\test_general_t3_coupled_uv_running.py:227: No user-provided Stage30 native beta export\n39 passed, 1 skipped in 1.00s\n",
+      "stderr_tail": ""
+    },
+    {
+      "label": "tests/python/test_general_t3_eft1_scalar_pair_mixing.py",
+      "missing": true
+    }
+  ],
+  "self_tests": [
+    {
+      "label": "Numerical.experimental.T3GeneralYukawaCoupledUV",
+      "command": [
+        "C:\\thesistemp\\T3neutrinomassmodelpipeline\\.venv\\Scripts\\python.exe",
+        "-c",
+        "import importlib; m=importlib.import_module('Numerical.experimental.T3GeneralYukawaCoupledUV'); m.self_test()"
+      ],
+      "returncode": 0,
+      "stdout_tail": "PASS: 16-model catalogue; 6 extras; full dynamic complex layout; real/complex negative controls; exact ODE solution\n",
+      "stderr_tail": ""
+    },
+    {
+      "label": "Numerical.experimental.T3RGAssistedExtendedC5",
+      "command": [
+        "C:\\thesistemp\\T3neutrinomassmodelpipeline\\.venv\\Scripts\\python.exe",
+        "-c",
+        "import importlib; m=importlib.import_module('Numerical.experimental.T3RGAssistedExtendedC5'); m.self_test()"
+      ],
+      "returncode": 0,
+      "stdout_tail": "PASS: six native-to-RGBeta names, Dirac SVD, threshold gate, complex JSON and no-certification controls\n",
+      "stderr_tail": ""
+    },
+    {
+      "label": "Numerical.experimental.T3ExtendedLowEnergyStudy",
+      "command": [
+        "C:\\thesistemp\\T3neutrinomassmodelpipeline\\.venv\\Scripts\\python.exe",
+        "-c",
+        "import importlib; m=importlib.import_module('Numerical.experimental.T3ExtendedLowEnergyStudy'); m.self_test()"
+      ],
+      "returncode": 0,
+      "stdout_tail": "PASS: six-model study configuration, physical gates, mass ordering, and threshold crossing controls\n",
+      "stderr_tail": ""
+    },
+    {
+      "label": "Numerical.experimental.T3ExtendedC5Observables",
+      "command": [
+        "C:\\thesistemp\\T3neutrinomassmodelpipeline\\.venv\\Scripts\\python.exe",
+        "-c",
+        "import importlib; m=importlib.import_module('Numerical.experimental.T3ExtendedC5Observables'); m.self_test()"
+      ],
+      "returncode": 0,
+      "stdout_tail": "PASS: source-labelled symmetric C5 -> mnu, charged-lepton rotation, Takagi observables, negative controls\n",
+      "stderr_tail": ""
+    }
+  ],
+  "explicit_unverified": [
+    "Whether the extended-C5 bridge uses a physically derived RGBeta-to-Matchete coupling basis",
+    "Whether the six-model one-scale path covers the input representation",
+    "Whether one full state is passed continuously from UV to final mass and PMNS",
+    "Whether all heavy thresholds are matched consistently in hierarchical cases",
+    "Numerical benchmark validation against independent known limits"
+  ],
+  "failing_commands": [
+    "tests/python/test_general_t3_eft1_hard_pole_audit.py",
+    "tests/python/test_general_t3_quartic_action_identity.py",
+    "tests/python/test_general_t3_triplet_intertwiner.py",
+    "tests/python/test_general_t3_triplet_native_structure.py"
+  ],
+  "decision": "NOT_CERTIFIED"
+}

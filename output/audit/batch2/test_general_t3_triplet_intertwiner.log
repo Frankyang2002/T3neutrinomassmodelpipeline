@@ -1,0 +1,33 @@
+...........F                                                             [100%]
+================================== FAILURES ===================================
+__________________ test_full_local_integration_if_available ___________________
+
+    def test_full_local_integration_if_available():
+        if not (FILES/'stage26_conditional_quartic_action.json').is_file() or \
+           not (FILES/'stage25_live_native_quartic_assembly.json').is_file():
+            pytest.skip('User-generated live Stage25/26 evidence not present')
+>       d=run(FILES,None)
+          ^^^^^^^^^^^^^^^
+
+tests\python\test_general_t3_triplet_intertwiner.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\TripletIntertwiner.py:261: in run
+    fresh=stage26_run(folder,None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^
+scripts\QuarticActionIdentity.py:248: in run
+    verify_matchete_source(root)
+scripts\QuarticActionIdentity.py:73: in verify_matchete_source
+    fail('Matchete Lagrangian construction or exported quartic coefficient convention changed')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+message = 'Matchete Lagrangian construction or exported quartic coefficient convention changed'
+
+    def fail(message: str):
+>       raise ValueError('Stage26 fail-closed: ' + message)
+E       ValueError: Stage26 fail-closed: Matchete Lagrangian construction or exported quartic coefficient convention changed
+
+scripts\QuarticActionIdentity.py:42: ValueError
+=========================== short test summary info ===========================
+FAILED tests/python/test_general_t3_triplet_intertwiner.py::test_full_local_integration_if_available
+1 failed, 11 passed in 1.52s
+

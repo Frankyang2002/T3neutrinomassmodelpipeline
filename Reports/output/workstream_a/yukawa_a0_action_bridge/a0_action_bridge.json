@@ -1,0 +1,74 @@
+{
+  "format": "t3-workstream-a-a0-conditional-yukawa-action-v1",
+  "model": "A_p0",
+  "status": "A0ExactFormalWeylActionIdentityBothIndependentYukawasPhysicalPhasePending",
+  "source": "Native Matchete y1/y1Conj CG, live RGBeta AddYukawa registry and prefactor, RGBeta MBL Yukawa sign",
+  "previous_38_yukawa_cg_and_prefactor_audit": "Passed",
+  "previous_1032_component_ward_equations": "Passed",
+  "matchete_cg_dimensions": [
+    2,
+    2
+  ],
+  "matchete_cg_components": [
+    "0",
+    "1",
+    "-1",
+    "0"
+  ],
+  "matchete_nonhc_terms": [
+    "y1M S1 NCM[Bar[L],CConj[F]] epsilon",
+    "y1ConjM Bar[S1] NCM[Bar[L],CConj[F]] epsilon"
+  ],
+  "rgbeta_native_nonhc_terms": [
+    "-Bar[y1R] Bar[S1] (l F) epsilon",
+    "-Bar[y1ConjR] S1 (l F) epsilon"
+  ],
+  "rgbeta_generic_yukawa_tensor_factor": "2/sqrt(2)",
+  "rgbeta_complex_scalar_projection": "1/sqrt(2)",
+  "rgbeta_distinct_fermion_permutations": 2,
+  "rgbeta_generic_lagrangian_yukawa_prefactor": "-1/2",
+  "rgbeta_physical_nonhc_coefficient": "-1",
+  "physical_fermion_mapping_assumption": "NCM[Bar[L_i],CConj[F_j]] = eta * (l_i F_j)^dagger, |eta|=1, in a declared common spinor convention",
+  "native_matchete_spinor_conversion_eta_measured": false,
+  "native_rgbeta_absolute_epsilon_coordinates_measured": false,
+  "conditional_candidate_maps": [
+    {
+      "epsilon_relative_orientation_rho": 1,
+      "matchete_to_rgbeta_cg_ratio_q": "1",
+      "physical_candidate_mapping_y1_R": "-eta*yM",
+      "physical_candidate_mapping_y1Conj_R": "-eta*ycM",
+      "conjugate_candidate_mapping_y1_Rbar": "-yMbar/eta",
+      "conjugate_candidate_mapping_y1Conj_Rbar": "-ycMbar/eta",
+      "all_monomial_channels_compared": 16,
+      "nonzero_exact_monomial_coefficients_equal": 8,
+      "all_residuals_zero_exact": true,
+      "conditional_on_common_su2_coordinates": true,
+      "conditional_on_undetermined_weyl_bilinear_phase_eta": true,
+      "physical_absolute_mapping_certified": false
+    },
+    {
+      "epsilon_relative_orientation_rho": -1,
+      "matchete_to_rgbeta_cg_ratio_q": "-1",
+      "physical_candidate_mapping_y1_R": "eta*yM",
+      "physical_candidate_mapping_y1Conj_R": "eta*ycM",
+      "conjugate_candidate_mapping_y1_Rbar": "yMbar/eta",
+      "conjugate_candidate_mapping_y1Conj_Rbar": "ycMbar/eta",
+      "all_monomial_channels_compared": 16,
+      "nonzero_exact_monomial_coefficients_equal": 8,
+      "all_residuals_zero_exact": true,
+      "conditional_on_common_su2_coordinates": true,
+      "conditional_on_undetermined_weyl_bilinear_phase_eta": true,
+      "physical_absolute_mapping_certified": false
+    }
+  ],
+  "relative_y1Conj_to_y1_mapping_coherent": true,
+  "formal_action_identity_under_declared_assumptions": true,
+  "absolute_matchete_rgbeta_yukawa_coupling_mapping_certified": false,
+  "physical_cross_package_action_certified": false,
+  "production_files_modified": false,
+  "next_required_measurement": "Anchor the four-component Matchete CConj bilinear to the RGBeta left-Weyl bilinear in an explicit canonical spinor convention, then independently fix the RGBeta fundamental epsilon orientation in the same physical component basis.",
+  "source_sha256": {
+    "Lagrangian\\interactions\\T3Topology.wl": "e6e24c4a673bddff980885f8354b388ceaa19e53c8b2faa79ba3289a87de1511",
+    "RGE\\running\\rgbeta\\T3RGBetaModel.wl": "03be4fd7dffa73b16675ef6d5ceb48f48445dbe75d74d2a8851679fb91161c37"
+  }
+}

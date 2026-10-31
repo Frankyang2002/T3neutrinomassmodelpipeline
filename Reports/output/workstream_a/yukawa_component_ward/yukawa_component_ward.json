@@ -1,0 +1,1173 @@
+{
+  "format": "t3-workstream-a-exact-yukawa-component-ward-v1",
+  "status": "ExactSU2U1ComponentWardPassedPhysicalCrossPackageDictionaryPending",
+  "models_checked": 16,
+  "baseline_yukawas_checked": 32,
+  "new_native_extra_yukawas_checked": 6,
+  "extra_native_cgs_equal_to_baseline_exact": [
+    "A_m2",
+    "A_p0",
+    "D_m2",
+    "D_p0",
+    "E_m2",
+    "E_p0"
+  ],
+  "su2_ward_component_equations_checked": 1032,
+  "u1_hypercharge_checks": 38,
+  "su3_c": "Trivial on the model-source color-singlet fields; no colored external indices",
+  "triplet_representation_basis": "Stage27 exact CG-derived Matchete reference candidate",
+  "independent_native_triplet_generator_coordinates_verified": false,
+  "rgbeta_native_ward_check_passed": false,
+  "physical_matchete_rgbeta_yukawa_normalization_certified": false,
+  "physical_action_equivalence_verified": false,
+  "production_rgbeta_modified": false,
+  "next_step": "Reconstruct both packages' physical Yukawa actions using the Weyl/Dirac and complex-real scalar conventions; compare exact signed coefficients.",
+  "source_sha256": {
+    "Lagrangian/model/SU2Invariants.wl": "78e83bd1730555d15a47f8f2b3343635734b3f3387afb243623b89410faa6c1a",
+    "Lagrangian/interactions/T3Topology.wl": "e6e24c4a673bddff980885f8354b388ceaa19e53c8b2faa79ba3289a87de1511",
+    "RGE/running/rgbeta/T3RGBetaModel.wl": "03be4fd7dffa73b16675ef6d5ceb48f48445dbe75d74d2a8851679fb91161c37",
+    "output/general_t3_stage22/stage27_triplet_generator_witness.json": "554a11926325a8a389bf5273bd64d06954c731bb52913f5feb19fea6d99d8bc6"
+  },
+  "yukawas": [
+    {
+      "model": "A_m4",
+      "coupling": "y1",
+      "field_order": [
+        "Bar[L]",
+        "F^c",
+        "S"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        2,
+        1
+      ],
+      "native_cg_norm_squared_exact": "2",
+      "conjugated_axes": [
+        true,
+        true,
+        false
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "3/2",
+        "-2"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 12,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "A_m4",
+      "coupling": "y2",
+      "field_order": [
+        "Bar[L]",
+        "F",
+        "Bar[S]"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        2,
+        3
+      ],
+      "native_cg_norm_squared_exact": "2*sqrt(3)",
+      "conjugated_axes": [
+        true,
+        false,
+        true
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "-3/2",
+        "1"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 36,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "A_m2",
+      "coupling": "y1",
+      "field_order": [
+        "Bar[L]",
+        "F^c",
+        "S"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        2,
+        1
+      ],
+      "native_cg_norm_squared_exact": "2",
+      "conjugated_axes": [
+        true,
+        true,
+        false
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "1/2",
+        "-1"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 12,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "A_m2",
+      "coupling": "y2",
+      "field_order": [
+        "Bar[L]",
+        "F",
+        "Bar[S]"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        2,
+        3
+      ],
+      "native_cg_norm_squared_exact": "2*sqrt(3)",
+      "conjugated_axes": [
+        true,
+        false,
+        true
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "-1/2",
+        "0"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 36,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "A_m2",
+      "coupling": "y2Conj",
+      "field_order": [
+        "Bar[L]",
+        "F",
+        "S"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        2,
+        3
+      ],
+      "native_cg_norm_squared_exact": "2*sqrt(3)",
+      "conjugated_axes": [
+        true,
+        false,
+        false
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "-1/2",
+        "0"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 36,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "A_p0",
+      "coupling": "y1",
+      "field_order": [
+        "Bar[L]",
+        "F^c",
+        "S"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        2,
+        1
+      ],
+      "native_cg_norm_squared_exact": "2",
+      "conjugated_axes": [
+        true,
+        true,
+        false
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "-1/2",
+        "0"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 12,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "A_p0",
+      "coupling": "y2",
+      "field_order": [
+        "Bar[L]",
+        "F",
+        "Bar[S]"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        2,
+        3
+      ],
+      "native_cg_norm_squared_exact": "2*sqrt(3)",
+      "conjugated_axes": [
+        true,
+        false,
+        true
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "1/2",
+        "-1"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 36,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "A_p0",
+      "coupling": "y1Conj",
+      "field_order": [
+        "Bar[L]",
+        "F^c",
+        "Bar[S]"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        2,
+        1
+      ],
+      "native_cg_norm_squared_exact": "2",
+      "conjugated_axes": [
+        true,
+        true,
+        true
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "-1/2",
+        "0"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 12,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "B_m3",
+      "coupling": "y1",
+      "field_order": [
+        "Bar[L]",
+        "F^c",
+        "S"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        1,
+        2
+      ],
+      "native_cg_norm_squared_exact": "2",
+      "conjugated_axes": [
+        true,
+        true,
+        false
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "1",
+        "-3/2"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 12,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "B_m3",
+      "coupling": "y2",
+      "field_order": [
+        "Bar[L]",
+        "F",
+        "Bar[S]"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        1,
+        2
+      ],
+      "native_cg_norm_squared_exact": "2",
+      "conjugated_axes": [
+        true,
+        false,
+        true
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "-1",
+        "1/2"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 12,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "B_m1",
+      "coupling": "y1",
+      "field_order": [
+        "Bar[L]",
+        "F^c",
+        "S"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        1,
+        2
+      ],
+      "native_cg_norm_squared_exact": "2",
+      "conjugated_axes": [
+        true,
+        true,
+        false
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "0",
+        "-1/2"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 12,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "B_m1",
+      "coupling": "y2",
+      "field_order": [
+        "Bar[L]",
+        "F",
+        "Bar[S]"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        1,
+        2
+      ],
+      "native_cg_norm_squared_exact": "2",
+      "conjugated_axes": [
+        true,
+        false,
+        true
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "0",
+        "-1/2"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 12,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "B_p1",
+      "coupling": "y1",
+      "field_order": [
+        "Bar[L]",
+        "F^c",
+        "S"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        1,
+        2
+      ],
+      "native_cg_norm_squared_exact": "2",
+      "conjugated_axes": [
+        true,
+        true,
+        false
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "-1",
+        "1/2"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 12,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "B_p1",
+      "coupling": "y2",
+      "field_order": [
+        "Bar[L]",
+        "F",
+        "Bar[S]"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        1,
+        2
+      ],
+      "native_cg_norm_squared_exact": "2",
+      "conjugated_axes": [
+        true,
+        false,
+        true
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "1",
+        "-3/2"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 12,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "C_m3",
+      "coupling": "y1",
+      "field_order": [
+        "Bar[L]",
+        "F^c",
+        "S"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        3,
+        2
+      ],
+      "native_cg_norm_squared_exact": "2*sqrt(3)",
+      "conjugated_axes": [
+        true,
+        true,
+        false
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "1",
+        "-3/2"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 36,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "C_m3",
+      "coupling": "y2",
+      "field_order": [
+        "Bar[L]",
+        "F",
+        "Bar[S]"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        3,
+        2
+      ],
+      "native_cg_norm_squared_exact": "2*sqrt(3)",
+      "conjugated_axes": [
+        true,
+        false,
+        true
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "-1",
+        "1/2"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 36,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "C_m1",
+      "coupling": "y1",
+      "field_order": [
+        "Bar[L]",
+        "F^c",
+        "S"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        3,
+        2
+      ],
+      "native_cg_norm_squared_exact": "2*sqrt(3)",
+      "conjugated_axes": [
+        true,
+        true,
+        false
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "0",
+        "-1/2"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 36,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "C_m1",
+      "coupling": "y2",
+      "field_order": [
+        "Bar[L]",
+        "F",
+        "Bar[S]"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        3,
+        2
+      ],
+      "native_cg_norm_squared_exact": "2*sqrt(3)",
+      "conjugated_axes": [
+        true,
+        false,
+        true
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "0",
+        "-1/2"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 36,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "C_p1",
+      "coupling": "y1",
+      "field_order": [
+        "Bar[L]",
+        "F^c",
+        "S"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        3,
+        2
+      ],
+      "native_cg_norm_squared_exact": "2*sqrt(3)",
+      "conjugated_axes": [
+        true,
+        true,
+        false
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "-1",
+        "1/2"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 36,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "C_p1",
+      "coupling": "y2",
+      "field_order": [
+        "Bar[L]",
+        "F",
+        "Bar[S]"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        3,
+        2
+      ],
+      "native_cg_norm_squared_exact": "2*sqrt(3)",
+      "conjugated_axes": [
+        true,
+        false,
+        true
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "1",
+        "-3/2"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 36,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "D_m2",
+      "coupling": "y1",
+      "field_order": [
+        "Bar[L]",
+        "F^c",
+        "S"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        2,
+        3
+      ],
+      "native_cg_norm_squared_exact": "2*sqrt(3)",
+      "conjugated_axes": [
+        true,
+        true,
+        false
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "1/2",
+        "-1"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 36,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "D_m2",
+      "coupling": "y2",
+      "field_order": [
+        "Bar[L]",
+        "F",
+        "Bar[S]"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        2,
+        1
+      ],
+      "native_cg_norm_squared_exact": "2",
+      "conjugated_axes": [
+        true,
+        false,
+        true
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "-1/2",
+        "0"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 12,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "D_m2",
+      "coupling": "y2Conj",
+      "field_order": [
+        "Bar[L]",
+        "F",
+        "S"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        2,
+        1
+      ],
+      "native_cg_norm_squared_exact": "2",
+      "conjugated_axes": [
+        true,
+        false,
+        false
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "-1/2",
+        "0"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 12,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "D_p0",
+      "coupling": "y1",
+      "field_order": [
+        "Bar[L]",
+        "F^c",
+        "S"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        2,
+        3
+      ],
+      "native_cg_norm_squared_exact": "2*sqrt(3)",
+      "conjugated_axes": [
+        true,
+        true,
+        false
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "-1/2",
+        "0"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 36,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "D_p0",
+      "coupling": "y2",
+      "field_order": [
+        "Bar[L]",
+        "F",
+        "Bar[S]"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        2,
+        1
+      ],
+      "native_cg_norm_squared_exact": "2",
+      "conjugated_axes": [
+        true,
+        false,
+        true
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "1/2",
+        "-1"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 12,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "D_p0",
+      "coupling": "y1Conj",
+      "field_order": [
+        "Bar[L]",
+        "F^c",
+        "Bar[S]"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        2,
+        3
+      ],
+      "native_cg_norm_squared_exact": "2*sqrt(3)",
+      "conjugated_axes": [
+        true,
+        true,
+        true
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "-1/2",
+        "0"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 36,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "D_p2",
+      "coupling": "y1",
+      "field_order": [
+        "Bar[L]",
+        "F^c",
+        "S"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        2,
+        3
+      ],
+      "native_cg_norm_squared_exact": "2*sqrt(3)",
+      "conjugated_axes": [
+        true,
+        true,
+        false
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "-3/2",
+        "1"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 36,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "D_p2",
+      "coupling": "y2",
+      "field_order": [
+        "Bar[L]",
+        "F",
+        "Bar[S]"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        2,
+        1
+      ],
+      "native_cg_norm_squared_exact": "2",
+      "conjugated_axes": [
+        true,
+        false,
+        true
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "3/2",
+        "-2"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 12,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "E_m4",
+      "coupling": "y1",
+      "field_order": [
+        "Bar[L]",
+        "F^c",
+        "S"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        2,
+        3
+      ],
+      "native_cg_norm_squared_exact": "2*sqrt(3)",
+      "conjugated_axes": [
+        true,
+        true,
+        false
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "3/2",
+        "-2"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 36,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "E_m4",
+      "coupling": "y2",
+      "field_order": [
+        "Bar[L]",
+        "F",
+        "Bar[S]"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        2,
+        3
+      ],
+      "native_cg_norm_squared_exact": "2*sqrt(3)",
+      "conjugated_axes": [
+        true,
+        false,
+        true
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "-3/2",
+        "1"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 36,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "E_m2",
+      "coupling": "y1",
+      "field_order": [
+        "Bar[L]",
+        "F^c",
+        "S"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        2,
+        3
+      ],
+      "native_cg_norm_squared_exact": "2*sqrt(3)",
+      "conjugated_axes": [
+        true,
+        true,
+        false
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "1/2",
+        "-1"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 36,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "E_m2",
+      "coupling": "y2",
+      "field_order": [
+        "Bar[L]",
+        "F",
+        "Bar[S]"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        2,
+        3
+      ],
+      "native_cg_norm_squared_exact": "2*sqrt(3)",
+      "conjugated_axes": [
+        true,
+        false,
+        true
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "-1/2",
+        "0"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 36,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "E_m2",
+      "coupling": "y2Conj",
+      "field_order": [
+        "Bar[L]",
+        "F",
+        "S"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        2,
+        3
+      ],
+      "native_cg_norm_squared_exact": "2*sqrt(3)",
+      "conjugated_axes": [
+        true,
+        false,
+        false
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "-1/2",
+        "0"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 36,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "E_p0",
+      "coupling": "y1",
+      "field_order": [
+        "Bar[L]",
+        "F^c",
+        "S"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        2,
+        3
+      ],
+      "native_cg_norm_squared_exact": "2*sqrt(3)",
+      "conjugated_axes": [
+        true,
+        true,
+        false
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "-1/2",
+        "0"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 36,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "E_p0",
+      "coupling": "y2",
+      "field_order": [
+        "Bar[L]",
+        "F",
+        "Bar[S]"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        2,
+        3
+      ],
+      "native_cg_norm_squared_exact": "2*sqrt(3)",
+      "conjugated_axes": [
+        true,
+        false,
+        true
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "1/2",
+        "-1"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 36,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "E_p0",
+      "coupling": "y1Conj",
+      "field_order": [
+        "Bar[L]",
+        "F^c",
+        "Bar[S]"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        2,
+        3
+      ],
+      "native_cg_norm_squared_exact": "2*sqrt(3)",
+      "conjugated_axes": [
+        true,
+        true,
+        true
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "-1/2",
+        "0"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 36,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "E_p2",
+      "coupling": "y1",
+      "field_order": [
+        "Bar[L]",
+        "F^c",
+        "S"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        2,
+        3
+      ],
+      "native_cg_norm_squared_exact": "2*sqrt(3)",
+      "conjugated_axes": [
+        true,
+        true,
+        false
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "-3/2",
+        "1"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 36,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    },
+    {
+      "model": "E_p2",
+      "coupling": "y2",
+      "field_order": [
+        "Bar[L]",
+        "F",
+        "Bar[S]"
+      ],
+      "tensor_dimensions_with_singlets": [
+        2,
+        2,
+        3
+      ],
+      "native_cg_norm_squared_exact": "2*sqrt(3)",
+      "conjugated_axes": [
+        true,
+        false,
+        true
+      ],
+      "u1_hypercharges": [
+        "1/2",
+        "3/2",
+        "-2"
+      ],
+      "u1_ward_residual": "0",
+      "su2_ward_equations_checked": 36,
+      "su2_ward_nonzero_residuals": 0,
+      "su3_color_singlet_ward": "Trivial (all three project fields are SU3 singlets)",
+      "passed": true
+    }
+  ]
+}

@@ -116,7 +116,8 @@ def source_gate(root: Path = ROOT, *, require_prior: bool = True) -> dict[str, A
     }
 
 
-def check_native(report: dict, model: str, mode: str, variant: str) -> dict:
+def check_native(report: dict, model: str, mode: str, variant: str,
+                 mass_mode: str = "indexed") -> dict:
     need(model in MODELS and mode in SUCCESS and variant in ("seeded", "zero"),
          "Invalid comparison identity")
     for label, expected in (("format", "t3-extra-yukawa-hierarchical-native-v1"),
@@ -125,6 +126,13 @@ def check_native(report: dict, model: str, mode: str, variant: str) -> dict:
                             ("status", SUCCESS[mode])):
         need(report.get(label) == expected,
              f"Native Matchete report mismatch: {model}/{mode}/{variant}/{label}")
+    need(report.get("mass_mode", "indexed") == mass_mode,
+         "Native report belongs to a different heavy-mass mode")
+    need(report.get("independent_heavy_masses_certified") is not True,
+         "Independent heavy masses not certified by the diagnostic")
+    if mass_mode == "common":
+        need(report.get("mass_mode_common_is_diagnostic_only") is True,
+             "Common mass result lacks diagnostic-only declaration")
     need(report.get("fermion_threshold_integrated_out") is True,
          "F threshold did not complete")
     need(report.get("scalar_threshold_integrated_out") is (mode == "hierarchy"),
@@ -191,10 +199,13 @@ def run_model(model: str, mode: str, output: Path, args: argparse.Namespace) -> 
                           "status": "Blocked", "variants": {},
                           "physical_hierarchical_prediction_certified": False}
     env = os.environ.copy()
+    mass_mode = "common" if getattr(args, "common_mass_diagnostic", False) else "indexed"
     env.update({"T3_EXPERIMENTAL_GENERAL_FERMIONS": "1",
                 "T3_EXPERIMENTAL_GENERAL_QUARTICS": "1",
-                "T3_EXPERIMENTAL_FLAVOR_MASSES": "1",
+                "T3_EXPERIMENTAL_FLAVOR_MASSES": "0" if mass_mode == "common" else "1",
                 "T3_EXPERIMENTAL_GENERAL_QUADRATICS": "0"})
+    row["mass_mode"] = mass_mode
+    row["independent_heavy_masses_certified"] = False
     for variant in ("seeded", "zero"):
         dest = base / variant
         native = dest / "native.json"
@@ -204,7 +215,7 @@ def run_model(model: str, mode: str, output: Path, args: argparse.Namespace) -> 
         else:
             dest.mkdir(parents=True, exist_ok=True)
             command = [args.wolframscript, "-file", str(NATIVE), str(dest),
-                       model[0], model.split("_")[1], variant, mode]
+                       model[0], model.split("_")[1], variant, mode, mass_mode]
             print(f"{model}/{variant}: Matchete {mode} matching...", flush=True)
             code = invoke(command, dest / "stdout.log", args.timeout_seconds, env)
         if code != 0 or not native.is_file():
@@ -215,7 +226,7 @@ def run_model(model: str, mode: str, output: Path, args: argparse.Namespace) -> 
             return row
         try:
             obj = json_read(native)
-            check_native(obj, model, mode, variant)
+            check_native(obj, model, mode, variant, mass_mode)
         except (GateError, KeyError, ValueError) as exc:
             row["variants"][variant] = {"status": "Blocked",
                                         "reason": str(exc),
@@ -302,6 +313,8 @@ def main() -> int:
     mode.add_argument("--stage1", action="store_true")
     mode.add_argument("--hierarchy", action="store_true")
     p.add_argument("--use-existing", action="store_true")
+    p.add_argument("--common-mass-diagnostic", action="store_true",
+                   help="Three degenerate heavy flavours; diagnostic ONLY, not 3 independent masses")
     p.add_argument("--wolframscript", default="wolframscript")
     p.add_argument("--timeout-seconds", type=int, default=3600)
     p.add_argument("--output-dir", type=Path, default=OUT)
@@ -311,6 +324,8 @@ def main() -> int:
         if args.self_test:
             return 0
         evidence = source_gate(ROOT, require_prior=True)
+        if args.common_mass_diagnostic and args.output_dir == OUT:
+            args.output_dir = OUT / "common_mass_diagnostic"
         args.output_dir.mkdir(parents=True, exist_ok=True)
         (args.output_dir / "source_gate.json").write_text(
             json.dumps(evidence, indent=2) + "\n", encoding="utf-8")
@@ -330,6 +345,9 @@ def main() -> int:
             "status": "AllNativeDifferenceRunsCompleted" if succeeded == len(results)
                       else "NativeHierarchicalMatchingPartialOrBlocked",
             "mode": mode_name, "successful": succeeded, "requested": len(results),
+            "mass_mode": "common" if args.common_mass_diagnostic else "indexed",
+            "independent_heavy_masses_certified": False,
+            "common_mass_diagnostic_only": bool(args.common_mass_diagnostic),
             "models": results,
             "absolute_matchete_rgbeta_dictionary_certified": False,
             "EFT1_Wilson_coefficient_running_implemented": False,
@@ -342,6 +360,8 @@ def main() -> int:
         print(f"SUMMARY {mode_name}: {succeeded}/{len(results)} native comparisons; {summary['status']}")
         print("Report:", out)
         print("Physical coupling dictionary, EFT1 Wilson RG running, finite hierarchical C5: NOT CERTIFIED")
+        if args.common_mass_diagnostic:
+            print("MASS MODE: three DEGENERATE flavours, diagnostic ONLY; independent heavy masses NOT represented.")
         return 0 if succeeded == len(results) else 4
     except (GateError, OSError, ValueError, KeyError, json.JSONDecodeError) as exc:
         print("BLOCKED: " + str(exc), file=sys.stderr)

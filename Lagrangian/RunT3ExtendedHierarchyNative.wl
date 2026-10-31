@@ -5,9 +5,13 @@
           OUT_DIRECTORY A|D|E m2|p0 seeded|zero stage1|hierarchy
    All exported coefficients are in native Matchete coordinates. *)
 ClearAll["Global`*"];
+(* The optional common-mass mode is a diagnostic: 3 heavy flavours with
+   a single common MF, eliminating the indexed 1/MF[r] that makes the
+   stage-1 EFT triple-count its NFlavor index. Never interpret this as
+   matching for three independent heavy masses. *)
 hArgs = Rest[$ScriptCommandLine];
-If[Length[hArgs] =!= 5,
-  Print["Usage: OUT_DIR A|D|E m2|p0 seeded|zero stage1|hierarchy"];
+If[!MemberQ[{5, 6}, Length[hArgs]],
+  Print["Usage: OUT_DIR A|D|E m2|p0 seeded|zero stage1|hierarchy [indexed|common]"];
   Exit[2]
 ];
 hOut = ExpandFileName[hArgs[[1]]];
@@ -15,22 +19,25 @@ hClass = ToUpperCase[hArgs[[2]]];
 hTag = hArgs[[3]];
 hVariant = hArgs[[4]];
 hMode = hArgs[[5]];
+hMassMode = If[Length[hArgs] === 6, hArgs[[6]], "indexed"];
 hModel = hClass <> "_" <> hTag;
 hAllowed = <|"A_m2" -> -2, "A_p0" -> 0,
   "D_m2" -> -2, "D_p0" -> 0,
   "E_m2" -> -2, "E_p0" -> 0|>;
 If[!KeyExistsQ[hAllowed, hModel] ||
    !MemberQ[{"seeded", "zero"}, hVariant] ||
-   !MemberQ[{"stage1", "hierarchy"}, hMode],
+   !MemberQ[{"stage1", "hierarchy"}, hMode] ||
+   !MemberQ[{"indexed", "common"}, hMassMode],
   Print["Invalid model/variant/mode"];
   Exit[2]
 ];
 If[!And @@ (Environment[#] === "1" & /@ {
     "T3_EXPERIMENTAL_GENERAL_FERMIONS",
-    "T3_EXPERIMENTAL_FLAVOR_MASSES",
     "T3_EXPERIMENTAL_GENERAL_QUARTICS"}) ||
+    Environment["T3_EXPERIMENTAL_FLAVOR_MASSES"] =!=
+      If[hMassMode === "indexed", "1", "0"] ||
     Environment["T3_EXPERIMENTAL_GENERAL_QUADRATICS"] === "1",
-  Print["Required general fermions/flavour masses/quartics=1; quadratics !=1"];
+  Print["Required fermions/quartics=1; flavour masses=1 for indexed or 0 for common; quadratics !=1"];
   Exit[2]
 ];
 If[!DirectoryQ[hOut], CreateDirectory[hOut, CreateIntermediateDirectories -> True]];
@@ -56,6 +63,9 @@ HResult[obj_Association] := Module[{r},
     "format"->"t3-extra-yukawa-hierarchical-native-v1",
     "model"->hModel,"alpha"->hAllowed[hModel],
     "variant"->hVariant,"mode"->hMode,"heavy_flavours"->3,
+    "mass_mode"->hMassMode,
+    "independent_heavy_masses_certified"->False,
+    "mass_mode_common_is_diagnostic_only"->(hMassMode === "common"),
     "last_step"->hStep,
     "fermion_threshold_integrated_out"->False,
     "scalar_threshold_integrated_out"->False,

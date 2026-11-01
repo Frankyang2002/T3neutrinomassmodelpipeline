@@ -1,18 +1,8 @@
-Project root: C:\thesistemp\T3neutrinomassmodelpipeline
-
-Complete replacement files:
-  Reports/GeneralSymbolicAdapter.py
-  tests/python/test_general_notation_index.py
-  tests/python/test_general_coupling_power_latex.py
-
-The X index is deterministic across all 16 models: distinct six-field-count
-signatures are sorted globally using general_rgbeta_quartic_registry.json.
-Only field contents with multiple invariant contractions carry ^(I).
-The notation index preserves the full internal symbol and field content.
-Existing conventional coupling labels are left unchanged.
+Install into C:\thesistemp\T3neutrinomassmodelpipeline; overwrite Reports\GeneralSymbolicPresentation.py.
+No changes to physics, to original report generators or to pipeline.py.
 
 PowerShell:
   cd C:\thesistemp\T3neutrinomassmodelpipeline
-  Expand-Archive -LiteralPath "$HOME\Downloads\T3_General_Short_X_Coupling_Labels.zip" -DestinationPath . -Force
-  python -X utf8 -m pytest -q tests/python/test_general_notation_index.py tests/python/test_general_coupling_power_latex.py
+  Expand-Archive -LiteralPath "$HOME\Downloads\T3_Extra_Quartic_Label_Fix.zip" -DestinationPath . -Force
+  python -X utf8 -m pytest -q tests/python/test_general_extra_quartic_labels.py
   python -X utf8 pipeline.py --hypercharge-comparison --reports-only

@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 from dataclasses import fields
+import hashlib
 import json
 from pathlib import Path
 from typing import Any, Mapping
@@ -184,6 +185,77 @@ def _state_values(state: Any) -> dict[str, Any]:
     return _encode({**sm, **rest, **state.general_couplings})
 
 
+def load_canonical_general_exports(model: str, run_id: str, *,
+                                   generate: bool = False,
+                                   wolframscript: str = "wolframscript",
+                                   study: str = "general_numerical") -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
+    """Load only source-fingerprint-validated *full-general* symbolic exports.
+
+    The canonical builder validates the Matchete interaction inventory, extra
+    conjugate Yukawa, exact RGBeta keys, and source fingerprints. It does not
+    establish the physical Matchete <-> RGBeta parameter dictionary.
+    """
+    from scripts import RunT3GeneralSymbolicStudy as canonical
+    from scripts import RunT3CompleteGeneralScalarSymbolic as scalar
+    from scripts.AuditGeneralT3QuadraticBasis import audit
+    from Numerical.experimental.GeneralT3ScalarQuadraticMasses import (
+        load_manifest, quadratic_kind,
+    )
+
+    if not isinstance(run_id, str) or not run_id or not all(
+        c.isalnum() or c in "_-" for c in run_id
+    ):
+        raise ValueError("run_id must contain only letters, digits, underscore, hyphen")
+    models = audit()["models"]
+    if model not in models:
+        raise ValueError(f"Unknown ordinary T3 model {model!r}")
+    if generate:
+        args = ["--model", model, "--run-id", run_id,
+                "--study", study, "--wolframscript", wolframscript]
+        if canonical.main(args) != 0:
+            raise RuntimeError("Canonical full-general symbolic generation failed")
+
+    folder = canonical.DEFAULT_DATA_ROOT / run_id / canonical.model_tag(model)
+    registry = canonical.load_json(scalar.REGISTRY)
+    manifest = load_manifest(scalar.MANIFEST)
+    source_hashes = canonical.fingerprint()
+    entry = registry["models"][model]
+    kind = quadratic_kind(manifest, model)
+    validation = canonical.validate_cached(model, folder, entry, kind, source_hashes)
+    if validation["matching_performed"] is not False:
+        raise ValueError("Unexpected claim of general threshold matching")
+    if validation["physical_rgbeta_matchete_mapping_certified"] is not False:
+        raise ValueError("Unexpected physical coupling-basis certification")
+    uv_path = folder / "uv_rgbeta.json"
+    eft_path = folder / "eft1_rgbeta.json"
+    uv = _load(uv_path)
+    eft = _load(eft_path)
+    expected_y = canonical.expected_yukawa(model)
+    actual_y = set(uv["report_betas"]) & {"y1Conj", "y2Conj"}
+    if actual_y != ({expected_y} if expected_y else set()):
+        raise ValueError("Canonical UV extra-Yukawa inventory differs from full Lagrangian")
+    if set(eft["report_betas"]) & {"y1", "y2", "MF", "y1Conj", "y2Conj"}:
+        raise ValueError("EFT1 export still contains integrated-out fermion couplings")
+    info = {
+        "source": "canonical_full_general_symbolic",
+        "model": model,
+        "run_id": run_id,
+        "extra_yukawa": expected_y,
+        "additional_quartics": validation["extra_quartics"],
+        "additional_bilinears": validation["extra_bilinears"],
+        "mass_basis": validation["mass_basis"],
+        "lagrangian_inventory_checked": True,
+        "rge_inventory_checked": True,
+        "physical_matchete_rgbeta_mapping_certified": False,
+        "physical_neutrino_mass_prediction": False,
+        "uv_json": str(uv_path),
+        "eft1_json": str(eft_path),
+        "uv_sha256": hashlib.sha256(uv_path.read_bytes()).hexdigest(),
+        "eft1_sha256": hashlib.sha256(eft_path.read_bytes()).hexdigest(),
+    }
+    return uv, eft, info
+
+
 def run(uv_payload: Mapping[str, Any], eft1_payload: Mapping[str, Any], *,
         mu_uv: float = 1e7, mu_f: float = 1e5, mu_s: float = 1e3,
         overrides: Mapping[str, Any] | None = None,
@@ -216,8 +288,15 @@ def run(uv_payload: Mapping[str, Any], eft1_payload: Mapping[str, Any], *,
 
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--uv-json", type=Path, required=True)
-    p.add_argument("--eft1-json", type=Path, required=True)
+    source = p.add_mutually_exclusive_group(required=True)
+    source.add_argument("--canonical-run-id", help="Validated full-general symbolic run ID")
+    source.add_argument("--uv-json", type=Path, help="Direct UV candidate JSON (not canonically validated)")
+    p.add_argument("--eft1-json", type=Path, help="Required with --uv-json")
+    p.add_argument("--model", help="Model name, required with --canonical-run-id (e.g. A_-2)")
+    p.add_argument("--generate-symbolic", action="store_true",
+                   help="Generate full-general symbolic export before numerical running")
+    p.add_argument("--wolframscript", default="wolframscript")
+    p.add_argument("--study", default="general_numerical")
     p.add_argument("--output-json", type=Path, required=True)
     p.add_argument("--initial-json", type=Path, help="Optional overrides for initial couplings")
     p.add_argument("--mu-uv", type=float, default=1e7)
@@ -225,8 +304,28 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--mu-s", type=float, default=1e3)
     a = p.parse_args(argv)
     overrides = _load(a.initial_json) if a.initial_json else None
-    result = run(_load(a.uv_json), _load(a.eft1_json), mu_uv=a.mu_uv,
+    if a.canonical_run_id:
+        if not a.model:
+            p.error("--model is required with --canonical-run-id")
+        uv_payload, eft_payload, provenance = load_canonical_general_exports(
+            a.model, a.canonical_run_id, generate=a.generate_symbolic,
+            wolframscript=a.wolframscript, study=a.study)
+    else:
+        if a.eft1_json is None:
+            p.error("--eft1-json is required with --uv-json")
+        if a.generate_symbolic:
+            p.error("--generate-symbolic requires --canonical-run-id")
+        uv_payload, eft_payload = _load(a.uv_json), _load(a.eft1_json)
+        provenance = {"source": "unvalidated_direct_rgbeta_exports",
+                      "lagrangian_inventory_checked": False,
+                      "rge_inventory_checked": False,
+                      "physical_matchete_rgbeta_mapping_certified": False,
+                      "physical_neutrino_mass_prediction": False}
+    result = run(uv_payload, eft_payload, mu_uv=a.mu_uv,
                  mu_f=a.mu_f, mu_s=a.mu_s, overrides=overrides)
+    result["symbolic_provenance"] = provenance
+    result["physical_mass_parameters_available"] = False
+    result["basis_mapping_required_for_physical_interpretation"] = True
     a.output_json.parent.mkdir(parents=True, exist_ok=True)
     a.output_json.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n",
                              encoding="utf-8")

@@ -1,0 +1,775 @@
+{
+  "model": "C_-1",
+  "run_id": "thesis16_v1",
+  "status": "ExploratoryGeneralScalarOneScaleConditionalFit",
+  "chi2_seed": 9144843.71628948,
+  "chi2_final": 35.160524646137915,
+  "observable_names": [
+    "delta_m21_sq_ev2",
+    "delta_m3l_sq_ev2",
+    "sin2_theta12",
+    "sin2_theta13",
+    "sin2_theta23"
+  ],
+  "prediction": {
+    "delta_m21_sq_ev2": 7.499655795390489e-05,
+    "delta_m3l_sq_ev2": 0.0025153219337403754,
+    "sin2_theta12": 0.3200933953406614,
+    "sin2_theta13": 0.022578717060917925,
+    "sin2_theta23": 0.3822450905952406
+  },
+  "whitened_residual": [
+    -0.3849918000980549,
+    0.21082603611586453,
+    1.6982549384453192,
+    0.17318782617179845,
+    -5.661607058371573
+  ],
+  "input_lambda_t3": 0.1,
+  "reference_lambda_t3": 0.1,
+  "reference_yukawa_seed_rescale_factor": 1.0,
+  "extra_quartic_fraction": 0.1,
+  "extra_mixed_scalar_bilinear_fraction": 0.01,
+  "best_parameters": {
+    "y1_00": -0.000103593518738343,
+    "y1_01": -2.2684992170951546e-05,
+    "y1_02": 0.00021177476888478708,
+    "y1_10": -0.00015144897295460424,
+    "y1_11": 0.0002849872575030332,
+    "y1_12": -0.0001124169735398084,
+    "y1_20": 7.302009374043905e-06,
+    "y1_21": 7.152149495315285e-05,
+    "y1_22": -0.00015679809738111672,
+    "y2_00": 0.000226713632371478,
+    "y2_01": 2.206321207420814e-05,
+    "y2_02": 0.00016914826042313535,
+    "y2_10": -6.909440681202028e-05,
+    "y2_11": -5.168713669512215e-06,
+    "y2_12": 4.353383508481912e-05,
+    "y2_20": -9.666946737896254e-05,
+    "y2_21": -0.00011319826477240724,
+    "y2_22": 4.330614960901258e-05
+  },
+  "best_source": "best_branch_active_12",
+  "sobol_attempts": 128,
+  "failures_recorded": [],
+  "local_refinement": {
+    "enabled": true,
+    "skipped": false,
+    "seed_count": 3,
+    "stopped_early": false,
+    "stages": [
+      {
+        "stage": "multistart_seed_1_active_5",
+        "seed_chi2": 2456.1506290708467,
+        "baseline_recomputed_chi2": 2456.1506291310457,
+        "active_parameter_count": 5,
+        "active_parameters": [
+          "y2_11",
+          "y1_00",
+          "y2_10",
+          "y2_02",
+          "y2_00"
+        ],
+        "max_nfev": 20,
+        "optimizer_nfev": 10,
+        "optimizer_success": true,
+        "optimizer_message": "`xtol` termination condition is satisfied.",
+        "pipeline_evaluations": 72,
+        "best_chi2": 35.403594787421746,
+        "sensitivity_ranking": [
+          {
+            "name": "y2_11",
+            "score": 150726969148.33685,
+            "status": "Success"
+          },
+          {
+            "name": "y1_00",
+            "score": 136289550566.81032,
+            "status": "Success"
+          },
+          {
+            "name": "y2_10",
+            "score": 94768434350.5061,
+            "status": "Success"
+          },
+          {
+            "name": "y2_02",
+            "score": 85763023546.37643,
+            "status": "Success"
+          },
+          {
+            "name": "y2_00",
+            "score": 72030221059.36131,
+            "status": "Success"
+          },
+          {
+            "name": "y2_22",
+            "score": 71809689330.82622,
+            "status": "Success"
+          },
+          {
+            "name": "y1_21",
+            "score": 64306657127.42247,
+            "status": "Success"
+          },
+          {
+            "name": "y1_20",
+            "score": 62256353111.92545,
+            "status": "Success"
+          },
+          {
+            "name": "y1_02",
+            "score": 58566525103.15604,
+            "status": "Success"
+          },
+          {
+            "name": "y2_12",
+            "score": 52131955941.996864,
+            "status": "Success"
+          },
+          {
+            "name": "y2_21",
+            "score": 44735702713.53575,
+            "status": "Success"
+          },
+          {
+            "name": "y1_22",
+            "score": 27527532366.415836,
+            "status": "Success"
+          },
+          {
+            "name": "y1_12",
+            "score": 25267934987.009254,
+            "status": "Success"
+          },
+          {
+            "name": "y1_11",
+            "score": 22530477886.812,
+            "status": "Success"
+          },
+          {
+            "name": "y2_01",
+            "score": 13321147668.062656,
+            "status": "Success"
+          },
+          {
+            "name": "y1_01",
+            "score": 13080435060.866745,
+            "status": "Success"
+          },
+          {
+            "name": "y2_20",
+            "score": 11927309638.98772,
+            "status": "Success"
+          },
+          {
+            "name": "y1_10",
+            "score": 2576075603.5156555,
+            "status": "Success"
+          }
+        ]
+      },
+      {
+        "stage": "multistart_seed_2_active_5",
+        "seed_chi2": 49010.44806874798,
+        "baseline_recomputed_chi2": 49010.448071069724,
+        "active_parameter_count": 5,
+        "active_parameters": [
+          "y2_11",
+          "y1_00",
+          "y2_10",
+          "y2_02",
+          "y2_00"
+        ],
+        "max_nfev": 20,
+        "optimizer_nfev": 7,
+        "optimizer_success": true,
+        "optimizer_message": "`xtol` termination condition is satisfied.",
+        "pipeline_evaluations": 69,
+        "best_chi2": 50.260255865465986,
+        "sensitivity_ranking": [
+          {
+            "name": "y2_11",
+            "score": 230435680337.91116,
+            "status": "Success"
+          },
+          {
+            "name": "y1_00",
+            "score": 126288741203.94792,
+            "status": "Success"
+          },
+          {
+            "name": "y2_10",
+            "score": 101231840480.91139,
+            "status": "Success"
+          },
+          {
+            "name": "y2_02",
+            "score": 96514413598.90137,
+            "status": "Success"
+          },
+          {
+            "name": "y2_00",
+            "score": 78693811186.34666,
+            "status": "Success"
+          },
+          {
+            "name": "y1_20",
+            "score": 73679609197.5445,
+            "status": "Success"
+          },
+          {
+            "name": "y1_21",
+            "score": 70300601495.40456,
+            "status": "Success"
+          },
+          {
+            "name": "y2_22",
+            "score": 60516802910.90749,
+            "status": "Success"
+          },
+          {
+            "name": "y2_12",
+            "score": 42217225158.38947,
+            "status": "Success"
+          },
+          {
+            "name": "y1_02",
+            "score": 42200797626.64448,
+            "status": "Success"
+          },
+          {
+            "name": "y2_21",
+            "score": 38714685194.85042,
+            "status": "Success"
+          },
+          {
+            "name": "y2_01",
+            "score": 37932821211.55946,
+            "status": "Success"
+          },
+          {
+            "name": "y1_12",
+            "score": 33606808550.43084,
+            "status": "Success"
+          },
+          {
+            "name": "y1_11",
+            "score": 30462183456.014038,
+            "status": "Success"
+          },
+          {
+            "name": "y1_01",
+            "score": 29869453409.317375,
+            "status": "Success"
+          },
+          {
+            "name": "y1_22",
+            "score": 17826027108.36924,
+            "status": "Success"
+          },
+          {
+            "name": "y2_20",
+            "score": 17796444105.577534,
+            "status": "Success"
+          },
+          {
+            "name": "y1_10",
+            "score": 9203194491.394989,
+            "status": "Success"
+          }
+        ]
+      },
+      {
+        "stage": "multistart_seed_3_active_5",
+        "seed_chi2": 78329.54842644423,
+        "baseline_recomputed_chi2": 78329.54842709219,
+        "active_parameter_count": 5,
+        "active_parameters": [
+          "y1_00",
+          "y2_02",
+          "y2_11",
+          "y2_00",
+          "y2_22"
+        ],
+        "max_nfev": 20,
+        "optimizer_nfev": 16,
+        "optimizer_success": true,
+        "optimizer_message": "`xtol` termination condition is satisfied.",
+        "pipeline_evaluations": 118,
+        "best_chi2": 308.0610982510539,
+        "sensitivity_ranking": [
+          {
+            "name": "y1_00",
+            "score": 165242130587.58896,
+            "status": "Success"
+          },
+          {
+            "name": "y2_02",
+            "score": 138421379073.78033,
+            "status": "Success"
+          },
+          {
+            "name": "y2_11",
+            "score": 137664321297.92755,
+            "status": "Success"
+          },
+          {
+            "name": "y2_00",
+            "score": 95224975855.06757,
+            "status": "Success"
+          },
+          {
+            "name": "y2_22",
+            "score": 78892633488.35251,
+            "status": "Success"
+          },
+          {
+            "name": "y1_20",
+            "score": 70407195284.99312,
+            "status": "Success"
+          },
+          {
+            "name": "y2_10",
+            "score": 65538197947.66703,
+            "status": "Success"
+          },
+          {
+            "name": "y2_12",
+            "score": 61368207818.83338,
+            "status": "Success"
+          },
+          {
+            "name": "y1_02",
+            "score": 48917839693.3784,
+            "status": "Success"
+          },
+          {
+            "name": "y1_21",
+            "score": 45093262930.594025,
+            "status": "Success"
+          },
+          {
+            "name": "y1_12",
+            "score": 35625102819.49256,
+            "status": "Success"
+          },
+          {
+            "name": "y2_21",
+            "score": 34214916871.760338,
+            "status": "Success"
+          },
+          {
+            "name": "y1_01",
+            "score": 32902606697.679344,
+            "status": "Success"
+          },
+          {
+            "name": "y1_22",
+            "score": 32400233984.43836,
+            "status": "Success"
+          },
+          {
+            "name": "y1_11",
+            "score": 26366114558.84664,
+            "status": "Success"
+          },
+          {
+            "name": "y2_01",
+            "score": 20049185075.302498,
+            "status": "Success"
+          },
+          {
+            "name": "y1_10",
+            "score": 14014433633.44908,
+            "status": "Success"
+          },
+          {
+            "name": "y2_20",
+            "score": 7135318656.722193,
+            "status": "Success"
+          }
+        ]
+      },
+      {
+        "stage": "best_branch_active_8",
+        "seed_chi2": 35.403594787421746,
+        "baseline_recomputed_chi2": 35.403594787421746,
+        "active_parameter_count": 8,
+        "active_parameters": [
+          "y1_00",
+          "y2_11",
+          "y2_10",
+          "y2_02",
+          "y2_00",
+          "y2_22",
+          "y1_21",
+          "y1_02"
+        ],
+        "max_nfev": 30,
+        "optimizer_nfev": 2,
+        "optimizer_success": true,
+        "optimizer_message": "`xtol` termination condition is satisfied.",
+        "pipeline_evaluations": 55,
+        "best_chi2": 35.36880815861717,
+        "sensitivity_ranking": [
+          {
+            "name": "y1_00",
+            "score": 152524956775.0077,
+            "status": "Success"
+          },
+          {
+            "name": "y2_11",
+            "score": 150492715771.21207,
+            "status": "Success"
+          },
+          {
+            "name": "y2_10",
+            "score": 91232537507.52565,
+            "status": "Success"
+          },
+          {
+            "name": "y2_02",
+            "score": 85111771660.78061,
+            "status": "Success"
+          },
+          {
+            "name": "y2_00",
+            "score": 82917637845.13402,
+            "status": "Success"
+          },
+          {
+            "name": "y2_22",
+            "score": 71809669465.0343,
+            "status": "Success"
+          },
+          {
+            "name": "y1_21",
+            "score": 64306585499.39341,
+            "status": "Success"
+          },
+          {
+            "name": "y1_02",
+            "score": 64125180566.499466,
+            "status": "Success"
+          },
+          {
+            "name": "y1_20",
+            "score": 62256849189.1726,
+            "status": "Success"
+          },
+          {
+            "name": "y2_12",
+            "score": 52131616627.16845,
+            "status": "Success"
+          },
+          {
+            "name": "y2_21",
+            "score": 44735726476.16472,
+            "status": "Success"
+          },
+          {
+            "name": "y1_10",
+            "score": 32638182896.57632,
+            "status": "Success"
+          },
+          {
+            "name": "y1_22",
+            "score": 27527450316.32946,
+            "status": "Success"
+          },
+          {
+            "name": "y1_12",
+            "score": 25267703889.481564,
+            "status": "Success"
+          },
+          {
+            "name": "y1_11",
+            "score": 20544754099.8617,
+            "status": "Success"
+          },
+          {
+            "name": "y2_01",
+            "score": 13321279458.944353,
+            "status": "Success"
+          },
+          {
+            "name": "y1_01",
+            "score": 13080582037.61807,
+            "status": "Success"
+          },
+          {
+            "name": "y2_20",
+            "score": 11927402647.819023,
+            "status": "Success"
+          }
+        ]
+      },
+      {
+        "stage": "best_branch_active_12",
+        "seed_chi2": 35.36880815861717,
+        "baseline_recomputed_chi2": 35.36880815861717,
+        "active_parameter_count": 12,
+        "active_parameters": [
+          "y1_00",
+          "y2_11",
+          "y2_10",
+          "y2_02",
+          "y2_00",
+          "y2_22",
+          "y1_21",
+          "y1_02",
+          "y1_20",
+          "y2_12",
+          "y2_21",
+          "y1_10"
+        ],
+        "max_nfev": 60,
+        "optimizer_nfev": 2,
+        "optimizer_success": true,
+        "optimizer_message": "`xtol` termination condition is satisfied.",
+        "pipeline_evaluations": 63,
+        "best_chi2": 35.160524646137915,
+        "sensitivity_ranking": [
+          {
+            "name": "y1_00",
+            "score": 152523612006.25388,
+            "status": "Success"
+          },
+          {
+            "name": "y2_11",
+            "score": 150492608741.4702,
+            "status": "Success"
+          },
+          {
+            "name": "y2_10",
+            "score": 91232439065.702,
+            "status": "Success"
+          },
+          {
+            "name": "y2_02",
+            "score": 85112161087.60861,
+            "status": "Success"
+          },
+          {
+            "name": "y2_00",
+            "score": 82915327690.9552,
+            "status": "Success"
+          },
+          {
+            "name": "y2_22",
+            "score": 71809607436.86276,
+            "status": "Success"
+          },
+          {
+            "name": "y1_21",
+            "score": 64306519686.64202,
+            "status": "Success"
+          },
+          {
+            "name": "y1_02",
+            "score": 64126223572.34396,
+            "status": "Success"
+          },
+          {
+            "name": "y1_20",
+            "score": 62256849112.40716,
+            "status": "Success"
+          },
+          {
+            "name": "y2_12",
+            "score": 52131616581.857864,
+            "status": "Success"
+          },
+          {
+            "name": "y2_21",
+            "score": 44735172030.5417,
+            "status": "Success"
+          },
+          {
+            "name": "y1_10",
+            "score": 32639019190.30248,
+            "status": "Success"
+          },
+          {
+            "name": "y1_22",
+            "score": 27526921785.753704,
+            "status": "Success"
+          },
+          {
+            "name": "y1_12",
+            "score": 25267703868.160458,
+            "status": "Success"
+          },
+          {
+            "name": "y1_11",
+            "score": 20543843201.37785,
+            "status": "Success"
+          },
+          {
+            "name": "y2_01",
+            "score": 13321279429.552872,
+            "status": "Success"
+          },
+          {
+            "name": "y1_01",
+            "score": 13080582001.307875,
+            "status": "Success"
+          },
+          {
+            "name": "y2_20",
+            "score": 11927402625.2322,
+            "status": "Success"
+          }
+        ]
+      }
+    ],
+    "pipeline_evaluations": 377
+  },
+  "numerical_evaluator_calls": 507,
+  "details": {
+    "trajectory": {
+      "eft1_end": {
+        "mu_gev": 1000.0,
+        "mS1Sq_gev2": 1404496.012686907,
+        "mS2Sq_gev2": 1066900.7843102326,
+        "lambdaT3": {
+          "real": 0.09795436480691662,
+          "imag": 0.0
+        },
+        "new_quartics": {
+          "lambdaT3GeneralQ110101I1": {
+            "real": 0.009878171180668405,
+            "imag": 0.0
+          }
+        },
+        "reused_quartics": {
+          "lambdaS1barS2S2bar2": {
+            "real": 0.011195902054094776,
+            "imag": 0.0
+          },
+          "lambdaS1bar2S2bar2": {
+            "real": 0.011924733500876862,
+            "imag": 0.0
+          },
+          "lambdaS1S1bar2S2bar": {
+            "real": 0.01136197527892393,
+            "imag": 0.0
+          },
+          "lambdaHHdagS2S2": {
+            "real": 0.009636429254312323,
+            "imag": 0.0
+          },
+          "lambdaHHdagS1barS1bar": {
+            "real": 0.009688454826452262,
+            "imag": 0.0
+          },
+          "lambdaHHdagS1barS2barCross": {
+            "real": 0.009622105794374716,
+            "imag": 0.0
+          }
+        },
+        "quadratic_mu2_gev2": {
+          "real": 1719.5671427867978,
+          "imag": 0.0
+        }
+      },
+      "uv_nfev": 179,
+      "eft1_nfev": 179,
+      "boundary_extra_quartic_fraction": 0.1,
+      "boundary_mu2_fraction": 0.01
+    },
+    "MF_muF_gev": [
+      113019.9533290892,
+      124321.94865829231,
+      135623.94392914133
+    ],
+    "heavy_mass_basis_residual": 3.703967402082501e-11,
+    "C5_muS_gev_inv": {
+      "real": [
+        [
+          -3.3261251998000537e-16,
+          -8.003860729694058e-16,
+          3.132817707559835e-16
+        ],
+        [
+          -8.003860729694058e-16,
+          -4.020274016437472e-16,
+          -1.0773305042726712e-15
+        ],
+        [
+          3.132817707559835e-16,
+          -1.0773305042726712e-15,
+          -1.181494981458362e-15
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    "C5_low_gev_inv": {
+      "real": [
+        [
+          -3.1132169767801015e-16,
+          -7.491526564732363e-16,
+          2.932289668450599e-16
+        ],
+        [
+          -7.491526564732363e-16,
+          -3.7629327691446134e-16,
+          -1.0083718319949258e-15
+        ],
+        [
+          2.932289668450599e-16,
+          -1.0083718319949258e-15,
+          -1.105871267458159e-15
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    }
+  },
+  "input_sha256": {
+    "Numerical/benchmarks/fitted_reference/T3_dS1_2_dS2_2_dF_3_alpha_m1.json": "782c261c88e364b2db70791ed97d8fa067cf255449900668155b821ba636f03c",
+    "RGE/general/generated/general_rgbeta_quartic_registry.json": "86a096410384641efa8f751b2aa98e8fee4bb6d3cccb4cfd116c559b71182eea",
+    "output/general_t3_mass_eigen_matchete/one_loop_probe/C_m1_final_one_loop_probe_weinberg_ordered_coefficient.inputform.txt": "83e587e503f4945b4af4ffad2334593d1e7fc7275ca20536c95a386084c6984d",
+    "output/general_t3_quadratic_eft1/C_m1_uv_quadratic_live_rgbeta.json": "f5ab3557c0f7a88edcf82d20fca673fdcd6c4e9f5beb28010db57c4cab3d1f0c",
+    "output/general_t3_quadratic_eft1/C_m1_eft1_quadratic_live_rgbeta.json": "9b955729a342a43d8fef0c2267383b5a7ff4dcf1c87d22d043be7b05960559af",
+    "configs/nufit_6_1_ic24_no.json": "27bd4d4297fddb3ef71b5b804afd8e31d44d302b569f7cf8c34d37d54005e15e"
+  },
+  "physical_matchete_rgbeta_coupling_map_certified": false,
+  "conditional_lambda_m_minus_lambda_rgbeta_assumed": true,
+  "full_sequential_general_scalar_matching_performed": false,
+  "general_extra_yukawas_included": false,
+  "note": "B(-1)/C(-1) have no extra conjugate Yukawa in the 16-model catalogue. The saved B/C Matchete one-scale C5 and candidate general-scalar RGEs are evaluated; no physical full-sequential matching is claimed."
+}

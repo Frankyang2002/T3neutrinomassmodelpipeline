@@ -1,54 +1,80 @@
-# T3 radiative neutrino-mass model pipeline
+# Direct B(-1)/C(-1) exploratory general-scalar numerical pilot
 
-This repository constructs ordinary T3 models, exports matching and RGE inputs, evolves renormalisable couplings across UV/EFT regimes, and evaluates the Weinberg coefficient and neutrino observables.
+This **new launcher** avoids the missing historical `small_lambda_1e-7` and
+`lambda_5e-9_refit` outputs. It loads the **tracked** `Numerical/benchmarks/fitted_reference`
+configuration for B(-1) or C(-1), keeps the full candidate B/C general-scalar
+quartic and mixed-bilinear beta-function state, and reuses the repository's
+existing Matchete ordered one-scale C5 evaluator, NuFIT numerical evaluation,
+Sobol sampler, and staged least squares.
 
-## Start here
+It does **not** edit any existing physics script or GitHub. The previous
+`RunT3GeneralScalarBCExploratoryFit.py` is left untouched.
 
-- **Architecture, research progression, and status:** [`docs/PROJECT_GUIDE.md`](docs/PROJECT_GUIDE.md)
-- **Physics and conventions:** [`docs/PHYSICS.md`](docs/PHYSICS.md)
-- **Numerical implementation:** [`docs/NUMERICAL.md`](docs/NUMERICAL.md)
-- **Saved results and their scope:** [`docs/RESULTS.md`](docs/RESULTS.md)
-- **Historical research record:** [`docs/RESEARCH_HISTORY_INDEX.md`](docs/RESEARCH_HISTORY_INDEX.md)
-- **Regeneration notes:** [`docs/REGENERATE_CURRENT_REPORTS.md`](docs/REGENERATE_CURRENT_REPORTS.md) (historical saved-data report rebuild; not a verified fresh symbolic rebuild)
+## Install
 
-## Software entry points
+Extract the ZIP at the project root, so this new file is:
 
-- `pipeline.py` — orchestration of model construction, RGEs, matching and optional numerical stages. Inspect `python pipeline.py --help` for study options.
-- `Numerical/fitting/ScanCLI.py` — execute ordinary split-scalar numerical studies from JSON configs.
-- `Numerical/orchestration/PipelineNumericalResults.py` — numerical diagnostics and reports inside the production pipeline.
-- `scripts/maintenance/SmokeTestFullPipeline.py` — one-point operational test using existing generated artifacts.
+`C:\thesistemp\T3neutrinomassmodelpipeline\scripts\RunT3BCGeneralFromReference.py`
 
-### Verified operational smoke test
-
-One existing ordinary T3-B (`alpha=-1`) configuration executed successfully through UV running, intermediate EFT1, matched `C5`, SM + Weinberg running, and oscillation-observable evaluation, returning `PASS_END_TO_END_OPERATIONAL`. This establishes software operation for **one benchmark using existing inputs**; it does not certify the physical matching conventions, all representations, or regenerability of those inputs from scratch.
-
-From a Python environment with project dependencies installed:
+Activate the existing venv, then from the project root:
 
 ```powershell
-$env:PYTHONUTF8 = '1'
-python scripts/maintenance/SmokeTestFullPipeline.py
+Get-Command wolframscript
+python -X utf8 -m scripts.RunT3BCGeneralFromReference --help
 ```
 
-**If legacy outputs were archived, this command may fail because its saved Matchete/RGBeta JSON inputs are absent.** Regenerate required artifacts first or restore them from the external archive; absence of inputs is distinct from a broken numerical integrator.
+## First quick numerical input -> output check
 
-## Directory roles
+```powershell
+python -X utf8 -m scripts.RunT3BCGeneralFromReference `
+  --model B_-1 --run-id thesis_b_m1_smoke `
+  --export-betas --sobol-points 2 --no-local-refinement
+```
 
-| Directory | Purpose |
-| --- | --- |
-| `Lagrangian/` | Model, interactions, symbolic construction and matching |
-| `RGE/` | RGBeta inputs, symbolic RGE generation and intermediate EFT definitions |
-| `Numerical/core/`, `Numerical/running/` | Numerical state and coupled scale evolution |
-| `Numerical/fitting/`, `Numerical/orchestration/` | Benchmarks, scans, orchestration and output |
-| `physics/` | Mass matrices and neutrino observables |
-| `configs/` | Input configurations and benchmark definitions |
-| `tests/` | Regression tests |
-| `docs/` | Current documentation and consolidated research history |
-| `output/`, `Reports/output/` | Generated artifacts; historical contents may have been archived outside the repo |
+`--export-betas` runs the existing `RunGeneralT3QuadraticEFT1.export_live` helper
+for **both UV and EFT1** using locally installed Wolfram/RGBeta. It does NOT
+require the old Stage33 trajectories. Once betas are exported successfully,
+subsequent experiments can omit `--export-betas`.
 
-## Status and scope
+## Proper Sobol + local least squares
 
-The production ordinary split-scalar numerical path is operational for the tested configuration. The separate general-coupling and exploratory paths may require unverified RGBeta–Matchete basis conversions or different matching approximations. Do not interpret their conditional outputs as fully validated physical predictions. See the project guide for details.
+```powershell
+python -X utf8 -m scripts.RunT3BCGeneralFromReference `
+  --model B_-1 --run-id thesis_b_m1_128 `
+  --sobol-points 128 --max-nfev 60
+```
 
-## Repository housekeeping
+Repeat with `--model C_-1` and a new `--run-id` (the C(-1) beta exports must
+also be generated once using `--export-betas`).
 
-The cleanup and archival operations are **local-only** and should be performed with a preview, an external archive, and a manifest. Never move a file used by source generation, tests or configs solely because its name contains `stage`, `probe` or `experimental`.
+To change the fixed topology quartic, use `--lambda-t3 0.05` or similar.
+The tracked initial values have `lambdaT3=0.1`. If changed, the Yukawa matrices
+are rescaled by `sqrt(0.1/lambdaT3)` **as an initial guess only**, then refitted.
+Other additional quartic boundaries are chosen by `--quartic-fraction 0.1`;
+the allowed B/C scalar mixing input by `--mu2-fraction 0.01`.
+
+## Outputs
+
+`output/studies/general_scalar_extended/fresh_reference_bc/<run-id>/B_m1/`
+
+- `fitted_config.json`: optimised numerical input config
+- `result.json`: chi2, five observables, C5 matrices, parameters, metadata
+- `observables.csv`: NuFIT target versus fitted predictions
+
+No historical fitted files are synthesized. No old outputs are overwritten.
+This pilot intentionally does not generate interactive RGE or oval HTML; the
+existing HTML generators require time-sampled trajectories/sensitivity scans,
+which are a separate downstream integration.
+
+## Explicit scope
+
+This is an **exploratory B/C-only** workflow: existing candidate full scalar
+quartic + mixed quadratic RGBeta UV/EFT1 running, and an existing Matchete
+**one-scale** C5 insertion with the conditional `lambda_M = -lambda_RGBeta`
+map. It is not certified general sequential EFT matching. The B(-1)/C(-1)
+models do not have additional conjugate Yukawas in this catalogue. This does
+not yet provide 16-model complete-general fits.
+
+If the run reports missing Wolfram/RGBeta libraries or a failed beta export,
+that is a local dependency or unsupported source issue. Do not substitute
+restricted RGEs for those general beta files.

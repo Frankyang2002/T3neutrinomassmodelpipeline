@@ -14,7 +14,7 @@ Matchete/RGBeta symbolic output in mathematical notation
 \section*{B\_+1}
 Additional quartics: 1, additional bilinears: 0, extra Yukawa: none.\\
 \emph{General matching and Wilson coefficients are not computed in this symbolic report.}
-\section*{Notation key}
+\section*{Coupling and interaction notation}
 \begin{longtable}{@{}p{0.23\linewidth}p{0.69\linewidth}@{}}
 \toprule
 symbol & interaction / definition \\
@@ -56,11 +56,23 @@ $C_5^{ij}$ & $(L_i^TCL_j)HH$ \\
 $R_W$ & $16\pi^2\beta_{C_5}\supset R_W\lambda_5C_{LLS_1S_2}$ \\
 \bottomrule
 \end{longtable}
+\section*{General-interaction coupling index}
+\small
+\begin{longtable}{@{}p{0.24\linewidth}p{0.32\linewidth}p{0.36\linewidth}@{}}
+\toprule
+Coupling & Field content / definition & Contraction / source \\
+\midrule
+$\lambda_{X_{10}}$ & $(H^\dagger)^{2}\,(S_1)^{2}$ & Contraction $I=1$; exact tensor in registry\newline {\tiny\texttt{lambdaT3GeneralQ022000I1}} \\
+\bottomrule
+\end{longtable}
+\normalsize
+Each $X_i$ labels one field-content class in the general-quartic registry; a superscript distinguishes different invariant contractions where present. The original RGBeta identifier and contraction are retained in the index. This is notation only, not a physical normalisation mapping.
+\clearpage
 \section*{Complete BSM UV Lagrangian}
 \emph{Matchete BSM Lagrangian, excluding the pure Standard Model contribution.}
 \medskip
 \noindent\begin{adjustbox}{max width=\linewidth}
-$\displaystyle \mathcal{L}_{\rm BSM} = \text{Bar}(\text{Coupling}(\text{lambdaT3ExtraQ022000I1},\{\},0)) \text{Bar}(\text{Field}(\text{NewScalar1},\text{Scalar},\{\text{Index}(\text{d$\$\$$1},\text{T3BSMd2})\},\{\})) \text{Bar}(\text{Field}(\text{NewScalar1},\text{Scalar},\{\text{Index}(\text{d$\$\$$2},\text{T3BSMd2})\},\{\})) \text{Field}(H,\text{Scalar},\{\text{Index}(\text{d$\$\$$1},\text{SU2L}(\text{fund}))\},\{\}) \text{Field}(H,\text{Scalar},\{\text{Index}(\text{d$\$\$$2},\text{SU2L}(\text{fund}))\},\{\}) \text{CG}(\text{Bar}(\text{T3ExtraCGQ022000I1}),\{\text{Bar}(\text{Index}(\text{d$\$\$$1},\text{SU2L}(\text{fund}))),\text{Bar}(\text{Index}(\text{d$\$\$$2},\text{SU2L}(\text{fund}))),\text{Index}(\text{d$\$\$$1},\text{T3BSMd2}),\text{Index}(\text{d$\$\$$2},\text{T3BSMd2})\})$
+$\displaystyle \mathcal{L}_{\rm BSM} = \text{Bar}(\text{Coupling}({\lambda_{X_{10}}},\{\},0)) \text{Bar}(\text{Field}(\text{NewScalar1},\text{Scalar},\{\text{Index}(\text{d$\$\$$1},\text{T3BSMd2})\},\{\})) \text{Bar}(\text{Field}(\text{NewScalar1},\text{Scalar},\{\text{Index}(\text{d$\$\$$2},\text{T3BSMd2})\},\{\})) \text{Field}(H,\text{Scalar},\{\text{Index}(\text{d$\$\$$1},\text{SU2L}(\text{fund}))\},\{\}) \text{Field}(H,\text{Scalar},\{\text{Index}(\text{d$\$\$$2},\text{SU2L}(\text{fund}))\},\{\}) \text{CG}(\text{Bar}(\text{T3ExtraCGQ022000I1}),\{\text{Bar}(\text{Index}(\text{d$\$\$$1},\text{SU2L}(\text{fund}))),\text{Bar}(\text{Index}(\text{d$\$\$$2},\text{SU2L}(\text{fund}))),\text{Index}(\text{d$\$\$$1},\text{T3BSMd2}),\text{Index}(\text{d$\$\$$2},\text{T3BSMd2})\})$
 \end{adjustbox}\par\smallskip
 \noindent\begin{adjustbox}{max width=\linewidth}
 $\displaystyle +\text{Coupling}(\text{MS1},\{\},0)^2 \text{Field}(\text{NewScalar1},\text{Scalar},\{\text{Index}(\text{d$\$\$$1},\text{T3BSMd2})\},\{\}) (-\text{Bar}(\text{Field}(\text{NewScalar1},\text{Scalar},\{\text{Index}(\text{d$\$\$$1},\text{T3BSMd2})\},\{\})))$
@@ -78,7 +90,7 @@ $\displaystyle +\text{Coupling}(\text{lambdaH1Inv2},\{\},0) \text{Field}(\text{N
 $\displaystyle +\text{Coupling}(\text{lambdaT3},\{\},0) \text{Field}(\text{NewScalar1},\text{Scalar},\{\text{Index}(\text{d$\$\$$2},\text{T3BSMd2})\},\{\}) \text{Bar}(\text{Field}(\text{NewScalar2},\text{Scalar},\{\text{Index}(\text{d$\$\$$1},\text{T3BSMd2})\},\{\})) \text{Field}(H,\text{Scalar},\{\text{Index}(\text{d$\$\$$1},\text{SU2L}(\text{fund}))\},\{\}) \text{Field}(H,\text{Scalar},\{\text{Index}(\text{d$\$\$$2},\text{SU2L}(\text{fund}))\},\{\}) \text{CG}(\text{T3MixCG},\{\text{Bar}(\text{Index}(\text{d$\$\$$1},\text{SU2L}(\text{fund}))),\text{Bar}(\text{Index}(\text{d$\$\$$2},\text{SU2L}(\text{fund}))),\text{Bar}(\text{Index}(\text{d$\$\$$2},\text{T3BSMd2})),\text{Index}(\text{d$\$\$$1},\text{T3BSMd2})\})$
 \end{adjustbox}\par\smallskip
 \noindent\begin{adjustbox}{max width=\linewidth}
-$\displaystyle +\text{Coupling}(\text{lambdaT3ExtraQ022000I1},\{\},0) \text{Field}(\text{NewScalar1},\text{Scalar},\{\text{Index}(\text{d$\$\$$1},\text{T3BSMd2})\},\{\}) \text{Field}(\text{NewScalar1},\text{Scalar},\{\text{Index}(\text{d$\$\$$2},\text{T3BSMd2})\},\{\}) \text{Bar}(\text{Field}(H,\text{Scalar},\{\text{Index}(\text{d$\$\$$1},\text{SU2L}(\text{fund}))\},\{\})) \text{Bar}(\text{Field}(H,\text{Scalar},\{\text{Index}(\text{d$\$\$$2},\text{SU2L}(\text{fund}))\},\{\})) \text{CG}(\text{T3ExtraCGQ022000I1},\{\text{Index}(\text{d$\$\$$1},\text{SU2L}(\text{fund})),\text{Index}(\text{d$\$\$$2},\text{SU2L}(\text{fund})),\text{Bar}(\text{Index}(\text{d$\$\$$1},\text{T3BSMd2})),\text{Bar}(\text{Index}(\text{d$\$\$$2},\text{T3BSMd2}))\})$
+$\displaystyle +\text{Coupling}({\lambda_{X_{10}}},\{\},0) \text{Field}(\text{NewScalar1},\text{Scalar},\{\text{Index}(\text{d$\$\$$1},\text{T3BSMd2})\},\{\}) \text{Field}(\text{NewScalar1},\text{Scalar},\{\text{Index}(\text{d$\$\$$2},\text{T3BSMd2})\},\{\}) \text{Bar}(\text{Field}(H,\text{Scalar},\{\text{Index}(\text{d$\$\$$1},\text{SU2L}(\text{fund}))\},\{\})) \text{Bar}(\text{Field}(H,\text{Scalar},\{\text{Index}(\text{d$\$\$$2},\text{SU2L}(\text{fund}))\},\{\})) \text{CG}(\text{T3ExtraCGQ022000I1},\{\text{Index}(\text{d$\$\$$1},\text{SU2L}(\text{fund})),\text{Index}(\text{d$\$\$$2},\text{SU2L}(\text{fund})),\text{Bar}(\text{Index}(\text{d$\$\$$1},\text{T3BSMd2})),\text{Bar}(\text{Index}(\text{d$\$\$$2},\text{T3BSMd2}))\})$
 \end{adjustbox}\par\smallskip
 \noindent\begin{adjustbox}{max width=\linewidth}
 $\displaystyle +\frac{1}{2} \text{Coupling}(\text{lambdaS1Inv1},\{\},0) \text{Field}(\text{NewScalar1},\text{Scalar},\{\text{Index}(\text{d$\$\$$3},\text{T3BSMd2})\},\{\}) \text{Field}(\text{NewScalar1},\text{Scalar},\{\text{Index}(\text{d$\$\$$4},\text{T3BSMd2})\},\{\}) \text{Bar}(\text{Field}(\text{NewScalar1},\text{Scalar},\{\text{Index}(\text{d$\$\$$1},\text{T3BSMd2})\},\{\})) \text{Bar}(\text{Field}(\text{NewScalar1},\text{Scalar},\{\text{Index}(\text{d$\$\$$2},\text{T3BSMd2})\},\{\})) \text{CG}(\text{T3Scalar1SelfCGInv1},\{\text{Index}(\text{d$\$\$$1},\text{T3BSMd2}),\text{Bar}(\text{Index}(\text{d$\$\$$3},\text{T3BSMd2})),\text{Index}(\text{d$\$\$$2},\text{T3BSMd2}),\text{Bar}(\text{Index}(\text{d$\$\$$4},\text{T3BSMd2}))\})$
@@ -227,7 +239,7 @@ $16\pi^2\,dX/d\ln\mu=\beta_X$
 &\quad -4 \operatorname{Tr}\!\left({Y_e}\,\left({Y_e}\right)^{\dagger}\,{Y_e}\,\left({Y_e}\right)^{\dagger}\right) \\
 &\quad -12 \operatorname{Tr}\!\left({Y_u}\,\left({Y_u}\right)^{\dagger}\,{Y_u}\,\left({Y_u}\right)^{\dagger}\right) \\
 &\quad +4 {\lambda_5} \left({\lambda_5}\right)^{*} \\
-&\quad +8 \text{lambdaT3GeneralQ022000I1} \left(\text{lambdaT3GeneralQ022000I1}\right)^{*} \\
+&\quad +8 {\lambda_{X_{10}}} \left({\lambda_{X_{10}}}\right)^{*} \\
 &\quad +\frac{9 {g_2}^4}{4} \\
 &\quad +{g_1}^2 \left(\frac{3 {g_2}^2}{2}-3 {\lambda_1}\right) \\
 &\quad -9 {g_2}^2 {\lambda_1} \\
@@ -242,7 +254,7 @@ $16\pi^2\,dX/d\ln\mu=\beta_X$
 \begin{align*}
 16\pi^2\,\frac{d \lambda_{S_1}^{(1)}}{d\ln\mu} &=4 {\lambda_{S_1}^{(1)}} T_{\nu}^{(1)} \\
 &\quad -4 \operatorname{Tr}\!\left({y_1}\,\left({y_1}\right)^{\dagger}\,{y_1}\,\left({y_1}\right)^{\dagger}\right) \\
-&\quad +8 \text{lambdaT3GeneralQ022000I1} \left(\text{lambdaT3GeneralQ022000I1}\right)^{*} \\
+&\quad +8 {\lambda_{X_{10}}} \left({\lambda_{X_{10}}}\right)^{*} \\
 &\quad +\frac{9 {g_2}^4}{4} \\
 &\quad +{g_1}^2 \left(\frac{3 {g_2}^2}{2}-3 {\lambda_{S_1}^{(1)}}\right) \\
 &\quad -9 {g_2}^2 {\lambda_{S_1}^{(1)}} \\
@@ -272,7 +284,7 @@ $16\pi^2\,dX/d\ln\mu=\beta_X$
 16\pi^2\,\frac{d \lambda_{HS_1}^{(1)}}{d\ln\mu} &={\lambda_{HS_1}^{(1)}} (2 T_{\nu}^{(1)}+6 \operatorname{Tr}\!\left({Y_d}\,\left({Y_d}\right)^{\dagger}\right)+2 \operatorname{Tr}\!\left({Y_e}\,\left({Y_e}\right)^{\dagger}\right)+6 \operatorname{Tr}\!\left({Y_u}\,\left({Y_u}\right)^{\dagger}\right)) \\
 &\quad -2 \operatorname{Tr}\!\left({y_1}\,\left({y_1}\right)^{\dagger}\,{Y_e}\,\left({Y_e}\right)^{\dagger}\right) \\
 &\quad +6 {\lambda_5} \left({\lambda_5}\right)^{*} \\
-&\quad +24 \text{lambdaT3GeneralQ022000I1} \left(\text{lambdaT3GeneralQ022000I1}\right)^{*} \\
+&\quad +24 {\lambda_{X_{10}}} \left({\lambda_{X_{10}}}\right)^{*} \\
 &\quad +\frac{9 {g_2}^4}{4} \\
 &\quad -9 {g_2}^2 {\lambda_{HS_1}^{(1)}} \\
 &\quad +\frac{3 {g_1}^4}{4} \\
@@ -328,7 +340,7 @@ $16\pi^2\,dX/d\ln\mu=\beta_X$
 16\pi^2\,\frac{d \lambda_{HS_1}^{(A)}}{d\ln\mu} &={\lambda_{HS_1}^{(A)}} (2 T_{\nu}^{(1)}+6 \operatorname{Tr}\!\left({Y_d}\,\left({Y_d}\right)^{\dagger}\right)+2 \operatorname{Tr}\!\left({Y_e}\,\left({Y_e}\right)^{\dagger}\right)+6 \operatorname{Tr}\!\left({Y_u}\,\left({Y_u}\right)^{\dagger}\right)) \\
 &\quad +\frac{8}{3} \operatorname{Tr}\!\left({y_1}\,\left({y_1}\right)^{\dagger}\,{Y_e}\,\left({Y_e}\right)^{\dagger}\right) \\
 &\quad +\frac{16}{3} {\lambda_5} \left({\lambda_5}\right)^{*} \\
-&\quad +64 \text{lambdaT3GeneralQ022000I1} \left(\text{lambdaT3GeneralQ022000I1}\right)^{*} \\
+&\quad +64 {\lambda_{X_{10}}} \left({\lambda_{X_{10}}}\right)^{*} \\
 &\quad +{g_1}^2 \left(6 {g_2}^2-3 {\lambda_{HS_1}^{(A)}}\right) \\
 &\quad -9 {g_2}^2 {\lambda_{HS_1}^{(A)}} \\
 &\quad +{\lambda_{12}^{(A)}} {\lambda_{HS_2}^{(A)}} \\
@@ -360,14 +372,14 @@ $16\pi^2\,dX/d\ln\mu=\beta_X$
 &\quad +2 {\lambda_{12}^{(A)}} {\lambda_{S_2}^{(1)}} \\
 &\quad +{\lambda_{HS_1}^{(A)}} {\lambda_{HS_2}^{(A)}} \\
 \end{align*}
-\subsection*{$lambdaT3GeneralQ022000I1$}
+\subsection*{$\lambda_{X_{10}}$}
 \begin{align*}
-16\pi^2\,\frac{d lambdaT3GeneralQ022000I1}{d\ln\mu} &=\text{lambdaT3GeneralQ022000I1} (2 T_{\nu}^{(1)}+6 \operatorname{Tr}\!\left({Y_d}\,\left({Y_d}\right)^{\dagger}\right)+2 \operatorname{Tr}\!\left({Y_e}\,\left({Y_e}\right)^{\dagger}\right)+6 \operatorname{Tr}\!\left({Y_u}\,\left({Y_u}\right)^{\dagger}\right)) \\
-&\quad -9 {g_2}^2 \text{lambdaT3GeneralQ022000I1} \\
-&\quad -3 {g_1}^2 \text{lambdaT3GeneralQ022000I1} \\
-&\quad +2 {\lambda_1} \text{lambdaT3GeneralQ022000I1} \\
-&\quad +8 {\lambda_{HS_1}^{(1)}} \text{lambdaT3GeneralQ022000I1} \\
-&\quad +4 {\lambda_{HS_1}^{(A)}} \text{lambdaT3GeneralQ022000I1} \\
-&\quad +2 {\lambda_{S_1}^{(1)}} \text{lambdaT3GeneralQ022000I1} \\
+16\pi^2\,\frac{d \lambda_{X_{10}}}{d\ln\mu} &={\lambda_{X_{10}}} (2 T_{\nu}^{(1)}+6 \operatorname{Tr}\!\left({Y_d}\,\left({Y_d}\right)^{\dagger}\right)+2 \operatorname{Tr}\!\left({Y_e}\,\left({Y_e}\right)^{\dagger}\right)+6 \operatorname{Tr}\!\left({Y_u}\,\left({Y_u}\right)^{\dagger}\right)) \\
+&\quad -9 {g_2}^2 {\lambda_{X_{10}}} \\
+&\quad -3 {g_1}^2 {\lambda_{X_{10}}} \\
+&\quad +2 {\lambda_1} {\lambda_{X_{10}}} \\
+&\quad +8 {\lambda_{HS_1}^{(1)}} {\lambda_{X_{10}}} \\
+&\quad +4 {\lambda_{HS_1}^{(A)}} {\lambda_{X_{10}}} \\
+&\quad +2 {\lambda_{S_1}^{(1)}} {\lambda_{X_{10}}} \\
 \end{align*}
 \end{document}

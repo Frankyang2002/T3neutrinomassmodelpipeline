@@ -80,15 +80,47 @@ GENERAL_QUARTIC = re.compile(r'(lambdaT3(?:General|Extra)Q)([0-9]{6})I([0-9]+)')
 GENERAL_MASS = re.compile(r'(muT3[A-Za-z0-9_]+|mT3[A-Za-z0-9_]+)')
 
 
+def _general_quartic_labels():
+    """Stable, global field-content labels shared by all sixteen models.
+
+    One X index per six-field-count signature. Independent contractions retain
+    their invariant superscript only when the registry has multiple for that
+    signature. The mapping depends only on the checked-in registry, not model
+    evaluation order or the order a PDF happens to be compiled.
+    """
+    registry = read_json(ROOT / 'RGE/general/generated/general_rgbeta_quartic_registry.json')
+    keys = set()
+    indices = {}
+    for model in registry['models'].values():
+        for category in ('new_rgbeta_symbols', 'preexisting_rgbeta_symbols'):
+            for entry in model.get(category, []):
+                if not isinstance(entry, dict):
+                    continue
+                match = GENERAL_QUARTIC.fullmatch(str(entry.get('name', '')))
+                if match:
+                    keys.add(match.group(2))
+                    indices.setdefault(match.group(2), set()).add(int(match.group(3)))
+    return {key: (number, len(indices[key]) > 1)
+            for number, key in enumerate(sorted(keys), start=1)}
+
+
 def generated_symbol(name):
     match = GENERAL_QUARTIC.fullmatch(str(name))
     if match:
-        return r'\lambda_{\mathrm{Q}' + match.group(2) + r'}^{(' + match.group(3) + r')}'
+        code, invariant = match.group(2), int(match.group(3))
+        label = _general_quartic_labels().get(code)
+        if label is None:
+            # Fail closed: do not silently invent a label for an unregistered coupling.
+            raise ValueError(f'Unregistered general quartic: {name}')
+        index, multiple = label
+        symbol = r'\lambda_{X_{' + str(index) + r'}}'
+        if multiple:
+            symbol += '^{(' + str(invariant) + ')}'
+        return symbol
     if name in ('y1Conj','y2Conj'):
         return r'y_{' + name[1] + r'}^{\mathrm{conj}}'
     if GENERAL_MASS.fullmatch(str(name)):
         token = str(name)
-        # Keep braces balanced and preserve the m-versus-mu prefix.
         if token.startswith('muT3'):
             return r'\mu_{\mathrm{' + esc(token[2:]).replace(r'\_', r'\,') + '}}'
         return r'm_{\mathrm{' + esc(token[1:]).replace(r'\_', r'\,') + '}}'
@@ -104,6 +136,9 @@ def format_general_latex(tex):
         replacement = generated_symbol(token)
         if not replacement:
             continue
+        # Group the rendered symbol: TeXForm may append ^2, ^*, or indices.
+        # Without grouping, a symbol carrying ^{(I)} causes Double superscript.
+        replacement = '{' + replacement + '}'
         # Wolfram TeXForm often encloses unrecognised symbols in \text{...}.
         for wrapper in ('text','mathrm','operatorname','texttt'):
             tex = tex.replace('\\'+wrapper+'{'+token+'}', replacement)
@@ -149,7 +184,7 @@ def notation_index(model, lag, beta_names):
                 desc = (r'\texttt{'+latex_escape_text(inv[:125])+r'}' if inv else r'Independent invariant')
                 # Avoid long unbreakable Mathematica invariant cells in the PDF.
                 if len(inv)>60: desc = r'Contraction $I='+str(re.search(r'I([0-9]+)$',name).group(1) if re.search(r'I([0-9]+)$',name) else 1)+r'$; exact tensor in registry'
-                lines.append(r'$'+(generated_symbol(name) or paper_symbol_latex(name))+r'$ & '+fields+' & '+desc+r' \\')
+                lines.append(r'$'+(generated_symbol(name) or paper_symbol_latex(name))+r'$ & '+fields+' & '+desc+r'\newline {\tiny\texttt{'+latex_escape_text(name)+r'}} \\')
     special = sorted(set(beta_names) | set(lag.get('interactions',[])))
     for name in special:
         if not isinstance(name,str) or name in found: continue
@@ -161,10 +196,10 @@ def notation_index(model, lag, beta_names):
                 else 'General quartic: see model interaction inventory')
         lines.append(r'$'+sym+r'$ & '+latex_escape_text(desc)+r' & \texttt{'+latex_escape_text(name)+r'} \\')
     lines += [r'\bottomrule',r'\end{longtable}',r'\normalsize',
-              r'The six field counts in $\mathrm{Q}abcdef$ refer respectively to '
-              r'$H,H^\dagger,S_1,S_1^\dagger,S_2,S_2^\dagger$; '
-              r'the superscript labels the independent invariant. '
-              r'This is a notation convention, not a physical normalisation mapping.',r'\clearpage']
+              r'Each $X_i$ labels one field-content class in the general-quartic registry; '
+              r'a superscript distinguishes different invariant contractions where present. '
+              r'The original RGBeta identifier and contraction are retained in the index. '
+              r'This is notation only, not a physical normalisation mapping.',r'\clearpage']
     return lines
 
 
@@ -376,7 +411,9 @@ def factor_tex(stage, model_stages, group_rows):
     lines = preamble('T3 general group factors: '+stage,
                      'Original RGE-structure / prefactor comparison layout')
     lines += paper_notation_key_lines()
-    lines += [r'\section*{General coupling index}',r'\begin{longtable}{@{}ll@{}}',r'\toprule',r'Symbol & Stored RGBeta coupling name \\',r'\midrule']
+    lines += [r'\section*{General coupling index}',
+              r'Each $X_i$ refers to one field-content signature, with the stored identifier given below.',
+              r'\begin{longtable}{@{}ll@{}}',r'\toprule',r'Symbol & Stored RGBeta coupling name \\',r'\midrule']
     all_names=sorted(set(n for stage_data in model_stages.values() for n in stage_data[stage]))
     for name in all_names:
         g=generated_symbol(name)

@@ -162,6 +162,12 @@ class GeneralT3FlavourC5:
             _require(source in eft, 'no running scalar splitting for ' + source)
             kappa = complex(eft[source]['real'], eft[source]['imag']) if isinstance(
                 eft[source], dict) else complex(eft[source])
+            if self.model in {'A_-2','A_+0','D_-2','D_+0','E_-2','E_+0'}:
+                _require(abs(kappa) > 0.0, 'self-bilinear mass basis requires nonzero mu2')
+                _require(kappa.real > 0.0 and
+                         abs(kappa.imag) <= 1e-10 * max(1.0, abs(kappa)),
+                         'current real self-bilinear Matchete rotation only supports '
+                         'positive real mu2; complex-phase rotation not yet derived')
         points = []
         mappings: list[str] = []
         for i, mf in enumerate(masses):
@@ -192,6 +198,8 @@ class GeneralT3FlavourC5:
         c5 = flavour_c5_from_channels(raw_rows, yukawas, channels)
         self.last_diagnostics = {
             'matching_kind': 'full-general-Matchete-one-scale-Yukawa-channels',
+            'self_bilinear_real_mass_basis_candidate': self.model in {
+                'A_-2','A_+0','D_-2','D_+0','E_-2','E_+0'},
             'matched_yukawas': sorted(self.required_yukawas),
             'n_yukawa_channels': len(channels),
             'channels': channels,

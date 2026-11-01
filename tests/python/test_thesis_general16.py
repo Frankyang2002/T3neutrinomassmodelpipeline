@@ -59,7 +59,8 @@ def test_general_c5_requires_matched_full_general_provenance(tmp_path, monkeypat
     p.parent.mkdir(parents=True)
     p.write_text('Coupling[y1] Coupling[y2]')
     mod.save(p.parent/'general_matching_status.json', {
-        'model':'E_+2', 'status':'Matched', 'model_selection_verified':True})
+        'model':'E_+2', 'status':'Matched', 'model_selection_verified':True,
+        'matching_scheme':'FullGeneralUnsplitMatcheteOneScaleCandidate'})
     assert mod.ensure_general_matching('E_+2', generate=False,
                                        wolframscript='wolframscript') == p
 

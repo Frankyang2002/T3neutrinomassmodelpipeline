@@ -1,0 +1,1204 @@
+{
+  "format": "t3-thesis-canonical-general-rge-conditional-c5-fit-v1",
+  "model": "B_-3",
+  "status": "ExploratoryAcceptedFit",
+  "chi2_seed": 12344.948422943913,
+  "chi2_final": 3.731763921359668,
+  "prediction": {
+    "delta_m21_sq_ev2": 7.525118303738523e-05,
+    "delta_m3l_sq_ev2": 0.0024969801835762816,
+    "sin2_theta12": 0.31109475552219473,
+    "sin2_theta13": 0.02254843236211165,
+    "sin2_theta23": 0.4973589635294568
+  },
+  "target": {
+    "delta_m21_sq_ev2": 7.537e-05,
+    "delta_m3l_sq_ev2": 0.002511,
+    "sin2_theta12": 0.3088,
+    "sin2_theta13": 0.02248,
+    "sin2_theta23": 0.47
+  },
+  "whitened_residual": [
+    -0.1224917140358494,
+    -0.683893484083837,
+    0.3450760183751449,
+    0.12005677563447353,
+    1.765094421255279
+  ],
+  "best_source": "best_branch_active_12",
+  "best_parameters": {
+    "y1_00": -1.8958788363018232e-05,
+    "y1_01": 4.4725419469658264e-05,
+    "y1_02": 5.043783297216446e-05,
+    "y1_10": -0.00014458485916256906,
+    "y1_11": 9.474897980690002e-05,
+    "y1_12": -0.00011186225702511641,
+    "y1_20": -7.971252074886016e-05,
+    "y1_21": 4.134194043907064e-05,
+    "y1_22": -3.414883948754833e-05,
+    "y2_00": 0.00011427535871840723,
+    "y2_01": 7.408242730636314e-05,
+    "y2_02": -3.131389593106911e-05,
+    "y2_10": -1.0414412668734539e-05,
+    "y2_11": -7.417287267744552e-06,
+    "y2_12": 0.0001364871862761113,
+    "y2_20": 4.60192808034136e-05,
+    "y2_21": -0.00016337967524304988,
+    "y2_22": 5.48993800785764e-05
+  },
+  "sobol_attempts": 128,
+  "sobol_failures": [],
+  "local_refinement": {
+    "enabled": true,
+    "skipped": false,
+    "seed_count": 3,
+    "stopped_early": false,
+    "stages": [
+      {
+        "stage": "multistart_seed_1_active_5",
+        "seed_chi2": 5752.466192675732,
+        "baseline_recomputed_chi2": 5752.466192675732,
+        "active_parameter_count": 5,
+        "active_parameters": [
+          "y2_00",
+          "y1_11",
+          "y2_21",
+          "y1_10",
+          "y2_01"
+        ],
+        "max_nfev": 20,
+        "optimizer_nfev": 12,
+        "optimizer_success": true,
+        "optimizer_message": "`ftol` termination condition is satisfied.",
+        "pipeline_evaluations": 109,
+        "best_chi2": 4107.716351638818,
+        "sensitivity_ranking": [
+          {
+            "name": "y2_00",
+            "score": 234.22528041531103,
+            "status": "Success"
+          },
+          {
+            "name": "y1_11",
+            "score": 194.56138521204903,
+            "status": "Success"
+          },
+          {
+            "name": "y2_21",
+            "score": 157.8276579211022,
+            "status": "Success"
+          },
+          {
+            "name": "y1_10",
+            "score": 149.2249430423003,
+            "status": "Success"
+          },
+          {
+            "name": "y2_01",
+            "score": 122.0233098195588,
+            "status": "Success"
+          },
+          {
+            "name": "y2_12",
+            "score": 115.81228255353264,
+            "status": "Success"
+          },
+          {
+            "name": "y1_21",
+            "score": 111.33131934826031,
+            "status": "Success"
+          },
+          {
+            "name": "y1_12",
+            "score": 92.0214623175757,
+            "status": "Success"
+          },
+          {
+            "name": "y1_20",
+            "score": 86.40631339838862,
+            "status": "Success"
+          },
+          {
+            "name": "y1_01",
+            "score": 76.61453277650662,
+            "status": "Success"
+          },
+          {
+            "name": "y1_02",
+            "score": 76.05540379359441,
+            "status": "Success"
+          },
+          {
+            "name": "y2_20",
+            "score": 68.85717677598097,
+            "status": "Success"
+          },
+          {
+            "name": "y2_22",
+            "score": 38.98586271183512,
+            "status": "Success"
+          },
+          {
+            "name": "y1_22",
+            "score": 31.937058938272678,
+            "status": "Success"
+          },
+          {
+            "name": "y2_10",
+            "score": 31.183878233408922,
+            "status": "Success"
+          },
+          {
+            "name": "y1_00",
+            "score": 30.485515474701337,
+            "status": "Success"
+          },
+          {
+            "name": "y2_02",
+            "score": 23.936228178531266,
+            "status": "Success"
+          },
+          {
+            "name": "y2_11",
+            "score": 21.5376241651249,
+            "status": "Success"
+          }
+        ]
+      },
+      {
+        "stage": "multistart_seed_2_active_5",
+        "seed_chi2": 7204.171174298965,
+        "baseline_recomputed_chi2": 7204.171174298965,
+        "active_parameter_count": 5,
+        "active_parameters": [
+          "y1_11",
+          "y1_01",
+          "y2_01",
+          "y2_21",
+          "y2_00"
+        ],
+        "max_nfev": 20,
+        "optimizer_nfev": 13,
+        "optimizer_success": true,
+        "optimizer_message": "`ftol` termination condition is satisfied.",
+        "pipeline_evaluations": 115,
+        "best_chi2": 2803.52820738454,
+        "sensitivity_ranking": [
+          {
+            "name": "y1_11",
+            "score": 178.11506539320405,
+            "status": "Success"
+          },
+          {
+            "name": "y1_01",
+            "score": 138.85419100585844,
+            "status": "Success"
+          },
+          {
+            "name": "y2_01",
+            "score": 134.20218213204151,
+            "status": "Success"
+          },
+          {
+            "name": "y2_21",
+            "score": 119.33381163983717,
+            "status": "Success"
+          },
+          {
+            "name": "y2_00",
+            "score": 92.6485820681554,
+            "status": "Success"
+          },
+          {
+            "name": "y1_21",
+            "score": 81.9690942612173,
+            "status": "Success"
+          },
+          {
+            "name": "y1_12",
+            "score": 81.36002382824908,
+            "status": "Success"
+          },
+          {
+            "name": "y1_00",
+            "score": 53.40545213895566,
+            "status": "Success"
+          },
+          {
+            "name": "y2_12",
+            "score": 50.447743151449515,
+            "status": "Success"
+          },
+          {
+            "name": "y1_10",
+            "score": 49.31199348282807,
+            "status": "Success"
+          },
+          {
+            "name": "y1_02",
+            "score": 37.56710515182245,
+            "status": "Success"
+          },
+          {
+            "name": "y1_20",
+            "score": 33.64478075109892,
+            "status": "Success"
+          },
+          {
+            "name": "y2_20",
+            "score": 28.588655256119164,
+            "status": "Success"
+          },
+          {
+            "name": "y1_22",
+            "score": 27.802996430380478,
+            "status": "Success"
+          },
+          {
+            "name": "y2_02",
+            "score": 23.52458235561307,
+            "status": "Success"
+          },
+          {
+            "name": "y2_11",
+            "score": 19.795388502335094,
+            "status": "Success"
+          },
+          {
+            "name": "y2_22",
+            "score": 18.36499509158079,
+            "status": "Success"
+          },
+          {
+            "name": "y2_10",
+            "score": 15.683068274019032,
+            "status": "Success"
+          }
+        ]
+      },
+      {
+        "stage": "multistart_seed_3_active_5",
+        "seed_chi2": 7407.449569160532,
+        "baseline_recomputed_chi2": 7407.449569160532,
+        "active_parameter_count": 5,
+        "active_parameters": [
+          "y1_11",
+          "y2_00",
+          "y2_21",
+          "y1_01",
+          "y2_01"
+        ],
+        "max_nfev": 20,
+        "optimizer_nfev": 9,
+        "optimizer_success": true,
+        "optimizer_message": "`ftol` termination condition is satisfied.",
+        "pipeline_evaluations": 91,
+        "best_chi2": 5980.68688662124,
+        "sensitivity_ranking": [
+          {
+            "name": "y1_11",
+            "score": 169.07545269057795,
+            "status": "Success"
+          },
+          {
+            "name": "y2_00",
+            "score": 142.36973881004363,
+            "status": "Success"
+          },
+          {
+            "name": "y2_21",
+            "score": 118.44698928043779,
+            "status": "Success"
+          },
+          {
+            "name": "y1_01",
+            "score": 78.58215526900256,
+            "status": "Success"
+          },
+          {
+            "name": "y2_01",
+            "score": 75.30167815664673,
+            "status": "Success"
+          },
+          {
+            "name": "y1_12",
+            "score": 72.09342165800588,
+            "status": "Success"
+          },
+          {
+            "name": "y1_21",
+            "score": 68.91536759342098,
+            "status": "Success"
+          },
+          {
+            "name": "y2_12",
+            "score": 62.48345779143377,
+            "status": "Success"
+          },
+          {
+            "name": "y2_20",
+            "score": 55.80871298486354,
+            "status": "Success"
+          },
+          {
+            "name": "y1_10",
+            "score": 50.05349919286744,
+            "status": "Success"
+          },
+          {
+            "name": "y2_10",
+            "score": 33.35784311093186,
+            "status": "Success"
+          },
+          {
+            "name": "y1_20",
+            "score": 27.76508242714591,
+            "status": "Success"
+          },
+          {
+            "name": "y1_00",
+            "score": 24.656501202974873,
+            "status": "Success"
+          },
+          {
+            "name": "y1_02",
+            "score": 23.980284007563238,
+            "status": "Success"
+          },
+          {
+            "name": "y2_11",
+            "score": 23.338895077015643,
+            "status": "Success"
+          },
+          {
+            "name": "y1_22",
+            "score": 23.07269349080888,
+            "status": "Success"
+          },
+          {
+            "name": "y2_22",
+            "score": 22.96596179214786,
+            "status": "Success"
+          },
+          {
+            "name": "y2_02",
+            "score": 20.696530170233384,
+            "status": "Success"
+          }
+        ]
+      },
+      {
+        "stage": "best_branch_active_8",
+        "seed_chi2": 2803.52820738454,
+        "baseline_recomputed_chi2": 2803.52820738454,
+        "active_parameter_count": 8,
+        "active_parameters": [
+          "y1_11",
+          "y2_00",
+          "y2_21",
+          "y1_10",
+          "y1_12",
+          "y2_01",
+          "y2_12",
+          "y1_01"
+        ],
+        "max_nfev": 30,
+        "optimizer_nfev": 30,
+        "optimizer_success": false,
+        "optimizer_message": "The maximum number of function evaluations is exceeded.",
+        "pipeline_evaluations": 290,
+        "best_chi2": 53.857014855836226,
+        "sensitivity_ranking": [
+          {
+            "name": "y1_11",
+            "score": 174.59095580228538,
+            "status": "Success"
+          },
+          {
+            "name": "y2_00",
+            "score": 151.77036597394186,
+            "status": "Success"
+          },
+          {
+            "name": "y2_21",
+            "score": 143.99591507665468,
+            "status": "Success"
+          },
+          {
+            "name": "y1_10",
+            "score": 112.26165835696631,
+            "status": "Success"
+          },
+          {
+            "name": "y1_12",
+            "score": 111.31583555979857,
+            "status": "Success"
+          },
+          {
+            "name": "y2_01",
+            "score": 108.6497135608188,
+            "status": "Success"
+          },
+          {
+            "name": "y2_12",
+            "score": 89.9912361368732,
+            "status": "Success"
+          },
+          {
+            "name": "y1_01",
+            "score": 88.20895271154268,
+            "status": "Success"
+          },
+          {
+            "name": "y1_21",
+            "score": 80.81174047782632,
+            "status": "Success"
+          },
+          {
+            "name": "y1_20",
+            "score": 67.98090481669264,
+            "status": "Success"
+          },
+          {
+            "name": "y1_02",
+            "score": 61.36565597702459,
+            "status": "Success"
+          },
+          {
+            "name": "y1_00",
+            "score": 53.96514372252169,
+            "status": "Success"
+          },
+          {
+            "name": "y1_22",
+            "score": 35.73655296755353,
+            "status": "Success"
+          },
+          {
+            "name": "y2_22",
+            "score": 31.775926424890095,
+            "status": "Success"
+          },
+          {
+            "name": "y2_20",
+            "score": 29.924592016808944,
+            "status": "Success"
+          },
+          {
+            "name": "y2_11",
+            "score": 25.275438947872562,
+            "status": "Success"
+          },
+          {
+            "name": "y2_02",
+            "score": 22.71492217849438,
+            "status": "Success"
+          },
+          {
+            "name": "y2_10",
+            "score": 17.73904434411183,
+            "status": "Success"
+          }
+        ]
+      },
+      {
+        "stage": "best_branch_active_12",
+        "seed_chi2": 53.857014855836226,
+        "baseline_recomputed_chi2": 53.857014855836226,
+        "active_parameter_count": 12,
+        "active_parameters": [
+          "y1_11",
+          "y2_21",
+          "y2_00",
+          "y2_12",
+          "y1_10",
+          "y1_12",
+          "y2_01",
+          "y1_01",
+          "y1_21",
+          "y1_00",
+          "y1_20",
+          "y1_02"
+        ],
+        "max_nfev": 60,
+        "optimizer_nfev": 35,
+        "optimizer_success": true,
+        "optimizer_message": "`ftol` termination condition is satisfied.",
+        "pipeline_evaluations": 443,
+        "best_chi2": 3.731763921359668,
+        "sensitivity_ranking": [
+          {
+            "name": "y1_11",
+            "score": 164.32566247946824,
+            "status": "Success"
+          },
+          {
+            "name": "y2_21",
+            "score": 140.07447696889082,
+            "status": "Success"
+          },
+          {
+            "name": "y2_00",
+            "score": 128.24771530300836,
+            "status": "Success"
+          },
+          {
+            "name": "y2_12",
+            "score": 116.49634759341248,
+            "status": "Success"
+          },
+          {
+            "name": "y1_10",
+            "score": 111.47137091949735,
+            "status": "Success"
+          },
+          {
+            "name": "y1_12",
+            "score": 110.20741886699486,
+            "status": "Success"
+          },
+          {
+            "name": "y2_01",
+            "score": 105.98209884864796,
+            "status": "Success"
+          },
+          {
+            "name": "y1_01",
+            "score": 105.49902848529638,
+            "status": "Success"
+          },
+          {
+            "name": "y1_21",
+            "score": 98.34098418530509,
+            "status": "Success"
+          },
+          {
+            "name": "y1_00",
+            "score": 80.25286539770245,
+            "status": "Success"
+          },
+          {
+            "name": "y1_20",
+            "score": 61.66372923669672,
+            "status": "Success"
+          },
+          {
+            "name": "y1_02",
+            "score": 61.142694262243694,
+            "status": "Success"
+          },
+          {
+            "name": "y2_22",
+            "score": 41.5771555379387,
+            "status": "Success"
+          },
+          {
+            "name": "y1_22",
+            "score": 37.74249091012535,
+            "status": "Success"
+          },
+          {
+            "name": "y2_20",
+            "score": 35.31340206700911,
+            "status": "Success"
+          },
+          {
+            "name": "y2_02",
+            "score": 27.546143778900966,
+            "status": "Success"
+          },
+          {
+            "name": "y2_10",
+            "score": 21.435263532616496,
+            "status": "Success"
+          },
+          {
+            "name": "y2_11",
+            "score": 20.417477384629816,
+            "status": "Success"
+          }
+        ]
+      }
+    ],
+    "pipeline_evaluations": 1048
+  },
+  "evaluator_calls": 1178,
+  "matching_kind": "full-general-matchete-one-scale-channels",
+  "matching_file": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_matchete_matching\\B_m3\\c5_coefficient.txt",
+  "self_bilinear_mass_eigenfield_matching": false,
+  "self_bilinear_complex_phase_supported": true,
+  "general_symbolic_provenance": {
+    "source": "canonical_full_general_symbolic",
+    "model": "B_-3",
+    "run_id": "full16_general_v1",
+    "extra_yukawa": null,
+    "additional_quartics": 1,
+    "additional_bilinears": 0,
+    "mass_basis": "CheckedNotMatched",
+    "lagrangian_inventory_checked": true,
+    "rge_inventory_checked": true,
+    "physical_matchete_rgbeta_mapping_certified": false,
+    "physical_neutrino_mass_prediction": false,
+    "uv_json": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\studies\\general_scalar_extended\\complete_scalar_symbolic\\full16_general_v1\\B_m3\\uv_rgbeta.json",
+    "eft1_json": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\studies\\general_scalar_extended\\complete_scalar_symbolic\\full16_general_v1\\B_m3\\eft1_rgbeta.json",
+    "uv_sha256": "2df890805dc052e22dc8ee913b6a4054787a672796e912f1274c47553ef1d9ba",
+    "eft1_sha256": "e74590a7f03605185cbc1b3eefe3f5eeef0cdeaece585e484b6083d1737ba9cb"
+  },
+  "fixed_general_scalar_boundary": {
+    "quartic_fraction_of_lambdaT3": 0.1,
+    "bilinear_fraction_min_mass_squared": 0.01,
+    "conjugate_yukawa_fraction_of_ordinary": 0.05
+  },
+  "general_rges_used": true,
+  "general_matchete_matching_used": true,
+  "full_general_sequential_matching_performed": false,
+  "self_bilinear_in_c5": false,
+  "general_extra_yukawa_direct_c5_channels": false,
+  "matching_channels": [
+    "T3YUKy1Bar__T3YUKy2Bar"
+  ],
+  "full_general_c5_flavour_pairings_evaluated": true,
+  "numerical_details": {
+    "uv_at_fermion_threshold": {
+      "g2": 0.6131313419197045,
+      "g3": 0.8767494625371517,
+      "yu": [
+        [
+          {
+            "real": 5.071873182007472e-06,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": 0.0,
+            "imag": 0.0
+          },
+          {
+            "real": 0.002564819062961106,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": 0.0,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0,
+            "imag": 0.0
+          },
+          {
+            "real": 0.7313309397387999,
+            "imag": 0.0
+          }
+        ]
+      ],
+      "yd": [
+        [
+          {
+            "real": 1.1161269963727617e-05,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": 0.0,
+            "imag": 0.0
+          },
+          {
+            "real": 0.00022207480767090032,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": 0.0,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0,
+            "imag": 0.0
+          },
+          {
+            "real": 0.011288133535219421,
+            "imag": 0.0
+          }
+        ]
+      ],
+      "gY": 0.363728121109814,
+      "ye": [
+        [
+          {
+            "real": 2.8620113174866824e-06,
+            "imag": 0.0
+          },
+          {
+            "real": 4.276889155096307e-14,
+            "imag": 0.0
+          },
+          {
+            "real": 1.0759274653001477e-12,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": 2.0301792072988968e-16,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0006029273141002659,
+            "imag": 0.0
+          },
+          {
+            "real": -4.270198437761276e-12,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": 3.0064962572512847e-16,
+            "imag": 0.0
+          },
+          {
+            "real": -2.5137341784235166e-13,
+            "imag": 0.0
+          },
+          {
+            "real": 0.010242163396089535,
+            "imag": 0.0
+          }
+        ]
+      ],
+      "lambdaH": 0.27655576128034726,
+      "y1": [
+        [
+          {
+            "real": -1.971565279123238e-05,
+            "imag": 0.0
+          },
+          {
+            "real": 4.651092801997611e-05,
+            "imag": 0.0
+          },
+          {
+            "real": 5.245138997357663e-05,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": -0.00015035691124617228,
+            "imag": 0.0
+          },
+          {
+            "real": 9.853150621574437e-05,
+            "imag": 0.0
+          },
+          {
+            "real": -0.00011632797204758905,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": -8.289464151248426e-05,
+            "imag": 0.0
+          },
+          {
+            "real": 4.2992309093376495e-05,
+            "imag": 0.0
+          },
+          {
+            "real": -3.551205979163545e-05,
+            "imag": 0.0
+          }
+        ]
+      ],
+      "y2": [
+        [
+          {
+            "real": 0.00011883740929261463,
+            "imag": 0.0
+          },
+          {
+            "real": 7.703991328956228e-05,
+            "imag": 0.0
+          },
+          {
+            "real": -3.256399544127612e-05,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": -1.08301722045735e-05,
+            "imag": 0.0
+          },
+          {
+            "real": -7.7133967665672e-06,
+            "imag": 0.0
+          },
+          {
+            "real": 0.00014193596675881714,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": 4.7856368808089846e-05,
+            "imag": 0.0
+          },
+          {
+            "real": -0.00016990178568381035,
+            "imag": 0.0
+          },
+          {
+            "real": 5.709096115436678e-05,
+            "imag": 0.0
+          }
+        ]
+      ],
+      "MF": [
+        [
+          {
+            "real": 102464.14533331968,
+            "imag": 0.0
+          },
+          {
+            "real": 5.782131156792708e-05,
+            "imag": 0.0
+          },
+          {
+            "real": -5.9224395597629484e-05,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": 5.195693258764454e-05,
+            "imag": 0.0
+          },
+          {
+            "real": 112710.55985974647,
+            "imag": 0.0
+          },
+          {
+            "real": 7.844449704846502e-05,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": -4.6534728809775556e-05,
+            "imag": 0.0
+          },
+          {
+            "real": 7.923612117711467e-05,
+            "imag": 0.0
+          },
+          {
+            "real": 122956.9744151153,
+            "imag": 0.0
+          }
+        ]
+      ],
+      "mS1Sq": 1427982.7061271984,
+      "mS2Sq": 1033353.2650404241,
+      "lambdaS1": 0.05037768275638111,
+      "lambdaS2": 0.11639276365523922,
+      "lambdaH1": 0.005826402556664861,
+      "lambdaH2": 0.01792412915215405,
+      "lambda12": -0.003059773357399754,
+      "lambdaT3": {
+        "real": 0.103005495834801,
+        "imag": 0.0
+      },
+      "lambdaH1Adj": 0.025639826323430138,
+      "lambdaH2Adj": 0.004236872889802482,
+      "lambda12Adj": -0.02910068808673933,
+      "lambdaT3GeneralQ020002I1": {
+        "real": 0.009978570637190876,
+        "imag": 0.0
+      }
+    },
+    "eft1_at_scalar_threshold": {
+      "g2": 0.6331124397465607,
+      "g3": 1.0584297978206343,
+      "yu": [
+        [
+          {
+            "real": 6.139996062255725e-06,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": 0.0,
+            "imag": 0.0
+          },
+          {
+            "real": 0.003104962005548435,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": 0.0,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0,
+            "imag": 0.0
+          },
+          {
+            "real": 0.8614014232776595,
+            "imag": 0.0
+          }
+        ]
+      ],
+      "yd": [
+        [
+          {
+            "real": 1.3461405381165102e-05,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": 0.0,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0002678404921281284,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": 0.0,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0,
+            "imag": 0.0
+          },
+          {
+            "real": 0.013992876380318342,
+            "imag": 0.0
+          }
+        ]
+      ],
+      "gY": 0.3523563381207593,
+      "ye": [
+        [
+          {
+            "real": 2.8183019204168185e-06,
+            "imag": 0.0
+          },
+          {
+            "real": 4.211571301717849e-14,
+            "imag": 0.0
+          },
+          {
+            "real": 1.0594908137938216e-12,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": 1.9991737083814268e-16,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0005937192386813465,
+            "imag": 0.0
+          },
+          {
+            "real": -4.204963644575218e-12,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": 2.9605534140157896e-16,
+            "imag": 0.0
+          },
+          {
+            "real": -2.4753212877085466e-13,
+            "imag": 0.0
+          },
+          {
+            "real": 0.010085696649181339,
+            "imag": 0.0
+          }
+        ]
+      ],
+      "lambdaH": 0.3369541355277867,
+      "mS1Sq": 1575075.6400181896,
+      "mS2Sq": 1073690.060343379,
+      "lambdaS1": -0.003646468026926107,
+      "lambdaS2": 0.11225315060967814,
+      "lambdaH1": -0.009140104376032415,
+      "lambdaH2": 0.004950456799071197,
+      "lambda12": -0.01861238743933949,
+      "lambdaT3": {
+        "real": 0.10369652796605053,
+        "imag": 0.0
+      },
+      "lambdaH1Adj": 0.051146158126167754,
+      "lambdaH2Adj": 0.008006505282237147,
+      "lambda12Adj": -0.06256032399332728,
+      "lambdaT3GeneralQ020002I1": {
+        "real": 0.009752178117116915,
+        "imag": 0.0
+      }
+    },
+    "uv_nfev": 38,
+    "eft1_nfev": 38,
+    "c5_at_scalar_threshold": {
+      "real": [
+        [
+          2.932102313870539e-17,
+          3.3562703821345225e-17,
+          3.3834653139647993e-16
+        ],
+        [
+          3.3562703821345225e-17,
+          7.958053259409996e-16,
+          9.564207717349202e-16
+        ],
+        [
+          3.3834653139647993e-16,
+          9.564207717349202e-16,
+          7.406499108770031e-16
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    "c5_at_low_scale": {
+      "real": [
+        [
+          2.7474107623361424e-17,
+          3.1448607354583466e-17,
+          3.1703495995240693e-16
+        ],
+        [
+          3.1448607354583466e-17,
+          7.456779867781755e-16,
+          8.96178311971062e-16
+        ],
+        [
+          3.1703495995240693e-16,
+          8.96178311971062e-16,
+          6.939998132650515e-16
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    "matching_scope": "full-general Matchete quadratic Yukawa channels, one-scale",
+    "general_c5_diagnostics": {
+      "matching_kind": "full-general-Matchete-one-scale-Yukawa-channels",
+      "self_bilinear_real_mass_basis_candidate": false,
+      "matched_yukawas": [
+        "y1",
+        "y2"
+      ],
+      "n_yukawa_channels": 1,
+      "channels": [
+        "T3YUKy1Bar__T3YUKy2Bar"
+      ],
+      "quartic_basis_mapping_assumptions": [],
+      "hbar_value": 0.006332573977646111,
+      "heavy_basis_residual": 6.241111813938408e-11,
+      "extra_yukawa_rotation": "not-applicable",
+      "sequential_eft_wilson_matching_performed": false,
+      "physical_general_c5_certified": false
+    }
+  },
+  "input_sha256": {
+    "reference": "c036c5177cdefaae39201b8e22740dd5ade1e9e904b534c0a5e84d7c9d99f55e",
+    "c5_kernel": "7f192897409fe14b6111fc1fa1e263ee4d99be378fc7497180698d9816c50cc5"
+  }
+}

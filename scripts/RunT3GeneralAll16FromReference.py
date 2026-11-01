@@ -184,8 +184,12 @@ def ensure_general_matching(model: str, *, generate: bool, wolframscript: str) -
         if not path.is_file() or path.stat().st_size == 0 or not state.is_file():
             return False
         status = read(state)
+        from scripts.RunT3GeneralMatcheteMatching import source_spec
+        _runner, expected_scheme = source_spec(model)
         return (status.get('model') == model and status.get('status') == 'Matched'
-                and status.get('model_selection_verified') is True)
+                and status.get('model_selection_verified') is True
+                and (status.get('matching_scheme') == expected_scheme
+                     or (model not in SELF and status.get('matching_scheme') is None)))
     if ready():
         return path
     if not generate:
@@ -381,6 +385,8 @@ def fit_nonmixed(model: str, args: argparse.Namespace, dest: Path) -> dict:
         'sobol_attempts': args.sobol_points, 'sobol_failures': failures,
         'local_refinement': history, 'evaluator_calls': evaluator.calls,
         'matching_kind': matching_kind, 'matching_file': str(matching_path),
+        'self_bilinear_mass_eigenfield_matching': model in SELF,
+        'self_bilinear_complex_phase_supported': model not in SELF,
         'general_symbolic_provenance': provenance,
         'fixed_general_scalar_boundary': {'quartic_fraction_of_lambdaT3': args.quartic_fraction,
                                           'bilinear_fraction_min_mass_squared': args.mu2_fraction,
@@ -521,7 +527,7 @@ def main(argv: list[str] | None = None) -> int:
                  'mu2_fraction': args.mu2_fraction,
                  'extra_yukawa_fraction': args.extra_yukawa_fraction,
                  'no_local_refinement': args.no_local_refinement,
-                 'matching_scheme': 'full-general-Matchete-Yukawa-channel-v1',
+                 'matching_scheme': 'full-general-Matchete-Yukawa-channel-massbasis-v2',
                  'reuse_b_run': args.reuse_b_run, 'reuse_c_run': args.reuse_c_run}
     if args.preflight:
         rows = []

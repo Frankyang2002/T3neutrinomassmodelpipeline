@@ -1,23 +1,12 @@
-Project root: C:\thesistemp\T3neutrinomassmodelpipeline
+Fix: balanced LaTeX braces for generated scalar mass/bilinear labels.
 
-Complete replacements:
-  pipeline.py
-  Reports/GeneralSymbolicAdapter.py (new adapter to existing Reports/* generator)
-  tests/python/test_general_original_report_bridge.py
+Project paths:
+  Reports/GeneralSymbolicAdapter.py  (complete replacement)
+  tests/python/test_general_mass_symbol_latex.py  (new test)
 
-The existing Reports/ReportGeneration.py, Reports/RGEComparison.py,
-and Reports/GroupFactorReports.py are REUSED, not replaced.
-
-PowerShell:
-  cd C:\thesistemp\T3neutrinomassmodelpipeline
-  Copy-Item pipeline.py pipeline.py.before_original_reporting.bak
-  Expand-Archive -LiteralPath "$HOME\Downloads\T3_Original_Reports_General_Adapter.zip" -DestinationPath . -Force
-  python -X utf8 -m pytest -q tests/python/test_general_original_report_bridge.py
+PowerShell from C:\thesistemp\T3neutrinomassmodelpipeline:
+  Expand-Archive -LiteralPath "$HOME\Downloads\T3_General_Mass_LaTeX_Brace_Fix.zip" -DestinationPath . -Force
+  python -X utf8 -m pytest -q tests/python/test_general_mass_symbol_latex.py
   python -X utf8 pipeline.py --hypercharge-comparison --reports-only
 
-When reports are functioning, remove the OBSOLETE standalone writer:
-  Remove-Item scripts/WriteT3GeneralSymbolicPDFs.py
-
-NOTE: The ZIP cannot delete files in your existing checkout. The explicit
-Remove-Item command is therefore required to clean up the old writer.
-No matching or physics verification is performed; this is output wiring.
+No physics calculations are changed. The full PDF compilation still needs to run on your machine.

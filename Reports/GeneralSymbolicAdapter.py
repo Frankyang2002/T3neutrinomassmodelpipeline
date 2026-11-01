@@ -74,15 +74,109 @@ def paper_symbol(name):
     return paper_symbol_latex(str(name))
 
 
+# Names in the generated general-quartic registry encode field multiplicities
+# in the order H, Hdag, S1, S1dag, S2, S2dag. I labels distinct contractions.
+GENERAL_QUARTIC = re.compile(r'(lambdaT3(?:General|Extra)Q)([0-9]{6})I([0-9]+)')
+GENERAL_MASS = re.compile(r'(muT3[A-Za-z0-9_]+|mT3[A-Za-z0-9_]+)')
+
+
+def generated_symbol(name):
+    match = GENERAL_QUARTIC.fullmatch(str(name))
+    if match:
+        return r'\lambda_{\mathrm{Q}' + match.group(2) + r'}^{(' + match.group(3) + r')}'
+    if name in ('y1Conj','y2Conj'):
+        return r'y_{' + name[1] + r'}^{\mathrm{conj}}'
+    if GENERAL_MASS.fullmatch(str(name)):
+        token = str(name)
+        # Keep braces balanced and preserve the m-versus-mu prefix.
+        if token.startswith('muT3'):
+            return r'\mu_{\mathrm{' + esc(token[2:]).replace(r'\_', r'\,') + '}}'
+        return r'm_{\mathrm{' + esc(token[1:]).replace(r'\_', r'\,') + '}}'
+    return None
+
+
+def format_general_latex(tex):
+    """Presentation-only token substitution; never substitute expression values."""
+    candidates = set(m.group(0) for m in GENERAL_QUARTIC.finditer(tex))
+    candidates.update(m.group(0) for m in GENERAL_MASS.finditer(tex))
+    candidates.update(x for x in ('y1Conj','y2Conj') if x in tex)
+    for token in sorted(candidates, key=len, reverse=True):
+        replacement = generated_symbol(token)
+        if not replacement:
+            continue
+        # Wolfram TeXForm often encloses unrecognised symbols in \text{...}.
+        for wrapper in ('text','mathrm','operatorname','texttt'):
+            tex = tex.replace('\\'+wrapper+'{'+token+'}', replacement)
+        tex = re.sub(r'(?<![A-Za-z_])'+re.escape(token)+r'(?![A-Za-z0-9_])',
+                     lambda _: replacement, tex)
+    return tex
+
+
+def registry_entries(model):
+    path = ROOT/'RGE/general/generated/general_rgbeta_quartic_registry.json'
+    data = read_json(path)
+    return data['models'][model]
+
+
+def field_content(counts):
+    parts = []
+    for tex, count in zip((r'H',r'H^\dagger',r'S_1',r'S_1^\dagger',r'S_2',r'S_2^\dagger'),counts):
+        if count:
+            parts.append(('('+tex+')' if int(count)>1 else tex) +
+                         (r'^{'+str(count)+'}' if int(count)>1 else ''))
+    return r'\,'.join(parts) if parts else r'1'
+
+
+def notation_index(model, lag, beta_names):
+    """Index every generated quartic and any additional named beta coupling."""
+    from Reports.ReportGeneration import latex_escape_text, paper_notation_key_lines, paper_symbol_latex
+    registry = registry_entries(model)
+    lines = paper_notation_key_lines(heading='Coupling and interaction notation')
+    lines += [r'\section*{General-interaction coupling index}',
+              r'\small',r'\begin{longtable}{@{}p{0.24\linewidth}p{0.32\linewidth}p{0.36\linewidth}@{}}',
+              r'\toprule',r'Coupling & Field content / definition & Contraction / source \\',r'\midrule']
+    found = set()
+    for category in ('new_rgbeta_symbols','preexisting_rgbeta_symbols'):
+        for item in registry.get(category,[]):
+            if isinstance(item,dict):
+                name=item.get('name','')
+                if not name or name in found: continue
+                found.add(name)
+                counts=item.get('counts',[])
+                fields = (r'$'+field_content(counts)+r'$' if len(counts)==6
+                          else latex_escape_text(str(item.get('fields',''))))
+                inv = str(item.get('invariant',''))
+                desc = (r'\texttt{'+latex_escape_text(inv[:125])+r'}' if inv else r'Independent invariant')
+                # Avoid long unbreakable Mathematica invariant cells in the PDF.
+                if len(inv)>60: desc = r'Contraction $I='+str(re.search(r'I([0-9]+)$',name).group(1) if re.search(r'I([0-9]+)$',name) else 1)+r'$; exact tensor in registry'
+                lines.append(r'$'+(generated_symbol(name) or paper_symbol_latex(name))+r'$ & '+fields+' & '+desc+r' \\')
+    special = sorted(set(beta_names) | set(lag.get('interactions',[])))
+    for name in special:
+        if not isinstance(name,str) or name in found: continue
+        sym = generated_symbol(name)
+        if sym is None: continue
+        found.add(name)
+        desc = ('Additional conjugate-scalar Yukawa' if name in ('y1Conj','y2Conj')
+                else 'General scalar bilinear / mass parameter' if GENERAL_MASS.fullmatch(name)
+                else 'General quartic: see model interaction inventory')
+        lines.append(r'$'+sym+r'$ & '+latex_escape_text(desc)+r' & \texttt{'+latex_escape_text(name)+r'} \\')
+    lines += [r'\bottomrule',r'\end{longtable}',r'\normalsize',
+              r'The six field counts in $\mathrm{Q}abcdef$ refer respectively to '
+              r'$H,H^\dagger,S_1,S_1^\dagger,S_2,S_2^\dagger$; '
+              r'the superscript labels the independent invariant. '
+              r'This is a notation convention, not a physical normalisation mapping.',r'\clearpage']
+    return lines
+
+
 def beta_latex(name, expression):
     # RGBeta's own TeXForm export is preferred; its expressions already use
     # the same formatter as the original restricted RGE report writer.
     from Reports.RGEComparison import normalise_rgbeta_latex
     from Reports.ReportGeneration import split_latex_terms
-    expr = normalise_rgbeta_latex(expression)
+    expr = format_general_latex(normalise_rgbeta_latex(expression))
     terms = split_latex_terms(expr) or [expr]
     # Each independent sum term gets its own line; no single huge TeX box.
-    lhs = r'16\pi^2\,\frac{d '+paper_symbol(name)+r'}{d\ln\mu}'
+    lhs = r'16\pi^2\,\frac{d '+(generated_symbol(name) or paper_symbol(name))+r'}{d\ln\mu}'
     block = [r'\begin{align*}',lhs+r' &='+terms[0].strip()+r' \\']
     for term in terms[1:]:
         t=term.strip()
@@ -282,6 +376,12 @@ def factor_tex(stage, model_stages, group_rows):
     lines = preamble('T3 general group factors: '+stage,
                      'Original RGE-structure / prefactor comparison layout')
     lines += paper_notation_key_lines()
+    lines += [r'\section*{General coupling index}',r'\begin{longtable}{@{}ll@{}}',r'\toprule',r'Symbol & Stored RGBeta coupling name \\',r'\midrule']
+    all_names=sorted(set(n for stage_data in model_stages.values() for n in stage_data[stage]))
+    for name in all_names:
+        g=generated_symbol(name)
+        if g: lines.append(r'$'+g+r'$ & \texttt{'+esc(name)+r'} \\')
+    lines += [r'\bottomrule',r'\end{longtable}',r'\clearpage']
     lines += [r'\section*{Field representations}',
               r'\begin{longtable}{@{}lccc@{}}',r'\toprule',
               r'Model & $S_1:(d,Y)$ & $S_2:(d,Y)$ & $F:(d,Y)$ \\',r'\midrule']
@@ -296,7 +396,7 @@ def factor_tex(stage, model_stages, group_rows):
         per_run = defaultdict(dict)
         for structure,item in structures.items():
             # Match original structure/prefactor table contract.
-            tex = item['tex']
+            tex = format_general_latex(item['tex'])
             for rec in records:
                 model = rec.name+'_'+('+' if rec.alpha>=0 else '')+str(rec.alpha)
                 value=item['values'].get(model)
@@ -307,7 +407,7 @@ def factor_tex(stage, model_stages, group_rows):
                     per_run[_run_key(rec)][tex] = sp.Symbol('unparsed')
         if per_run:
             lines += _saved_rge_term_table(
-                r'\beta_{'+paper_symbol_latex(name)+r'}^{(1)}',records,per_run)
+                r'\beta_{'+(generated_symbol(name) or paper_symbol_latex(name))+r'}^{(1)}',records,per_run)
     return lines
 
 
@@ -319,7 +419,7 @@ def lagrangian_latex(terms):
         # The term may be large. adjustbox prevents hard page-overflow while
         # independent terms retain real TeX maths rather than code listings.
         out += [r'\noindent\begin{adjustbox}{max width=\linewidth}',
-                r'$\displaystyle '+(r'\mathcal{L}_{\rm BSM} = ' if idx==0 else ('+' if not term.lstrip().startswith('-') else ''))+term+r'$',
+                r'$\displaystyle '+(r'\mathcal{L}_{\rm BSM} = ' if idx==0 else ('+' if not term.lstrip().startswith('-') else ''))+format_general_latex(term)+r'$',
                 r'\end{adjustbox}\par\smallskip']
     return out
 
@@ -358,7 +458,7 @@ def render(*,study='full16_general_symbolic',run_id='full16_general_v1',
         require(all('\\mathcal{L}_{\\rm BSM}' not in t for t in terms),'Unexpected nested LaTeX')
         bsm=lagrangian_latex(terms)
         from Reports.ReportGeneration import paper_notation_key_lines
-        bsm = paper_notation_key_lines() + bsm
+        bsm = notation_index(model, lag, list(read_json(saved/'uv_rgbeta.json').get('report_betas',{}))) + bsm
         bsm += [r'\section*{Interaction inventory}',r'\begin{itemize}']
         bsm += [r'\item \texttt{'+esc(x)+'}' for x in lag['interactions']]
         bsm += [r'\end{itemize}']
@@ -372,12 +472,14 @@ def render(*,study='full16_general_symbolic',run_id='full16_general_v1',
             contents=preamble(f'T3 {model}: '+('full general UV Lagrangian and RGEs' if stage=='UV' else 'general EFT1 RGEs'),
                               'Matchete/RGBeta symbolic output in mathematical notation')
             contents += [model_heading]+intro
+            if stage != 'UV':
+                contents += notation_index(model, lag, list(betas))
             if stage=='UV':
                 contents += bsm
             contents += [r'\clearpage',r'\section*{One-loop renormalisable beta functions}',
                          r'$16\pi^2\,dX/d\ln\mu=\beta_X$']
             for name in betas:
-                contents += [r'\subsection*{$'+paper_symbol(name)+r'$}']
+                contents += [r'\subsection*{$'+(generated_symbol(name) or paper_symbol(name))+r'$}']
                 contents += beta_latex(name,str(latex[name]))
             dest=out/stagefolder/mt
             pdf=compile_report(dest,stem,contents,pdflatex)

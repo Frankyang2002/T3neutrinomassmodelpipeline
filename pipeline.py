@@ -229,7 +229,17 @@ def _run_general_symbolic(args: argparse.Namespace) -> int:
     if args.debug_reports:
         print("Note: --debug-reports is a legacy report option; "
               "general symbolic reports are written automatically.")
-    return run_general(argv)
+    result = run_general(argv)
+    if result != 0:
+        return result
+    from Reports.GeneralSymbolicAdapter import render
+    try:
+        pdfs = render(study=args.study or "full16_general_symbolic")
+    except (OSError, ValueError, RuntimeError, KeyError) as exc:
+        print(f"General symbolic PDF generation failed: {exc}")
+        return 1
+    print(f"General symbolic PDF reports: {len(pdfs)}")
+    return 0
 
 
 def main() -> int:

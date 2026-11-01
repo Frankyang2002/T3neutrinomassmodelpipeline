@@ -51,8 +51,14 @@ def run_model(model: str, root: Path, executable: str, *, reuse: bool) -> dict:
 
     if result is None:
         family, alpha = model.split("_")
+        # wolframscript can consume a leading minus as an option; RunModel.wl
+        # explicitly accepts m2/p2 notation for signed model parameters.
+        alpha_cli = ("m" + alpha[1:]) if alpha.startswith("-") else ("p" + alpha[1:]) if alpha.startswith("+") else alpha
+        candidate = output / "c5_coefficient.txt"
+        if candidate.exists():
+            candidate.unlink()  # Never report a stale coefficient as new matching.
         command = [executable, "-file", str(RUNNER), str(output),
-                   "5", "1", family, alpha]
+                   "5", "1", family, alpha_cli]
         env = os.environ.copy()
         env["T3_EXPERIMENTAL_GENERAL_FERMIONS"] = "1"
         env["T3_EXPERIMENTAL_GENERAL_QUADRATICS"] = "1"
@@ -62,13 +68,17 @@ def run_model(model: str, root: Path, executable: str, *, reuse: bool) -> dict:
                                      capture_output=True, text=True, check=False)
             log.write_text(process.stdout + "\n" + process.stderr,
                            encoding="utf-8", errors="replace")
-            candidate = output / "c5_coefficient.txt"
+            expected_alpha = int(alpha)
+            expected_model_line = f"Model: T3-{family}, alpha = {expected_alpha}"
+            model_correct = expected_model_line in process.stdout
             result = {
                 "model": model,
                 "status": "Matched" if process.returncode == 0
-                          and candidate.is_file() and candidate.stat().st_size > 0
+                          and model_correct and candidate.is_file() and candidate.stat().st_size > 0
                           else "Failed",
                 "exit_code": process.returncode,
+                "model_selection_verified": model_correct,
+                "wolfram_alpha_argument": alpha_cli,
                 "c5_coefficient_file": str(candidate) if candidate.is_file() else None,
                 "log": str(log),
             }

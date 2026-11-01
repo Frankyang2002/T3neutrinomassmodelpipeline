@@ -109,20 +109,85 @@ def field_content(counts):
                       for f, n in zip(fields, counts) if n) or '1'
 
 
-def notation_rows(models):
+# Names already defined by the original common notation key.
+ORIGINAL_DEFINITIONS = frozenset({
+    'gY','g2','g3','yu','yd','ye','y1','y2','MF',
+    'mS1Sq','mS2Sq','lambdaH','lambdaS1','lambdaS2',
+    'lambdaH1','lambdaH2','lambdaH1Adj','lambdaH2Adj',
+    'lambdaT3','lambda12','lambda12Adj','lambda12Cross',
+    'lambdaS1Adj','lambdaS2Adj',
+})
+
+# Exact field content is taken from the internal symbol names. These entries
+# are schematic until an explicit invariant contraction is available.
+NAMED_QUARTICS = {
+    'lambdaHHdagS1barS1bar': (r'(H^\dagger)^2(S_1^\dagger)^2', r'\lambda_7'),
+    'lambdaHHdagS2S2': (r'(H^\dagger)^2S_2^2', r'\lambda_8'),
+    'lambdaS1bar2S2bar2': (r'(S_1^\dagger)^2(S_2^\dagger)^2', r'\lambda_9'),
+    'lambdaS1barS2S2bar2': (r'S_1^\dagger S_2(S_2^\dagger)^2', r'\lambda_{10}'),
+    'lambdaS1S1bar2S2bar': (r'S_1(S_1^\dagger)^2S_2^\dagger', r'\lambda_{11}'),
+    'lambdaHHdagS1barS2barCross': (r'HH^\dagger S_1^\dagger S_2^\dagger', r'\lambda_{12}'),
+}
+
+def _notation_symbol(name):
+    from Reports.ReportGeneration import PAPER_SYMBOL_LATEX
+    return generated_symbol(name) or PAPER_SYMBOL_LATEX.get(name) or r'\mathrm{' + latex_escape_text(name) + '}'
+
+
+def notation_rows(models, encountered=()):
+    """Complete additional-coupling index for the actual selected study.
+
+    Registry entries supply field content and contraction. Every remaining
+    encountered beta key or Lagrangian coupling is included, but unknown
+    operator definitions are *not* invented.
+    """
     registry = _registry()['models']
-    seen = set(); rows = []
+    found = set(str(x) for x in encountered if x)
+    entries = {}
     for model in models:
         for category in ('new_rgbeta_symbols', 'preexisting_rgbeta_symbols'):
             for entry in registry[model].get(category, []):
-                if not isinstance(entry, dict):continue
-                name = entry.get('name', '')
-                if name in seen or not name:continue
-                seen.add(name)
-                symbol = generated_symbol(name)
-                content = field_content(entry.get('counts', []))
-                detail = r'\texttt{' + latex_escape_text(name) + '}'
-                rows.append((symbol, content, detail))
-    for name in ('y1Conj', 'y2Conj'):
-        rows.append((generated_symbol(name), r'L\,F\,S_i^\dagger', r'\texttt{' + name + '}'))
+                if not isinstance(entry, dict):
+                    continue
+                name = str(entry.get('name',''))
+                if not name: continue
+                entries.setdefault(name, entry)
+                # Include native Matchete aliases separately when they arise
+                # in the saved Lagrangian expression.
+                alias = str(entry.get('matchete_basis_name',''))
+                if alias and 'I#' in alias:
+                    for i in range(1, int(entry.get('matchete_count',1) or 1)+1):
+                        entries.setdefault(alias.replace('I#', 'I'+str(i)), entry)
+        # No guessed couplings for models absent from this report.
+    found.update(entries)
+    rows=[]
+    for name in sorted(found):
+        if name in ORIGINAL_DEFINITIONS:
+            continue
+        symbol = _notation_symbol(name)
+        if name in entries:
+            entry=entries[name]
+            content=field_content(entry.get('counts', []))
+            contraction=str(entry.get('invariant','')).strip()
+            detail=r'\texttt{' + latex_escape_text(name) + '}'
+            if contraction:
+                detail += r'; contraction: \texttt{' + latex_escape_text(contraction) + '}'
+        elif name in NAMED_QUARTICS:
+            content, symbol = NAMED_QUARTICS[name]
+            detail=r'\texttt{' + latex_escape_text(name) + r'}; invariant contraction model-dependent'
+        elif name == 'y1Conj':
+            content=r'L\,F\,S_1^\dagger'
+            detail=r'\texttt{y1Conj}; conjugate-scalar Yukawa'
+        elif name == 'y2Conj':
+            content=r'L\,F\,S_2^\dagger'
+            detail=r'\texttt{y2Conj}; conjugate-scalar Yukawa'
+        elif MASS.fullmatch(name):
+            content=r'\mathrm{scalar\ bilinear}'
+            detail=r'\texttt{' + latex_escape_text(name) + r'}; see native Lagrangian for contraction'
+        elif re.fullmatch(r'[A-Za-z][A-Za-z0-9_]*',name):
+            content=r'\text{definition unavailable in registry}'
+            detail=r'\texttt{' + latex_escape_text(name) + r'}; symbolic running parameter'
+        else:
+            continue
+        rows.append((symbol,content,detail))
     return rows

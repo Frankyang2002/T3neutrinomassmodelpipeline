@@ -14,7 +14,7 @@ including the gauge-coupling conversion already performed by
 
 A later RGBeta evaluator only needs to return a dictionary whose keys are the
 state-layout coupling names and whose values have the corresponding scalar or
-matrix shapes.  This module then performs all real/complex packing and divides
+matrix shapes. This module then performs all real/complex packing and divides
 by 16*pi^2 exactly once.
 """
 
@@ -29,9 +29,15 @@ from Numerical.core.StateVector import StateVectorLayout, VectorBlock
 
 LOOP_FACTOR = 16.0 * np.pi**2
 
+# Numerical cancellation in complex-valued intermediate expressions can leave
+# a tiny imaginary residue in a beta for a mathematically real parameter.
+# Accept only residues negligible relative to the beta's real magnitude.
+REAL_BETA_IMAG_ATOL = 1.0e-11
+REAL_BETA_IMAG_RTOL = 1.0e-12
+
 
 def _finite_real_scalar(name: str, value: Any) -> float:
-    """Return one finite real beta value."""
+    """Return one finite real beta value, rejecting genuine complex betas."""
     if np.ndim(value) != 0:
         raise ValueError(f"Beta {name} must be a scalar.")
 
@@ -40,10 +46,12 @@ def _finite_real_scalar(name: str, value: Any) -> float:
     if not (np.isfinite(result.real) and np.isfinite(result.imag)):
         raise ValueError(f"Beta {name} must be finite.")
 
-    if not np.isclose(result.imag, 0.0, rtol=0.0, atol=1.0e-13):
+    tolerance = REAL_BETA_IMAG_ATOL + REAL_BETA_IMAG_RTOL * abs(result.real)
+    if abs(result.imag) > tolerance:
         raise ValueError(
             f"Beta {name} must be real for a real state variable; "
-            f"got imaginary part {result.imag}."
+            f"got imaginary part {result.imag} "
+            f"(allowed roundoff {tolerance})."
         )
 
     return float(result.real)
@@ -78,7 +86,7 @@ def _finite_complex_matrix(
     if not np.all(np.isfinite(matrix.real)) or not np.all(
         np.isfinite(matrix.imag)
     ):
-        raise ValueError(f"Beta {name} must contain only finite entries.")
+        raise ValueError("Beta {name} must contain only finite entries.".format(name=name))
 
     return matrix
 
@@ -125,9 +133,9 @@ def validate_beta_keys(
 ) -> None:
     """Require complete beta coverage of the numerical state layout.
 
-    The current UV ODE state is defined by ``StateVectorLayout``.  Every block
+    The current UV ODE state is defined by ``StateVectorLayout``. Every block
     must therefore have exactly one evaluated beta before an ODE derivative can
-    be built.  Extra keys are rejected by default so a mismatch between RGBeta
+    be built. Extra keys are rejected by default so a mismatch between RGBeta
     export and numerical state cannot be silently ignored.
     """
 
@@ -174,7 +182,7 @@ def beta_values_to_derivative(
 
     divide_by_loop_factor:
         If True (default), divide the packed one-loop beta vector by
-        ``16*pi^2``.  Set False only for an evaluator that already returns the
+        ``16*pi^2``. Set False only for an evaluator that already returns the
         physical derivative ``dX/dln(mu)``.
 
     allow_extra:

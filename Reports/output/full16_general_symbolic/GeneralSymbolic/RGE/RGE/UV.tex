@@ -54,23 +54,53 @@ $R_W$ & $16\pi^2\beta_{C_5}\supset R_W\lambda_5C_{LLS_1S_2}$ \\
 \toprule
 Symbol & Field content & Stored coupling / contraction \\
 \midrule
-$\lambda_{X_{5}}^{(1)}$ & $(S_1^\dagger)^{2}\,S_2\,S_2^\dagger$ & \texttt{lambdaT3GeneralQ000211I1} \\
-$\lambda_{X_{6}}$ & $(S_1^\dagger)^{4}$ & \texttt{lambdaT3GeneralQ000400I1} \\
-$\lambda_{X_{9}}$ & $S_1\,(S_1^\dagger)^{3}$ & \texttt{lambdaT3GeneralQ001300I1} \\
-$\lambda_{X_{14}}$ & $(H^\dagger)^{2}\,S_1\,S_2$ & \texttt{lambdaT3GeneralQ021010I1} \\
-$\lambda_{X_{18}}$ & $H\,H^\dagger\,(S_1^\dagger)^{2}$ & \texttt{lambdaT3GeneralQ110200I1} \\
-$\lambda_{X_{1}}$ & $(S_2^\dagger)^{4}$ & \texttt{lambdaT3GeneralQ000004I1} \\
-$\lambda_{X_{2}}$ & $S_2\,(S_2^\dagger)^{3}$ & \texttt{lambdaT3GeneralQ000013I1} \\
-$\lambda_{X_{7}}^{(1)}$ & $S_1\,S_1^\dagger\,(S_2^\dagger)^{2}$ & \texttt{lambdaT3GeneralQ001102I1} \\
-$\lambda_{X_{12}}$ & $(H^\dagger)^{2}\,S_1^\dagger\,S_2^\dagger$ & \texttt{lambdaT3GeneralQ020101I1} \\
-$\lambda_{X_{16}}$ & $H\,H^\dagger\,(S_2^\dagger)^{2}$ & \texttt{lambdaT3GeneralQ110002I1} \\
-$\lambda_{X_{15}}$ & $(H^\dagger)^{2}\,(S_1)^{2}$ & \texttt{lambdaT3GeneralQ022000I1} \\
-$\lambda_{X_{17}}^{(1)}$ & $H\,H^\dagger\,S_1^\dagger\,S_2^\dagger$ & \texttt{lambdaT3GeneralQ110101I1} \\
-$\lambda_{X_{10}}$ & $(H^\dagger)^{2}\,(S_2^\dagger)^{2}$ & \texttt{lambdaT3GeneralQ020002I1} \\
-$\lambda_{X_{5}}^{(2)}$ & $(S_1^\dagger)^{2}\,S_2\,S_2^\dagger$ & \texttt{lambdaT3GeneralQ000211I2} \\
-$\lambda_{X_{7}}^{(2)}$ & $S_1\,S_1^\dagger\,(S_2^\dagger)^{2}$ & \texttt{lambdaT3GeneralQ001102I2} \\
-$y_{1}^{\mathrm{conj}}$ & $L\,F\,S_i^\dagger$ & \texttt{y1Conj} \\
-$y_{2}^{\mathrm{conj}}$ & $L\,F\,S_i^\dagger$ & \texttt{y2Conj} \\
+$\lambda_7$ & $(H^\dagger)^2(S_1^\dagger)^2$ & \texttt{lambdaHHdagS1barS1bar}; invariant contraction model-dependent \\
+$\lambda_{12}$ & $HH^\dagger S_1^\dagger S_2^\dagger$ & \texttt{lambdaHHdagS1barS2barCross}; invariant contraction model-dependent \\
+$\lambda_8$ & $(H^\dagger)^2S_2^2$ & \texttt{lambdaHHdagS2S2}; invariant contraction model-dependent \\
+$\lambda_{11}$ & $S_1(S_1^\dagger)^2S_2^\dagger$ & \texttt{lambdaS1S1bar2S2bar}; invariant contraction model-dependent \\
+$\lambda_9$ & $(S_1^\dagger)^2(S_2^\dagger)^2$ & \texttt{lambdaS1bar2S2bar2}; invariant contraction model-dependent \\
+$\lambda_{10}$ & $S_1^\dagger S_2(S_2^\dagger)^2$ & \texttt{lambdaS1barS2S2bar2}; invariant contraction model-dependent \\
+$\lambda_{X_{1}}$ & $(S_2^\dagger)^{4}$ & \texttt{lambdaT3ExtraQ000004I1}; contraction: \texttt{((1/3) * (del[SU2L @ S2, \#1, \#2] * del[SU2L @ S2, \#3, \#4]) + (1/3) * (del[SU2L @ S2, \#1, \#3] * del[SU2L @ S2, \#2, \#4]) + (1/3) * (del[SU2L @ S2, \#1, \#4] * del[SU2L @ S2, \#2, \#3]))} \\
+$\lambda_{X_{2}}$ & $S_2\,(S_2^\dagger)^{3}$ & \texttt{lambdaT3ExtraQ000013I1}; contraction: \texttt{((1/3) * (del[SU2L @ S2, \#1, \#2] * del[SU2L @ S2, \#3, \#4]) + (1/3) * (del[SU2L @ S2, \#1, \#3] * del[SU2L @ S2, \#2, \#4]) + (1/3) * (del[SU2L @ S2, \#1, \#4] * del[SU2L @ S2, \#2, \#3]))} \\
+$\lambda_{X_{3}}$ & $\text{definition unavailable in registry}$ & \texttt{lambdaT3ExtraQ000112I1}; symbolic running parameter \\
+$\lambda_{X_{4}}$ & $\text{definition unavailable in registry}$ & \texttt{lambdaT3ExtraQ000202I1}; symbolic running parameter \\
+$\lambda_{X_{5}}^{(1)}$ & $(S_1^\dagger)^{2}\,S_2\,S_2^\dagger$ & \texttt{lambdaT3ExtraQ000211I1}; contraction: \texttt{del[SU2L @ S2, \#3, \#4]} \\
+$\lambda_{X_{5}}^{(2)}$ & $(S_1^\dagger)^{2}\,S_2\,S_2^\dagger$ & \texttt{lambdaT3ExtraQ000211I2}; contraction: \texttt{(del[SU2L @ S2, \#1, \#2] * del[SU2L @ S2, \#3, \#4])} \\
+$\lambda_{X_{6}}$ & $(S_1^\dagger)^{4}$ & \texttt{lambdaT3ExtraQ000400I1}; contraction: \texttt{1} \\
+$\lambda_{X_{7}}^{(1)}$ & $S_1\,S_1^\dagger\,(S_2^\dagger)^{2}$ & \texttt{lambdaT3ExtraQ001102I1}; contraction: \texttt{del[SU2L @ S2, \#3, \#4]} \\
+$\lambda_{X_{7}}^{(2)}$ & $S_1\,S_1^\dagger\,(S_2^\dagger)^{2}$ & \texttt{lambdaT3ExtraQ001102I2}; contraction: \texttt{(del[SU2L @ S2, \#1, \#2] * del[SU2L @ S2, \#3, \#4])} \\
+$\lambda_{X_{8}}$ & $\text{definition unavailable in registry}$ & \texttt{lambdaT3ExtraQ001201I1}; symbolic running parameter \\
+$\lambda_{X_{9}}$ & $S_1\,(S_1^\dagger)^{3}$ & \texttt{lambdaT3ExtraQ001300I1}; contraction: \texttt{1} \\
+$\lambda_{X_{10}}$ & $(H^\dagger)^{2}\,(S_2^\dagger)^{2}$ & \texttt{lambdaT3ExtraQ020002I1}; contraction: \texttt{((1/2) * (eps[SU2L @ fund, \#1, \#3] * eps[SU2L @ fund, \#2, \#4]) + (1/2) * (eps[SU2L @ fund, \#1, \#4] * eps[SU2L @ fund, \#2, \#3]))} \\
+$\lambda_{X_{11}}$ & $\text{definition unavailable in registry}$ & \texttt{lambdaT3ExtraQ020020I1}; symbolic running parameter \\
+$\lambda_{X_{12}}$ & $(H^\dagger)^{2}\,S_1^\dagger\,S_2^\dagger$ & \texttt{lambdaT3ExtraQ020101I1}; contraction: \texttt{delS2[SU2L, \#4, \#1, \#2]} \\
+$\lambda_{X_{13}}$ & $\text{definition unavailable in registry}$ & \texttt{lambdaT3ExtraQ020200I1}; symbolic running parameter \\
+$\lambda_{X_{14}}$ & $(H^\dagger)^{2}\,S_1\,S_2$ & \texttt{lambdaT3ExtraQ021010I1}; contraction: \texttt{delS2[SU2L, \#4, \#1, \#2]} \\
+$\lambda_{X_{15}}$ & $(H^\dagger)^{2}\,(S_1)^{2}$ & \texttt{lambdaT3ExtraQ022000I1}; contraction: \texttt{((1/2) * (del[SU2L @ fund, \#1, \#3] * del[SU2L @ fund, \#2, \#4]) + (1/2) * (del[SU2L @ fund, \#1, \#4] * del[SU2L @ fund, \#2, \#3]))} \\
+$\lambda_{X_{16}}$ & $H\,H^\dagger\,(S_2^\dagger)^{2}$ & \texttt{lambdaT3ExtraQ110002I1}; contraction: \texttt{(del[SU2L @ fund, \#2, \#1] * del[SU2L @ S2, \#3, \#4])} \\
+$\lambda_{X_{17}}^{(1)}$ & $H\,H^\dagger\,S_1^\dagger\,S_2^\dagger$ & \texttt{lambdaT3ExtraQ110101I1}; contraction: \texttt{(del[SU2L @ fund, \#4, \#1] * eps[SU2L @ fund, \#2, \#3])} \\
+$\lambda_{X_{17}}^{(2)}$ & $H\,H^\dagger\,S_1^\dagger\,S_2^\dagger$ & \texttt{lambdaT3ExtraQ110101I2}; contraction: \texttt{(del[SU2L @ fund, \#4, \#1] * eps[SU2L @ fund, \#2, \#3])} \\
+$\lambda_{X_{18}}$ & $H\,H^\dagger\,(S_1^\dagger)^{2}$ & \texttt{lambdaT3ExtraQ110200I1}; contraction: \texttt{del[SU2L @ fund, \#2, \#1]} \\
+$\lambda_{X_{1}}$ & $(S_2^\dagger)^{4}$ & \texttt{lambdaT3GeneralQ000004I1}; contraction: \texttt{((1/3) * (del[SU2L @ S2, \#1, \#2] * del[SU2L @ S2, \#3, \#4]) + (1/3) * (del[SU2L @ S2, \#1, \#3] * del[SU2L @ S2, \#2, \#4]) + (1/3) * (del[SU2L @ S2, \#1, \#4] * del[SU2L @ S2, \#2, \#3]))} \\
+$\lambda_{X_{2}}$ & $S_2\,(S_2^\dagger)^{3}$ & \texttt{lambdaT3GeneralQ000013I1}; contraction: \texttt{((1/3) * (del[SU2L @ S2, \#1, \#2] * del[SU2L @ S2, \#3, \#4]) + (1/3) * (del[SU2L @ S2, \#1, \#3] * del[SU2L @ S2, \#2, \#4]) + (1/3) * (del[SU2L @ S2, \#1, \#4] * del[SU2L @ S2, \#2, \#3]))} \\
+$\lambda_{X_{5}}^{(1)}$ & $(S_1^\dagger)^{2}\,S_2\,S_2^\dagger$ & \texttt{lambdaT3GeneralQ000211I1}; contraction: \texttt{del[SU2L @ S2, \#3, \#4]} \\
+$\lambda_{X_{5}}^{(2)}$ & $(S_1^\dagger)^{2}\,S_2\,S_2^\dagger$ & \texttt{lambdaT3GeneralQ000211I2}; contraction: \texttt{((1/2) * (del[SU2L @ S2, \#1, \#3] * del[SU2L @ S2, \#2, \#4]) + (1/2) * (del[SU2L @ S2, \#1, \#4] * del[SU2L @ S2, \#2, \#3]))} \\
+$\lambda_{X_{6}}$ & $(S_1^\dagger)^{4}$ & \texttt{lambdaT3GeneralQ000400I1}; contraction: \texttt{1} \\
+$\lambda_{X_{7}}^{(1)}$ & $S_1\,S_1^\dagger\,(S_2^\dagger)^{2}$ & \texttt{lambdaT3GeneralQ001102I1}; contraction: \texttt{del[SU2L @ S2, \#3, \#4]} \\
+$\lambda_{X_{7}}^{(2)}$ & $S_1\,S_1^\dagger\,(S_2^\dagger)^{2}$ & \texttt{lambdaT3GeneralQ001102I2}; contraction: \texttt{((1/2) * (del[SU2L @ S2, \#1, \#3] * del[SU2L @ S2, \#2, \#4]) + (1/2) * (del[SU2L @ S2, \#1, \#4] * del[SU2L @ S2, \#2, \#3]))} \\
+$\lambda_{X_{9}}$ & $S_1\,(S_1^\dagger)^{3}$ & \texttt{lambdaT3GeneralQ001300I1}; contraction: \texttt{1} \\
+$\lambda_{X_{10}}$ & $(H^\dagger)^{2}\,(S_2^\dagger)^{2}$ & \texttt{lambdaT3GeneralQ020002I1}; contraction: \texttt{((1/2) * (eps[SU2L @ fund, \#1, \#3] * eps[SU2L @ fund, \#2, \#4]) + (1/2) * (eps[SU2L @ fund, \#1, \#4] * eps[SU2L @ fund, \#2, \#3]))} \\
+$\lambda_{X_{12}}$ & $(H^\dagger)^{2}\,S_1^\dagger\,S_2^\dagger$ & \texttt{lambdaT3GeneralQ020101I1}; contraction: \texttt{delS2[SU2L, \#4, \#1, \#2]} \\
+$\lambda_{X_{14}}$ & $(H^\dagger)^{2}\,S_1\,S_2$ & \texttt{lambdaT3GeneralQ021010I1}; contraction: \texttt{delS2[SU2L, \#4, \#1, \#2]} \\
+$\lambda_{X_{15}}$ & $(H^\dagger)^{2}\,(S_1)^{2}$ & \texttt{lambdaT3GeneralQ022000I1}; contraction: \texttt{((1/2) * (del[SU2L @ fund, \#1, \#3] * del[SU2L @ fund, \#2, \#4]) + (1/2) * (del[SU2L @ fund, \#1, \#4] * del[SU2L @ fund, \#2, \#3]))} \\
+$\lambda_{X_{16}}$ & $H\,H^\dagger\,(S_2^\dagger)^{2}$ & \texttt{lambdaT3GeneralQ110002I1}; contraction: \texttt{(del[SU2L @ fund, \#2, \#1] * del[SU2L @ S2, \#3, \#4])} \\
+$\lambda_{X_{17}}^{(1)}$ & $H\,H^\dagger\,S_1^\dagger\,S_2^\dagger$ & \texttt{lambdaT3GeneralQ110101I1}; contraction: \texttt{(del[SU2L @ fund, \#4, \#1] * eps[SU2L @ fund, \#2, \#3])} \\
+$\lambda_{X_{18}}$ & $H\,H^\dagger\,(S_1^\dagger)^{2}$ & \texttt{lambdaT3GeneralQ110200I1}; contraction: \texttt{del[SU2L @ fund, \#2, \#1]} \\
+$\mu_{\mathrm{T3GeneralS1S2}}$ & $\mathrm{scalar\ bilinear}$ & \texttt{muT3GeneralS1S2}; see native Lagrangian for contraction \\
+$\mu_{\mathrm{T3GeneralS1Sq}}$ & $\mathrm{scalar\ bilinear}$ & \texttt{muT3GeneralS1Sq}; see native Lagrangian for contraction \\
+$\mu_{\mathrm{T3GeneralS2Sq}}$ & $\mathrm{scalar\ bilinear}$ & \texttt{muT3GeneralS2Sq}; see native Lagrangian for contraction \\
+$y_{1}^{\mathrm{conj}}$ & $L\,F\,S_1^\dagger$ & \texttt{y1Conj}; conjugate-scalar Yukawa \\
+$y_{2}^{\mathrm{conj}}$ & $L\,F\,S_2^\dagger$ & \texttt{y2Conj}; conjugate-scalar Yukawa \\
 \bottomrule
 \end{longtable}
 Each running coupling has its own table. Rows are model configurations and columns are additive structures in the beta function. Every populated cell contains the complete model-specific term, including its numerical coefficient. A dash means that the term is absent for that configuration.

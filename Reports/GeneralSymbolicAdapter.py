@@ -44,9 +44,9 @@ def _model_tag(model):
     return model.replace('+', 'p').replace('-', 'm')
 
 
-def _shared_notation(models):
+def _shared_notation(models, encountered=()):
     result = original_notation(heading='Coupling and interaction notation')
-    rows = notation_rows(models)
+    rows = notation_rows(models, encountered)
     result += [r'\section*{Additional general-interaction couplings}',
         r'\begin{longtable}{@{}p{0.20\linewidth}p{0.34\linewidth}p{0.38\linewidth}@{}}',
         r'\toprule', r'Symbol & Field content & Stored coupling / contraction \\', r'\midrule']
@@ -84,6 +84,7 @@ def render(*, study='full16_general_symbolic', run_id='full16_general_v1', wolfr
     staging.mkdir(parents=True, exist_ok=True)
     records = []
     all_names = {'UV': set(), 'EFT1': set()}
+    lagrangian_names = set()
     for model in models:
         kind, alpha_string = model.split('_')
         d1, d2, df = REP[kind]
@@ -92,6 +93,16 @@ def render(*, study='full16_general_symbolic', run_id='full16_general_v1', wolfr
         if not lag.get('general_scalar_quadratics_requested') or not lag.get('extra_yukawas_requested'):
             raise RuntimeError(f'{model}: restricted Lagrangian encountered')
         lag_path = Path(lag['bsm_lagrangian_inputform_file'])
+        # Inventory source couplings from the actual model, not only the
+        # restricted paper-notation dictionary.
+        import re as _re
+        native_text = lag_path.read_text(encoding='utf-8')
+        lagrangian_names.update(_re.findall(r'lambdaT3(?:General|Extra)Q[0-9]{6}I[0-9]+', native_text))
+        lagrangian_names.update(_re.findall(r'(?:mu|m)T3[A-Za-z0-9_]+', native_text))
+        lagrangian_names.update(_re.findall(r'\b(?:y1Conj|y2Conj)\b', native_text))
+        for interaction in lag.get('interactions', []):
+            if isinstance(interaction, str):
+                lagrangian_names.update(_re.findall(r'(?:lambda|mu|m|y)[A-Za-z0-9_]+', interaction))
         terms = matchete_terms(lag_path, staging / f'{_model_tag(model)}_bsm_tex.json', wolframscript)
         # The original field-content sorter handles these terms, instead of a
         # model-specific independent Lagrangian layout.
@@ -143,7 +154,7 @@ def render(*, study='full16_general_symbolic', run_id='full16_general_v1', wolfr
             PAPER_SYMBOL_LATEX[name] = '{' + symbol + '}'
 
     def notation(*, heading='Notation key'):
-        return _shared_notation(models)
+        return _shared_notation(models, all_names['UV'] | all_names['EFT1'] | lagrangian_names)
 
     RG.paper_notation_key_lines = notation
     RC.paper_notation_key_lines = notation

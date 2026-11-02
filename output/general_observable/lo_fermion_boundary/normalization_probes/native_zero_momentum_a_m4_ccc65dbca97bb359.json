@@ -1,0 +1,45 @@
+{
+  "format": "t3-a-m4-native-zero-momentum-dirac-wick-v1",
+  "model": "A_-4",
+  "status": "SignedUVToNativeEFT1SpinorKernelVerified_CGAndMasterPhaseOpen",
+  "source": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_fermion_boundary\\normalization_probes\\native_feynman_a_m4_45f6bbfe96e54fc79eb25362cb3e9d92.json",
+  "native_report": {
+    "native_source_index": 2,
+    "uv_vertex_signs": {
+      "y1_bar": "+i",
+      "y2_bar": "-i"
+    },
+    "holomorphic_native_eft1_vertex_orderings": 2,
+    "native_eft1_spinor_rule_i_factor": "+i",
+    "checked_native_report_sha256": "ccc65dbca97bb359c819c779a462ef9312dcd199f572ae1c9c98bb95e9989bdd",
+    "native_su2_cg_product_checked": false
+  },
+  "exact_uv_exchange": {
+    "uv_ij_equals_native_contact_ij_exact": true,
+    "uv_ji_equals_native_contact_ji_exact": true,
+    "external_fermion_antisymmetrization_exact": true,
+    "two_vertex_time_orderings_included": true,
+    "exchange_kernel_uv_over_native_contact": "1",
+    "independent_gamma_cc_phase_sign_still_unresolved": true,
+    "spinor_basis": "C=diag(i sigma2,-i sigma2), epsilon12=+1, PL=diag(1,1,0,0)",
+    "connected_kernel_coefficients": {
+      "8,13": "Y1i*Y2j/M + Y1j*Y2i/M",
+      "9,12": "-Y1i*Y2j/M - Y1j*Y2i/M"
+    },
+    "heavy_dirac_propagator_at_p_zero": "-i/M times identity_4",
+    "minkowski_vertex_and_propagator_factor": "(i)^2 * (-i) = +i, before full external fermion and CG factors",
+    "amplitude_i_factor": "+i times connected local kernel"
+  },
+  "connected_heavy_fermion_exchange_evaluated_at_p_zero": true,
+  "native_su2_cg_tensor_identity_certified": false,
+  "master_weyl_spinor_phase_certified": false,
+  "full_physical_16_model_normalization_certified": false,
+  "source_resolved_16_model_release_changed": false,
+  "notes": [
+    "The signed Gaussian/Wick contraction uses exact native UV ordering and mass term; it is not a re-run of Matchete Match.",
+    "The native EFT1 Feynman-rule i and fermion leg orderings are independently checked from the stored native report.",
+    "The full SU(2) CG tensor product was not computed from native Yukawa CG matrices.",
+    "Changing C to -C flips UV and contact together: their agreement cannot fix the master Weyl phase.",
+    "Only A_-4 Dirac exchange is tested; Majorana B_-1/C_-1 need separate native checks."
+  ]
+}

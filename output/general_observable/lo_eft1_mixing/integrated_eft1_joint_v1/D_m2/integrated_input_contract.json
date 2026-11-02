@@ -1,0 +1,145 @@
+{
+  "format": "t3-eft1-seven-term-joint-two-scalar-contract-v1",
+  "model": "D_-2",
+  "status": "SourceValidated_ExternalNumericalInputsMissing",
+  "source_boundary_sha256": "cdcb662da4bce608180c7b927e2564069b15d04bdb43876d0ffba9140fbe1af7",
+  "mu_F_gev": 100000.0,
+  "required_master_couplings_format": "t3-eft1-explicit-master-couplings-diagnostic-v1",
+  "required_master_couplings": {
+    "format": "t3-eft1-source-backed-required-couplings-contract-v1",
+    "model": "D_-2",
+    "status": "SourceBoundaryVerified_CouplingsAndSpinorNormalizationMissing",
+    "source_boundary_sha256": "cdcb662da4bce608180c7b927e2564069b15d04bdb43876d0ffba9140fbe1af7",
+    "mu_F_gev": 100000.0,
+    "n_real_scalars": 12,
+    "n_fermions_minimum": 6,
+    "lepton_components_master_one_based": [
+      [
+        1,
+        2
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        5,
+        6
+      ]
+    ],
+    "higgs_real_components_one_based": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "source_scalar_blocks": [
+      {
+        "name": "H",
+        "role": "Higgs",
+        "indices": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "name": "NewScalar1",
+        "role": "heavy",
+        "indices": [
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ]
+      },
+      {
+        "name": "T3Scalar2Minus",
+        "role": "heavy",
+        "indices": [
+          11
+        ]
+      },
+      {
+        "name": "T3Scalar2Plus",
+        "role": "heavy",
+        "indices": [
+          12
+        ]
+      }
+    ],
+    "PL_matchete_source_indices": [
+      5,
+      6,
+      7,
+      8
+    ],
+    "known_zero_at_benchmark": [],
+    "nonzero_neutral_quartic_pivot_pairs": 4,
+    "required_external_input_format": "t3-eft1-explicit-master-couplings-diagnostic-v1",
+    "required_external_keys": [
+      "format",
+      "model",
+      "source_boundary_sha256",
+      "mu_F_gev",
+      "mu_S_gev",
+      "n_fermions",
+      "n_real_scalars",
+      "renormalization_scheme",
+      "master_conventions",
+      "coverage_assertion",
+      "yukawa_components",
+      "quartic_channels",
+      "gauge_sectors"
+    ],
+    "full_input_must_contain": [
+      "all EFT1 two-Weyl-one-real-scalar Yukawas",
+      "all relevant independent real-scalar quartic channels in V4=lambda phi4/4!",
+      "gauge couplings and complete SU2L/U1Y generators for every Weyl/scalar component",
+      "all other active fermions required for anomalous dimensions",
+      "matched mu_F and mu_S in same MSbar scheme"
+    ],
+    "physical_source_spinor_factor": null,
+    "physical_quartic_normalization_verified": false,
+    "full_dim5_operator_inventory_verified": false,
+    "hard_fermion_one_loop_matching_included": false,
+    "joint_scalar_matching_performed": false
+  },
+  "required_joint_scalar_background": {
+    "format": "t3-joint-scalar-conditional-background-v1",
+    "model": "D_-2",
+    "source_boundary_sha256": "cdcb662da4bce608180c7b927e2564069b15d04bdb43876d0ffba9140fbe1af7",
+    "numerical_array_shapes": {
+      "source_to_matching_real_U": [
+        8,
+        8
+      ],
+      "mass_squared_gev2_muS": [
+        8,
+        8
+      ],
+      "lambda_HHSS_muS": [
+        4,
+        4,
+        8,
+        8
+      ],
+      "lambda_HHSS_channels_muS": [
+        "k",
+        4,
+        4,
+        8,
+        8
+      ]
+    },
+    "required_channel_consistency": "quartic_channels labels and fully normalized HHSS components must match the master inputs after source/matching basis rotation",
+    "required_scalar_mass_origin": "unbroken_electroweak or explicitly declared EWSB_resummed",
+    "one_common_scalar_threshold": true
+  },
+  "physical_source_spinor_factor": null,
+  "complete_one_loop_UV_to_SMEFT_certified": false,
+  "note": "This contract is not a fabricated mass/quartic/gauge input. No numerical C5 yet."
+}

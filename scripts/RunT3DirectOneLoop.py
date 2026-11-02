@@ -1,7 +1,7 @@
-"""All-16 direct UV one-loop runner (strict physical-component input contract).
+"""All-16 direct UV one-loop runner (strict by default; provisional opt-in).
 
 No EFT imports. Does not reconstruct or guess Matchete component tensors.
-Only source-certified physical component inputs are evaluated.
+Uncertified inputs can only run with --allow-uncertified and are reported as such.
 """
 from __future__ import annotations
 import argparse
@@ -118,7 +118,11 @@ def main() -> int:
     a=ap.parse_args()
     p=run(a.project_root,a.physical_input,a.output,allow_uncertified=a.allow_uncertified,
           retain_individual_terms=not a.no_individual_terms,eft_reference=a.eft_reference_dir)
-    print(f"Source-certified direct UV results: {p['evaluated']}/16; status: {a.output/'all_16_status.json'}")
+    certified = sum(row["status"] == "uv_mass_evaluated_source_certified"
+                    for row in p["models"])
+    print(f"Direct UV numerical results: {p['evaluated']}/16; "
+          f"physically source-certified: {certified}/16; "
+          f"status: {a.output/'all_16_status.json'}")
     return 0 if p['evaluated']==16 else 2
 
 if __name__=='__main__':raise SystemExit(main())

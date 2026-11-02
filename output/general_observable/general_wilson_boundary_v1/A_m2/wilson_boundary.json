@@ -1,0 +1,303 @@
+{
+  "format": "t3-source-exact-F-tree-flavour-operator-handoff-v1",
+  "model": "A_-2",
+  "status": "SourceFactoredOrderedFlavourMatricesAtF_NotCanonicalWilsonTensor",
+  "source": {
+    "first_threshold_certificate": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\fermion_first_self_fix_v2\\A_m2\\status.json",
+    "first_threshold_sha256": "b9eebff9dc55aa5b82ba621c3692be1d142bfcc77fd8648a1c8a8cf6a28162f0",
+    "matchete_operator_source": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\fermion_first_self_fix_v2\\A_m2\\data\\eft1_after_F_wilson_seed.json",
+    "matchete_operator_sha256": "bf2fd12acc9d06902b828191f159d629175d90bdb43d4946ff4a99699f2a63f7",
+    "running_json": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\vectorlike_fix_v2\\A_m2\\running.json",
+    "running_sha256": "79e62d1a8e106ea3fecd442695a3cb40c3c43954c61c40c75def68612a8ec841"
+  },
+  "mu_F_gev": 100000.0,
+  "heavy_masses_at_F_gev": [
+    159478.07800098634,
+    191373.69360118365,
+    212637.43733465165
+  ],
+  "heavy_flavour_mass_basis_diagnostics": {
+    "heavy_basis_residual": 0.0,
+    "extra_yukawa_rotation": "same-heavy-leg-as-parent-assumption",
+    "vectorlike_right_rotation_identity_fast_path": true
+  },
+  "ordered_flavour_factor_count": 4,
+  "operator_terms": [
+    {
+      "source_term_inputform": "(Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Field[NewScalar1, Scalar, {}, {}]]*CG[T3MixCG, {Bar[Index[d$$1, SU2L[fund]]], Bar[Index[d$$2, SU2L[fund]]], Index[d$$1, T3BSMd3]}]*Field[T3Scalar2Minus, Scalar, {Index[d$$1, T3BSMd3]}, {}]*NCM[Transp[Field[l, Fermion, {Index[d$$2, SU2L[fund]], Index[d$$2, Flavor]}, {}]], DiracProduct[GammaCC, Proj[-1]], Field[l, Fermion, {Index[d$$1, SU2L[fund]], Index[d$$1, Flavor]}, {}]])/(Sqrt[2]*Coupling[MF, {Index[d$$1, NFlavor]}, 0])",
+      "operator_template_unit_flavor_inputform": "(1*1*Bar[Field[NewScalar1, Scalar, {}, {}]]*CG[T3MixCG, {Bar[Index[d$$1, SU2L[fund]]], Bar[Index[d$$2, SU2L[fund]]], Index[d$$1, T3BSMd3]}]*Field[T3Scalar2Minus, Scalar, {Index[d$$1, T3BSMd3]}, {}]*NCM[Transp[Field[l, Fermion, {Index[d$$2, SU2L[fund]], Index[d$$2, Flavor]}, {}]], DiracProduct[GammaCC, Proj[-1]], Field[l, Fermion, {Index[d$$1, SU2L[fund]], Index[d$$1, Flavor]}, {}]])/(Sqrt[2]*1)",
+      "factors": [
+        {
+          "name": "y1",
+          "conjugated": true,
+          "external_index": "d$$1",
+          "heavy_index": "d$$1"
+        },
+        {
+          "name": "y2",
+          "conjugated": true,
+          "external_index": "d$$2",
+          "heavy_index": "d$$1"
+        }
+      ],
+      "heavy_mass_power": -1,
+      "symmetric_flavour_combination_assumed": false,
+      "source_index": 5,
+      "cg_names": [
+        "T3MixCG"
+      ],
+      "flavour_matrix_axes_external_indices": [
+        "d$$1",
+        "d$$2"
+      ],
+      "ordered_flavour_matrix_gev_inv": {
+        "real": [
+          [
+            1.1340662011045354e-12,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            9.450551574898428e-13,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            8.505471264629968e-13
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "frobenius_norm": 1.7037211665998298e-12
+      }
+    },
+    {
+      "source_term_inputform": "(Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2Conj, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Field[NewScalar1, Scalar, {}, {}]]*CG[T3MixCG, {Bar[Index[d$$1, SU2L[fund]]], Bar[Index[d$$2, SU2L[fund]]], Index[d$$1, T3BSMd3]}]*Field[T3Scalar2Minus, Scalar, {Index[d$$1, T3BSMd3]}, {}]*NCM[Transp[Field[l, Fermion, {Index[d$$2, SU2L[fund]], Index[d$$2, Flavor]}, {}]], DiracProduct[GammaCC, Proj[-1]], Field[l, Fermion, {Index[d$$1, SU2L[fund]], Index[d$$1, Flavor]}, {}]])/(Sqrt[2]*Coupling[MF, {Index[d$$1, NFlavor]}, 0])",
+      "operator_template_unit_flavor_inputform": "(1*1*Bar[Field[NewScalar1, Scalar, {}, {}]]*CG[T3MixCG, {Bar[Index[d$$1, SU2L[fund]]], Bar[Index[d$$2, SU2L[fund]]], Index[d$$1, T3BSMd3]}]*Field[T3Scalar2Minus, Scalar, {Index[d$$1, T3BSMd3]}, {}]*NCM[Transp[Field[l, Fermion, {Index[d$$2, SU2L[fund]], Index[d$$2, Flavor]}, {}]], DiracProduct[GammaCC, Proj[-1]], Field[l, Fermion, {Index[d$$1, SU2L[fund]], Index[d$$1, Flavor]}, {}]])/(Sqrt[2]*1)",
+      "factors": [
+        {
+          "name": "y1",
+          "conjugated": true,
+          "external_index": "d$$1",
+          "heavy_index": "d$$1"
+        },
+        {
+          "name": "y2Conj",
+          "conjugated": true,
+          "external_index": "d$$2",
+          "heavy_index": "d$$1"
+        }
+      ],
+      "heavy_mass_power": -1,
+      "symmetric_flavour_combination_assumed": false,
+      "source_index": 6,
+      "cg_names": [
+        "T3MixCG"
+      ],
+      "flavour_matrix_axes_external_indices": [
+        "d$$1",
+        "d$$2"
+      ],
+      "ordered_flavour_matrix_gev_inv": {
+        "real": [
+          [
+            1.1340662011045356e-12,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            9.450551574898428e-13,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            8.505471264629968e-13
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "frobenius_norm": 1.70372116659983e-12
+      }
+    },
+    {
+      "source_term_inputform": "(I*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Field[NewScalar1, Scalar, {}, {}]]*CG[T3MixCG, {Bar[Index[d$$1, SU2L[fund]]], Bar[Index[d$$2, SU2L[fund]]], Index[d$$1, T3BSMd3]}]*Field[T3Scalar2Plus, Scalar, {Index[d$$1, T3BSMd3]}, {}]*NCM[Transp[Field[l, Fermion, {Index[d$$2, SU2L[fund]], Index[d$$2, Flavor]}, {}]], DiracProduct[GammaCC, Proj[-1]], Field[l, Fermion, {Index[d$$1, SU2L[fund]], Index[d$$1, Flavor]}, {}]])/(Sqrt[2]*Coupling[MF, {Index[d$$1, NFlavor]}, 0])",
+      "operator_template_unit_flavor_inputform": "(I*1*1*Bar[Field[NewScalar1, Scalar, {}, {}]]*CG[T3MixCG, {Bar[Index[d$$1, SU2L[fund]]], Bar[Index[d$$2, SU2L[fund]]], Index[d$$1, T3BSMd3]}]*Field[T3Scalar2Plus, Scalar, {Index[d$$1, T3BSMd3]}, {}]*NCM[Transp[Field[l, Fermion, {Index[d$$2, SU2L[fund]], Index[d$$2, Flavor]}, {}]], DiracProduct[GammaCC, Proj[-1]], Field[l, Fermion, {Index[d$$1, SU2L[fund]], Index[d$$1, Flavor]}, {}]])/(Sqrt[2]*1)",
+      "factors": [
+        {
+          "name": "y1",
+          "conjugated": true,
+          "external_index": "d$$1",
+          "heavy_index": "d$$1"
+        },
+        {
+          "name": "y2",
+          "conjugated": true,
+          "external_index": "d$$2",
+          "heavy_index": "d$$1"
+        }
+      ],
+      "heavy_mass_power": -1,
+      "symmetric_flavour_combination_assumed": false,
+      "source_index": 7,
+      "cg_names": [
+        "T3MixCG"
+      ],
+      "flavour_matrix_axes_external_indices": [
+        "d$$1",
+        "d$$2"
+      ],
+      "ordered_flavour_matrix_gev_inv": {
+        "real": [
+          [
+            1.1340662011045354e-12,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            9.450551574898428e-13,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            8.505471264629968e-13
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "frobenius_norm": 1.7037211665998298e-12
+      }
+    },
+    {
+      "source_term_inputform": "((-I)*Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2Conj, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Field[NewScalar1, Scalar, {}, {}]]*CG[T3MixCG, {Bar[Index[d$$1, SU2L[fund]]], Bar[Index[d$$2, SU2L[fund]]], Index[d$$1, T3BSMd3]}]*Field[T3Scalar2Plus, Scalar, {Index[d$$1, T3BSMd3]}, {}]*NCM[Transp[Field[l, Fermion, {Index[d$$2, SU2L[fund]], Index[d$$2, Flavor]}, {}]], DiracProduct[GammaCC, Proj[-1]], Field[l, Fermion, {Index[d$$1, SU2L[fund]], Index[d$$1, Flavor]}, {}]])/(Sqrt[2]*Coupling[MF, {Index[d$$1, NFlavor]}, 0])",
+      "operator_template_unit_flavor_inputform": "((-I)*1*1*Bar[Field[NewScalar1, Scalar, {}, {}]]*CG[T3MixCG, {Bar[Index[d$$1, SU2L[fund]]], Bar[Index[d$$2, SU2L[fund]]], Index[d$$1, T3BSMd3]}]*Field[T3Scalar2Plus, Scalar, {Index[d$$1, T3BSMd3]}, {}]*NCM[Transp[Field[l, Fermion, {Index[d$$2, SU2L[fund]], Index[d$$2, Flavor]}, {}]], DiracProduct[GammaCC, Proj[-1]], Field[l, Fermion, {Index[d$$1, SU2L[fund]], Index[d$$1, Flavor]}, {}]])/(Sqrt[2]*1)",
+      "factors": [
+        {
+          "name": "y1",
+          "conjugated": true,
+          "external_index": "d$$1",
+          "heavy_index": "d$$1"
+        },
+        {
+          "name": "y2Conj",
+          "conjugated": true,
+          "external_index": "d$$2",
+          "heavy_index": "d$$1"
+        }
+      ],
+      "heavy_mass_power": -1,
+      "symmetric_flavour_combination_assumed": false,
+      "source_index": 8,
+      "cg_names": [
+        "T3MixCG"
+      ],
+      "flavour_matrix_axes_external_indices": [
+        "d$$1",
+        "d$$2"
+      ],
+      "ordered_flavour_matrix_gev_inv": {
+        "real": [
+          [
+            1.1340662011045356e-12,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            9.450551574898428e-13,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            8.505471264629968e-13
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "frobenius_norm": 1.70372116659983e-12
+      }
+    }
+  ],
+  "source_CG_registry": [
+    {
+      "Name": "T3MixCG",
+      "RepsInputForm": "{Bar[SU2L[fund]], Bar[SU2L[fund]], T3BSMd3}",
+      "TensorInputForm": "SparseArray[Automatic, {2, 2, 3}, 0, {1, {{0, 3, 6}, {{1, 1}, {1, 3}, {2, 2}, {1, 2}, {2, 1}, {2, 3}}}, {3^(-1/4), I/3^(1/4), -3^(-1/4), -3^(-1/4), -3^(-1/4), I/3^(1/4)}}]"
+    }
+  ],
+  "operator_template_definition": "Original Matchete TermInputForm with the two Yukawa factors and inverse MF set to 1. Its product with ordered_flavour_matrix_gev_inv reconstructs only the factorised flavour dependence, retaining every remaining symbolic field/CG/normalisation factor.",
+  "full_general_yukawa_flavour_channels_retained": true,
+  "external_lepton_order": "Matrix axes follow the two Yukawa factors in the exact Matchete term; see flavour_matrix_axes_external_indices. No unverified p/q or Majorana symmetrisation is applied.",
+  "numeric_flavour_contractions_computed": true,
+  "canonical_real_wilson_tensor_computed": false,
+  "eft1_wilson_rge_computed": false,
+  "scalar_threshold_matching_computed": false,
+  "physical_matchete_rgbeta_dictionary_certified": false,
+  "sequential_c5_computed": false
+}

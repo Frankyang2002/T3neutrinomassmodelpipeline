@@ -1,0 +1,803 @@
+{
+  "format": "t3-a-m4-native-source-scalar-weight-basis-audit-batch7-v1",
+  "model": "A_-4",
+  "status": "NATIVE_SOURCE_HESSIAN_WEIGHT_BASIS_RECONCILED_CONDITIONAL",
+  "all_six_native_source_Hessians_agree_with_Batch6": true,
+  "source": {
+    "batch4_summary_SHA256": "be8a1b905cd83d65906dc472cf5c3ef68c36943514edd77aaa1d266dfdccace5",
+    "batch5_summary_SHA256": "b9e2f281cf53ede7a50ebf8dd53ad83d0a3ce662ac8c776d2ebf51103425652c",
+    "batch6_summary_SHA256": "809a14f1d6eebc3a454206135dca61fd12da9c37d04a31cc197081a2721aafaf",
+    "native_HHSS_seed_SHA256": "2f607d804c8b250ce6e2776c7be6fe71addabad1280dc6b6b0f1448d3eda3781"
+  },
+  "native_source_evaluated_without_lambda_tensor_factorial": true,
+  "native_triplet_weight_rotation_from_existing_SU2_generator_audit": true,
+  "H0_vev": "H0=v/sqrt(2); source V4=-L4",
+  "matching_sequence": "UV -> integrate out ALL heavy F at muF -> EFT1(S1,S2) -> integrate out BOTH scalars together at muS -> SMEFT",
+  "physics_note": "UV is a broken-phase loop; EFT is an unbroken fixed-order LLSS-induced conditional result. No full one-loop equivalence asserted.",
+  "branch_aliases_not_certified": {
+    "adjoint_alias": "lambdaH2Adj",
+    "ordinary_alias": "lambdaH2"
+  },
+  "scale_status": "UV scalar stage is frozen muUV, F is muF, S is EFT1 muS hybrid. Fermion parameters are muF for all.",
+  "scenarios": {
+    "UV": {
+      "adjoint_alias": {
+        "best_complex_multiplier_of_EFT_per_N_to_UV": {
+          "real": 1.7027780936397103,
+          "imag": 0.0
+        },
+        "residual_after_one_complex_multiplier": 0.01761571396030877,
+        "UV_masses_eV_descending": [
+          0.047045550093692996,
+          0.008172616545565739,
+          0.0005144641094747622
+        ],
+        "EFT_masses_eV_per_abs_N_descending": [
+          0.027661374181477245,
+          0.004576299436960617,
+          0.0003664266977195843
+        ],
+        "offdiagonal_uv_norm_fraction": 0.8030738921120841,
+        "offdiagonal_eft_norm_fraction": 0.8015320977083148,
+        "UV_frobenius_norm_eV": 0.04775290690773671,
+        "EFT_frobenius_norm_eV_per_abs_N": 0.028039764739905073,
+        "matrix_agreement_certified": false,
+        "stage": "UV",
+        "branch": "adjoint_alias",
+        "higgs_vev_gev": 246.22,
+        "source_direct_hessian_vs_Batch6_quartic_relative": 2.017759509573258e-16,
+        "source_native_scalar_A_vs_Batch6_relative": 4.193226673514014e-19,
+        "source_native_scalar_B_vs_Batch6_relative": 0.0,
+        "source_direct_Hessian_agrees_with_Batch6": true,
+        "source_native_vs_legacy_Batch5_weight_A_relative": 0.0007261840514432153,
+        "source_weight_B_frobenius_gev2": 0.0,
+        "source_weight_vs_legacy_Batch5_B_relative": 0.0,
+        "scalar_source_to_weight_rotation_U": {
+          "real": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.7071067811865476,
+              0.0,
+              0.7071067811865476
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              -0.7071067811865476,
+              0.0,
+              0.7071067811865476
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "Batch6_mass_matrix_relative_difference": 0.29289321881345226,
+        "Batch5_mass_matrix_relative_difference": 4.9100789535313776e-05,
+        "Batch6_matrix_shape_residual": 0.01761571396030871,
+        "Batch5_masses_eV_descending": [
+          0.04704786298224522,
+          0.008172999308144335,
+          0.0005144945415976707
+        ],
+        "Batch6_masses_eV_descending": [
+          0.03326622749590174,
+          0.005778912579406909,
+          0.0003637810604867036
+        ],
+        "native_source_term_Hessians": {
+          "2": {
+            "native_coupling": "lambdaH1Inv1",
+            "source_term_sha256": "68797f77ce89c45556a437aa74112a7ce80ba1c7ed3bbeecf69088d2a699edae",
+            "hessian_frobenius_gev2": 857.3569086449787,
+            "matrix_imag_max_gev2": 0.0
+          },
+          "3": {
+            "native_coupling": "lambdaT3",
+            "source_term_sha256": "60ac0ad2be06d60e80d1f4e24f8c7acaa752c544b2978c67f7486a2c65e37e9b",
+            "hessian_frobenius_gev2": 4606.4497743553875,
+            "matrix_imag_max_gev2": 1151.6124435888469
+          },
+          "4": {
+            "native_coupling": "lambdaT3",
+            "source_term_sha256": "def04db45d1ef49073149d02c9bb3814c87d86145aea314ec229e54cfa6ddf4b",
+            "hessian_frobenius_gev2": 4606.4497743553875,
+            "matrix_imag_max_gev2": 1151.6124435888469
+          },
+          "5": {
+            "native_coupling": "lambdaH2Inv2",
+            "source_term_sha256": "418eda9ef757df3621a13e248dea7723018b82690005effa980ba7abac69cedd",
+            "hessian_frobenius_gev2": 0.0,
+            "matrix_imag_max_gev2": 0.0
+          }
+        },
+        "independent_vs_production_UV_relative": 6.155016172845881e-13,
+        "uv_pole_relative": 6.386855299856098e-19,
+        "physical_C5_certified": false
+      },
+      "ordinary_alias": {
+        "best_complex_multiplier_of_EFT_per_N_to_UV": {
+          "real": 1.7028617184681474,
+          "imag": 0.0
+        },
+        "residual_after_one_complex_multiplier": 0.01761485712134618,
+        "UV_masses_eV_descending": [
+          0.0470478629822452,
+          0.008172999308144325,
+          0.0005144945415976659
+        ],
+        "EFT_masses_eV_per_abs_N_descending": [
+          0.027661374181477245,
+          0.004576299436960617,
+          0.0003664266977195843
+        ],
+        "offdiagonal_uv_norm_fraction": 0.8030738143407493,
+        "offdiagonal_eft_norm_fraction": 0.8015320977083148,
+        "UV_frobenius_norm_eV": 0.047755251371135926,
+        "EFT_frobenius_norm_eV_per_abs_N": 0.028039764739905073,
+        "matrix_agreement_certified": false,
+        "stage": "UV",
+        "branch": "ordinary_alias",
+        "higgs_vev_gev": 246.22,
+        "source_direct_hessian_vs_Batch6_quartic_relative": 2.2586780426255785e-16,
+        "source_native_scalar_A_vs_Batch6_relative": 4.195659348734003e-19,
+        "source_native_scalar_B_vs_Batch6_relative": 0.0,
+        "source_direct_Hessian_agrees_with_Batch6": true,
+        "source_native_vs_legacy_Batch5_weight_A_relative": 7.59501263790344e-17,
+        "source_weight_B_frobenius_gev2": 0.0,
+        "source_weight_vs_legacy_Batch5_B_relative": 0.0,
+        "scalar_source_to_weight_rotation_U": {
+          "real": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.7071067811865476,
+              0.0,
+              0.7071067811865476
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              -0.7071067811865476,
+              0.0,
+              0.7071067811865476
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "Batch6_mass_matrix_relative_difference": 0.29289321881345187,
+        "Batch5_mass_matrix_relative_difference": 4.578857926457824e-16,
+        "Batch6_matrix_shape_residual": 0.017614857121346417,
+        "Batch5_masses_eV_descending": [
+          0.04704786298224522,
+          0.008172999308144335,
+          0.0005144945415976707
+        ],
+        "Batch6_masses_eV_descending": [
+          0.03326786295508117,
+          0.005779183233421823,
+          0.000363802579247177
+        ],
+        "native_source_term_Hessians": {
+          "2": {
+            "native_coupling": "lambdaH1Inv1",
+            "source_term_sha256": "68797f77ce89c45556a437aa74112a7ce80ba1c7ed3bbeecf69088d2a699edae",
+            "hessian_frobenius_gev2": 857.3569086449787,
+            "matrix_imag_max_gev2": 0.0
+          },
+          "3": {
+            "native_coupling": "lambdaT3",
+            "source_term_sha256": "60ac0ad2be06d60e80d1f4e24f8c7acaa752c544b2978c67f7486a2c65e37e9b",
+            "hessian_frobenius_gev2": 4606.4497743553875,
+            "matrix_imag_max_gev2": 1151.6124435888469
+          },
+          "4": {
+            "native_coupling": "lambdaT3",
+            "source_term_sha256": "def04db45d1ef49073149d02c9bb3814c87d86145aea314ec229e54cfa6ddf4b",
+            "hessian_frobenius_gev2": 4606.4497743553875,
+            "matrix_imag_max_gev2": 1151.6124435888469
+          },
+          "5": {
+            "native_coupling": "lambdaH2Inv2",
+            "source_term_sha256": "418eda9ef757df3621a13e248dea7723018b82690005effa980ba7abac69cedd",
+            "hessian_frobenius_gev2": 2227.478588989937,
+            "matrix_imag_max_gev2": 0.0
+          }
+        },
+        "independent_vs_production_UV_relative": 3.4910287215463533e-12,
+        "uv_pole_relative": 3.4350000075094247e-19,
+        "physical_C5_certified": false
+      }
+    },
+    "F": {
+      "adjoint_alias": {
+        "best_complex_multiplier_of_EFT_per_N_to_UV": {
+          "real": 1.8044344473563412,
+          "imag": 0.0
+        },
+        "residual_after_one_complex_multiplier": 0.017837401697782862,
+        "UV_masses_eV_descending": [
+          0.04985351441914781,
+          0.008665624320406242,
+          0.000543761832928369
+        ],
+        "EFT_masses_eV_per_abs_N_descending": [
+          0.027661374181477245,
+          0.004576299436960617,
+          0.0003664266977195843
+        ],
+        "offdiagonal_uv_norm_fraction": 0.8030940242510206,
+        "offdiagonal_eft_norm_fraction": 0.8015320977083148,
+        "UV_frobenius_norm_eV": 0.050603968438587346,
+        "EFT_frobenius_norm_eV_per_abs_N": 0.028039764739905073,
+        "matrix_agreement_certified": false,
+        "stage": "F",
+        "branch": "adjoint_alias",
+        "higgs_vev_gev": 246.22,
+        "source_direct_hessian_vs_Batch6_quartic_relative": 3.670520399443783e-16,
+        "source_native_scalar_A_vs_Batch6_relative": 7.48386805164277e-19,
+        "source_native_scalar_B_vs_Batch6_relative": 0.0,
+        "source_direct_Hessian_agrees_with_Batch6": true,
+        "source_native_vs_legacy_Batch5_weight_A_relative": 2.4811729813860434e-05,
+        "source_weight_B_frobenius_gev2": 0.0,
+        "source_weight_vs_legacy_Batch5_B_relative": 0.0,
+        "scalar_source_to_weight_rotation_U": {
+          "real": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.7071067811865476,
+              0.0,
+              0.7071067811865476
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              -0.7071067811865476,
+              0.0,
+              0.7071067811865476
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "Batch6_mass_matrix_relative_difference": 0.2928932188134513,
+        "Batch5_mass_matrix_relative_difference": 1.6989293918426774e-06,
+        "Batch6_matrix_shape_residual": 0.017837401697782224,
+        "Batch5_masses_eV_descending": [
+          0.04985359922074812,
+          0.008665638354926059,
+          0.0005437629483998463
+        ],
+        "Batch6_masses_eV_descending": [
+          0.0352517581117608,
+          0.006127521720174335,
+          0.0003844976794140715
+        ],
+        "native_source_term_Hessians": {
+          "2": {
+            "native_coupling": "lambdaH1Inv1",
+            "source_term_sha256": "68797f77ce89c45556a437aa74112a7ce80ba1c7ed3bbeecf69088d2a699edae",
+            "hessian_frobenius_gev2": 441.02350755722387,
+            "matrix_imag_max_gev2": 0.0
+          },
+          "3": {
+            "native_coupling": "lambdaT3",
+            "source_term_sha256": "60ac0ad2be06d60e80d1f4e24f8c7acaa752c544b2978c67f7486a2c65e37e9b",
+            "hessian_frobenius_gev2": 4943.527505405972,
+            "matrix_imag_max_gev2": 1235.881876351493
+          },
+          "4": {
+            "native_coupling": "lambdaT3",
+            "source_term_sha256": "def04db45d1ef49073149d02c9bb3814c87d86145aea314ec229e54cfa6ddf4b",
+            "hessian_frobenius_gev2": 4943.527505405972,
+            "matrix_imag_max_gev2": 1235.881876351493
+          },
+          "5": {
+            "native_coupling": "lambdaH2Inv2",
+            "source_term_sha256": "418eda9ef757df3621a13e248dea7723018b82690005effa980ba7abac69cedd",
+            "hessian_frobenius_gev2": 360.3810502861294,
+            "matrix_imag_max_gev2": 0.0
+          }
+        },
+        "independent_vs_production_UV_relative": 5.431175013370428e-12,
+        "uv_pole_relative": 5.71078765133997e-19,
+        "physical_C5_certified": false
+      },
+      "ordinary_alias": {
+        "best_complex_multiplier_of_EFT_per_N_to_UV": {
+          "real": 1.8044375134560304,
+          "imag": 0.0
+        },
+        "residual_after_one_complex_multiplier": 0.017837371702235826,
+        "UV_masses_eV_descending": [
+          0.049853599220748106,
+          0.008665638354926041,
+          0.0005437629483998444
+        ],
+        "EFT_masses_eV_per_abs_N_descending": [
+          0.027661374181477245,
+          0.004576299436960617,
+          0.0003664266977195843
+        ],
+        "offdiagonal_uv_norm_fraction": 0.8030940215258022,
+        "offdiagonal_eft_norm_fraction": 0.8015320977083148,
+        "UV_frobenius_norm_eV": 0.050604054397897745,
+        "EFT_frobenius_norm_eV_per_abs_N": 0.028039764739905073,
+        "matrix_agreement_certified": false,
+        "stage": "F",
+        "branch": "ordinary_alias",
+        "higgs_vev_gev": 246.22,
+        "source_direct_hessian_vs_Batch6_quartic_relative": 3.667958847943633e-16,
+        "source_native_scalar_A_vs_Batch6_relative": 7.484018544690622e-19,
+        "source_native_scalar_B_vs_Batch6_relative": 0.0,
+        "source_direct_Hessian_agrees_with_Batch6": true,
+        "source_native_vs_legacy_Batch5_weight_A_relative": 1.3547753231109435e-16,
+        "source_weight_B_frobenius_gev2": 0.0,
+        "source_weight_vs_legacy_Batch5_B_relative": 0.0,
+        "scalar_source_to_weight_rotation_U": {
+          "real": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.7071067811865476,
+              0.0,
+              0.7071067811865476
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              -0.7071067811865476,
+              0.0,
+              0.7071067811865476
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "Batch6_mass_matrix_relative_difference": 0.29289321881345126,
+        "Batch5_mass_matrix_relative_difference": 9.6793707915633e-16,
+        "Batch6_matrix_shape_residual": 0.017837371702236062,
+        "Batch5_masses_eV_descending": [
+          0.04985359922074812,
+          0.008665638354926059,
+          0.0005437629483998463
+        ],
+        "Batch6_masses_eV_descending": [
+          0.035251818075547434,
+          0.006127531644078453,
+          0.0003844984681715248
+        ],
+        "native_source_term_Hessians": {
+          "2": {
+            "native_coupling": "lambdaH1Inv1",
+            "source_term_sha256": "68797f77ce89c45556a437aa74112a7ce80ba1c7ed3bbeecf69088d2a699edae",
+            "hessian_frobenius_gev2": 441.02350755722387,
+            "matrix_imag_max_gev2": 0.0
+          },
+          "3": {
+            "native_coupling": "lambdaT3",
+            "source_term_sha256": "60ac0ad2be06d60e80d1f4e24f8c7acaa752c544b2978c67f7486a2c65e37e9b",
+            "hessian_frobenius_gev2": 4943.527505405972,
+            "matrix_imag_max_gev2": 1235.881876351493
+          },
+          "4": {
+            "native_coupling": "lambdaT3",
+            "source_term_sha256": "def04db45d1ef49073149d02c9bb3814c87d86145aea314ec229e54cfa6ddf4b",
+            "hessian_frobenius_gev2": 4943.527505405972,
+            "matrix_imag_max_gev2": 1235.881876351493
+          },
+          "5": {
+            "native_coupling": "lambdaH2Inv2",
+            "source_term_sha256": "418eda9ef757df3621a13e248dea7723018b82690005effa980ba7abac69cedd",
+            "hessian_frobenius_gev2": 445.6667247613429,
+            "matrix_imag_max_gev2": 0.0
+          }
+        },
+        "independent_vs_production_UV_relative": 2.456344961405458e-12,
+        "uv_pole_relative": 5.55412425193993e-19,
+        "physical_C5_certified": false
+      }
+    },
+    "S": {
+      "adjoint_alias": {
+        "best_complex_multiplier_of_EFT_per_N_to_UV": {
+          "real": 1.855055215775935,
+          "imag": 0.0
+        },
+        "residual_after_one_complex_multiplier": 0.018091502117690342,
+        "UV_masses_eV_descending": [
+          0.05125129593928664,
+          0.008914736582947795,
+          0.0005573490850287866
+        ],
+        "EFT_masses_eV_per_abs_N_descending": [
+          0.027661374181477245,
+          0.004576299436960617,
+          0.0003664266977195843
+        ],
+        "offdiagonal_uv_norm_fraction": 0.803117123942774,
+        "offdiagonal_eft_norm_fraction": 0.8015320977083148,
+        "UV_frobenius_norm_eV": 0.05202382628952114,
+        "EFT_frobenius_norm_eV_per_abs_N": 0.028039764739905073,
+        "matrix_agreement_certified": false,
+        "stage": "S",
+        "branch": "adjoint_alias",
+        "higgs_vev_gev": 246.22,
+        "source_direct_hessian_vs_Batch6_quartic_relative": 1.9059308774511662e-17,
+        "source_native_scalar_A_vs_Batch6_relative": 0.0,
+        "source_native_scalar_B_vs_Batch6_relative": 0.0,
+        "source_direct_Hessian_agrees_with_Batch6": true,
+        "source_native_vs_legacy_Batch5_weight_A_relative": 0.0005653392030808096,
+        "source_weight_B_frobenius_gev2": 0.0,
+        "source_weight_vs_legacy_Batch5_B_relative": 0.0,
+        "scalar_source_to_weight_rotation_U": {
+          "real": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.7071067811865476,
+              0.0,
+              0.7071067811865476
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              -0.7071067811865476,
+              0.0,
+              0.7071067811865476
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "Batch6_mass_matrix_relative_difference": 0.29289321881345187,
+        "Batch5_mass_matrix_relative_difference": 3.933631074714307e-05,
+        "Batch6_matrix_shape_residual": 0.01809150211768942,
+        "Batch5_masses_eV_descending": [
+          0.05124927739949232,
+          0.008914402499701877,
+          0.0005573225425060334
+        ],
+        "Batch6_masses_eV_descending": [
+          0.036240138903268194,
+          0.006303670690294165,
+          0.0003941053175119748
+        ],
+        "native_source_term_Hessians": {
+          "2": {
+            "native_coupling": "lambdaH1Inv1",
+            "source_term_sha256": "68797f77ce89c45556a437aa74112a7ce80ba1c7ed3bbeecf69088d2a699edae",
+            "hessian_frobenius_gev2": 53.503111725298076,
+            "matrix_imag_max_gev2": 0.0
+          },
+          "3": {
+            "native_coupling": "lambdaT3",
+            "source_term_sha256": "60ac0ad2be06d60e80d1f4e24f8c7acaa752c544b2978c67f7486a2c65e37e9b",
+            "hessian_frobenius_gev2": 5155.4270245538655,
+            "matrix_imag_max_gev2": 1288.8567561384664
+          },
+          "4": {
+            "native_coupling": "lambdaT3",
+            "source_term_sha256": "def04db45d1ef49073149d02c9bb3814c87d86145aea314ec229e54cfa6ddf4b",
+            "hessian_frobenius_gev2": 5155.4270245538655,
+            "matrix_imag_max_gev2": 1288.8567561384664
+          },
+          "5": {
+            "native_coupling": "lambdaH2Inv2",
+            "source_term_sha256": "418eda9ef757df3621a13e248dea7723018b82690005effa980ba7abac69cedd",
+            "hessian_frobenius_gev2": 698.7614036723203,
+            "matrix_imag_max_gev2": 0.0
+          }
+        },
+        "independent_vs_production_UV_relative": 5.527156343633135e-12,
+        "uv_pole_relative": 6.47728694833622e-19,
+        "physical_C5_certified": false
+      },
+      "ordinary_alias": {
+        "best_complex_multiplier_of_EFT_per_N_to_UV": {
+          "real": 1.8549822328042478,
+          "imag": 0.0
+        },
+        "residual_after_one_complex_multiplier": 0.018092205812684916,
+        "UV_masses_eV_descending": [
+          0.05124927739949231,
+          0.00891440249970188,
+          0.0005573225425060407
+        ],
+        "EFT_masses_eV_per_abs_N_descending": [
+          0.027661374181477245,
+          0.004576299436960617,
+          0.0003664266977195843
+        ],
+        "offdiagonal_uv_norm_fraction": 0.8031171879485355,
+        "offdiagonal_eft_norm_fraction": 0.8015320977083148,
+        "UV_frobenius_norm_eV": 0.05202178019169654,
+        "EFT_frobenius_norm_eV_per_abs_N": 0.028039764739905073,
+        "matrix_agreement_certified": false,
+        "stage": "S",
+        "branch": "ordinary_alias",
+        "higgs_vev_gev": 246.22,
+        "source_direct_hessian_vs_Batch6_quartic_relative": 7.479542995302102e-17,
+        "source_native_scalar_A_vs_Batch6_relative": 0.0,
+        "source_native_scalar_B_vs_Batch6_relative": 0.0,
+        "source_direct_Hessian_agrees_with_Batch6": true,
+        "source_native_vs_legacy_Batch5_weight_A_relative": 1.1873201756347578e-16,
+        "source_weight_B_frobenius_gev2": 0.0,
+        "source_weight_vs_legacy_Batch5_B_relative": 0.0,
+        "scalar_source_to_weight_rotation_U": {
+          "real": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.7071067811865476,
+              0.0,
+              0.7071067811865476
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              -0.7071067811865476,
+              0.0,
+              0.7071067811865476
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "Batch6_mass_matrix_relative_difference": 0.2928932188134524,
+        "Batch5_mass_matrix_relative_difference": 4.0625798184195737e-16,
+        "Batch6_matrix_shape_residual": 0.018092205812684628,
+        "Batch5_masses_eV_descending": [
+          0.05124927739949232,
+          0.008914402499701877,
+          0.0005573225425060334
+        ],
+        "Batch6_masses_eV_descending": [
+          0.036238711580091496,
+          0.006303434457765507,
+          0.00039408654911414574
+        ],
+        "native_source_term_Hessians": {
+          "2": {
+            "native_coupling": "lambdaH1Inv1",
+            "source_term_sha256": "68797f77ce89c45556a437aa74112a7ce80ba1c7ed3bbeecf69088d2a699edae",
+            "hessian_frobenius_gev2": 53.503111725298076,
+            "matrix_imag_max_gev2": 0.0
+          },
+          "3": {
+            "native_coupling": "lambdaT3",
+            "source_term_sha256": "60ac0ad2be06d60e80d1f4e24f8c7acaa752c544b2978c67f7486a2c65e37e9b",
+            "hessian_frobenius_gev2": 5155.4270245538655,
+            "matrix_imag_max_gev2": 1288.8567561384664
+          },
+          "4": {
+            "native_coupling": "lambdaT3",
+            "source_term_sha256": "def04db45d1ef49073149d02c9bb3814c87d86145aea314ec229e54cfa6ddf4b",
+            "hessian_frobenius_gev2": 5155.4270245538655,
+            "matrix_imag_max_gev2": 1288.8567561384664
+          },
+          "5": {
+            "native_coupling": "lambdaH2Inv2",
+            "source_term_sha256": "418eda9ef757df3621a13e248dea7723018b82690005effa980ba7abac69cedd",
+            "hessian_frobenius_gev2": 1518.4761081304023,
+            "matrix_imag_max_gev2": 0.0
+          }
+        },
+        "independent_vs_production_UV_relative": 1.0970964867674394e-11,
+        "uv_pole_relative": 3.8558141476133314e-19,
+        "physical_C5_certified": false
+      }
+    }
+  },
+  "gammaCC_to_master_Weyl_signed_factor": null,
+  "source_rgbeta_quartic_aliases_certified": false,
+  "fermion_hard_one_loop_matching_complete": false,
+  "physical_C5_certified": false,
+  "complete_neutrino_mass_certified": false
+}

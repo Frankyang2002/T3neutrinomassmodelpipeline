@@ -10,6 +10,7 @@ from Numerical.direct_one_loop.comparison import compare_same_point
 from .certification import (all_models, CLASSES, validate_components,
                             source_evidence, load, digest)
 from .channels import partition_exact
+from .phase_portal import convention_scan, ConventionError
 
 
 def _save(path:Path,value:Any):
@@ -93,11 +94,15 @@ def verify_source_charge_support(structural:dict[str,Any], data:dict[str,Any],
 
 
 def run(root:Path, output:Path, input_dir:Path|None=None,
-        eft_dir:Path|None=None, weak_fraction:float=.01) -> dict:
+        eft_dir:Path|None=None, weak_fraction:float=.01,
+        convention_scan_enabled:bool=False) -> dict:
     root=root.resolve(); output=output.resolve()
     if not output.is_relative_to((root/'output/general_observable/lo_certification_direct_uv').resolve()):
         raise ValueError('Output must remain inside owned output/general_observable/lo_certification_direct_uv')
-    if (output/'all_16_certification_status.json').exists() or any((output/'models').glob('*.json')):
+    if ((output/'all_16_certification_status.json').exists()
+        or (output/'all_16_convention_scan_summary.csv').exists()
+        or any((output/'models').glob('*.json'))
+        or any((output/'convention_scan').glob('*.json'))):
         raise FileExistsError('Existing certification output found; use a NEW --output-dir within the owned output tree')
     if input_dir is None:
         input_dir=root/'output/general_observable/lo_direct_one_loop/provisional_inputs'
@@ -107,6 +112,7 @@ def run(root:Path, output:Path, input_dir:Path|None=None,
         'portal':_perhaps(source/'source_audits/native_portal_identity_decomposition.json'),
         'charges':_perhaps(source/'source_audits/charge_channels.json'),
         'cg_weights':_perhaps(source/'source_audits/charge_resolved_loop_weights.json'),
+
     }
     rows=[]
     for short,key in all_models():
@@ -146,6 +152,30 @@ def run(root:Path, output:Path, input_dir:Path|None=None,
             if not direct['diagnostics']['neutrino_mass_matrix_symmetric']:
                 raise ValueError('The full UV neutrino mass is not symmetric')
             channels=partition_exact(inp,kind,alpha,direct,weak_fraction=weak_fraction)
+            scan_report={'status':'not_requested'}
+            if convention_scan_enabled:
+                portal_report=audits['portal'] or {}
+                valid_portal_report=(portal_report.get('status')==
+                    'all_32_geometric_identities_representable_physical_dictionary_pending'
+                    and portal_report.get('models_checked')==16
+                    and portal_report.get('scalar_portal_sectors_checked')==32
+                    and portal_report.get('full_tensor_identities_representable')==32)
+                portal_entry=next((e for e in portal_report.get('models',[])
+                                   if e.get('model')==short),None) if valid_portal_report else None
+                if portal_entry is None:
+                    scan_report={'status':'blocked_missing_native_portal_identity',
+                                 'reason':'No source-exported native all-index portal tensor geometry'}
+                elif portal_entry.get('frozen_sha256')!=digest(bench_path):
+                    scan_report={'status':'blocked_stale_native_portal_benchmark_hash',
+                                 'reason':'Native portal tensor source entry tied to different benchmark bytes'}
+                else:
+                    try:
+                        scan_report=convention_scan(inp,kind,alpha,bench,portal_entry,direct,
+                                                     suppressed_fraction=weak_fraction)
+                        _save(output/'convention_scan'/f'{short}.json',scan_report)
+                    except (ConventionError,ValueError,RuntimeError,TypeError,KeyError,ArithmeticError) as err:
+                        scan_report={'status':'blocked_convention_scan',
+                                     'reason':type(err).__name__+': '+str(err)}
             physically=evidence['physically_certified']
             # Even if an external input sets a certification boolean, no source
             # stage is promoted without independent cross-package witnesses.
@@ -160,7 +190,8 @@ def run(root:Path, output:Path, input_dir:Path|None=None,
                           masses_ev=direct['total']['neutrino_masses_ev'],
                           cancellation_ratio=direct['diagnostics']['cancellation_ratio_total_over_sum'],
                           observed_charge_channels=structural['observed_scalar_charge_channels'],
-                          blocking=evidence['blocking_physical_conventions'])
+                          blocking=evidence['blocking_physical_conventions'],
+                          convention_scan_status=scan_report['status'])
             _save(output/'models'/f'{short}.json',{
                 'format':'t3-direct-uv-lo-certification-v1',
                 'status':'provisional_not_physical_certification',
@@ -180,6 +211,10 @@ def run(root:Path, output:Path, input_dir:Path|None=None,
                     'SM_fermions_retained':True},
                 'structural':structural,'source_certification':evidence,
                 'exact_direct_one_loop':direct,'charge_and_suppression':channels,
+                'convention_scan':{'status':scan_report['status'],
+                    'report_path':('convention_scan/'+short+'.json' if scan_report['status']==
+                       'conditional_exact_mass_variants_not_physical_certification' else None),
+                    'reason':scan_report.get('reason')},
                 'eft_comparison':comparison})
         except (ValueError,FileNotFoundError,KeyError,IndexError,TypeError,
                 RuntimeError,ArithmeticError) as exc:
@@ -194,12 +229,34 @@ def run(root:Path, output:Path, input_dir:Path|None=None,
             'catalogue':len(rows),
             'exact_uv_provisional':sum(r['status']=='exact_uv_provisional' for r in rows),
             'physical_source_certified':sum(r['certified'] for r in rows),
-            'blocked':sum(r['status']=='blocked' for r in rows)},
+            'blocked':sum(r['status']=='blocked' for r in rows),
+            'convention_scan_completed':sum(r.get('convention_scan_status')==
+               'conditional_exact_mass_variants_not_physical_certification' for r in rows),
+            'convention_scan_blocked':sum(str(r.get('convention_scan_status','')).startswith('blocked_') for r in rows)},
         'benchmark_provenance':'frozen fitted_reference at base_state.mu_gev; no invented additional couplings',
         'baseline_unmodified':True,
         'models':rows,
     }
     _save(output/'all_16_certification_status.json',summary)
+    if convention_scan_enabled:
+        with (output/'all_16_convention_scan_summary.csv').open('w',encoding='utf-8',newline='') as fp:
+            wr=csv.writer(fp)
+            wr.writerow(['model','scan_status','physical_certified',
+                         'baseline_m3_ev','portal_minus_m3_ev','T3_mixing_flip_m3_ev',
+                         'portal_minus_relative_matrix_shift','T3_mixing_relative_matrix_shift',
+                         'blocking'])
+            for row in rows:
+                if row.get('convention_scan_status')==                     'conditional_exact_mass_variants_not_physical_certification':
+                    sc=load(output/'convention_scan'/f"{row['model']}.json")
+                    v=sc['variants']
+                    vals=[v['baseline_native_plus']['takagi_masses_ev'][-1],
+                          v['conditional_native_minus_RGBeta_portals']['takagi_masses_ev'][-1],
+                          v['conditional_opposite_T3_mixing_sign']['takagi_masses_ev'][-1],
+                          sc['relative_shift_from_portal_hypothesis'],
+                          sc['relative_shift_from_topology_mixing_hypothesis']]
+                else:vals=[None]*5
+                wr.writerow([row['model'],row.get('convention_scan_status'),False,
+                             *vals,'; '.join(row['blocking'])])
     output.mkdir(parents=True,exist_ok=True)
     with (output/'all_16_summary.csv').open('w',encoding='utf-8',newline='') as fp:
         wr=csv.writer(fp)

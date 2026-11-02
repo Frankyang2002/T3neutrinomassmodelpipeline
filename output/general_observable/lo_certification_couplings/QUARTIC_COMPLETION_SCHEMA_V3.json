@@ -1,0 +1,28 @@
+{
+  "format": "t3-ws2-complete-baseline-portal-and-extra-reference-batch-v3",
+  "readme": "Numerical/lo_certification/couplings/README_QUARTIC_COMPLETION_V3.md",
+  "matching_sequence": ["UV", "all heavy BSM fermions integrated at mu_F", "EFT1 containing both heavy scalar multiplets and SM fermions", "both heavy scalar multiplets integrated together at mu_S", "SMEFT"],
+  "output_dir": "output/general_observable/lo_certification_couplings/<fresh_run_name>",
+  "summary": "summary.json",
+  "per_model": {
+    "metadata": "<model_slug>/portal_and_extra_status.json",
+    "portal_arrays": "<model_slug>/baseline_native_plus_rgbeta_portals_muF_muS.npz",
+    "extra_reference_tensors": "<model_slug>/exact_extra_HHSS_reference_tensors.json",
+    "failure": "<model_slug>/failure.json (only if model source validation failed)"
+  },
+  "npz_arrays": {
+    "muF_portal_sum": [4,4,"n","n"],
+    "muF_channel_tensors": ["k",4,4,"n","n"],
+    "muF_channel_labels": ["k"],
+    "muS_portal_sum": [4,4,"n","n"],
+    "muS_channel_tensors": ["k",4,4,"n","n"],
+    "muS_channel_labels": ["k"]
+  },
+  "scalar_basis": "original S1/S2 interleaved (Re,Im), not certified source muF or muS mass basis",
+  "quartic_tensor_convention": "V4=lambda_abcd*phi_a*phi_b*phi_c*phi_d/4!",
+  "portal_status": "source-derived exact tensor-span completion conditional on a common complex scalar frame",
+  "extra_status": "SU2-invariant exact reference basis; named CG/phase normalization and running coefficient unresolved",
+  "physical_C5_certified": false,
+  "missing_coupling_is_zero": false,
+  "safe_to_supply_as_full_seven_term_or_joint_scalar_input": false
+}

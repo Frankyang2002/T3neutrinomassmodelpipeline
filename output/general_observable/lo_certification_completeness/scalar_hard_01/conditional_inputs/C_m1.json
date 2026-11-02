@@ -1,0 +1,57 @@
+{
+  "model": "C_-1",
+  "tensor_convention": "T3_REAL_LLSS_HHSS_WEINBERG_v1",
+  "scheme": "MSbar",
+  "tensor_npz": "C_m1.npz",
+  "mu_f_gev": 100000.0,
+  "mu_s_gev": 1000.0,
+  "quartic_channel_names": [
+    "lambdaH1Inv1",
+    "lambdaH1Inv2",
+    "lambdaH2Inv1",
+    "lambdaH2Inv2",
+    "lambdaT3"
+  ],
+  "source_normalization_certified": false,
+  "interpretation": "C5 per unknown signed N_GammaCC_to_Weyl, benchmark diagonal flavour ONLY",
+  "physical_C5_certified": false,
+  "provenance": {
+    "fermion_source_sha256": "e9e181f75309e976ad84d222b80e9c7958fb2bbb206fb6b076d9f7f3eb26198e",
+    "running_sha256": "c7b512a780705fe9be903f88c981553401ebbae3a931a4040dd27b34dd0f626c",
+    "scalar_bundle_sha256": "5769e2f9c8fce97d89bc452aeb572e7a8e1bfa9abdc728f79ec38dcda7bd5881",
+    "scalar_bundle_provenance": {
+      "source": "v4 Matchete-source HHSS channels plus saved v5/v6 muS scalar benchmark",
+      "background_metadata_sha256": "19df9537d6a0925e73345ae772e122222c77a5166526916d24392b8cd317c85c",
+      "background_npz_sha256": "5769e2f9c8fce97d89bc452aeb572e7a8e1bfa9abdc728f79ec38dcda7bd5881",
+      "upstream": {
+        "source": "EXPLORATORY mixed/self scalar prototype: C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\all16_v1\\C_m1\\running.json + C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\full16_symbolic\\T3_C_alpha_m1\\data\\eft1_after_F_scalar_quartic_seed.json",
+        "quartic_potential_normalization": "V=lambda_abcd*phi_a*phi_b*phi_c*phi_d/4!",
+        "running_snapshot_sha256": "c7b512a780705fe9be903f88c981553401ebbae3a931a4040dd27b34dd0f626c",
+        "source_quartic_seed_sha256": "0b45ab70e346a29752efd659810e3892c5f9a3e2a549389deaa40781ef58b6bd",
+        "source_boundary_sha256": "e9e181f75309e976ad84d222b80e9c7958fb2bbb206fb6b076d9f7f3eb26198e",
+        "candidate_native_to_rgbeta_aliases": {
+          "lambdaH1Inv1": "lambdaH1",
+          "lambdaH1Inv2": "lambdaH1Adj",
+          "lambdaH2Inv1": "lambdaH2",
+          "lambdaH2Inv2": "lambdaH2Adj",
+          "lambdaT3": "lambdaT3"
+        },
+        "quadratic_parameter_name": "muT3GeneralS1S2",
+        "mass_basis_assumption": "(S1,epsilon*conjugate(S2))=U@(X,Y), epsilon12=+1; muS U reused as muF boundary field definition (exploratory)",
+        "muF_muS_basis_alignment_certified": false,
+        "native_spherical_CG_identification_certified": false,
+        "coupling_alias_normalization_certified": false
+      },
+      "candidate_coupling_aliases_certified": false,
+      "special_scalar_basis_alignment_certified": false,
+      "GammaCC_to_Weyl_signed_factor": null,
+      "complete_UV_operator_closure_certified": false
+    }
+  },
+  "source_scalar_background_metadata_sha256": "19df9537d6a0925e73345ae772e122222c77a5166526916d24392b8cd317c85c",
+  "source_scalar_background_npz_sha256": "5769e2f9c8fce97d89bc452aeb572e7a8e1bfa9abdc728f79ec38dcda7bd5881",
+  "source_scalar_case": "special",
+  "native_to_rgbeta_quartic_map_certified": false,
+  "source_muF_muS_basis_identification_certified": false,
+  "source_channel_inventory_scope": "cached native source HHSS, not full UV closure"
+}

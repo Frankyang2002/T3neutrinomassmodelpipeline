@@ -233,3 +233,95 @@ eigenvalues label summed propagator contributions but are never used as
 sequential EFT thresholds. Both heavy scalar multiplets remain in EFT1 until
 integrated together at muS. No original upstream files, shared output or
 GitHub data are overwritten.
+
+## Workstream 3 scalar source bridge — full all-16 exploratory batch (2026-11-03)
+
+**Files added:**
+
+- `Numerical/lo_certification/completeness/scalar_bridge.py` — checks the *existing*
+  `Numerical/joint_scalar_matching` native-source scalar backgrounds; pulls **both**
+  heavy-scalar mass and every named HHSS channel into the fermion LLSS source basis
+  using the same real orthogonal map; retains independent suppressed channels.
+- `scripts/BuildLOScalarHardBatch.py` — all-16 production of source-aligned scalar
+  inputs and, **only where the full Weinberg projection passes**, numerical hard
+  scalar-portal matching diagnostics. Reuses existing v4, v5 and v6 code, **read only**.
+- `tests/test_lo_completeness_scalar_bridge.py` — tests including a true synthetic
+  bridge → per-fermion hard-matching numerical calculation.
+
+Read-only upstream paths:
+
+```
+output/general_observable/lo_fermion_boundary/releases/source_021dcc1e8fe8ba0f/
+output/general_observable/all16_v1/<model>/running.json
+output/general_observable/lo_joint_scalar_matching/source_quartic_v4/native_quartic_channels/
+output/full16_symbolic/T3_<family>_alpha_<alpha>/data/eft1_after_F_scalar_quartic_seed.json
+Numerical/joint_scalar_matching/{source_quartic_v4,numerical_benchmark_v5,special_mass_v6,large_batch}.py
+```
+
+**Explicitly exploratory:** the pre-existing v5/v6 scalar builders use a candidate
+native Matchete → RGBeta quartic parameter-name/normalization map, and the eight
+mixed/split scalar models identify muF source scalar fields with muS prototype
+fields. Their correctness remains unverified. The builder requires explicit
+opt-in flags and never labels a conditional result physical. Full general UV
+quartic closure, extra Yukawas, the signed GammaCC/Weyl factor, independent
+hard counterterm matching, and full seven-term transport remain outstanding.
+
+**Source audit, without writing:**
+
+```powershell
+Set-Location C:\thesistemp\T3neutrinomassmodelpipeline
+python -m unittest discover -s tests -p 'test_lo_completeness_*.py' -v
+python -m scripts.BuildLOScalarHardBatch `
+  --check-only `
+  --output-dir 'output\general_observable\lo_certification_completeness\scalar_hard_01'
+```
+
+**Source-backed exploratory scalar + hard one-loop portal run for ALL 16:**
+
+```powershell
+python -m scripts.BuildLOScalarHardBatch `
+  --allow-exploratory-map `
+  --allow-exploratory-special-bases `
+  --output-dir 'output\general_observable\lo_certification_completeness\scalar_hard_01'
+```
+
+Results are written ONLY below the new owned `scalar_hard_01` directory:
+
+```
+scalar_hard_01/
+  summary.json                               # all-16 statuses and exact blockers
+  scalar_backgrounds/A_m4.json, A_m4.npz    # existing v4/v5/v6 builder output
+  conditional_inputs/A_m4.json, A_m4.npz    # only if projection passes
+  conditional_hard/A_m4.json                 # only if numerical candidate passes
+  projection_rejected/A_m2.json              # diagnostic ONLY if Ward projection fails
+  ...
+```
+
+An existing result may instead be reused **read-only** without any automatic
+scalar source regeneration:
+
+```powershell
+python -m scripts.BuildLOScalarHardBatch `
+  --existing-background-dir 'output\general_observable\lo_joint_scalar_matching\exploratory_all16_v6\numeric_backgrounds' `
+  --output-dir 'output\general_observable\lo_certification_completeness\scalar_hard_from_v6_01'
+```
+
+A fresh output path is mandatory for every run. No GitHub writes, no scalar
+threshold splitting, and no individual fermion threshold running occur.
+
+The upstream v6 snapshot on GitHub (`main`, inspected 2026-11-03) contains
+12 conditional scalar-C5 models and **four full-Weinberg Ward failures**:
+`A_-2`, `D_+0`, `E_-2`, `E_+0`. They are not assigned a C5 or silently
+accepted. The new hard-portal projection may reject additional models because
+its per-heavy-flavour kernels are not identical to the old scalar-only bubble.
+Record the actual generated `summary.json` rather than presuming a count.
+
+**Interpretation of hard output:** `hard_muF` is a leading-power *conditional*
+MSbar hard-portal candidate; `eft1_scalar_log` is the corresponding **single**
+logarithmic partition; `scalar_threshold_muS` uses **one** joint scalar bubble;
+`dim5_sum` is the sum of those three pieces; `full_triangle` is an independent
+fixed-order one-loop mass-ratio kernel; `higher_dimension_remainder` is one-loop
+but of higher order in the heavy-fermion expansion. These are not six
+independent physical mass contributions and must not be added on top of one
+another. The other six EFT1 RGE terms and other hard topologies are **not**
+claimed complete. None of these outputs is a certified physical mass matrix.

@@ -1,0 +1,70 @@
+{
+  "format": "t3-general-A-m2-yukawa-sensitivity-v1",
+  "model": "A_-2",
+  "scope": "General UV/EFT1 RGEs + conditional mass-basis one-scale Matchete C5",
+  "physical_sequential_matching_certified": false,
+  "source": {
+    "source": "completed_A_m2_result_from_general_campaign",
+    "fit_run_id": "thesis16_general_c5_full_v1",
+    "source_campaign_model_count": 16,
+    "fit_chi2_original": 34.52948208294043,
+    "fit_best_source": "best_branch_active_12",
+    "fit_result_file": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\studies\\general_scalar_extended\\thesis_general_all16\\thesis16_general_c5_full_v1\\A_m2\\result.json",
+    "fit_config_file": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\studies\\general_scalar_extended\\thesis_general_all16\\thesis16_general_c5_full_v1\\A_m2\\fitted_config.json",
+    "fit_result_sha256": "28ff6b6ed559286c9e7894ed87ecd0471048f6251f3727b618305eca79975fbf",
+    "fit_config_sha256": "c1bd4af31ba76b283c56efdae23c3029ff2f2c8659d727604db5b956e103dd36"
+  },
+  "benchmark_config": {
+    "quartic_fraction": 0.1,
+    "mu2_fraction": 0.01,
+    "canonical_run_id": "full16_general_v1"
+  },
+  "y2Conj_held_fixed_per_case_during_original_y1_y2_fit": true,
+  "y2Conj_fraction_multiplies_reference_y2_not_fitted_y2": true,
+  "bilinear_nonzero_in_all_cases": true,
+  "matchete_c5_source": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_matchete_matching\\A_m2\\c5_coefficient.txt",
+  "matchete_c5_sha256": "32f7de9242cd858851374fd85cc2d62d4b7b93d88703617751acf1d647c998c2",
+  "source_provenance": {
+    "source": "canonical_full_general_symbolic",
+    "model": "A_-2",
+    "run_id": "full16_general_v1",
+    "extra_yukawa": "y2Conj",
+    "additional_quartics": 5,
+    "additional_bilinears": 1,
+    "mass_basis": "CheckedNotMatched",
+    "lagrangian_inventory_checked": true,
+    "rge_inventory_checked": true,
+    "physical_matchete_rgbeta_mapping_certified": false,
+    "physical_neutrino_mass_prediction": false,
+    "uv_json": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\studies\\general_scalar_extended\\complete_scalar_symbolic\\full16_general_v1\\A_m2\\uv_rgbeta.json",
+    "eft1_json": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\studies\\general_scalar_extended\\complete_scalar_symbolic\\full16_general_v1\\A_m2\\eft1_rgbeta.json",
+    "uv_sha256": "1ed385abdd0b15d4d616df74f77f86eec84ea0ba33c008baeddba95b38ecb6f8",
+    "eft1_sha256": "2357f514e10a9a0ef7c6c1a6b78ee4f1c476bd8d4c41eeae81ee94ba3d6018f3"
+  },
+  "matching_kind": "full-general-matchete-one-scale-channels",
+  "matched_channels": [
+    "y1",
+    "y2",
+    "y2Conj"
+  ],
+  "cases": [
+    {
+      "name": "y2conj_0",
+      "status": "Evaluated",
+      "chi2": 36.12720611614131,
+      "error": null
+    },
+    {
+      "name": "y2conj_0p05",
+      "status": "Evaluated",
+      "chi2": 34.52948208294043,
+      "error": null
+    },
+    {
+      "name": "y2conj_0p1",
+      "status": "Evaluated",
+      "chi2": 34.05849428475968,
+      "error": null
+    }
+  ]
+}

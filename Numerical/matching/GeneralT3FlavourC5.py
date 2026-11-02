@@ -28,6 +28,7 @@ from Numerical.matching.GeneralT3MultiModelNeutrinos import (
 ROOT = Path(__file__).resolve().parents[2]
 EVALUATOR_WL = ROOT / 'Lagrangian' / 'EvaluateGeneralC5Channels.wl'
 MIXED = frozenset(('B_-1', 'C_-1'))
+SELF = frozenset(('A_-2', 'A_+0', 'D_-2', 'D_+0', 'E_-2', 'E_+0'))
 MARKER = re.compile(r'^T3YUK(y1Conj|y2Conj|y1|y2)(Bar|Plain)$')
 
 
@@ -121,6 +122,58 @@ def flavour_c5_from_channels(rows: list[dict], yukawas: Mapping[str, np.ndarray]
     return result
 
 
+
+def validate_real_self_bilinear(model: str, value: complex) -> complex:
+    """Accept a signed REAL self-bilinear, never an unimplemented complex phase.
+
+    The fixed Matchete mass basis is S=(S_minus+i S_plus)/sqrt(2), with
+    m_minus^2=m_S^2-2 Re(mu^2) and m_plus^2=m_S^2+2 Re(mu^2).
+    Tiny imaginary floating-point noise may be discarded at the same relative
+    tolerance as the original positive-real-only implementation.
+    """
+    _require(model in SELF, 'self-bilinear model not supported: ' + str(model))
+    kappa = complex(value)
+    _require(math.isfinite(kappa.real) and math.isfinite(kappa.imag),
+             'nonfinite self-bilinear at scalar threshold')
+    tol = 1e-10 * max(1.0, abs(kappa))
+    _require(abs(kappa.imag) <= tol,
+             f'{model}: complex self-bilinear phase unsupported; '
+             f'evolved mu2={kappa.real:.17g}{kappa.imag:+.17g}j GeV^2 '
+             f'(imaginary tolerance {tol:.3g} GeV^2)')
+    _require(kappa.real != 0.0,
+             f'{model}: zero self-bilinear requires the degenerate-mass limit')
+    return complex(kappa.real, 0.0)
+
+
+def signed_real_mass_basis_parameters(model: str, parameters: dict,
+                                       kappa: complex, *,
+                                       coefficient_symbols: set[str] | None = None) -> dict:
+    """Map |mu2|-ordered mass parameters to the FIXED real-field convention.
+
+    GeneralT3MultiModelNeutrinos.mass_params() returns masses ordered by
+    absolute kappa, while RunT3GeneralSelfMassBasis.wl fixes the *fields*, not
+    mass ordering. For negative real kappa, exchange the numerical masses of
+    the + and - labelled Matchete fields. Yukawas and quartics are untouched.
+    """
+    kappa = validate_real_self_bilinear(model, kappa)
+    result = dict(parameters)
+    if kappa.real < 0:
+        _require(not coefficient_symbols or 'T3NeutralPhase' not in coefficient_symbols,
+                 f'{model}: coefficient contains T3NeutralPhase; negative-real '
+                 'basis change requires an explicit phase derivation')
+        species = '2' if model.endswith('-2') else '1'
+        plus = f'T3{species}PlusMass'
+        minus = f'T3{species}MinusMass'
+        _require(plus in result and minus in result,
+                 f'{model}: split scalar mass symbols are missing')
+        result[plus], result[minus] = result[minus], result[plus]
+        # The matching source is a fixed real-field basis; a phase imported
+        # from mass_params' *positive-kappa* ordering is not used here.
+        if 'T3NeutralPhase' in result:
+            result['T3NeutralPhase'] = 1.0
+    return result
+
+
 @dataclass
 class GeneralT3FlavourC5:
     """Callable with the same evaluate(uv_state, eft_state) API as old C5 kernels."""
@@ -162,18 +215,17 @@ class GeneralT3FlavourC5:
             _require(source in eft, 'no running scalar splitting for ' + source)
             kappa = complex(eft[source]['real'], eft[source]['imag']) if isinstance(
                 eft[source], dict) else complex(eft[source])
-            if self.model in {'A_-2','A_+0','D_-2','D_+0','E_-2','E_+0'}:
-                _require(abs(kappa) > 0.0, 'self-bilinear mass basis requires nonzero mu2')
-                _require(kappa.real > 0.0 and
-                         abs(kappa.imag) <= 1e-10 * max(1.0, abs(kappa)),
-                         'current real self-bilinear Matchete rotation only supports '
-                         'positive real mu2; complex-phase rotation not yet derived')
+            if self.model in SELF:
+                kappa = validate_real_self_bilinear(self.model, kappa)
         points = []
         mappings: list[str] = []
         for i, mf in enumerate(masses):
             scalars, notes = kernel_parameters(
                 self.symbols, self.model, uv, eft, mf,
                 kappa_override=kappa, strict_mapping=False)
+            if needed_splitting and self.model in SELF:
+                scalars = signed_real_mass_basis_parameters(
+                    self.model, scalars, kappa, coefficient_symbols=self.symbols)
             points.append({'index': i, 'couplings': scalars})
             mappings.extend(notes)
         with tempfile.TemporaryDirectory(prefix='t3_general_c5_') as temp:
@@ -198,8 +250,13 @@ class GeneralT3FlavourC5:
         c5 = flavour_c5_from_channels(raw_rows, yukawas, channels)
         self.last_diagnostics = {
             'matching_kind': 'full-general-Matchete-one-scale-Yukawa-channels',
-            'self_bilinear_real_mass_basis_candidate': self.model in {
-                'A_-2','A_+0','D_-2','D_+0','E_-2','E_+0'},
+            'self_bilinear_real_mass_basis_candidate': self.model in SELF,
+            'self_bilinear_signed_real_mass_labels': self.model in SELF,
+            'self_bilinear_negative_real_mu2': bool(
+                kappa is not None and self.model in SELF and kappa.real < 0),
+            'self_bilinear_mu2_at_scalar_threshold_gev2': (
+                {'real': float(kappa.real), 'imag': float(kappa.imag)}
+                if kappa is not None and self.model in SELF else None),
             'matched_yukawas': sorted(self.required_yukawas),
             'n_yukawa_channels': len(channels),
             'channels': channels,

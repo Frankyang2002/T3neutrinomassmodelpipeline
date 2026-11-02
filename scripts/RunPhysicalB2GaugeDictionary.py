@@ -8,7 +8,6 @@ import argparse
 from pathlib import Path
 import json
 import sys
-import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
@@ -37,15 +36,11 @@ def main() -> int:
     if not root.is_dir() or not (root/'Lagrangian').is_dir():
         print('BLOCKED: project root is not available: '+str(root));return 2
     try:
-        raw=subprocess.run(['git','-C',str(root),'rev-parse','HEAD'],
-            capture_output=True,text=True,timeout=6)
-        revision=raw.stdout.strip() if raw.returncode==0 else None
-    except (OSError,subprocess.TimeoutExpired):
-        revision=None
-    try:
         dictionary, channels=compute(root)
-        dictionary['source_inventory']['current_git_head']=revision
-        dictionary['source_inventory']['current_git_head_measured']=bool(revision)
+        # Use the project-root-validated HEAD measured by source_inventory.
+        # An independent `git -C root rev-parse HEAD` could accept an ancestor
+        # repository and incorrectly overwrite the validated provenance.
+        revision = dictionary['source_inventory']['current_git_head']
         dictionary['spurion_dirac']=spurion_phase_ward(False)
         dictionary['spurion_majorana']=spurion_phase_ward(True)
         status=('CONDITIONAL_NATIVE_CG_SNAPSHOT_LOADED' if

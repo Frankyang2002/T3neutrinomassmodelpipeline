@@ -1,0 +1,161 @@
+{
+	"format":"b2-native-rgbeta-formal-invariant-probe-v1",
+	"status":"FormalRegistriesCapturedPhysicalNormalisationPending",
+	"RGBeta_eps_downvalues_inputform":"{HoldPattern[eps[RGBeta`GroupsAndIndices`PackagePrivate`rep_, RGBeta`GroupsAndIndices`PackagePrivate`a_, RGBeta`GroupsAndIndices`PackagePrivate`a_]] :> 0}",
+	"RGBeta_del_downvalues_inputform":"{HoldPattern[del[RGBeta`GroupsAndIndices`PackagePrivate`rep_, RGBeta`GroupsAndIndices`PackagePrivate`a_, RGBeta`GroupsAndIndices`PackagePrivate`b_] \/;  !OrderedQ[{RGBeta`GroupsAndIndices`PackagePrivate`a, RGBeta`GroupsAndIndices`PackagePrivate`b}]] :> del[RGBeta`GroupsAndIndices`PackagePrivate`rep, RGBeta`GroupsAndIndices`PackagePrivate`b, RGBeta`GroupsAndIndices`PackagePrivate`a], HoldPattern[del[RGBeta`GroupsAndIndices`PackagePrivate`rep_, RGBeta`GroupsAndIndices`PackagePrivate`a_, RGBeta`GroupsAndIndices`PackagePrivate`a_]] :> Dim[RGBeta`GroupsAndIndices`PackagePrivate`rep], HoldPattern[del[Bar[RGBeta`GroupsAndIndices`PackagePrivate`rep_], RGBeta`GroupsAndIndices`PackagePrivate`a_, RGBeta`GroupsAndIndices`PackagePrivate`b_]] :> del[RGBeta`GroupsAndIndices`PackagePrivate`rep, RGBeta`GroupsAndIndices`PackagePrivate`a, RGBeta`GroupsAndIndices`PackagePrivate`b]}",
+	"RGBeta_delS2_downvalues_inputform":"{}",
+	"eps_example_inputform":"eps[SU2L[fund], 1, 2]",
+	"del_triplet_example_inputform":"Dim[SU2L[S2]]",
+	"delS2_example_inputform":"delS2[SU2L, 1, 1, 1]",
+	"five_classes":[
+		{
+			"family":"A",
+			"status":"RegistryAndFormalInvariantCaptured",
+			"dimensions_alpha":[
+				1,
+				3,
+				2,
+				0
+			],
+			"majorana":false,
+			"registered_yukawas":[
+				{
+					"coupling":"y1",
+					"formal_invariant_inputform":"eps[SU2L[fund], b2b, b2c]",
+					"actual_registered_fields":"{Bar[S1], l, F}"
+				},
+				{
+					"coupling":"y2",
+					"formal_invariant_inputform":"delS2[SU2L, b2a, b2b, b2c]",
+					"actual_registered_fields":"{S2, l, Fc}"
+				}
+			],
+			"registered_MF_invariant_formal":"eps[SU2L[fund], b2a, b2b]",
+			"registered_MF_fields":"{F, Fc}",
+			"mixing_invariant_formal":"delS2[SU2L, b2t, b2h, b2h2]",
+			"basic_portal_singlet_formal":"del[SU2L[fund], b2h, b2h2]*del[SU2L[S2], b2s, b2t]",
+			"physical_action_certified":false,
+			"native_numeric_RGBeta_component_axes_certified":false
+		},
+		{
+			"family":"B",
+			"status":"RegistryAndFormalInvariantCaptured",
+			"dimensions_alpha":[
+				2,
+				2,
+				1,
+				-1
+			],
+			"majorana":true,
+			"registered_yukawas":[
+				{
+					"coupling":"y1",
+					"formal_invariant_inputform":"eps[SU2L[fund], b2a, b2b]",
+					"actual_registered_fields":"{Bar[S1], l, F}"
+				},
+				{
+					"coupling":"y2",
+					"formal_invariant_inputform":"eps[SU2L[fund], b2a, b2b]",
+					"actual_registered_fields":"{S2, l, F}"
+				}
+			],
+			"registered_MF_invariant_formal":"1",
+			"registered_MF_fields":"{F, F}",
+			"mixing_invariant_formal":"(del[SU2L[fund], b2h, b2t]*del[SU2L[fund], b2h2, b2s])\/2 + (del[SU2L[fund], b2h, b2s]*del[SU2L[fund], b2h2, b2t])\/2",
+			"basic_portal_singlet_formal":"del[SU2L[fund], b2h, b2h2]*del[SU2L[fund], b2s, b2t]",
+			"physical_action_certified":false,
+			"native_numeric_RGBeta_component_axes_certified":false
+		},
+		{
+			"family":"C",
+			"status":"RegistryAndFormalInvariantCaptured",
+			"dimensions_alpha":[
+				2,
+				2,
+				3,
+				-1
+			],
+			"majorana":true,
+			"registered_yukawas":[
+				{
+					"coupling":"y1",
+					"formal_invariant_inputform":"delS2[SU2L, b2c, b2a, b2b]",
+					"actual_registered_fields":"{Bar[S1], l, F}"
+				},
+				{
+					"coupling":"y2",
+					"formal_invariant_inputform":"delS2[SU2L, b2c, b2a, b2b]",
+					"actual_registered_fields":"{S2, l, F}"
+				}
+			],
+			"registered_MF_invariant_formal":"del[SU2L[S2], b2a, b2b]",
+			"registered_MF_fields":"{F, F}",
+			"mixing_invariant_formal":"(del[SU2L[fund], b2h, b2t]*del[SU2L[fund], b2h2, b2s])\/2 + (del[SU2L[fund], b2h, b2s]*del[SU2L[fund], b2h2, b2t])\/2",
+			"basic_portal_singlet_formal":"del[SU2L[fund], b2h, b2h2]*del[SU2L[fund], b2s, b2t]",
+			"physical_action_certified":false,
+			"native_numeric_RGBeta_component_axes_certified":false
+		},
+		{
+			"family":"D",
+			"status":"RegistryAndFormalInvariantCaptured",
+			"dimensions_alpha":[
+				3,
+				1,
+				2,
+				0
+			],
+			"majorana":false,
+			"registered_yukawas":[
+				{
+					"coupling":"y1",
+					"formal_invariant_inputform":"delS2[SU2L, b2a, b2b, b2c]",
+					"actual_registered_fields":"{Bar[S1], l, F}"
+				},
+				{
+					"coupling":"y2",
+					"formal_invariant_inputform":"eps[SU2L[fund], b2b, b2c]",
+					"actual_registered_fields":"{S2, l, Fc}"
+				}
+			],
+			"registered_MF_invariant_formal":"eps[SU2L[fund], b2a, b2b]",
+			"registered_MF_fields":"{F, Fc}",
+			"mixing_invariant_formal":"delS2[SU2L, b2s, b2h, b2h2]",
+			"basic_portal_singlet_formal":"del[SU2L[fund], b2h, b2h2]",
+			"physical_action_certified":false,
+			"native_numeric_RGBeta_component_axes_certified":false
+		},
+		{
+			"family":"E",
+			"status":"RegistryAndFormalInvariantCaptured",
+			"dimensions_alpha":[
+				3,
+				3,
+				2,
+				0
+			],
+			"majorana":false,
+			"registered_yukawas":[
+				{
+					"coupling":"y1",
+					"formal_invariant_inputform":"delS2[SU2L, b2a, b2b, b2c]",
+					"actual_registered_fields":"{Bar[S1], l, F}"
+				},
+				{
+					"coupling":"y2",
+					"formal_invariant_inputform":"delS2[SU2L, b2a, b2b, b2c]",
+					"actual_registered_fields":"{S2, l, Fc}"
+				}
+			],
+			"registered_MF_invariant_formal":"eps[SU2L[fund], b2a, b2b]",
+			"registered_MF_fields":"{F, Fc}",
+			"mixing_invariant_formal":"((del[SU2L[fund], b2h, j$19509]*del[SU2L[fund], b2h2, i$19509])\/2 + (del[SU2L[fund], b2h, i$19509]*del[SU2L[fund], b2h2, j$19509])\/2)*delS2[SU2L, b2s, k$19509, l$19509]*delS2[SU2L, b2t, m$19509, n$19509]*eps[SU2L[fund], i$19509, k$19509]*eps[SU2L[fund], j$19509, m$19509]*eps[SU2L[fund], l$19509, n$19509]",
+			"basic_portal_singlet_formal":"del[SU2L[fund], b2h, b2h2]*del[SU2L[S2], b2s, b2t]",
+			"physical_action_certified":false,
+			"native_numeric_RGBeta_component_axes_certified":false
+		}
+	],
+	"numerical_component_axes_verified":false,
+	"physical_source_certified":false,
+	"full_RGBeta_action_normalisation_verified":false,
+	"comment":"Symbolic names\/DownValues do not establish numerical components or physical action prefactors"
+}

@@ -134,7 +134,15 @@ def canonical_git_blob(root: Path, rel: str, expected: str, head: str | None) ->
 def source_inventory(root: Path) -> dict[str, Any]:
     # Direct byte equality is strongest. Canonical Git equality is also valid
     # if path-specific clean filters account for Windows checkout bytes.
-    rev_rc, rev = git_result(root, 'rev-parse', 'HEAD')
+    # `git -C some/subdirectory` normally walks upwards to an ancestor repo.
+    # That ancestor is NOT evidence for the requested project root. Likewise,
+    # GIT_DIR/GIT_WORK_TREE in the environment can redirect Git. Accept a HEAD
+    # only if Git identifies this exact root as the worktree top level.
+    top_rc, top = git_result(root, 'rev-parse', '--show-toplevel')
+    top_path = Path(top).resolve() if top_rc == 0 and top else None
+    root_path = root.resolve()
+    top_matches_root = bool(top_path is not None and top_path == root_path)
+    rev_rc, rev = git_result(root, 'rev-parse', 'HEAD') if top_matches_root else (None, '')
     head = rev if rev_rc == 0 and re.fullmatch(r'[0-9a-f]{40}', rev) else None
     report = {}
     for rel, expected in SOURCE_BLOBS.items():
@@ -186,6 +194,8 @@ def source_inventory(root: Path) -> dict[str, Any]:
                 'Matchete portal Hermitian convention changed')
     return {'reference_commit': HEAD, 'current_git_head': head,
             'current_git_head_measured': head is not None,
+            'git_repository_root': str(top_path) if top_path is not None else None,
+            'git_repository_root_matches_project': top_matches_root,
             'source_files': report,
             'source_reference_matches': all(v['state'] == 'reference_match' for v in report.values()),
             'source_contract_guard_is_full_parser': False}

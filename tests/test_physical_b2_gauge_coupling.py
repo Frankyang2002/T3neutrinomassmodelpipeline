@@ -105,6 +105,7 @@ def test_untrusted_value_and_drift_detected(tmp_path):
     record=source_inventory(tmp_path)
     assert record['source_reference_matches'] is False
     assert record['current_git_head_measured'] is False
+    assert record['git_repository_root_matches_project'] is False
 
 
 def test_explicit_native_tensor_orientation_and_conjugation():
@@ -185,6 +186,7 @@ def test_windows_crlf_git_canonical_source_is_accepted(tmp_path, monkeypatch):
     assert status['source_reference_matches'] is False  # missing second file
     assert status['current_git_head']==head
     assert status['current_git_head_measured'] is True
+    assert status['git_repository_root_matches_project'] is True
     assert item['raw_worktree_git_blob_sha'] != expected
     assert item['git_canonical_blob_sha'] == expected
 
@@ -216,3 +218,16 @@ def test_untracked_file_cannot_impersonate_reference_git_blob(tmp_path, monkeypa
     status=b2.source_inventory(tmp_path)['source_files'][rel]
     assert status['state']=='drift_or_unreviewed'
     assert status['git_canonical_matches_reference'] is False
+
+
+def test_ancestor_git_repository_is_not_the_requested_project(tmp_path):
+    # Git walks upward from a nested directory, even when that directory has
+    # no .git. Reject an ancestor HEAD rather than misreporting its revision.
+    _checkout_with_windows_line_endings(tmp_path)
+    nested = tmp_path / "nested" / "not_a_repository_root"
+    nested.mkdir(parents=True)
+    record = source_inventory(nested)
+    assert record['git_repository_root_matches_project'] is False
+    assert record['current_git_head_measured'] is False
+    assert record['current_git_head'] is None
+    assert record['source_reference_matches'] is False

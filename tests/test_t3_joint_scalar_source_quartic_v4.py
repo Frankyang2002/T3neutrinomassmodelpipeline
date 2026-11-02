@@ -51,8 +51,11 @@ def endpoint(source,extra=None):
 
 class V4Tests(unittest.TestCase):
     def test_source_path_and_independent_channels(self):
-        self.assertTrue(str(source_seed_path(Path('output/full16_symbolic'),'A_-4'))
-                        .endswith('T3_A_alpha_m4/data/eft1_after_F_scalar_quartic_seed.json'))
+        self.assertEqual(
+            source_seed_path(Path('output/full16_symbolic'), 'A_-4'),
+            Path('output/full16_symbolic') / 'T3_A_alpha_m4' / 'data'
+            / 'eft1_after_F_scalar_quartic_seed.json',
+        )
         x=sp.Symbol('x')
         class FakeSparse:
             def __init__(self,entries):self.entries=entries

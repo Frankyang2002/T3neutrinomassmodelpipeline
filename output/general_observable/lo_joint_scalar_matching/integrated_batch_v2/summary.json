@@ -1,0 +1,561 @@
+{
+  "format": "t3-joint-scalar-integrated-conditional-batch-v2",
+  "status": "SourcePivotAuditComplete",
+  "model_count": 16,
+  "models_pivot_verified": 16,
+  "conditional_response_models": 0,
+  "blocked_models": 0,
+  "source_release_dir": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_fermion_boundary\\releases\\source_021dcc1e8fe8ba0f",
+  "source_release_summary_sha256": "e515d82d118284bab72dbad6ba593aabc529aea08f0a7e47b08cd5049361cfcd",
+  "quartic_pivot_dir": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_eft1_mixing\\source_kernel_v1",
+  "physical_C5_certified": false,
+  "certified_spinor_normalization": false,
+  "sequence": "UV -> integrate all F at muF -> EFT1(S1,S2) -> integrate all scalars at one muS -> SMEFT",
+  "note": "Source/kernel audits are real repository cross-checks; no quartic/mass inputs are invented. Optional conditional output is per unknown GammaCC factor and is not a certified physical C5 or a complete full-theory one-loop result.",
+  "models": [
+    {
+      "model": "A_-4",
+      "status": "source_and_quartic_kernel_verified",
+      "physical_C5_certified": false,
+      "source_boundary_sha256": "a51a31e437628ab8a1e6adfaf054bf1da5309b158574971999f8a2bce3bb80ed",
+      "mu_f_gev": 100000.0,
+      "source_matrix_shape": [
+        3,
+        3,
+        2,
+        2,
+        8,
+        8
+      ],
+      "source_count": 1,
+      "quartic_pivot_audit": {
+        "pivot_kernel_sha256": "fa2cf6750282d59617b1ee2765a2b76b3d6897b8512b1fbfb9562c443ac22b8a",
+        "source_count": 1,
+        "pivot_per_source_channels": 8,
+        "distinct_scalar_pairs": 8,
+        "cancelled_source_pairs_omitted_by_kernel": 0,
+        "source_vs_kernel_max_abs_error": 0.0,
+        "pivot_convention": "4*(2-delta_ab)*C_formal[lepton_SU2=1,lepton_SU2=1,a,b]",
+        "physical_normalization_certified": false
+      },
+      "source_GammaCC_normalization_certified": false,
+      "scalar_background_contract": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\integrated_batch_v2\\scalar_background_contracts\\A_m4.json",
+      "remaining_blockers": [
+        "numerical scalar EFT1 quartic tensor at muS not provided",
+        "numerical positive heavy-scalar mass-squared matrix at muS not provided",
+        "absolute signed Matchete GammaCC/Weyl normalization unresolved",
+        "possible hard F and other operator contributions not certified"
+      ]
+    },
+    {
+      "model": "A_-2",
+      "status": "source_and_quartic_kernel_verified",
+      "physical_C5_certified": false,
+      "source_boundary_sha256": "4109d135dcb5080ccb3ae78ebf670ee4c58a596e7ff4a14d44d91a8c94abc805",
+      "mu_f_gev": 100000.0,
+      "source_matrix_shape": [
+        3,
+        3,
+        2,
+        2,
+        8,
+        8
+      ],
+      "source_count": 4,
+      "quartic_pivot_audit": {
+        "pivot_kernel_sha256": "0654b54b204e89408212c80e51f3a1934c2135ca1fcc2dfaee5027c402e85263",
+        "source_count": 4,
+        "pivot_per_source_channels": 16,
+        "distinct_scalar_pairs": 8,
+        "cancelled_source_pairs_omitted_by_kernel": 0,
+        "source_vs_kernel_max_abs_error": 0.0,
+        "pivot_convention": "4*(2-delta_ab)*C_formal[lepton_SU2=1,lepton_SU2=1,a,b]",
+        "physical_normalization_certified": false
+      },
+      "source_GammaCC_normalization_certified": false,
+      "scalar_background_contract": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\integrated_batch_v2\\scalar_background_contracts\\A_m2.json",
+      "remaining_blockers": [
+        "numerical scalar EFT1 quartic tensor at muS not provided",
+        "numerical positive heavy-scalar mass-squared matrix at muS not provided",
+        "absolute signed Matchete GammaCC/Weyl normalization unresolved",
+        "possible hard F and other operator contributions not certified"
+      ]
+    },
+    {
+      "model": "A_+0",
+      "status": "source_and_quartic_kernel_verified",
+      "physical_C5_certified": false,
+      "source_boundary_sha256": "8b6cf6714a1193e4d44e865152d87e576428421ab9207da29aee9369022bdc89",
+      "mu_f_gev": 100000.0,
+      "source_matrix_shape": [
+        3,
+        3,
+        2,
+        2,
+        8,
+        8
+      ],
+      "source_count": 4,
+      "quartic_pivot_audit": {
+        "pivot_kernel_sha256": "ae01926135a2c8edbaa7144e0ad97252c42fdb30fb174bfa9dbe6fe9ddf797c8",
+        "source_count": 4,
+        "pivot_per_source_channels": 16,
+        "distinct_scalar_pairs": 8,
+        "cancelled_source_pairs_omitted_by_kernel": 0,
+        "source_vs_kernel_max_abs_error": 0.0,
+        "pivot_convention": "4*(2-delta_ab)*C_formal[lepton_SU2=1,lepton_SU2=1,a,b]",
+        "physical_normalization_certified": false
+      },
+      "source_GammaCC_normalization_certified": false,
+      "scalar_background_contract": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\integrated_batch_v2\\scalar_background_contracts\\A_p0.json",
+      "remaining_blockers": [
+        "numerical scalar EFT1 quartic tensor at muS not provided",
+        "numerical positive heavy-scalar mass-squared matrix at muS not provided",
+        "absolute signed Matchete GammaCC/Weyl normalization unresolved",
+        "possible hard F and other operator contributions not certified"
+      ]
+    },
+    {
+      "model": "B_-3",
+      "status": "source_and_quartic_kernel_verified",
+      "physical_C5_certified": false,
+      "source_boundary_sha256": "d90d991722162dcb6b98e1a856805ba8ea0a2e801818924c8615acf16f32f535",
+      "mu_f_gev": 100000.0,
+      "source_matrix_shape": [
+        3,
+        3,
+        2,
+        2,
+        8,
+        8
+      ],
+      "source_count": 1,
+      "quartic_pivot_audit": {
+        "pivot_kernel_sha256": "297738fefd9135d64fe51c2eeb0317a011a68d769b9bd3ed72521dec887330a1",
+        "source_count": 1,
+        "pivot_per_source_channels": 4,
+        "distinct_scalar_pairs": 4,
+        "cancelled_source_pairs_omitted_by_kernel": 0,
+        "source_vs_kernel_max_abs_error": 0.0,
+        "pivot_convention": "4*(2-delta_ab)*C_formal[lepton_SU2=1,lepton_SU2=1,a,b]",
+        "physical_normalization_certified": false
+      },
+      "source_GammaCC_normalization_certified": false,
+      "scalar_background_contract": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\integrated_batch_v2\\scalar_background_contracts\\B_m3.json",
+      "remaining_blockers": [
+        "numerical scalar EFT1 quartic tensor at muS not provided",
+        "numerical positive heavy-scalar mass-squared matrix at muS not provided",
+        "absolute signed Matchete GammaCC/Weyl normalization unresolved",
+        "possible hard F and other operator contributions not certified"
+      ]
+    },
+    {
+      "model": "B_-1",
+      "status": "source_and_quartic_kernel_verified",
+      "physical_C5_certified": false,
+      "source_boundary_sha256": "6a4d1531a9c52ebae69e73cf582196a29bf858027b4511d2771ad3d1eee103b4",
+      "mu_f_gev": 100000.0,
+      "source_matrix_shape": [
+        3,
+        3,
+        2,
+        2,
+        8,
+        8
+      ],
+      "source_count": 10,
+      "quartic_pivot_audit": {
+        "pivot_kernel_sha256": "0702670e9840189c6a365169dd749789f44d353c7f40be973d671366584e9664",
+        "source_count": 10,
+        "pivot_per_source_channels": 34,
+        "distinct_scalar_pairs": 10,
+        "cancelled_source_pairs_omitted_by_kernel": 0,
+        "source_vs_kernel_max_abs_error": 0.0,
+        "pivot_convention": "4*(2-delta_ab)*C_formal[lepton_SU2=1,lepton_SU2=1,a,b]",
+        "physical_normalization_certified": false
+      },
+      "source_GammaCC_normalization_certified": false,
+      "scalar_background_contract": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\integrated_batch_v2\\scalar_background_contracts\\B_m1.json",
+      "remaining_blockers": [
+        "numerical scalar EFT1 quartic tensor at muS not provided",
+        "numerical positive heavy-scalar mass-squared matrix at muS not provided",
+        "absolute signed Matchete GammaCC/Weyl normalization unresolved",
+        "possible hard F and other operator contributions not certified"
+      ]
+    },
+    {
+      "model": "B_+1",
+      "status": "source_and_quartic_kernel_verified",
+      "physical_C5_certified": false,
+      "source_boundary_sha256": "ed0ec711732b8730495b28b0b5c2a738b6ed03f420d236b2b10900fd02a2bda7",
+      "mu_f_gev": 100000.0,
+      "source_matrix_shape": [
+        3,
+        3,
+        2,
+        2,
+        8,
+        8
+      ],
+      "source_count": 1,
+      "quartic_pivot_audit": {
+        "pivot_kernel_sha256": "8f21e1ebf6ad1cc07e738827936b5653735f2870303b0de0ae06224e095fbf7e",
+        "source_count": 1,
+        "pivot_per_source_channels": 4,
+        "distinct_scalar_pairs": 4,
+        "cancelled_source_pairs_omitted_by_kernel": 0,
+        "source_vs_kernel_max_abs_error": 0.0,
+        "pivot_convention": "4*(2-delta_ab)*C_formal[lepton_SU2=1,lepton_SU2=1,a,b]",
+        "physical_normalization_certified": false
+      },
+      "source_GammaCC_normalization_certified": false,
+      "scalar_background_contract": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\integrated_batch_v2\\scalar_background_contracts\\B_p1.json",
+      "remaining_blockers": [
+        "numerical scalar EFT1 quartic tensor at muS not provided",
+        "numerical positive heavy-scalar mass-squared matrix at muS not provided",
+        "absolute signed Matchete GammaCC/Weyl normalization unresolved",
+        "possible hard F and other operator contributions not certified"
+      ]
+    },
+    {
+      "model": "C_-3",
+      "status": "source_and_quartic_kernel_verified",
+      "physical_C5_certified": false,
+      "source_boundary_sha256": "38d938f205f44727c5a756ba1027c2839c3569c08886495de1bd90a8e72671b1",
+      "mu_f_gev": 100000.0,
+      "source_matrix_shape": [
+        3,
+        3,
+        2,
+        2,
+        8,
+        8
+      ],
+      "source_count": 2,
+      "quartic_pivot_audit": {
+        "pivot_kernel_sha256": "1530af4c7636ac4cc1575c73291d458fd6a26e28d847a5d9c548d6ce09e22745",
+        "source_count": 2,
+        "pivot_per_source_channels": 4,
+        "distinct_scalar_pairs": 4,
+        "cancelled_source_pairs_omitted_by_kernel": 0,
+        "source_vs_kernel_max_abs_error": 0.0,
+        "pivot_convention": "4*(2-delta_ab)*C_formal[lepton_SU2=1,lepton_SU2=1,a,b]",
+        "physical_normalization_certified": false
+      },
+      "source_GammaCC_normalization_certified": false,
+      "scalar_background_contract": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\integrated_batch_v2\\scalar_background_contracts\\C_m3.json",
+      "remaining_blockers": [
+        "numerical scalar EFT1 quartic tensor at muS not provided",
+        "numerical positive heavy-scalar mass-squared matrix at muS not provided",
+        "absolute signed Matchete GammaCC/Weyl normalization unresolved",
+        "possible hard F and other operator contributions not certified"
+      ]
+    },
+    {
+      "model": "C_-1",
+      "status": "source_and_quartic_kernel_verified",
+      "physical_C5_certified": false,
+      "source_boundary_sha256": "e9e181f75309e976ad84d222b80e9c7958fb2bbb206fb6b076d9f7f3eb26198e",
+      "mu_f_gev": 100000.0,
+      "source_matrix_shape": [
+        3,
+        3,
+        2,
+        2,
+        8,
+        8
+      ],
+      "source_count": 12,
+      "quartic_pivot_audit": {
+        "pivot_kernel_sha256": "f36766aae8daa72558e22721260f74eaa427e896d674bc1cee112bdfdaa7eaeb",
+        "source_count": 12,
+        "pivot_per_source_channels": 34,
+        "distinct_scalar_pairs": 10,
+        "cancelled_source_pairs_omitted_by_kernel": 0,
+        "source_vs_kernel_max_abs_error": 0.0,
+        "pivot_convention": "4*(2-delta_ab)*C_formal[lepton_SU2=1,lepton_SU2=1,a,b]",
+        "physical_normalization_certified": false
+      },
+      "source_GammaCC_normalization_certified": false,
+      "scalar_background_contract": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\integrated_batch_v2\\scalar_background_contracts\\C_m1.json",
+      "remaining_blockers": [
+        "numerical scalar EFT1 quartic tensor at muS not provided",
+        "numerical positive heavy-scalar mass-squared matrix at muS not provided",
+        "absolute signed Matchete GammaCC/Weyl normalization unresolved",
+        "possible hard F and other operator contributions not certified"
+      ]
+    },
+    {
+      "model": "C_+1",
+      "status": "source_and_quartic_kernel_verified",
+      "physical_C5_certified": false,
+      "source_boundary_sha256": "d1841c22ad51884884bb3e296b13ac8e9e6f7b7f1cbe721b08016bf3562d3def",
+      "mu_f_gev": 100000.0,
+      "source_matrix_shape": [
+        3,
+        3,
+        2,
+        2,
+        8,
+        8
+      ],
+      "source_count": 2,
+      "quartic_pivot_audit": {
+        "pivot_kernel_sha256": "c0ecb01d75a3661f2858ce43e4e51bf21799b6402c067c80bfd973c60e71ccde",
+        "source_count": 2,
+        "pivot_per_source_channels": 4,
+        "distinct_scalar_pairs": 4,
+        "cancelled_source_pairs_omitted_by_kernel": 0,
+        "source_vs_kernel_max_abs_error": 0.0,
+        "pivot_convention": "4*(2-delta_ab)*C_formal[lepton_SU2=1,lepton_SU2=1,a,b]",
+        "physical_normalization_certified": false
+      },
+      "source_GammaCC_normalization_certified": false,
+      "scalar_background_contract": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\integrated_batch_v2\\scalar_background_contracts\\C_p1.json",
+      "remaining_blockers": [
+        "numerical scalar EFT1 quartic tensor at muS not provided",
+        "numerical positive heavy-scalar mass-squared matrix at muS not provided",
+        "absolute signed Matchete GammaCC/Weyl normalization unresolved",
+        "possible hard F and other operator contributions not certified"
+      ]
+    },
+    {
+      "model": "D_-2",
+      "status": "source_and_quartic_kernel_verified",
+      "physical_C5_certified": false,
+      "source_boundary_sha256": "cdcb662da4bce608180c7b927e2564069b15d04bdb43876d0ffba9140fbe1af7",
+      "mu_f_gev": 100000.0,
+      "source_matrix_shape": [
+        3,
+        3,
+        2,
+        2,
+        8,
+        8
+      ],
+      "source_count": 4,
+      "quartic_pivot_audit": {
+        "pivot_kernel_sha256": "d9f7d99f0dd495ecec0ed05ec6728a3b05be2e4b4970a19a00495dff285d8ffa",
+        "source_count": 4,
+        "pivot_per_source_channels": 16,
+        "distinct_scalar_pairs": 4,
+        "cancelled_source_pairs_omitted_by_kernel": 4,
+        "source_vs_kernel_max_abs_error": 0.0,
+        "pivot_convention": "4*(2-delta_ab)*C_formal[lepton_SU2=1,lepton_SU2=1,a,b]",
+        "physical_normalization_certified": false
+      },
+      "source_GammaCC_normalization_certified": false,
+      "scalar_background_contract": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\integrated_batch_v2\\scalar_background_contracts\\D_m2.json",
+      "remaining_blockers": [
+        "numerical scalar EFT1 quartic tensor at muS not provided",
+        "numerical positive heavy-scalar mass-squared matrix at muS not provided",
+        "absolute signed Matchete GammaCC/Weyl normalization unresolved",
+        "possible hard F and other operator contributions not certified"
+      ]
+    },
+    {
+      "model": "D_+0",
+      "status": "source_and_quartic_kernel_verified",
+      "physical_C5_certified": false,
+      "source_boundary_sha256": "c2eb897e8518c055f06001831e03dc3f5052ec226dc4526019fd644d20c63cb1",
+      "mu_f_gev": 100000.0,
+      "source_matrix_shape": [
+        3,
+        3,
+        2,
+        2,
+        8,
+        8
+      ],
+      "source_count": 4,
+      "quartic_pivot_audit": {
+        "pivot_kernel_sha256": "468641cd540bf888957bd8724c061042a2f8de5408218997597f6a7f7e46e69d",
+        "source_count": 4,
+        "pivot_per_source_channels": 16,
+        "distinct_scalar_pairs": 4,
+        "cancelled_source_pairs_omitted_by_kernel": 4,
+        "source_vs_kernel_max_abs_error": 0.0,
+        "pivot_convention": "4*(2-delta_ab)*C_formal[lepton_SU2=1,lepton_SU2=1,a,b]",
+        "physical_normalization_certified": false
+      },
+      "source_GammaCC_normalization_certified": false,
+      "scalar_background_contract": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\integrated_batch_v2\\scalar_background_contracts\\D_p0.json",
+      "remaining_blockers": [
+        "numerical scalar EFT1 quartic tensor at muS not provided",
+        "numerical positive heavy-scalar mass-squared matrix at muS not provided",
+        "absolute signed Matchete GammaCC/Weyl normalization unresolved",
+        "possible hard F and other operator contributions not certified"
+      ]
+    },
+    {
+      "model": "D_+2",
+      "status": "source_and_quartic_kernel_verified",
+      "physical_C5_certified": false,
+      "source_boundary_sha256": "ffe6b8ee2c899a9e617290d8d7f54cb0b34f903675e4665a2a8491c4c766f5a7",
+      "mu_f_gev": 100000.0,
+      "source_matrix_shape": [
+        3,
+        3,
+        2,
+        2,
+        8,
+        8
+      ],
+      "source_count": 1,
+      "quartic_pivot_audit": {
+        "pivot_kernel_sha256": "43a954170d8cdea8777450cffd8337b987594b4f6f134dc824e1dc82e5ed9d69",
+        "source_count": 1,
+        "pivot_per_source_channels": 8,
+        "distinct_scalar_pairs": 8,
+        "cancelled_source_pairs_omitted_by_kernel": 0,
+        "source_vs_kernel_max_abs_error": 0.0,
+        "pivot_convention": "4*(2-delta_ab)*C_formal[lepton_SU2=1,lepton_SU2=1,a,b]",
+        "physical_normalization_certified": false
+      },
+      "source_GammaCC_normalization_certified": false,
+      "scalar_background_contract": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\integrated_batch_v2\\scalar_background_contracts\\D_p2.json",
+      "remaining_blockers": [
+        "numerical scalar EFT1 quartic tensor at muS not provided",
+        "numerical positive heavy-scalar mass-squared matrix at muS not provided",
+        "absolute signed Matchete GammaCC/Weyl normalization unresolved",
+        "possible hard F and other operator contributions not certified"
+      ]
+    },
+    {
+      "model": "E_-4",
+      "status": "source_and_quartic_kernel_verified",
+      "physical_C5_certified": false,
+      "source_boundary_sha256": "438c456af08cee4dd23438ec5e28c8f11cc3f0cebadc266f3d9a15bfdf19660f",
+      "mu_f_gev": 100000.0,
+      "source_matrix_shape": [
+        3,
+        3,
+        2,
+        2,
+        12,
+        12
+      ],
+      "source_count": 2,
+      "quartic_pivot_audit": {
+        "pivot_kernel_sha256": "760da5b4828c569bb49fb759ee224977271044689ab80d6a42ece5428ae3e0d6",
+        "source_count": 2,
+        "pivot_per_source_channels": 16,
+        "distinct_scalar_pairs": 16,
+        "cancelled_source_pairs_omitted_by_kernel": 0,
+        "source_vs_kernel_max_abs_error": 0.0,
+        "pivot_convention": "4*(2-delta_ab)*C_formal[lepton_SU2=1,lepton_SU2=1,a,b]",
+        "physical_normalization_certified": false
+      },
+      "source_GammaCC_normalization_certified": false,
+      "scalar_background_contract": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\integrated_batch_v2\\scalar_background_contracts\\E_m4.json",
+      "remaining_blockers": [
+        "numerical scalar EFT1 quartic tensor at muS not provided",
+        "numerical positive heavy-scalar mass-squared matrix at muS not provided",
+        "absolute signed Matchete GammaCC/Weyl normalization unresolved",
+        "possible hard F and other operator contributions not certified"
+      ]
+    },
+    {
+      "model": "E_-2",
+      "status": "source_and_quartic_kernel_verified",
+      "physical_C5_certified": false,
+      "source_boundary_sha256": "5e1a3f3d6d25b2d848d8edbe421cf9311cd664756384de04756d261697cce9fd",
+      "mu_f_gev": 100000.0,
+      "source_matrix_shape": [
+        3,
+        3,
+        2,
+        2,
+        12,
+        12
+      ],
+      "source_count": 8,
+      "quartic_pivot_audit": {
+        "pivot_kernel_sha256": "3cee68ed962547c34163183c7b569f01c774d1de15bdb8a228ca24e9a740ef5d",
+        "source_count": 8,
+        "pivot_per_source_channels": 32,
+        "distinct_scalar_pairs": 8,
+        "cancelled_source_pairs_omitted_by_kernel": 8,
+        "source_vs_kernel_max_abs_error": 0.0,
+        "pivot_convention": "4*(2-delta_ab)*C_formal[lepton_SU2=1,lepton_SU2=1,a,b]",
+        "physical_normalization_certified": false
+      },
+      "source_GammaCC_normalization_certified": false,
+      "scalar_background_contract": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\integrated_batch_v2\\scalar_background_contracts\\E_m2.json",
+      "remaining_blockers": [
+        "numerical scalar EFT1 quartic tensor at muS not provided",
+        "numerical positive heavy-scalar mass-squared matrix at muS not provided",
+        "absolute signed Matchete GammaCC/Weyl normalization unresolved",
+        "possible hard F and other operator contributions not certified"
+      ]
+    },
+    {
+      "model": "E_+0",
+      "status": "source_and_quartic_kernel_verified",
+      "physical_C5_certified": false,
+      "source_boundary_sha256": "221adb509f3d0ca73f534c781aaf0ba4a6ad20346f6c68dc68880506ce6d0880",
+      "mu_f_gev": 100000.0,
+      "source_matrix_shape": [
+        3,
+        3,
+        2,
+        2,
+        12,
+        12
+      ],
+      "source_count": 8,
+      "quartic_pivot_audit": {
+        "pivot_kernel_sha256": "b119d4c921e312b86113215a70dfbbca33cf6d370db999598c5a5768f6e3d6d7",
+        "source_count": 8,
+        "pivot_per_source_channels": 32,
+        "distinct_scalar_pairs": 8,
+        "cancelled_source_pairs_omitted_by_kernel": 8,
+        "source_vs_kernel_max_abs_error": 0.0,
+        "pivot_convention": "4*(2-delta_ab)*C_formal[lepton_SU2=1,lepton_SU2=1,a,b]",
+        "physical_normalization_certified": false
+      },
+      "source_GammaCC_normalization_certified": false,
+      "scalar_background_contract": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\integrated_batch_v2\\scalar_background_contracts\\E_p0.json",
+      "remaining_blockers": [
+        "numerical scalar EFT1 quartic tensor at muS not provided",
+        "numerical positive heavy-scalar mass-squared matrix at muS not provided",
+        "absolute signed Matchete GammaCC/Weyl normalization unresolved",
+        "possible hard F and other operator contributions not certified"
+      ]
+    },
+    {
+      "model": "E_+2",
+      "status": "source_and_quartic_kernel_verified",
+      "physical_C5_certified": false,
+      "source_boundary_sha256": "ffc29b67266bd9057032c543f42993a31d94c1c633593a7f60f876eb636ec917",
+      "mu_f_gev": 100000.0,
+      "source_matrix_shape": [
+        3,
+        3,
+        2,
+        2,
+        12,
+        12
+      ],
+      "source_count": 2,
+      "quartic_pivot_audit": {
+        "pivot_kernel_sha256": "34a98d36ea17308bb7581061cea285ee3f6758f4736445734e820d4b11c88424",
+        "source_count": 2,
+        "pivot_per_source_channels": 16,
+        "distinct_scalar_pairs": 16,
+        "cancelled_source_pairs_omitted_by_kernel": 0,
+        "source_vs_kernel_max_abs_error": 0.0,
+        "pivot_convention": "4*(2-delta_ab)*C_formal[lepton_SU2=1,lepton_SU2=1,a,b]",
+        "physical_normalization_certified": false
+      },
+      "source_GammaCC_normalization_certified": false,
+      "scalar_background_contract": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\integrated_batch_v2\\scalar_background_contracts\\E_p2.json",
+      "remaining_blockers": [
+        "numerical scalar EFT1 quartic tensor at muS not provided",
+        "numerical positive heavy-scalar mass-squared matrix at muS not provided",
+        "absolute signed Matchete GammaCC/Weyl normalization unresolved",
+        "possible hard F and other operator contributions not certified"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "format": "t3-joint-scalar-conditional-background-v1",
+  "model": "D_+0",
+  "source_boundary_sha256": "c2eb897e8518c055f06001831e03dc3f5052ec226dc4526019fd644d20c63cb1",
+  "source_scalar_real_labels": [
+    "T3Scalar1Minus",
+    "T3Scalar1Minus",
+    "T3Scalar1Minus",
+    "T3Scalar1Plus",
+    "T3Scalar1Plus",
+    "T3Scalar1Plus",
+    "NewScalar2",
+    "NewScalar2"
+  ],
+  "renormalization_scheme": "MSbar",
+  "tensor_convention": "T3_REAL_LLSS_HHSS_WEINBERG_v1",
+  "mu_f_gev": 100000.0,
+  "mu_s_gev": null,
+  "reference_scale_gev": null,
+  "scalar_mass_origin": null,
+  "same_muS_quartic_and_mass": true,
+  "no_separate_scalar_threshold": true,
+  "tensor_npz": "D_p0.npz",
+  "quartic_channel_names": [],
+  "provenance": {
+    "source": "REPLACE_WITH_ACTUAL_SCALAR_EFT1_SOURCE",
+    "quartic_potential_normalization": "V=lambda_abcd*phi_a*phi_b*phi_c*phi_d/4!"
+  },
+  "REQUIRED_NPZ_ARRAYS_WITH_SHAPES": {
+    "source_to_matching_real_U": [
+      8,
+      8
+    ],
+    "lambda_HHSS_muS": [
+      4,
+      4,
+      8,
+      8
+    ],
+    "mass_squared_gev2_muS": [
+      8,
+      8
+    ],
+    "lambda_HHSS_channels_muS": [
+      "k",
+      4,
+      4,
+      8,
+      8
+    ]
+  },
+  "STATUS": "INCOMPLETE_CONTRACT_NOT_VALID_INPUT",
+  "IMPORTANT": "No mass, quartic, GammaCC sign, scale, or C5 is guessed. This template cannot be run until replaced by the true scalar EFT1 tensors."
+}

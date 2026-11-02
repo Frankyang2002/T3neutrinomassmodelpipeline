@@ -1,0 +1,401 @@
+{
+  "EFT_or_running_performed": false,
+  "checks": {
+    "conditional_all16_residuals_small": true,
+    "exact_chosen_basis_weyl_algebra": true,
+    "native_mass_yukawa_and_hc_structure": true,
+    "restricted_flags_checked": true
+  },
+  "chosen_basis_algebra": {
+    "absolute_native_GammaCC_phase_measured": false,
+    "canonical_YZ": "Z1=-conjugate(y1 * native_CG1); Y2=-conjugate(y2 * native_CG2)",
+    "chosen_C": "+i gamma^2 gamma^0",
+    "dirac_mass": "Bar[F] F = chi epsilon xi + h.c.",
+    "epsilon_12": 1,
+    "exact_chosen_basis_checked": true,
+    "majorana_free_mass_multiplier": "1/2",
+    "majorana_mass": "Bar[F] F = chi epsilon chi + h.c.",
+    "original_y1": "Bar[L] CConj[F] = (l epsilon chi)^dagger",
+    "original_y2": "Bar[L] F = (l epsilon xi)^dagger"
+  },
+  "execution_utc": "2026-11-02T23:35:57.662391+00:00",
+  "format": "t3-b1-native-source-factor-audit-v2",
+  "guarded_source_blobs": {
+    "Lagrangian/interactions/T3Topology.wl": {
+      "crlf_normalization_applied": false,
+      "git_blob_sha1": "a45a099a8b766cbad0114a0559cb0bcb80895649",
+      "github_main_blob_match": true,
+      "sha256": "e6e24c4a673bddff980885f8354b388ceaa19e53c8b2faa79ba3289a87de1511",
+      "source_bytes_match_after_line_ending_normalization": true,
+      "working_tree_raw_git_blob_sha1": "a45a099a8b766cbad0114a0559cb0bcb80895649"
+    },
+    "Lagrangian/model/LagrangianBuilder.wl": {
+      "crlf_normalization_applied": false,
+      "git_blob_sha1": "98d549cda503b751380dc10c4a56212e5312ccd8",
+      "github_main_blob_match": true,
+      "sha256": "dbe102874c84c0ae8013eeceb78571e0ae3d44f35e95cf9c8d1e0ba952f32e8b",
+      "source_bytes_match_after_line_ending_normalization": true,
+      "working_tree_raw_git_blob_sha1": "98d549cda503b751380dc10c4a56212e5312ccd8"
+    },
+    "Lagrangian/model/SU2Invariants.wl": {
+      "crlf_normalization_applied": true,
+      "git_blob_sha1": "dbe0cd490204dec363fcf4278f079b58c8ddcefc",
+      "github_main_blob_match": true,
+      "sha256": "78e83bd1730555d15a47f8f2b3343635734b3f3387afb243623b89410faa6c1a",
+      "source_bytes_match_after_line_ending_normalization": true,
+      "working_tree_raw_git_blob_sha1": "631781061c700b9b70b3d3f0b7cae051dd43e16a"
+    },
+    "Lagrangian/model/T3Fields.wl": {
+      "crlf_normalization_applied": false,
+      "git_blob_sha1": "65467ede6ef06a7743e3ca2878debf777dc94507",
+      "github_main_blob_match": true,
+      "sha256": "2f27f080ab02d1225aab7e5928aba19f238ec6d5dcdd41b72ee2d2c7298e24ab",
+      "source_bytes_match_after_line_ending_normalization": true,
+      "working_tree_raw_git_blob_sha1": "65467ede6ef06a7743e3ca2878debf777dc94507"
+    },
+    "Numerical/direct_one_loop/core.py": {
+      "crlf_normalization_applied": false,
+      "git_blob_sha1": "abbf261fbf2ca2561482d3e53b84452d1654610e",
+      "github_main_blob_match": true,
+      "sha256": "d85e450f5e7d9a586cfd6a6479f4d629a630ab54bda4218c08dda15ac011c656",
+      "source_bytes_match_after_line_ending_normalization": true,
+      "working_tree_raw_git_blob_sha1": "abbf261fbf2ca2561482d3e53b84452d1654610e"
+    },
+    "RGE/running/rgbeta/T3RGBetaModel.wl": {
+      "crlf_normalization_applied": false,
+      "git_blob_sha1": "7af7a4ddf99a7e38210543a21b3b1cda203eaf02",
+      "github_main_blob_match": true,
+      "sha256": "a58c79f18b2abdf9d476588552dfa52e2f131f322094e5b72d1198162aa20abc",
+      "source_bytes_match_after_line_ending_normalization": true,
+      "working_tree_raw_git_blob_sha1": "7af7a4ddf99a7e38210543a21b3b1cda203eaf02"
+    },
+    "scripts/BuildT3DirectOneLoopInputs.py": {
+      "crlf_normalization_applied": false,
+      "git_blob_sha1": "976a5c6303c637b7d1e45942a8dfa06f7e780ac7",
+      "github_main_blob_match": true,
+      "sha256": "16fbf7fbb06e630a02e720bd9f3bfbda65748394d3ef50924f39a656998213ec",
+      "source_bytes_match_after_line_ending_normalization": true,
+      "working_tree_raw_git_blob_sha1": "976a5c6303c637b7d1e45942a8dfa06f7e780ac7"
+    }
+  },
+  "limitations": [
+    "Native symbolic GammaCC not anchored to a concrete 4x4 gamma matrix sign",
+    "No physical Matchete-RGBeta SU2 CG component axes or relative phases",
+    "Three representatives do not independently measure the remaining 13 native actions",
+    "Frozen all16 inputs are conditional candidate, not external Feynman rule certification",
+    "No physical one-loop amplitude/source normalisation certificate was issued"
+  ],
+  "local_git_revision": "e2a5def5326cc452f668ef593bd81ae13fdff30b",
+  "mass_coefficient_contract": {
+    "Dirac_A_p0": "-1",
+    "Majorana_B_m1": "-1/2",
+    "Majorana_C_m1": "-1/2"
+  },
+  "native_action_witnesses": {
+    "A_p0": {
+      "B2_relative_CG_phases_measured_here": false,
+      "absolute_GammaCC_matrix_orientation_measured": false,
+      "couplings_and_chiral_projectors": {
+        "mass": {
+          "coefficient": "-1/1",
+          "field_order_verified": true,
+          "gamma_cc": false,
+          "hc": false,
+          "kind": "mass",
+          "projector": null
+        },
+        "y1": {
+          "hc": {
+            "coefficient": "1/1",
+            "field_order_verified": true,
+            "gamma_cc": true,
+            "hc": true,
+            "kind": "y1",
+            "projector": -1
+          },
+          "original": {
+            "coefficient": "1/1",
+            "field_order_verified": true,
+            "gamma_cc": true,
+            "hc": false,
+            "kind": "y1",
+            "projector": 1
+          }
+        },
+        "y2": {
+          "hc": {
+            "coefficient": "1/1",
+            "field_order_verified": true,
+            "gamma_cc": false,
+            "hc": true,
+            "kind": "y2",
+            "projector": -1
+          },
+          "original": {
+            "coefficient": "1/1",
+            "field_order_verified": true,
+            "gamma_cc": false,
+            "hc": false,
+            "kind": "y2",
+            "projector": 1
+          }
+        }
+      },
+      "model": "A_p0",
+      "native_structure_verified": true,
+      "physical_source_certified": false,
+      "sha256": "f927475c1eb3549c7038591957d449e97c6405dbcf679f590d0696cac239ec48"
+    },
+    "B_m1": {
+      "B2_relative_CG_phases_measured_here": false,
+      "absolute_GammaCC_matrix_orientation_measured": false,
+      "couplings_and_chiral_projectors": {
+        "mass": {
+          "coefficient": "-1/2",
+          "field_order_verified": true,
+          "gamma_cc": true,
+          "hc": false,
+          "kind": "mass",
+          "projector": null
+        },
+        "y1": {
+          "hc": {
+            "coefficient": "1/1",
+            "field_order_verified": true,
+            "gamma_cc": true,
+            "hc": true,
+            "kind": "y1",
+            "projector": -1
+          },
+          "original": {
+            "coefficient": "1/1",
+            "field_order_verified": true,
+            "gamma_cc": false,
+            "hc": false,
+            "kind": "y1",
+            "projector": 1
+          }
+        },
+        "y2": {
+          "hc": {
+            "coefficient": "1/1",
+            "field_order_verified": true,
+            "gamma_cc": true,
+            "hc": true,
+            "kind": "y2",
+            "projector": -1
+          },
+          "original": {
+            "coefficient": "1/1",
+            "field_order_verified": true,
+            "gamma_cc": false,
+            "hc": false,
+            "kind": "y2",
+            "projector": 1
+          }
+        }
+      },
+      "model": "B_m1",
+      "native_structure_verified": true,
+      "physical_source_certified": false,
+      "sha256": "2854f420a104e2254617a41862c612f79ebc145d44dc371fe3162dd5591b57fc"
+    },
+    "C_m1": {
+      "B2_relative_CG_phases_measured_here": false,
+      "absolute_GammaCC_matrix_orientation_measured": false,
+      "couplings_and_chiral_projectors": {
+        "mass": {
+          "coefficient": "-1/2",
+          "field_order_verified": true,
+          "gamma_cc": true,
+          "hc": false,
+          "kind": "mass",
+          "projector": null
+        },
+        "y1": {
+          "hc": {
+            "coefficient": "1/1",
+            "field_order_verified": true,
+            "gamma_cc": true,
+            "hc": true,
+            "kind": "y1",
+            "projector": -1
+          },
+          "original": {
+            "coefficient": "1/1",
+            "field_order_verified": true,
+            "gamma_cc": false,
+            "hc": false,
+            "kind": "y1",
+            "projector": 1
+          }
+        },
+        "y2": {
+          "hc": {
+            "coefficient": "1/1",
+            "field_order_verified": true,
+            "gamma_cc": true,
+            "hc": true,
+            "kind": "y2",
+            "projector": -1
+          },
+          "original": {
+            "coefficient": "1/1",
+            "field_order_verified": true,
+            "gamma_cc": false,
+            "hc": false,
+            "kind": "y2",
+            "projector": 1
+          }
+        }
+      },
+      "model": "C_m1",
+      "native_structure_verified": true,
+      "physical_source_certified": false,
+      "sha256": "cff78b33560cd8afde274a036751957cee72dc3d8dec3ff4aa048d8ade518422"
+    }
+  },
+  "native_actions_structurally_verified_count": 3,
+  "native_cc_abstract_probe": {
+    "abstract_native_cc_checks": 6,
+    "installed_numeric_gamma_cc_sign_measured": false,
+    "installed_symbol_manifest": {
+      "gamma_cc_downvalues_count": 0,
+      "gamma_cc_ownvalues_count": 0,
+      "gamma_cc_upvalues_count": 0,
+      "native_cc_squared_inputform": "-1",
+      "native_cc_transpose_inputform": "-GammaCC",
+      "native_y1_bilinear_inputform": "NCM[Bar[Field[l, Fermion, {Index[i, SU2L[fund]], Index[p, Flavor]}, {}]], DiracProduct[GammaCC, Proj[1]], Transp[Bar[Field[NewFermion, Fermion, {Index[j, T3BSMd2], Index[r, NFlavor]}, {}]]]]",
+      "native_y2_bilinear_inputform": "NCM[Bar[Field[l, Fermion, {Index[i, SU2L[fund]], Index[p, Flavor]}, {}]], DiracProduct[Proj[1]], Field[NewFermion, Fermion, {Index[j, T3BSMd2], Index[r, NFlavor]}, {}]]",
+      "symbol_full_name": "Matchete`GammaCC"
+    }
+  },
+  "physical_B1_scope_complete": false,
+  "physical_source_certified": false,
+  "physical_source_certified_models": 0,
+  "previous_conditional_16": {
+    "conditional_models": 16,
+    "max_Y_relative_residual": 1.6640541641034287e-16,
+    "max_Z_relative_residual": 0.0,
+    "max_mass_relative_residual": 2.1823440252295523e-16,
+    "models": {
+      "A_+0": {
+        "Y_after_global_minus": 0.0,
+        "Z_after_global_minus": 0.0,
+        "mass": 0.0
+      },
+      "A_-2": {
+        "Y_after_global_minus": 0.0,
+        "Z_after_global_minus": 0.0,
+        "mass": 0.0
+      },
+      "A_-4": {
+        "Y_after_global_minus": 0.0,
+        "Z_after_global_minus": 0.0,
+        "mass": 0.0
+      },
+      "B_+1": {
+        "Y_after_global_minus": 0.0,
+        "Z_after_global_minus": 0.0,
+        "mass": 0.0
+      },
+      "B_-1": {
+        "Y_after_global_minus": 0.0,
+        "Z_after_global_minus": 0.0,
+        "mass": 0.0
+      },
+      "B_-3": {
+        "Y_after_global_minus": 0.0,
+        "Z_after_global_minus": 0.0,
+        "mass": 0.0
+      },
+      "C_+1": {
+        "Y_after_global_minus": 0.0,
+        "Z_after_global_minus": 0.0,
+        "mass": 0.0
+      },
+      "C_-1": {
+        "Y_after_global_minus": 1.6640541641034287e-16,
+        "Z_after_global_minus": 0.0,
+        "mass": 2.1823440252295523e-16
+      },
+      "C_-3": {
+        "Y_after_global_minus": 0.0,
+        "Z_after_global_minus": 0.0,
+        "mass": 0.0
+      },
+      "D_+0": {
+        "Y_after_global_minus": 0.0,
+        "Z_after_global_minus": 0.0,
+        "mass": 0.0
+      },
+      "D_+2": {
+        "Y_after_global_minus": 0.0,
+        "Z_after_global_minus": 0.0,
+        "mass": 0.0
+      },
+      "D_-2": {
+        "Y_after_global_minus": 0.0,
+        "Z_after_global_minus": 0.0,
+        "mass": 0.0
+      },
+      "E_+0": {
+        "Y_after_global_minus": 0.0,
+        "Z_after_global_minus": 0.0,
+        "mass": 0.0
+      },
+      "E_+2": {
+        "Y_after_global_minus": 0.0,
+        "Z_after_global_minus": 0.0,
+        "mass": 0.0
+      },
+      "E_-2": {
+        "Y_after_global_minus": 0.0,
+        "Z_after_global_minus": 0.0,
+        "mass": 0.0
+      },
+      "E_-4": {
+        "Y_after_global_minus": 0.0,
+        "Z_after_global_minus": 0.0,
+        "mass": 0.0
+      }
+    }
+  },
+  "previous_conditional_audit_sha256": "b1669b9a07f91fdadd3822bee0f44ab613240a51bcdb7462fceed34441dfda7c",
+  "relative_physical_factors_verified": false,
+  "safe_to_integrate_into_production": false,
+  "spurion": {
+    "Dirac": {
+      "charge": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "invariant": "y1*y2*conjugate(MF)*conjugate(lambdaT3)",
+      "wrong_lambda_charge": [
+        0,
+        0,
+        2,
+        -2
+      ]
+    },
+    "Majorana": {
+      "charge": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "invariant": "y1*y2*conjugate(MF)*conjugate(lambdaT3)",
+      "wrong_lambda_charge": [
+        0,
+        0,
+        2,
+        -2
+      ]
+    }
+  },
+  "status": "ThreeNativeActionsCoefficientAndChiralityVerified_AbsoluteCCAndB2Pending",
+  "yukawa_original_and_hc_coefficient_contract": "positive 1 (each), in all three actions"
+}

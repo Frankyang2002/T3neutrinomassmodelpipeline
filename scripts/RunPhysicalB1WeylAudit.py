@@ -44,9 +44,30 @@ HEAD='0b210f18f6a2cfb10fff03059e2ec4a73d2195a4'
 
 
 def digest(p):return hashlib.sha256(p.read_bytes()).hexdigest()
-def gitblob(p):
-    data=p.read_bytes()
-    return hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()
+
+
+def _git_blob_sha1(data: bytes) -> str:
+    """Compute the Git blob object ID for the *supplied bytes*."""
+    header = b'blob ' + str(len(data)).encode('ascii') + b'\0'
+    return hashlib.sha1(header + data).hexdigest()
+
+
+def gitblob(p, *, normalize_eol: bool = False):
+    """Compute a source blob ID; optionally permit CRLF -> LF only.
+
+    Git checks out LF-tracked files as CRLF under common Windows settings.
+    Normalization here is deliberately restricted to line endings: no text
+    parsing, whitespace removal, Git filters, or content modifications.
+    """
+    data = p.read_bytes()
+    if normalize_eol:
+        # A bare CR is not normal Windows CRLF conversion; fail closed.
+        require(b'\r' not in data.replace(b'\r\n', b''),
+                'UNSUPPORTED SOURCE DRIFT: lone CR byte in '+str(p))
+        data = data.replace(b'\r\n', b'\n')
+    return _git_blob_sha1(data)
+
+
 def read(p):
     require(p.is_file(),'Missing local input: '+str(p))
     return json.loads(p.read_text(encoding='utf-8-sig'))
@@ -62,9 +83,19 @@ def guard_source(root):
     for rel,expected in SOURCE_GIT_BLOBS.items():
         p=root/rel
         require(p.is_file(),'Missing local source '+rel)
-        actual=gitblob(p)
-        checks[rel]={'git_blob_sha1':actual,'sha256':digest(p),'github_main_blob_match':actual==expected}
-        require(actual==expected,'UNSUPPORTED SOURCE DRIFT in '+rel+'; do not use this B1 adapter. Upload actual local file for updated audit')
+        raw_blob=gitblob(p)
+        canonical_blob=gitblob(p, normalize_eol=True)
+        match=canonical_blob==expected
+        checks[rel]={
+            'git_blob_sha1':canonical_blob,
+            'working_tree_raw_git_blob_sha1':raw_blob,
+            'sha256':digest(p),
+            'github_main_blob_match':match,
+            'crlf_normalization_applied':raw_blob!=canonical_blob,
+            'source_bytes_match_after_line_ending_normalization':match,
+        }
+        require(match,'UNSUPPORTED SOURCE DRIFT in '+rel+
+                '; changes beyond CRLF/LF conversion rejected. Upload actual local file for updated audit')
     return checks
 
 

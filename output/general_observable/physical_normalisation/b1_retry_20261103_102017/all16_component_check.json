@@ -1,0 +1,707 @@
+{
+  "checks": {
+    "source_blobs": {
+      "Lagrangian/interactions/T3Topology.wl": {
+        "crlf_normalization_applied": false,
+        "git_blob_sha1": "a45a099a8b766cbad0114a0559cb0bcb80895649",
+        "github_main_blob_match": true,
+        "sha256": "e6e24c4a673bddff980885f8354b388ceaa19e53c8b2faa79ba3289a87de1511",
+        "source_bytes_match_after_line_ending_normalization": true,
+        "working_tree_raw_git_blob_sha1": "a45a099a8b766cbad0114a0559cb0bcb80895649"
+      },
+      "Lagrangian/model/LagrangianBuilder.wl": {
+        "crlf_normalization_applied": false,
+        "git_blob_sha1": "98d549cda503b751380dc10c4a56212e5312ccd8",
+        "github_main_blob_match": true,
+        "sha256": "dbe102874c84c0ae8013eeceb78571e0ae3d44f35e95cf9c8d1e0ba952f32e8b",
+        "source_bytes_match_after_line_ending_normalization": true,
+        "working_tree_raw_git_blob_sha1": "98d549cda503b751380dc10c4a56212e5312ccd8"
+      },
+      "Lagrangian/model/SU2Invariants.wl": {
+        "crlf_normalization_applied": true,
+        "git_blob_sha1": "dbe0cd490204dec363fcf4278f079b58c8ddcefc",
+        "github_main_blob_match": true,
+        "sha256": "78e83bd1730555d15a47f8f2b3343635734b3f3387afb243623b89410faa6c1a",
+        "source_bytes_match_after_line_ending_normalization": true,
+        "working_tree_raw_git_blob_sha1": "631781061c700b9b70b3d3f0b7cae051dd43e16a"
+      },
+      "Lagrangian/model/T3Fields.wl": {
+        "crlf_normalization_applied": false,
+        "git_blob_sha1": "65467ede6ef06a7743e3ca2878debf777dc94507",
+        "github_main_blob_match": true,
+        "sha256": "2f27f080ab02d1225aab7e5928aba19f238ec6d5dcdd41b72ee2d2c7298e24ab",
+        "source_bytes_match_after_line_ending_normalization": true,
+        "working_tree_raw_git_blob_sha1": "65467ede6ef06a7743e3ca2878debf777dc94507"
+      },
+      "Numerical/direct_one_loop/core.py": {
+        "crlf_normalization_applied": false,
+        "git_blob_sha1": "abbf261fbf2ca2561482d3e53b84452d1654610e",
+        "github_main_blob_match": true,
+        "sha256": "d85e450f5e7d9a586cfd6a6479f4d629a630ab54bda4218c08dda15ac011c656",
+        "source_bytes_match_after_line_ending_normalization": true,
+        "working_tree_raw_git_blob_sha1": "abbf261fbf2ca2561482d3e53b84452d1654610e"
+      },
+      "RGE/running/rgbeta/T3RGBetaModel.wl": {
+        "crlf_normalization_applied": false,
+        "git_blob_sha1": "7af7a4ddf99a7e38210543a21b3b1cda203eaf02",
+        "github_main_blob_match": true,
+        "sha256": "a58c79f18b2abdf9d476588552dfa52e2f131f322094e5b72d1198162aa20abc",
+        "source_bytes_match_after_line_ending_normalization": true,
+        "working_tree_raw_git_blob_sha1": "7af7a4ddf99a7e38210543a21b3b1cda203eaf02"
+      },
+      "scripts/BuildT3DirectOneLoopInputs.py": {
+        "crlf_normalization_applied": false,
+        "git_blob_sha1": "976a5c6303c637b7d1e45942a8dfa06f7e780ac7",
+        "github_main_blob_match": true,
+        "sha256": "16fbf7fbb06e630a02e720bd9f3bfbda65748394d3ef50924f39a656998213ec",
+        "source_bytes_match_after_line_ending_normalization": true,
+        "working_tree_raw_git_blob_sha1": "976a5c6303c637b7d1e45942a8dfa06f7e780ac7"
+      }
+    },
+    "spinor_identity": {
+      "absolute_native_GammaCC_phase_measured": false,
+      "canonical_YZ": "Z1=-conjugate(y1 * native_CG1); Y2=-conjugate(y2 * native_CG2)",
+      "chosen_C": "+i gamma^2 gamma^0",
+      "dirac_mass": "Bar[F] F = chi epsilon xi + h.c.",
+      "epsilon_12": 1,
+      "exact_chosen_basis_checked": true,
+      "majorana_free_mass_multiplier": "1/2",
+      "majorana_mass": "Bar[F] F = chi epsilon chi + h.c.",
+      "original_y1": "Bar[L] CConj[F] = (l epsilon chi)^dagger",
+      "original_y2": "Bar[L] F = (l epsilon xi)^dagger"
+    },
+    "spurion_dirac": {
+      "charge": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "invariant": "y1*y2*conjugate(MF)*conjugate(lambdaT3)",
+      "wrong_lambda_charge": [
+        0,
+        0,
+        2,
+        -2
+      ]
+    },
+    "spurion_majorana": {
+      "charge": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "invariant": "y1*y2*conjugate(MF)*conjugate(lambdaT3)",
+      "wrong_lambda_charge": [
+        0,
+        0,
+        2,
+        -2
+      ]
+    }
+  },
+  "count_conditional_comparison_passed": 16,
+  "execution_utc": "2026-11-02T23:20:18.178754+00:00",
+  "format": "t3-b1-matchete-to-weyl-v1",
+  "github_reference_commit": "0b210f18f6a2cfb10fff03059e2ec4a73d2195a4",
+  "local_git_revision": "e2a5def5326cc452f668ef593bd81ae13fdff30b",
+  "models": [
+    {
+      "benchmark_sha256": "3cb8dc3e94f2bd6f60571a7a85477638e8fc02109bccfcec0e04055852d81247",
+      "fermion_type": "Dirac",
+      "frozen_input_sha256": "14cdf7c7a5167ab5677b75e3faaa4e9b7958f5884319bde21c272f62dea1a48b",
+      "global_external_neutrino_rephase_is_harmless": true,
+      "model": "A_-4",
+      "n_heavy_weyl": 12,
+      "pending_B2_basis": true,
+      "physically_verified": false,
+      "residuals": {
+        "Y_after_global_minus": 0.0,
+        "Y_fixed_basis": 2.0,
+        "Z_after_global_minus": 0.0,
+        "Z_fixed_basis": 2.0,
+        "mass": 0.0
+      },
+      "shape_M": [
+        12,
+        12
+      ],
+      "shape_YZ": [
+        3,
+        12,
+        4
+      ],
+      "triplet_metric": null
+    },
+    {
+      "benchmark_sha256": "9cd1dd65546f045268ee429b81815301e2e65fd680c4abe5aba74c6f20ff0c54",
+      "fermion_type": "Dirac",
+      "frozen_input_sha256": "65f36c02a289b8036606f61b1d576a72b22fadf7fed16c78e436fde66fd88fb3",
+      "global_external_neutrino_rephase_is_harmless": true,
+      "model": "A_-2",
+      "n_heavy_weyl": 12,
+      "pending_B2_basis": true,
+      "physically_verified": false,
+      "residuals": {
+        "Y_after_global_minus": 0.0,
+        "Y_fixed_basis": 2.0,
+        "Z_after_global_minus": 0.0,
+        "Z_fixed_basis": 2.0,
+        "mass": 0.0
+      },
+      "shape_M": [
+        12,
+        12
+      ],
+      "shape_YZ": [
+        3,
+        12,
+        4
+      ],
+      "triplet_metric": null
+    },
+    {
+      "benchmark_sha256": "4824f1278b9838635deec2ff11d1d9290abc5ee726cb56a8f4c2ea6fc77d812d",
+      "fermion_type": "Dirac",
+      "frozen_input_sha256": "0aaa9d32bdb1e8da207fad7d443aed7b268fc56acf65e19674c883a2e65f3ce9",
+      "global_external_neutrino_rephase_is_harmless": true,
+      "model": "A_+0",
+      "n_heavy_weyl": 12,
+      "pending_B2_basis": true,
+      "physically_verified": false,
+      "residuals": {
+        "Y_after_global_minus": 0.0,
+        "Y_fixed_basis": 2.0,
+        "Z_after_global_minus": 0.0,
+        "Z_fixed_basis": 2.0,
+        "mass": 0.0
+      },
+      "shape_M": [
+        12,
+        12
+      ],
+      "shape_YZ": [
+        3,
+        12,
+        4
+      ],
+      "triplet_metric": null
+    },
+    {
+      "benchmark_sha256": "c036c5177cdefaae39201b8e22740dd5ade1e9e904b534c0a5e84d7c9d99f55e",
+      "fermion_type": "Dirac",
+      "frozen_input_sha256": "71ffd39a6fa0288b65ed0f59868531f66530c683cc9c14485bbabe718b9cdcb0",
+      "global_external_neutrino_rephase_is_harmless": true,
+      "model": "B_-3",
+      "n_heavy_weyl": 6,
+      "pending_B2_basis": true,
+      "physically_verified": false,
+      "residuals": {
+        "Y_after_global_minus": 0.0,
+        "Y_fixed_basis": 2.0,
+        "Z_after_global_minus": 0.0,
+        "Z_fixed_basis": 2.0,
+        "mass": 0.0
+      },
+      "shape_M": [
+        6,
+        6
+      ],
+      "shape_YZ": [
+        3,
+        6,
+        4
+      ],
+      "triplet_metric": null
+    },
+    {
+      "benchmark_sha256": "d83d7d31f9929f21dffad63c429a9e996a3f065a60535243a282a54d6f87dd5f",
+      "fermion_type": "Majorana",
+      "frozen_input_sha256": "e5d25ede470961c216f558c462bd19c090a8890918caea69297bb0a2c445855d",
+      "global_external_neutrino_rephase_is_harmless": true,
+      "model": "B_-1",
+      "n_heavy_weyl": 3,
+      "pending_B2_basis": true,
+      "physically_verified": false,
+      "residuals": {
+        "Y_after_global_minus": 0.0,
+        "Y_fixed_basis": 2.0,
+        "Z_after_global_minus": 0.0,
+        "Z_fixed_basis": 2.0,
+        "mass": 0.0
+      },
+      "shape_M": [
+        3,
+        3
+      ],
+      "shape_YZ": [
+        3,
+        3,
+        4
+      ],
+      "triplet_metric": null
+    },
+    {
+      "benchmark_sha256": "fe1c9e656ba0359e3832b1c96d62260f78e8e5dde31e8abd3da830c62b5d6b31",
+      "fermion_type": "Dirac",
+      "frozen_input_sha256": "f941d6049b2d7eaf21127539f2cd191ba4684ab6df6760bc2b11883f5c532ee2",
+      "global_external_neutrino_rephase_is_harmless": true,
+      "model": "B_+1",
+      "n_heavy_weyl": 6,
+      "pending_B2_basis": true,
+      "physically_verified": false,
+      "residuals": {
+        "Y_after_global_minus": 0.0,
+        "Y_fixed_basis": 2.0,
+        "Z_after_global_minus": 0.0,
+        "Z_fixed_basis": 2.0,
+        "mass": 0.0
+      },
+      "shape_M": [
+        6,
+        6
+      ],
+      "shape_YZ": [
+        3,
+        6,
+        4
+      ],
+      "triplet_metric": null
+    },
+    {
+      "benchmark_sha256": "a1736f4c38c8a56f93969b5528f0822d0fa88e8288457b8e70151dd5d40fab6c",
+      "fermion_type": "Dirac",
+      "frozen_input_sha256": "9147e7a338e1d375cfb036c41864684197bb139534b222db4d2651eb4bf028a4",
+      "global_external_neutrino_rephase_is_harmless": true,
+      "model": "C_-3",
+      "n_heavy_weyl": 18,
+      "pending_B2_basis": true,
+      "physically_verified": false,
+      "residuals": {
+        "Y_after_global_minus": 0.0,
+        "Y_fixed_basis": 2.0,
+        "Z_after_global_minus": 0.0,
+        "Z_fixed_basis": 2.0,
+        "mass": 0.0
+      },
+      "shape_M": [
+        18,
+        18
+      ],
+      "shape_YZ": [
+        3,
+        18,
+        4
+      ],
+      "triplet_metric": {
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "real": [
+          [
+            -4.266421588589642e-17,
+            0.0,
+            1.0000000000000002
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            1.0000000000000002,
+            0.0,
+            -4.266421588589642e-17
+          ]
+        ]
+      }
+    },
+    {
+      "benchmark_sha256": "782c261c88e364b2db70791ed97d8fa067cf255449900668155b821ba636f03c",
+      "fermion_type": "Majorana",
+      "frozen_input_sha256": "36e6fd4d905030ef377468ea46c8261e04ab40e53f8ebf96cbb019e47dd36dce",
+      "global_external_neutrino_rephase_is_harmless": true,
+      "model": "C_-1",
+      "n_heavy_weyl": 9,
+      "pending_B2_basis": true,
+      "physically_verified": false,
+      "residuals": {
+        "Y_after_global_minus": 1.6640541641034287e-16,
+        "Y_fixed_basis": 1.9999999999999998,
+        "Z_after_global_minus": 0.0,
+        "Z_fixed_basis": 2.0,
+        "mass": 2.1823440252295523e-16
+      },
+      "shape_M": [
+        9,
+        9
+      ],
+      "shape_YZ": [
+        3,
+        9,
+        4
+      ],
+      "triplet_metric": {
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "real": [
+          [
+            -4.266421588589642e-17,
+            0.0,
+            1.0000000000000002
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            1.0000000000000002,
+            0.0,
+            -4.266421588589642e-17
+          ]
+        ]
+      }
+    },
+    {
+      "benchmark_sha256": "dd3beb2db859c7b272ebe81b25bc548d0bd159990c7b421a62f9aeeab352339c",
+      "fermion_type": "Dirac",
+      "frozen_input_sha256": "b57ddd02412cd051945b9901baa228f50f385de0d407bce5894d81f16584de8e",
+      "global_external_neutrino_rephase_is_harmless": true,
+      "model": "C_+1",
+      "n_heavy_weyl": 18,
+      "pending_B2_basis": true,
+      "physically_verified": false,
+      "residuals": {
+        "Y_after_global_minus": 0.0,
+        "Y_fixed_basis": 2.0,
+        "Z_after_global_minus": 0.0,
+        "Z_fixed_basis": 2.0,
+        "mass": 0.0
+      },
+      "shape_M": [
+        18,
+        18
+      ],
+      "shape_YZ": [
+        3,
+        18,
+        4
+      ],
+      "triplet_metric": {
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "real": [
+          [
+            -4.266421588589642e-17,
+            0.0,
+            1.0000000000000002
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            1.0000000000000002,
+            0.0,
+            -4.266421588589642e-17
+          ]
+        ]
+      }
+    },
+    {
+      "benchmark_sha256": "fbaae81addefb93ff4749a4f60798682b929fb2e60b934ad18f11dbfe2402fce",
+      "fermion_type": "Dirac",
+      "frozen_input_sha256": "a7a045bb83220294c89a00a9cf628b826abafe665597c52bc299b4d851c7575b",
+      "global_external_neutrino_rephase_is_harmless": true,
+      "model": "D_-2",
+      "n_heavy_weyl": 12,
+      "pending_B2_basis": true,
+      "physically_verified": false,
+      "residuals": {
+        "Y_after_global_minus": 0.0,
+        "Y_fixed_basis": 2.0,
+        "Z_after_global_minus": 0.0,
+        "Z_fixed_basis": 2.0,
+        "mass": 0.0
+      },
+      "shape_M": [
+        12,
+        12
+      ],
+      "shape_YZ": [
+        3,
+        12,
+        4
+      ],
+      "triplet_metric": null
+    },
+    {
+      "benchmark_sha256": "59bcfbd972a82202c63fbcea0d02352d90a9acd6f63250bf2a40e2f7a18f88ca",
+      "fermion_type": "Dirac",
+      "frozen_input_sha256": "d1d7dce3afa5567284e66778c1e2ea99cfde6652044004e09b60d6035e6e1480",
+      "global_external_neutrino_rephase_is_harmless": true,
+      "model": "D_+0",
+      "n_heavy_weyl": 12,
+      "pending_B2_basis": true,
+      "physically_verified": false,
+      "residuals": {
+        "Y_after_global_minus": 0.0,
+        "Y_fixed_basis": 2.0,
+        "Z_after_global_minus": 0.0,
+        "Z_fixed_basis": 2.0,
+        "mass": 0.0
+      },
+      "shape_M": [
+        12,
+        12
+      ],
+      "shape_YZ": [
+        3,
+        12,
+        4
+      ],
+      "triplet_metric": null
+    },
+    {
+      "benchmark_sha256": "18d1e743cd6160bc3d33ece098315480fe2ab69ef218b294e831cc7ab39ac6d3",
+      "fermion_type": "Dirac",
+      "frozen_input_sha256": "57e30292c4855ce6af949f2037b66f6c8f06bef374354bbe28ea55828f16f027",
+      "global_external_neutrino_rephase_is_harmless": true,
+      "model": "D_+2",
+      "n_heavy_weyl": 12,
+      "pending_B2_basis": true,
+      "physically_verified": false,
+      "residuals": {
+        "Y_after_global_minus": 0.0,
+        "Y_fixed_basis": 2.0,
+        "Z_after_global_minus": 0.0,
+        "Z_fixed_basis": 2.0,
+        "mass": 0.0
+      },
+      "shape_M": [
+        12,
+        12
+      ],
+      "shape_YZ": [
+        3,
+        12,
+        4
+      ],
+      "triplet_metric": null
+    },
+    {
+      "benchmark_sha256": "347d0c74d67ae827d53b9b2edb5c9f9953dc10b3df519f2ccc85c7a842e89c55",
+      "fermion_type": "Dirac",
+      "frozen_input_sha256": "42363373a59ab0ccca00b77b5748143220bcc64cd678e2f171e5c53d8dc09009",
+      "global_external_neutrino_rephase_is_harmless": true,
+      "model": "E_-4",
+      "n_heavy_weyl": 12,
+      "pending_B2_basis": true,
+      "physically_verified": false,
+      "residuals": {
+        "Y_after_global_minus": 0.0,
+        "Y_fixed_basis": 2.0,
+        "Z_after_global_minus": 0.0,
+        "Z_fixed_basis": 2.0,
+        "mass": 0.0
+      },
+      "shape_M": [
+        12,
+        12
+      ],
+      "shape_YZ": [
+        3,
+        12,
+        6
+      ],
+      "triplet_metric": null
+    },
+    {
+      "benchmark_sha256": "5fddf5a3cba554a52714ab2837f690620f97fd4edaa9f5ba13d63b7f4a33b6f6",
+      "fermion_type": "Dirac",
+      "frozen_input_sha256": "2bf49749b781ce139d1084530ce6d82bee437ab2c986344cc21fc7276eabd326",
+      "global_external_neutrino_rephase_is_harmless": true,
+      "model": "E_-2",
+      "n_heavy_weyl": 12,
+      "pending_B2_basis": true,
+      "physically_verified": false,
+      "residuals": {
+        "Y_after_global_minus": 0.0,
+        "Y_fixed_basis": 2.0,
+        "Z_after_global_minus": 0.0,
+        "Z_fixed_basis": 2.0,
+        "mass": 0.0
+      },
+      "shape_M": [
+        12,
+        12
+      ],
+      "shape_YZ": [
+        3,
+        12,
+        6
+      ],
+      "triplet_metric": null
+    },
+    {
+      "benchmark_sha256": "01b140875a017cfa10230f2f4012e620d3aa099596ccebfb4e5135ea67aedecb",
+      "fermion_type": "Dirac",
+      "frozen_input_sha256": "3f18217920b1a171e78d9721ed873ad3c0012f489bdefae0b2ee2316c024504a",
+      "global_external_neutrino_rephase_is_harmless": true,
+      "model": "E_+0",
+      "n_heavy_weyl": 12,
+      "pending_B2_basis": true,
+      "physically_verified": false,
+      "residuals": {
+        "Y_after_global_minus": 0.0,
+        "Y_fixed_basis": 2.0,
+        "Z_after_global_minus": 0.0,
+        "Z_fixed_basis": 2.0,
+        "mass": 0.0
+      },
+      "shape_M": [
+        12,
+        12
+      ],
+      "shape_YZ": [
+        3,
+        12,
+        6
+      ],
+      "triplet_metric": null
+    },
+    {
+      "benchmark_sha256": "c7fedaa074e5cf026eb9a233e406a7a5a686aa21decbe2137241f6a8d1abc34d",
+      "fermion_type": "Dirac",
+      "frozen_input_sha256": "a892e2f30982f47f3892535d2d449f08b594ace02b2d7f8057cc3ecba432f1bd",
+      "global_external_neutrino_rephase_is_harmless": true,
+      "model": "E_+2",
+      "n_heavy_weyl": 12,
+      "pending_B2_basis": true,
+      "physically_verified": false,
+      "residuals": {
+        "Y_after_global_minus": 0.0,
+        "Y_fixed_basis": 2.0,
+        "Z_after_global_minus": 0.0,
+        "Z_fixed_basis": 2.0,
+        "mass": 0.0
+      },
+      "shape_M": [
+        12,
+        12
+      ],
+      "shape_YZ": [
+        3,
+        12,
+        6
+      ],
+      "triplet_metric": null
+    }
+  ],
+  "native": {
+    "absolute_GammaCC_phase_measured": false,
+    "observed": true,
+    "provided": true,
+    "representatives": {
+      "A_p0": {
+        "mass_terms": 1,
+        "native_terms_observed": true,
+        "sha256": "f927475c1eb3549c7038591957d449e97c6405dbcf679f590d0696cac239ec48",
+        "yukawa_original_hc_counts": {
+          "y1": [
+            1,
+            1
+          ],
+          "y2": [
+            1,
+            1
+          ]
+        }
+      },
+      "B_m1": {
+        "mass_terms": 1,
+        "native_terms_observed": true,
+        "sha256": "2854f420a104e2254617a41862c612f79ebc145d44dc371fe3162dd5591b57fc",
+        "yukawa_original_hc_counts": {
+          "y1": [
+            1,
+            1
+          ],
+          "y2": [
+            1,
+            1
+          ]
+        }
+      },
+      "C_m1": {
+        "mass_terms": 1,
+        "native_terms_observed": true,
+        "sha256": "cff78b33560cd8afde274a036751957cee72dc3d8dec3ff4aa048d8ade518422",
+        "yukawa_original_hc_counts": {
+          "y1": [
+            1,
+            1
+          ],
+          "y2": [
+            1,
+            1
+          ]
+        }
+      }
+    }
+  },
+  "native_action_observed": true,
+  "needs_B2_SU2_dictionary": true,
+  "physical_B1_scope_complete": false,
+  "physical_source_certified": false,
+  "relative_physical_factors_verified": false,
+  "status": "All16ConditionalCandidateWeylTensorsReconstructed_PhysicalDictionaryPending",
+  "weyl_rules_mathematically_verified": true
+}

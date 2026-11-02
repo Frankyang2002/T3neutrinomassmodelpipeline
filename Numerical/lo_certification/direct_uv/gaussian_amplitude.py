@@ -341,7 +341,9 @@ def _eft1_boundary_gate(root:Path,short:str,uv_mu:float)->dict[str,Any]:
                 'compared_LLSS_tensors':False}
     p=candidates[0]
     rec=load(p)
-    require(rec.get('model')==tag,'F threshold source release model label disagrees')
+    # The filesystem slug (e.g. B_m1) is NOT the JSON model identifier.
+    # Source releases record signed model names (e.g. B_-1).
+    require(rec.get('model')==short,'F threshold source release model label disagrees')
     require(rec.get('field_content',{}).get('heavy_fermions_integrated_out')=='all at mu_F',
             'F threshold release incorrectly integrates a partial heavy multiplet')
     require(rec.get('field_content',{}).get('heavy_scalar_multiplets')=='both retained in EFT1',

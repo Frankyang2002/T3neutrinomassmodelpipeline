@@ -178,7 +178,7 @@ def main(argv=None)->int:
     if target.exists() and not args.check_only:
         parser.error('Output exists; choose a new directory, no overwrite allowed')
     v3,v4=resolved(args.ws2_v3_dir),resolved(args.ws2_v4_dir)
-    old,runroot=resolved(args.old_scalar_hard_dir),resolved(args.running_dir)
+    old_root,runroot=resolved(args.old_scalar_hard_dir),resolved(args.running_dir)
     inventory=source_inventory(v3,v4,ALL_MODELS)
     from Numerical.joint_scalar_matching.fermion_boundary_bridge import load_release_manifest
     release=load_release_manifest(resolved(args.release_dir))
@@ -192,7 +192,7 @@ def main(argv=None)->int:
     for model in models:
         try:
             formal,old,R,portal,names,channels,refs,record=model_input(model,release,runroot,
-                old,v3,v4,args.allow_exploratory_special_bases or args.check_only)
+                old_root,v3,v4,args.allow_exploratory_special_bases or args.check_only)
             total_added+=record['baseline_completion']['added_baseline_directions']
             total_named+=record['extra_named_inventory']['extra_named_symbols']
             if not args.check_only:

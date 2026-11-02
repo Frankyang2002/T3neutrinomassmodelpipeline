@@ -65,7 +65,8 @@ class GaussianAmplitude(unittest.TestCase):
         with tempfile.TemporaryDirectory() as t:
             root=Path(t);p=root/'output/general_observable/lo_fermion_boundary/releases/source_test/B_m1/boundary.json'
             p.parent.mkdir(parents=True)
-            p.write_text(json.dumps({'model':'B_m1',
+            # Boundary directory is B_m1, but JSON uses the signed model ID.
+            p.write_text(json.dumps({'model':'B_-1',
               'mu_F_gev':1e5,
               'field_content':{'heavy_fermions_integrated_out':'all at mu_F',
                                'heavy_scalar_multiplets':'both retained in EFT1'},

@@ -1,0 +1,49 @@
+{
+  "format": "t3-b1-matchete-weyl-rules-v1",
+  "source_reference": "GitHub main read-only",
+  "github_commit": "0b210f18f6a2cfb10fff03059e2ec4a73d2195a4",
+  "github_source_git_blob_sha1": {
+    "Lagrangian/interactions/T3Topology.wl": "a45a099a8b766cbad0114a0559cb0bcb80895649",
+    "Lagrangian/model/T3Fields.wl": "65467ede6ef06a7743e3ca2878debf777dc94507",
+    "Lagrangian/model/LagrangianBuilder.wl": "98d549cda503b751380dc10c4a56212e5312ccd8",
+    "Lagrangian/model/SU2Invariants.wl": "dbe0cd490204dec363fcf4278f079b58c8ddcefc",
+    "scripts/BuildT3DirectOneLoopInputs.py": "976a5c6303c637b7d1e45942a8dfa06f7e780ac7",
+    "Numerical/direct_one_loop/core.py": "abbf261fbf2ca2561482d3e53b84452d1654610e",
+    "RGE/running/rgbeta/T3RGBetaModel.wl": "7af7a4ddf99a7e38210543a21b3b1cda203eaf02"
+  },
+  "local_git_revision": null,
+  "native_action_observed": false,
+  "weyl_rules_mathematically_verified": true,
+  "relative_physical_factors_verified": false,
+  "needs_B2_SU2_dictionary": true,
+  "physical_B1_scope_complete": false,
+  "physical_source_certified": false,
+  "safe_to_integrate_as_physical_source": false,
+  "mathematical_tests_executed": 13,
+  "mathematical_tests_passed": 13,
+  "live_wolfram_executed_here": false,
+  "convention": {
+    "metric": "(+---)",
+    "C": "i gamma2 gamma0",
+    "epsilon12": 1,
+    "four_dirac": "(chi_alpha,bar_xi^dot_alpha)",
+    "numerical_weyl_order_Dirac": "(xi,chi)",
+    "y1": "Z_y1=-conjugate(y1*CG1) in chosen basis",
+    "y2": "Y_y2=-conjugate(y2*CG2) in chosen basis",
+    "source_to_candidate_global_neutrino_minus_is_rephasing": true,
+    "Dirac_M": "[[0,D kron I],[D.T kron I,0]]",
+    "Majorana_M": "MF kron (U.T@U)",
+    "Majorana_free_action_half_factor": "exactly one factor 1/2 in free action; none extra in symmetric M",
+    "loop": "Sigma_ab=(1/(16*pi^2))*sum_kt(g_akt*g_bkt*m_k*B0_fin)",
+    "canonical_real_scalar_yukawa": "1/sqrt(2) for each R,I component"
+  },
+  "source_rephasing_invariant": "y1*y2*conjugate(MF)*conjugate(lambdaT3)",
+  "unresolved": [
+    "installed Matchete GammaCC numerical sign",
+    "Matchete/RGBeta SU2 invariant axes including doublet eps and triplet delta",
+    "source-normalised scalar mixing/electroweak CG mapping B2",
+    "native general non-diagonal complex MF unsupported",
+    "local working tree not available"
+  ],
+  "evidence_level": "exact mathematics + read-only GitHub source; no local native runtime"
+}

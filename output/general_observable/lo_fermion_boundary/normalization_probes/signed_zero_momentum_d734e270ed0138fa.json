@@ -1,0 +1,95 @@
+{
+  "assumed_GammaCC_phase_certified": false,
+  "does_not_mutate_previous_boundary": true,
+  "format": "t3-signed-zero-momentum-grassmann-diagnostic-v1",
+  "grassmann_zero_momentum": {
+    "benchmark_inputs": {
+      "M": 7,
+      "y_a": 3,
+      "y_b": -2
+    },
+    "convention": {
+      "Lagrangian_not_amplitude_i_factor": true,
+      "epsilon_12": 1,
+      "epsilon_21": -1,
+      "uv_dirac_mass": "-M u^T epsilon v",
+      "uv_majorana_mass": "-(M/2) h^T epsilon h",
+      "uv_yukawa": "+y_a heavy^T epsilon a + y_b heavy^T epsilon b"
+    },
+    "dirac_contact": "+y_a y_b ab/M",
+    "dirac_cross_channel_factor": "1",
+    "fully_physical_matchete_to_master_normalization_certified": false,
+    "majorana_contact": "+(y_a^2 aa + 2 y_a y_b ab + y_b^2 bb)/(2M)",
+    "majorana_cross_channel_symmetry_factor": "1",
+    "majorana_same_channel_symmetry_factor": "1/2",
+    "spinor_exchange_signs_verified": true,
+    "zero_momentum_Grassmann_saddle_exact": true
+  },
+  "input_release_summary_sha256": "e515d82d118284bab72dbad6ba593aabc529aea08f0a7e47b08cd5049361cfcd",
+  "local_native_source_checks": {
+    "matchete_source_checks_passed": 5,
+    "mixed_PR_conjugates_excluded": true,
+    "native_CG_signs_are_not_spinor_signs": true,
+    "source_checks": {
+      "A_-4_Dirac_cross": {
+        "ending_verified": "/Coupling[MF, {Index[d$$1, NFlavor]}, 0]",
+        "factor_names": [
+          "y1",
+          "y2"
+        ],
+        "negative_CG_prefactor": false,
+        "projector": "PL",
+        "source_index": 2
+      },
+      "B_-1_Majorana_cross": {
+        "ending_verified": "/Coupling[MF, {}, 0]",
+        "factor_names": [
+          "y1",
+          "y2"
+        ],
+        "negative_CG_prefactor": false,
+        "projector": "PL",
+        "source_index": 14
+      },
+      "B_-1_Majorana_diagonal": {
+        "ending_verified": "/(2*Coupling[MF, {}, 0])",
+        "factor_names": [
+          "y1",
+          "y1"
+        ],
+        "negative_CG_prefactor": false,
+        "projector": "PL",
+        "source_index": 12
+      },
+      "C_-1_Majorana_cross_CG_minus": {
+        "ending_verified": "/(Sqrt[3]*Coupling[MF, {}, 0])",
+        "factor_names": [
+          "y1",
+          "y2"
+        ],
+        "negative_CG_prefactor": true,
+        "projector": "PL",
+        "source_index": 14
+      },
+      "C_-1_Majorana_diagonal": {
+        "ending_verified": "/(2*Sqrt[3]*Coupling[MF, {}, 0])",
+        "factor_names": [
+          "y1",
+          "y1"
+        ],
+        "negative_CG_prefactor": false,
+        "projector": "PL",
+        "source_index": 13
+      }
+    },
+    "source_sha256": {
+      "A_-4": "c56fb3e5a4af61c9929ec0faf77f89d98cd9fb07edce53c62b97e45822268c44",
+      "B_-1": "90f70ded2ffbeaf19dbc9677956f77ccb467d81645d4811f179f99d04b6e9ced",
+      "C_-1": "4c46f0cc8079b6afa87a24b0f99d24cf5cfe3cfe97aec6cde43cbe14a8f05fe9"
+    }
+  },
+  "momentum_dependent_UV_Feynman_amplitude_computed": false,
+  "native_matchete_UV_yukawa_mass_action_independently_matched": false,
+  "physical_master_C_ijab_normalization": null,
+  "status": "ConditionalSignedContactOnly_NoPhysicalCertification"
+}

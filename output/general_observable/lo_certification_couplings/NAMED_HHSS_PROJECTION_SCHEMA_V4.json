@@ -1,0 +1,27 @@
+{
+  "format": "t3-ws2-source-named-rgbeta-HHSS-projection-v4",
+  "purpose": "Machine-readable algebraic projection of the 24 named extra-HHSS source GroupInvariants into V3 exact SU2 singlet reference bases",
+  "required_prior_run": "ws2_quartic_completion_v1",
+  "default_output_directory": "output/general_observable/lo_certification_couplings/ws2_named_hhss_v1",
+  "batch_summary": {
+    "all16_source_projections_passed": "boolean; no claim of physical certification",
+    "extra_HHSS_source_symbols_examined": "integer; expected 24 if all local source checks pass",
+    "valid_canonical_orientation_symbols": "integer; diagnostic only",
+    "physical_named_maps_certified": "integer; zero until Matchete CG + RGBeta runtime signed phase conventions are certified",
+    "physical_C5_calculated": false
+  },
+  "per_model_file": "<A_m4 etc>/named_HHSS_source_projection.json",
+  "per_model_failure": "<A_m4 etc>/failure.json",
+  "per_source_channel": {
+    "rgbeta_symbol": "exact source name",
+    "counts": "[H,BarH,S1,BarS1,S2,BarS2]",
+    "source_fields": "literal Wolfram external scalar field order",
+    "group_invariant_expression": "literal Wolfram GroupInvariant (not AddQuartic prefactor)",
+    "candidate_orientation_projection_maps": "all exact canonical invariant projections found among tested pseudoreality maps; each gives a field-type map and rational / radical coordinate vector",
+    "matchete_seed_link": "actual matching native Matchete terms, if any, without a certified CG map",
+    "numerical_running_coefficients": "muF and muS source symbol presence and raw value; not used to construct a physical tensor",
+    "physical_Matchete_RGBeta_coupling_dictionary": null,
+    "safe_physical_input": false
+  },
+  "thresholds": "all heavy fermions at muF, then both heavy scalar multiplets at muS; no additional BSM threshold"
+}

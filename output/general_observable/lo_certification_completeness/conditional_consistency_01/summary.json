@@ -1,0 +1,966 @@
+{
+  "format": "t3-lo-conditional-portal-crossworkstream-audit-v1",
+  "model_count": 16,
+  "portal_numeric_consistency_passed": 16,
+  "portal_numeric_incomplete_or_failed": 0,
+  "physical_full_one_loop_certified": false,
+  "physical_C5_certified": false,
+  "source_evidence": {
+    "portal": {
+      "status": "SOURCE_SPAN_AUDITED_NOT_GENERAL_UV_CLOSURE",
+      "sha256": "d52a0d0cd405fbfb7306586bffc8ced14605457484a0a0f9e5957a63cb22dadc"
+    },
+    "gammacc": {
+      "status": "NOT_PROVIDED",
+      "signed_factor_certified": false
+    },
+    "legacy_scalar": {
+      "status": "INDEPENDENT_EARLIER_SCALAR_CALCULATION_WITH_UNRESOLVED_FAILURES",
+      "sha256": "1527de69c66bba9d1ff8bede560edc0b458067eec589cc504f6dbe64f55b86b9"
+    }
+  },
+  "previous_scalar_projection_failures": [
+    "A_-2",
+    "D_+0",
+    "E_-2",
+    "E_+0"
+  ],
+  "models_with_missing_native_portal_directions": [
+    "A_-4",
+    "A_-2",
+    "A_+0",
+    "D_-2",
+    "D_+0",
+    "D_+2",
+    "E_-4",
+    "E_-2",
+    "E_+0",
+    "E_+2"
+  ],
+  "models": [
+    {
+      "model": "A_-4",
+      "status": "PORTAL_NUMERIC_CHECKS_PASS",
+      "hard_input_json_sha256": "2df839911416e99ed92dab6b8c7decb825cd8369ba3a7cc606c3a1db4f309665",
+      "hard_input_npz_sha256": "1c25ed053de75d4ed496608f47261ff6c7d595762fec4086c02012dffcf96762",
+      "saved_diagnostic_sha256": "cf2391a3e145dd080d062bda533d8feeddbf9a80eb570146de6b4565ae59f1a8",
+      "source_fermion_boundary_sha256": "a51a31e437628ab8a1e6adfaf054bf1da5309b158574971999f8a2bce3bb80ed",
+      "source_running_sha256": "7f16660186a6f208a419cbc53b9e6641e9b5fd71277fc40e4a03ef6610bc4f92",
+      "F_matching_scale_gev": 100000.0,
+      "S_matching_scale_gev": 1000.0,
+      "hard_frobenius_per_unknown_N_gamma_gev_inverse": 5.654718258824504e-17,
+      "dim5_frobenius_per_unknown_N_gamma_gev_inverse": 1.3265260512820988e-15,
+      "hard_to_dim5_norm_ratio": 0.04262802267139172,
+      "relative_exact_triangle_truncation_error": 0.00016647983540869703,
+      "max_projection_residual": 2.781369455866118e-16,
+      "matching_scale_muF_relative_drift_fixed_inputs": 3.1537765218911947e-16,
+      "matching_scale_muS_relative_drift_fixed_inputs": 1.6621861733900098e-16,
+      "scalar_mass2_power_exponent_1_to_1quarter": 0.8954161634922803,
+      "scalar_mass2_power_exponent_1quarter_to_1sixteenth": 0.9086349052783907,
+      "UV_power_scan_status": "PASS_APPROX_DIM7_POWER",
+      "n_heavy_flavours": 3,
+      "n_scalar_real_components": 8,
+      "n_preserved_HHSS_source_channels": 3,
+      "saved_to_recomputed_relative_errors": {
+        "hard_muF": 0.0,
+        "eft1_scalar_log": 0.0,
+        "scalar_threshold_muS": 0.0,
+        "dim5_sum": 0.0,
+        "full_triangle": 0.0,
+        "higher_dimension_remainder": 0.0
+      },
+      "physical_C5_certified": false,
+      "portal_span": {
+        "rgbeta_directions_missing_from_native_HHSS_seed": 1,
+        "extra_symmetry_allowed_HHSS_candidates": 0,
+        "S1_span_status": "exact_full_tensor_span",
+        "S2_span_status": "exact_partial_tensor_span",
+        "remaining_upstream_blockers": [
+          "GammaCC_to_master_Weyl_signed_normalization_not_certified",
+          "full_SM_Weyl_yukawa_gauge_tensor_embedding_not_certified",
+          "mixing_lambdaT3_Matchete_RGBeta_phase_normalization_not_certified",
+          "full_joint_scalar_background_and_hard_one_loop_closure_not_certified",
+          "ordinary_RGBeta_portal_span_missing_1_independent_directions"
+        ]
+      },
+      "earlier_scalar_comparison": {
+        "previous_status": "conditional_C5_per_unknown_NGamma_exploratory",
+        "previous_projection_failed": false
+      },
+      "physical_blockers": [
+        "Signed Matchete GammaCC-to-master Weyl map not certified",
+        "Native Matchete/RGBeta scalar quartic aliases not physically normalized",
+        "All independent dimension-five operators and finite hard counterterms not certified",
+        "Native HHSS source lacks some independently counted portal directions"
+      ]
+    },
+    {
+      "model": "A_-2",
+      "status": "PORTAL_NUMERIC_CHECKS_PASS",
+      "hard_input_json_sha256": "2a33ec642c395b29eea64d0fd869dd2ecf4a9c09c108b077a37287faf865b668",
+      "hard_input_npz_sha256": "63b8d44fba9759d3626943bfc98c2270cf0e3a695e7191b7e60c47d777623807",
+      "saved_diagnostic_sha256": "8b984417b0a0adf925ad7405d985bd4e48bebf1cb315da4f0ff2d74b8b79e697",
+      "source_fermion_boundary_sha256": "4109d135dcb5080ccb3ae78ebf670ee4c58a596e7ff4a14d44d91a8c94abc805",
+      "source_running_sha256": "9612043de39fa73791fb878bdcfa0ee540e8bc6406358f4a1af6a2521053c618",
+      "F_matching_scale_gev": 100000.0,
+      "S_matching_scale_gev": 1000.0,
+      "hard_frobenius_per_unknown_N_gamma_gev_inverse": 4.3905079428648766e-17,
+      "dim5_frobenius_per_unknown_N_gamma_gev_inverse": 1.22043966995715e-15,
+      "hard_to_dim5_norm_ratio": 0.035974805235714995,
+      "relative_exact_triangle_truncation_error": 0.00016553888473165836,
+      "max_projection_residual": 4.895649167149888e-13,
+      "matching_scale_muF_relative_drift_fixed_inputs": 2.679726514554044e-16,
+      "matching_scale_muS_relative_drift_fixed_inputs": 2.4239038335116214e-16,
+      "scalar_mass2_power_exponent_1_to_1quarter": 0.8954270372750551,
+      "scalar_mass2_power_exponent_1quarter_to_1sixteenth": 0.90864313262176,
+      "UV_power_scan_status": "PASS_APPROX_DIM7_POWER",
+      "n_heavy_flavours": 3,
+      "n_scalar_real_components": 8,
+      "n_preserved_HHSS_source_channels": 3,
+      "saved_to_recomputed_relative_errors": {
+        "hard_muF": 0.0,
+        "eft1_scalar_log": 0.0,
+        "scalar_threshold_muS": 0.0,
+        "dim5_sum": 0.0,
+        "full_triangle": 0.0,
+        "higher_dimension_remainder": 0.0
+      },
+      "physical_C5_certified": false,
+      "portal_span": {
+        "rgbeta_directions_missing_from_native_HHSS_seed": 1,
+        "extra_symmetry_allowed_HHSS_candidates": 2,
+        "S1_span_status": "exact_full_tensor_span",
+        "S2_span_status": "exact_partial_tensor_span",
+        "remaining_upstream_blockers": [
+          "GammaCC_to_master_Weyl_signed_normalization_not_certified",
+          "full_SM_Weyl_yukawa_gauge_tensor_embedding_not_certified",
+          "mixing_lambdaT3_Matchete_RGBeta_phase_normalization_not_certified",
+          "full_joint_scalar_background_and_hard_one_loop_closure_not_certified",
+          "ordinary_RGBeta_portal_span_missing_1_independent_directions",
+          "extra_HHSS_invariants_not_source_normalized:2",
+          "extra_scalar_quadratic_RG_closure_unimplemented"
+        ]
+      },
+      "earlier_scalar_comparison": {
+        "previous_status": "ERROR_unverified_source_or_physics_consistency",
+        "previous_projection_failed": true
+      },
+      "physical_blockers": [
+        "Signed Matchete GammaCC-to-master Weyl map not certified",
+        "Native Matchete/RGBeta scalar quartic aliases not physically normalized",
+        "All independent dimension-five operators and finite hard counterterms not certified",
+        "Native HHSS source lacks some independently counted portal directions",
+        "Extra symmetry-allowed HHSS candidates not source-normalized",
+        "Earlier independent scalar-threshold Weinberg projection failed"
+      ]
+    },
+    {
+      "model": "A_+0",
+      "status": "PORTAL_NUMERIC_CHECKS_PASS",
+      "hard_input_json_sha256": "3eab7e726528ffc907788176ca9a92fbb8a945273189a8877398710885aeb7d9",
+      "hard_input_npz_sha256": "d9a4f289d9d670726c777fc8a55d57c68c1cdce40cf405cb0bd9db16ae041710",
+      "saved_diagnostic_sha256": "a18eeabaa41e97e3173e1357eae4e5853071e5fea38b0a16acddf9b41a2661cc",
+      "source_fermion_boundary_sha256": "8b6cf6714a1193e4d44e865152d87e576428421ab9207da29aee9369022bdc89",
+      "source_running_sha256": "2e3e179cd21ad5aa940929fa7bae77013137fb0c7759c91b49813b2ae24040ac",
+      "F_matching_scale_gev": 100000.0,
+      "S_matching_scale_gev": 1000.0,
+      "hard_frobenius_per_unknown_N_gamma_gev_inverse": 4.3997626737734285e-17,
+      "dim5_frobenius_per_unknown_N_gamma_gev_inverse": 1.220791341937154e-15,
+      "hard_to_dim5_norm_ratio": 0.03604025129136218,
+      "relative_exact_triangle_truncation_error": 0.0001689287289272732,
+      "max_projection_residual": 4.789022186575789e-13,
+      "matching_scale_muF_relative_drift_fixed_inputs": 1.8061508018102089e-16,
+      "matching_scale_muS_relative_drift_fixed_inputs": 1.6154703881853507e-16,
+      "scalar_mass2_power_exponent_1_to_1quarter": 0.8951360275209849,
+      "scalar_mass2_power_exponent_1quarter_to_1sixteenth": 0.9084202632448468,
+      "UV_power_scan_status": "PASS_APPROX_DIM7_POWER",
+      "n_heavy_flavours": 3,
+      "n_scalar_real_components": 8,
+      "n_preserved_HHSS_source_channels": 3,
+      "saved_to_recomputed_relative_errors": {
+        "hard_muF": 0.0,
+        "eft1_scalar_log": 0.0,
+        "scalar_threshold_muS": 0.0,
+        "dim5_sum": 0.0,
+        "full_triangle": 0.0,
+        "higher_dimension_remainder": 0.0
+      },
+      "physical_C5_certified": false,
+      "portal_span": {
+        "rgbeta_directions_missing_from_native_HHSS_seed": 1,
+        "extra_symmetry_allowed_HHSS_candidates": 2,
+        "S1_span_status": "exact_full_tensor_span",
+        "S2_span_status": "exact_partial_tensor_span",
+        "remaining_upstream_blockers": [
+          "GammaCC_to_master_Weyl_signed_normalization_not_certified",
+          "full_SM_Weyl_yukawa_gauge_tensor_embedding_not_certified",
+          "mixing_lambdaT3_Matchete_RGBeta_phase_normalization_not_certified",
+          "full_joint_scalar_background_and_hard_one_loop_closure_not_certified",
+          "ordinary_RGBeta_portal_span_missing_1_independent_directions",
+          "extra_HHSS_invariants_not_source_normalized:2",
+          "extra_scalar_quadratic_RG_closure_unimplemented"
+        ]
+      },
+      "earlier_scalar_comparison": {
+        "previous_status": "conditional_C5_per_unknown_NGamma_exploratory",
+        "previous_projection_failed": false
+      },
+      "physical_blockers": [
+        "Signed Matchete GammaCC-to-master Weyl map not certified",
+        "Native Matchete/RGBeta scalar quartic aliases not physically normalized",
+        "All independent dimension-five operators and finite hard counterterms not certified",
+        "Native HHSS source lacks some independently counted portal directions",
+        "Extra symmetry-allowed HHSS candidates not source-normalized"
+      ]
+    },
+    {
+      "model": "B_-3",
+      "status": "PORTAL_NUMERIC_CHECKS_PASS",
+      "hard_input_json_sha256": "3383d87a79c10da6d3f1bbdba04e33cc19f481a204787b29ac7e4a31010a9324",
+      "hard_input_npz_sha256": "480c1f093c6e13793792ac4f0a9169e050167e0613e52ef56bde425bba6a0b45",
+      "saved_diagnostic_sha256": "4dbeeea0ee70692c44cf8c6529c204209faaee3874e0530c073c96f3e1037e06",
+      "source_fermion_boundary_sha256": "d90d991722162dcb6b98e1a856805ba8ea0a2e801818924c8615acf16f32f535",
+      "source_running_sha256": "126ef8e7c80af85c75912673f3d52ba4570289bdbd22d8705a1163530963f7ef",
+      "F_matching_scale_gev": 100000.0,
+      "S_matching_scale_gev": 1000.0,
+      "hard_frobenius_per_unknown_N_gamma_gev_inverse": 3.84985333204023e-17,
+      "dim5_frobenius_per_unknown_N_gamma_gev_inverse": 1.2317531717683583e-15,
+      "hard_to_dim5_norm_ratio": 0.03125507139156146,
+      "relative_exact_triangle_truncation_error": 0.0001706026940366147,
+      "max_projection_residual": 2.4012421460833867e-16,
+      "matching_scale_muF_relative_drift_fixed_inputs": 1.7900771937264458e-16,
+      "matching_scale_muS_relative_drift_fixed_inputs": 1.601093716057757e-16,
+      "scalar_mass2_power_exponent_1_to_1quarter": 0.8952768653953204,
+      "scalar_mass2_power_exponent_1quarter_to_1sixteenth": 0.9085285312091054,
+      "UV_power_scan_status": "PASS_APPROX_DIM7_POWER",
+      "n_heavy_flavours": 3,
+      "n_scalar_real_components": 8,
+      "n_preserved_HHSS_source_channels": 5,
+      "saved_to_recomputed_relative_errors": {
+        "hard_muF": 0.0,
+        "eft1_scalar_log": 0.0,
+        "scalar_threshold_muS": 0.0,
+        "dim5_sum": 0.0,
+        "full_triangle": 0.0,
+        "higher_dimension_remainder": 0.0
+      },
+      "physical_C5_certified": false,
+      "portal_span": {
+        "rgbeta_directions_missing_from_native_HHSS_seed": 0,
+        "extra_symmetry_allowed_HHSS_candidates": 1,
+        "S1_span_status": "exact_full_tensor_span",
+        "S2_span_status": "exact_full_tensor_span",
+        "remaining_upstream_blockers": [
+          "GammaCC_to_master_Weyl_signed_normalization_not_certified",
+          "full_SM_Weyl_yukawa_gauge_tensor_embedding_not_certified",
+          "mixing_lambdaT3_Matchete_RGBeta_phase_normalization_not_certified",
+          "full_joint_scalar_background_and_hard_one_loop_closure_not_certified",
+          "extra_HHSS_invariants_not_source_normalized:1"
+        ]
+      },
+      "earlier_scalar_comparison": {
+        "previous_status": "conditional_C5_per_unknown_NGamma_exploratory",
+        "previous_projection_failed": false
+      },
+      "physical_blockers": [
+        "Signed Matchete GammaCC-to-master Weyl map not certified",
+        "Native Matchete/RGBeta scalar quartic aliases not physically normalized",
+        "All independent dimension-five operators and finite hard counterterms not certified",
+        "Extra symmetry-allowed HHSS candidates not source-normalized"
+      ]
+    },
+    {
+      "model": "B_-1",
+      "status": "PORTAL_NUMERIC_CHECKS_PASS",
+      "hard_input_json_sha256": "592b8bbf1904c0de40f809ce361ad90f93437062a3b69a95a7536d1ab0ea0127",
+      "hard_input_npz_sha256": "84c74f0a116fdd56000c6c7c2346420cda93fd12fb2b40d86723e3a61c6ecc93",
+      "saved_diagnostic_sha256": "8292d8dc525317c6a178fe684c6a2de79cf4c105f4a3f14fc8dd31a9fd39fb66",
+      "source_fermion_boundary_sha256": "6a4d1531a9c52ebae69e73cf582196a29bf858027b4511d2771ad3d1eee103b4",
+      "source_running_sha256": "d0ef30b36cde052a05a715d043129f63dad0418ca749a74be02b9eb5a93fdbea",
+      "F_matching_scale_gev": 100000.0,
+      "S_matching_scale_gev": 1000.0,
+      "hard_frobenius_per_unknown_N_gamma_gev_inverse": 3.493522356367228e-17,
+      "dim5_frobenius_per_unknown_N_gamma_gev_inverse": 1.1839364923072094e-15,
+      "hard_to_dim5_norm_ratio": 0.02950768372346719,
+      "relative_exact_triangle_truncation_error": 0.00017107919863476443,
+      "max_projection_residual": 7.326374648089651e-13,
+      "matching_scale_muF_relative_drift_fixed_inputs": 2.0401291669537916e-16,
+      "matching_scale_muS_relative_drift_fixed_inputs": 8.328792447343505e-17,
+      "scalar_mass2_power_exponent_1_to_1quarter": 0.895220513958873,
+      "scalar_mass2_power_exponent_1quarter_to_1sixteenth": 0.9084853516335852,
+      "UV_power_scan_status": "PASS_APPROX_DIM7_POWER",
+      "n_heavy_flavours": 3,
+      "n_scalar_real_components": 8,
+      "n_preserved_HHSS_source_channels": 5,
+      "saved_to_recomputed_relative_errors": {
+        "hard_muF": 0.0,
+        "eft1_scalar_log": 0.0,
+        "scalar_threshold_muS": 0.0,
+        "dim5_sum": 0.0,
+        "full_triangle": 0.0,
+        "higher_dimension_remainder": 0.0
+      },
+      "physical_C5_certified": false,
+      "portal_span": {
+        "rgbeta_directions_missing_from_native_HHSS_seed": 0,
+        "extra_symmetry_allowed_HHSS_candidates": 4,
+        "S1_span_status": "exact_full_tensor_span",
+        "S2_span_status": "exact_full_tensor_span",
+        "remaining_upstream_blockers": [
+          "GammaCC_to_master_Weyl_signed_normalization_not_certified",
+          "full_SM_Weyl_yukawa_gauge_tensor_embedding_not_certified",
+          "mixing_lambdaT3_Matchete_RGBeta_phase_normalization_not_certified",
+          "full_joint_scalar_background_and_hard_one_loop_closure_not_certified",
+          "extra_HHSS_invariants_not_source_normalized:4",
+          "extra_scalar_quadratic_RG_closure_unimplemented"
+        ]
+      },
+      "earlier_scalar_comparison": {
+        "previous_status": "conditional_C5_per_unknown_NGamma_exploratory",
+        "previous_projection_failed": false
+      },
+      "physical_blockers": [
+        "Signed Matchete GammaCC-to-master Weyl map not certified",
+        "Native Matchete/RGBeta scalar quartic aliases not physically normalized",
+        "All independent dimension-five operators and finite hard counterterms not certified",
+        "Extra symmetry-allowed HHSS candidates not source-normalized"
+      ]
+    },
+    {
+      "model": "B_+1",
+      "status": "PORTAL_NUMERIC_CHECKS_PASS",
+      "hard_input_json_sha256": "a8e954981656d314200101a14223f195c74b43e15e4e6b1abe25949a7cb291d1",
+      "hard_input_npz_sha256": "cd50f44826896976521caac2ad1a5a1bd508b04378a50f7f34d99e3669e78d15",
+      "saved_diagnostic_sha256": "e119e42258bf9b79fbf97df12e6d7dce770f29268c62dfe9433851407c3c0903",
+      "source_fermion_boundary_sha256": "ed0ec711732b8730495b28b0b5c2a738b6ed03f420d236b2b10900fd02a2bda7",
+      "source_running_sha256": "1fd3e3fdada3c636efd33d43dc94ccd52f8e0b7abcd31e3eb5a8eb1ad179e70f",
+      "F_matching_scale_gev": 100000.0,
+      "S_matching_scale_gev": 1000.0,
+      "hard_frobenius_per_unknown_N_gamma_gev_inverse": 3.873901474262274e-17,
+      "dim5_frobenius_per_unknown_N_gamma_gev_inverse": 1.238030593846698e-15,
+      "hard_to_dim5_norm_ratio": 0.03129083799315196,
+      "relative_exact_triangle_truncation_error": 0.00017291232629210084,
+      "max_projection_residual": 2.5358180949035157e-16,
+      "matching_scale_muF_relative_drift_fixed_inputs": 1.9509884341969597e-16,
+      "matching_scale_muS_relative_drift_fixed_inputs": 7.964876929756778e-17,
+      "scalar_mass2_power_exponent_1_to_1quarter": 0.8950668873925276,
+      "scalar_mass2_power_exponent_1quarter_to_1sixteenth": 0.9083677296262556,
+      "UV_power_scan_status": "PASS_APPROX_DIM7_POWER",
+      "n_heavy_flavours": 3,
+      "n_scalar_real_components": 8,
+      "n_preserved_HHSS_source_channels": 5,
+      "saved_to_recomputed_relative_errors": {
+        "hard_muF": 0.0,
+        "eft1_scalar_log": 0.0,
+        "scalar_threshold_muS": 0.0,
+        "dim5_sum": 0.0,
+        "full_triangle": 0.0,
+        "higher_dimension_remainder": 0.0
+      },
+      "physical_C5_certified": false,
+      "portal_span": {
+        "rgbeta_directions_missing_from_native_HHSS_seed": 0,
+        "extra_symmetry_allowed_HHSS_candidates": 1,
+        "S1_span_status": "exact_full_tensor_span",
+        "S2_span_status": "exact_full_tensor_span",
+        "remaining_upstream_blockers": [
+          "GammaCC_to_master_Weyl_signed_normalization_not_certified",
+          "full_SM_Weyl_yukawa_gauge_tensor_embedding_not_certified",
+          "mixing_lambdaT3_Matchete_RGBeta_phase_normalization_not_certified",
+          "full_joint_scalar_background_and_hard_one_loop_closure_not_certified",
+          "extra_HHSS_invariants_not_source_normalized:1"
+        ]
+      },
+      "earlier_scalar_comparison": {
+        "previous_status": "conditional_C5_per_unknown_NGamma_exploratory",
+        "previous_projection_failed": false
+      },
+      "physical_blockers": [
+        "Signed Matchete GammaCC-to-master Weyl map not certified",
+        "Native Matchete/RGBeta scalar quartic aliases not physically normalized",
+        "All independent dimension-five operators and finite hard counterterms not certified",
+        "Extra symmetry-allowed HHSS candidates not source-normalized"
+      ]
+    },
+    {
+      "model": "C_-3",
+      "status": "PORTAL_NUMERIC_CHECKS_PASS",
+      "hard_input_json_sha256": "e80d9f07d0d0e93dd45b2e1839f08109fa6719aca2195380bb88edef50ca4a5a",
+      "hard_input_npz_sha256": "0ef65d36414262238354601dcfc664531b4ce424b8b3e3f9f0ef8badde414c8d",
+      "saved_diagnostic_sha256": "8569b8e612ded519408683a3a1fcb77cfd6e2137df254489bb20e4e98933494a",
+      "source_fermion_boundary_sha256": "38d938f205f44727c5a756ba1027c2839c3569c08886495de1bd90a8e72671b1",
+      "source_running_sha256": "b6c889df1913ba64a9df2515558675efc2b8de87d7b6cd32763262c5e13de42c",
+      "F_matching_scale_gev": 100000.0,
+      "S_matching_scale_gev": 1000.0,
+      "hard_frobenius_per_unknown_N_gamma_gev_inverse": 3.671376491029669e-17,
+      "dim5_frobenius_per_unknown_N_gamma_gev_inverse": 7.063394976269211e-16,
+      "hard_to_dim5_norm_ratio": 0.051977505199190206,
+      "relative_exact_triangle_truncation_error": 0.00012653223749338686,
+      "max_projection_residual": 2.3147807330509963e-16,
+      "matching_scale_muF_relative_drift_fixed_inputs": 1.7097892570724355e-16,
+      "matching_scale_muS_relative_drift_fixed_inputs": 1.5608169077976207e-16,
+      "scalar_mass2_power_exponent_1_to_1quarter": 0.8984279543400792,
+      "scalar_mass2_power_exponent_1quarter_to_1sixteenth": 0.9109483941888653,
+      "UV_power_scan_status": "PASS_APPROX_DIM7_POWER",
+      "n_heavy_flavours": 3,
+      "n_scalar_real_components": 8,
+      "n_preserved_HHSS_source_channels": 5,
+      "saved_to_recomputed_relative_errors": {
+        "hard_muF": 0.0,
+        "eft1_scalar_log": 0.0,
+        "scalar_threshold_muS": 0.0,
+        "dim5_sum": 0.0,
+        "full_triangle": 0.0,
+        "higher_dimension_remainder": 0.0
+      },
+      "physical_C5_certified": false,
+      "portal_span": {
+        "rgbeta_directions_missing_from_native_HHSS_seed": 0,
+        "extra_symmetry_allowed_HHSS_candidates": 1,
+        "S1_span_status": "exact_full_tensor_span",
+        "S2_span_status": "exact_full_tensor_span",
+        "remaining_upstream_blockers": [
+          "GammaCC_to_master_Weyl_signed_normalization_not_certified",
+          "full_SM_Weyl_yukawa_gauge_tensor_embedding_not_certified",
+          "mixing_lambdaT3_Matchete_RGBeta_phase_normalization_not_certified",
+          "full_joint_scalar_background_and_hard_one_loop_closure_not_certified",
+          "extra_HHSS_invariants_not_source_normalized:1"
+        ]
+      },
+      "earlier_scalar_comparison": {
+        "previous_status": "conditional_C5_per_unknown_NGamma_exploratory",
+        "previous_projection_failed": false
+      },
+      "physical_blockers": [
+        "Signed Matchete GammaCC-to-master Weyl map not certified",
+        "Native Matchete/RGBeta scalar quartic aliases not physically normalized",
+        "All independent dimension-five operators and finite hard counterterms not certified",
+        "Extra symmetry-allowed HHSS candidates not source-normalized"
+      ]
+    },
+    {
+      "model": "C_-1",
+      "status": "PORTAL_NUMERIC_CHECKS_PASS",
+      "hard_input_json_sha256": "a4822bca9e38dd4823bc3484c421afafa7055f171d7d0de92ebdbda79c49eba9",
+      "hard_input_npz_sha256": "3a1129c4e8c85b9112495fa40ab279ce9337dd3da0c3772677f59022c9605210",
+      "saved_diagnostic_sha256": "fe939949e2d0e5efb421f0f93f4feec65f8698c00ad45c004bd22425104de24c",
+      "source_fermion_boundary_sha256": "e9e181f75309e976ad84d222b80e9c7958fb2bbb206fb6b076d9f7f3eb26198e",
+      "source_running_sha256": "c7b512a780705fe9be903f88c981553401ebbae3a931a4040dd27b34dd0f626c",
+      "F_matching_scale_gev": 100000.0,
+      "S_matching_scale_gev": 1000.0,
+      "hard_frobenius_per_unknown_N_gamma_gev_inverse": 3.408892776102598e-17,
+      "dim5_frobenius_per_unknown_N_gamma_gev_inverse": 6.93120337905544e-16,
+      "hard_to_dim5_norm_ratio": 0.04918183163407838,
+      "relative_exact_triangle_truncation_error": 0.0001261946380106019,
+      "max_projection_residual": 8.65127678342802e-13,
+      "matching_scale_muF_relative_drift_fixed_inputs": 2.5647408244235005e-16,
+      "matching_scale_muS_relative_drift_fixed_inputs": 2.5647408244235005e-16,
+      "scalar_mass2_power_exponent_1_to_1quarter": 0.8984317895423095,
+      "scalar_mass2_power_exponent_1quarter_to_1sixteenth": 0.9109513102299016,
+      "UV_power_scan_status": "PASS_APPROX_DIM7_POWER",
+      "n_heavy_flavours": 3,
+      "n_scalar_real_components": 8,
+      "n_preserved_HHSS_source_channels": 5,
+      "saved_to_recomputed_relative_errors": {
+        "hard_muF": 0.0,
+        "eft1_scalar_log": 0.0,
+        "scalar_threshold_muS": 0.0,
+        "dim5_sum": 0.0,
+        "full_triangle": 0.0,
+        "higher_dimension_remainder": 0.0
+      },
+      "physical_C5_certified": false,
+      "portal_span": {
+        "rgbeta_directions_missing_from_native_HHSS_seed": 0,
+        "extra_symmetry_allowed_HHSS_candidates": 4,
+        "S1_span_status": "exact_full_tensor_span",
+        "S2_span_status": "exact_full_tensor_span",
+        "remaining_upstream_blockers": [
+          "GammaCC_to_master_Weyl_signed_normalization_not_certified",
+          "full_SM_Weyl_yukawa_gauge_tensor_embedding_not_certified",
+          "mixing_lambdaT3_Matchete_RGBeta_phase_normalization_not_certified",
+          "full_joint_scalar_background_and_hard_one_loop_closure_not_certified",
+          "extra_HHSS_invariants_not_source_normalized:4",
+          "extra_scalar_quadratic_RG_closure_unimplemented"
+        ]
+      },
+      "earlier_scalar_comparison": {
+        "previous_status": "conditional_C5_per_unknown_NGamma_exploratory",
+        "previous_projection_failed": false
+      },
+      "physical_blockers": [
+        "Signed Matchete GammaCC-to-master Weyl map not certified",
+        "Native Matchete/RGBeta scalar quartic aliases not physically normalized",
+        "All independent dimension-five operators and finite hard counterterms not certified",
+        "Extra symmetry-allowed HHSS candidates not source-normalized"
+      ]
+    },
+    {
+      "model": "C_+1",
+      "status": "PORTAL_NUMERIC_CHECKS_PASS",
+      "hard_input_json_sha256": "ee59377fd3825d3fa99cfe5dab6a5bcbe0e30564c5bfb3ac1d700e2e18317c7f",
+      "hard_input_npz_sha256": "675589cf0075edb4c4152db0279e144c14aceff9f0887e11cccd9613d4098cae",
+      "saved_diagnostic_sha256": "0990c2800f42324edf8592d3c4b88a6cc7ba36a40403dd867b13b8c6d5a2c683",
+      "source_fermion_boundary_sha256": "d1841c22ad51884884bb3e296b13ac8e9e6f7b7f1cbe721b08016bf3562d3def",
+      "source_running_sha256": "e113fca17b9a6706d8a88196f7d9d236d4e0c3724af21dd3fea26e7b363f8d5a",
+      "F_matching_scale_gev": 100000.0,
+      "S_matching_scale_gev": 1000.0,
+      "hard_frobenius_per_unknown_N_gamma_gev_inverse": 3.691019222590165e-17,
+      "dim5_frobenius_per_unknown_N_gamma_gev_inverse": 7.093752767562976e-16,
+      "hard_to_dim5_norm_ratio": 0.052031968741112426,
+      "relative_exact_triangle_truncation_error": 0.00012816045861667856,
+      "max_projection_residual": 1.9171291960460573e-13,
+      "matching_scale_muF_relative_drift_fixed_inputs": 1.9658455607777276e-16,
+      "matching_scale_muS_relative_drift_fixed_inputs": 1.9658455607777276e-16,
+      "scalar_mass2_power_exponent_1_to_1quarter": 0.898240248220813,
+      "scalar_mass2_power_exponent_1quarter_to_1sixteenth": 0.9108036869793401,
+      "UV_power_scan_status": "PASS_APPROX_DIM7_POWER",
+      "n_heavy_flavours": 3,
+      "n_scalar_real_components": 8,
+      "n_preserved_HHSS_source_channels": 5,
+      "saved_to_recomputed_relative_errors": {
+        "hard_muF": 0.0,
+        "eft1_scalar_log": 0.0,
+        "scalar_threshold_muS": 0.0,
+        "dim5_sum": 0.0,
+        "full_triangle": 0.0,
+        "higher_dimension_remainder": 0.0
+      },
+      "physical_C5_certified": false,
+      "portal_span": {
+        "rgbeta_directions_missing_from_native_HHSS_seed": 0,
+        "extra_symmetry_allowed_HHSS_candidates": 1,
+        "S1_span_status": "exact_full_tensor_span",
+        "S2_span_status": "exact_full_tensor_span",
+        "remaining_upstream_blockers": [
+          "GammaCC_to_master_Weyl_signed_normalization_not_certified",
+          "full_SM_Weyl_yukawa_gauge_tensor_embedding_not_certified",
+          "mixing_lambdaT3_Matchete_RGBeta_phase_normalization_not_certified",
+          "full_joint_scalar_background_and_hard_one_loop_closure_not_certified",
+          "extra_HHSS_invariants_not_source_normalized:1"
+        ]
+      },
+      "earlier_scalar_comparison": {
+        "previous_status": "conditional_C5_per_unknown_NGamma_exploratory",
+        "previous_projection_failed": false
+      },
+      "physical_blockers": [
+        "Signed Matchete GammaCC-to-master Weyl map not certified",
+        "Native Matchete/RGBeta scalar quartic aliases not physically normalized",
+        "All independent dimension-five operators and finite hard counterterms not certified",
+        "Extra symmetry-allowed HHSS candidates not source-normalized"
+      ]
+    },
+    {
+      "model": "D_-2",
+      "status": "PORTAL_NUMERIC_CHECKS_PASS",
+      "hard_input_json_sha256": "ea00a073cef33910bfc60493e7fa136b766851c1533b085055e6fb6ca13538fc",
+      "hard_input_npz_sha256": "6cce1749f2f839898882c2620855332f65d6f252b6bc4ecf83ae1e36cf43a553",
+      "saved_diagnostic_sha256": "4349fab7084b80594f2ae43fc5148a3f6548722a6842ad5ac19fdc4e81c7f4e8",
+      "source_fermion_boundary_sha256": "cdcb662da4bce608180c7b927e2564069b15d04bdb43876d0ffba9140fbe1af7",
+      "source_running_sha256": "912f44c3c84b8dea0342eaca594aa1c343b4f8ea2631b50c40451602662a3029",
+      "F_matching_scale_gev": 100000.0,
+      "S_matching_scale_gev": 1000.0,
+      "hard_frobenius_per_unknown_N_gamma_gev_inverse": 4.44876445999008e-17,
+      "dim5_frobenius_per_unknown_N_gamma_gev_inverse": 1.2399542099148476e-15,
+      "hard_to_dim5_norm_ratio": 0.0358784576431705,
+      "relative_exact_triangle_truncation_error": 0.000160080763792952,
+      "max_projection_residual": 2.4023158618905766e-16,
+      "matching_scale_muF_relative_drift_fixed_inputs": 2.385756160126225e-16,
+      "matching_scale_muS_relative_drift_fixed_inputs": 1.7782376505937045e-16,
+      "scalar_mass2_power_exponent_1_to_1quarter": 0.8959727519282304,
+      "scalar_mass2_power_exponent_1quarter_to_1sixteenth": 0.9090615369214688,
+      "UV_power_scan_status": "PASS_APPROX_DIM7_POWER",
+      "n_heavy_flavours": 3,
+      "n_scalar_real_components": 8,
+      "n_preserved_HHSS_source_channels": 3,
+      "saved_to_recomputed_relative_errors": {
+        "hard_muF": 0.0,
+        "eft1_scalar_log": 0.0,
+        "scalar_threshold_muS": 0.0,
+        "dim5_sum": 0.0,
+        "full_triangle": 0.0,
+        "higher_dimension_remainder": 0.0
+      },
+      "physical_C5_certified": false,
+      "portal_span": {
+        "rgbeta_directions_missing_from_native_HHSS_seed": 1,
+        "extra_symmetry_allowed_HHSS_candidates": 2,
+        "S1_span_status": "exact_partial_tensor_span",
+        "S2_span_status": "exact_full_tensor_span",
+        "remaining_upstream_blockers": [
+          "GammaCC_to_master_Weyl_signed_normalization_not_certified",
+          "full_SM_Weyl_yukawa_gauge_tensor_embedding_not_certified",
+          "mixing_lambdaT3_Matchete_RGBeta_phase_normalization_not_certified",
+          "full_joint_scalar_background_and_hard_one_loop_closure_not_certified",
+          "ordinary_RGBeta_portal_span_missing_1_independent_directions",
+          "extra_HHSS_invariants_not_source_normalized:2",
+          "extra_scalar_quadratic_RG_closure_unimplemented"
+        ]
+      },
+      "earlier_scalar_comparison": {
+        "previous_status": "conditional_C5_per_unknown_NGamma_exploratory",
+        "previous_projection_failed": false
+      },
+      "physical_blockers": [
+        "Signed Matchete GammaCC-to-master Weyl map not certified",
+        "Native Matchete/RGBeta scalar quartic aliases not physically normalized",
+        "All independent dimension-five operators and finite hard counterterms not certified",
+        "Native HHSS source lacks some independently counted portal directions",
+        "Extra symmetry-allowed HHSS candidates not source-normalized"
+      ]
+    },
+    {
+      "model": "D_+0",
+      "status": "PORTAL_NUMERIC_CHECKS_PASS",
+      "hard_input_json_sha256": "f4815738b071a11e87edbf616d9a4be5a5da9e8f1e33d139e3c8b5f540255a17",
+      "hard_input_npz_sha256": "e43a2cc0ccdb14e6137aaf081ba266c8a0383b53647cea693060a7fa4d1db6a2",
+      "saved_diagnostic_sha256": "ee89fb41637086c64f0491de2bb566afc72fd00953e1b53d9bc2245a8c447a62",
+      "source_fermion_boundary_sha256": "c2eb897e8518c055f06001831e03dc3f5052ec226dc4526019fd644d20c63cb1",
+      "source_running_sha256": "f51ec443e55d96931ce9228922c48cf819717b20876c34a88849ee086548504b",
+      "F_matching_scale_gev": 100000.0,
+      "S_matching_scale_gev": 1000.0,
+      "hard_frobenius_per_unknown_N_gamma_gev_inverse": 4.4383107618657044e-17,
+      "dim5_frobenius_per_unknown_N_gamma_gev_inverse": 1.2382018851555067e-15,
+      "hard_to_dim5_norm_ratio": 0.03584480701471629,
+      "relative_exact_triangle_truncation_error": 0.00015863195666381057,
+      "max_projection_residual": 2.216780366624381e-16,
+      "matching_scale_muF_relative_drift_fixed_inputs": 2.3891325235765313e-16,
+      "matching_scale_muS_relative_drift_fixed_inputs": 1.0136230851445766e-15,
+      "scalar_mass2_power_exponent_1_to_1quarter": 0.8960800430096998,
+      "scalar_mass2_power_exponent_1quarter_to_1sixteenth": 0.9091438034051705,
+      "UV_power_scan_status": "PASS_APPROX_DIM7_POWER",
+      "n_heavy_flavours": 3,
+      "n_scalar_real_components": 8,
+      "n_preserved_HHSS_source_channels": 3,
+      "saved_to_recomputed_relative_errors": {
+        "hard_muF": 0.0,
+        "eft1_scalar_log": 0.0,
+        "scalar_threshold_muS": 0.0,
+        "dim5_sum": 0.0,
+        "full_triangle": 0.0,
+        "higher_dimension_remainder": 0.0
+      },
+      "physical_C5_certified": false,
+      "portal_span": {
+        "rgbeta_directions_missing_from_native_HHSS_seed": 1,
+        "extra_symmetry_allowed_HHSS_candidates": 2,
+        "S1_span_status": "exact_partial_tensor_span",
+        "S2_span_status": "exact_full_tensor_span",
+        "remaining_upstream_blockers": [
+          "GammaCC_to_master_Weyl_signed_normalization_not_certified",
+          "full_SM_Weyl_yukawa_gauge_tensor_embedding_not_certified",
+          "mixing_lambdaT3_Matchete_RGBeta_phase_normalization_not_certified",
+          "full_joint_scalar_background_and_hard_one_loop_closure_not_certified",
+          "ordinary_RGBeta_portal_span_missing_1_independent_directions",
+          "extra_HHSS_invariants_not_source_normalized:2",
+          "extra_scalar_quadratic_RG_closure_unimplemented"
+        ]
+      },
+      "earlier_scalar_comparison": {
+        "previous_status": "ERROR_unverified_source_or_physics_consistency",
+        "previous_projection_failed": true
+      },
+      "physical_blockers": [
+        "Signed Matchete GammaCC-to-master Weyl map not certified",
+        "Native Matchete/RGBeta scalar quartic aliases not physically normalized",
+        "All independent dimension-five operators and finite hard counterterms not certified",
+        "Native HHSS source lacks some independently counted portal directions",
+        "Extra symmetry-allowed HHSS candidates not source-normalized",
+        "Earlier independent scalar-threshold Weinberg projection failed"
+      ]
+    },
+    {
+      "model": "D_+2",
+      "status": "PORTAL_NUMERIC_CHECKS_PASS",
+      "hard_input_json_sha256": "86f8412be4b202e530089d991fb382cf91c43356788e4cb0c2cf8733adbcfe6c",
+      "hard_input_npz_sha256": "32b9c43b36dd5e4c95b534215c42d0cf35f20d7a1960af9c6f9f5e981cf571b1",
+      "saved_diagnostic_sha256": "4e5c190ca30ca90db3fe868a59b8515c15500a08824e7d9659c5dbd4756ec823",
+      "source_fermion_boundary_sha256": "ffe6b8ee2c899a9e617290d8d7f54cb0b34f903675e4665a2a8491c4c766f5a7",
+      "source_running_sha256": "bf2fe3db71b9a5f852a8bb2b52ad62acbc143e20fd473db65f93065d0be19ecc",
+      "F_matching_scale_gev": 100000.0,
+      "S_matching_scale_gev": 1000.0,
+      "hard_frobenius_per_unknown_N_gamma_gev_inverse": 5.71729668406356e-17,
+      "dim5_frobenius_per_unknown_N_gamma_gev_inverse": 1.3447054889912784e-15,
+      "hard_to_dim5_norm_ratio": 0.04251709189015322,
+      "relative_exact_triangle_truncation_error": 0.00016143432341932538,
+      "max_projection_residual": 3.4094516903678085e-16,
+      "matching_scale_muF_relative_drift_fixed_inputs": 3.2794292566423106e-16,
+      "matching_scale_muS_relative_drift_fixed_inputs": 3.023484382616075e-16,
+      "scalar_mass2_power_exponent_1_to_1quarter": 0.8958910958681096,
+      "scalar_mass2_power_exponent_1quarter_to_1sixteenth": 0.9089989719176239,
+      "UV_power_scan_status": "PASS_APPROX_DIM7_POWER",
+      "n_heavy_flavours": 3,
+      "n_scalar_real_components": 8,
+      "n_preserved_HHSS_source_channels": 3,
+      "saved_to_recomputed_relative_errors": {
+        "hard_muF": 0.0,
+        "eft1_scalar_log": 0.0,
+        "scalar_threshold_muS": 0.0,
+        "dim5_sum": 0.0,
+        "full_triangle": 0.0,
+        "higher_dimension_remainder": 0.0
+      },
+      "physical_C5_certified": false,
+      "portal_span": {
+        "rgbeta_directions_missing_from_native_HHSS_seed": 1,
+        "extra_symmetry_allowed_HHSS_candidates": 0,
+        "S1_span_status": "exact_partial_tensor_span",
+        "S2_span_status": "exact_full_tensor_span",
+        "remaining_upstream_blockers": [
+          "GammaCC_to_master_Weyl_signed_normalization_not_certified",
+          "full_SM_Weyl_yukawa_gauge_tensor_embedding_not_certified",
+          "mixing_lambdaT3_Matchete_RGBeta_phase_normalization_not_certified",
+          "full_joint_scalar_background_and_hard_one_loop_closure_not_certified",
+          "ordinary_RGBeta_portal_span_missing_1_independent_directions"
+        ]
+      },
+      "earlier_scalar_comparison": {
+        "previous_status": "conditional_C5_per_unknown_NGamma_exploratory",
+        "previous_projection_failed": false
+      },
+      "physical_blockers": [
+        "Signed Matchete GammaCC-to-master Weyl map not certified",
+        "Native Matchete/RGBeta scalar quartic aliases not physically normalized",
+        "All independent dimension-five operators and finite hard counterterms not certified",
+        "Native HHSS source lacks some independently counted portal directions"
+      ]
+    },
+    {
+      "model": "E_-4",
+      "status": "PORTAL_NUMERIC_CHECKS_PASS",
+      "hard_input_json_sha256": "bd6727ede9e27265a6db730be72f87e8b3a4ac5208c156391c0297a1592227e5",
+      "hard_input_npz_sha256": "7296c11d5a59416859d0929f6b7179b99803b512094a484707f3953945727af9",
+      "saved_diagnostic_sha256": "f349be3c8bbe2699255339004a2217455b8dd5d7b1d904d5096ac41a7f436635",
+      "source_fermion_boundary_sha256": "438c456af08cee4dd23438ec5e28c8f11cc3f0cebadc266f3d9a15bfdf19660f",
+      "source_running_sha256": "15939cf43a70a524249b65f309f0ee86a80d2c61d1fd94ea50fcf43f1f583c14",
+      "F_matching_scale_gev": 100000.0,
+      "S_matching_scale_gev": 1000.0,
+      "hard_frobenius_per_unknown_N_gamma_gev_inverse": 9.488357659732866e-17,
+      "dim5_frobenius_per_unknown_N_gamma_gev_inverse": 2.173937744999706e-15,
+      "hard_to_dim5_norm_ratio": 0.04364594929894899,
+      "relative_exact_triangle_truncation_error": 0.00020754206298558963,
+      "max_projection_residual": 5.247186886872901e-13,
+      "matching_scale_muF_relative_drift_fixed_inputs": 3.84883764572668e-16,
+      "matching_scale_muS_relative_drift_fixed_inputs": 2.565891763817787e-16,
+      "scalar_mass2_power_exponent_1_to_1quarter": 0.8931209307666815,
+      "scalar_mass2_power_exponent_1quarter_to_1sixteenth": 0.9068823098695289,
+      "UV_power_scan_status": "PASS_APPROX_DIM7_POWER",
+      "n_heavy_flavours": 3,
+      "n_scalar_real_components": 12,
+      "n_preserved_HHSS_source_channels": 3,
+      "saved_to_recomputed_relative_errors": {
+        "hard_muF": 0.0,
+        "eft1_scalar_log": 0.0,
+        "scalar_threshold_muS": 0.0,
+        "dim5_sum": 0.0,
+        "full_triangle": 0.0,
+        "higher_dimension_remainder": 0.0
+      },
+      "physical_C5_certified": false,
+      "portal_span": {
+        "rgbeta_directions_missing_from_native_HHSS_seed": 2,
+        "extra_symmetry_allowed_HHSS_candidates": 0,
+        "S1_span_status": "exact_partial_tensor_span",
+        "S2_span_status": "exact_partial_tensor_span",
+        "remaining_upstream_blockers": [
+          "GammaCC_to_master_Weyl_signed_normalization_not_certified",
+          "full_SM_Weyl_yukawa_gauge_tensor_embedding_not_certified",
+          "mixing_lambdaT3_Matchete_RGBeta_phase_normalization_not_certified",
+          "full_joint_scalar_background_and_hard_one_loop_closure_not_certified",
+          "ordinary_RGBeta_portal_span_missing_2_independent_directions"
+        ]
+      },
+      "earlier_scalar_comparison": {
+        "previous_status": "conditional_C5_per_unknown_NGamma_exploratory",
+        "previous_projection_failed": false
+      },
+      "physical_blockers": [
+        "Signed Matchete GammaCC-to-master Weyl map not certified",
+        "Native Matchete/RGBeta scalar quartic aliases not physically normalized",
+        "All independent dimension-five operators and finite hard counterterms not certified",
+        "Native HHSS source lacks some independently counted portal directions"
+      ]
+    },
+    {
+      "model": "E_-2",
+      "status": "PORTAL_NUMERIC_CHECKS_PASS",
+      "hard_input_json_sha256": "2d5890d2cf5bbeb94bcdea734a11c2986bc63ef2a60d420b46bd656a9252d857",
+      "hard_input_npz_sha256": "8763540df3992e4db24edf86407b81571fc402d24814fc59d1e88915565e1a9e",
+      "saved_diagnostic_sha256": "5353ec7321d4ca32e15b985f0e108e8b955ca45f677593b7af14b993c34433ac",
+      "source_fermion_boundary_sha256": "5e1a3f3d6d25b2d848d8edbe421cf9311cd664756384de04756d261697cce9fd",
+      "source_running_sha256": "6607fdb662346948af524dda3d83d99fa11cb222185c1e01bf52b03e9e4947a2",
+      "F_matching_scale_gev": 100000.0,
+      "S_matching_scale_gev": 1000.0,
+      "hard_frobenius_per_unknown_N_gamma_gev_inverse": 7.375978679780619e-17,
+      "dim5_frobenius_per_unknown_N_gamma_gev_inverse": 2.009248921980596e-15,
+      "hard_to_dim5_norm_ratio": 0.03671012884013308,
+      "relative_exact_triangle_truncation_error": 0.00019768591472302645,
+      "max_projection_residual": 2.8067626893059303e-16,
+      "matching_scale_muF_relative_drift_fixed_inputs": 3.1038926912818597e-16,
+      "matching_scale_muS_relative_drift_fixed_inputs": 3.538982168744401e-16,
+      "scalar_mass2_power_exponent_1_to_1quarter": 0.8936416900649746,
+      "scalar_mass2_power_exponent_1quarter_to_1sixteenth": 0.9072792096692999,
+      "UV_power_scan_status": "PASS_APPROX_DIM7_POWER",
+      "n_heavy_flavours": 3,
+      "n_scalar_real_components": 12,
+      "n_preserved_HHSS_source_channels": 3,
+      "saved_to_recomputed_relative_errors": {
+        "hard_muF": 0.0,
+        "eft1_scalar_log": 0.0,
+        "scalar_threshold_muS": 0.0,
+        "dim5_sum": 0.0,
+        "full_triangle": 0.0,
+        "higher_dimension_remainder": 0.0
+      },
+      "physical_C5_certified": false,
+      "portal_span": {
+        "rgbeta_directions_missing_from_native_HHSS_seed": 2,
+        "extra_symmetry_allowed_HHSS_candidates": 2,
+        "S1_span_status": "exact_partial_tensor_span",
+        "S2_span_status": "exact_partial_tensor_span",
+        "remaining_upstream_blockers": [
+          "GammaCC_to_master_Weyl_signed_normalization_not_certified",
+          "full_SM_Weyl_yukawa_gauge_tensor_embedding_not_certified",
+          "mixing_lambdaT3_Matchete_RGBeta_phase_normalization_not_certified",
+          "full_joint_scalar_background_and_hard_one_loop_closure_not_certified",
+          "ordinary_RGBeta_portal_span_missing_2_independent_directions",
+          "extra_HHSS_invariants_not_source_normalized:2",
+          "extra_scalar_quadratic_RG_closure_unimplemented"
+        ]
+      },
+      "earlier_scalar_comparison": {
+        "previous_status": "ERROR_unverified_source_or_physics_consistency",
+        "previous_projection_failed": true
+      },
+      "physical_blockers": [
+        "Signed Matchete GammaCC-to-master Weyl map not certified",
+        "Native Matchete/RGBeta scalar quartic aliases not physically normalized",
+        "All independent dimension-five operators and finite hard counterterms not certified",
+        "Native HHSS source lacks some independently counted portal directions",
+        "Extra symmetry-allowed HHSS candidates not source-normalized",
+        "Earlier independent scalar-threshold Weinberg projection failed"
+      ]
+    },
+    {
+      "model": "E_+0",
+      "status": "PORTAL_NUMERIC_CHECKS_PASS",
+      "hard_input_json_sha256": "2b6f6ca1971dae0271969e31f8c79bb53a9f271bc6405839db49152b450cdcd9",
+      "hard_input_npz_sha256": "d1421bfcc27e3d1f13cd6b3b770ae77716e40d9a31639c1e10975a8a8cb41df4",
+      "saved_diagnostic_sha256": "43af23376f4e49b8ca4bd0d6e2975e61eb1d8759fe9297f7fdffa741dfc0b7e0",
+      "source_fermion_boundary_sha256": "221adb509f3d0ca73f534c781aaf0ba4a6ad20346f6c68dc68880506ce6d0880",
+      "source_running_sha256": "e95c3218d38e517f4e3a3728b06e0a2d250adc5feb68bb446b8946b5a218a88d",
+      "F_matching_scale_gev": 100000.0,
+      "S_matching_scale_gev": 1000.0,
+      "hard_frobenius_per_unknown_N_gamma_gev_inverse": 7.365960618990577e-17,
+      "dim5_frobenius_per_unknown_N_gamma_gev_inverse": 2.005164036675566e-15,
+      "hard_to_dim5_norm_ratio": 0.036734952773254746,
+      "relative_exact_triangle_truncation_error": 0.00019912873557036045,
+      "max_projection_residual": 2.4091628670754066e-16,
+      "matching_scale_muF_relative_drift_fixed_inputs": 4.055225378891103e-16,
+      "matching_scale_muS_relative_drift_fixed_inputs": 4.055225378891103e-16,
+      "scalar_mass2_power_exponent_1_to_1quarter": 0.8935314384483526,
+      "scalar_mass2_power_exponent_1quarter_to_1sixteenth": 0.907195064949979,
+      "UV_power_scan_status": "PASS_APPROX_DIM7_POWER",
+      "n_heavy_flavours": 3,
+      "n_scalar_real_components": 12,
+      "n_preserved_HHSS_source_channels": 3,
+      "saved_to_recomputed_relative_errors": {
+        "hard_muF": 0.0,
+        "eft1_scalar_log": 0.0,
+        "scalar_threshold_muS": 0.0,
+        "dim5_sum": 0.0,
+        "full_triangle": 0.0,
+        "higher_dimension_remainder": 0.0
+      },
+      "physical_C5_certified": false,
+      "portal_span": {
+        "rgbeta_directions_missing_from_native_HHSS_seed": 2,
+        "extra_symmetry_allowed_HHSS_candidates": 2,
+        "S1_span_status": "exact_partial_tensor_span",
+        "S2_span_status": "exact_partial_tensor_span",
+        "remaining_upstream_blockers": [
+          "GammaCC_to_master_Weyl_signed_normalization_not_certified",
+          "full_SM_Weyl_yukawa_gauge_tensor_embedding_not_certified",
+          "mixing_lambdaT3_Matchete_RGBeta_phase_normalization_not_certified",
+          "full_joint_scalar_background_and_hard_one_loop_closure_not_certified",
+          "ordinary_RGBeta_portal_span_missing_2_independent_directions",
+          "extra_HHSS_invariants_not_source_normalized:2",
+          "extra_scalar_quadratic_RG_closure_unimplemented"
+        ]
+      },
+      "earlier_scalar_comparison": {
+        "previous_status": "ERROR_unverified_source_or_physics_consistency",
+        "previous_projection_failed": true
+      },
+      "physical_blockers": [
+        "Signed Matchete GammaCC-to-master Weyl map not certified",
+        "Native Matchete/RGBeta scalar quartic aliases not physically normalized",
+        "All independent dimension-five operators and finite hard counterterms not certified",
+        "Native HHSS source lacks some independently counted portal directions",
+        "Extra symmetry-allowed HHSS candidates not source-normalized",
+        "Earlier independent scalar-threshold Weinberg projection failed"
+      ]
+    },
+    {
+      "model": "E_+2",
+      "status": "PORTAL_NUMERIC_CHECKS_PASS",
+      "hard_input_json_sha256": "7b87504d6cfb8214ffeb18a27818d2726e216856cbac719707dddd7e5bae59da",
+      "hard_input_npz_sha256": "027d4a0290fea2d38d541766404e421690a54061e0e94277c019838053aa8370",
+      "saved_diagnostic_sha256": "88e813e0e21ac87d263f8e48c8bb458fa8d8f7c6292612531d4e2f357fe71329",
+      "source_fermion_boundary_sha256": "ffc29b67266bd9057032c543f42993a31d94c1c633593a7f60f876eb636ec917",
+      "source_running_sha256": "427f0958a5e562edfe8f2fa8266254b1651ba829920dd747bf9a2e32fe727f66",
+      "F_matching_scale_gev": 100000.0,
+      "S_matching_scale_gev": 1000.0,
+      "hard_frobenius_per_unknown_N_gamma_gev_inverse": 9.450572453392941e-17,
+      "dim5_frobenius_per_unknown_N_gamma_gev_inverse": 2.1599603720510084e-15,
+      "hard_to_dim5_norm_ratio": 0.0437534529599683,
+      "relative_exact_triangle_truncation_error": 0.00021326829881229331,
+      "max_projection_residual": 4.481494558793267e-13,
+      "matching_scale_muF_relative_drift_fixed_inputs": 3.416321048467449e-16,
+      "matching_scale_muS_relative_drift_fixed_inputs": 3.416321048467449e-16,
+      "scalar_mass2_power_exponent_1_to_1quarter": 0.8926900655375173,
+      "scalar_mass2_power_exponent_1quarter_to_1sixteenth": 0.9065539064309451,
+      "UV_power_scan_status": "PASS_APPROX_DIM7_POWER",
+      "n_heavy_flavours": 3,
+      "n_scalar_real_components": 12,
+      "n_preserved_HHSS_source_channels": 3,
+      "saved_to_recomputed_relative_errors": {
+        "hard_muF": 0.0,
+        "eft1_scalar_log": 0.0,
+        "scalar_threshold_muS": 0.0,
+        "dim5_sum": 0.0,
+        "full_triangle": 0.0,
+        "higher_dimension_remainder": 0.0
+      },
+      "physical_C5_certified": false,
+      "portal_span": {
+        "rgbeta_directions_missing_from_native_HHSS_seed": 2,
+        "extra_symmetry_allowed_HHSS_candidates": 0,
+        "S1_span_status": "exact_partial_tensor_span",
+        "S2_span_status": "exact_partial_tensor_span",
+        "remaining_upstream_blockers": [
+          "GammaCC_to_master_Weyl_signed_normalization_not_certified",
+          "full_SM_Weyl_yukawa_gauge_tensor_embedding_not_certified",
+          "mixing_lambdaT3_Matchete_RGBeta_phase_normalization_not_certified",
+          "full_joint_scalar_background_and_hard_one_loop_closure_not_certified",
+          "ordinary_RGBeta_portal_span_missing_2_independent_directions"
+        ]
+      },
+      "earlier_scalar_comparison": {
+        "previous_status": "conditional_C5_per_unknown_NGamma_exploratory",
+        "previous_projection_failed": false
+      },
+      "physical_blockers": [
+        "Signed Matchete GammaCC-to-master Weyl map not certified",
+        "Native Matchete/RGBeta scalar quartic aliases not physically normalized",
+        "All independent dimension-five operators and finite hard counterterms not certified",
+        "Native HHSS source lacks some independently counted portal directions"
+      ]
+    }
+  ],
+  "eft_sequence": "UV -> all F at ONE muF -> EFT1(S1,S2,SM) -> both S at ONE muS -> SMEFT",
+  "numerical_scope": "source-matched scalar-portal triangle, fixed-input matching-scale test",
+  "UV_power_test_scope": "same analytic UV triangle and its own dim5 expansion, not independent UV derivation",
+  "normalization": "per unknown signed N_GammaCC; physical sign not assumed"
+}

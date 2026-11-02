@@ -325,3 +325,40 @@ but of higher order in the heavy-fermion expansion. These are not six
 independent physical mass contributions and must not be added on top of one
 another. The other six EFT1 RGE terms and other hard topologies are **not**
 claimed complete. None of these outputs is a certified physical mass matrix.
+
+## Workstream 3: conditional hard-portal numerical consistency + external evidence gate
+
+New full files (exclusive owned paths):
+
+- `Numerical/lo_certification/completeness/consistency_audit.py`
+- `scripts/AuditLOConditionalConsistency.py`
+- `tests/test_lo_completeness_consistency.py`
+
+The reader consumes the **already generated** `scalar_hard_01` and does not modify it. Every model's saved `C5` components are independently recomputed with the existing hard kernel and source input NPZ, after checking that the adjacent scalar background files have the SHA-256 recorded in the conditional input. The check rejects a mismatched model, missing channels, changed saved matrices, different scalar/fermion thresholds or an unexpected physical-certification claim. It is benchmark-specific and remains per-unknown-signed `N_GammaCC`.
+
+The diagnostic verifies the declared **partial scalar-portal topology**:
+
+1. `hard_muF + eft1_scalar_log + scalar_threshold_muS = dim5_sum`, as reconstructed from unchanged source input.
+2. With `C_LLSS,k`, quartics, and masses held constant, independently varying `muF` and `muS` leaves this combined partition unchanged to relative `1e-9` (algebraic matching-scale consistency, **not** the full seven-term running of actual coupling trajectories).
+3. For the same analytic zero-momentum full triangle, scaling the scalar *mass squares* by `1/4` and `1/16` produces a higher-dimensional remainder with approximate exponent near one in `mS²/MF²`. This is a **power-counting stress test**, not an independent UV amplitude computation.
+4. Weinberg residuals are checked separately for the retained hard, logarithm, scalar finite, dim5 sum and full triangle. No hard-only Ward result is allowed to erase an earlier separate scalar-threshold Ward failure.
+5. Read-only Workstream 2 evidence `output/general_observable/lo_certification_couplings/ws2_portal_normalization_v1/summary.json` is incorporated. This audit records missing native-source portal directions and as-yet unnormalized additional HHSS candidates, even if all numerical source channels are present in the old v4 cache. Source-channel completeness **is not general UV portal completeness**.
+6. Read-only previous v6 scalar matching summary is incorporated. The older projection-failing A_-2, D_+0, E_-2 and E_+0 models (as recorded in v6) remain a separate consistency blocker even when new hard-sector projection passes. The optional Workstream C GammaCC calibration report, if present, is indexed as a **conditional** Clifford/Grassmann result, never promoted into a signed physical Wilson certificate.
+
+All output fields explicitly retain `physical_C5_certified=false` and `physical_full_one_loop_certified=false`. Do **not** add this partial scalar-source log to a seven-term EFT1 RGE solution which already includes the scalar source. Neither the synthetic UV triangle nor its own truncated expansion is an independent one-loop full UV matching calculation.
+
+From the local project root in PowerShell:
+
+```powershell
+Set-Location C:\thesistemp\T3neutrinomassmodelpipeline
+Expand-Archive -LiteralPath "$HOME\Downloads\T3_LO_Completeness_Workstream3_ConsistencyGate.zip" -DestinationPath . -Force
+python -m unittest discover -s tests -p 'test_lo_completeness_*.py' -v
+python -m scripts.AuditLOConditionalConsistency --check-only
+python -m scripts.AuditLOConditionalConsistency --output-dir 'output\general_observable\lo_certification_completeness\conditional_consistency_01'
+Get-Content 'output\general_observable\lo_certification_completeness\conditional_consistency_01\summary.json' -Raw
+Import-Csv 'output\general_observable\lo_certification_completeness\conditional_consistency_01\numerical_table.csv' | Format-Table -AutoSize
+```
+
+Outputs are `summary.json`, `numerical_table.csv`, and `blockers.json` within the requested **new** Workstream 3 output directory. The output path is refused if already present; choose `conditional_consistency_02` on a rerun. If an upstream optional evidence report is absent, its status remains `NOT_PROVIDED`, not treated as a pass. An incomplete numerical input or failed consistency check returns nonzero and a fail-closed summary.
+
+**Physical interpretation:** The latest observed all-16 portal-span audit has nontrivial extra symmetry-allowed channels; the previous 16/16 conditional hard portal successes therefore do *not* close the general one-loop T3 problem. The independent signed GammaCC-to-Weyl calibration and full counterterm/operator inventory still belong to their original workstreams. Workstream 3 does not change those workers or their data.

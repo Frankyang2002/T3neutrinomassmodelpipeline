@@ -1,0 +1,1128 @@
+{
+  "format": "t3-lo-direct-uv-native-mass-ward-conditional-spinor-spurions-v1",
+  "status": "16of16_native_source_mass_Ward_and_conditional_spurions_checked_absolute_dictionary_pending",
+  "source_contract": {
+    "source_sha256": {
+      "RGE\\running\\rgbeta\\T3RGBetaModel.wl": "a58c79f18b2abdf9d476588552dfa52e2f131f322094e5b72d1198162aa20abc",
+      "Lagrangian\\interactions\\T3Topology.wl": "e6e24c4a673bddff980885f8354b388ceaa19e53c8b2faa79ba3289a87de1511",
+      "Lagrangian\\model\\T3Fields.wl": "2f27f080ab02d1225aab7e5928aba19f238ec6d5dcdd41b72ee2d2c7298e24ab"
+    },
+    "rgbeta_mass_contract_checked": true,
+    "rgbeta_dirac_doublet_mass_tensor": "epsilon_of_two_left_fundamentals",
+    "rgbeta_dirac_triplet_mass_tensor": "delta_in_real_triplet_representation",
+    "rgbeta_majorana_odd_representation_contract": "delta",
+    "source_read_live_on_local_filesystem": true,
+    "installed_native_rgbeta_mass_amplitude_executed": false,
+    "absolute_spinor_phase_measured": false,
+    "Matchete_topology_y1_spinor": "CConj[NewFermion]",
+    "Matchete_topology_y2_spinor": "NewFermion",
+    "RGBeta_y1_spinor_name": "F",
+    "RGBeta_y2_spinor_name": "Fc for Dirac, F for Majorana",
+    "mapping_of_Matchete_CConj_to_RGBeta_Fc_in_common_left_Weyl_basis": "CONDITIONAL_NOT_NATIVE_PROVED"
+  },
+  "mass_ward_witnesses": [
+    {
+      "dimension": 1,
+      "candidate_representation_basis": "singlet",
+      "tensor": "delta",
+      "all_su2_generators_ward_zero": true,
+      "nonzero_generator_numbers": [],
+      "mass_tensor_rows": [
+        [
+          "1"
+        ]
+      ],
+      "native_component_basis_cross_package_measured": false
+    },
+    {
+      "dimension": 2,
+      "candidate_representation_basis": "fundamental",
+      "tensor": "epsilon",
+      "all_su2_generators_ward_zero": true,
+      "nonzero_generator_numbers": [],
+      "mass_tensor_rows": [
+        [
+          "0",
+          "1"
+        ],
+        [
+          "-1",
+          "0"
+        ]
+      ],
+      "native_component_basis_cross_package_measured": false
+    },
+    {
+      "dimension": 3,
+      "candidate_representation_basis": "Cartesian_adjoint",
+      "tensor": "delta",
+      "all_su2_generators_ward_zero": true,
+      "nonzero_generator_numbers": [],
+      "mass_tensor_rows": [
+        [
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "1",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "1"
+        ]
+      ],
+      "native_component_basis_cross_package_measured": false
+    }
+  ],
+  "negative_control_doublet_delta": {
+    "dimension": 2,
+    "candidate_representation_basis": "fundamental",
+    "tensor": "delta",
+    "all_su2_generators_ward_zero": false,
+    "nonzero_generator_numbers": [
+      1,
+      3
+    ],
+    "mass_tensor_rows": [
+      [
+        "1",
+        "0"
+      ],
+      [
+        "0",
+        "1"
+      ]
+    ],
+    "native_component_basis_cross_package_measured": false
+  },
+  "optional_native_evidence": {
+    "a0_native_mass_report": {
+      "available": false
+    },
+    "a0_spinor_witness": {
+      "available": false
+    }
+  },
+  "model_count": 16,
+  "model_counts": {
+    "Dirac": 14,
+    "Majorana": 2,
+    "extra_yukawa_allowed": 6
+  },
+  "physical_source_certified_models": 0,
+  "outstanding": [
+    "Native installed Matchete GammaCC 4x4 orientation and RGBeta epsilon component orientation",
+    "Physical two-Yukawa and MF normalisation in one common all-left Weyl basis",
+    "Physical Matchete-RGBeta signed portal and scalar-mixing coupling dictionary",
+    "Additional allowed Yukawas absent from restricted benchmark numeric coefficients",
+    "Complete same-input two-threshold EFT C5 comparison after source matching"
+  ],
+  "all_heavy_fermions_at_muF_then_both_heavy_scalars_at_muS": true,
+  "SM_fermions_never_integrated_out": true,
+  "models": [
+    {
+      "model": "A_-4",
+      "frozen_benchmark_key": "T3_dS1_1_dS2_3_dF_2_alpha_m4",
+      "fields": {
+        "dS1": 1,
+        "dS2": 3,
+        "dF": 2,
+        "alpha": -4
+      },
+      "fermion_kind": "Dirac",
+      "rgbeta_source_mass_invariant": "epsilon",
+      "su2_ward_satisfied_for_declared_representation": true,
+      "source_operator_orientation_verified": true,
+      "conditional_spurion": {
+        "conditional_left_weyl_action": "y1 nu Fc S1 + y2 nu F S2* + MF F Fc + lambdaT3 HH S1 S2* + hc",
+        "rephasing_variables": [
+          "F",
+          "Fc",
+          "S1",
+          "S2"
+        ],
+        "MF_monomial_charge": [
+          1,
+          1,
+          0,
+          0
+        ],
+        "loop_spurion": "y1*y2*conjugate(MF)*conjugate(lambdaT3)",
+        "operator_powers": {
+          "y1": 1,
+          "y2": 1,
+          "MF": -1,
+          "lambdaT3": -1
+        },
+        "loop_spurion_rephasing_charge": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "incorrect_nonconjugated_lambda_charge": [
+          0,
+          0,
+          2,
+          -2
+        ],
+        "negative_control_rejected": true,
+        "incorrect_same_chirality_dirac_assignment_charge": [
+          1,
+          -1,
+          -1,
+          -1
+        ],
+        "absolute_Matchete_RGBeta_coefficient_certified": false,
+        "MF_and_GammaCC_sign_transport_certified": false,
+        "native_complex_field_conjugations_physically_projected": false
+      },
+      "physical_source_certified": false
+    },
+    {
+      "model": "A_-2",
+      "frozen_benchmark_key": "T3_dS1_1_dS2_3_dF_2_alpha_m2",
+      "fields": {
+        "dS1": 1,
+        "dS2": 3,
+        "dF": 2,
+        "alpha": -2
+      },
+      "fermion_kind": "Dirac",
+      "rgbeta_source_mass_invariant": "epsilon",
+      "su2_ward_satisfied_for_declared_representation": true,
+      "source_operator_orientation_verified": true,
+      "conditional_spurion": {
+        "conditional_left_weyl_action": "y1 nu Fc S1 + y2 nu F S2* + MF F Fc + lambdaT3 HH S1 S2* + hc",
+        "rephasing_variables": [
+          "F",
+          "Fc",
+          "S1",
+          "S2"
+        ],
+        "MF_monomial_charge": [
+          1,
+          1,
+          0,
+          0
+        ],
+        "loop_spurion": "y1*y2*conjugate(MF)*conjugate(lambdaT3)",
+        "operator_powers": {
+          "y1": 1,
+          "y2": 1,
+          "MF": -1,
+          "lambdaT3": -1
+        },
+        "loop_spurion_rephasing_charge": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "incorrect_nonconjugated_lambda_charge": [
+          0,
+          0,
+          2,
+          -2
+        ],
+        "negative_control_rejected": true,
+        "incorrect_same_chirality_dirac_assignment_charge": [
+          1,
+          -1,
+          -1,
+          -1
+        ],
+        "absolute_Matchete_RGBeta_coefficient_certified": false,
+        "MF_and_GammaCC_sign_transport_certified": false,
+        "native_complex_field_conjugations_physically_projected": false,
+        "additional_source_allowed_independent_yukawa": {
+          "name": "y2Conj",
+          "operator_charge": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "independent_complex_coefficient": true,
+          "included_in_restricted_frozen_benchmark": false
+        }
+      },
+      "physical_source_certified": false
+    },
+    {
+      "model": "A_+0",
+      "frozen_benchmark_key": "T3_dS1_1_dS2_3_dF_2_alpha_p0",
+      "fields": {
+        "dS1": 1,
+        "dS2": 3,
+        "dF": 2,
+        "alpha": 0
+      },
+      "fermion_kind": "Dirac",
+      "rgbeta_source_mass_invariant": "epsilon",
+      "su2_ward_satisfied_for_declared_representation": true,
+      "source_operator_orientation_verified": true,
+      "conditional_spurion": {
+        "conditional_left_weyl_action": "y1 nu Fc S1 + y2 nu F S2* + MF F Fc + lambdaT3 HH S1 S2* + hc",
+        "rephasing_variables": [
+          "F",
+          "Fc",
+          "S1",
+          "S2"
+        ],
+        "MF_monomial_charge": [
+          1,
+          1,
+          0,
+          0
+        ],
+        "loop_spurion": "y1*y2*conjugate(MF)*conjugate(lambdaT3)",
+        "operator_powers": {
+          "y1": 1,
+          "y2": 1,
+          "MF": -1,
+          "lambdaT3": -1
+        },
+        "loop_spurion_rephasing_charge": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "incorrect_nonconjugated_lambda_charge": [
+          0,
+          0,
+          2,
+          -2
+        ],
+        "negative_control_rejected": true,
+        "incorrect_same_chirality_dirac_assignment_charge": [
+          1,
+          -1,
+          -1,
+          -1
+        ],
+        "absolute_Matchete_RGBeta_coefficient_certified": false,
+        "MF_and_GammaCC_sign_transport_certified": false,
+        "native_complex_field_conjugations_physically_projected": false,
+        "additional_source_allowed_independent_yukawa": {
+          "name": "y1Conj",
+          "operator_charge": [
+            0,
+            1,
+            -1,
+            0
+          ],
+          "independent_complex_coefficient": true,
+          "included_in_restricted_frozen_benchmark": false
+        }
+      },
+      "physical_source_certified": false
+    },
+    {
+      "model": "B_-3",
+      "frozen_benchmark_key": "T3_dS1_2_dS2_2_dF_1_alpha_m3",
+      "fields": {
+        "dS1": 2,
+        "dS2": 2,
+        "dF": 1,
+        "alpha": -3
+      },
+      "fermion_kind": "Dirac",
+      "rgbeta_source_mass_invariant": "delta",
+      "su2_ward_satisfied_for_declared_representation": true,
+      "source_operator_orientation_verified": true,
+      "conditional_spurion": {
+        "conditional_left_weyl_action": "y1 nu Fc S1 + y2 nu F S2* + MF F Fc + lambdaT3 HH S1 S2* + hc",
+        "rephasing_variables": [
+          "F",
+          "Fc",
+          "S1",
+          "S2"
+        ],
+        "MF_monomial_charge": [
+          1,
+          1,
+          0,
+          0
+        ],
+        "loop_spurion": "y1*y2*conjugate(MF)*conjugate(lambdaT3)",
+        "operator_powers": {
+          "y1": 1,
+          "y2": 1,
+          "MF": -1,
+          "lambdaT3": -1
+        },
+        "loop_spurion_rephasing_charge": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "incorrect_nonconjugated_lambda_charge": [
+          0,
+          0,
+          2,
+          -2
+        ],
+        "negative_control_rejected": true,
+        "incorrect_same_chirality_dirac_assignment_charge": [
+          1,
+          -1,
+          -1,
+          -1
+        ],
+        "absolute_Matchete_RGBeta_coefficient_certified": false,
+        "MF_and_GammaCC_sign_transport_certified": false,
+        "native_complex_field_conjugations_physically_projected": false
+      },
+      "physical_source_certified": false
+    },
+    {
+      "model": "B_-1",
+      "frozen_benchmark_key": "T3_dS1_2_dS2_2_dF_1_alpha_m1",
+      "fields": {
+        "dS1": 2,
+        "dS2": 2,
+        "dF": 1,
+        "alpha": -1
+      },
+      "fermion_kind": "Majorana",
+      "rgbeta_source_mass_invariant": "delta",
+      "su2_ward_satisfied_for_declared_representation": true,
+      "source_operator_orientation_verified": true,
+      "conditional_spurion": {
+        "conditional_left_weyl_action": "y1 nu F S1 + y2 nu F S2* + MF/2 F F + lambdaT3 HH S1 S2* + hc",
+        "rephasing_variables": [
+          "F",
+          "Fc",
+          "S1",
+          "S2"
+        ],
+        "MF_monomial_charge": [
+          2,
+          0,
+          0,
+          0
+        ],
+        "loop_spurion": "y1*y2*conjugate(MF)*conjugate(lambdaT3)",
+        "operator_powers": {
+          "y1": 1,
+          "y2": 1,
+          "MF": -1,
+          "lambdaT3": -1
+        },
+        "loop_spurion_rephasing_charge": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "incorrect_nonconjugated_lambda_charge": [
+          0,
+          0,
+          2,
+          -2
+        ],
+        "negative_control_rejected": true,
+        "incorrect_same_chirality_dirac_assignment_charge": null,
+        "absolute_Matchete_RGBeta_coefficient_certified": false,
+        "MF_and_GammaCC_sign_transport_certified": false,
+        "native_complex_field_conjugations_physically_projected": false
+      },
+      "physical_source_certified": false
+    },
+    {
+      "model": "B_+1",
+      "frozen_benchmark_key": "T3_dS1_2_dS2_2_dF_1_alpha_p1",
+      "fields": {
+        "dS1": 2,
+        "dS2": 2,
+        "dF": 1,
+        "alpha": 1
+      },
+      "fermion_kind": "Dirac",
+      "rgbeta_source_mass_invariant": "delta",
+      "su2_ward_satisfied_for_declared_representation": true,
+      "source_operator_orientation_verified": true,
+      "conditional_spurion": {
+        "conditional_left_weyl_action": "y1 nu Fc S1 + y2 nu F S2* + MF F Fc + lambdaT3 HH S1 S2* + hc",
+        "rephasing_variables": [
+          "F",
+          "Fc",
+          "S1",
+          "S2"
+        ],
+        "MF_monomial_charge": [
+          1,
+          1,
+          0,
+          0
+        ],
+        "loop_spurion": "y1*y2*conjugate(MF)*conjugate(lambdaT3)",
+        "operator_powers": {
+          "y1": 1,
+          "y2": 1,
+          "MF": -1,
+          "lambdaT3": -1
+        },
+        "loop_spurion_rephasing_charge": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "incorrect_nonconjugated_lambda_charge": [
+          0,
+          0,
+          2,
+          -2
+        ],
+        "negative_control_rejected": true,
+        "incorrect_same_chirality_dirac_assignment_charge": [
+          1,
+          -1,
+          -1,
+          -1
+        ],
+        "absolute_Matchete_RGBeta_coefficient_certified": false,
+        "MF_and_GammaCC_sign_transport_certified": false,
+        "native_complex_field_conjugations_physically_projected": false
+      },
+      "physical_source_certified": false
+    },
+    {
+      "model": "C_-3",
+      "frozen_benchmark_key": "T3_dS1_2_dS2_2_dF_3_alpha_m3",
+      "fields": {
+        "dS1": 2,
+        "dS2": 2,
+        "dF": 3,
+        "alpha": -3
+      },
+      "fermion_kind": "Dirac",
+      "rgbeta_source_mass_invariant": "delta",
+      "su2_ward_satisfied_for_declared_representation": true,
+      "source_operator_orientation_verified": true,
+      "conditional_spurion": {
+        "conditional_left_weyl_action": "y1 nu Fc S1 + y2 nu F S2* + MF F Fc + lambdaT3 HH S1 S2* + hc",
+        "rephasing_variables": [
+          "F",
+          "Fc",
+          "S1",
+          "S2"
+        ],
+        "MF_monomial_charge": [
+          1,
+          1,
+          0,
+          0
+        ],
+        "loop_spurion": "y1*y2*conjugate(MF)*conjugate(lambdaT3)",
+        "operator_powers": {
+          "y1": 1,
+          "y2": 1,
+          "MF": -1,
+          "lambdaT3": -1
+        },
+        "loop_spurion_rephasing_charge": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "incorrect_nonconjugated_lambda_charge": [
+          0,
+          0,
+          2,
+          -2
+        ],
+        "negative_control_rejected": true,
+        "incorrect_same_chirality_dirac_assignment_charge": [
+          1,
+          -1,
+          -1,
+          -1
+        ],
+        "absolute_Matchete_RGBeta_coefficient_certified": false,
+        "MF_and_GammaCC_sign_transport_certified": false,
+        "native_complex_field_conjugations_physically_projected": false
+      },
+      "physical_source_certified": false
+    },
+    {
+      "model": "C_-1",
+      "frozen_benchmark_key": "T3_dS1_2_dS2_2_dF_3_alpha_m1",
+      "fields": {
+        "dS1": 2,
+        "dS2": 2,
+        "dF": 3,
+        "alpha": -1
+      },
+      "fermion_kind": "Majorana",
+      "rgbeta_source_mass_invariant": "delta",
+      "su2_ward_satisfied_for_declared_representation": true,
+      "source_operator_orientation_verified": true,
+      "conditional_spurion": {
+        "conditional_left_weyl_action": "y1 nu F S1 + y2 nu F S2* + MF/2 F F + lambdaT3 HH S1 S2* + hc",
+        "rephasing_variables": [
+          "F",
+          "Fc",
+          "S1",
+          "S2"
+        ],
+        "MF_monomial_charge": [
+          2,
+          0,
+          0,
+          0
+        ],
+        "loop_spurion": "y1*y2*conjugate(MF)*conjugate(lambdaT3)",
+        "operator_powers": {
+          "y1": 1,
+          "y2": 1,
+          "MF": -1,
+          "lambdaT3": -1
+        },
+        "loop_spurion_rephasing_charge": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "incorrect_nonconjugated_lambda_charge": [
+          0,
+          0,
+          2,
+          -2
+        ],
+        "negative_control_rejected": true,
+        "incorrect_same_chirality_dirac_assignment_charge": null,
+        "absolute_Matchete_RGBeta_coefficient_certified": false,
+        "MF_and_GammaCC_sign_transport_certified": false,
+        "native_complex_field_conjugations_physically_projected": false
+      },
+      "physical_source_certified": false
+    },
+    {
+      "model": "C_+1",
+      "frozen_benchmark_key": "T3_dS1_2_dS2_2_dF_3_alpha_p1",
+      "fields": {
+        "dS1": 2,
+        "dS2": 2,
+        "dF": 3,
+        "alpha": 1
+      },
+      "fermion_kind": "Dirac",
+      "rgbeta_source_mass_invariant": "delta",
+      "su2_ward_satisfied_for_declared_representation": true,
+      "source_operator_orientation_verified": true,
+      "conditional_spurion": {
+        "conditional_left_weyl_action": "y1 nu Fc S1 + y2 nu F S2* + MF F Fc + lambdaT3 HH S1 S2* + hc",
+        "rephasing_variables": [
+          "F",
+          "Fc",
+          "S1",
+          "S2"
+        ],
+        "MF_monomial_charge": [
+          1,
+          1,
+          0,
+          0
+        ],
+        "loop_spurion": "y1*y2*conjugate(MF)*conjugate(lambdaT3)",
+        "operator_powers": {
+          "y1": 1,
+          "y2": 1,
+          "MF": -1,
+          "lambdaT3": -1
+        },
+        "loop_spurion_rephasing_charge": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "incorrect_nonconjugated_lambda_charge": [
+          0,
+          0,
+          2,
+          -2
+        ],
+        "negative_control_rejected": true,
+        "incorrect_same_chirality_dirac_assignment_charge": [
+          1,
+          -1,
+          -1,
+          -1
+        ],
+        "absolute_Matchete_RGBeta_coefficient_certified": false,
+        "MF_and_GammaCC_sign_transport_certified": false,
+        "native_complex_field_conjugations_physically_projected": false
+      },
+      "physical_source_certified": false
+    },
+    {
+      "model": "D_-2",
+      "frozen_benchmark_key": "T3_dS1_3_dS2_1_dF_2_alpha_m2",
+      "fields": {
+        "dS1": 3,
+        "dS2": 1,
+        "dF": 2,
+        "alpha": -2
+      },
+      "fermion_kind": "Dirac",
+      "rgbeta_source_mass_invariant": "epsilon",
+      "su2_ward_satisfied_for_declared_representation": true,
+      "source_operator_orientation_verified": true,
+      "conditional_spurion": {
+        "conditional_left_weyl_action": "y1 nu Fc S1 + y2 nu F S2* + MF F Fc + lambdaT3 HH S1 S2* + hc",
+        "rephasing_variables": [
+          "F",
+          "Fc",
+          "S1",
+          "S2"
+        ],
+        "MF_monomial_charge": [
+          1,
+          1,
+          0,
+          0
+        ],
+        "loop_spurion": "y1*y2*conjugate(MF)*conjugate(lambdaT3)",
+        "operator_powers": {
+          "y1": 1,
+          "y2": 1,
+          "MF": -1,
+          "lambdaT3": -1
+        },
+        "loop_spurion_rephasing_charge": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "incorrect_nonconjugated_lambda_charge": [
+          0,
+          0,
+          2,
+          -2
+        ],
+        "negative_control_rejected": true,
+        "incorrect_same_chirality_dirac_assignment_charge": [
+          1,
+          -1,
+          -1,
+          -1
+        ],
+        "absolute_Matchete_RGBeta_coefficient_certified": false,
+        "MF_and_GammaCC_sign_transport_certified": false,
+        "native_complex_field_conjugations_physically_projected": false,
+        "additional_source_allowed_independent_yukawa": {
+          "name": "y2Conj",
+          "operator_charge": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "independent_complex_coefficient": true,
+          "included_in_restricted_frozen_benchmark": false
+        }
+      },
+      "physical_source_certified": false
+    },
+    {
+      "model": "D_+0",
+      "frozen_benchmark_key": "T3_dS1_3_dS2_1_dF_2_alpha_p0",
+      "fields": {
+        "dS1": 3,
+        "dS2": 1,
+        "dF": 2,
+        "alpha": 0
+      },
+      "fermion_kind": "Dirac",
+      "rgbeta_source_mass_invariant": "epsilon",
+      "su2_ward_satisfied_for_declared_representation": true,
+      "source_operator_orientation_verified": true,
+      "conditional_spurion": {
+        "conditional_left_weyl_action": "y1 nu Fc S1 + y2 nu F S2* + MF F Fc + lambdaT3 HH S1 S2* + hc",
+        "rephasing_variables": [
+          "F",
+          "Fc",
+          "S1",
+          "S2"
+        ],
+        "MF_monomial_charge": [
+          1,
+          1,
+          0,
+          0
+        ],
+        "loop_spurion": "y1*y2*conjugate(MF)*conjugate(lambdaT3)",
+        "operator_powers": {
+          "y1": 1,
+          "y2": 1,
+          "MF": -1,
+          "lambdaT3": -1
+        },
+        "loop_spurion_rephasing_charge": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "incorrect_nonconjugated_lambda_charge": [
+          0,
+          0,
+          2,
+          -2
+        ],
+        "negative_control_rejected": true,
+        "incorrect_same_chirality_dirac_assignment_charge": [
+          1,
+          -1,
+          -1,
+          -1
+        ],
+        "absolute_Matchete_RGBeta_coefficient_certified": false,
+        "MF_and_GammaCC_sign_transport_certified": false,
+        "native_complex_field_conjugations_physically_projected": false,
+        "additional_source_allowed_independent_yukawa": {
+          "name": "y1Conj",
+          "operator_charge": [
+            0,
+            1,
+            -1,
+            0
+          ],
+          "independent_complex_coefficient": true,
+          "included_in_restricted_frozen_benchmark": false
+        }
+      },
+      "physical_source_certified": false
+    },
+    {
+      "model": "D_+2",
+      "frozen_benchmark_key": "T3_dS1_3_dS2_1_dF_2_alpha_p2",
+      "fields": {
+        "dS1": 3,
+        "dS2": 1,
+        "dF": 2,
+        "alpha": 2
+      },
+      "fermion_kind": "Dirac",
+      "rgbeta_source_mass_invariant": "epsilon",
+      "su2_ward_satisfied_for_declared_representation": true,
+      "source_operator_orientation_verified": true,
+      "conditional_spurion": {
+        "conditional_left_weyl_action": "y1 nu Fc S1 + y2 nu F S2* + MF F Fc + lambdaT3 HH S1 S2* + hc",
+        "rephasing_variables": [
+          "F",
+          "Fc",
+          "S1",
+          "S2"
+        ],
+        "MF_monomial_charge": [
+          1,
+          1,
+          0,
+          0
+        ],
+        "loop_spurion": "y1*y2*conjugate(MF)*conjugate(lambdaT3)",
+        "operator_powers": {
+          "y1": 1,
+          "y2": 1,
+          "MF": -1,
+          "lambdaT3": -1
+        },
+        "loop_spurion_rephasing_charge": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "incorrect_nonconjugated_lambda_charge": [
+          0,
+          0,
+          2,
+          -2
+        ],
+        "negative_control_rejected": true,
+        "incorrect_same_chirality_dirac_assignment_charge": [
+          1,
+          -1,
+          -1,
+          -1
+        ],
+        "absolute_Matchete_RGBeta_coefficient_certified": false,
+        "MF_and_GammaCC_sign_transport_certified": false,
+        "native_complex_field_conjugations_physically_projected": false
+      },
+      "physical_source_certified": false
+    },
+    {
+      "model": "E_-4",
+      "frozen_benchmark_key": "T3_dS1_3_dS2_3_dF_2_alpha_m4",
+      "fields": {
+        "dS1": 3,
+        "dS2": 3,
+        "dF": 2,
+        "alpha": -4
+      },
+      "fermion_kind": "Dirac",
+      "rgbeta_source_mass_invariant": "epsilon",
+      "su2_ward_satisfied_for_declared_representation": true,
+      "source_operator_orientation_verified": true,
+      "conditional_spurion": {
+        "conditional_left_weyl_action": "y1 nu Fc S1 + y2 nu F S2* + MF F Fc + lambdaT3 HH S1 S2* + hc",
+        "rephasing_variables": [
+          "F",
+          "Fc",
+          "S1",
+          "S2"
+        ],
+        "MF_monomial_charge": [
+          1,
+          1,
+          0,
+          0
+        ],
+        "loop_spurion": "y1*y2*conjugate(MF)*conjugate(lambdaT3)",
+        "operator_powers": {
+          "y1": 1,
+          "y2": 1,
+          "MF": -1,
+          "lambdaT3": -1
+        },
+        "loop_spurion_rephasing_charge": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "incorrect_nonconjugated_lambda_charge": [
+          0,
+          0,
+          2,
+          -2
+        ],
+        "negative_control_rejected": true,
+        "incorrect_same_chirality_dirac_assignment_charge": [
+          1,
+          -1,
+          -1,
+          -1
+        ],
+        "absolute_Matchete_RGBeta_coefficient_certified": false,
+        "MF_and_GammaCC_sign_transport_certified": false,
+        "native_complex_field_conjugations_physically_projected": false
+      },
+      "physical_source_certified": false
+    },
+    {
+      "model": "E_-2",
+      "frozen_benchmark_key": "T3_dS1_3_dS2_3_dF_2_alpha_m2",
+      "fields": {
+        "dS1": 3,
+        "dS2": 3,
+        "dF": 2,
+        "alpha": -2
+      },
+      "fermion_kind": "Dirac",
+      "rgbeta_source_mass_invariant": "epsilon",
+      "su2_ward_satisfied_for_declared_representation": true,
+      "source_operator_orientation_verified": true,
+      "conditional_spurion": {
+        "conditional_left_weyl_action": "y1 nu Fc S1 + y2 nu F S2* + MF F Fc + lambdaT3 HH S1 S2* + hc",
+        "rephasing_variables": [
+          "F",
+          "Fc",
+          "S1",
+          "S2"
+        ],
+        "MF_monomial_charge": [
+          1,
+          1,
+          0,
+          0
+        ],
+        "loop_spurion": "y1*y2*conjugate(MF)*conjugate(lambdaT3)",
+        "operator_powers": {
+          "y1": 1,
+          "y2": 1,
+          "MF": -1,
+          "lambdaT3": -1
+        },
+        "loop_spurion_rephasing_charge": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "incorrect_nonconjugated_lambda_charge": [
+          0,
+          0,
+          2,
+          -2
+        ],
+        "negative_control_rejected": true,
+        "incorrect_same_chirality_dirac_assignment_charge": [
+          1,
+          -1,
+          -1,
+          -1
+        ],
+        "absolute_Matchete_RGBeta_coefficient_certified": false,
+        "MF_and_GammaCC_sign_transport_certified": false,
+        "native_complex_field_conjugations_physically_projected": false,
+        "additional_source_allowed_independent_yukawa": {
+          "name": "y2Conj",
+          "operator_charge": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "independent_complex_coefficient": true,
+          "included_in_restricted_frozen_benchmark": false
+        }
+      },
+      "physical_source_certified": false
+    },
+    {
+      "model": "E_+0",
+      "frozen_benchmark_key": "T3_dS1_3_dS2_3_dF_2_alpha_p0",
+      "fields": {
+        "dS1": 3,
+        "dS2": 3,
+        "dF": 2,
+        "alpha": 0
+      },
+      "fermion_kind": "Dirac",
+      "rgbeta_source_mass_invariant": "epsilon",
+      "su2_ward_satisfied_for_declared_representation": true,
+      "source_operator_orientation_verified": true,
+      "conditional_spurion": {
+        "conditional_left_weyl_action": "y1 nu Fc S1 + y2 nu F S2* + MF F Fc + lambdaT3 HH S1 S2* + hc",
+        "rephasing_variables": [
+          "F",
+          "Fc",
+          "S1",
+          "S2"
+        ],
+        "MF_monomial_charge": [
+          1,
+          1,
+          0,
+          0
+        ],
+        "loop_spurion": "y1*y2*conjugate(MF)*conjugate(lambdaT3)",
+        "operator_powers": {
+          "y1": 1,
+          "y2": 1,
+          "MF": -1,
+          "lambdaT3": -1
+        },
+        "loop_spurion_rephasing_charge": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "incorrect_nonconjugated_lambda_charge": [
+          0,
+          0,
+          2,
+          -2
+        ],
+        "negative_control_rejected": true,
+        "incorrect_same_chirality_dirac_assignment_charge": [
+          1,
+          -1,
+          -1,
+          -1
+        ],
+        "absolute_Matchete_RGBeta_coefficient_certified": false,
+        "MF_and_GammaCC_sign_transport_certified": false,
+        "native_complex_field_conjugations_physically_projected": false,
+        "additional_source_allowed_independent_yukawa": {
+          "name": "y1Conj",
+          "operator_charge": [
+            0,
+            1,
+            -1,
+            0
+          ],
+          "independent_complex_coefficient": true,
+          "included_in_restricted_frozen_benchmark": false
+        }
+      },
+      "physical_source_certified": false
+    },
+    {
+      "model": "E_+2",
+      "frozen_benchmark_key": "T3_dS1_3_dS2_3_dF_2_alpha_p2",
+      "fields": {
+        "dS1": 3,
+        "dS2": 3,
+        "dF": 2,
+        "alpha": 2
+      },
+      "fermion_kind": "Dirac",
+      "rgbeta_source_mass_invariant": "epsilon",
+      "su2_ward_satisfied_for_declared_representation": true,
+      "source_operator_orientation_verified": true,
+      "conditional_spurion": {
+        "conditional_left_weyl_action": "y1 nu Fc S1 + y2 nu F S2* + MF F Fc + lambdaT3 HH S1 S2* + hc",
+        "rephasing_variables": [
+          "F",
+          "Fc",
+          "S1",
+          "S2"
+        ],
+        "MF_monomial_charge": [
+          1,
+          1,
+          0,
+          0
+        ],
+        "loop_spurion": "y1*y2*conjugate(MF)*conjugate(lambdaT3)",
+        "operator_powers": {
+          "y1": 1,
+          "y2": 1,
+          "MF": -1,
+          "lambdaT3": -1
+        },
+        "loop_spurion_rephasing_charge": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "incorrect_nonconjugated_lambda_charge": [
+          0,
+          0,
+          2,
+          -2
+        ],
+        "negative_control_rejected": true,
+        "incorrect_same_chirality_dirac_assignment_charge": [
+          1,
+          -1,
+          -1,
+          -1
+        ],
+        "absolute_Matchete_RGBeta_coefficient_certified": false,
+        "MF_and_GammaCC_sign_transport_certified": false,
+        "native_complex_field_conjugations_physically_projected": false
+      },
+      "physical_source_certified": false
+    }
+  ]
+}

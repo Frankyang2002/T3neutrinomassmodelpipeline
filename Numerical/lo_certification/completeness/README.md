@@ -142,3 +142,94 @@ The runner requires **a fresh output directory** and refuses overwrites or outpu
 6. Comparison of the physical all-16 matched mass matrices to the exact UV direct loop (with the source-derived complex vertex dictionary), including the suppressed higher-dimension one-loop remainder when the EFT hierarchy is not extreme.
 
 Until these blocks are independently resolved, the deliverable is **implemented and algebraically tested but not a physics-complete leading-one-loop T3 pipeline**.
+
+## Source-backed formal per-heavy-flavour input builder (Workstream 3 follow-up)
+
+Additional owned files:
+
+- `Numerical/lo_certification/completeness/source_bridge.py`
+- `scripts/BuildLOHardInputs.py`
+- `tests/test_lo_completeness_source_bridge.py`
+
+**Verified public-source basis for this stage:** the November 2, 2026 GitHub
+`main` tree `2c29e5ba2c0350b7e9be292e02ceb8bc7c52c0d3` has all 16
+`source_021dcc1e8fe8ba0f/<tag>/boundary.json` and all 16
+`all16_v1/<tag>/running.json`. All 16 published formal source tensors have
+lepton-flavour-diagonal (`p=q`) support, and the corresponding saved UV states
+have diagonal `y1`, `y2` and `MF` at the common muF. Those facts support a
+**specific benchmark-only formal decomposition** into `k=1,2,3` flavour
+blocks, not a general mass-eigenstate reconstruction. The algorithm verifies
+rather than assumes these conditions on each local file and checks that all PL
+source contributions sum to the recorded tree boundary. No spurious term is
+introduced from a PR Hermitian conjugate or scalar exchange-orbit count.
+
+### Ready-now commands (PowerShell from repository root)
+
+```powershell
+python -m unittest discover -s tests -p 'test_lo_completeness_*.py' -v
+python -m scripts.BuildLOHardInputs `
+  --check-only `
+  --output-dir 'output\general_observable\lo_certification_completeness\source_formal_01'
+python -m scripts.BuildLOHardInputs `
+  --output-dir 'output\general_observable\lo_certification_completeness\source_formal_01'
+```
+
+Creates (under a new output folder) all 16:
+
+```text
+formal_fermion_by_flavour/A_m4.json
+formal_fermion_by_flavour/A_m4.npz
+...
+formal_fermion_by_flavour/E_p2.json
+formal_fermion_by_flavour/E_p2.npz
+summary.json
+```
+
+NPZ arrays are specifically named
+`C_LLSS_by_fermion_formal_per_NGamma`,
+`C_LLSS_total_formal_per_NGamma`, and `fermion_masses_gev`. They are
+**not** files intended for `input/lo_hard_conditional`, which is absent,
+because the scalar tensor and signed Weyl normalization are still missing.
+All statuses remain non-physical and are not accepted as independently
+normalized full-one-loop C5 matching.
+
+### Optional conditional kernel input generation
+
+The same runner can write complete NPZ and metadata pairs *inside its owned
+output folder* if an independently prepared scalar source is available:
+
+```powershell
+python -m scripts.BuildLOHardInputs `
+  --scalar-input-dir 'PATH_TO_EXPLICIT_ALL16_SCALAR_BUNDLES' `
+  --output-dir 'output\general_observable\lo_certification_completeness\conditional_inputs_01'
+python -m scripts.RunLOCompletenessAudit `
+  --all `
+  --hard-input-dir 'output\general_observable\lo_certification_completeness\conditional_inputs_01\conditional_inputs' `
+  --output-dir 'output\general_observable\lo_certification_completeness\conditional_hard_02'
+```
+
+Each scalar bundle must be `<tag>.json` plus the named adjacent `.npz`
+for the *same source basis*. JSON keys: `model`, `tensor_npz`,
+`tensor_convention="T3_REAL_LLSS_HHSS_WEINBERG_v1"`, `scheme="MSbar"`,
+`mu_s_gev`, `source_scalar_real_labels` (exact labels from formal
+output), `quartic_channel_names` (non-empty and unique),
+`complete_scalar_HHSS_channels_supplied=true`, and a non-empty `provenance`
+object. NPZ arrays: `lambda_HHSS` with shape `(4,4,n,n)`,
+`lambda_HHSS_channels` with shape `(k,4,4,n,n)` (every independent
+channel), and `scalar_mass_squared_gev2` with shape `(n,n)`;
+`n=8` (A-D), `n=12` (E). The runner verifies sum over independent
+quartic channels and a strict full Weinberg projection. It **does not**
+rotate from an unspecified mass basis or guess scalar masses/portals.
+
+The optional output numerically represents **C5 per unknown signed
+GammaCC-to-Weyl factor** in the specified diagonal benchmark, not physical
+C5, and the direct one-loop cross-check remains independently uncertified.
+Unprovided scalar inputs are *not* treated as zero. Missing/general Yukawa
+branches, hard counterterms, complete dimension-five operator closure and
+non-diagonal heavy-flavour decomposition remain unresolved.
+
+There are still exactly **one common muF and one common muS**; heavy-mass
+eigenvalues label summed propagator contributions but are never used as
+sequential EFT thresholds. Both heavy scalar multiplets remain in EFT1 until
+integrated together at muS. No original upstream files, shared output or
+GitHub data are overwritten.

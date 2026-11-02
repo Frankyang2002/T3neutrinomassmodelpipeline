@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Same-point T3 direct UV versus EFT mass comparison",
+  "description": "Reference file named A_-4.json etc. in --eft-reference-dir. Values must refer to the same renormalized UV benchmark and scale. Do not identify the UV base point with mu_F or mu_S without running.",
+  "type": "object",
+  "required": ["physical_dimension", "scheme", "benchmark_sha256", "renormalization_scale_gev", "same_renormalized_uv_parameters", "matrix_gev"],
+  "properties": {
+    "physical_dimension": {"const": "mass_matrix_gev"},
+    "scheme": {"type": "string", "minLength": 1},
+    "benchmark_sha256": {"type": "string", "pattern": "^[a-fA-F0-9]{64}$"},
+    "renormalization_scale_gev": {"type": "number", "exclusiveMinimum": 0},
+    "same_renormalized_uv_parameters": {"const": true},
+    "matrix_gev": {
+      "description": "Complex symmetric 3x3 mass: keys real, imag; each is 3x3 numeric array",
+      "type": "object", "required": ["real", "imag"],
+      "properties": {"real":{"type":"array","minItems":3,"maxItems":3},
+                     "imag":{"type":"array","minItems":3,"maxItems":3}}
+    },
+    "mu_F_gev": {"type": "number", "exclusiveMinimum": 0},
+    "mu_S_gev": {"type": "number", "exclusiveMinimum": 0},
+    "vev_gev": {"type": "number", "exclusiveMinimum": 0}
+  },
+  "additionalProperties": true
+}

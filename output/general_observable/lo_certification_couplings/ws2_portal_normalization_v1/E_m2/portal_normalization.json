@@ -1,0 +1,252 @@
+{
+  "blockers": [
+    "GammaCC_to_master_Weyl_signed_normalization_not_certified",
+    "full_SM_Weyl_yukawa_gauge_tensor_embedding_not_certified",
+    "mixing_lambdaT3_Matchete_RGBeta_phase_normalization_not_certified",
+    "full_joint_scalar_background_and_hard_one_loop_closure_not_certified",
+    "ordinary_RGBeta_portal_span_missing_2_independent_directions",
+    "extra_HHSS_invariants_not_source_normalized:2",
+    "extra_scalar_quadratic_RG_closure_unimplemented"
+  ],
+  "exact_converted_native_portal_couplings": {
+    "muF": {
+      "S1": {
+        "missing_numeric_couplings": [
+          "lambdaH1",
+          "lambdaH1Adj"
+        ],
+        "native_couplings": null,
+        "status": "blocked_tensor_basis_not_exact_full_rank"
+      },
+      "S2": {
+        "missing_numeric_couplings": [
+          "lambdaH2",
+          "lambdaH2Adj"
+        ],
+        "native_couplings": null,
+        "status": "blocked_tensor_basis_not_exact_full_rank"
+      }
+    },
+    "muS": {
+      "S1": {
+        "missing_numeric_couplings": [
+          "lambdaH1",
+          "lambdaH1Adj"
+        ],
+        "native_couplings": null,
+        "status": "blocked_tensor_basis_not_exact_full_rank"
+      },
+      "S2": {
+        "missing_numeric_couplings": [
+          "lambdaH2",
+          "lambdaH2Adj"
+        ],
+        "native_couplings": null,
+        "status": "blocked_tensor_basis_not_exact_full_rank"
+      }
+    }
+  },
+  "extra_operator_inventory": {
+    "extra_HHSS_candidates": [
+      {
+        "mapping_status": "NotNormalised",
+        "matchete_basis_name": "lambdaT3ExtraQ020101I#",
+        "represented_as_certified_native_HHSS": false,
+        "required_proof": "independent full real-component quartic tensor and scale/phase normalization",
+        "rgbeta": "lambdaT3GeneralQ020101I1"
+      },
+      {
+        "mapping_status": "NotNormalised",
+        "matchete_basis_name": "lambdaT3ExtraQ110002I#",
+        "represented_as_certified_native_HHSS": false,
+        "required_proof": "independent full real-component quartic tensor and scale/phase normalization",
+        "rgbeta": "lambdaT3GeneralQ110002I1"
+      }
+    ],
+    "extra_missing_same_scale_numeric_values": [],
+    "generated_extra_source": {
+      "HHSS_new_symbol_declarations_verified": [
+        "lambdaT3GeneralQ020101I1",
+        "lambdaT3GeneralQ110002I1"
+      ],
+      "native_matchete_tensor_normalization_certified": false,
+      "relative_path": "RGE/general/generated/E_-2_extra_quartics.wl",
+      "sha256": "2d85b7c3b382c3a8ca7a1e607ee9cf3859bc6a537ee35f11d52f05e6f4240cd8"
+    },
+    "numerical_extra_HHSS_default_zero_used": false,
+    "physical_extra_HHSS_tensor_normalization_verified": false,
+    "quadratic_registry_blocked_count": 1
+  },
+  "format": "t3-ws2-exact-portal-span-audit-v2",
+  "interpretation": "Exact tensor identities use V=-L4 and 1/4! real-field normalization. No source-to-Matchete-GammaCC normalization and no scalar phase rotation inferred.",
+  "matchete_baseline_plus_extra_HHSS_complete": false,
+  "matchete_portal_span_missing_directions": 2,
+  "model": "E_-2",
+  "native_s1_portal": {
+    "basis_assumption": "same highest-weight complex SU2 component frame in RGBeta and Matchete",
+    "dimension": 3,
+    "full_EFT1_source_completeness_certified": false,
+    "native_independent_directions_in_rgbeta_span": 1,
+    "native_symbols": [
+      "lambdaH1Inv2"
+    ],
+    "native_tensor_outside_rgbeta_span_components": [],
+    "native_unit_to_rgbeta_invariant_coefficients": [
+      [
+        "1"
+      ],
+      [
+        "0"
+      ]
+    ],
+    "normalization_conversion_physically_usable_for_portal_subsector": false,
+    "potential_convention": "V4=lambda_abcd phi_a phi_b phi_c phi_d/4!",
+    "rgbeta_independent_portal_directions": 2,
+    "rgbeta_portal_directions_missing_from_native_span": 1,
+    "rgbeta_source_potential_sign": "V4 = - L4 interaction",
+    "rgbeta_symbols": [
+      "lambdaH1",
+      "lambdaH1Adj"
+    ],
+    "species": "S1",
+    "status": "exact_partial_tensor_span"
+  },
+  "native_s2_portal": {
+    "basis_assumption": "same highest-weight complex SU2 component frame in RGBeta and Matchete",
+    "dimension": 3,
+    "full_EFT1_source_completeness_certified": false,
+    "native_independent_directions_in_rgbeta_span": 1,
+    "native_symbols": [
+      "lambdaH2Inv2"
+    ],
+    "native_tensor_outside_rgbeta_span_components": [],
+    "native_unit_to_rgbeta_invariant_coefficients": [
+      [
+        "1"
+      ],
+      [
+        "0"
+      ]
+    ],
+    "normalization_conversion_physically_usable_for_portal_subsector": false,
+    "potential_convention": "V4=lambda_abcd phi_a phi_b phi_c phi_d/4!",
+    "rgbeta_independent_portal_directions": 2,
+    "rgbeta_portal_directions_missing_from_native_span": 1,
+    "rgbeta_source_potential_sign": "V4 = - L4 interaction",
+    "rgbeta_symbols": [
+      "lambdaH2",
+      "lambdaH2Adj"
+    ],
+    "species": "S2",
+    "status": "exact_partial_tensor_span"
+  },
+  "original_full_Matchete_seed": "output/full16_symbolic/T3_E_alpha_m2/data/eft1_after_F_scalar_quartic_seed.json",
+  "partial_background_npz": "rgbeta_portals_only_muF_muS.npz",
+  "physical_C5_calculated": false,
+  "physics_status": "blocked",
+  "rgbeta_local_potential_source": {
+    "matchete_portal_source_path": "Lagrangian/interactions/ScalarPotential.wl",
+    "matchete_portal_source_sha256": "c863e5d69bf665e65c7e164aee5ceafe01b8aefc75500099da5847db7d0cfa97",
+    "path": "RGE/running/rgbeta/T3RGBetaModel.wl",
+    "portal_declarations_present": {
+      "lambdaH1": true,
+      "lambdaH1Adj": true,
+      "lambdaH2": true,
+      "lambdaH2Adj": true
+    },
+    "sha256": "a58c79f18b2abdf9d476588552dfa52e2f131f322094e5b72d1198162aa20abc",
+    "verified_scope": "literal Matchete and RGBeta source declarations; no unverified RGBeta runtime tensor factors"
+  },
+  "rgbeta_portal_partial_background": {
+    "muF_missing_rgbeta_portals": [],
+    "muS_missing_rgbeta_portals": [],
+    "omitted_independent_interactions": [
+      "lambdaT3",
+      "all extra HHSS symbols in registry"
+    ],
+    "physical_completeness": false,
+    "portal_subsectors": [
+      {
+        "basis_assumption": "same highest-weight complex SU2 component frame in RGBeta and Matchete",
+        "dimension": 3,
+        "full_EFT1_source_completeness_certified": false,
+        "native_independent_directions_in_rgbeta_span": 1,
+        "native_symbols": [
+          "lambdaH1Inv2"
+        ],
+        "native_tensor_outside_rgbeta_span_components": [],
+        "native_unit_to_rgbeta_invariant_coefficients": [
+          [
+            "1"
+          ],
+          [
+            "0"
+          ]
+        ],
+        "normalization_conversion_physically_usable_for_portal_subsector": false,
+        "potential_convention": "V4=lambda_abcd phi_a phi_b phi_c phi_d/4!",
+        "rgbeta_independent_portal_directions": 2,
+        "rgbeta_portal_directions_missing_from_native_span": 1,
+        "rgbeta_source_potential_sign": "V4 = - L4 interaction",
+        "rgbeta_symbols": [
+          "lambdaH1",
+          "lambdaH1Adj"
+        ],
+        "species": "S1",
+        "status": "exact_partial_tensor_span"
+      },
+      {
+        "basis_assumption": "same highest-weight complex SU2 component frame in RGBeta and Matchete",
+        "dimension": 3,
+        "full_EFT1_source_completeness_certified": false,
+        "native_independent_directions_in_rgbeta_span": 1,
+        "native_symbols": [
+          "lambdaH2Inv2"
+        ],
+        "native_tensor_outside_rgbeta_span_components": [],
+        "native_unit_to_rgbeta_invariant_coefficients": [
+          [
+            "1"
+          ],
+          [
+            "0"
+          ]
+        ],
+        "normalization_conversion_physically_usable_for_portal_subsector": false,
+        "potential_convention": "V4=lambda_abcd phi_a phi_b phi_c phi_d/4!",
+        "rgbeta_independent_portal_directions": 2,
+        "rgbeta_portal_directions_missing_from_native_span": 1,
+        "rgbeta_source_potential_sign": "V4 = - L4 interaction",
+        "rgbeta_symbols": [
+          "lambdaH2",
+          "lambdaH2Adj"
+        ],
+        "species": "S2",
+        "status": "exact_partial_tensor_span"
+      }
+    ],
+    "safe_for_complete_seven_term_or_joint_matching": false,
+    "source_basis": "original S1/S2 interleaved canonical real frame (assumed RGBeta highest weight)",
+    "tensor_shape": [
+      4,
+      4,
+      12,
+      12
+    ]
+  },
+  "safe_as_existing_joint_scalar_matching_input": false,
+  "safe_as_existing_seven_term_solver_input": false,
+  "scales_gev": {
+    "mu_F": 100000.0,
+    "mu_S": 1000.0
+  },
+  "scheme": "MSbar",
+  "source_sha256": {
+    "boundary": "5e1a3f3d6d25b2d848d8edbe421cf9311cd664756384de04756d261697cce9fd",
+    "quartic_cache": "a910defc72ee654e342d03d3c649c9896e4412ee0c972b753220b39ccd2893d1",
+    "quartic_seed": "37b73acbae75710b579333739ceb8c764c4c5894c440e708505cc491262988db",
+    "running": "6607fdb662346948af524dda3d83d99fa11cb222185c1e01bf52b03e9e4947a2"
+  },
+  "status": "conditional_portal_span_or_index_map",
+  "two_grouped_matching_thresholds_only": true
+}

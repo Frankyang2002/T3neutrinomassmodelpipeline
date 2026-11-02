@@ -1,0 +1,151 @@
+{
+  "blockers": [
+    "GammaCC_to_master_Weyl_signed_normalization_not_certified",
+    "additional_symmetry_allowed_HHSS_tensor_channels_not_normalized_or_present_in_seed",
+    "additional_RG_closed_quadratic_couplings_not_implemented_in_source_registry",
+    "full_SM_Weyl_Yukawa_tensor_and_complete_gauge_generator_embedding_not_certified",
+    "muF_muS_same_EFT1_renormalisable_trajectory_is_illustrative_only",
+    "additional_one_loop_EFT1_operator_and_hard_fermion_boundary_closure_not_certified",
+    "special_Matchete_scalar_phase_and_muF_basis_map_unverified",
+    "local_source_versions_differ_from_inspected_GitHub_main_20261102"
+  ],
+  "candidate_numerical_tensor_shapes": {
+    "HHSS_channels": [
+      3,
+      4,
+      4,
+      12,
+      12
+    ],
+    "HHSS_sum": [
+      4,
+      4,
+      12,
+      12
+    ],
+    "scalar_mass2_muS": [
+      12,
+      12
+    ]
+  },
+  "coupling_dictionary_status": "conditional",
+  "extra_HHSS_registry_channels": [
+    {
+      "mapping_status": "NotNormalised",
+      "matchete_basis_name": "lambdaT3ExtraQ021010I#",
+      "represented_as_certified_native_HHSS": false,
+      "required_proof": "independent full real-component quartic tensor and scale/phase normalization",
+      "rgbeta": "lambdaT3GeneralQ021010I1"
+    },
+    {
+      "mapping_status": "NotNormalised",
+      "matchete_basis_name": "lambdaT3ExtraQ110200I#",
+      "represented_as_certified_native_HHSS": false,
+      "required_proof": "independent full real-component quartic tensor and scale/phase normalization",
+      "rgbeta": "lambdaT3GeneralQ110200I1"
+    }
+  ],
+  "format": "t3-lo-coupling-dictionary-batch-v1",
+  "joint_matching_physical_C5_available": false,
+  "model": "E_+0",
+  "models_in_EFT1": [
+    "S1",
+    "S2"
+  ],
+  "muS_mass_eigenvalues_gev2": [
+    2441868.000683976,
+    2441868.000683976,
+    2441868.000683976,
+    2486202.758015786,
+    2486202.758015786,
+    2486202.758015786,
+    3421707.314440959,
+    3421707.314440959,
+    3421707.314440959,
+    3421707.314440959,
+    3421707.314440959,
+    3421707.314440959
+  ],
+  "mu_F_gev": 100000.0,
+  "mu_S_gev": 1000.0,
+  "native_quartic_channels": [
+    "lambdaH1Inv2",
+    "lambdaH2Inv2",
+    "lambdaT3"
+  ],
+  "native_vs_RGBeta": {
+    "lambdaH1Inv2": {
+      "RGBeta_symbol_candidate": "lambdaH1Adj",
+      "matchete_source_cg": true,
+      "status": "unverified_relative_tensor_normalization_and_phase"
+    },
+    "lambdaH2Inv2": {
+      "RGBeta_symbol_candidate": "lambdaH2Adj",
+      "matchete_source_cg": true,
+      "status": "unverified_relative_tensor_normalization_and_phase"
+    },
+    "lambdaT3": {
+      "RGBeta_symbol_candidate": "lambdaT3",
+      "matchete_source_cg": true,
+      "status": "unverified_relative_tensor_normalization_and_phase"
+    }
+  },
+  "physical_spinor_factor": null,
+  "physical_status": "blocked",
+  "physically_normalized_complete_master_couplings_available": false,
+  "quartic_tensor_status": "verified_exact_seed_and_cache",
+  "running_status": "verified_repository_illustrative_EFT1_MSbar_renormalizable_snapshot",
+  "scalar_real_labels_F": [
+    "T3Scalar1Minus",
+    "T3Scalar1Minus",
+    "T3Scalar1Minus",
+    "T3Scalar1Plus",
+    "T3Scalar1Plus",
+    "T3Scalar1Plus",
+    "NewScalar2",
+    "NewScalar2",
+    "NewScalar2",
+    "NewScalar2",
+    "NewScalar2",
+    "NewScalar2"
+  ],
+  "source_compatibility": {
+    "Numerical/joint_scalar_matching/large_batch.py": true,
+    "Numerical/joint_scalar_matching/numerical_benchmark_v5.py": true,
+    "Numerical/joint_scalar_matching/source_quartic_v4.py": true,
+    "Numerical/joint_scalar_matching/special_mass_v6.py": true,
+    "RGE/general/generated/general_rgbeta_quartic_registry.json": false,
+    "RGE/running/intermediate/GeneralEFT1C5Mixing.py": true,
+    "RGE/running/intermediate/IntegratedEFT1JointScalarBridge.py": true,
+    "RGE/running/intermediate/ScalarOnlyTensorAdapters.py": false,
+    "RGE/running/rgbeta/T3RGBetaModel.wl": true
+  },
+  "source_files": {
+    "boundary": {
+      "path": "output/general_observable/lo_fermion_boundary/releases/source_021dcc1e8fe8ba0f/E_p0/boundary.json",
+      "sha256": "221adb509f3d0ca73f534c781aaf0ba4a6ad20346f6c68dc68880506ce6d0880"
+    },
+    "quartic_cache": {
+      "path": "output/general_observable/lo_joint_scalar_matching/source_quartic_v4/native_quartic_channels/E_p0.json",
+      "sha256": "d8da18d12bcc98b1fb2084c2dba98779e57cdb74aa82a1a600b50c071c8dbb5a"
+    },
+    "quartic_seed": {
+      "path": "output/full16_symbolic/T3_E_alpha_p0/data/eft1_after_F_scalar_quartic_seed.json",
+      "sha256": "37b73acbae75710b579333739ceb8c764c4c5894c440e708505cc491262988db"
+    },
+    "running": {
+      "path": "output/general_observable/all16_v1/E_p0/running.json",
+      "sha256": "e95c3218d38e517f4e3a3728b06e0a2d250adc5feb68bb446b8946b5a218a88d"
+    }
+  },
+  "stages": {
+    "matchete_LLSS_tree_source": "verified_formal_polynomial_not_physical_normalized",
+    "muF_muS_relative_basis": "derived_from_separate_running_endpoint_quadratic_inputs_conditional",
+    "native_quartic_V4_CG_tensor": "verified_exact_seed_and_cache",
+    "same_muS_mass_hessian_positive": "verified_for_illustrative_running_inputs"
+  },
+  "thresholds": [
+    "all heavy BSM fermions together",
+    "both heavy scalar multiplets together"
+  ]
+}

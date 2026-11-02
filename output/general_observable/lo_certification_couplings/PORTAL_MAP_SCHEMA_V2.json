@@ -1,0 +1,25 @@
+{
+  "format": "t3-ws2-exact-portal-span-audit-v2",
+  "description": "Documentation schema, not a numerical physical coupling input",
+  "output_root": "output/general_observable/lo_certification_couplings/<new-run-name>/",
+  "files": {
+    "summary.json": {
+      "required_keys": ["format", "models_processed", "all16_audit_passed", "source_drift_recheck", "verified_full_rgbeta_portal_span_models", "newly_discovered_baseline_portal_deficiency", "extra_HHSS_registry_entries", "models", "physical_C5_calculated"]
+    },
+    "<model_slug>/portal_normalization.json": {
+      "required_keys": ["format", "model", "source_sha256", "scales_gev", "native_s1_portal", "native_s2_portal", "exact_converted_native_portal_couplings", "rgbeta_portal_partial_background", "extra_operator_inventory", "blockers", "physical_C5_calculated"]
+    },
+    "<model_slug>/rgbeta_portals_only_muF_muS.npz": {
+      "muF_portal_channel_tensors": ["kF", 4, 4, "n", "n"],
+      "muF_portal_sum_tensor": [4, 4, "n", "n"],
+      "muF_portal_labels": ["kF"],
+      "muS_portal_channel_tensors": ["kS", 4, 4, "n", "n"],
+      "muS_portal_sum_tensor": [4, 4, "n", "n"],
+      "muS_portal_labels": ["kS"]
+    }
+  },
+  "physics_status": "blocked until all independent HHSS channels, scalar bases, hard F normalization and RGE inputs are certified",
+  "safe_for_existing_physical_C5_solver": false,
+  "two_matching_thresholds_only": true,
+  "potential_convention": "V4=lambda_abcd phi_a phi_b phi_c phi_d/4!"
+}

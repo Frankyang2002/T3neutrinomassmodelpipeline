@@ -1,0 +1,591 @@
+{
+  "format": "t3-direct-uv-source-coverage-readonly-main-20261102",
+  "source_repository": "https://github.com/Frankyang2002/T3neutrinomassmodelpipeline",
+  "source_commit": "2c29e5ba2c0350b7e9be292e02ceb8bc7c52c0d3",
+  "evidence_paths": [
+    "Lagrangian/model/T3ModelCatalog.wl",
+    "Lagrangian/interactions/T3Topology.wl",
+    "Lagrangian/interactions/ScalarPotential.wl",
+    "scripts/BuildT3DirectOneLoopInputs.py",
+    "Numerical/direct_one_loop/core.py",
+    "output/general_observable/lo_direct_one_loop/convention_batch1/integrated_convention_audit.json",
+    "output/general_observable/lo_direct_one_loop/source_audits/native_portal_identity_decomposition.json",
+    "output/general_observable/lo_direct_one_loop/provisional/all_16_status.json",
+    "output/general_observable/lo_direct_one_loop/source_audits/charge_resolved_loop_weights.json"
+  ],
+  "algebraic_audit_passed": 16,
+  "physical_source_certified": 0,
+  "geometric_native_portal_invariants_representable": 32,
+  "native_extra_yukawa_source_allowed_count": 6,
+  "source_native_interaction_coverage_incomplete": true,
+  "rows": [
+    {
+      "model": "A_-4",
+      "source_frozen_benchmark": "Numerical/benchmarks/fitted_reference/T3_dS1_1_dS2_3_dF_2_alpha_m4.json",
+      "fermion_mass_case": "Dirac doubled Weyl",
+      "common_internal_electric_charge_channels": [
+        -2.0
+      ],
+      "number_of_common_charge_channels": 1,
+      "ordinary_source_yukawa_structures": [
+        "Bar[L] F^c S1",
+        "Bar[L] F S2^dag"
+      ],
+      "native_scalar_mixing_operator": "H H S1 S2^dag + h.c.",
+      "exact_UV_provisional_algebraic": true,
+      "native_CG_candidate_charge_check_algebraic": true,
+      "full_source_4spinor_Weyl_phase_checked": false,
+      "portal_physical_coupling_dictionary_checked": false,
+      "physical_source_mass_matrix_certified": false,
+      "additional_hypercharge_zero_scalar_yukawa_allowed": false,
+      "additional_yukawa_numeric_input_in_frozen_benchmark": null,
+      "existing_snapshot_masses_ev": [
+        0.0004744829299217918,
+        0.007582728104811943,
+        0.04360064403662413
+      ],
+      "existing_snapshot_cancellation_ratio_full_over_individual_sum": 6.461176088725848e-08,
+      "status": "restricted_benchmark_provisional_only",
+      "source_native_CG_candidate_contraction": "Y1 * Y2 * conjugate(T3MixCG)",
+      "source_native_CG_candidate_coefficient_total": "-2*sqrt(3)/3",
+      "source_native_CG_candidate_charge_weights": {
+        "-2": "-2*sqrt(3)/3"
+      },
+      "source_physical_loop_multiplicity_certified": false,
+      "source_native_CG_weights_are_conditional_on_spinor_and_mass_basis": true
+    },
+    {
+      "model": "A_-2",
+      "source_frozen_benchmark": "Numerical/benchmarks/fitted_reference/T3_dS1_1_dS2_3_dF_2_alpha_m2.json",
+      "fermion_mass_case": "Dirac doubled Weyl",
+      "common_internal_electric_charge_channels": [
+        -1.0
+      ],
+      "number_of_common_charge_channels": 1,
+      "ordinary_source_yukawa_structures": [
+        "Bar[L] F^c S1",
+        "Bar[L] F S2^dag"
+      ],
+      "native_scalar_mixing_operator": "H H S1 S2^dag + h.c.",
+      "exact_UV_provisional_algebraic": true,
+      "native_CG_candidate_charge_check_algebraic": true,
+      "full_source_4spinor_Weyl_phase_checked": false,
+      "portal_physical_coupling_dictionary_checked": false,
+      "physical_source_mass_matrix_certified": false,
+      "additional_hypercharge_zero_scalar_yukawa_allowed": true,
+      "additional_yukawa_numeric_input_in_frozen_benchmark": false,
+      "existing_snapshot_masses_ev": [
+        0.007214753468522372,
+        0.011008457842593217,
+        0.04856020909942753
+      ],
+      "existing_snapshot_cancellation_ratio_full_over_individual_sum": 6.974977103974104e-08,
+      "status": "restricted_benchmark_provisional_only",
+      "source_native_CG_candidate_contraction": "Y1 * Y2 * conjugate(T3MixCG)",
+      "source_native_CG_candidate_coefficient_total": "-2*sqrt(3)/3",
+      "source_native_CG_candidate_charge_weights": {
+        "-1": "-2*sqrt(3)/3"
+      },
+      "source_physical_loop_multiplicity_certified": false,
+      "source_native_CG_weights_are_conditional_on_spinor_and_mass_basis": true
+    },
+    {
+      "model": "A_+0",
+      "source_frozen_benchmark": "Numerical/benchmarks/fitted_reference/T3_dS1_1_dS2_3_dF_2_alpha_p0.json",
+      "fermion_mass_case": "Dirac doubled Weyl",
+      "common_internal_electric_charge_channels": [
+        0.0
+      ],
+      "number_of_common_charge_channels": 1,
+      "ordinary_source_yukawa_structures": [
+        "Bar[L] F^c S1",
+        "Bar[L] F S2^dag"
+      ],
+      "native_scalar_mixing_operator": "H H S1 S2^dag + h.c.",
+      "exact_UV_provisional_algebraic": true,
+      "native_CG_candidate_charge_check_algebraic": true,
+      "full_source_4spinor_Weyl_phase_checked": false,
+      "portal_physical_coupling_dictionary_checked": false,
+      "physical_source_mass_matrix_certified": false,
+      "additional_hypercharge_zero_scalar_yukawa_allowed": true,
+      "additional_yukawa_numeric_input_in_frozen_benchmark": false,
+      "existing_snapshot_masses_ev": [
+        0.00721427491270554,
+        0.011000035911135549,
+        0.04849895401231995
+      ],
+      "existing_snapshot_cancellation_ratio_full_over_individual_sum": 6.967524304777451e-08,
+      "status": "restricted_benchmark_provisional_only",
+      "source_native_CG_candidate_contraction": "Y1 * Y2 * conjugate(T3MixCG)",
+      "source_native_CG_candidate_coefficient_total": "-2*sqrt(3)/3",
+      "source_native_CG_candidate_charge_weights": {
+        "0": "-2*sqrt(3)/3"
+      },
+      "source_physical_loop_multiplicity_certified": false,
+      "source_native_CG_weights_are_conditional_on_spinor_and_mass_basis": true
+    },
+    {
+      "model": "B_-3",
+      "source_frozen_benchmark": "Numerical/benchmarks/fitted_reference/T3_dS1_2_dS2_2_dF_1_alpha_m3.json",
+      "fermion_mass_case": "Dirac doubled Weyl",
+      "common_internal_electric_charge_channels": [
+        -1.0
+      ],
+      "number_of_common_charge_channels": 1,
+      "ordinary_source_yukawa_structures": [
+        "Bar[L] F^c S1",
+        "Bar[L] F S2^dag"
+      ],
+      "native_scalar_mixing_operator": "H H S1 S2^dag + h.c.",
+      "exact_UV_provisional_algebraic": true,
+      "native_CG_candidate_charge_check_algebraic": true,
+      "full_source_4spinor_Weyl_phase_checked": false,
+      "portal_physical_coupling_dictionary_checked": false,
+      "physical_source_mass_matrix_certified": false,
+      "additional_hypercharge_zero_scalar_yukawa_allowed": false,
+      "additional_yukawa_numeric_input_in_frozen_benchmark": null,
+      "existing_snapshot_masses_ev": [
+        0.00721823052870422,
+        0.010981448529938714,
+        0.04833239941925042
+      ],
+      "existing_snapshot_cancellation_ratio_full_over_individual_sum": 1.0025888189869427e-07,
+      "status": "restricted_benchmark_provisional_only",
+      "source_native_CG_candidate_contraction": "Y1 * Y2 * conjugate(T3MixCG)",
+      "source_native_CG_candidate_coefficient_total": "-2*sqrt(3)/3",
+      "source_native_CG_candidate_charge_weights": {
+        "-1": "-2*sqrt(3)/3"
+      },
+      "source_physical_loop_multiplicity_certified": false,
+      "source_native_CG_weights_are_conditional_on_spinor_and_mass_basis": true
+    },
+    {
+      "model": "B_-1",
+      "source_frozen_benchmark": "Numerical/benchmarks/fitted_reference/T3_dS1_2_dS2_2_dF_1_alpha_m1.json",
+      "fermion_mass_case": "Majorana charge-pair metric",
+      "common_internal_electric_charge_channels": [
+        0.0
+      ],
+      "number_of_common_charge_channels": 1,
+      "ordinary_source_yukawa_structures": [
+        "Bar[L] F^c S1",
+        "Bar[L] F S2^dag"
+      ],
+      "native_scalar_mixing_operator": "H H S1 S2^dag + h.c.",
+      "exact_UV_provisional_algebraic": true,
+      "native_CG_candidate_charge_check_algebraic": true,
+      "full_source_4spinor_Weyl_phase_checked": false,
+      "portal_physical_coupling_dictionary_checked": false,
+      "physical_source_mass_matrix_certified": false,
+      "additional_hypercharge_zero_scalar_yukawa_allowed": false,
+      "additional_yukawa_numeric_input_in_frozen_benchmark": null,
+      "existing_snapshot_masses_ev": [
+        0.0045224925033932216,
+        0.009803383428760673,
+        0.050441309360393934
+      ],
+      "existing_snapshot_cancellation_ratio_full_over_individual_sum": 6.115297624810181e-08,
+      "status": "restricted_benchmark_provisional_only",
+      "source_native_CG_candidate_contraction": "Y1 * Y2 * conjugate(T3MixCG)",
+      "source_native_CG_candidate_coefficient_total": "-2*sqrt(3)/3",
+      "source_native_CG_candidate_charge_weights": {
+        "0": "-2*sqrt(3)/3"
+      },
+      "source_physical_loop_multiplicity_certified": false,
+      "source_native_CG_weights_are_conditional_on_spinor_and_mass_basis": true
+    },
+    {
+      "model": "B_+1",
+      "source_frozen_benchmark": "Numerical/benchmarks/fitted_reference/T3_dS1_2_dS2_2_dF_1_alpha_p1.json",
+      "fermion_mass_case": "Dirac doubled Weyl",
+      "common_internal_electric_charge_channels": [
+        1.0
+      ],
+      "number_of_common_charge_channels": 1,
+      "ordinary_source_yukawa_structures": [
+        "Bar[L] F^c S1",
+        "Bar[L] F S2^dag"
+      ],
+      "native_scalar_mixing_operator": "H H S1 S2^dag + h.c.",
+      "exact_UV_provisional_algebraic": true,
+      "native_CG_candidate_charge_check_algebraic": true,
+      "full_source_4spinor_Weyl_phase_checked": false,
+      "portal_physical_coupling_dictionary_checked": false,
+      "physical_source_mass_matrix_certified": false,
+      "additional_hypercharge_zero_scalar_yukawa_allowed": false,
+      "additional_yukawa_numeric_input_in_frozen_benchmark": null,
+      "existing_snapshot_masses_ev": [
+        0.0072158271198015595,
+        0.010946104201595206,
+        0.04807431856930931
+      ],
+      "existing_snapshot_cancellation_ratio_full_over_individual_sum": 9.915673485912509e-08,
+      "status": "restricted_benchmark_provisional_only",
+      "source_native_CG_candidate_contraction": "Y1 * Y2 * conjugate(T3MixCG)",
+      "source_native_CG_candidate_coefficient_total": "-2*sqrt(3)/3",
+      "source_native_CG_candidate_charge_weights": {
+        "1": "-2*sqrt(3)/3"
+      },
+      "source_physical_loop_multiplicity_certified": false,
+      "source_native_CG_weights_are_conditional_on_spinor_and_mass_basis": true
+    },
+    {
+      "model": "C_-3",
+      "source_frozen_benchmark": "Numerical/benchmarks/fitted_reference/T3_dS1_2_dS2_2_dF_3_alpha_m3.json",
+      "fermion_mass_case": "Dirac doubled Weyl",
+      "common_internal_electric_charge_channels": [
+        -1.0
+      ],
+      "number_of_common_charge_channels": 1,
+      "ordinary_source_yukawa_structures": [
+        "Bar[L] F^c S1",
+        "Bar[L] F S2^dag"
+      ],
+      "native_scalar_mixing_operator": "H H S1 S2^dag + h.c.",
+      "exact_UV_provisional_algebraic": true,
+      "native_CG_candidate_charge_check_algebraic": true,
+      "full_source_4spinor_Weyl_phase_checked": false,
+      "portal_physical_coupling_dictionary_checked": false,
+      "physical_source_mass_matrix_certified": false,
+      "additional_hypercharge_zero_scalar_yukawa_allowed": false,
+      "additional_yukawa_numeric_input_in_frozen_benchmark": null,
+      "existing_snapshot_masses_ev": [
+        0.026946874336659044,
+        0.028192285689837792,
+        0.055040744399739994
+      ],
+      "existing_snapshot_cancellation_ratio_full_over_individual_sum": 4.37883596292252e-08,
+      "status": "restricted_benchmark_provisional_only",
+      "source_native_CG_candidate_contraction": "Y1 * Y2 * conjugate(T3MixCG)",
+      "source_native_CG_candidate_coefficient_total": "2/3",
+      "source_native_CG_candidate_charge_weights": {
+        "-1": "2/3"
+      },
+      "source_physical_loop_multiplicity_certified": false,
+      "source_native_CG_weights_are_conditional_on_spinor_and_mass_basis": true
+    },
+    {
+      "model": "C_-1",
+      "source_frozen_benchmark": "Numerical/benchmarks/fitted_reference/T3_dS1_2_dS2_2_dF_3_alpha_m1.json",
+      "fermion_mass_case": "Majorana charge-pair metric",
+      "common_internal_electric_charge_channels": [
+        0.0
+      ],
+      "number_of_common_charge_channels": 1,
+      "ordinary_source_yukawa_structures": [
+        "Bar[L] F^c S1",
+        "Bar[L] F S2^dag"
+      ],
+      "native_scalar_mixing_operator": "H H S1 S2^dag + h.c.",
+      "exact_UV_provisional_algebraic": true,
+      "native_CG_candidate_charge_check_algebraic": true,
+      "full_source_4spinor_Weyl_phase_checked": false,
+      "portal_physical_coupling_dictionary_checked": false,
+      "physical_source_mass_matrix_certified": false,
+      "additional_hypercharge_zero_scalar_yukawa_allowed": false,
+      "additional_yukawa_numeric_input_in_frozen_benchmark": null,
+      "existing_snapshot_masses_ev": [
+        0.03749725678958958,
+        0.03858887280522517,
+        0.06228500486797574
+      ],
+      "existing_snapshot_cancellation_ratio_full_over_individual_sum": 1.5661595691521746e-08,
+      "status": "restricted_benchmark_provisional_only",
+      "source_native_CG_candidate_contraction": "Y1 * Y2 * conjugate(T3MixCG)",
+      "source_native_CG_candidate_coefficient_total": "2/3",
+      "source_native_CG_candidate_charge_weights": {
+        "0": "2/3"
+      },
+      "source_physical_loop_multiplicity_certified": false,
+      "source_native_CG_weights_are_conditional_on_spinor_and_mass_basis": true
+    },
+    {
+      "model": "C_+1",
+      "source_frozen_benchmark": "Numerical/benchmarks/fitted_reference/T3_dS1_2_dS2_2_dF_3_alpha_p1.json",
+      "fermion_mass_case": "Dirac doubled Weyl",
+      "common_internal_electric_charge_channels": [
+        1.0
+      ],
+      "number_of_common_charge_channels": 1,
+      "ordinary_source_yukawa_structures": [
+        "Bar[L] F^c S1",
+        "Bar[L] F S2^dag"
+      ],
+      "native_scalar_mixing_operator": "H H S1 S2^dag + h.c.",
+      "exact_UV_provisional_algebraic": true,
+      "native_CG_candidate_charge_check_algebraic": true,
+      "full_source_4spinor_Weyl_phase_checked": false,
+      "portal_physical_coupling_dictionary_checked": false,
+      "physical_source_mass_matrix_certified": false,
+      "additional_hypercharge_zero_scalar_yukawa_allowed": false,
+      "additional_yukawa_numeric_input_in_frozen_benchmark": null,
+      "existing_snapshot_masses_ev": [
+        0.0003654877870011988,
+        0.008268705381983045,
+        0.047786108208625375
+      ],
+      "existing_snapshot_cancellation_ratio_full_over_individual_sum": 3.176993677063294e-08,
+      "status": "restricted_benchmark_provisional_only",
+      "source_native_CG_candidate_contraction": "Y1 * Y2 * conjugate(T3MixCG)",
+      "source_native_CG_candidate_coefficient_total": "2/3",
+      "source_native_CG_candidate_charge_weights": {
+        "1": "2/3"
+      },
+      "source_physical_loop_multiplicity_certified": false,
+      "source_native_CG_weights_are_conditional_on_spinor_and_mass_basis": true
+    },
+    {
+      "model": "D_-2",
+      "source_frozen_benchmark": "Numerical/benchmarks/fitted_reference/T3_dS1_3_dS2_1_dF_2_alpha_m2.json",
+      "fermion_mass_case": "Dirac doubled Weyl",
+      "common_internal_electric_charge_channels": [
+        0.0
+      ],
+      "number_of_common_charge_channels": 1,
+      "ordinary_source_yukawa_structures": [
+        "Bar[L] F^c S1",
+        "Bar[L] F S2^dag"
+      ],
+      "native_scalar_mixing_operator": "H H S1 S2^dag + h.c.",
+      "exact_UV_provisional_algebraic": true,
+      "native_CG_candidate_charge_check_algebraic": true,
+      "full_source_4spinor_Weyl_phase_checked": false,
+      "portal_physical_coupling_dictionary_checked": false,
+      "physical_source_mass_matrix_certified": false,
+      "additional_hypercharge_zero_scalar_yukawa_allowed": true,
+      "additional_yukawa_numeric_input_in_frozen_benchmark": false,
+      "existing_snapshot_masses_ev": [
+        0.007214174883831299,
+        0.010997753944411905,
+        0.048482372402161814
+      ],
+      "existing_snapshot_cancellation_ratio_full_over_individual_sum": 7.880664700008928e-08,
+      "status": "restricted_benchmark_provisional_only",
+      "source_native_CG_candidate_contraction": "Y1 * Y2 * conjugate(T3MixCG)",
+      "source_native_CG_candidate_coefficient_total": "-2*sqrt(3)/3",
+      "source_native_CG_candidate_charge_weights": {
+        "0": "-2*sqrt(3)/3"
+      },
+      "source_physical_loop_multiplicity_certified": false,
+      "source_native_CG_weights_are_conditional_on_spinor_and_mass_basis": true
+    },
+    {
+      "model": "D_+0",
+      "source_frozen_benchmark": "Numerical/benchmarks/fitted_reference/T3_dS1_3_dS2_1_dF_2_alpha_p0.json",
+      "fermion_mass_case": "Dirac doubled Weyl",
+      "common_internal_electric_charge_channels": [
+        1.0
+      ],
+      "number_of_common_charge_channels": 1,
+      "ordinary_source_yukawa_structures": [
+        "Bar[L] F^c S1",
+        "Bar[L] F S2^dag"
+      ],
+      "native_scalar_mixing_operator": "H H S1 S2^dag + h.c.",
+      "exact_UV_provisional_algebraic": true,
+      "native_CG_candidate_charge_check_algebraic": true,
+      "full_source_4spinor_Weyl_phase_checked": false,
+      "portal_physical_coupling_dictionary_checked": false,
+      "physical_source_mass_matrix_certified": false,
+      "additional_hypercharge_zero_scalar_yukawa_allowed": true,
+      "additional_yukawa_numeric_input_in_frozen_benchmark": false,
+      "existing_snapshot_masses_ev": [
+        0.007214670313678233,
+        0.011007039496588628,
+        0.04854990270269596
+      ],
+      "existing_snapshot_cancellation_ratio_full_over_individual_sum": 7.88403683585287e-08,
+      "status": "restricted_benchmark_provisional_only",
+      "source_native_CG_candidate_contraction": "Y1 * Y2 * conjugate(T3MixCG)",
+      "source_native_CG_candidate_coefficient_total": "-2*sqrt(3)/3",
+      "source_native_CG_candidate_charge_weights": {
+        "1": "-2*sqrt(3)/3"
+      },
+      "source_physical_loop_multiplicity_certified": false,
+      "source_native_CG_weights_are_conditional_on_spinor_and_mass_basis": true
+    },
+    {
+      "model": "D_+2",
+      "source_frozen_benchmark": "Numerical/benchmarks/fitted_reference/T3_dS1_3_dS2_1_dF_2_alpha_p2.json",
+      "fermion_mass_case": "Dirac doubled Weyl",
+      "common_internal_electric_charge_channels": [
+        2.0
+      ],
+      "number_of_common_charge_channels": 1,
+      "ordinary_source_yukawa_structures": [
+        "Bar[L] F^c S1",
+        "Bar[L] F S2^dag"
+      ],
+      "native_scalar_mixing_operator": "H H S1 S2^dag + h.c.",
+      "exact_UV_provisional_algebraic": true,
+      "native_CG_candidate_charge_check_algebraic": true,
+      "full_source_4spinor_Weyl_phase_checked": false,
+      "portal_physical_coupling_dictionary_checked": false,
+      "physical_source_mass_matrix_certified": false,
+      "additional_hypercharge_zero_scalar_yukawa_allowed": false,
+      "additional_yukawa_numeric_input_in_frozen_benchmark": null,
+      "existing_snapshot_masses_ev": [
+        0.0004747331744406435,
+        0.007581737808967201,
+        0.043594819763735346
+      ],
+      "existing_snapshot_cancellation_ratio_full_over_individual_sum": 5.997071035671716e-08,
+      "status": "restricted_benchmark_provisional_only",
+      "source_native_CG_candidate_contraction": "Y1 * Y2 * conjugate(T3MixCG)",
+      "source_native_CG_candidate_coefficient_total": "-2*sqrt(3)/3",
+      "source_native_CG_candidate_charge_weights": {
+        "2": "-2*sqrt(3)/3"
+      },
+      "source_physical_loop_multiplicity_certified": false,
+      "source_native_CG_weights_are_conditional_on_spinor_and_mass_basis": true
+    },
+    {
+      "model": "E_-4",
+      "source_frozen_benchmark": "Numerical/benchmarks/fitted_reference/T3_dS1_3_dS2_3_dF_2_alpha_m4.json",
+      "fermion_mass_case": "Dirac doubled Weyl",
+      "common_internal_electric_charge_channels": [
+        -2.0,
+        -1.0
+      ],
+      "number_of_common_charge_channels": 2,
+      "ordinary_source_yukawa_structures": [
+        "Bar[L] F^c S1",
+        "Bar[L] F S2^dag"
+      ],
+      "native_scalar_mixing_operator": "H H S1 S2^dag + h.c.",
+      "exact_UV_provisional_algebraic": true,
+      "native_CG_candidate_charge_check_algebraic": true,
+      "full_source_4spinor_Weyl_phase_checked": false,
+      "portal_physical_coupling_dictionary_checked": false,
+      "physical_source_mass_matrix_certified": false,
+      "additional_hypercharge_zero_scalar_yukawa_allowed": false,
+      "additional_yukawa_numeric_input_in_frozen_benchmark": null,
+      "existing_snapshot_masses_ev": [
+        0.0033193970979805867,
+        0.007416937058018795,
+        0.038488454787258645
+      ],
+      "existing_snapshot_cancellation_ratio_full_over_individual_sum": 2.7261538215423694e-08,
+      "status": "restricted_benchmark_provisional_only",
+      "source_native_CG_candidate_contraction": "Y1 * Y2 * conjugate(T3MixCG)",
+      "source_native_CG_candidate_coefficient_total": "2*sqrt(6)/3",
+      "source_native_CG_candidate_charge_weights": {
+        "-2": "sqrt(6)/3",
+        "-1": "sqrt(6)/3"
+      },
+      "source_physical_loop_multiplicity_certified": false,
+      "source_native_CG_weights_are_conditional_on_spinor_and_mass_basis": true
+    },
+    {
+      "model": "E_-2",
+      "source_frozen_benchmark": "Numerical/benchmarks/fitted_reference/T3_dS1_3_dS2_3_dF_2_alpha_m2.json",
+      "fermion_mass_case": "Dirac doubled Weyl",
+      "common_internal_electric_charge_channels": [
+        -1.0,
+        0.0
+      ],
+      "number_of_common_charge_channels": 2,
+      "ordinary_source_yukawa_structures": [
+        "Bar[L] F^c S1",
+        "Bar[L] F S2^dag"
+      ],
+      "native_scalar_mixing_operator": "H H S1 S2^dag + h.c.",
+      "exact_UV_provisional_algebraic": true,
+      "native_CG_candidate_charge_check_algebraic": true,
+      "full_source_4spinor_Weyl_phase_checked": false,
+      "portal_physical_coupling_dictionary_checked": false,
+      "physical_source_mass_matrix_certified": false,
+      "additional_hypercharge_zero_scalar_yukawa_allowed": true,
+      "additional_yukawa_numeric_input_in_frozen_benchmark": false,
+      "existing_snapshot_masses_ev": [
+        0.0047141910553783715,
+        0.008678828758542975,
+        0.0424694776250831
+      ],
+      "existing_snapshot_cancellation_ratio_full_over_individual_sum": 2.4181265484378986e-08,
+      "status": "restricted_benchmark_provisional_only",
+      "source_native_CG_candidate_contraction": "Y1 * Y2 * conjugate(T3MixCG)",
+      "source_native_CG_candidate_coefficient_total": "2*sqrt(6)/3",
+      "source_native_CG_candidate_charge_weights": {
+        "-1": "sqrt(6)/3",
+        "0": "sqrt(6)/3"
+      },
+      "source_physical_loop_multiplicity_certified": false,
+      "source_native_CG_weights_are_conditional_on_spinor_and_mass_basis": true
+    },
+    {
+      "model": "E_+0",
+      "source_frozen_benchmark": "Numerical/benchmarks/fitted_reference/T3_dS1_3_dS2_3_dF_2_alpha_p0.json",
+      "fermion_mass_case": "Dirac doubled Weyl",
+      "common_internal_electric_charge_channels": [
+        0.0,
+        1.0
+      ],
+      "number_of_common_charge_channels": 2,
+      "ordinary_source_yukawa_structures": [
+        "Bar[L] F^c S1",
+        "Bar[L] F S2^dag"
+      ],
+      "native_scalar_mixing_operator": "H H S1 S2^dag + h.c.",
+      "exact_UV_provisional_algebraic": true,
+      "native_CG_candidate_charge_check_algebraic": true,
+      "full_source_4spinor_Weyl_phase_checked": false,
+      "portal_physical_coupling_dictionary_checked": false,
+      "physical_source_mass_matrix_certified": false,
+      "additional_hypercharge_zero_scalar_yukawa_allowed": true,
+      "additional_yukawa_numeric_input_in_frozen_benchmark": false,
+      "existing_snapshot_masses_ev": [
+        0.004643584281144841,
+        0.008648589446859487,
+        0.04251535686137618
+      ],
+      "existing_snapshot_cancellation_ratio_full_over_individual_sum": 2.4390723252989773e-08,
+      "status": "restricted_benchmark_provisional_only",
+      "source_native_CG_candidate_contraction": "Y1 * Y2 * conjugate(T3MixCG)",
+      "source_native_CG_candidate_coefficient_total": "2*sqrt(6)/3",
+      "source_native_CG_candidate_charge_weights": {
+        "0": "sqrt(6)/3",
+        "1": "sqrt(6)/3"
+      },
+      "source_physical_loop_multiplicity_certified": false,
+      "source_native_CG_weights_are_conditional_on_spinor_and_mass_basis": true
+    },
+    {
+      "model": "E_+2",
+      "source_frozen_benchmark": "Numerical/benchmarks/fitted_reference/T3_dS1_3_dS2_3_dF_2_alpha_p2.json",
+      "fermion_mass_case": "Dirac doubled Weyl",
+      "common_internal_electric_charge_channels": [
+        1.0,
+        2.0
+      ],
+      "number_of_common_charge_channels": 2,
+      "ordinary_source_yukawa_structures": [
+        "Bar[L] F^c S1",
+        "Bar[L] F S2^dag"
+      ],
+      "native_scalar_mixing_operator": "H H S1 S2^dag + h.c.",
+      "exact_UV_provisional_algebraic": true,
+      "native_CG_candidate_charge_check_algebraic": true,
+      "full_source_4spinor_Weyl_phase_checked": false,
+      "portal_physical_coupling_dictionary_checked": false,
+      "physical_source_mass_matrix_certified": false,
+      "additional_hypercharge_zero_scalar_yukawa_allowed": false,
+      "additional_yukawa_numeric_input_in_frozen_benchmark": null,
+      "existing_snapshot_masses_ev": [
+        0.003325966842574721,
+        0.007442484796302353,
+        0.0386335600264995
+      ],
+      "existing_snapshot_cancellation_ratio_full_over_individual_sum": 2.729831898363747e-08,
+      "status": "restricted_benchmark_provisional_only",
+      "source_native_CG_candidate_contraction": "Y1 * Y2 * conjugate(T3MixCG)",
+      "source_native_CG_candidate_coefficient_total": "2*sqrt(6)/3",
+      "source_native_CG_candidate_charge_weights": {
+        "1": "sqrt(6)/3",
+        "2": "sqrt(6)/3"
+      },
+      "source_physical_loop_multiplicity_certified": false,
+      "source_native_CG_weights_are_conditional_on_spinor_and_mass_basis": true
+    }
+  ]
+}

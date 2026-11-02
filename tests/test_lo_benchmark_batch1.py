@@ -53,6 +53,27 @@ class TestRestrictedBenchmark(unittest.TestCase):
         with self.assertRaisesRegex(b.AuditError, 'y1 real'):
             b.compare_frozen(self.contract, frozen)
 
+    def test_y2_contract_matches_pinned_original_source_matrix(self):
+        # Independent literal from the checked-in original fitted_reference
+        # A_-4 benchmark; do not derive this expected value from the contract.
+        # This caught the original 3e-16 transcription error at [1][1].
+        expected_y2 = [
+            [9.910122072324159e-05, 7.93926564976573e-05,
+             -2.1200984437018638e-05],
+            [4.159613623782387e-05, 2.3139864206313102e-07,
+             1.4121611182189383e-05],
+            [4.319550376385441e-06, -0.00010891978349536659,
+             4.4861549511551865e-05],
+        ]
+        self.assertEqual(self.contract['frozen_values_at_mu_UV']['y2_real'],
+                         expected_y2)
+
+    def test_y2_single_ulp_scale_source_drift_fails_closed(self):
+        frozen = fake_frozen(self.contract)
+        frozen['base_state']['ordinary']['y2']['real'][1][1] = 2.31398642363131e-07
+        with self.assertRaisesRegex(b.AuditError, 'y2 real matrix'):
+            b.compare_frozen(self.contract, frozen)
+
     def test_incorrect_hypercharge_fails(self):
         c = copy.deepcopy(self.contract)
         c['representation']['scalar2']['hypercharge'] = +1

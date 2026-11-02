@@ -103,6 +103,16 @@ provisional formal polynomial to a physical EFT1 running or scalar-matching
 worker. This is a deliberately restricted benchmark, not the most general
 scalar potential and not a full neutrino-oscillation fit.
 
+## Frozen y2 input transcription correction (2026-11-03)
+
+The original Batch 1 ZIP contained a single copied decimal error at
+`frozen_values_at_mu_UV.y2_real[1][1]` (zero-based indexing):
+`2.31398642363131e-07` rather than the immutable frozen source value
+`2.3139864206313102e-07`. This replacement updates only the Batch 1
+contract and adds regression checks against an independently pinned y2
+matrix. The original `fitted_reference` file and every provisional matching
+source are unchanged. Strict equality in `compare_frozen` remains in force.
+
 ## Install and execute (PowerShell)
 
 From a directory containing the downloaded ZIP:

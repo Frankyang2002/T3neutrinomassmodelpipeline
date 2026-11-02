@@ -1,0 +1,467 @@
+{
+  "format": "t3-ws4-independent-uv-spectral-reference-v1",
+  "status": "all_16_independent_conditionally_normalised_uv_references_computed",
+  "source_guards": {
+    "status": "source_forms_verified",
+    "all_required_sources_present": true,
+    "source_files": {
+      "model": {
+        "path": "Lagrangian/model/T3ModelCatalog.wl",
+        "sha256": "3ea4006b38617d1c603c564b209a0e0cedb324da127214fe434e18fd9953febc",
+        "source_forms_satisfied": true,
+        "missing_forms": []
+      },
+      "fields": {
+        "path": "Lagrangian/model/T3Fields.wl",
+        "sha256": "2f27f080ab02d1225aab7e5928aba19f238ec6d5dcdd41b72ee2d2c7298e24ab",
+        "source_forms_satisfied": true,
+        "missing_forms": []
+      },
+      "cg": {
+        "path": "Lagrangian/model/SU2Invariants.wl",
+        "sha256": "78e83bd1730555d15a47f8f2b3343635734b3f3387afb243623b89410faa6c1a",
+        "source_forms_satisfied": true,
+        "missing_forms": []
+      },
+      "topology": {
+        "path": "Lagrangian/interactions/T3Topology.wl",
+        "sha256": "e6e24c4a673bddff980885f8354b388ceaa19e53c8b2faa79ba3289a87de1511",
+        "source_forms_satisfied": true,
+        "missing_forms": []
+      },
+      "scalar_potential": {
+        "path": "Lagrangian/interactions/ScalarPotential.wl",
+        "sha256": "c863e5d69bf665e65c7e164aee5ceafe01b8aefc75500099da5847db7d0cfa97",
+        "source_forms_satisfied": true,
+        "missing_forms": []
+      },
+      "rgbeta": {
+        "path": "RGE/running/rgbeta/T3RGBetaModel.wl",
+        "sha256": "a58c79f18b2abdf9d476588552dfa52e2f131f322094e5b72d1198162aa20abc",
+        "source_forms_satisfied": true,
+        "missing_forms": []
+      },
+      "input_builder": {
+        "path": "scripts/BuildT3DirectOneLoopInputs.py",
+        "sha256": "16fbf7fbb06e630a02e720bd9f3bfbda65748394d3ef50924f39a656998213ec",
+        "source_forms_satisfied": true,
+        "missing_forms": []
+      },
+      "core": {
+        "path": "Numerical/direct_one_loop/core.py",
+        "sha256": "d85e450f5e7d9a586cfd6a6479f4d629a630ab54bda4218c08dda15ac011c656",
+        "source_forms_satisfied": true,
+        "missing_forms": []
+      }
+    },
+    "errors": []
+  },
+  "native_portal_symbol_trace": {
+    "current_source_forms": {
+      "potential_builds_invariant_specific_portal_family": true,
+      "portal_coupling_symbol_dynamically_has_Inv_index": true,
+      "topology_calls_general_scalar_potential_family": true,
+      "unindexed_lambdaH1_defined": true,
+      "unindexed_lambdaH2_defined": true
+    },
+    "source_level_bare_to_indexed_portal_map_established": false,
+    "observed": "GeneralScalarPotential uses lambdaH1InvN/lambdaH2InvN; fitted input builder reads lambdaH1/lambdaH2",
+    "not_inferred": "No signed/magnitude equivalence between bare and invariant-indexed parameters is assumed",
+    "next_native_measurement": "Export the scalar quadratic operator with one isolated native lambdaHiInvN, the physical generator basis and H0=v/sqrt(2), then project to A; compare to the benchmark lambdaHi definition"
+  },
+  "optional_native_evidence": {
+    "spinor": {
+      "available": false,
+      "path": "Reports\\output\\workstream_a\\yukawa_spinor_phase\\a0_spinor_phase.json"
+    },
+    "yukawa_normalization": {
+      "available": false,
+      "path": "Reports\\output\\workstream_a\\yukawa_normalization_bridge\\yukawa_normalization_bridge.json"
+    },
+    "a0_action": {
+      "available": false,
+      "path": "Reports\\output\\workstream_a\\yukawa_a0_action_bridge\\a0_action_bridge.json"
+    }
+  },
+  "live_native_operator_export": {
+    "available": false,
+    "physical_component_normalisation_certified": false,
+    "reason": "Optional live Matchete operator inventory not supplied"
+  },
+  "restricted_input_structure_audit": {
+    "format": "t3-ws4-existing-provisional-input-shape-audit-v1",
+    "status": "restricted_component_structure_verified_not_physical",
+    "models_checked": 16,
+    "results": [
+      {
+        "model": "A_-4",
+        "source_tensor_structure_verified": true,
+        "provisional_input_sha256": "14cdf7c7a5167ab5677b75e3faaa4e9b7958f5884319bde21c272f62dea1a48b",
+        "complex_fermion_states": 12,
+        "complex_scalar_states": 4,
+        "native_phase_and_normalisation_verified": false
+      },
+      {
+        "model": "A_-2",
+        "source_tensor_structure_verified": true,
+        "provisional_input_sha256": "65f36c02a289b8036606f61b1d576a72b22fadf7fed16c78e436fde66fd88fb3",
+        "complex_fermion_states": 12,
+        "complex_scalar_states": 4,
+        "native_phase_and_normalisation_verified": false
+      },
+      {
+        "model": "A_+0",
+        "source_tensor_structure_verified": true,
+        "provisional_input_sha256": "0aaa9d32bdb1e8da207fad7d443aed7b268fc56acf65e19674c883a2e65f3ce9",
+        "complex_fermion_states": 12,
+        "complex_scalar_states": 4,
+        "native_phase_and_normalisation_verified": false
+      },
+      {
+        "model": "B_-3",
+        "source_tensor_structure_verified": true,
+        "provisional_input_sha256": "71ffd39a6fa0288b65ed0f59868531f66530c683cc9c14485bbabe718b9cdcb0",
+        "complex_fermion_states": 6,
+        "complex_scalar_states": 4,
+        "native_phase_and_normalisation_verified": false
+      },
+      {
+        "model": "B_-1",
+        "source_tensor_structure_verified": true,
+        "provisional_input_sha256": "e5d25ede470961c216f558c462bd19c090a8890918caea69297bb0a2c445855d",
+        "complex_fermion_states": 3,
+        "complex_scalar_states": 4,
+        "native_phase_and_normalisation_verified": false
+      },
+      {
+        "model": "B_+1",
+        "source_tensor_structure_verified": true,
+        "provisional_input_sha256": "f941d6049b2d7eaf21127539f2cd191ba4684ab6df6760bc2b11883f5c532ee2",
+        "complex_fermion_states": 6,
+        "complex_scalar_states": 4,
+        "native_phase_and_normalisation_verified": false
+      },
+      {
+        "model": "C_-3",
+        "source_tensor_structure_verified": true,
+        "provisional_input_sha256": "9147e7a338e1d375cfb036c41864684197bb139534b222db4d2651eb4bf028a4",
+        "complex_fermion_states": 18,
+        "complex_scalar_states": 4,
+        "native_phase_and_normalisation_verified": false
+      },
+      {
+        "model": "C_-1",
+        "source_tensor_structure_verified": true,
+        "provisional_input_sha256": "36e6fd4d905030ef377468ea46c8261e04ab40e53f8ebf96cbb019e47dd36dce",
+        "complex_fermion_states": 9,
+        "complex_scalar_states": 4,
+        "native_phase_and_normalisation_verified": false
+      },
+      {
+        "model": "C_+1",
+        "source_tensor_structure_verified": true,
+        "provisional_input_sha256": "b57ddd02412cd051945b9901baa228f50f385de0d407bce5894d81f16584de8e",
+        "complex_fermion_states": 18,
+        "complex_scalar_states": 4,
+        "native_phase_and_normalisation_verified": false
+      },
+      {
+        "model": "D_-2",
+        "source_tensor_structure_verified": true,
+        "provisional_input_sha256": "a7a045bb83220294c89a00a9cf628b826abafe665597c52bc299b4d851c7575b",
+        "complex_fermion_states": 12,
+        "complex_scalar_states": 4,
+        "native_phase_and_normalisation_verified": false
+      },
+      {
+        "model": "D_+0",
+        "source_tensor_structure_verified": true,
+        "provisional_input_sha256": "d1d7dce3afa5567284e66778c1e2ea99cfde6652044004e09b60d6035e6e1480",
+        "complex_fermion_states": 12,
+        "complex_scalar_states": 4,
+        "native_phase_and_normalisation_verified": false
+      },
+      {
+        "model": "D_+2",
+        "source_tensor_structure_verified": true,
+        "provisional_input_sha256": "57e30292c4855ce6af949f2037b66f6c8f06bef374354bbe28ea55828f16f027",
+        "complex_fermion_states": 12,
+        "complex_scalar_states": 4,
+        "native_phase_and_normalisation_verified": false
+      },
+      {
+        "model": "E_-4",
+        "source_tensor_structure_verified": true,
+        "provisional_input_sha256": "42363373a59ab0ccca00b77b5748143220bcc64cd678e2f171e5c53d8dc09009",
+        "complex_fermion_states": 12,
+        "complex_scalar_states": 6,
+        "native_phase_and_normalisation_verified": false
+      },
+      {
+        "model": "E_-2",
+        "source_tensor_structure_verified": true,
+        "provisional_input_sha256": "2bf49749b781ce139d1084530ce6d82bee437ab2c986344cc21fc7276eabd326",
+        "complex_fermion_states": 12,
+        "complex_scalar_states": 6,
+        "native_phase_and_normalisation_verified": false
+      },
+      {
+        "model": "E_+0",
+        "source_tensor_structure_verified": true,
+        "provisional_input_sha256": "3f18217920b1a171e78d9721ed873ad3c0012f489bdefae0b2ee2316c024504a",
+        "complex_fermion_states": 12,
+        "complex_scalar_states": 6,
+        "native_phase_and_normalisation_verified": false
+      },
+      {
+        "model": "E_+2",
+        "source_tensor_structure_verified": true,
+        "provisional_input_sha256": "a892e2f30982f47f3892535d2d449f08b594ace02b2d7f8057cc3ecba432f1bd",
+        "complex_fermion_states": 12,
+        "complex_scalar_states": 6,
+        "native_phase_and_normalisation_verified": false
+      }
+    ],
+    "UV_mass_matrices_recomputed": false,
+    "physical_source_mapping_certified": false
+  },
+  "model_count": 16,
+  "models": [
+    {
+      "model": "A_-4",
+      "independent_masses_ev": [
+        0.0004744829299354989,
+        0.007582728104595831,
+        0.043600644036855436
+      ],
+      "uv_pole_relative": 5.921013985005381e-19,
+      "cancellation_factor": 1.0000000104024176,
+      "physical_source_normalisation_certified": false,
+      "status": "independent_conditional_UV_reference",
+      "relative_production_difference": 8.876471442464334e-12,
+      "report_path": "output\\general_observable\\lo_certification_direct_uv\\native_uv_reference_01\\models\\A_-4.json"
+    },
+    {
+      "model": "A_-2",
+      "independent_masses_ev": [
+        0.007214753468420294,
+        0.011008457842590524,
+        0.04856020909975076
+      ],
+      "uv_pole_relative": 4.855745656080132e-19,
+      "cancellation_factor": 1.0000000166687382,
+      "physical_source_normalisation_certified": false,
+      "status": "independent_conditional_UV_reference",
+      "relative_production_difference": 8.462597567617478e-12,
+      "report_path": "output\\general_observable\\lo_certification_direct_uv\\native_uv_reference_01\\models\\A_-2.json"
+    },
+    {
+      "model": "A_+0",
+      "independent_masses_ev": [
+        0.007214274912821709,
+        0.011000035911229188,
+        0.048498954012450204
+      ],
+      "uv_pole_relative": 3.8506229610408276e-19,
+      "cancellation_factor": 1.0000000167075398,
+      "physical_source_normalisation_certified": false,
+      "status": "independent_conditional_UV_reference",
+      "relative_production_difference": 9.018163769015769e-12,
+      "report_path": "output\\general_observable\\lo_certification_direct_uv\\native_uv_reference_01\\models\\A_+0.json"
+    },
+    {
+      "model": "B_-3",
+      "independent_masses_ev": [
+        0.007218230528501527,
+        0.010981448529720174,
+        0.04833239941924166
+      ],
+      "uv_pole_relative": 7.071252026167794e-19,
+      "cancellation_factor": 1.0000000168194685,
+      "physical_source_normalisation_certified": false,
+      "status": "independent_conditional_UV_reference",
+      "relative_production_difference": 5.977831474752703e-12,
+      "report_path": "output\\general_observable\\lo_certification_direct_uv\\native_uv_reference_01\\models\\B_-3.json"
+    },
+    {
+      "model": "B_-1",
+      "independent_masses_ev": [
+        0.004522492503358701,
+        0.009803383428969251,
+        0.05044130936101864
+      ],
+      "uv_pole_relative": 7.519564833900335e-19,
+      "cancellation_factor": 131.20613047204677,
+      "physical_source_normalisation_certified": false,
+      "status": "independent_conditional_UV_reference",
+      "relative_production_difference": 1.8349485024506298e-11,
+      "report_path": "output\\general_observable\\lo_certification_direct_uv\\native_uv_reference_01\\models\\B_-1.json"
+    },
+    {
+      "model": "B_+1",
+      "independent_masses_ev": [
+        0.00721582711978819,
+        0.010946104201482254,
+        0.048074318569269504
+      ],
+      "uv_pole_relative": 8.02374802095242e-19,
+      "cancellation_factor": 1.000000017045527,
+      "physical_source_normalisation_certified": false,
+      "status": "independent_conditional_UV_reference",
+      "relative_production_difference": 7.277939685894867e-12,
+      "report_path": "output\\general_observable\\lo_certification_direct_uv\\native_uv_reference_01\\models\\B_+1.json"
+    },
+    {
+      "model": "C_-3",
+      "independent_masses_ev": [
+        0.026946874336583552,
+        0.028192285689979637,
+        0.05504074439952495
+      ],
+      "uv_pole_relative": 2.98169280583266e-19,
+      "cancellation_factor": 1.0000000034687178,
+      "physical_source_normalisation_certified": false,
+      "status": "independent_conditional_UV_reference",
+      "relative_production_difference": 6.161451477678699e-12,
+      "report_path": "output\\general_observable\\lo_certification_direct_uv\\native_uv_reference_01\\models\\C_-3.json"
+    },
+    {
+      "model": "C_-1",
+      "independent_masses_ev": [
+        0.03749725678999172,
+        0.038588872805041564,
+        0.06228500486755306
+      ],
+      "uv_pole_relative": 1.166694947250825e-19,
+      "cancellation_factor": 186.9725670966664,
+      "physical_source_normalisation_certified": false,
+      "status": "independent_conditional_UV_reference",
+      "relative_production_difference": 8.195369686308898e-12,
+      "report_path": "output\\general_observable\\lo_certification_direct_uv\\native_uv_reference_01\\models\\C_-1.json"
+    },
+    {
+      "model": "C_+1",
+      "independent_masses_ev": [
+        0.0003654877874242135,
+        0.008268705382035424,
+        0.04778610820886442
+      ],
+      "uv_pole_relative": 1.8648597573038006e-19,
+      "cancellation_factor": 1.0000000117768948,
+      "physical_source_normalisation_certified": false,
+      "status": "independent_conditional_UV_reference",
+      "relative_production_difference": 1.2682430405634566e-11,
+      "report_path": "output\\general_observable\\lo_certification_direct_uv\\native_uv_reference_01\\models\\C_+1.json"
+    },
+    {
+      "model": "D_-2",
+      "independent_masses_ev": [
+        0.007214174883833102,
+        0.010997753944672067,
+        0.04848237240236678
+      ],
+      "uv_pole_relative": 5.573717152984993e-19,
+      "cancellation_factor": 1.0000000167174197,
+      "physical_source_normalisation_certified": false,
+      "status": "independent_conditional_UV_reference",
+      "relative_production_difference": 7.461449458675927e-12,
+      "report_path": "output\\general_observable\\lo_certification_direct_uv\\native_uv_reference_01\\models\\D_-2.json"
+    },
+    {
+      "model": "D_+0",
+      "independent_masses_ev": [
+        0.007214670313721779,
+        0.011007039496807708,
+        0.04854990270290299
+      ],
+      "uv_pole_relative": 5.422451170256892e-19,
+      "cancellation_factor": 1.0000000166752774,
+      "physical_source_normalisation_certified": false,
+      "status": "independent_conditional_UV_reference",
+      "relative_production_difference": 7.209091771878421e-12,
+      "report_path": "output\\general_observable\\lo_certification_direct_uv\\native_uv_reference_01\\models\\D_+0.json"
+    },
+    {
+      "model": "D_+2",
+      "independent_masses_ev": [
+        0.00047473317438657487,
+        0.007581737808937518,
+        0.04359481976398995
+      ],
+      "uv_pole_relative": 5.040105259558946e-19,
+      "cancellation_factor": 1.0000000104060702,
+      "physical_source_normalisation_certified": false,
+      "status": "independent_conditional_UV_reference",
+      "relative_production_difference": 7.708127978599667e-12,
+      "report_path": "output\\general_observable\\lo_certification_direct_uv\\native_uv_reference_01\\models\\D_+2.json"
+    },
+    {
+      "model": "E_-4",
+      "independent_masses_ev": [
+        0.0033193970979029665,
+        0.007416937057837625,
+        0.03848845478686715
+      ],
+      "uv_pole_relative": 1.6014861749681591e-19,
+      "cancellation_factor": 1.0000000029145575,
+      "physical_source_normalisation_certified": false,
+      "status": "independent_conditional_UV_reference",
+      "relative_production_difference": 1.5369971036351305e-11,
+      "report_path": "output\\general_observable\\lo_certification_direct_uv\\native_uv_reference_01\\models\\E_-4.json"
+    },
+    {
+      "model": "E_-2",
+      "independent_masses_ev": [
+        0.004714191055347185,
+        0.008678828758026863,
+        0.04246947762521097
+      ],
+      "uv_pole_relative": 2.2011064443414413e-19,
+      "cancellation_factor": 1.0000000385816308,
+      "physical_source_normalisation_certified": false,
+      "status": "independent_conditional_UV_reference",
+      "relative_production_difference": 2.1530100013067194e-11,
+      "report_path": "output\\general_observable\\lo_certification_direct_uv\\native_uv_reference_01\\models\\E_-2.json"
+    },
+    {
+      "model": "E_+0",
+      "independent_masses_ev": [
+        0.004643584281044015,
+        0.008648589446232873,
+        0.042515356861628543
+      ],
+      "uv_pole_relative": 1.386661892195598e-19,
+      "cancellation_factor": 1.0000000375676934,
+      "physical_source_normalisation_certified": false,
+      "status": "independent_conditional_UV_reference",
+      "relative_production_difference": 2.6175804949094748e-11,
+      "report_path": "output\\general_observable\\lo_certification_direct_uv\\native_uv_reference_01\\models\\E_+0.json"
+    },
+    {
+      "model": "E_+2",
+      "independent_masses_ev": [
+        0.003325966842550979,
+        0.0074424847961580744,
+        0.0386335600258613
+      ],
+      "uv_pole_relative": 1.1728279423048279e-19,
+      "cancellation_factor": 1.0000000028688987,
+      "physical_source_normalisation_certified": false,
+      "status": "independent_conditional_UV_reference",
+      "relative_production_difference": 2.0693299491332314e-11,
+      "report_path": "output\\general_observable\\lo_certification_direct_uv\\native_uv_reference_01\\models\\E_+2.json"
+    }
+  ],
+  "physical_source_certified_models": 0,
+  "scale_status": "provisional inputs at mu0, not run to muF",
+  "EFT1_tree_interface": "not compared at common scale; formal Gaussian bridge remains separate",
+  "hard_one_loop_fermion_threshold_matching": "not implemented",
+  "scalar_to_SMEFT_matching": "not implemented",
+  "extra_symmetry_allowed_yukawas": "six permitted; set zero by frozen restricted benchmark, not symmetry",
+  "unresolved_native_factors": [
+    "signed MF and 4-spinor GammaCC map to the same Weyl basis as both Yukawas",
+    "RGBeta epsilon/triplet component axes and normalisation against Matchete",
+    "bare lambdaH1/lambdaH2 to native lambdaHiInvN scalar-potential identification",
+    "source lambdaT3 contraction plus Higgs VEV and potential-to-Hessian sign"
+  ]
+}

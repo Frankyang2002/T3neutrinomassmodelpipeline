@@ -1,0 +1,624 @@
+{
+  "format": "t3-direct-uv-integrated-conventions-v1",
+  "status": "physical_uv_normalization_NOT_CERTIFIED",
+  "scope": "restricted frozen benchmark, 16 direct UV models; no EFT/RGE",
+  "algebraic_candidate_models_passed": 16,
+  "algebraic_candidate_models_blocked": 0,
+  "physical_models_certified": 0,
+  "source_guard_sha256": {
+    "Lagrangian/interactions/T3Topology.wl": "e6e24c4a673bddff980885f8354b388ceaa19e53c8b2faa79ba3289a87de1511",
+    "Lagrangian/model/SU2Invariants.wl": "78e83bd1730555d15a47f8f2b3343635734b3f3387afb243623b89410faa6c1a",
+    "Lagrangian/model/T3Fields.wl": "2f27f080ab02d1225aab7e5928aba19f238ec6d5dcdd41b72ee2d2c7298e24ab",
+    "Lagrangian/interactions/ScalarPotential.wl": "c863e5d69bf665e65c7e164aee5ceafe01b8aefc75500099da5847db7d0cfa97",
+    "Numerical/direct_one_loop/core.py": "d85e450f5e7d9a586cfd6a6479f4d629a630ab54bda4218c08dda15ac011c656"
+  },
+  "existing_evidence_sha256": {
+    "output/general_observable/lo_direct_one_loop/source_audits/component_support_audit.json": "8eebe3dc6c3d0bfab48b4ba12244a86187a1c45ad03388d83b98675742f78b4e",
+    "output/general_observable/lo_direct_one_loop/source_audits/matchete_generator_analysis.json": "e8bd4a7d8de5115b9440bc142017f9f4536b2dd8a2a23fdfe588c99bafa0d87a",
+    "output/general_observable/lo_direct_one_loop/source_audits/cg_covariance_audit.json": "2f42a95fd5317cc1b930b0b4304764882cc2287da9375890eaf88b350cee003e",
+    "output/general_observable/lo_direct_one_loop/source_audits/native_portal_identity_decomposition.json": "96d239d644d96a99312a89d3214c2ac3ae8c62117d4e9d4250f7da7ed96d42cf"
+  },
+  "prior_A0_spinor_phase_evidence": {
+    "present": false,
+    "reason": "A(0) native spinor-phase witness not found",
+    "cross_package_physical_dictionary_certified": false
+  },
+  "checks_covered": [
+    "both native topology Yukawa field orientations and prior source CG rotations",
+    "all nonzero component Q-conservation channels and Majorana Q pairing",
+    "candidate Dirac two-Weyl or Majorana charge-metric fermion mass tensor",
+    "H0=v/sqrt(2) topology mixing in Hermitian scalar A with -lambda*v^2/2",
+    "portal mass shifts and restricted B=0 quadratic action",
+    "two independent complex-field quadratic-action witnesses",
+    "wrong topology mixing sign/half and portal-sign negative controls",
+    "candidate complex-conjugated Yukawa tensors and flavour indexing"
+  ],
+  "limitations_not_silently_certified": [
+    "Matchete abstract GammaCC has no native numerical 4-spinor sign anchor",
+    "candidate SU2 generator basis was validated by covariance, not exported live",
+    "RGBeta fundamental epsilon orientation and benchmark y1/y2 dictionary pending",
+    "source FreeLag Weyl mass/charge conjugation and Majorana 1/2 not independently projected",
+    "the full native portal invariant combination and physical benchmark coupling dictionary pending",
+    "extra symmetry-allowed interactions absent from restricted fitted benchmarks"
+  ],
+  "never_modify_frozen_benchmarks_or_provisional_results": true,
+  "input_provenance_never_promoted_to_validated": true,
+  "models": [
+    {
+      "model": "A_-4",
+      "source_benchmark": "Numerical/benchmarks/fitted_reference/T3_dS1_1_dS2_3_dF_2_alpha_m4.json",
+      "benchmark_sha256": "3cb8dc3e94f2bd6f60571a7a85477638e8fc02109bccfcec0e04055852d81247",
+      "input_file": "input/lo_direct_one_loop/A_-4.json",
+      "input_sha256": "14cdf7c7a5167ab5677b75e3faaa4e9b7958f5884319bde21c272f62dea1a48b",
+      "fermion_type": "Dirac",
+      "electric_charge_channel_witness": {
+        "native_component_charge_channels_checked": 4,
+        "majorana_charge_pairing_checked": false
+      },
+      "fermion_double_Weyl_candidate_residual": 0.0,
+      "fermion_charge_pair_metric_symmetric": true,
+      "scalar_A_candidate_residual": 0.0,
+      "scalar_B_candidate_residual": 0.0,
+      "scalar_source_action": {
+        "independent_complex_field_witnesses": 2,
+        "maximum_absolute_source_potential_discrepancy_gev4": 2.6031257322754127e-10
+      },
+      "negative_controls": {
+        "controls": {
+          "mixing_sign_flip": true,
+          "missing_vev_one_half": true,
+          "portal_sign_flip": true
+        },
+        "nonzero_controls_checked": 3
+      },
+      "conditional_yukawa1_candidate_residual": 0.0,
+      "conditional_yukawa2_candidate_residual": 0.0,
+      "source_group_charge_basis_is_candidate_generator_not_live_export": true,
+      "native_spinor_phase_certified": false,
+      "native_fermion_mass_normalization_certified": false,
+      "absolute_portal_and_topology_coupling_dictionary_certified": false,
+      "physical_uv_mass_certified": false,
+      "status": "restricted_UV_action_algebra_checked_physical_coupling_dictionary_PENDING"
+    },
+    {
+      "model": "A_-2",
+      "source_benchmark": "Numerical/benchmarks/fitted_reference/T3_dS1_1_dS2_3_dF_2_alpha_m2.json",
+      "benchmark_sha256": "9cd1dd65546f045268ee429b81815301e2e65fd680c4abe5aba74c6f20ff0c54",
+      "input_file": "input/lo_direct_one_loop/A_-2.json",
+      "input_sha256": "65f36c02a289b8036606f61b1d576a72b22fadf7fed16c78e436fde66fd88fb3",
+      "fermion_type": "Dirac",
+      "electric_charge_channel_witness": {
+        "native_component_charge_channels_checked": 4,
+        "majorana_charge_pairing_checked": false
+      },
+      "fermion_double_Weyl_candidate_residual": 0.0,
+      "fermion_charge_pair_metric_symmetric": true,
+      "scalar_A_candidate_residual": 0.0,
+      "scalar_B_candidate_residual": 0.0,
+      "scalar_source_action": {
+        "independent_complex_field_witnesses": 2,
+        "maximum_absolute_source_potential_discrepancy_gev4": 2.6031257322754127e-10
+      },
+      "negative_controls": {
+        "controls": {
+          "mixing_sign_flip": true,
+          "missing_vev_one_half": true,
+          "portal_sign_flip": true
+        },
+        "nonzero_controls_checked": 3
+      },
+      "conditional_yukawa1_candidate_residual": 0.0,
+      "conditional_yukawa2_candidate_residual": 0.0,
+      "source_group_charge_basis_is_candidate_generator_not_live_export": true,
+      "native_spinor_phase_certified": false,
+      "native_fermion_mass_normalization_certified": false,
+      "absolute_portal_and_topology_coupling_dictionary_certified": false,
+      "physical_uv_mass_certified": false,
+      "status": "restricted_UV_action_algebra_checked_physical_coupling_dictionary_PENDING"
+    },
+    {
+      "model": "A_+0",
+      "source_benchmark": "Numerical/benchmarks/fitted_reference/T3_dS1_1_dS2_3_dF_2_alpha_p0.json",
+      "benchmark_sha256": "4824f1278b9838635deec2ff11d1d9290abc5ee726cb56a8f4c2ea6fc77d812d",
+      "input_file": "input/lo_direct_one_loop/A_+0.json",
+      "input_sha256": "0aaa9d32bdb1e8da207fad7d443aed7b268fc56acf65e19674c883a2e65f3ce9",
+      "fermion_type": "Dirac",
+      "electric_charge_channel_witness": {
+        "native_component_charge_channels_checked": 4,
+        "majorana_charge_pairing_checked": false
+      },
+      "fermion_double_Weyl_candidate_residual": 0.0,
+      "fermion_charge_pair_metric_symmetric": true,
+      "scalar_A_candidate_residual": 0.0,
+      "scalar_B_candidate_residual": 0.0,
+      "scalar_source_action": {
+        "independent_complex_field_witnesses": 2,
+        "maximum_absolute_source_potential_discrepancy_gev4": 2.6031257322754127e-10
+      },
+      "negative_controls": {
+        "controls": {
+          "mixing_sign_flip": true,
+          "missing_vev_one_half": true,
+          "portal_sign_flip": true
+        },
+        "nonzero_controls_checked": 3
+      },
+      "conditional_yukawa1_candidate_residual": 0.0,
+      "conditional_yukawa2_candidate_residual": 0.0,
+      "source_group_charge_basis_is_candidate_generator_not_live_export": true,
+      "native_spinor_phase_certified": false,
+      "native_fermion_mass_normalization_certified": false,
+      "absolute_portal_and_topology_coupling_dictionary_certified": false,
+      "physical_uv_mass_certified": false,
+      "status": "restricted_UV_action_algebra_checked_physical_coupling_dictionary_PENDING"
+    },
+    {
+      "model": "B_-3",
+      "source_benchmark": "Numerical/benchmarks/fitted_reference/T3_dS1_2_dS2_2_dF_1_alpha_m3.json",
+      "benchmark_sha256": "c036c5177cdefaae39201b8e22740dd5ade1e9e904b534c0a5e84d7c9d99f55e",
+      "input_file": "input/lo_direct_one_loop/B_-3.json",
+      "input_sha256": "71ffd39a6fa0288b65ed0f59868531f66530c683cc9c14485bbabe718b9cdcb0",
+      "fermion_type": "Dirac",
+      "electric_charge_channel_witness": {
+        "native_component_charge_channels_checked": 3,
+        "majorana_charge_pairing_checked": false
+      },
+      "fermion_double_Weyl_candidate_residual": 0.0,
+      "fermion_charge_pair_metric_symmetric": true,
+      "scalar_A_candidate_residual": 0.0,
+      "scalar_B_candidate_residual": 0.0,
+      "scalar_source_action": {
+        "independent_complex_field_witnesses": 2,
+        "maximum_absolute_source_potential_discrepancy_gev4": 2.346425826049686e-10
+      },
+      "negative_controls": {
+        "controls": {
+          "mixing_sign_flip": true,
+          "missing_vev_one_half": true,
+          "portal_sign_flip": true
+        },
+        "nonzero_controls_checked": 3
+      },
+      "conditional_yukawa1_candidate_residual": 0.0,
+      "conditional_yukawa2_candidate_residual": 0.0,
+      "source_group_charge_basis_is_candidate_generator_not_live_export": true,
+      "native_spinor_phase_certified": false,
+      "native_fermion_mass_normalization_certified": false,
+      "absolute_portal_and_topology_coupling_dictionary_certified": false,
+      "physical_uv_mass_certified": false,
+      "status": "restricted_UV_action_algebra_checked_physical_coupling_dictionary_PENDING"
+    },
+    {
+      "model": "B_-1",
+      "source_benchmark": "Numerical/benchmarks/fitted_reference/T3_dS1_2_dS2_2_dF_1_alpha_m1.json",
+      "benchmark_sha256": "d83d7d31f9929f21dffad63c429a9e996a3f065a60535243a282a54d6f87dd5f",
+      "input_file": "input/lo_direct_one_loop/B_-1.json",
+      "input_sha256": "e5d25ede470961c216f558c462bd19c090a8890918caea69297bb0a2c445855d",
+      "fermion_type": "Majorana",
+      "electric_charge_channel_witness": {
+        "native_component_charge_channels_checked": 4,
+        "majorana_charge_pairing_checked": true
+      },
+      "fermion_double_Weyl_candidate_residual": 0.0,
+      "fermion_charge_pair_metric_symmetric": true,
+      "scalar_A_candidate_residual": 0.0,
+      "scalar_B_candidate_residual": 0.0,
+      "scalar_source_action": {
+        "independent_complex_field_witnesses": 2,
+        "maximum_absolute_source_potential_discrepancy_gev4": 2.346425826049686e-10
+      },
+      "negative_controls": {
+        "controls": {
+          "mixing_sign_flip": true,
+          "missing_vev_one_half": true,
+          "portal_sign_flip": true
+        },
+        "nonzero_controls_checked": 3
+      },
+      "conditional_yukawa1_candidate_residual": 0.0,
+      "conditional_yukawa2_candidate_residual": 0.0,
+      "source_group_charge_basis_is_candidate_generator_not_live_export": true,
+      "native_spinor_phase_certified": false,
+      "native_fermion_mass_normalization_certified": false,
+      "absolute_portal_and_topology_coupling_dictionary_certified": false,
+      "physical_uv_mass_certified": false,
+      "status": "restricted_UV_action_algebra_checked_physical_coupling_dictionary_PENDING"
+    },
+    {
+      "model": "B_+1",
+      "source_benchmark": "Numerical/benchmarks/fitted_reference/T3_dS1_2_dS2_2_dF_1_alpha_p1.json",
+      "benchmark_sha256": "fe1c9e656ba0359e3832b1c96d62260f78e8e5dde31e8abd3da830c62b5d6b31",
+      "input_file": "input/lo_direct_one_loop/B_+1.json",
+      "input_sha256": "f941d6049b2d7eaf21127539f2cd191ba4684ab6df6760bc2b11883f5c532ee2",
+      "fermion_type": "Dirac",
+      "electric_charge_channel_witness": {
+        "native_component_charge_channels_checked": 3,
+        "majorana_charge_pairing_checked": false
+      },
+      "fermion_double_Weyl_candidate_residual": 0.0,
+      "fermion_charge_pair_metric_symmetric": true,
+      "scalar_A_candidate_residual": 0.0,
+      "scalar_B_candidate_residual": 0.0,
+      "scalar_source_action": {
+        "independent_complex_field_witnesses": 2,
+        "maximum_absolute_source_potential_discrepancy_gev4": 2.346425826049686e-10
+      },
+      "negative_controls": {
+        "controls": {
+          "mixing_sign_flip": true,
+          "missing_vev_one_half": true,
+          "portal_sign_flip": true
+        },
+        "nonzero_controls_checked": 3
+      },
+      "conditional_yukawa1_candidate_residual": 0.0,
+      "conditional_yukawa2_candidate_residual": 0.0,
+      "source_group_charge_basis_is_candidate_generator_not_live_export": true,
+      "native_spinor_phase_certified": false,
+      "native_fermion_mass_normalization_certified": false,
+      "absolute_portal_and_topology_coupling_dictionary_certified": false,
+      "physical_uv_mass_certified": false,
+      "status": "restricted_UV_action_algebra_checked_physical_coupling_dictionary_PENDING"
+    },
+    {
+      "model": "C_-3",
+      "source_benchmark": "Numerical/benchmarks/fitted_reference/T3_dS1_2_dS2_2_dF_3_alpha_m3.json",
+      "benchmark_sha256": "a1736f4c38c8a56f93969b5528f0822d0fa88e8288457b8e70151dd5d40fab6c",
+      "input_file": "input/lo_direct_one_loop/C_-3.json",
+      "input_sha256": "9147e7a338e1d375cfb036c41864684197bb139534b222db4d2651eb4bf028a4",
+      "fermion_type": "Dirac",
+      "electric_charge_channel_witness": {
+        "native_component_charge_channels_checked": 5,
+        "majorana_charge_pairing_checked": false
+      },
+      "fermion_double_Weyl_candidate_residual": 0.0,
+      "fermion_charge_pair_metric_symmetric": true,
+      "scalar_A_candidate_residual": 0.0,
+      "scalar_B_candidate_residual": 0.0,
+      "scalar_source_action": {
+        "independent_complex_field_witnesses": 2,
+        "maximum_absolute_source_potential_discrepancy_gev4": 2.346425826049686e-10
+      },
+      "negative_controls": {
+        "controls": {
+          "mixing_sign_flip": true,
+          "missing_vev_one_half": true,
+          "portal_sign_flip": true
+        },
+        "nonzero_controls_checked": 3
+      },
+      "conditional_yukawa1_candidate_residual": 0.0,
+      "conditional_yukawa2_candidate_residual": 0.0,
+      "source_group_charge_basis_is_candidate_generator_not_live_export": true,
+      "native_spinor_phase_certified": false,
+      "native_fermion_mass_normalization_certified": false,
+      "absolute_portal_and_topology_coupling_dictionary_certified": false,
+      "physical_uv_mass_certified": false,
+      "status": "restricted_UV_action_algebra_checked_physical_coupling_dictionary_PENDING"
+    },
+    {
+      "model": "C_-1",
+      "source_benchmark": "Numerical/benchmarks/fitted_reference/T3_dS1_2_dS2_2_dF_3_alpha_m1.json",
+      "benchmark_sha256": "782c261c88e364b2db70791ed97d8fa067cf255449900668155b821ba636f03c",
+      "input_file": "input/lo_direct_one_loop/C_-1.json",
+      "input_sha256": "36e6fd4d905030ef377468ea46c8261e04ab40e53f8ebf96cbb019e47dd36dce",
+      "fermion_type": "Majorana",
+      "electric_charge_channel_witness": {
+        "native_component_charge_channels_checked": 8,
+        "majorana_charge_pairing_checked": true
+      },
+      "fermion_double_Weyl_candidate_residual": 0.0,
+      "fermion_charge_pair_metric_symmetric": true,
+      "scalar_A_candidate_residual": 0.0,
+      "scalar_B_candidate_residual": 0.0,
+      "scalar_source_action": {
+        "independent_complex_field_witnesses": 2,
+        "maximum_absolute_source_potential_discrepancy_gev4": 2.346425826049686e-10
+      },
+      "negative_controls": {
+        "controls": {
+          "mixing_sign_flip": true,
+          "missing_vev_one_half": true,
+          "portal_sign_flip": true
+        },
+        "nonzero_controls_checked": 3
+      },
+      "conditional_yukawa1_candidate_residual": 0.0,
+      "conditional_yukawa2_candidate_residual": 0.0,
+      "source_group_charge_basis_is_candidate_generator_not_live_export": true,
+      "native_spinor_phase_certified": false,
+      "native_fermion_mass_normalization_certified": false,
+      "absolute_portal_and_topology_coupling_dictionary_certified": false,
+      "physical_uv_mass_certified": false,
+      "status": "restricted_UV_action_algebra_checked_physical_coupling_dictionary_PENDING"
+    },
+    {
+      "model": "C_+1",
+      "source_benchmark": "Numerical/benchmarks/fitted_reference/T3_dS1_2_dS2_2_dF_3_alpha_p1.json",
+      "benchmark_sha256": "dd3beb2db859c7b272ebe81b25bc548d0bd159990c7b421a62f9aeeab352339c",
+      "input_file": "input/lo_direct_one_loop/C_+1.json",
+      "input_sha256": "b57ddd02412cd051945b9901baa228f50f385de0d407bce5894d81f16584de8e",
+      "fermion_type": "Dirac",
+      "electric_charge_channel_witness": {
+        "native_component_charge_channels_checked": 5,
+        "majorana_charge_pairing_checked": false
+      },
+      "fermion_double_Weyl_candidate_residual": 0.0,
+      "fermion_charge_pair_metric_symmetric": true,
+      "scalar_A_candidate_residual": 0.0,
+      "scalar_B_candidate_residual": 0.0,
+      "scalar_source_action": {
+        "independent_complex_field_witnesses": 2,
+        "maximum_absolute_source_potential_discrepancy_gev4": 2.346425826049686e-10
+      },
+      "negative_controls": {
+        "controls": {
+          "mixing_sign_flip": true,
+          "missing_vev_one_half": true,
+          "portal_sign_flip": true
+        },
+        "nonzero_controls_checked": 3
+      },
+      "conditional_yukawa1_candidate_residual": 0.0,
+      "conditional_yukawa2_candidate_residual": 0.0,
+      "source_group_charge_basis_is_candidate_generator_not_live_export": true,
+      "native_spinor_phase_certified": false,
+      "native_fermion_mass_normalization_certified": false,
+      "absolute_portal_and_topology_coupling_dictionary_certified": false,
+      "physical_uv_mass_certified": false,
+      "status": "restricted_UV_action_algebra_checked_physical_coupling_dictionary_PENDING"
+    },
+    {
+      "model": "D_-2",
+      "source_benchmark": "Numerical/benchmarks/fitted_reference/T3_dS1_3_dS2_1_dF_2_alpha_m2.json",
+      "benchmark_sha256": "fbaae81addefb93ff4749a4f60798682b929fb2e60b934ad18f11dbfe2402fce",
+      "input_file": "input/lo_direct_one_loop/D_-2.json",
+      "input_sha256": "a7a045bb83220294c89a00a9cf628b826abafe665597c52bc299b4d851c7575b",
+      "fermion_type": "Dirac",
+      "electric_charge_channel_witness": {
+        "native_component_charge_channels_checked": 4,
+        "majorana_charge_pairing_checked": false
+      },
+      "fermion_double_Weyl_candidate_residual": 0.0,
+      "fermion_charge_pair_metric_symmetric": true,
+      "scalar_A_candidate_residual": 0.0,
+      "scalar_B_candidate_residual": 0.0,
+      "scalar_source_action": {
+        "independent_complex_field_witnesses": 2,
+        "maximum_absolute_source_potential_discrepancy_gev4": 2.1827872842550278e-11
+      },
+      "negative_controls": {
+        "controls": {
+          "mixing_sign_flip": true,
+          "missing_vev_one_half": true,
+          "portal_sign_flip": true
+        },
+        "nonzero_controls_checked": 3
+      },
+      "conditional_yukawa1_candidate_residual": 0.0,
+      "conditional_yukawa2_candidate_residual": 0.0,
+      "source_group_charge_basis_is_candidate_generator_not_live_export": true,
+      "native_spinor_phase_certified": false,
+      "native_fermion_mass_normalization_certified": false,
+      "absolute_portal_and_topology_coupling_dictionary_certified": false,
+      "physical_uv_mass_certified": false,
+      "status": "restricted_UV_action_algebra_checked_physical_coupling_dictionary_PENDING"
+    },
+    {
+      "model": "D_+0",
+      "source_benchmark": "Numerical/benchmarks/fitted_reference/T3_dS1_3_dS2_1_dF_2_alpha_p0.json",
+      "benchmark_sha256": "59bcfbd972a82202c63fbcea0d02352d90a9acd6f63250bf2a40e2f7a18f88ca",
+      "input_file": "input/lo_direct_one_loop/D_+0.json",
+      "input_sha256": "d1d7dce3afa5567284e66778c1e2ea99cfde6652044004e09b60d6035e6e1480",
+      "fermion_type": "Dirac",
+      "electric_charge_channel_witness": {
+        "native_component_charge_channels_checked": 4,
+        "majorana_charge_pairing_checked": false
+      },
+      "fermion_double_Weyl_candidate_residual": 0.0,
+      "fermion_charge_pair_metric_symmetric": true,
+      "scalar_A_candidate_residual": 0.0,
+      "scalar_B_candidate_residual": 0.0,
+      "scalar_source_action": {
+        "independent_complex_field_witnesses": 2,
+        "maximum_absolute_source_potential_discrepancy_gev4": 2.1827872842550278e-11
+      },
+      "negative_controls": {
+        "controls": {
+          "mixing_sign_flip": true,
+          "missing_vev_one_half": true,
+          "portal_sign_flip": true
+        },
+        "nonzero_controls_checked": 3
+      },
+      "conditional_yukawa1_candidate_residual": 0.0,
+      "conditional_yukawa2_candidate_residual": 0.0,
+      "source_group_charge_basis_is_candidate_generator_not_live_export": true,
+      "native_spinor_phase_certified": false,
+      "native_fermion_mass_normalization_certified": false,
+      "absolute_portal_and_topology_coupling_dictionary_certified": false,
+      "physical_uv_mass_certified": false,
+      "status": "restricted_UV_action_algebra_checked_physical_coupling_dictionary_PENDING"
+    },
+    {
+      "model": "D_+2",
+      "source_benchmark": "Numerical/benchmarks/fitted_reference/T3_dS1_3_dS2_1_dF_2_alpha_p2.json",
+      "benchmark_sha256": "18d1e743cd6160bc3d33ece098315480fe2ab69ef218b294e831cc7ab39ac6d3",
+      "input_file": "input/lo_direct_one_loop/D_+2.json",
+      "input_sha256": "57e30292c4855ce6af949f2037b66f6c8f06bef374354bbe28ea55828f16f027",
+      "fermion_type": "Dirac",
+      "electric_charge_channel_witness": {
+        "native_component_charge_channels_checked": 4,
+        "majorana_charge_pairing_checked": false
+      },
+      "fermion_double_Weyl_candidate_residual": 0.0,
+      "fermion_charge_pair_metric_symmetric": true,
+      "scalar_A_candidate_residual": 0.0,
+      "scalar_B_candidate_residual": 0.0,
+      "scalar_source_action": {
+        "independent_complex_field_witnesses": 2,
+        "maximum_absolute_source_potential_discrepancy_gev4": 2.1827872842550278e-11
+      },
+      "negative_controls": {
+        "controls": {
+          "mixing_sign_flip": true,
+          "missing_vev_one_half": true,
+          "portal_sign_flip": true
+        },
+        "nonzero_controls_checked": 3
+      },
+      "conditional_yukawa1_candidate_residual": 0.0,
+      "conditional_yukawa2_candidate_residual": 0.0,
+      "source_group_charge_basis_is_candidate_generator_not_live_export": true,
+      "native_spinor_phase_certified": false,
+      "native_fermion_mass_normalization_certified": false,
+      "absolute_portal_and_topology_coupling_dictionary_certified": false,
+      "physical_uv_mass_certified": false,
+      "status": "restricted_UV_action_algebra_checked_physical_coupling_dictionary_PENDING"
+    },
+    {
+      "model": "E_-4",
+      "source_benchmark": "Numerical/benchmarks/fitted_reference/T3_dS1_3_dS2_3_dF_2_alpha_m4.json",
+      "benchmark_sha256": "347d0c74d67ae827d53b9b2edb5c9f9953dc10b3df519f2ccc85c7a842e89c55",
+      "input_file": "input/lo_direct_one_loop/E_-4.json",
+      "input_sha256": "42363373a59ab0ccca00b77b5748143220bcc64cd678e2f171e5c53d8dc09009",
+      "fermion_type": "Dirac",
+      "electric_charge_channel_witness": {
+        "native_component_charge_channels_checked": 6,
+        "majorana_charge_pairing_checked": false
+      },
+      "fermion_double_Weyl_candidate_residual": 0.0,
+      "fermion_charge_pair_metric_symmetric": true,
+      "scalar_A_candidate_residual": 0.0,
+      "scalar_B_candidate_residual": 0.0,
+      "scalar_source_action": {
+        "independent_complex_field_witnesses": 2,
+        "maximum_absolute_source_potential_discrepancy_gev4": 4.713113518868819e-10
+      },
+      "negative_controls": {
+        "controls": {
+          "mixing_sign_flip": true,
+          "missing_vev_one_half": true,
+          "portal_sign_flip": true
+        },
+        "nonzero_controls_checked": 3
+      },
+      "conditional_yukawa1_candidate_residual": 0.0,
+      "conditional_yukawa2_candidate_residual": 0.0,
+      "source_group_charge_basis_is_candidate_generator_not_live_export": true,
+      "native_spinor_phase_certified": false,
+      "native_fermion_mass_normalization_certified": false,
+      "absolute_portal_and_topology_coupling_dictionary_certified": false,
+      "physical_uv_mass_certified": false,
+      "status": "restricted_UV_action_algebra_checked_physical_coupling_dictionary_PENDING"
+    },
+    {
+      "model": "E_-2",
+      "source_benchmark": "Numerical/benchmarks/fitted_reference/T3_dS1_3_dS2_3_dF_2_alpha_m2.json",
+      "benchmark_sha256": "5fddf5a3cba554a52714ab2837f690620f97fd4edaa9f5ba13d63b7f4a33b6f6",
+      "input_file": "input/lo_direct_one_loop/E_-2.json",
+      "input_sha256": "2bf49749b781ce139d1084530ce6d82bee437ab2c986344cc21fc7276eabd326",
+      "fermion_type": "Dirac",
+      "electric_charge_channel_witness": {
+        "native_component_charge_channels_checked": 6,
+        "majorana_charge_pairing_checked": false
+      },
+      "fermion_double_Weyl_candidate_residual": 0.0,
+      "fermion_charge_pair_metric_symmetric": true,
+      "scalar_A_candidate_residual": 0.0,
+      "scalar_B_candidate_residual": 0.0,
+      "scalar_source_action": {
+        "independent_complex_field_witnesses": 2,
+        "maximum_absolute_source_potential_discrepancy_gev4": 4.713113518868819e-10
+      },
+      "negative_controls": {
+        "controls": {
+          "mixing_sign_flip": true,
+          "missing_vev_one_half": true,
+          "portal_sign_flip": true
+        },
+        "nonzero_controls_checked": 3
+      },
+      "conditional_yukawa1_candidate_residual": 0.0,
+      "conditional_yukawa2_candidate_residual": 0.0,
+      "source_group_charge_basis_is_candidate_generator_not_live_export": true,
+      "native_spinor_phase_certified": false,
+      "native_fermion_mass_normalization_certified": false,
+      "absolute_portal_and_topology_coupling_dictionary_certified": false,
+      "physical_uv_mass_certified": false,
+      "status": "restricted_UV_action_algebra_checked_physical_coupling_dictionary_PENDING"
+    },
+    {
+      "model": "E_+0",
+      "source_benchmark": "Numerical/benchmarks/fitted_reference/T3_dS1_3_dS2_3_dF_2_alpha_p0.json",
+      "benchmark_sha256": "01b140875a017cfa10230f2f4012e620d3aa099596ccebfb4e5135ea67aedecb",
+      "input_file": "input/lo_direct_one_loop/E_+0.json",
+      "input_sha256": "3f18217920b1a171e78d9721ed873ad3c0012f489bdefae0b2ee2316c024504a",
+      "fermion_type": "Dirac",
+      "electric_charge_channel_witness": {
+        "native_component_charge_channels_checked": 6,
+        "majorana_charge_pairing_checked": false
+      },
+      "fermion_double_Weyl_candidate_residual": 0.0,
+      "fermion_charge_pair_metric_symmetric": true,
+      "scalar_A_candidate_residual": 0.0,
+      "scalar_B_candidate_residual": 0.0,
+      "scalar_source_action": {
+        "independent_complex_field_witnesses": 2,
+        "maximum_absolute_source_potential_discrepancy_gev4": 4.713113518868819e-10
+      },
+      "negative_controls": {
+        "controls": {
+          "mixing_sign_flip": true,
+          "missing_vev_one_half": true,
+          "portal_sign_flip": true
+        },
+        "nonzero_controls_checked": 3
+      },
+      "conditional_yukawa1_candidate_residual": 0.0,
+      "conditional_yukawa2_candidate_residual": 0.0,
+      "source_group_charge_basis_is_candidate_generator_not_live_export": true,
+      "native_spinor_phase_certified": false,
+      "native_fermion_mass_normalization_certified": false,
+      "absolute_portal_and_topology_coupling_dictionary_certified": false,
+      "physical_uv_mass_certified": false,
+      "status": "restricted_UV_action_algebra_checked_physical_coupling_dictionary_PENDING"
+    },
+    {
+      "model": "E_+2",
+      "source_benchmark": "Numerical/benchmarks/fitted_reference/T3_dS1_3_dS2_3_dF_2_alpha_p2.json",
+      "benchmark_sha256": "c7fedaa074e5cf026eb9a233e406a7a5a686aa21decbe2137241f6a8d1abc34d",
+      "input_file": "input/lo_direct_one_loop/E_+2.json",
+      "input_sha256": "a892e2f30982f47f3892535d2d449f08b594ace02b2d7f8057cc3ecba432f1bd",
+      "fermion_type": "Dirac",
+      "electric_charge_channel_witness": {
+        "native_component_charge_channels_checked": 6,
+        "majorana_charge_pairing_checked": false
+      },
+      "fermion_double_Weyl_candidate_residual": 0.0,
+      "fermion_charge_pair_metric_symmetric": true,
+      "scalar_A_candidate_residual": 0.0,
+      "scalar_B_candidate_residual": 0.0,
+      "scalar_source_action": {
+        "independent_complex_field_witnesses": 2,
+        "maximum_absolute_source_potential_discrepancy_gev4": 4.713113518868819e-10
+      },
+      "negative_controls": {
+        "controls": {
+          "mixing_sign_flip": true,
+          "missing_vev_one_half": true,
+          "portal_sign_flip": true
+        },
+        "nonzero_controls_checked": 3
+      },
+      "conditional_yukawa1_candidate_residual": 0.0,
+      "conditional_yukawa2_candidate_residual": 0.0,
+      "source_group_charge_basis_is_candidate_generator_not_live_export": true,
+      "native_spinor_phase_certified": false,
+      "native_fermion_mass_normalization_certified": false,
+      "absolute_portal_and_topology_coupling_dictionary_certified": false,
+      "physical_uv_mass_certified": false,
+      "status": "restricted_UV_action_algebra_checked_physical_coupling_dictionary_PENDING"
+    }
+  ]
+}

@@ -1,0 +1,1260 @@
+{
+  "format": "t3-exploratory-all16-conditional-c5-benchmark-v6",
+  "status": "PartialConditionalC5Exploratory",
+  "models_checked": 16,
+  "models_with_conditional_C5": 12,
+  "special_models_conditional_C5": 4,
+  "errors": 4,
+  "physical_C5_certified": false,
+  "full_one_loop_neutrino_mass_calculation": false,
+  "absolute_GammaCC_to_Weyl_normalization": null,
+  "allow_exploratory_map": true,
+  "allow_exploratory_special_bases": true,
+  "conditional_mass_convention": "mnu=v^2 C5/2 with v=246.22 GeV, PER |N_GammaCC|",
+  "source_muS": "illustrative EFT1 renormalisable running at 1000 GeV, not physical certification",
+  "known_approximations": [
+    "Uncertified Matchete-to-RGBeta quartic aliases",
+    "Uncertified native spherical/component CG identification for mixed/split scalar basis",
+    "Source muF mass eigenfield definitions identified with muS mass eigenfields",
+    "Uncertified GammaCC signed factor",
+    "Hard-fermion loop terms and full EFT1 Wilson anomalous dimensions not included",
+    "Unbroken scalar masses; no EWSB-resummed mass shifts"
+  ],
+  "all_scalars_integrated_at_one_muS": true,
+  "sequence": "UV -> integrate all F at muF -> EFT1(S1,S2) -> integrate all scalars at one muS -> SMEFT",
+  "comparison_csv": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\all16_conditional_mass_comparison.csv",
+  "models": [
+    {
+      "model": "A_-4",
+      "status": "conditional_C5_per_unknown_NGamma_exploratory",
+      "physical_C5_certified": false,
+      "mu_f_gev": 100000.0,
+      "mu_s_gev": 1000.0,
+      "mass_source": "renormalisable EFT1@S illustrative endpoint",
+      "source_scalar_basis_matches_fermion_boundary": true,
+      "candidate_coupling_map": {
+        "lambdaH1Inv1": "lambdaH1",
+        "lambdaH2Inv2": "lambdaH2Adj",
+        "lambdaT3": "lambdaT3"
+      },
+      "coupling_mapping_status": "candidate_all_native_HHSS_channels_mapped",
+      "scalar_mass_parameters_gev2": {
+        "mS1Sq": 2005168.8999241046,
+        "mS2Sq": 3373609.7572312187
+      },
+      "running_snapshot_sha256": "7f16660186a6f208a419cbc53b9e6641e9b5fd71277fc40e4a03ef6610bc4f92",
+      "source_quartic_seed_sha256": "2f607d804c8b250ce6e2776c7be6fe71addabad1280dc6b6b0f1448d3eda3781",
+      "fermion_boundary_sha256": "a51a31e437628ab8a1e6adfaf054bf1da5309b158574971999f8a2bce3bb80ed",
+      "special_mixing_or_split_required": false,
+      "physical_predictions_certified": false,
+      "remaining_blockers": [
+        "absolute Matchete GammaCC to Weyl factor/sign remains unknown",
+        "Matchete invariant coupling normalization vs RGBeta parameter map is NOT certified",
+        "full scalar UV operator completeness and full hard one-loop matching NOT certified"
+      ],
+      "v2_pivot_verified": true,
+      "v3_full_SU2_verified": true,
+      "v2_pivot_components": 8,
+      "scalar_case": "ordinary",
+      "background": {
+        "background_json": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\numeric_backgrounds\\A_m4.json",
+        "background_npz": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\numeric_backgrounds\\A_m4.npz",
+        "mu_s_gev": 1000.0,
+        "mass_eigenvalues_gev2": [
+          2005168.8999241046,
+          3373609.7572312187
+        ],
+        "source_HHSS_channels": [
+          "lambdaH1Inv1",
+          "lambdaH2Inv2",
+          "lambdaT3"
+        ],
+        "coupling_aliases_NOT_CERTIFIED": {
+          "lambdaH1Inv1": "lambdaH1",
+          "lambdaH2Inv2": "lambdaH2Adj",
+          "lambdaT3": "lambdaT3"
+        },
+        "physical_C5_certified": false
+      },
+      "conditional_result": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\C5_per_unknown_NGamma_exploratory\\A_m4.json",
+      "numerical_metrics": {
+        "conditional_C5_frobenius_per_N_gev_inverse": 1.2837451062999973e-15,
+        "log_C5_frobenius_per_N_gev_inverse": 1.4363078194034473e-15,
+        "finite_bubble_C5_frobenius_per_N_gev_inverse": 1.5256271310344989e-16,
+        "conditional_C5_singular_values_per_N_gev_inverse": [
+          8.545130293716296e-16,
+          7.120941835390918e-16,
+          6.408828710092869e-16
+        ],
+        "conditional_neutrino_mass_singular_values_eV_per_abs_N": [
+          0.02590212216709167,
+          0.021585101575418215,
+          0.019426534001343504
+        ],
+        "neutrino_mass_vev_gev": 246.22,
+        "assumed_mass_convention": "mnu = v^2 C5 / 2; v=246.22 GeV; singular values are Takagi magnitudes",
+        "absolute_GammaCC_factor_known": false,
+        "complete_physical_neutrino_masses": false,
+        "projection_residual": 2.2851622955067016e-16,
+        "matching_scale_cancellation_residual": 1.5351397738672364e-16
+      },
+      "full_su2_beta_source_parity": {
+        "full_SU2_unordered_pair_beta_parity": true,
+        "beta_C5_16pi2_per_N_max_abs_error_gev_inverse": 1.262177448353619e-29,
+        "weinberg_projection_residual": 1.8121070497052528e-16,
+        "quartic_mass_at_single_muS": 1000.0,
+        "conditional_on_unknown_GammaCC_normalization": true
+      }
+    },
+    {
+      "model": "A_-2",
+      "status": "ERROR_unverified_source_or_physics_consistency",
+      "physical_C5_certified": false,
+      "mu_f_gev": 100000.0,
+      "mu_s_gev": 1000.0,
+      "mass_source": "renormalisable EFT1@S illustrative endpoint",
+      "source_scalar_basis_matches_fermion_boundary": false,
+      "candidate_coupling_map": {
+        "lambdaH1Inv1": "lambdaH1",
+        "lambdaH2Inv2": "lambdaH2Adj",
+        "lambdaT3": "lambdaT3"
+      },
+      "coupling_mapping_status": "candidate_all_native_HHSS_channels_mapped",
+      "scalar_mass_parameters_gev2": {
+        "mS1Sq": 1738544.2092845533,
+        "mS2Sq": 3197146.8624512446
+      },
+      "running_snapshot_sha256": "9612043de39fa73791fb878bdcfa0ee540e8bc6406358f4a1af6a2521053c618",
+      "source_quartic_seed_sha256": "2f607d804c8b250ce6e2776c7be6fe71addabad1280dc6b6b0f1448d3eda3781",
+      "fermion_boundary_sha256": "4109d135dcb5080ccb3ae78ebf670ee4c58a596e7ff4a14d44d91a8c94abc805",
+      "special_mixing_or_split_required": true,
+      "physical_predictions_certified": false,
+      "remaining_blockers": [
+        "absolute Matchete GammaCC to Weyl factor/sign remains unknown",
+        "Matchete invariant coupling normalization vs RGBeta parameter map is NOT certified",
+        "full scalar UV operator completeness and full hard one-loop matching NOT certified",
+        "split-real or B/C mixed heavy-scalar mass and original-to-boundary map at muS missing"
+      ],
+      "v2_pivot_verified": true,
+      "v3_full_SU2_verified": true,
+      "v2_pivot_components": 16,
+      "error": "ValueError: Joint-scalar fermion bridge: full LLhh amplitude violates the Weinberg Ward projection; check scalar basis/quartics"
+    },
+    {
+      "model": "A_+0",
+      "status": "conditional_C5_per_unknown_NGamma_exploratory",
+      "physical_C5_certified": false,
+      "mu_f_gev": 100000.0,
+      "mu_s_gev": 1000.0,
+      "mass_source": "renormalisable EFT1@S illustrative endpoint",
+      "source_scalar_basis_matches_fermion_boundary": false,
+      "candidate_coupling_map": {
+        "lambdaH1Inv1": "lambdaH1",
+        "lambdaH2Inv2": "lambdaH2Adj",
+        "lambdaT3": "lambdaT3"
+      },
+      "coupling_mapping_status": "candidate_all_native_HHSS_channels_mapped",
+      "scalar_mass_parameters_gev2": {
+        "mS1Sq": 1667274.575782723,
+        "mS2Sq": 3384942.856718141
+      },
+      "running_snapshot_sha256": "2e3e179cd21ad5aa940929fa7bae77013137fb0c7759c91b49813b2ae24040ac",
+      "source_quartic_seed_sha256": "2f607d804c8b250ce6e2776c7be6fe71addabad1280dc6b6b0f1448d3eda3781",
+      "fermion_boundary_sha256": "8b6cf6714a1193e4d44e865152d87e576428421ab9207da29aee9369022bdc89",
+      "special_mixing_or_split_required": true,
+      "physical_predictions_certified": false,
+      "remaining_blockers": [
+        "absolute Matchete GammaCC to Weyl factor/sign remains unknown",
+        "Matchete invariant coupling normalization vs RGBeta parameter map is NOT certified",
+        "full scalar UV operator completeness and full hard one-loop matching NOT certified",
+        "split-real or B/C mixed heavy-scalar mass and original-to-boundary map at muS missing"
+      ],
+      "v2_pivot_verified": true,
+      "v3_full_SU2_verified": true,
+      "v2_pivot_components": 16,
+      "scalar_case": "self_s1",
+      "background": {
+        "background_json": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\numeric_backgrounds\\A_p0.json",
+        "background_npz": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\numeric_backgrounds\\A_p0.npz",
+        "mu_s_gev": 1000.0,
+        "mass_eigenvalues_gev2": [
+          1654176.1582557198,
+          1680372.9933097262,
+          3384942.856718141,
+          3384942.856718141,
+          3384942.856718141,
+          3384942.856718141,
+          3384942.856718141,
+          3384942.856718141
+        ],
+        "mass_eigenvalues_gev": [
+          1286.147797982689,
+          1296.292016989122,
+          1839.8214197900136,
+          1839.8214197900136,
+          1839.8214197900136,
+          1839.8214197900136,
+          1839.8214197900136,
+          1839.8214197900136
+        ],
+        "quadratic_kind": "self_s1",
+        "source_mu2_parameter": "muT3GeneralS1Sq",
+        "source_mu2": {
+          "real": 6549.208763501644,
+          "imag": 0.0
+        },
+        "mass_basis_assumption_NOT_CERTIFIED": "S=exp(i arg(mu)/2) W (Plus+i Minus)/sqrt(2), W^T C W=I spherical C; native component-basis identification exploratory",
+        "orthogonality_residual": 0.0,
+        "coupling_aliases_NOT_CERTIFIED": {
+          "lambdaH1Inv1": "lambdaH1",
+          "lambdaH2Inv2": "lambdaH2Adj",
+          "lambdaT3": "lambdaT3"
+        },
+        "physical_C5_certified": false
+      },
+      "conditional_result": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\C5_per_unknown_NGamma_exploratory\\A_p0.json",
+      "numerical_metrics": {
+        "conditional_C5_frobenius_per_N_gev_inverse": 1.19314681694954e-15,
+        "log_C5_frobenius_per_N_gev_inverse": 1.3229497886406049e-15,
+        "finite_bubble_C5_frobenius_per_N_gev_inverse": 1.2980297169106484e-16,
+        "conditional_C5_singular_values_per_N_gev_inverse": [
+          7.942071182551479e-16,
+          6.618392581414797e-16,
+          5.956535708718687e-16
+        ],
+        "conditional_neutrino_mass_singular_values_eV_per_abs_N": [
+          0.024074120693216496,
+          0.020061767030005555,
+          0.018055536933513004
+        ],
+        "neutrino_mass_vev_gev": 246.22,
+        "assumed_mass_convention": "mnu = v^2 C5 / 2; v=246.22 GeV; singular values are Takagi magnitudes",
+        "absolute_GammaCC_factor_known": false,
+        "complete_physical_neutrino_masses": false,
+        "projection_residual": 2.446293474136517e-16,
+        "matching_scale_cancellation_residual": 1.4907234424059373e-16
+      },
+      "full_su2_beta_source_parity": {
+        "full_SU2_unordered_pair_beta_parity": true,
+        "beta_C5_16pi2_per_N_max_abs_error_gev_inverse": 6.310887241768095e-30,
+        "weinberg_projection_residual": 1.502610469508286e-16,
+        "quartic_mass_at_single_muS": 1000.0,
+        "conditional_on_unknown_GammaCC_normalization": true
+      }
+    },
+    {
+      "model": "B_-3",
+      "status": "conditional_C5_per_unknown_NGamma_exploratory",
+      "physical_C5_certified": false,
+      "mu_f_gev": 100000.0,
+      "mu_s_gev": 1000.0,
+      "mass_source": "renormalisable EFT1@S illustrative endpoint",
+      "source_scalar_basis_matches_fermion_boundary": true,
+      "candidate_coupling_map": {
+        "lambdaH1Inv1": "lambdaH1",
+        "lambdaH1Inv2": "lambdaH1Adj",
+        "lambdaH2Inv1": "lambdaH2",
+        "lambdaH2Inv2": "lambdaH2Adj",
+        "lambdaT3": "lambdaT3"
+      },
+      "coupling_mapping_status": "candidate_all_native_HHSS_channels_mapped",
+      "scalar_mass_parameters_gev2": {
+        "mS1Sq": 2124757.238967662,
+        "mS2Sq": 2556511.823811086
+      },
+      "running_snapshot_sha256": "126ef8e7c80af85c75912673f3d52ba4570289bdbd22d8705a1163530963f7ef",
+      "source_quartic_seed_sha256": "0b45ab70e346a29752efd659810e3892c5f9a3e2a549389deaa40781ef58b6bd",
+      "fermion_boundary_sha256": "d90d991722162dcb6b98e1a856805ba8ea0a2e801818924c8615acf16f32f535",
+      "special_mixing_or_split_required": false,
+      "physical_predictions_certified": false,
+      "remaining_blockers": [
+        "absolute Matchete GammaCC to Weyl factor/sign remains unknown",
+        "Matchete invariant coupling normalization vs RGBeta parameter map is NOT certified",
+        "full scalar UV operator completeness and full hard one-loop matching NOT certified"
+      ],
+      "v2_pivot_verified": true,
+      "v3_full_SU2_verified": true,
+      "v2_pivot_components": 4,
+      "scalar_case": "ordinary",
+      "background": {
+        "background_json": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\numeric_backgrounds\\B_m3.json",
+        "background_npz": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\numeric_backgrounds\\B_m3.npz",
+        "mu_s_gev": 1000.0,
+        "mass_eigenvalues_gev2": [
+          2124757.238967662,
+          2556511.823811086
+        ],
+        "source_HHSS_channels": [
+          "lambdaH1Inv1",
+          "lambdaH1Inv2",
+          "lambdaH2Inv1",
+          "lambdaH2Inv2",
+          "lambdaT3"
+        ],
+        "coupling_aliases_NOT_CERTIFIED": {
+          "lambdaH1Inv1": "lambdaH1",
+          "lambdaH1Inv2": "lambdaH1Adj",
+          "lambdaH2Inv1": "lambdaH2",
+          "lambdaH2Inv2": "lambdaH2Adj",
+          "lambdaT3": "lambdaT3"
+        },
+        "physical_C5_certified": false
+      },
+      "conditional_result": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\C5_per_unknown_NGamma_exploratory\\B_m3.json",
+      "numerical_metrics": {
+        "conditional_C5_frobenius_per_N_gev_inverse": 1.2152867800387538e-15,
+        "log_C5_frobenius_per_N_gev_inverse": 1.3386855839663996e-15,
+        "finite_bubble_C5_frobenius_per_N_gev_inverse": 1.233988039276459e-16,
+        "conditional_C5_singular_values_per_N_gev_inverse": [
+          8.089443797271199e-16,
+          6.741203092335717e-16,
+          6.067064833374548e-16
+        ],
+        "conditional_neutrino_mass_singular_values_eV_per_abs_N": [
+          0.024520838688068015,
+          0.020434032021636617,
+          0.01839057440999983
+        ],
+        "neutrino_mass_vev_gev": 246.22,
+        "assumed_mass_convention": "mnu = v^2 C5 / 2; v=246.22 GeV; singular values are Takagi magnitudes",
+        "absolute_GammaCC_factor_known": false,
+        "complete_physical_neutrino_masses": false,
+        "projection_residual": 3.5938015651989876e-16,
+        "matching_scale_cancellation_residual": 1.6470882240695695e-16
+      },
+      "full_su2_beta_source_parity": {
+        "full_SU2_unordered_pair_beta_parity": true,
+        "beta_C5_16pi2_per_N_max_abs_error_gev_inverse": 1.262177448353619e-29,
+        "weinberg_projection_residual": 2.0621917704073058e-16,
+        "quartic_mass_at_single_muS": 1000.0,
+        "conditional_on_unknown_GammaCC_normalization": true
+      }
+    },
+    {
+      "model": "B_-1",
+      "status": "conditional_C5_per_unknown_NGamma_exploratory",
+      "physical_C5_certified": false,
+      "mu_f_gev": 100000.0,
+      "mu_s_gev": 1000.0,
+      "mass_source": "renormalisable EFT1@S illustrative endpoint",
+      "source_scalar_basis_matches_fermion_boundary": false,
+      "candidate_coupling_map": {
+        "lambdaH1Inv1": "lambdaH1",
+        "lambdaH1Inv2": "lambdaH1Adj",
+        "lambdaH2Inv1": "lambdaH2",
+        "lambdaH2Inv2": "lambdaH2Adj",
+        "lambdaT3": "lambdaT3"
+      },
+      "coupling_mapping_status": "candidate_all_native_HHSS_channels_mapped",
+      "scalar_mass_parameters_gev2": {
+        "mS1Sq": 1924617.6760574116,
+        "mS2Sq": 2562463.8462749184
+      },
+      "running_snapshot_sha256": "d0ef30b36cde052a05a715d043129f63dad0418ca749a74be02b9eb5a93fdbea",
+      "source_quartic_seed_sha256": "0b45ab70e346a29752efd659810e3892c5f9a3e2a549389deaa40781ef58b6bd",
+      "fermion_boundary_sha256": "6a4d1531a9c52ebae69e73cf582196a29bf858027b4511d2771ad3d1eee103b4",
+      "special_mixing_or_split_required": true,
+      "physical_predictions_certified": false,
+      "remaining_blockers": [
+        "absolute Matchete GammaCC to Weyl factor/sign remains unknown",
+        "Matchete invariant coupling normalization vs RGBeta parameter map is NOT certified",
+        "full scalar UV operator completeness and full hard one-loop matching NOT certified",
+        "split-real or B/C mixed heavy-scalar mass and original-to-boundary map at muS missing"
+      ],
+      "v2_pivot_verified": true,
+      "v3_full_SU2_verified": true,
+      "v2_pivot_components": 34,
+      "scalar_case": "mixed",
+      "background": {
+        "background_json": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\numeric_backgrounds\\B_m1.json",
+        "background_npz": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\numeric_backgrounds\\B_m1.npz",
+        "mu_s_gev": 1000.0,
+        "mass_eigenvalues_gev2": [
+          1924577.6114581414,
+          1924577.6114581414,
+          1924577.6114581414,
+          1924577.6114581414,
+          2562503.910874189,
+          2562503.910874189,
+          2562503.910874189,
+          2562503.910874189
+        ],
+        "mass_eigenvalues_gev": [
+          1387.2914659357425,
+          1387.2914659357425,
+          1387.2914659357425,
+          1387.2914659357425,
+          1600.7822809096149,
+          1600.7822809096149,
+          1600.7822809096149,
+          1600.7822809096149
+        ],
+        "quadratic_kind": "mixed",
+        "source_mu2_parameter": "muT3GeneralS1S2",
+        "source_mu2": {
+          "real": 5055.359173968688,
+          "imag": 0.0
+        },
+        "mass_basis_assumption_NOT_CERTIFIED": "(S1,epsilon*conjugate(S2))=U@(X,Y), epsilon12=+1; muS U reused as muF boundary field definition (exploratory)",
+        "orthogonality_residual": 2.220446049250313e-16,
+        "coupling_aliases_NOT_CERTIFIED": {
+          "lambdaH1Inv1": "lambdaH1",
+          "lambdaH1Inv2": "lambdaH1Adj",
+          "lambdaH2Inv1": "lambdaH2",
+          "lambdaH2Inv2": "lambdaH2Adj",
+          "lambdaT3": "lambdaT3"
+        },
+        "physical_C5_certified": false
+      },
+      "conditional_result": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\C5_per_unknown_NGamma_exploratory\\B_m1.json",
+      "numerical_metrics": {
+        "conditional_C5_frobenius_per_N_gev_inverse": 1.1741621401214246e-15,
+        "log_C5_frobenius_per_N_gev_inverse": 1.2869101285738399e-15,
+        "finite_bubble_C5_frobenius_per_N_gev_inverse": 1.1274798845241544e-16,
+        "conditional_C5_singular_values_per_N_gev_inverse": [
+          7.8157014448461535e-16,
+          6.51308446774083e-16,
+          5.861758675564465e-16
+        ],
+        "conditional_neutrino_mass_singular_values_eV_per_abs_N": [
+          0.023691066922032496,
+          0.01974255555729403,
+          0.017768247423931106
+        ],
+        "neutrino_mass_vev_gev": 246.22,
+        "assumed_mass_convention": "mnu = v^2 C5 / 2; v=246.22 GeV; singular values are Takagi magnitudes",
+        "absolute_GammaCC_factor_known": false,
+        "complete_physical_neutrino_masses": false,
+        "projection_residual": 2.9742884737888056e-16,
+        "matching_scale_cancellation_residual": 1.8768858183233363e-16
+      },
+      "full_su2_beta_source_parity": {
+        "full_SU2_unordered_pair_beta_parity": true,
+        "beta_C5_16pi2_per_N_max_abs_error_gev_inverse": 6.310887241768095e-30,
+        "weinberg_projection_residual": 2.2248361816336537e-16,
+        "quartic_mass_at_single_muS": 1000.0,
+        "conditional_on_unknown_GammaCC_normalization": true
+      }
+    },
+    {
+      "model": "B_+1",
+      "status": "conditional_C5_per_unknown_NGamma_exploratory",
+      "physical_C5_certified": false,
+      "mu_f_gev": 100000.0,
+      "mu_s_gev": 1000.0,
+      "mass_source": "renormalisable EFT1@S illustrative endpoint",
+      "source_scalar_basis_matches_fermion_boundary": true,
+      "candidate_coupling_map": {
+        "lambdaH1Inv1": "lambdaH1",
+        "lambdaH1Inv2": "lambdaH1Adj",
+        "lambdaH2Inv1": "lambdaH2",
+        "lambdaH2Inv2": "lambdaH2Adj",
+        "lambdaT3": "lambdaT3"
+      },
+      "coupling_mapping_status": "candidate_all_native_HHSS_channels_mapped",
+      "scalar_mass_parameters_gev2": {
+        "mS1Sq": 1919200.2536506478,
+        "mS2Sq": 2830306.526038439
+      },
+      "running_snapshot_sha256": "1fd3e3fdada3c636efd33d43dc94ccd52f8e0b7abcd31e3eb5a8eb1ad179e70f",
+      "source_quartic_seed_sha256": "0b45ab70e346a29752efd659810e3892c5f9a3e2a549389deaa40781ef58b6bd",
+      "fermion_boundary_sha256": "ed0ec711732b8730495b28b0b5c2a738b6ed03f420d236b2b10900fd02a2bda7",
+      "special_mixing_or_split_required": false,
+      "physical_predictions_certified": false,
+      "remaining_blockers": [
+        "absolute Matchete GammaCC to Weyl factor/sign remains unknown",
+        "Matchete invariant coupling normalization vs RGBeta parameter map is NOT certified",
+        "full scalar UV operator completeness and full hard one-loop matching NOT certified"
+      ],
+      "v2_pivot_verified": true,
+      "v3_full_SU2_verified": true,
+      "v2_pivot_components": 4,
+      "scalar_case": "ordinary",
+      "background": {
+        "background_json": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\numeric_backgrounds\\B_p1.json",
+        "background_npz": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\numeric_backgrounds\\B_p1.npz",
+        "mu_s_gev": 1000.0,
+        "mass_eigenvalues_gev2": [
+          1919200.2536506478,
+          2830306.526038439
+        ],
+        "source_HHSS_channels": [
+          "lambdaH1Inv1",
+          "lambdaH1Inv2",
+          "lambdaH2Inv1",
+          "lambdaH2Inv2",
+          "lambdaT3"
+        ],
+        "coupling_aliases_NOT_CERTIFIED": {
+          "lambdaH1Inv1": "lambdaH1",
+          "lambdaH1Inv2": "lambdaH1Adj",
+          "lambdaH2Inv1": "lambdaH2",
+          "lambdaH2Inv2": "lambdaH2Adj",
+          "lambdaT3": "lambdaT3"
+        },
+        "physical_C5_certified": false
+      },
+      "conditional_result": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\C5_per_unknown_NGamma_exploratory\\B_p1.json",
+      "numerical_metrics": {
+        "conditional_C5_frobenius_per_N_gev_inverse": 1.2214607707122041e-15,
+        "log_C5_frobenius_per_N_gev_inverse": 1.3470476950748675e-15,
+        "finite_bubble_C5_frobenius_per_N_gev_inverse": 1.255869243626635e-16,
+        "conditional_C5_singular_values_per_N_gev_inverse": [
+          8.130540393875469e-16,
+          6.775450255806539e-16,
+          6.097887189308738e-16
+        ],
+        "conditional_neutrino_mass_singular_values_eV_per_abs_N": [
+          0.0246454112843078,
+          0.020537842517393472,
+          0.018484003579765918
+        ],
+        "neutrino_mass_vev_gev": 246.22,
+        "assumed_mass_convention": "mnu = v^2 C5 / 2; v=246.22 GeV; singular values are Takagi magnitudes",
+        "absolute_GammaCC_factor_known": false,
+        "complete_physical_neutrino_masses": false,
+        "projection_residual": 3.1304952957913513e-16,
+        "matching_scale_cancellation_residual": 1.793094170761828e-16
+      },
+      "full_su2_beta_source_parity": {
+        "full_SU2_unordered_pair_beta_parity": true,
+        "beta_C5_16pi2_per_N_max_abs_error_gev_inverse": 6.310887241768095e-30,
+        "weinberg_projection_residual": 2.366432009463286e-16,
+        "quartic_mass_at_single_muS": 1000.0,
+        "conditional_on_unknown_GammaCC_normalization": true
+      }
+    },
+    {
+      "model": "C_-3",
+      "status": "conditional_C5_per_unknown_NGamma_exploratory",
+      "physical_C5_certified": false,
+      "mu_f_gev": 100000.0,
+      "mu_s_gev": 1000.0,
+      "mass_source": "renormalisable EFT1@S illustrative endpoint",
+      "source_scalar_basis_matches_fermion_boundary": true,
+      "candidate_coupling_map": {
+        "lambdaH1Inv1": "lambdaH1",
+        "lambdaH1Inv2": "lambdaH1Adj",
+        "lambdaH2Inv1": "lambdaH2",
+        "lambdaH2Inv2": "lambdaH2Adj",
+        "lambdaT3": "lambdaT3"
+      },
+      "coupling_mapping_status": "candidate_all_native_HHSS_channels_mapped",
+      "scalar_mass_parameters_gev2": {
+        "mS1Sq": 2076332.8742583275,
+        "mS2Sq": 2511442.4806299214
+      },
+      "running_snapshot_sha256": "b6c889df1913ba64a9df2515558675efc2b8de87d7b6cd32763262c5e13de42c",
+      "source_quartic_seed_sha256": "0b45ab70e346a29752efd659810e3892c5f9a3e2a549389deaa40781ef58b6bd",
+      "fermion_boundary_sha256": "38d938f205f44727c5a756ba1027c2839c3569c08886495de1bd90a8e72671b1",
+      "special_mixing_or_split_required": false,
+      "physical_predictions_certified": false,
+      "remaining_blockers": [
+        "absolute Matchete GammaCC to Weyl factor/sign remains unknown",
+        "Matchete invariant coupling normalization vs RGBeta parameter map is NOT certified",
+        "full scalar UV operator completeness and full hard one-loop matching NOT certified"
+      ],
+      "v2_pivot_verified": true,
+      "v3_full_SU2_verified": true,
+      "v2_pivot_components": 4,
+      "scalar_case": "ordinary",
+      "background": {
+        "background_json": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\numeric_backgrounds\\C_m3.json",
+        "background_npz": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\numeric_backgrounds\\C_m3.npz",
+        "mu_s_gev": 1000.0,
+        "mass_eigenvalues_gev2": [
+          2076332.8742583275,
+          2511442.4806299214
+        ],
+        "source_HHSS_channels": [
+          "lambdaH1Inv1",
+          "lambdaH1Inv2",
+          "lambdaH2Inv1",
+          "lambdaH2Inv2",
+          "lambdaT3"
+        ],
+        "coupling_aliases_NOT_CERTIFIED": {
+          "lambdaH1Inv1": "lambdaH1",
+          "lambdaH1Inv2": "lambdaH1Adj",
+          "lambdaH2Inv1": "lambdaH2",
+          "lambdaH2Inv2": "lambdaH2Adj",
+          "lambdaT3": "lambdaT3"
+        },
+        "physical_C5_certified": false
+      },
+      "conditional_result": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\C5_per_unknown_NGamma_exploratory\\C_m3.json",
+      "numerical_metrics": {
+        "conditional_C5_frobenius_per_N_gev_inverse": 6.749078159910591e-16,
+        "log_C5_frobenius_per_N_gev_inverse": 7.41640501561304e-16,
+        "finite_bubble_C5_frobenius_per_N_gev_inverse": 6.673268557024482e-17,
+        "conditional_C5_singular_values_per_N_gev_inverse": [
+          4.492461308132481e-16,
+          3.7437177168411e-16,
+          3.3693359969176126e-16
+        ],
+        "conditional_neutrino_mass_singular_values_eV_per_abs_N": [
+          0.01361761349850324,
+          0.011348011127698218,
+          0.010213179859681744
+        ],
+        "neutrino_mass_vev_gev": 246.22,
+        "assumed_mass_convention": "mnu = v^2 C5 / 2; v=246.22 GeV; singular values are Takagi magnitudes",
+        "absolute_GammaCC_factor_known": false,
+        "complete_physical_neutrino_masses": false,
+        "projection_residual": 1.9950567397815916e-16,
+        "matching_scale_cancellation_residual": 9.401605196864835e-17
+      },
+      "full_su2_beta_source_parity": {
+        "full_SU2_unordered_pair_beta_parity": true,
+        "beta_C5_16pi2_per_N_max_abs_error_gev_inverse": 4.733165431326071e-30,
+        "weinberg_projection_residual": 1.717774839561904e-16,
+        "quartic_mass_at_single_muS": 1000.0,
+        "conditional_on_unknown_GammaCC_normalization": true
+      }
+    },
+    {
+      "model": "C_-1",
+      "status": "conditional_C5_per_unknown_NGamma_exploratory",
+      "physical_C5_certified": false,
+      "mu_f_gev": 100000.0,
+      "mu_s_gev": 1000.0,
+      "mass_source": "renormalisable EFT1@S illustrative endpoint",
+      "source_scalar_basis_matches_fermion_boundary": false,
+      "candidate_coupling_map": {
+        "lambdaH1Inv1": "lambdaH1",
+        "lambdaH1Inv2": "lambdaH1Adj",
+        "lambdaH2Inv1": "lambdaH2",
+        "lambdaH2Inv2": "lambdaH2Adj",
+        "lambdaT3": "lambdaT3"
+      },
+      "coupling_mapping_status": "candidate_all_native_HHSS_channels_mapped",
+      "scalar_mass_parameters_gev2": {
+        "mS1Sq": 1912500.8974881982,
+        "mS2Sq": 2544508.711215833
+      },
+      "running_snapshot_sha256": "c7b512a780705fe9be903f88c981553401ebbae3a931a4040dd27b34dd0f626c",
+      "source_quartic_seed_sha256": "0b45ab70e346a29752efd659810e3892c5f9a3e2a549389deaa40781ef58b6bd",
+      "fermion_boundary_sha256": "e9e181f75309e976ad84d222b80e9c7958fb2bbb206fb6b076d9f7f3eb26198e",
+      "special_mixing_or_split_required": true,
+      "physical_predictions_certified": false,
+      "remaining_blockers": [
+        "absolute Matchete GammaCC to Weyl factor/sign remains unknown",
+        "Matchete invariant coupling normalization vs RGBeta parameter map is NOT certified",
+        "full scalar UV operator completeness and full hard one-loop matching NOT certified",
+        "split-real or B/C mixed heavy-scalar mass and original-to-boundary map at muS missing"
+      ],
+      "v2_pivot_verified": true,
+      "v3_full_SU2_verified": true,
+      "v2_pivot_components": 34,
+      "scalar_case": "mixed",
+      "background": {
+        "background_json": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\numeric_backgrounds\\C_m1.json",
+        "background_npz": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\numeric_backgrounds\\C_m1.npz",
+        "mu_s_gev": 1000.0,
+        "mass_eigenvalues_gev2": [
+          1912459.636626781,
+          1912459.636626781,
+          1912459.636626781,
+          1912459.636626781,
+          2544549.9720772505,
+          2544549.9720772505,
+          2544549.9720772505,
+          2544549.9720772505
+        ],
+        "mass_eigenvalues_gev": [
+          1382.9170751085478,
+          1382.9170751085478,
+          1382.9170751085478,
+          1382.9170751085478,
+          1595.164559560314,
+          1595.164559560314,
+          1595.164559560314,
+          1595.164559560314
+        ],
+        "quadratic_kind": "mixed",
+        "source_mu2_parameter": "muT3GeneralS1S2",
+        "source_mu2": {
+          "real": 5106.749384432329,
+          "imag": 0.0
+        },
+        "mass_basis_assumption_NOT_CERTIFIED": "(S1,epsilon*conjugate(S2))=U@(X,Y), epsilon12=+1; muS U reused as muF boundary field definition (exploratory)",
+        "orthogonality_residual": 2.750118062280252e-19,
+        "coupling_aliases_NOT_CERTIFIED": {
+          "lambdaH1Inv1": "lambdaH1",
+          "lambdaH1Inv2": "lambdaH1Adj",
+          "lambdaH2Inv1": "lambdaH2",
+          "lambdaH2Inv2": "lambdaH2Adj",
+          "lambdaT3": "lambdaT3"
+        },
+        "physical_C5_certified": false
+      },
+      "conditional_result": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\C5_per_unknown_NGamma_exploratory\\C_m1.json",
+      "numerical_metrics": {
+        "conditional_C5_frobenius_per_N_gev_inverse": 6.645795960314049e-16,
+        "log_C5_frobenius_per_N_gev_inverse": 7.274184285331379e-16,
+        "finite_bubble_C5_frobenius_per_N_gev_inverse": 6.283883250173294e-17,
+        "conditional_C5_singular_values_per_N_gev_inverse": [
+          4.4237124736504173e-16,
+          3.686427022000482e-16,
+          3.317774511334503e-16
+        ],
+        "conditional_neutrino_mass_singular_values_eV_per_abs_N": [
+          0.013409221040063014,
+          0.011174350747365518,
+          0.010056885941065598
+        ],
+        "neutrino_mass_vev_gev": 246.22,
+        "assumed_mass_convention": "mnu = v^2 C5 / 2; v=246.22 GeV; singular values are Takagi magnitudes",
+        "absolute_GammaCC_factor_known": false,
+        "complete_physical_neutrino_masses": false,
+        "projection_residual": 4.481629130114318e-16,
+        "matching_scale_cancellation_residual": 9.585420055613229e-17
+      },
+      "full_su2_beta_source_parity": {
+        "full_SU2_unordered_pair_beta_parity": true,
+        "beta_C5_16pi2_per_N_max_abs_error_gev_inverse": 6.310887241768095e-30,
+        "weinberg_projection_residual": 2.0521288626286783e-16,
+        "quartic_mass_at_single_muS": 1000.0,
+        "conditional_on_unknown_GammaCC_normalization": true
+      }
+    },
+    {
+      "model": "C_+1",
+      "status": "conditional_C5_per_unknown_NGamma_exploratory",
+      "physical_C5_certified": false,
+      "mu_f_gev": 100000.0,
+      "mu_s_gev": 1000.0,
+      "mass_source": "renormalisable EFT1@S illustrative endpoint",
+      "source_scalar_basis_matches_fermion_boundary": true,
+      "candidate_coupling_map": {
+        "lambdaH1Inv1": "lambdaH1",
+        "lambdaH1Inv2": "lambdaH1Adj",
+        "lambdaH2Inv1": "lambdaH2",
+        "lambdaH2Inv2": "lambdaH2Adj",
+        "lambdaT3": "lambdaT3"
+      },
+      "coupling_mapping_status": "candidate_all_native_HHSS_channels_mapped",
+      "scalar_mass_parameters_gev2": {
+        "mS1Sq": 1885005.4826710774,
+        "mS2Sq": 2766193.59458446
+      },
+      "running_snapshot_sha256": "e113fca17b9a6706d8a88196f7d9d236d4e0c3724af21dd3fea26e7b363f8d5a",
+      "source_quartic_seed_sha256": "0b45ab70e346a29752efd659810e3892c5f9a3e2a549389deaa40781ef58b6bd",
+      "fermion_boundary_sha256": "d1841c22ad51884884bb3e296b13ac8e9e6f7b7f1cbe721b08016bf3562d3def",
+      "special_mixing_or_split_required": false,
+      "physical_predictions_certified": false,
+      "remaining_blockers": [
+        "absolute Matchete GammaCC to Weyl factor/sign remains unknown",
+        "Matchete invariant coupling normalization vs RGBeta parameter map is NOT certified",
+        "full scalar UV operator completeness and full hard one-loop matching NOT certified"
+      ],
+      "v2_pivot_verified": true,
+      "v3_full_SU2_verified": true,
+      "v2_pivot_components": 4,
+      "scalar_case": "ordinary",
+      "background": {
+        "background_json": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\numeric_backgrounds\\C_p1.json",
+        "background_npz": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\numeric_backgrounds\\C_p1.npz",
+        "mu_s_gev": 1000.0,
+        "mass_eigenvalues_gev2": [
+          1885005.4826710774,
+          2766193.59458446
+        ],
+        "source_HHSS_channels": [
+          "lambdaH1Inv1",
+          "lambdaH1Inv2",
+          "lambdaH2Inv1",
+          "lambdaH2Inv2",
+          "lambdaT3"
+        ],
+        "coupling_aliases_NOT_CERTIFIED": {
+          "lambdaH1Inv1": "lambdaH1",
+          "lambdaH1Inv2": "lambdaH1Adj",
+          "lambdaH2Inv1": "lambdaH2",
+          "lambdaH2Inv2": "lambdaH2Adj",
+          "lambdaT3": "lambdaT3"
+        },
+        "physical_C5_certified": false
+      },
+      "conditional_result": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\C5_per_unknown_NGamma_exploratory\\C_p1.json",
+      "numerical_metrics": {
+        "conditional_C5_frobenius_per_N_gev_inverse": 6.777751471765893e-16,
+        "log_C5_frobenius_per_N_gev_inverse": 7.456084534513224e-16,
+        "finite_bubble_C5_frobenius_per_N_gev_inverse": 6.783330627473309e-17,
+        "conditional_C5_singular_values_per_N_gev_inverse": [
+          4.5115474323458755e-16,
+          3.7596228201825944e-16,
+          3.383650547660078e-16
+        ],
+        "conditional_neutrino_mass_singular_values_eV_per_abs_N": [
+          0.013675467633440793,
+          0.011396222906298548,
+          0.010256570332308125
+        ],
+        "neutrino_mass_vev_gev": 246.22,
+        "assumed_mass_convention": "mnu = v^2 C5 / 2; v=246.22 GeV; singular values are Takagi magnitudes",
+        "absolute_GammaCC_factor_known": false,
+        "complete_physical_neutrino_masses": false,
+        "projection_residual": 2.137647963313373e-16,
+        "matching_scale_cancellation_residual": 1.4786133733304719e-16
+      },
+      "full_su2_beta_source_parity": {
+        "full_SU2_unordered_pair_beta_parity": true,
+        "beta_C5_16pi2_per_N_max_abs_error_gev_inverse": 0.0,
+        "weinberg_projection_residual": 2.0466421069163497e-16,
+        "quartic_mass_at_single_muS": 1000.0,
+        "conditional_on_unknown_GammaCC_normalization": true
+      }
+    },
+    {
+      "model": "D_-2",
+      "status": "conditional_C5_per_unknown_NGamma_exploratory",
+      "physical_C5_certified": false,
+      "mu_f_gev": 100000.0,
+      "mu_s_gev": 1000.0,
+      "mass_source": "renormalisable EFT1@S illustrative endpoint",
+      "source_scalar_basis_matches_fermion_boundary": false,
+      "candidate_coupling_map": {
+        "lambdaH1Inv2": "lambdaH1Adj",
+        "lambdaH2Inv1": "lambdaH2",
+        "lambdaT3": "lambdaT3"
+      },
+      "coupling_mapping_status": "candidate_all_native_HHSS_channels_mapped",
+      "scalar_mass_parameters_gev2": {
+        "mS1Sq": 2539754.3767214813,
+        "mS2Sq": 2230639.265660349
+      },
+      "running_snapshot_sha256": "912f44c3c84b8dea0342eaca594aa1c343b4f8ea2631b50c40451602662a3029",
+      "source_quartic_seed_sha256": "ade583a5ea0fc1ed253282c40d7f71718fa16f9d92f4f34fc9245284bb8293ce",
+      "fermion_boundary_sha256": "cdcb662da4bce608180c7b927e2564069b15d04bdb43876d0ffba9140fbe1af7",
+      "special_mixing_or_split_required": true,
+      "physical_predictions_certified": false,
+      "remaining_blockers": [
+        "absolute Matchete GammaCC to Weyl factor/sign remains unknown",
+        "Matchete invariant coupling normalization vs RGBeta parameter map is NOT certified",
+        "full scalar UV operator completeness and full hard one-loop matching NOT certified",
+        "split-real or B/C mixed heavy-scalar mass and original-to-boundary map at muS missing"
+      ],
+      "v2_pivot_verified": true,
+      "v3_full_SU2_verified": true,
+      "v2_pivot_components": 16,
+      "scalar_case": "self_s2",
+      "background": {
+        "background_json": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\numeric_backgrounds\\D_m2.json",
+        "background_npz": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\numeric_backgrounds\\D_m2.npz",
+        "mu_s_gev": 1000.0,
+        "mass_eigenvalues_gev2": [
+          2539754.3767214813,
+          2539754.3767214813,
+          2539754.3767214813,
+          2539754.3767214813,
+          2539754.3767214813,
+          2539754.3767214813,
+          2215572.971582729,
+          2245705.5597379687
+        ],
+        "mass_eigenvalues_gev": [
+          1593.6606843119025,
+          1593.6606843119025,
+          1593.6606843119025,
+          1593.6606843119025,
+          1593.6606843119025,
+          1593.6606843119025,
+          1488.4800877347097,
+          1498.5678362149538
+        ],
+        "quadratic_kind": "self_s2",
+        "source_mu2_parameter": "muT3GeneralS2Sq",
+        "source_mu2": {
+          "real": 7533.147038809902,
+          "imag": 0.0
+        },
+        "mass_basis_assumption_NOT_CERTIFIED": "S=exp(i arg(mu)/2) W (Plus+i Minus)/sqrt(2), W^T C W=I spherical C; native component-basis identification exploratory",
+        "orthogonality_residual": 0.0,
+        "coupling_aliases_NOT_CERTIFIED": {
+          "lambdaH1Inv2": "lambdaH1Adj",
+          "lambdaH2Inv1": "lambdaH2",
+          "lambdaT3": "lambdaT3"
+        },
+        "physical_C5_certified": false
+      },
+      "conditional_result": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\C5_per_unknown_NGamma_exploratory\\D_m2.json",
+      "numerical_metrics": {
+        "conditional_C5_frobenius_per_N_gev_inverse": 1.2120040270881202e-15,
+        "log_C5_frobenius_per_N_gev_inverse": 1.3376839703510766e-15,
+        "finite_bubble_C5_frobenius_per_N_gev_inverse": 1.2567994326295638e-16,
+        "conditional_C5_singular_values_per_N_gev_inverse": [
+          8.0675924537793e-16,
+          6.722993639653751e-16,
+          6.050676382742725e-16
+        ],
+        "conditional_neutrino_mass_singular_values_eV_per_abs_N": [
+          0.024454602580578997,
+          0.020378835266086734,
+          0.01834089750212319
+        ],
+        "neutrino_mass_vev_gev": 246.22,
+        "assumed_mass_convention": "mnu = v^2 C5 / 2; v=246.22 GeV; singular values are Takagi magnitudes",
+        "absolute_GammaCC_factor_known": false,
+        "complete_physical_neutrino_masses": false,
+        "projection_residual": 2.838525353434041e-16,
+        "matching_scale_cancellation_residual": 1.0424900571775901e-16
+      },
+      "full_su2_beta_source_parity": {
+        "full_SU2_unordered_pair_beta_parity": true,
+        "beta_C5_16pi2_per_N_max_abs_error_gev_inverse": 6.310887241768095e-30,
+        "weinberg_projection_residual": 2.063735871555579e-16,
+        "quartic_mass_at_single_muS": 1000.0,
+        "conditional_on_unknown_GammaCC_normalization": true
+      }
+    },
+    {
+      "model": "D_+0",
+      "status": "ERROR_unverified_source_or_physics_consistency",
+      "physical_C5_certified": false,
+      "mu_f_gev": 100000.0,
+      "mu_s_gev": 1000.0,
+      "mass_source": "renormalisable EFT1@S illustrative endpoint",
+      "source_scalar_basis_matches_fermion_boundary": false,
+      "candidate_coupling_map": {
+        "lambdaH1Inv2": "lambdaH1Adj",
+        "lambdaH2Inv1": "lambdaH2",
+        "lambdaT3": "lambdaT3"
+      },
+      "coupling_mapping_status": "candidate_all_native_HHSS_channels_mapped",
+      "scalar_mass_parameters_gev2": {
+        "mS1Sq": 2399174.1817014487,
+        "mS2Sq": 2326514.1542035197
+      },
+      "running_snapshot_sha256": "f51ec443e55d96931ce9228922c48cf819717b20876c34a88849ee086548504b",
+      "source_quartic_seed_sha256": "ade583a5ea0fc1ed253282c40d7f71718fa16f9d92f4f34fc9245284bb8293ce",
+      "fermion_boundary_sha256": "c2eb897e8518c055f06001831e03dc3f5052ec226dc4526019fd644d20c63cb1",
+      "special_mixing_or_split_required": true,
+      "physical_predictions_certified": false,
+      "remaining_blockers": [
+        "absolute Matchete GammaCC to Weyl factor/sign remains unknown",
+        "Matchete invariant coupling normalization vs RGBeta parameter map is NOT certified",
+        "full scalar UV operator completeness and full hard one-loop matching NOT certified",
+        "split-real or B/C mixed heavy-scalar mass and original-to-boundary map at muS missing"
+      ],
+      "v2_pivot_verified": true,
+      "v3_full_SU2_verified": true,
+      "v2_pivot_components": 16,
+      "error": "ValueError: Joint-scalar fermion bridge: full LLhh amplitude violates the Weinberg Ward projection; check scalar basis/quartics"
+    },
+    {
+      "model": "D_+2",
+      "status": "conditional_C5_per_unknown_NGamma_exploratory",
+      "physical_C5_certified": false,
+      "mu_f_gev": 100000.0,
+      "mu_s_gev": 1000.0,
+      "mass_source": "renormalisable EFT1@S illustrative endpoint",
+      "source_scalar_basis_matches_fermion_boundary": true,
+      "candidate_coupling_map": {
+        "lambdaH1Inv2": "lambdaH1Adj",
+        "lambdaH2Inv1": "lambdaH2",
+        "lambdaT3": "lambdaT3"
+      },
+      "coupling_mapping_status": "candidate_all_native_HHSS_channels_mapped",
+      "scalar_mass_parameters_gev2": {
+        "mS1Sq": 2534037.544631342,
+        "mS2Sq": 2669651.5631723218
+      },
+      "running_snapshot_sha256": "bf2fe3db71b9a5f852a8bb2b52ad62acbc143e20fd473db65f93065d0be19ecc",
+      "source_quartic_seed_sha256": "ade583a5ea0fc1ed253282c40d7f71718fa16f9d92f4f34fc9245284bb8293ce",
+      "fermion_boundary_sha256": "ffe6b8ee2c899a9e617290d8d7f54cb0b34f903675e4665a2a8491c4c766f5a7",
+      "special_mixing_or_split_required": false,
+      "physical_predictions_certified": false,
+      "remaining_blockers": [
+        "absolute Matchete GammaCC to Weyl factor/sign remains unknown",
+        "Matchete invariant coupling normalization vs RGBeta parameter map is NOT certified",
+        "full scalar UV operator completeness and full hard one-loop matching NOT certified"
+      ],
+      "v2_pivot_verified": true,
+      "v3_full_SU2_verified": true,
+      "v2_pivot_components": 8,
+      "scalar_case": "ordinary",
+      "background": {
+        "background_json": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\numeric_backgrounds\\D_p2.json",
+        "background_npz": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\numeric_backgrounds\\D_p2.npz",
+        "mu_s_gev": 1000.0,
+        "mass_eigenvalues_gev2": [
+          2534037.544631342,
+          2669651.5631723218
+        ],
+        "source_HHSS_channels": [
+          "lambdaH1Inv2",
+          "lambdaH2Inv1",
+          "lambdaT3"
+        ],
+        "coupling_aliases_NOT_CERTIFIED": {
+          "lambdaH1Inv2": "lambdaH1Adj",
+          "lambdaH2Inv1": "lambdaH2",
+          "lambdaT3": "lambdaT3"
+        },
+        "physical_C5_certified": false
+      },
+      "conditional_result": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\C5_per_unknown_NGamma_exploratory\\D_p2.json",
+      "numerical_metrics": {
+        "conditional_C5_frobenius_per_N_gev_inverse": 1.301452506817221e-15,
+        "log_C5_frobenius_per_N_gev_inverse": 1.4522028432371358e-15,
+        "finite_bubble_C5_frobenius_per_N_gev_inverse": 1.507503364199146e-16,
+        "conditional_C5_singular_values_per_N_gev_inverse": [
+          8.662997963739053e-16,
+          7.219164892694361e-16,
+          6.497229200391897e-16
+        ],
+        "conditional_neutrino_mass_singular_values_eV_per_abs_N": [
+          0.026259404348116456,
+          0.021882836723092897,
+          0.019694494842272987
+        ],
+        "neutrino_mass_vev_gev": 246.22,
+        "assumed_mass_convention": "mnu = v^2 C5 / 2; v=246.22 GeV; singular values are Takagi magnitudes",
+        "absolute_GammaCC_factor_known": false,
+        "complete_physical_neutrino_masses": false,
+        "projection_residual": 3.1684210816852284e-16,
+        "matching_scale_cancellation_residual": 9.60280614537485e-17
+      },
+      "full_su2_beta_source_parity": {
+        "full_SU2_unordered_pair_beta_parity": true,
+        "beta_C5_16pi2_per_N_max_abs_error_gev_inverse": 1.8932661725304283e-29,
+        "weinberg_projection_residual": 2.1950768095131568e-16,
+        "quartic_mass_at_single_muS": 1000.0,
+        "conditional_on_unknown_GammaCC_normalization": true
+      }
+    },
+    {
+      "model": "E_-4",
+      "status": "conditional_C5_per_unknown_NGamma_exploratory",
+      "physical_C5_certified": false,
+      "mu_f_gev": 100000.0,
+      "mu_s_gev": 1000.0,
+      "mass_source": "renormalisable EFT1@S illustrative endpoint",
+      "source_scalar_basis_matches_fermion_boundary": true,
+      "candidate_coupling_map": {
+        "lambdaH1Inv2": "lambdaH1Adj",
+        "lambdaH2Inv2": "lambdaH2Adj",
+        "lambdaT3": "lambdaT3"
+      },
+      "coupling_mapping_status": "candidate_all_native_HHSS_channels_mapped",
+      "scalar_mass_parameters_gev2": {
+        "mS1Sq": 3223524.7053176914,
+        "mS2Sq": 3446351.0978698162
+      },
+      "running_snapshot_sha256": "15939cf43a70a524249b65f309f0ee86a80d2c61d1fd94ea50fcf43f1f583c14",
+      "source_quartic_seed_sha256": "37b73acbae75710b579333739ceb8c764c4c5894c440e708505cc491262988db",
+      "fermion_boundary_sha256": "438c456af08cee4dd23438ec5e28c8f11cc3f0cebadc266f3d9a15bfdf19660f",
+      "special_mixing_or_split_required": false,
+      "physical_predictions_certified": false,
+      "remaining_blockers": [
+        "absolute Matchete GammaCC to Weyl factor/sign remains unknown",
+        "Matchete invariant coupling normalization vs RGBeta parameter map is NOT certified",
+        "full scalar UV operator completeness and full hard one-loop matching NOT certified"
+      ],
+      "v2_pivot_verified": true,
+      "v3_full_SU2_verified": true,
+      "v2_pivot_components": 16,
+      "scalar_case": "ordinary",
+      "background": {
+        "background_json": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\numeric_backgrounds\\E_m4.json",
+        "background_npz": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\numeric_backgrounds\\E_m4.npz",
+        "mu_s_gev": 1000.0,
+        "mass_eigenvalues_gev2": [
+          3223524.7053176914,
+          3446351.0978698162
+        ],
+        "source_HHSS_channels": [
+          "lambdaH1Inv2",
+          "lambdaH2Inv2",
+          "lambdaT3"
+        ],
+        "coupling_aliases_NOT_CERTIFIED": {
+          "lambdaH1Inv2": "lambdaH1Adj",
+          "lambdaH2Inv2": "lambdaH2Adj",
+          "lambdaT3": "lambdaT3"
+        },
+        "physical_C5_certified": false
+      },
+      "conditional_result": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\C5_per_unknown_NGamma_exploratory\\E_m4.json",
+      "numerical_metrics": {
+        "conditional_C5_frobenius_per_N_gev_inverse": 2.1023238696559173e-15,
+        "log_C5_frobenius_per_N_gev_inverse": 2.418554001160851e-15,
+        "finite_bubble_C5_frobenius_per_N_gev_inverse": 3.1623013150493375e-16,
+        "conditional_C5_singular_values_per_N_gev_inverse": [
+          1.3993923945316381e-15,
+          1.1661603163266536e-15,
+          1.0495411834115695e-15
+        ],
+        "conditional_neutrino_mass_singular_values_eV_per_abs_N": [
+          0.042418584055426305,
+          0.035348819668811135,
+          0.03181384369541014
+        ],
+        "neutrino_mass_vev_gev": 246.22,
+        "assumed_mass_convention": "mnu = v^2 C5 / 2; v=246.22 GeV; singular values are Takagi magnitudes",
+        "absolute_GammaCC_factor_known": false,
+        "complete_physical_neutrino_masses": false,
+        "projection_residual": 3.9055549939247233e-16,
+        "matching_scale_cancellation_residual": 8.154261852767982e-17
+      },
+      "full_su2_beta_source_parity": {
+        "full_SU2_unordered_pair_beta_parity": true,
+        "beta_C5_16pi2_per_N_max_abs_error_gev_inverse": 6.310887241768095e-30,
+        "weinberg_projection_residual": 2.4213529772900014e-16,
+        "quartic_mass_at_single_muS": 1000.0,
+        "conditional_on_unknown_GammaCC_normalization": true
+      }
+    },
+    {
+      "model": "E_-2",
+      "status": "ERROR_unverified_source_or_physics_consistency",
+      "physical_C5_certified": false,
+      "mu_f_gev": 100000.0,
+      "mu_s_gev": 1000.0,
+      "mass_source": "renormalisable EFT1@S illustrative endpoint",
+      "source_scalar_basis_matches_fermion_boundary": false,
+      "candidate_coupling_map": {
+        "lambdaH1Inv2": "lambdaH1Adj",
+        "lambdaH2Inv2": "lambdaH2Adj",
+        "lambdaT3": "lambdaT3"
+      },
+      "coupling_mapping_status": "candidate_all_native_HHSS_channels_mapped",
+      "scalar_mass_parameters_gev2": {
+        "mS1Sq": 2601129.9947889,
+        "mS2Sq": 3237290.1254776106
+      },
+      "running_snapshot_sha256": "6607fdb662346948af524dda3d83d99fa11cb222185c1e01bf52b03e9e4947a2",
+      "source_quartic_seed_sha256": "37b73acbae75710b579333739ceb8c764c4c5894c440e708505cc491262988db",
+      "fermion_boundary_sha256": "5e1a3f3d6d25b2d848d8edbe421cf9311cd664756384de04756d261697cce9fd",
+      "special_mixing_or_split_required": true,
+      "physical_predictions_certified": false,
+      "remaining_blockers": [
+        "absolute Matchete GammaCC to Weyl factor/sign remains unknown",
+        "Matchete invariant coupling normalization vs RGBeta parameter map is NOT certified",
+        "full scalar UV operator completeness and full hard one-loop matching NOT certified",
+        "split-real or B/C mixed heavy-scalar mass and original-to-boundary map at muS missing"
+      ],
+      "v2_pivot_verified": true,
+      "v3_full_SU2_verified": true,
+      "v2_pivot_components": 32,
+      "error": "ValueError: Joint-scalar fermion bridge: full LLhh amplitude violates the Weinberg Ward projection; check scalar basis/quartics"
+    },
+    {
+      "model": "E_+0",
+      "status": "ERROR_unverified_source_or_physics_consistency",
+      "physical_C5_certified": false,
+      "mu_f_gev": 100000.0,
+      "mu_s_gev": 1000.0,
+      "mass_source": "renormalisable EFT1@S illustrative endpoint",
+      "source_scalar_basis_matches_fermion_boundary": false,
+      "candidate_coupling_map": {
+        "lambdaH1Inv2": "lambdaH1Adj",
+        "lambdaH2Inv2": "lambdaH2Adj",
+        "lambdaT3": "lambdaT3"
+      },
+      "coupling_mapping_status": "candidate_all_native_HHSS_channels_mapped",
+      "scalar_mass_parameters_gev2": {
+        "mS1Sq": 2464035.379349881,
+        "mS2Sq": 3421707.314440959
+      },
+      "running_snapshot_sha256": "e95c3218d38e517f4e3a3728b06e0a2d250adc5feb68bb446b8946b5a218a88d",
+      "source_quartic_seed_sha256": "37b73acbae75710b579333739ceb8c764c4c5894c440e708505cc491262988db",
+      "fermion_boundary_sha256": "221adb509f3d0ca73f534c781aaf0ba4a6ad20346f6c68dc68880506ce6d0880",
+      "special_mixing_or_split_required": true,
+      "physical_predictions_certified": false,
+      "remaining_blockers": [
+        "absolute Matchete GammaCC to Weyl factor/sign remains unknown",
+        "Matchete invariant coupling normalization vs RGBeta parameter map is NOT certified",
+        "full scalar UV operator completeness and full hard one-loop matching NOT certified",
+        "split-real or B/C mixed heavy-scalar mass and original-to-boundary map at muS missing"
+      ],
+      "v2_pivot_verified": true,
+      "v3_full_SU2_verified": true,
+      "v2_pivot_components": 32,
+      "error": "ValueError: Joint-scalar fermion bridge: full LLhh amplitude violates the Weinberg Ward projection; check scalar basis/quartics"
+    },
+    {
+      "model": "E_+2",
+      "status": "conditional_C5_per_unknown_NGamma_exploratory",
+      "physical_C5_certified": false,
+      "mu_f_gev": 100000.0,
+      "mu_s_gev": 1000.0,
+      "mass_source": "renormalisable EFT1@S illustrative endpoint",
+      "source_scalar_basis_matches_fermion_boundary": true,
+      "candidate_coupling_map": {
+        "lambdaH1Inv2": "lambdaH1Adj",
+        "lambdaH2Inv2": "lambdaH2Adj",
+        "lambdaT3": "lambdaT3"
+      },
+      "coupling_mapping_status": "candidate_all_native_HHSS_channels_mapped",
+      "scalar_mass_parameters_gev2": {
+        "mS1Sq": 2643833.650286623,
+        "mS2Sq": 4223144.96707387
+      },
+      "running_snapshot_sha256": "427f0958a5e562edfe8f2fa8266254b1651ba829920dd747bf9a2e32fe727f66",
+      "source_quartic_seed_sha256": "37b73acbae75710b579333739ceb8c764c4c5894c440e708505cc491262988db",
+      "fermion_boundary_sha256": "ffc29b67266bd9057032c543f42993a31d94c1c633593a7f60f876eb636ec917",
+      "special_mixing_or_split_required": false,
+      "physical_predictions_certified": false,
+      "remaining_blockers": [
+        "absolute Matchete GammaCC to Weyl factor/sign remains unknown",
+        "Matchete invariant coupling normalization vs RGBeta parameter map is NOT certified",
+        "full scalar UV operator completeness and full hard one-loop matching NOT certified"
+      ],
+      "v2_pivot_verified": true,
+      "v3_full_SU2_verified": true,
+      "v2_pivot_components": 16,
+      "scalar_case": "ordinary",
+      "background": {
+        "background_json": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\numeric_backgrounds\\E_p2.json",
+        "background_npz": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\numeric_backgrounds\\E_p2.npz",
+        "mu_s_gev": 1000.0,
+        "mass_eigenvalues_gev2": [
+          2643833.650286623,
+          4223144.96707387
+        ],
+        "source_HHSS_channels": [
+          "lambdaH1Inv2",
+          "lambdaH2Inv2",
+          "lambdaT3"
+        ],
+        "coupling_aliases_NOT_CERTIFIED": {
+          "lambdaH1Inv2": "lambdaH1Adj",
+          "lambdaH2Inv2": "lambdaH2Adj",
+          "lambdaT3": "lambdaT3"
+        },
+        "physical_C5_certified": false
+      },
+      "conditional_result": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\C5_per_unknown_NGamma_exploratory\\E_p2.json",
+      "numerical_metrics": {
+        "conditional_C5_frobenius_per_N_gev_inverse": 2.0886294210093612e-15,
+        "log_C5_frobenius_per_N_gev_inverse": 2.408922665027098e-15,
+        "finite_bubble_C5_frobenius_per_N_gev_inverse": 3.20293244017737e-16,
+        "conditional_C5_singular_values_per_N_gev_inverse": [
+          1.3902768117425647e-15,
+          1.1585639974168552e-15,
+          1.0427045165943736e-15
+        ],
+        "conditional_neutrino_mass_singular_values_eV_per_abs_N": [
+          0.042142271195456875,
+          0.03511855895462814,
+          0.031606609664999945
+        ],
+        "neutrino_mass_vev_gev": 246.22,
+        "assumed_mass_convention": "mnu = v^2 C5 / 2; v=246.22 GeV; singular values are Takagi magnitudes",
+        "absolute_GammaCC_factor_known": false,
+        "complete_physical_neutrino_masses": false,
+        "projection_residual": 2.4084131368240975e-16,
+        "matching_scale_cancellation_residual": 8.186864160001353e-17
+      },
+      "full_su2_beta_source_parity": {
+        "full_SU2_unordered_pair_beta_parity": true,
+        "beta_C5_16pi2_per_N_max_abs_error_gev_inverse": 1.262177448353619e-29,
+        "weinberg_projection_residual": 1.102739421712627e-16,
+        "quartic_mass_at_single_muS": 1000.0,
+        "conditional_on_unknown_GammaCC_normalization": true
+      }
+    }
+  ]
+}

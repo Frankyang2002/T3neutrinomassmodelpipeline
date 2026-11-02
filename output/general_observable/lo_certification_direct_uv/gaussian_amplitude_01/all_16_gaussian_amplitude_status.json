@@ -1,0 +1,593 @@
+{
+  "format": "t3-direct-uv-first-threshold-gaussian-llss-conditional-v1",
+  "status": "conditional_LLSS_source_candidate_only",
+  "source_contract_status": "source_mass_ward_plus_declared_weyl_gamma_basis_not_native_certified",
+  "local_source_sha256": {
+    "RGE\\running\\rgbeta\\T3RGBetaModel.wl": "a58c79f18b2abdf9d476588552dfa52e2f131f322094e5b72d1198162aa20abc",
+    "Lagrangian\\interactions\\T3Topology.wl": "e6e24c4a673bddff980885f8354b388ceaa19e53c8b2faa79ba3289a87de1511",
+    "Lagrangian\\model\\T3Fields.wl": "2f27f080ab02d1225aab7e5928aba19f238ec6d5dcdd41b72ee2d2c7298e24ab"
+  },
+  "chosen_four_spinor_basis": {
+    "status": "explicit_chosen_four_spinor_dirac_majorana_action_equalities_pass",
+    "conventions": {
+      "gamma0": "[[0,I],[I,0]]",
+      "gamma2": "[[0,sigma2],[-sigma2,0]]",
+      "C": "i gamma2 gamma0 = diag(epsilon,-epsilon)",
+      "epsilon": "[[0,1],[-1,0]]",
+      "F_dirac": "(chi_alpha, -epsilon bar(xi)_dot_alpha)",
+      "F_charge_conjugate": "(xi_alpha, -epsilon bar(chi)_dot_alpha)",
+      "F_majorana": "xi=chi"
+    },
+    "exact_identities": {
+      "BarL_CConjF": "dagger(l epsilon chi)",
+      "BarL_F": "dagger(l epsilon xi)",
+      "BarF_F": "chi epsilon xi + h.c.",
+      "majorana_half_mass": "-MF/2 (chi epsilon chi + h.c.)",
+      "yukawa_HC_scalar_orientations": {
+        "y1": "S1^dagger",
+        "y2": "S2"
+      }
+    },
+    "negative_wrong_C_sign_rejected": true,
+    "majorana_repeated_grassmann_spinor_factor_two_checked": true,
+    "absolute_installed_Matchete_GammaCC_phase_measured": false,
+    "native_RGBeta_epsilon_numeric_orientation_measured": false,
+    "relative_Matchete_RGBeta_signed_mass_and_yukawa_dictionary_certified": false,
+    "candidate_numerical_YZ_from_original_topology_HC": "Y1_HC_conjugate and Y2_HC_field coefficients = -conjugate(original Matchete y_i * CG_i) ONLY in the chosen Weyl and scalar basis"
+  },
+  "optional_previous_native_evidence": {
+    "a0_native_mass_report": {
+      "available": false
+    },
+    "a0_spinor_witness": {
+      "available": false
+    }
+  },
+  "tree_amplitude_computed_models": 0,
+  "blocked_models": 16,
+  "physical_certified_models": 0,
+  "EFT_order": [
+    "UV",
+    "integrate all BSM heavy fermions together at mu_F",
+    "EFT1 retains both BSM scalars and all SM fermions",
+    "integrate both BSM scalars together at mu_S",
+    "SMEFT"
+  ],
+  "not_included": [
+    "raw fermion-threshold hard one-loop LLHH matching",
+    "scalar-loop matching at mu_S",
+    "EFT1 evolution",
+    "physical Matchete/RGBeta source-to-Weyl phase/CG normalization",
+    "optional extra Yukawas not present in frozen restricted component inputs"
+  ],
+  "models": [
+    {
+      "model": "A_-4",
+      "benchmark_path": "Numerical\\benchmarks\\fitted_reference\\T3_dS1_1_dS2_3_dF_2_alpha_m4.json",
+      "input_path": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_direct_one_loop\\provisional_inputs\\A_-4.json",
+      "physically_certified": false,
+      "status": "blocked",
+      "fermion_type": "Dirac",
+      "source_F_mass_ward_passed": true,
+      "chosen_4spinor_weyl_phases": {
+        "holomorphic_hc_of_native_topology": "h1 nu chi S1dag + h2 nu xi S2 + MF chi xi + lambda HH S1 S2dag",
+        "h1_is_candidate_conjugate_native_y1": true,
+        "h2_is_candidate_conjugate_native_y2": true,
+        "invariant_source_HC_spurion": "h1*h2*conjugate(MF)*lambda",
+        "invariant_in_unbarred_Matchete_names": "conjugate(y1_M)*conjugate(y2_M)*conjugate(MF)*lambdaT3_M",
+        "sum_charge": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "wrong_lambda_conjugation_charge": [
+          0,
+          0,
+          -2,
+          2
+        ],
+        "is_a_conditional_common_chirality_and_scalar_basis_statement": true,
+        "absolute_physical_native_couplings_certified": false
+      },
+      "frozen_benchmark_sha256": "3cb8dc3e94f2bd6f60571a7a85477638e8fc02109bccfcec0e04055852d81247",
+      "reason": "F threshold source release model label disagrees",
+      "amplitude_file": "output\\general_observable\\lo_certification_direct_uv\\gaussian_amplitude_01\\models\\A_-4.json"
+    },
+    {
+      "model": "A_-2",
+      "benchmark_path": "Numerical\\benchmarks\\fitted_reference\\T3_dS1_1_dS2_3_dF_2_alpha_m2.json",
+      "input_path": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_direct_one_loop\\provisional_inputs\\A_-2.json",
+      "physically_certified": false,
+      "status": "blocked",
+      "fermion_type": "Dirac",
+      "source_F_mass_ward_passed": true,
+      "chosen_4spinor_weyl_phases": {
+        "holomorphic_hc_of_native_topology": "h1 nu chi S1dag + h2 nu xi S2 + MF chi xi + lambda HH S1 S2dag",
+        "h1_is_candidate_conjugate_native_y1": true,
+        "h2_is_candidate_conjugate_native_y2": true,
+        "invariant_source_HC_spurion": "h1*h2*conjugate(MF)*lambda",
+        "invariant_in_unbarred_Matchete_names": "conjugate(y1_M)*conjugate(y2_M)*conjugate(MF)*lambdaT3_M",
+        "sum_charge": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "wrong_lambda_conjugation_charge": [
+          0,
+          0,
+          -2,
+          2
+        ],
+        "is_a_conditional_common_chirality_and_scalar_basis_statement": true,
+        "absolute_physical_native_couplings_certified": false
+      },
+      "frozen_benchmark_sha256": "9cd1dd65546f045268ee429b81815301e2e65fd680c4abe5aba74c6f20ff0c54",
+      "reason": "F threshold source release model label disagrees",
+      "amplitude_file": "output\\general_observable\\lo_certification_direct_uv\\gaussian_amplitude_01\\models\\A_-2.json"
+    },
+    {
+      "model": "A_+0",
+      "benchmark_path": "Numerical\\benchmarks\\fitted_reference\\T3_dS1_1_dS2_3_dF_2_alpha_p0.json",
+      "input_path": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_direct_one_loop\\provisional_inputs\\A_+0.json",
+      "physically_certified": false,
+      "status": "blocked",
+      "fermion_type": "Dirac",
+      "source_F_mass_ward_passed": true,
+      "chosen_4spinor_weyl_phases": {
+        "holomorphic_hc_of_native_topology": "h1 nu chi S1dag + h2 nu xi S2 + MF chi xi + lambda HH S1 S2dag",
+        "h1_is_candidate_conjugate_native_y1": true,
+        "h2_is_candidate_conjugate_native_y2": true,
+        "invariant_source_HC_spurion": "h1*h2*conjugate(MF)*lambda",
+        "invariant_in_unbarred_Matchete_names": "conjugate(y1_M)*conjugate(y2_M)*conjugate(MF)*lambdaT3_M",
+        "sum_charge": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "wrong_lambda_conjugation_charge": [
+          0,
+          0,
+          -2,
+          2
+        ],
+        "is_a_conditional_common_chirality_and_scalar_basis_statement": true,
+        "absolute_physical_native_couplings_certified": false
+      },
+      "frozen_benchmark_sha256": "4824f1278b9838635deec2ff11d1d9290abc5ee726cb56a8f4c2ea6fc77d812d",
+      "reason": "F threshold source release model label disagrees",
+      "amplitude_file": "output\\general_observable\\lo_certification_direct_uv\\gaussian_amplitude_01\\models\\A_+0.json"
+    },
+    {
+      "model": "B_-3",
+      "benchmark_path": "Numerical\\benchmarks\\fitted_reference\\T3_dS1_2_dS2_2_dF_1_alpha_m3.json",
+      "input_path": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_direct_one_loop\\provisional_inputs\\B_-3.json",
+      "physically_certified": false,
+      "status": "blocked",
+      "fermion_type": "Dirac",
+      "source_F_mass_ward_passed": true,
+      "chosen_4spinor_weyl_phases": {
+        "holomorphic_hc_of_native_topology": "h1 nu chi S1dag + h2 nu xi S2 + MF chi xi + lambda HH S1 S2dag",
+        "h1_is_candidate_conjugate_native_y1": true,
+        "h2_is_candidate_conjugate_native_y2": true,
+        "invariant_source_HC_spurion": "h1*h2*conjugate(MF)*lambda",
+        "invariant_in_unbarred_Matchete_names": "conjugate(y1_M)*conjugate(y2_M)*conjugate(MF)*lambdaT3_M",
+        "sum_charge": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "wrong_lambda_conjugation_charge": [
+          0,
+          0,
+          -2,
+          2
+        ],
+        "is_a_conditional_common_chirality_and_scalar_basis_statement": true,
+        "absolute_physical_native_couplings_certified": false
+      },
+      "frozen_benchmark_sha256": "c036c5177cdefaae39201b8e22740dd5ade1e9e904b534c0a5e84d7c9d99f55e",
+      "reason": "F threshold source release model label disagrees",
+      "amplitude_file": "output\\general_observable\\lo_certification_direct_uv\\gaussian_amplitude_01\\models\\B_-3.json"
+    },
+    {
+      "model": "B_-1",
+      "benchmark_path": "Numerical\\benchmarks\\fitted_reference\\T3_dS1_2_dS2_2_dF_1_alpha_m1.json",
+      "input_path": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_direct_one_loop\\provisional_inputs\\B_-1.json",
+      "physically_certified": false,
+      "status": "blocked",
+      "fermion_type": "Majorana",
+      "source_F_mass_ward_passed": true,
+      "chosen_4spinor_weyl_phases": {
+        "holomorphic_hc_of_native_topology": "h1 nu chi S1dag + h2 nu xi S2 + MF chi xi + lambda HH S1 S2dag",
+        "h1_is_candidate_conjugate_native_y1": true,
+        "h2_is_candidate_conjugate_native_y2": true,
+        "invariant_source_HC_spurion": "h1*h2*conjugate(MF)*lambda",
+        "invariant_in_unbarred_Matchete_names": "conjugate(y1_M)*conjugate(y2_M)*conjugate(MF)*lambdaT3_M",
+        "sum_charge": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "wrong_lambda_conjugation_charge": [
+          0,
+          0,
+          -2,
+          2
+        ],
+        "is_a_conditional_common_chirality_and_scalar_basis_statement": true,
+        "absolute_physical_native_couplings_certified": false
+      },
+      "frozen_benchmark_sha256": "d83d7d31f9929f21dffad63c429a9e996a3f065a60535243a282a54d6f87dd5f",
+      "reason": "F threshold source release model label disagrees",
+      "amplitude_file": "output\\general_observable\\lo_certification_direct_uv\\gaussian_amplitude_01\\models\\B_-1.json"
+    },
+    {
+      "model": "B_+1",
+      "benchmark_path": "Numerical\\benchmarks\\fitted_reference\\T3_dS1_2_dS2_2_dF_1_alpha_p1.json",
+      "input_path": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_direct_one_loop\\provisional_inputs\\B_+1.json",
+      "physically_certified": false,
+      "status": "blocked",
+      "fermion_type": "Dirac",
+      "source_F_mass_ward_passed": true,
+      "chosen_4spinor_weyl_phases": {
+        "holomorphic_hc_of_native_topology": "h1 nu chi S1dag + h2 nu xi S2 + MF chi xi + lambda HH S1 S2dag",
+        "h1_is_candidate_conjugate_native_y1": true,
+        "h2_is_candidate_conjugate_native_y2": true,
+        "invariant_source_HC_spurion": "h1*h2*conjugate(MF)*lambda",
+        "invariant_in_unbarred_Matchete_names": "conjugate(y1_M)*conjugate(y2_M)*conjugate(MF)*lambdaT3_M",
+        "sum_charge": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "wrong_lambda_conjugation_charge": [
+          0,
+          0,
+          -2,
+          2
+        ],
+        "is_a_conditional_common_chirality_and_scalar_basis_statement": true,
+        "absolute_physical_native_couplings_certified": false
+      },
+      "frozen_benchmark_sha256": "fe1c9e656ba0359e3832b1c96d62260f78e8e5dde31e8abd3da830c62b5d6b31",
+      "reason": "F threshold source release model label disagrees",
+      "amplitude_file": "output\\general_observable\\lo_certification_direct_uv\\gaussian_amplitude_01\\models\\B_+1.json"
+    },
+    {
+      "model": "C_-3",
+      "benchmark_path": "Numerical\\benchmarks\\fitted_reference\\T3_dS1_2_dS2_2_dF_3_alpha_m3.json",
+      "input_path": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_direct_one_loop\\provisional_inputs\\C_-3.json",
+      "physically_certified": false,
+      "status": "blocked",
+      "fermion_type": "Dirac",
+      "source_F_mass_ward_passed": true,
+      "chosen_4spinor_weyl_phases": {
+        "holomorphic_hc_of_native_topology": "h1 nu chi S1dag + h2 nu xi S2 + MF chi xi + lambda HH S1 S2dag",
+        "h1_is_candidate_conjugate_native_y1": true,
+        "h2_is_candidate_conjugate_native_y2": true,
+        "invariant_source_HC_spurion": "h1*h2*conjugate(MF)*lambda",
+        "invariant_in_unbarred_Matchete_names": "conjugate(y1_M)*conjugate(y2_M)*conjugate(MF)*lambdaT3_M",
+        "sum_charge": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "wrong_lambda_conjugation_charge": [
+          0,
+          0,
+          -2,
+          2
+        ],
+        "is_a_conditional_common_chirality_and_scalar_basis_statement": true,
+        "absolute_physical_native_couplings_certified": false
+      },
+      "frozen_benchmark_sha256": "a1736f4c38c8a56f93969b5528f0822d0fa88e8288457b8e70151dd5d40fab6c",
+      "reason": "F threshold source release model label disagrees",
+      "amplitude_file": "output\\general_observable\\lo_certification_direct_uv\\gaussian_amplitude_01\\models\\C_-3.json"
+    },
+    {
+      "model": "C_-1",
+      "benchmark_path": "Numerical\\benchmarks\\fitted_reference\\T3_dS1_2_dS2_2_dF_3_alpha_m1.json",
+      "input_path": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_direct_one_loop\\provisional_inputs\\C_-1.json",
+      "physically_certified": false,
+      "status": "blocked",
+      "fermion_type": "Majorana",
+      "source_F_mass_ward_passed": true,
+      "chosen_4spinor_weyl_phases": {
+        "holomorphic_hc_of_native_topology": "h1 nu chi S1dag + h2 nu xi S2 + MF chi xi + lambda HH S1 S2dag",
+        "h1_is_candidate_conjugate_native_y1": true,
+        "h2_is_candidate_conjugate_native_y2": true,
+        "invariant_source_HC_spurion": "h1*h2*conjugate(MF)*lambda",
+        "invariant_in_unbarred_Matchete_names": "conjugate(y1_M)*conjugate(y2_M)*conjugate(MF)*lambdaT3_M",
+        "sum_charge": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "wrong_lambda_conjugation_charge": [
+          0,
+          0,
+          -2,
+          2
+        ],
+        "is_a_conditional_common_chirality_and_scalar_basis_statement": true,
+        "absolute_physical_native_couplings_certified": false
+      },
+      "frozen_benchmark_sha256": "782c261c88e364b2db70791ed97d8fa067cf255449900668155b821ba636f03c",
+      "reason": "F threshold source release model label disagrees",
+      "amplitude_file": "output\\general_observable\\lo_certification_direct_uv\\gaussian_amplitude_01\\models\\C_-1.json"
+    },
+    {
+      "model": "C_+1",
+      "benchmark_path": "Numerical\\benchmarks\\fitted_reference\\T3_dS1_2_dS2_2_dF_3_alpha_p1.json",
+      "input_path": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_direct_one_loop\\provisional_inputs\\C_+1.json",
+      "physically_certified": false,
+      "status": "blocked",
+      "fermion_type": "Dirac",
+      "source_F_mass_ward_passed": true,
+      "chosen_4spinor_weyl_phases": {
+        "holomorphic_hc_of_native_topology": "h1 nu chi S1dag + h2 nu xi S2 + MF chi xi + lambda HH S1 S2dag",
+        "h1_is_candidate_conjugate_native_y1": true,
+        "h2_is_candidate_conjugate_native_y2": true,
+        "invariant_source_HC_spurion": "h1*h2*conjugate(MF)*lambda",
+        "invariant_in_unbarred_Matchete_names": "conjugate(y1_M)*conjugate(y2_M)*conjugate(MF)*lambdaT3_M",
+        "sum_charge": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "wrong_lambda_conjugation_charge": [
+          0,
+          0,
+          -2,
+          2
+        ],
+        "is_a_conditional_common_chirality_and_scalar_basis_statement": true,
+        "absolute_physical_native_couplings_certified": false
+      },
+      "frozen_benchmark_sha256": "dd3beb2db859c7b272ebe81b25bc548d0bd159990c7b421a62f9aeeab352339c",
+      "reason": "F threshold source release model label disagrees",
+      "amplitude_file": "output\\general_observable\\lo_certification_direct_uv\\gaussian_amplitude_01\\models\\C_+1.json"
+    },
+    {
+      "model": "D_-2",
+      "benchmark_path": "Numerical\\benchmarks\\fitted_reference\\T3_dS1_3_dS2_1_dF_2_alpha_m2.json",
+      "input_path": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_direct_one_loop\\provisional_inputs\\D_-2.json",
+      "physically_certified": false,
+      "status": "blocked",
+      "fermion_type": "Dirac",
+      "source_F_mass_ward_passed": true,
+      "chosen_4spinor_weyl_phases": {
+        "holomorphic_hc_of_native_topology": "h1 nu chi S1dag + h2 nu xi S2 + MF chi xi + lambda HH S1 S2dag",
+        "h1_is_candidate_conjugate_native_y1": true,
+        "h2_is_candidate_conjugate_native_y2": true,
+        "invariant_source_HC_spurion": "h1*h2*conjugate(MF)*lambda",
+        "invariant_in_unbarred_Matchete_names": "conjugate(y1_M)*conjugate(y2_M)*conjugate(MF)*lambdaT3_M",
+        "sum_charge": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "wrong_lambda_conjugation_charge": [
+          0,
+          0,
+          -2,
+          2
+        ],
+        "is_a_conditional_common_chirality_and_scalar_basis_statement": true,
+        "absolute_physical_native_couplings_certified": false
+      },
+      "frozen_benchmark_sha256": "fbaae81addefb93ff4749a4f60798682b929fb2e60b934ad18f11dbfe2402fce",
+      "reason": "F threshold source release model label disagrees",
+      "amplitude_file": "output\\general_observable\\lo_certification_direct_uv\\gaussian_amplitude_01\\models\\D_-2.json"
+    },
+    {
+      "model": "D_+0",
+      "benchmark_path": "Numerical\\benchmarks\\fitted_reference\\T3_dS1_3_dS2_1_dF_2_alpha_p0.json",
+      "input_path": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_direct_one_loop\\provisional_inputs\\D_+0.json",
+      "physically_certified": false,
+      "status": "blocked",
+      "fermion_type": "Dirac",
+      "source_F_mass_ward_passed": true,
+      "chosen_4spinor_weyl_phases": {
+        "holomorphic_hc_of_native_topology": "h1 nu chi S1dag + h2 nu xi S2 + MF chi xi + lambda HH S1 S2dag",
+        "h1_is_candidate_conjugate_native_y1": true,
+        "h2_is_candidate_conjugate_native_y2": true,
+        "invariant_source_HC_spurion": "h1*h2*conjugate(MF)*lambda",
+        "invariant_in_unbarred_Matchete_names": "conjugate(y1_M)*conjugate(y2_M)*conjugate(MF)*lambdaT3_M",
+        "sum_charge": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "wrong_lambda_conjugation_charge": [
+          0,
+          0,
+          -2,
+          2
+        ],
+        "is_a_conditional_common_chirality_and_scalar_basis_statement": true,
+        "absolute_physical_native_couplings_certified": false
+      },
+      "frozen_benchmark_sha256": "59bcfbd972a82202c63fbcea0d02352d90a9acd6f63250bf2a40e2f7a18f88ca",
+      "reason": "F threshold source release model label disagrees",
+      "amplitude_file": "output\\general_observable\\lo_certification_direct_uv\\gaussian_amplitude_01\\models\\D_+0.json"
+    },
+    {
+      "model": "D_+2",
+      "benchmark_path": "Numerical\\benchmarks\\fitted_reference\\T3_dS1_3_dS2_1_dF_2_alpha_p2.json",
+      "input_path": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_direct_one_loop\\provisional_inputs\\D_+2.json",
+      "physically_certified": false,
+      "status": "blocked",
+      "fermion_type": "Dirac",
+      "source_F_mass_ward_passed": true,
+      "chosen_4spinor_weyl_phases": {
+        "holomorphic_hc_of_native_topology": "h1 nu chi S1dag + h2 nu xi S2 + MF chi xi + lambda HH S1 S2dag",
+        "h1_is_candidate_conjugate_native_y1": true,
+        "h2_is_candidate_conjugate_native_y2": true,
+        "invariant_source_HC_spurion": "h1*h2*conjugate(MF)*lambda",
+        "invariant_in_unbarred_Matchete_names": "conjugate(y1_M)*conjugate(y2_M)*conjugate(MF)*lambdaT3_M",
+        "sum_charge": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "wrong_lambda_conjugation_charge": [
+          0,
+          0,
+          -2,
+          2
+        ],
+        "is_a_conditional_common_chirality_and_scalar_basis_statement": true,
+        "absolute_physical_native_couplings_certified": false
+      },
+      "frozen_benchmark_sha256": "18d1e743cd6160bc3d33ece098315480fe2ab69ef218b294e831cc7ab39ac6d3",
+      "reason": "F threshold source release model label disagrees",
+      "amplitude_file": "output\\general_observable\\lo_certification_direct_uv\\gaussian_amplitude_01\\models\\D_+2.json"
+    },
+    {
+      "model": "E_-4",
+      "benchmark_path": "Numerical\\benchmarks\\fitted_reference\\T3_dS1_3_dS2_3_dF_2_alpha_m4.json",
+      "input_path": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_direct_one_loop\\provisional_inputs\\E_-4.json",
+      "physically_certified": false,
+      "status": "blocked",
+      "fermion_type": "Dirac",
+      "source_F_mass_ward_passed": true,
+      "chosen_4spinor_weyl_phases": {
+        "holomorphic_hc_of_native_topology": "h1 nu chi S1dag + h2 nu xi S2 + MF chi xi + lambda HH S1 S2dag",
+        "h1_is_candidate_conjugate_native_y1": true,
+        "h2_is_candidate_conjugate_native_y2": true,
+        "invariant_source_HC_spurion": "h1*h2*conjugate(MF)*lambda",
+        "invariant_in_unbarred_Matchete_names": "conjugate(y1_M)*conjugate(y2_M)*conjugate(MF)*lambdaT3_M",
+        "sum_charge": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "wrong_lambda_conjugation_charge": [
+          0,
+          0,
+          -2,
+          2
+        ],
+        "is_a_conditional_common_chirality_and_scalar_basis_statement": true,
+        "absolute_physical_native_couplings_certified": false
+      },
+      "frozen_benchmark_sha256": "347d0c74d67ae827d53b9b2edb5c9f9953dc10b3df519f2ccc85c7a842e89c55",
+      "reason": "F threshold source release model label disagrees",
+      "amplitude_file": "output\\general_observable\\lo_certification_direct_uv\\gaussian_amplitude_01\\models\\E_-4.json"
+    },
+    {
+      "model": "E_-2",
+      "benchmark_path": "Numerical\\benchmarks\\fitted_reference\\T3_dS1_3_dS2_3_dF_2_alpha_m2.json",
+      "input_path": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_direct_one_loop\\provisional_inputs\\E_-2.json",
+      "physically_certified": false,
+      "status": "blocked",
+      "fermion_type": "Dirac",
+      "source_F_mass_ward_passed": true,
+      "chosen_4spinor_weyl_phases": {
+        "holomorphic_hc_of_native_topology": "h1 nu chi S1dag + h2 nu xi S2 + MF chi xi + lambda HH S1 S2dag",
+        "h1_is_candidate_conjugate_native_y1": true,
+        "h2_is_candidate_conjugate_native_y2": true,
+        "invariant_source_HC_spurion": "h1*h2*conjugate(MF)*lambda",
+        "invariant_in_unbarred_Matchete_names": "conjugate(y1_M)*conjugate(y2_M)*conjugate(MF)*lambdaT3_M",
+        "sum_charge": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "wrong_lambda_conjugation_charge": [
+          0,
+          0,
+          -2,
+          2
+        ],
+        "is_a_conditional_common_chirality_and_scalar_basis_statement": true,
+        "absolute_physical_native_couplings_certified": false
+      },
+      "frozen_benchmark_sha256": "5fddf5a3cba554a52714ab2837f690620f97fd4edaa9f5ba13d63b7f4a33b6f6",
+      "reason": "F threshold source release model label disagrees",
+      "amplitude_file": "output\\general_observable\\lo_certification_direct_uv\\gaussian_amplitude_01\\models\\E_-2.json"
+    },
+    {
+      "model": "E_+0",
+      "benchmark_path": "Numerical\\benchmarks\\fitted_reference\\T3_dS1_3_dS2_3_dF_2_alpha_p0.json",
+      "input_path": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_direct_one_loop\\provisional_inputs\\E_+0.json",
+      "physically_certified": false,
+      "status": "blocked",
+      "fermion_type": "Dirac",
+      "source_F_mass_ward_passed": true,
+      "chosen_4spinor_weyl_phases": {
+        "holomorphic_hc_of_native_topology": "h1 nu chi S1dag + h2 nu xi S2 + MF chi xi + lambda HH S1 S2dag",
+        "h1_is_candidate_conjugate_native_y1": true,
+        "h2_is_candidate_conjugate_native_y2": true,
+        "invariant_source_HC_spurion": "h1*h2*conjugate(MF)*lambda",
+        "invariant_in_unbarred_Matchete_names": "conjugate(y1_M)*conjugate(y2_M)*conjugate(MF)*lambdaT3_M",
+        "sum_charge": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "wrong_lambda_conjugation_charge": [
+          0,
+          0,
+          -2,
+          2
+        ],
+        "is_a_conditional_common_chirality_and_scalar_basis_statement": true,
+        "absolute_physical_native_couplings_certified": false
+      },
+      "frozen_benchmark_sha256": "01b140875a017cfa10230f2f4012e620d3aa099596ccebfb4e5135ea67aedecb",
+      "reason": "F threshold source release model label disagrees",
+      "amplitude_file": "output\\general_observable\\lo_certification_direct_uv\\gaussian_amplitude_01\\models\\E_+0.json"
+    },
+    {
+      "model": "E_+2",
+      "benchmark_path": "Numerical\\benchmarks\\fitted_reference\\T3_dS1_3_dS2_3_dF_2_alpha_p2.json",
+      "input_path": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_direct_one_loop\\provisional_inputs\\E_+2.json",
+      "physically_certified": false,
+      "status": "blocked",
+      "fermion_type": "Dirac",
+      "source_F_mass_ward_passed": true,
+      "chosen_4spinor_weyl_phases": {
+        "holomorphic_hc_of_native_topology": "h1 nu chi S1dag + h2 nu xi S2 + MF chi xi + lambda HH S1 S2dag",
+        "h1_is_candidate_conjugate_native_y1": true,
+        "h2_is_candidate_conjugate_native_y2": true,
+        "invariant_source_HC_spurion": "h1*h2*conjugate(MF)*lambda",
+        "invariant_in_unbarred_Matchete_names": "conjugate(y1_M)*conjugate(y2_M)*conjugate(MF)*lambdaT3_M",
+        "sum_charge": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "wrong_lambda_conjugation_charge": [
+          0,
+          0,
+          -2,
+          2
+        ],
+        "is_a_conditional_common_chirality_and_scalar_basis_statement": true,
+        "absolute_physical_native_couplings_certified": false
+      },
+      "frozen_benchmark_sha256": "c7fedaa074e5cf026eb9a233e406a7a5a686aa21decbe2137241f6a8d1abc34d",
+      "reason": "F threshold source release model label disagrees",
+      "amplitude_file": "output\\general_observable\\lo_certification_direct_uv\\gaussian_amplitude_01\\models\\E_+2.json"
+    }
+  ]
+}

@@ -362,3 +362,109 @@ Import-Csv 'output\general_observable\lo_certification_completeness\conditional_
 Outputs are `summary.json`, `numerical_table.csv`, and `blockers.json` within the requested **new** Workstream 3 output directory. The output path is refused if already present; choose `conditional_consistency_02` on a rerun. If an upstream optional evidence report is absent, its status remains `NOT_PROVIDED`, not treated as a pass. An incomplete numerical input or failed consistency check returns nonzero and a fail-closed summary.
 
 **Physical interpretation:** The latest observed all-16 portal-span audit has nontrivial extra symmetry-allowed channels; the previous 16/16 conditional hard portal successes therefore do *not* close the general one-loop T3 problem. The independent signed GammaCC-to-Weyl calibration and full counterterm/operator inventory still belong to their original workstreams. Workstream 3 does not change those workers or their data.
+
+---
+
+## Workstream 3 big batch: WS2 V3/V4 portal completion and HHSS reference response
+
+**Complete replacement/additional files in `T3_LO_Completeness_Workstream3_PortalCompletionBigBatch.zip`:**
+
+- `Numerical/lo_certification/completeness/portal_completion_bridge.py` — validates
+  both-scale WS2 completed portal NPZs, original scalar basis, native/complement
+  rank inventory, immutable source hashes and V4 named-reference evidence.
+- `scripts/RunLOPortalCompletionResponse.py` — read-only upstream all-16 run;
+  outputs only to a *new* child of
+  `output/general_observable/lo_certification_completeness/`.
+- `tests/test_lo_completeness_portal_completion.py` — anti-double-counting,
+  component rotation, source-drift, V3/V4, unit-response and Ward tests.
+
+All previous Workstream 3 files are retained and unchanged. Upstream
+`Numerical/lo_certification/couplings/`, `Numerical/joint_scalar_matching/`,
+`RGE/`, `Lagrangian/` and published `output/` releases outside Workstream3
+are **never written** by this batch.
+
+### Source-backed scope
+
+- WS2 V3 exact **14** added baseline portal directions across 10 models
+  (A:3, D:3, E:8). V3 provides numerical tensors at **both** `muF`
+  and `muS` in the original interleaved real basis. They are *not*
+  source-certified as physical Matchete/RGBeta runtime normalization.
+- Existing exploratory V5/V6 scalar mass matrix is retained; one orthogonal
+  original-to-boundary map is used for both the completed baseline portal
+  and the legacy nonportal channels. Split/mixed maps remain **assumptions**.
+- All native **baseline** quartic channels are **replaced** with WS2 V3
+  reconstructed numeric baseline channels; the legacy nonbaseline
+  `lambdaT3` and other nonportal source channels are preserved. The kernel
+  is never evaluated with `old_portal + WS2_complete_portal`.
+- WS2 V3 provides **24** extra named HHSS registry entries in exact SU(2)
+  reference invariant spaces. WS2 V4 evaluates possible source orientations,
+  but **0** physical Matchete/RGBeta named coefficient maps are certified.
+  The new batch therefore computes *independent unit-real and unit-imag
+  reference responses*; it NEVER multiplies them by the saved RGBeta
+  coefficients, and NEVER sums these unit responses into `C5`.
+- A completed-baseline amplitude that fails the Weinberg Ward projection is
+  labelled `WARD_REJECTED_NO_VALID_COMPLETED_C5`. Projected diagnostic
+  matrices are retained for investigation only, not promoted to physical C5.
+
+### PowerShell (run from repository root)
+
+```powershell
+Set-Location C:\thesistemp\T3neutrinomassmodelpipeline
+Expand-Archive -LiteralPath "$HOME\Downloads\T3_LO_Completeness_Workstream3_PortalCompletionBigBatch.zip" -DestinationPath . -Force
+python -m unittest discover -s tests -p 'test_lo_completeness_*.py' -v
+
+# Read-only complete WS2 V3/V4 and older scalar_hard_01 source inventory:
+python -m scripts.RunLOPortalCompletionResponse --check-only
+
+# Recompute 16 completed-baseline portal responses and all 24 extra references:
+python -m scripts.RunLOPortalCompletionResponse `
+  --allow-exploratory-portal-embedding `
+  --allow-exploratory-special-bases `
+  --output-dir 'output\general_observable\lo_certification_completeness\portal_completion_01'
+
+$j=Get-Content 'output\general_observable\lo_certification_completeness\portal_completion_01\summary.json' -Raw | ConvertFrom-Json
+$j | Select-Object model_count,validated_input_models,blocked_source_models,baseline_directions_verified,extra_named_symbols_verified,conditional_baseline_ward_passed,conditional_baseline_ward_rejected,physical_C5_certified
+$j.models | Format-Table model,status,portal_max_projection_residual,completed_dim5_frobenius -AutoSize
+```
+
+Use a NEW output directory on reruns (e.g. `portal_completion_02`), never
+overwrite older benchmarks. An optional `--model A_-4` produces one-model
+previews (using a separate run directory). The optional
+`--skip-extra-unit-responses` disables the longer unit-reference evaluation;
+V3/V4 inventories are still cross-checked. The default computes the extra
+reference basis sensitivities where symmetry and mass inputs permit.
+
+### Output under `portal_completion_01/`
+
+- `summary.json`: all-model status, source hashes, completed direction counts,
+  number of unassigned reference directions, physical blockers.
+- `numerical_table.csv`: conditional completed-baseline response norms and Ward residuals.
+- `completed_tensors/<slug>.npz`: complete **baseline** muF/muS portal tensors
+  in WS2 original basis, conditional complete muS HHSS tensor and channels in
+  the fermion-boundary basis, V6 exploratory basis matrix and scalar mass
+  matrix. These are *NOT* complete physical full HHSS tensors.
+- `conditional_portal_response/<slug>.json`: hard + scalar logarithm +
+  joint scalar finite + exact triangle and higher-dimensional remainder for
+  the completed **baseline** + retained native nonportal channels.
+- `extra_reference_unit_responses/<slug>.json`: exact V3 SU(2) reference
+  sensitivity per **unit** real/imaginary invariant coefficient, with V4
+  source symbol inventory, Ward flags and no physical named coupling.
+
+**EFT sequencing is unchanged:** UV -> integrate **all F at one muF** ->
+EFT1(H,S1,S2,SM fermions) -> integrate **both scalars at one muS** -> SMEFT.
+
+**Not certified:** signed `GammaCC`-to-Weyl factor, RGBeta runtime invariant
+normalization/phase, special scalar original-to-fermion boundary map, complete
+extra 24 named coefficient mapping and running, the other EFT1 mixing terms,
+finite hard counterterms and general one-loop operator completeness.
+The CLI's successful `COMPLETED_BASELINE_CONDITIONAL_C5` means only the
+configured, expressly provisional portal-sector algebra passed.
+
+The `summary.json` also includes a **two-scale portal-only diagnostic**:
+actual V3 portal tensors at muF versus muS are separately contracted against
+one fixed saved scalar mass matrix and the same formal LLSS source. The
+resulting relative tensor/hard-matrix shifts quantify the effect of choosing
+one endpoint's portal couplings. They **are not** EFT1 RG integration, a
+renormalization-scale-independence proof, or an implementation of muF
+nonportal running. The combined conditional C5 response remains a fixed-input
+one-loop-sector benchmark evaluated with the muS portal endpoint.

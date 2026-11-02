@@ -1,0 +1,36 @@
+{
+  "format": "t3-ws2-matchete-rgbeta-named-tensor-dictionary-v5",
+  "source_required": [
+    "output/full16_symbolic/T3_<family>_alpha_<tag>/data/eft1_after_F_scalar_quartic_seed.json",
+    "RGE/general/generated/general_rgbeta_quartic_registry.json",
+    "RGE/general/generated/<model>_extra_quartics.wl",
+    "RGE/running/rgbeta/T3RGBetaModel.wl",
+    "output/general_observable/lo_certification_couplings/ws2_named_hhss_v1/<model_slug>/named_HHSS_source_projection.json"
+  ],
+  "summary_required_keys": [
+    "all16_source_and_CG_crosswalk_passed",
+    "models_processed",
+    "extra_RGBeta_quartic_declarations_checked",
+    "extra_HHSS_source_symbols_crosswalked",
+    "native_Matchete_CG_tensors_parsed",
+    "native_EFT1_quartic_terms_parsed",
+    "matching_native_extra_HHSS_channels",
+    "physically_certified_HHSS_coupling_maps",
+    "full_physical_EFT1_couplings_certified",
+    "physical_C5_calculated",
+    "models"
+  ],
+  "per_model_file": "<model_slug>/matchete_rgbeta_exact_source_crosswalk.json",
+  "per_model_required_keys": [
+    "native_CGRegistry",
+    "native_quartic_terms",
+    "all_extra_quartic_source_declarations",
+    "all_extra_quartic_sector_crosswalk",
+    "named_extra_HHSS_entries",
+    "sources_sha256",
+    "scales_gev",
+    "blocking_dependencies"
+  ],
+  "physical_policy": "Candidate tensor orientation maps are not certified Matchete↔RGBeta coefficient conversions; no physical EFT1 or C5 input is exported.",
+  "thresholds": "UV -> all fermions at muF -> EFT1 -> both scalars at muS -> SMEFT"
+}

@@ -1,0 +1,714 @@
+{
+  "format": "t3-ws4-native-amplitude-source-contract-v1",
+  "status": "source_operator_and_mass_insertion_verified_not_physical",
+  "source_audit": {
+    "status": "source_forms_verified",
+    "all_required_sources_present": true,
+    "source_files": {
+      "model": {
+        "path": "Lagrangian/model/T3ModelCatalog.wl",
+        "sha256": "3ea4006b38617d1c603c564b209a0e0cedb324da127214fe434e18fd9953febc",
+        "source_forms_satisfied": true,
+        "missing_forms": []
+      },
+      "fields": {
+        "path": "Lagrangian/model/T3Fields.wl",
+        "sha256": "2f27f080ab02d1225aab7e5928aba19f238ec6d5dcdd41b72ee2d2c7298e24ab",
+        "source_forms_satisfied": true,
+        "missing_forms": []
+      },
+      "cg": {
+        "path": "Lagrangian/model/SU2Invariants.wl",
+        "sha256": "78e83bd1730555d15a47f8f2b3343635734b3f3387afb243623b89410faa6c1a",
+        "source_forms_satisfied": true,
+        "missing_forms": []
+      },
+      "topology": {
+        "path": "Lagrangian/interactions/T3Topology.wl",
+        "sha256": "e6e24c4a673bddff980885f8354b388ceaa19e53c8b2faa79ba3289a87de1511",
+        "source_forms_satisfied": true,
+        "missing_forms": []
+      },
+      "scalar_potential": {
+        "path": "Lagrangian/interactions/ScalarPotential.wl",
+        "sha256": "c863e5d69bf665e65c7e164aee5ceafe01b8aefc75500099da5847db7d0cfa97",
+        "source_forms_satisfied": true,
+        "missing_forms": []
+      },
+      "rgbeta": {
+        "path": "RGE/running/rgbeta/T3RGBetaModel.wl",
+        "sha256": "a58c79f18b2abdf9d476588552dfa52e2f131f322094e5b72d1198162aa20abc",
+        "source_forms_satisfied": true,
+        "missing_forms": []
+      },
+      "input_builder": {
+        "path": "scripts/BuildT3DirectOneLoopInputs.py",
+        "sha256": "16fbf7fbb06e630a02e720bd9f3bfbda65748394d3ef50924f39a656998213ec",
+        "source_forms_satisfied": true,
+        "missing_forms": []
+      },
+      "core": {
+        "path": "Numerical/direct_one_loop/core.py",
+        "sha256": "d85e450f5e7d9a586cfd6a6479f4d629a630ab54bda4218c08dda15ac011c656",
+        "source_forms_satisfied": true,
+        "missing_forms": []
+      }
+    },
+    "errors": []
+  },
+  "native_amplitude_witnesses": {
+    "A_+0_Dirac_doublet": {
+      "model": "A_+0",
+      "basis": [
+        "F0",
+        "F1",
+        "Fc0",
+        "Fc1"
+      ],
+      "unbarred_fundamental_epsilon": [
+        [
+          0,
+          1
+        ],
+        [
+          -1,
+          0
+        ]
+      ],
+      "symmetric_mass_matrix_in_units_MF": [
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          -1,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0
+        ]
+      ],
+      "fermion_mass_square_MF2_identity": true,
+      "inverse_mixed_component_plus": "1/7",
+      "inverse_mixed_component_minus": "-1/7",
+      "coefficient_of_mixed_sources_has_no_extra_factor_two": true,
+      "native_GammaCC_and_RGBeta_epsilon_numeric_alignment": "UNRESOLVED"
+    },
+    "B_-1_Majorana_singlet": {
+      "model": "B_-1",
+      "basis": [
+        "F"
+      ],
+      "quadratic_action": "-MF/2 * F F + h.c.",
+      "source_action": "-F*(J1+J2) + h.c.",
+      "mixed_LLSS_coefficient_in_units_y1y2": "1/7",
+      "coefficient_of_mixed_sources_has_no_extra_factor_two": true,
+      "native_Matchete_MF_half_factor_and_phase": "UNRESOLVED"
+    }
+  },
+  "models": [
+    {
+      "model": "A_-4",
+      "SU2_dimensions": {
+        "S1": 1,
+        "S2": 3,
+        "F": 2
+      },
+      "hypercharges_Y": {
+        "S1": -2.0,
+        "S2": -1.0,
+        "F": -1.5
+      },
+      "fermion_type": "Dirac",
+      "Matchete_original_y1": "Bar[L] CConj[F] S1 * T3Y1CG + h.c.",
+      "Matchete_original_y2": "Bar[L] F Bar[S2] * T3Y2CG + h.c.",
+      "RGBeta_y1": "{Bar[S1], l, F}",
+      "RGBeta_y2": "{S2,l,Fc}",
+      "RGBeta_mass": "{F,Fc}",
+      "RGBeta_SU2_mass": "epsilon",
+      "input_builder_vertex1": "y1_HC in conjugate scalar channel",
+      "input_builder_vertex2": "y2_HC in field scalar channel",
+      "extra_symmetry_allowed_yukawa": null,
+      "extra_yukawa_restricted_benchmark_value": "not_applicable",
+      "source_operator_form_checked": true,
+      "physical_component_normalisation_certified": false
+    },
+    {
+      "model": "A_-2",
+      "SU2_dimensions": {
+        "S1": 1,
+        "S2": 3,
+        "F": 2
+      },
+      "hypercharges_Y": {
+        "S1": -1.0,
+        "S2": 0.0,
+        "F": -0.5
+      },
+      "fermion_type": "Dirac",
+      "Matchete_original_y1": "Bar[L] CConj[F] S1 * T3Y1CG + h.c.",
+      "Matchete_original_y2": "Bar[L] F Bar[S2] * T3Y2CG + h.c.",
+      "RGBeta_y1": "{Bar[S1], l, F}",
+      "RGBeta_y2": "{S2,l,Fc}",
+      "RGBeta_mass": "{F,Fc}",
+      "RGBeta_SU2_mass": "epsilon",
+      "input_builder_vertex1": "y1_HC in conjugate scalar channel",
+      "input_builder_vertex2": "y2_HC in field scalar channel",
+      "extra_symmetry_allowed_yukawa": "y2Conj",
+      "extra_yukawa_restricted_benchmark_value": "assumed_zero",
+      "source_operator_form_checked": true,
+      "physical_component_normalisation_certified": false
+    },
+    {
+      "model": "A_+0",
+      "SU2_dimensions": {
+        "S1": 1,
+        "S2": 3,
+        "F": 2
+      },
+      "hypercharges_Y": {
+        "S1": 0.0,
+        "S2": 1.0,
+        "F": 0.5
+      },
+      "fermion_type": "Dirac",
+      "Matchete_original_y1": "Bar[L] CConj[F] S1 * T3Y1CG + h.c.",
+      "Matchete_original_y2": "Bar[L] F Bar[S2] * T3Y2CG + h.c.",
+      "RGBeta_y1": "{Bar[S1], l, F}",
+      "RGBeta_y2": "{S2,l,Fc}",
+      "RGBeta_mass": "{F,Fc}",
+      "RGBeta_SU2_mass": "epsilon",
+      "input_builder_vertex1": "y1_HC in conjugate scalar channel",
+      "input_builder_vertex2": "y2_HC in field scalar channel",
+      "extra_symmetry_allowed_yukawa": "y1Conj",
+      "extra_yukawa_restricted_benchmark_value": "assumed_zero",
+      "source_operator_form_checked": true,
+      "physical_component_normalisation_certified": false
+    },
+    {
+      "model": "B_-3",
+      "SU2_dimensions": {
+        "S1": 2,
+        "S2": 2,
+        "F": 1
+      },
+      "hypercharges_Y": {
+        "S1": -1.5,
+        "S2": -0.5,
+        "F": -1.0
+      },
+      "fermion_type": "Dirac",
+      "Matchete_original_y1": "Bar[L] CConj[F] S1 * T3Y1CG + h.c.",
+      "Matchete_original_y2": "Bar[L] F Bar[S2] * T3Y2CG + h.c.",
+      "RGBeta_y1": "{Bar[S1], l, F}",
+      "RGBeta_y2": "{S2,l,Fc}",
+      "RGBeta_mass": "{F,Fc}",
+      "RGBeta_SU2_mass": "singlet",
+      "input_builder_vertex1": "y1_HC in conjugate scalar channel",
+      "input_builder_vertex2": "y2_HC in field scalar channel",
+      "extra_symmetry_allowed_yukawa": null,
+      "extra_yukawa_restricted_benchmark_value": "not_applicable",
+      "source_operator_form_checked": true,
+      "physical_component_normalisation_certified": false
+    },
+    {
+      "model": "B_-1",
+      "SU2_dimensions": {
+        "S1": 2,
+        "S2": 2,
+        "F": 1
+      },
+      "hypercharges_Y": {
+        "S1": -0.5,
+        "S2": 0.5,
+        "F": 0.0
+      },
+      "fermion_type": "Majorana",
+      "Matchete_original_y1": "Bar[L] CConj[F] S1 * T3Y1CG + h.c.",
+      "Matchete_original_y2": "Bar[L] F Bar[S2] * T3Y2CG + h.c.",
+      "RGBeta_y1": "{Bar[S1], l, F}",
+      "RGBeta_y2": "{S2,l,F}",
+      "RGBeta_mass": "{F,F}",
+      "RGBeta_SU2_mass": "singlet",
+      "input_builder_vertex1": "y1_HC in conjugate scalar channel",
+      "input_builder_vertex2": "y2_HC in field scalar channel",
+      "extra_symmetry_allowed_yukawa": null,
+      "extra_yukawa_restricted_benchmark_value": "not_applicable",
+      "source_operator_form_checked": true,
+      "physical_component_normalisation_certified": false
+    },
+    {
+      "model": "B_+1",
+      "SU2_dimensions": {
+        "S1": 2,
+        "S2": 2,
+        "F": 1
+      },
+      "hypercharges_Y": {
+        "S1": 0.5,
+        "S2": 1.5,
+        "F": 1.0
+      },
+      "fermion_type": "Dirac",
+      "Matchete_original_y1": "Bar[L] CConj[F] S1 * T3Y1CG + h.c.",
+      "Matchete_original_y2": "Bar[L] F Bar[S2] * T3Y2CG + h.c.",
+      "RGBeta_y1": "{Bar[S1], l, F}",
+      "RGBeta_y2": "{S2,l,Fc}",
+      "RGBeta_mass": "{F,Fc}",
+      "RGBeta_SU2_mass": "singlet",
+      "input_builder_vertex1": "y1_HC in conjugate scalar channel",
+      "input_builder_vertex2": "y2_HC in field scalar channel",
+      "extra_symmetry_allowed_yukawa": null,
+      "extra_yukawa_restricted_benchmark_value": "not_applicable",
+      "source_operator_form_checked": true,
+      "physical_component_normalisation_certified": false
+    },
+    {
+      "model": "C_-3",
+      "SU2_dimensions": {
+        "S1": 2,
+        "S2": 2,
+        "F": 3
+      },
+      "hypercharges_Y": {
+        "S1": -1.5,
+        "S2": -0.5,
+        "F": -1.0
+      },
+      "fermion_type": "Dirac",
+      "Matchete_original_y1": "Bar[L] CConj[F] S1 * T3Y1CG + h.c.",
+      "Matchete_original_y2": "Bar[L] F Bar[S2] * T3Y2CG + h.c.",
+      "RGBeta_y1": "{Bar[S1], l, F}",
+      "RGBeta_y2": "{S2,l,Fc}",
+      "RGBeta_mass": "{F,Fc}",
+      "RGBeta_SU2_mass": "delta",
+      "input_builder_vertex1": "y1_HC in conjugate scalar channel",
+      "input_builder_vertex2": "y2_HC in field scalar channel",
+      "extra_symmetry_allowed_yukawa": null,
+      "extra_yukawa_restricted_benchmark_value": "not_applicable",
+      "source_operator_form_checked": true,
+      "physical_component_normalisation_certified": false
+    },
+    {
+      "model": "C_-1",
+      "SU2_dimensions": {
+        "S1": 2,
+        "S2": 2,
+        "F": 3
+      },
+      "hypercharges_Y": {
+        "S1": -0.5,
+        "S2": 0.5,
+        "F": 0.0
+      },
+      "fermion_type": "Majorana",
+      "Matchete_original_y1": "Bar[L] CConj[F] S1 * T3Y1CG + h.c.",
+      "Matchete_original_y2": "Bar[L] F Bar[S2] * T3Y2CG + h.c.",
+      "RGBeta_y1": "{Bar[S1], l, F}",
+      "RGBeta_y2": "{S2,l,F}",
+      "RGBeta_mass": "{F,F}",
+      "RGBeta_SU2_mass": "delta",
+      "input_builder_vertex1": "y1_HC in conjugate scalar channel",
+      "input_builder_vertex2": "y2_HC in field scalar channel",
+      "extra_symmetry_allowed_yukawa": null,
+      "extra_yukawa_restricted_benchmark_value": "not_applicable",
+      "source_operator_form_checked": true,
+      "physical_component_normalisation_certified": false
+    },
+    {
+      "model": "C_+1",
+      "SU2_dimensions": {
+        "S1": 2,
+        "S2": 2,
+        "F": 3
+      },
+      "hypercharges_Y": {
+        "S1": 0.5,
+        "S2": 1.5,
+        "F": 1.0
+      },
+      "fermion_type": "Dirac",
+      "Matchete_original_y1": "Bar[L] CConj[F] S1 * T3Y1CG + h.c.",
+      "Matchete_original_y2": "Bar[L] F Bar[S2] * T3Y2CG + h.c.",
+      "RGBeta_y1": "{Bar[S1], l, F}",
+      "RGBeta_y2": "{S2,l,Fc}",
+      "RGBeta_mass": "{F,Fc}",
+      "RGBeta_SU2_mass": "delta",
+      "input_builder_vertex1": "y1_HC in conjugate scalar channel",
+      "input_builder_vertex2": "y2_HC in field scalar channel",
+      "extra_symmetry_allowed_yukawa": null,
+      "extra_yukawa_restricted_benchmark_value": "not_applicable",
+      "source_operator_form_checked": true,
+      "physical_component_normalisation_certified": false
+    },
+    {
+      "model": "D_-2",
+      "SU2_dimensions": {
+        "S1": 3,
+        "S2": 1,
+        "F": 2
+      },
+      "hypercharges_Y": {
+        "S1": -1.0,
+        "S2": 0.0,
+        "F": -0.5
+      },
+      "fermion_type": "Dirac",
+      "Matchete_original_y1": "Bar[L] CConj[F] S1 * T3Y1CG + h.c.",
+      "Matchete_original_y2": "Bar[L] F Bar[S2] * T3Y2CG + h.c.",
+      "RGBeta_y1": "{Bar[S1], l, F}",
+      "RGBeta_y2": "{S2,l,Fc}",
+      "RGBeta_mass": "{F,Fc}",
+      "RGBeta_SU2_mass": "epsilon",
+      "input_builder_vertex1": "y1_HC in conjugate scalar channel",
+      "input_builder_vertex2": "y2_HC in field scalar channel",
+      "extra_symmetry_allowed_yukawa": "y2Conj",
+      "extra_yukawa_restricted_benchmark_value": "assumed_zero",
+      "source_operator_form_checked": true,
+      "physical_component_normalisation_certified": false
+    },
+    {
+      "model": "D_+0",
+      "SU2_dimensions": {
+        "S1": 3,
+        "S2": 1,
+        "F": 2
+      },
+      "hypercharges_Y": {
+        "S1": 0.0,
+        "S2": 1.0,
+        "F": 0.5
+      },
+      "fermion_type": "Dirac",
+      "Matchete_original_y1": "Bar[L] CConj[F] S1 * T3Y1CG + h.c.",
+      "Matchete_original_y2": "Bar[L] F Bar[S2] * T3Y2CG + h.c.",
+      "RGBeta_y1": "{Bar[S1], l, F}",
+      "RGBeta_y2": "{S2,l,Fc}",
+      "RGBeta_mass": "{F,Fc}",
+      "RGBeta_SU2_mass": "epsilon",
+      "input_builder_vertex1": "y1_HC in conjugate scalar channel",
+      "input_builder_vertex2": "y2_HC in field scalar channel",
+      "extra_symmetry_allowed_yukawa": "y1Conj",
+      "extra_yukawa_restricted_benchmark_value": "assumed_zero",
+      "source_operator_form_checked": true,
+      "physical_component_normalisation_certified": false
+    },
+    {
+      "model": "D_+2",
+      "SU2_dimensions": {
+        "S1": 3,
+        "S2": 1,
+        "F": 2
+      },
+      "hypercharges_Y": {
+        "S1": 1.0,
+        "S2": 2.0,
+        "F": 1.5
+      },
+      "fermion_type": "Dirac",
+      "Matchete_original_y1": "Bar[L] CConj[F] S1 * T3Y1CG + h.c.",
+      "Matchete_original_y2": "Bar[L] F Bar[S2] * T3Y2CG + h.c.",
+      "RGBeta_y1": "{Bar[S1], l, F}",
+      "RGBeta_y2": "{S2,l,Fc}",
+      "RGBeta_mass": "{F,Fc}",
+      "RGBeta_SU2_mass": "epsilon",
+      "input_builder_vertex1": "y1_HC in conjugate scalar channel",
+      "input_builder_vertex2": "y2_HC in field scalar channel",
+      "extra_symmetry_allowed_yukawa": null,
+      "extra_yukawa_restricted_benchmark_value": "not_applicable",
+      "source_operator_form_checked": true,
+      "physical_component_normalisation_certified": false
+    },
+    {
+      "model": "E_-4",
+      "SU2_dimensions": {
+        "S1": 3,
+        "S2": 3,
+        "F": 2
+      },
+      "hypercharges_Y": {
+        "S1": -2.0,
+        "S2": -1.0,
+        "F": -1.5
+      },
+      "fermion_type": "Dirac",
+      "Matchete_original_y1": "Bar[L] CConj[F] S1 * T3Y1CG + h.c.",
+      "Matchete_original_y2": "Bar[L] F Bar[S2] * T3Y2CG + h.c.",
+      "RGBeta_y1": "{Bar[S1], l, F}",
+      "RGBeta_y2": "{S2,l,Fc}",
+      "RGBeta_mass": "{F,Fc}",
+      "RGBeta_SU2_mass": "epsilon",
+      "input_builder_vertex1": "y1_HC in conjugate scalar channel",
+      "input_builder_vertex2": "y2_HC in field scalar channel",
+      "extra_symmetry_allowed_yukawa": null,
+      "extra_yukawa_restricted_benchmark_value": "not_applicable",
+      "source_operator_form_checked": true,
+      "physical_component_normalisation_certified": false
+    },
+    {
+      "model": "E_-2",
+      "SU2_dimensions": {
+        "S1": 3,
+        "S2": 3,
+        "F": 2
+      },
+      "hypercharges_Y": {
+        "S1": -1.0,
+        "S2": 0.0,
+        "F": -0.5
+      },
+      "fermion_type": "Dirac",
+      "Matchete_original_y1": "Bar[L] CConj[F] S1 * T3Y1CG + h.c.",
+      "Matchete_original_y2": "Bar[L] F Bar[S2] * T3Y2CG + h.c.",
+      "RGBeta_y1": "{Bar[S1], l, F}",
+      "RGBeta_y2": "{S2,l,Fc}",
+      "RGBeta_mass": "{F,Fc}",
+      "RGBeta_SU2_mass": "epsilon",
+      "input_builder_vertex1": "y1_HC in conjugate scalar channel",
+      "input_builder_vertex2": "y2_HC in field scalar channel",
+      "extra_symmetry_allowed_yukawa": "y2Conj",
+      "extra_yukawa_restricted_benchmark_value": "assumed_zero",
+      "source_operator_form_checked": true,
+      "physical_component_normalisation_certified": false
+    },
+    {
+      "model": "E_+0",
+      "SU2_dimensions": {
+        "S1": 3,
+        "S2": 3,
+        "F": 2
+      },
+      "hypercharges_Y": {
+        "S1": 0.0,
+        "S2": 1.0,
+        "F": 0.5
+      },
+      "fermion_type": "Dirac",
+      "Matchete_original_y1": "Bar[L] CConj[F] S1 * T3Y1CG + h.c.",
+      "Matchete_original_y2": "Bar[L] F Bar[S2] * T3Y2CG + h.c.",
+      "RGBeta_y1": "{Bar[S1], l, F}",
+      "RGBeta_y2": "{S2,l,Fc}",
+      "RGBeta_mass": "{F,Fc}",
+      "RGBeta_SU2_mass": "epsilon",
+      "input_builder_vertex1": "y1_HC in conjugate scalar channel",
+      "input_builder_vertex2": "y2_HC in field scalar channel",
+      "extra_symmetry_allowed_yukawa": "y1Conj",
+      "extra_yukawa_restricted_benchmark_value": "assumed_zero",
+      "source_operator_form_checked": true,
+      "physical_component_normalisation_certified": false
+    },
+    {
+      "model": "E_+2",
+      "SU2_dimensions": {
+        "S1": 3,
+        "S2": 3,
+        "F": 2
+      },
+      "hypercharges_Y": {
+        "S1": 1.0,
+        "S2": 2.0,
+        "F": 1.5
+      },
+      "fermion_type": "Dirac",
+      "Matchete_original_y1": "Bar[L] CConj[F] S1 * T3Y1CG + h.c.",
+      "Matchete_original_y2": "Bar[L] F Bar[S2] * T3Y2CG + h.c.",
+      "RGBeta_y1": "{Bar[S1], l, F}",
+      "RGBeta_y2": "{S2,l,Fc}",
+      "RGBeta_mass": "{F,Fc}",
+      "RGBeta_SU2_mass": "epsilon",
+      "input_builder_vertex1": "y1_HC in conjugate scalar channel",
+      "input_builder_vertex2": "y2_HC in field scalar channel",
+      "extra_symmetry_allowed_yukawa": null,
+      "extra_yukawa_restricted_benchmark_value": "not_applicable",
+      "source_operator_form_checked": true,
+      "physical_component_normalisation_certified": false
+    }
+  ],
+  "model_count": 16,
+  "physical_source_normalisation_certified_count": 0,
+  "native_inputs_missing_for_physical_certification": [
+    "Installed Matchete GammaCC numerical phase in common left-Weyl field basis",
+    "RGBeta native epsilon and triplet component axes including relative phase",
+    "Full y1, y2 and MF signed map under a single heavy-field rephasing",
+    "Native scalar potential-to-Hessian portal and T3 mixing coefficient map",
+    "Nonzero independent extra BSM operators (zero under frozen restriction)"
+  ],
+  "frozen_restricted_benchmark_assumptions": {
+    "general_yukawas": "y1Conj/y2Conj set to zero in six allowed models",
+    "additional_quadratics": "set to zero unless explicitly present in frozen input",
+    "nonminimal_scalar_invariants": "not included unless frozen component inputs supply them",
+    "representative_nonminimal_couplings": [
+      "lambdaHHdagS2S2",
+      "lambdaHHdagS1barS1bar",
+      "lambdaHHdagS1barS2barCross",
+      "lambdaH1Adj",
+      "lambdaH2Adj",
+      "lambdaS1Adj",
+      "lambdaS2Adj"
+    ],
+    "these_zeros_are_not_symmetry_predictions": true
+  },
+  "formal_EFT_bridge": {
+    "action": "L = -psi.T MF psi/2 - psi.T J + h.c.",
+    "tree_level_only": "L_eff = +J.T MF^-1 J/2 + h.c.",
+    "all_BSM_fermions_eliminated": true,
+    "both_BSM_scalars_retained_in_EFT1": true,
+    "no_MSbar_hard_one_loop_matching": true,
+    "mu0_gev": 10000000,
+    "muF_gev": 100000,
+    "muS_gev": 1000,
+    "same_scale_EFT1_matching_certified": false
+  },
+  "numerical_UV_matrices_recomputed": false,
+  "physical_masses_claimed": false,
+  "actual_restricted_input_audit": {
+    "format": "t3-ws4-existing-provisional-input-shape-audit-v1",
+    "status": "restricted_component_structure_verified_not_physical",
+    "models_checked": 16,
+    "results": [
+      {
+        "model": "A_-4",
+        "source_tensor_structure_verified": true,
+        "provisional_input_sha256": "14cdf7c7a5167ab5677b75e3faaa4e9b7958f5884319bde21c272f62dea1a48b",
+        "complex_fermion_states": 12,
+        "complex_scalar_states": 4,
+        "native_phase_and_normalisation_verified": false
+      },
+      {
+        "model": "A_-2",
+        "source_tensor_structure_verified": true,
+        "provisional_input_sha256": "65f36c02a289b8036606f61b1d576a72b22fadf7fed16c78e436fde66fd88fb3",
+        "complex_fermion_states": 12,
+        "complex_scalar_states": 4,
+        "native_phase_and_normalisation_verified": false
+      },
+      {
+        "model": "A_+0",
+        "source_tensor_structure_verified": true,
+        "provisional_input_sha256": "0aaa9d32bdb1e8da207fad7d443aed7b268fc56acf65e19674c883a2e65f3ce9",
+        "complex_fermion_states": 12,
+        "complex_scalar_states": 4,
+        "native_phase_and_normalisation_verified": false
+      },
+      {
+        "model": "B_-3",
+        "source_tensor_structure_verified": true,
+        "provisional_input_sha256": "71ffd39a6fa0288b65ed0f59868531f66530c683cc9c14485bbabe718b9cdcb0",
+        "complex_fermion_states": 6,
+        "complex_scalar_states": 4,
+        "native_phase_and_normalisation_verified": false
+      },
+      {
+        "model": "B_-1",
+        "source_tensor_structure_verified": true,
+        "provisional_input_sha256": "e5d25ede470961c216f558c462bd19c090a8890918caea69297bb0a2c445855d",
+        "complex_fermion_states": 3,
+        "complex_scalar_states": 4,
+        "native_phase_and_normalisation_verified": false
+      },
+      {
+        "model": "B_+1",
+        "source_tensor_structure_verified": true,
+        "provisional_input_sha256": "f941d6049b2d7eaf21127539f2cd191ba4684ab6df6760bc2b11883f5c532ee2",
+        "complex_fermion_states": 6,
+        "complex_scalar_states": 4,
+        "native_phase_and_normalisation_verified": false
+      },
+      {
+        "model": "C_-3",
+        "source_tensor_structure_verified": true,
+        "provisional_input_sha256": "9147e7a338e1d375cfb036c41864684197bb139534b222db4d2651eb4bf028a4",
+        "complex_fermion_states": 18,
+        "complex_scalar_states": 4,
+        "native_phase_and_normalisation_verified": false
+      },
+      {
+        "model": "C_-1",
+        "source_tensor_structure_verified": true,
+        "provisional_input_sha256": "36e6fd4d905030ef377468ea46c8261e04ab40e53f8ebf96cbb019e47dd36dce",
+        "complex_fermion_states": 9,
+        "complex_scalar_states": 4,
+        "native_phase_and_normalisation_verified": false
+      },
+      {
+        "model": "C_+1",
+        "source_tensor_structure_verified": true,
+        "provisional_input_sha256": "b57ddd02412cd051945b9901baa228f50f385de0d407bce5894d81f16584de8e",
+        "complex_fermion_states": 18,
+        "complex_scalar_states": 4,
+        "native_phase_and_normalisation_verified": false
+      },
+      {
+        "model": "D_-2",
+        "source_tensor_structure_verified": true,
+        "provisional_input_sha256": "a7a045bb83220294c89a00a9cf628b826abafe665597c52bc299b4d851c7575b",
+        "complex_fermion_states": 12,
+        "complex_scalar_states": 4,
+        "native_phase_and_normalisation_verified": false
+      },
+      {
+        "model": "D_+0",
+        "source_tensor_structure_verified": true,
+        "provisional_input_sha256": "d1d7dce3afa5567284e66778c1e2ea99cfde6652044004e09b60d6035e6e1480",
+        "complex_fermion_states": 12,
+        "complex_scalar_states": 4,
+        "native_phase_and_normalisation_verified": false
+      },
+      {
+        "model": "D_+2",
+        "source_tensor_structure_verified": true,
+        "provisional_input_sha256": "57e30292c4855ce6af949f2037b66f6c8f06bef374354bbe28ea55828f16f027",
+        "complex_fermion_states": 12,
+        "complex_scalar_states": 4,
+        "native_phase_and_normalisation_verified": false
+      },
+      {
+        "model": "E_-4",
+        "source_tensor_structure_verified": true,
+        "provisional_input_sha256": "42363373a59ab0ccca00b77b5748143220bcc64cd678e2f171e5c53d8dc09009",
+        "complex_fermion_states": 12,
+        "complex_scalar_states": 6,
+        "native_phase_and_normalisation_verified": false
+      },
+      {
+        "model": "E_-2",
+        "source_tensor_structure_verified": true,
+        "provisional_input_sha256": "2bf49749b781ce139d1084530ce6d82bee437ab2c986344cc21fc7276eabd326",
+        "complex_fermion_states": 12,
+        "complex_scalar_states": 6,
+        "native_phase_and_normalisation_verified": false
+      },
+      {
+        "model": "E_+0",
+        "source_tensor_structure_verified": true,
+        "provisional_input_sha256": "3f18217920b1a171e78d9721ed873ad3c0012f489bdefae0b2ee2316c024504a",
+        "complex_fermion_states": 12,
+        "complex_scalar_states": 6,
+        "native_phase_and_normalisation_verified": false
+      },
+      {
+        "model": "E_+2",
+        "source_tensor_structure_verified": true,
+        "provisional_input_sha256": "a892e2f30982f47f3892535d2d449f08b594ace02b2d7f8057cc3ecba432f1bd",
+        "complex_fermion_states": 12,
+        "complex_scalar_states": 6,
+        "native_phase_and_normalisation_verified": false
+      }
+    ],
+    "UV_mass_matrices_recomputed": false,
+    "physical_source_mapping_certified": false
+  }
+}

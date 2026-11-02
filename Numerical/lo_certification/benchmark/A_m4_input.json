@@ -1,0 +1,72 @@
+{
+  "format": "t3-restricted-a-m4-batch1-input-v1",
+  "model": "A_-4",
+  "physical_certification": false,
+  "representation": {
+    "scalar1": {"su2_dimension": 1, "hypercharge": -2.0},
+    "scalar2": {"su2_dimension": 3, "hypercharge": -1.0},
+    "heavy_fermion": {"su2_dimension": 2, "hypercharge": -1.5, "mass_type": "Dirac", "families": 3}
+  },
+  "matching": {
+    "mu_UV_gev": 10000000.0,
+    "mu_F_gev": 100000.0,
+    "mu_S_gev": 1000.0,
+    "mu_low_gev": 100.0,
+    "first_threshold": "all heavy BSM fermions simultaneously, retain both heavy scalar multiplets",
+    "second_threshold": "both heavy scalar multiplets simultaneously, into SMEFT",
+    "evolution_of_frozen_UV_couplings_to_mu_F": "NOT_CERTIFIED"
+  },
+  "source": {
+    "frozen_benchmark_path": "Numerical/benchmarks/fitted_reference/T3_dS1_1_dS2_3_dF_2_alpha_m4.json",
+    "frozen_benchmark_sha256": "3cb8dc3e94f2bd6f60571a7a85477638e8fc02109bccfcec0e04055852d81247",
+    "provisional_boundary_path": "output/general_observable/lo_fermion_boundary/releases/source_021dcc1e8fe8ba0f/A_m4/boundary.json",
+    "v6_extra_source_path": "output/general_observable/lo_certification_couplings/ws2_extra_source_v1/A_m4/V6_source_evidence.json"
+  },
+  "frozen_values_at_mu_UV": {
+    "y1_real": [
+      [-0.00002618833696469664, 0.00005192426489666104, 0.000042472246941179035],
+      [-0.0000795598204666997, 0.00006316598653793336, -0.0001337733481710395],
+      [-0.00004550523936687876, 0.00006617305918789167, 0.000037284407112747435]
+    ],
+    "y2_real": [
+      [0.00009910122072324159, 0.0000793926564976573, -0.000021200984437018638],
+      [0.00004159613623782387, 0.00000023139864236313102, 0.000014121611182189383],
+      [0.000004319550376385441, -0.00010891978349536659, 0.000044861549511551865]
+    ],
+    "y1_imag": "all exactly zero in source",
+    "y2_imag": "all exactly zero in source",
+    "M_F_diagonal_gev": [100000.0, 110000.0, 120000.0],
+    "m_S1_squared_gev2": 1306122.448979592,
+    "m_S2_squared_gev2": 1000000.0,
+    "lambda_T3": {"real": 0.1, "imag": 0.0},
+    "lambda_S1": 0.1,
+    "lambda_S2": 0.12,
+    "lambda_H1": 0.02,
+    "lambda_H2": 0.03,
+    "lambda_12": 0.01,
+    "lambda_H2Adj": 0.0,
+    "lambda_S2Adj": 0.0,
+    "vev_gev": 246.22
+  },
+  "restricted_uv_lagrangian": {
+    "included": [
+      "source native y1 and y2 ordinary Yukawa channels with exact native CG not replaced",
+      "source Dirac mass MF and both scalar mass-squared parameters",
+      "source lambdaT3 H H S1 conjugate(S2) plus Hermitian conjugate",
+      "source lambdaS1, lambdaS2, lambdaH1, lambdaH2, lambda12 scalar quartics",
+      "SM renormalizable terms"
+    ],
+    "fixed_zero_at_mu_UV": ["lambdaH2Adj", "lambdaS2Adj", "all unspecified independent extra quartic and extra Yukawa couplings"],
+    "not_assumed_preserved_by_RGE": true,
+    "phase_convention": "source frozen y1,y2,lambdaT3 and MF are real, not a cross-package spinor-phase certificate",
+    "CG_normalization": "retain original native Matchete tensors; do not insert guessed factors"
+  },
+  "source_verification": {
+    "expected_native_PL_source_count": 1,
+    "expected_independent_LLSS_coordinates": 60,
+    "sample_coordinate": [1,1,1,1,5,7],
+    "sample_formal_coefficient_gev_inv": {"real": 2.1535596891394695e-13, "imag": 0.0},
+    "gamma_cc_to_weyl_factor": null,
+    "physical_LLSS_boundary": null
+  }
+}

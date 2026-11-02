@@ -1,0 +1,583 @@
+{
+  "format": "t3-general-all16-numerical-observables-v1",
+  "canonical_run_id": "full16_general_v1",
+  "benchmark": "illustrative-real",
+  "scales_gev": {
+    "UV": 10000000.0,
+    "F": 100000.0,
+    "S": 1000.0,
+    "low": 91.1876
+  },
+  "selected_models": [
+    "A_-4",
+    "A_-2",
+    "A_+0",
+    "B_-3",
+    "B_-1",
+    "B_+1",
+    "C_-3",
+    "C_-1",
+    "C_+1",
+    "D_-2",
+    "D_+0",
+    "D_+2",
+    "E_-4",
+    "E_-2",
+    "E_+0",
+    "E_+2"
+  ],
+  "rge_success_count": 16,
+  "conditional_c5_low_success_count": 11,
+  "expected_mixed_model_c5_blocked_count": 2,
+  "physically_certified_sequential_eft_count": 0,
+  "matchete_rgbeta_coupling_dictionary_certified": false,
+  "results": [
+    {
+      "model": "A_-4",
+      "output_folder": "output\\general_observable\\all16_v1\\A_m4",
+      "rge_status": "Success",
+      "c5_status": "ConditionalC5AndSMRunningSuccess",
+      "uv_trajectory_entries": 884,
+      "eft1_trajectory_entries": 533,
+      "rge_output": "output\\general_observable\\all16_v1\\A_m4\\running.json",
+      "uv_coupling_names": 20,
+      "eft1_coupling_names": 17,
+      "hierarchy": {
+        "grouped_fermion_matching_scale_gev": 100000.0,
+        "heavy_fermion_singular_masses_at_F_gev": [
+          166140.08943527873,
+          199368.10732233452,
+          221520.11924704042
+        ],
+        "all_fermion_masses_above_mu_F": true,
+        "scalar_matching_scale_gev": 1000.0,
+        "unbroken_scalar_mass_parameters_at_S_gev": [
+          1416.0398652312388,
+          1836.738891958032
+        ],
+        "all_unsplit_scalar_masses_above_mu_S": true,
+        "scalar_mixed_or_self_bilinear_mass_basis_checked": false,
+        "note": "Scalar masses are unbroken unsplit parameters, not all physical eigenmasses"
+      },
+      "c5_output": "output\\general_observable\\all16_v1\\A_m4\\c5_conditional.json",
+      "neutrino_masses_ev": [
+        0.020075302639421047,
+        0.021773695849493395,
+        0.025023707628683233
+      ],
+      "c5_trajectory_csv": "output\\general_observable\\all16_v1\\A_m4\\c5_trajectory\\c5_running.csv",
+      "c5_endpoint_relative_check": 0.0
+    },
+    {
+      "model": "A_-2",
+      "output_folder": "output\\general_observable\\all16_v1\\A_m2",
+      "rge_status": "Success",
+      "c5_status": "C5StageFailed",
+      "uv_trajectory_entries": 1079,
+      "eft1_trajectory_entries": 611,
+      "rge_output": "output\\general_observable\\all16_v1\\A_m2\\running.json",
+      "uv_coupling_names": 27,
+      "eft1_coupling_names": 23,
+      "hierarchy": {
+        "grouped_fermion_matching_scale_gev": 100000.0,
+        "heavy_fermion_singular_masses_at_F_gev": [
+          159478.07800098634,
+          191373.69360118365,
+          212637.43733465165
+        ],
+        "all_fermion_masses_above_mu_F": true,
+        "scalar_matching_scale_gev": 1000.0,
+        "unbroken_scalar_mass_parameters_at_S_gev": [
+          1318.5386643115753,
+          1788.0567279734848
+        ],
+        "all_unsplit_scalar_masses_above_mu_S": true,
+        "scalar_mixed_or_self_bilinear_mass_basis_checked": false,
+        "note": "Scalar masses are unbroken unsplit parameters, not all physical eigenmasses"
+      },
+      "failure_stage": "Matchete_general_one_scale_matching",
+      "c5_error": "ValueError: Full-general flavour C5: missing vectorlike right rotation",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\scripts\\RunGeneralT3Observable.py\", line 334, in run_one\n    c5 = np.asarray(matcher.evaluate(uv.final_state, eft.final_state), dtype=complex)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\Numerical\\matching\\GeneralT3FlavourC5.py\", line 204, in evaluate\n    masses, yukawas, basis_diagnostics = prepare_heavy_flavour(\n                                         ^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\Numerical\\matching\\GeneralT3FlavourC5.py\", line 74, in prepare_heavy_flavour\n    _require(basis.right_rotation is not None,\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\Numerical\\matching\\GeneralT3FlavourC5.py\", line 37, in _require\n    raise ValueError('Full-general flavour C5: ' + reason)\nValueError: Full-general flavour C5: missing vectorlike right rotation\n"
+    },
+    {
+      "model": "A_+0",
+      "output_folder": "output\\general_observable\\all16_v1\\A_p0",
+      "rge_status": "Success",
+      "c5_status": "ConditionalC5AndSMRunningSuccess",
+      "uv_trajectory_entries": 1079,
+      "eft1_trajectory_entries": 611,
+      "rge_output": "output\\general_observable\\all16_v1\\A_p0\\running.json",
+      "uv_coupling_names": 27,
+      "eft1_coupling_names": 23,
+      "hierarchy": {
+        "grouped_fermion_matching_scale_gev": 100000.0,
+        "heavy_fermion_singular_masses_at_F_gev": [
+          159476.0019087392,
+          191371.20229048707,
+          212634.66921165504
+        ],
+        "all_fermion_masses_above_mu_F": true,
+        "scalar_matching_scale_gev": 1000.0,
+        "unbroken_scalar_mass_parameters_at_S_gev": [
+          1291.2298694588517,
+          1839.8214197900136
+        ],
+        "all_unsplit_scalar_masses_above_mu_S": true,
+        "scalar_mixed_or_self_bilinear_mass_basis_checked": false,
+        "note": "Scalar masses are unbroken unsplit parameters, not all physical eigenmasses"
+      },
+      "c5_output": "output\\general_observable\\all16_v1\\A_p0\\c5_conditional.json",
+      "neutrino_masses_ev": [
+        0.03694814056418715,
+        0.04007320347521252,
+        0.046052985103173176
+      ],
+      "c5_trajectory_csv": "output\\general_observable\\all16_v1\\A_p0\\c5_trajectory\\c5_running.csv",
+      "c5_endpoint_relative_check": 0.0
+    },
+    {
+      "model": "B_-3",
+      "output_folder": "output\\general_observable\\all16_v1\\B_m3",
+      "rge_status": "Success",
+      "c5_status": "ConditionalC5AndSMRunningSuccess",
+      "uv_trajectory_entries": 910,
+      "eft1_trajectory_entries": 559,
+      "rge_output": "output\\general_observable\\all16_v1\\B_m3\\running.json",
+      "uv_coupling_names": 22,
+      "eft1_coupling_names": 19,
+      "hierarchy": {
+        "grouped_fermion_matching_scale_gev": 100000.0,
+        "heavy_fermion_singular_masses_at_F_gev": [
+          153285.74817568035,
+          183942.89781081642,
+          204380.99756757676
+        ],
+        "all_fermion_masses_above_mu_F": true,
+        "scalar_matching_scale_gev": 1000.0,
+        "unbroken_scalar_mass_parameters_at_S_gev": [
+          1457.654704985945,
+          1598.909573369015
+        ],
+        "all_unsplit_scalar_masses_above_mu_S": true,
+        "scalar_mixed_or_self_bilinear_mass_basis_checked": false,
+        "note": "Scalar masses are unbroken unsplit parameters, not all physical eigenmasses"
+      },
+      "c5_output": "output\\general_observable\\all16_v1\\B_m3\\c5_conditional.json",
+      "neutrino_masses_ev": [
+        0.018667192395350165,
+        0.020244681797621237,
+        0.023262699020294802
+      ],
+      "c5_trajectory_csv": "output\\general_observable\\all16_v1\\B_m3\\c5_trajectory\\c5_running.csv",
+      "c5_endpoint_relative_check": 0.0
+    },
+    {
+      "model": "B_-1",
+      "output_folder": "output\\general_observable\\all16_v1\\B_m1",
+      "rge_status": "Success",
+      "c5_status": "BlockedGenericMixedScalarC5AdapterNotImplemented",
+      "uv_trajectory_entries": 1001,
+      "eft1_trajectory_entries": 650,
+      "rge_output": "output\\general_observable\\all16_v1\\B_m1\\running.json",
+      "uv_coupling_names": 29,
+      "eft1_coupling_names": 26,
+      "hierarchy": {
+        "grouped_fermion_matching_scale_gev": 100000.0,
+        "heavy_fermion_singular_masses_at_F_gev": [
+          149999.99711125903,
+          179999.9965335109,
+          199999.99614835114
+        ],
+        "all_fermion_masses_above_mu_F": true,
+        "scalar_matching_scale_gev": 1000.0,
+        "unbroken_scalar_mass_parameters_at_S_gev": [
+          1387.3059057242608,
+          1600.7697667918765
+        ],
+        "all_unsplit_scalar_masses_above_mu_S": true,
+        "scalar_mixed_or_self_bilinear_mass_basis_checked": false,
+        "note": "Scalar masses are unbroken unsplit parameters, not all physical eigenmasses"
+      },
+      "c5_reason": "B/C(-1) mass-eigenstate one-scale matching has separate exploratory machinery, not a model-independent coupled UV-state/EFT1-state matching API"
+    },
+    {
+      "model": "B_+1",
+      "output_folder": "output\\general_observable\\all16_v1\\B_p1",
+      "rge_status": "Success",
+      "c5_status": "ConditionalC5AndSMRunningSuccess",
+      "uv_trajectory_entries": 910,
+      "eft1_trajectory_entries": 559,
+      "rge_output": "output\\general_observable\\all16_v1\\B_p1\\running.json",
+      "uv_coupling_names": 22,
+      "eft1_coupling_names": 19,
+      "hierarchy": {
+        "grouped_fermion_matching_scale_gev": 100000.0,
+        "heavy_fermion_singular_masses_at_F_gev": [
+          153285.74817568038,
+          183942.89781081642,
+          204380.9975675768
+        ],
+        "all_fermion_masses_above_mu_F": true,
+        "scalar_matching_scale_gev": 1000.0,
+        "unbroken_scalar_mass_parameters_at_S_gev": [
+          1385.3520323912792,
+          1682.3514870675626
+        ],
+        "all_unsplit_scalar_masses_above_mu_S": true,
+        "scalar_mixed_or_self_bilinear_mass_basis_checked": false,
+        "note": "Scalar masses are unbroken unsplit parameters, not all physical eigenmasses"
+      },
+      "c5_output": "output\\general_observable\\all16_v1\\B_p1\\c5_conditional.json",
+      "neutrino_masses_ev": [
+        0.018763093708125945,
+        0.020348143522726393,
+        0.023380431518678316
+      ],
+      "c5_trajectory_csv": "output\\general_observable\\all16_v1\\B_p1\\c5_trajectory\\c5_running.csv",
+      "c5_endpoint_relative_check": 0.0
+    },
+    {
+      "model": "C_-3",
+      "output_folder": "output\\general_observable\\all16_v1\\C_m3",
+      "rge_status": "Success",
+      "c5_status": "ConditionalC5AndSMRunningSuccess",
+      "uv_trajectory_entries": 910,
+      "eft1_trajectory_entries": 559,
+      "rge_output": "output\\general_observable\\all16_v1\\C_m3\\running.json",
+      "uv_coupling_names": 22,
+      "eft1_coupling_names": 19,
+      "hierarchy": {
+        "grouped_fermion_matching_scale_gev": 100000.0,
+        "heavy_fermion_singular_masses_at_F_gev": [
+          176071.37771489602,
+          211285.65325787524,
+          234761.8369531966
+        ],
+        "all_fermion_masses_above_mu_F": true,
+        "scalar_matching_scale_gev": 1000.0,
+        "unbroken_scalar_mass_parameters_at_S_gev": [
+          1440.9486022264387,
+          1584.7531292380909
+        ],
+        "all_unsplit_scalar_masses_above_mu_S": true,
+        "scalar_mixed_or_self_bilinear_mass_basis_checked": false,
+        "note": "Scalar masses are unbroken unsplit parameters, not all physical eigenmasses"
+      },
+      "c5_output": "output\\general_observable\\all16_v1\\C_m3\\c5_conditional.json",
+      "neutrino_masses_ev": [
+        0.010654923949357657,
+        0.011564533249984514,
+        0.01330807586563162
+      ],
+      "c5_trajectory_csv": "output\\general_observable\\all16_v1\\C_m3\\c5_trajectory\\c5_running.csv",
+      "c5_endpoint_relative_check": 0.0
+    },
+    {
+      "model": "C_-1",
+      "output_folder": "output\\general_observable\\all16_v1\\C_m1",
+      "rge_status": "Success",
+      "c5_status": "BlockedGenericMixedScalarC5AdapterNotImplemented",
+      "uv_trajectory_entries": 1001,
+      "eft1_trajectory_entries": 650,
+      "rge_output": "output\\general_observable\\all16_v1\\C_m1\\running.json",
+      "uv_coupling_names": 29,
+      "eft1_coupling_names": 26,
+      "hierarchy": {
+        "grouped_fermion_matching_scale_gev": 100000.0,
+        "heavy_fermion_singular_masses_at_F_gev": [
+          173539.2990594639,
+          208247.1588713567,
+          231385.73207928883
+        ],
+        "all_fermion_masses_above_mu_F": true,
+        "scalar_matching_scale_gev": 1000.0,
+        "unbroken_scalar_mass_parameters_at_S_gev": [
+          1382.931993081438,
+          1595.151626402905
+        ],
+        "all_unsplit_scalar_masses_above_mu_S": true,
+        "scalar_mixed_or_self_bilinear_mass_basis_checked": false,
+        "note": "Scalar masses are unbroken unsplit parameters, not all physical eigenmasses"
+      },
+      "c5_reason": "B/C(-1) mass-eigenstate one-scale matching has separate exploratory machinery, not a model-independent coupled UV-state/EFT1-state matching API"
+    },
+    {
+      "model": "C_+1",
+      "output_folder": "output\\general_observable\\all16_v1\\C_p1",
+      "rge_status": "Success",
+      "c5_status": "ConditionalC5AndSMRunningSuccess",
+      "uv_trajectory_entries": 910,
+      "eft1_trajectory_entries": 559,
+      "rge_output": "output\\general_observable\\all16_v1\\C_p1\\running.json",
+      "uv_coupling_names": 22,
+      "eft1_coupling_names": 19,
+      "hierarchy": {
+        "grouped_fermion_matching_scale_gev": 100000.0,
+        "heavy_fermion_singular_masses_at_F_gev": [
+          176071.3777148962,
+          211285.65325787547,
+          234761.83695319682
+        ],
+        "all_fermion_masses_above_mu_F": true,
+        "scalar_matching_scale_gev": 1000.0,
+        "unbroken_scalar_mass_parameters_at_S_gev": [
+          1372.9550184441869,
+          1663.187780914849
+        ],
+        "all_unsplit_scalar_masses_above_mu_S": true,
+        "scalar_mixed_or_self_bilinear_mass_basis_checked": false,
+        "note": "Scalar masses are unbroken unsplit parameters, not all physical eigenmasses"
+      },
+      "c5_output": "output\\general_observable\\all16_v1\\C_p1\\c5_conditional.json",
+      "neutrino_masses_ev": [
+        0.010701103489498723,
+        0.011614379308732591,
+        0.013364852313844072
+      ],
+      "c5_trajectory_csv": "output\\general_observable\\all16_v1\\C_p1\\c5_trajectory\\c5_running.csv",
+      "c5_endpoint_relative_check": 0.0
+    },
+    {
+      "model": "D_-2",
+      "output_folder": "output\\general_observable\\all16_v1\\D_m2",
+      "rge_status": "Success",
+      "c5_status": "C5StageFailed",
+      "uv_trajectory_entries": 1079,
+      "eft1_trajectory_entries": 611,
+      "rge_output": "output\\general_observable\\all16_v1\\D_m2\\running.json",
+      "uv_coupling_names": 27,
+      "eft1_coupling_names": 23,
+      "hierarchy": {
+        "grouped_fermion_matching_scale_gev": 100000.0,
+        "heavy_fermion_singular_masses_at_F_gev": [
+          159476.0019087392,
+          191371.20229048707,
+          212634.66921165504
+        ],
+        "all_fermion_masses_above_mu_F": true,
+        "scalar_matching_scale_gev": 1000.0,
+        "unbroken_scalar_mass_parameters_at_S_gev": [
+          1593.6606843119025,
+          1493.5324789439126
+        ],
+        "all_unsplit_scalar_masses_above_mu_S": true,
+        "scalar_mixed_or_self_bilinear_mass_basis_checked": false,
+        "note": "Scalar masses are unbroken unsplit parameters, not all physical eigenmasses"
+      },
+      "failure_stage": "Matchete_general_one_scale_matching",
+      "c5_error": "ValueError: Full-general flavour C5: missing vectorlike right rotation",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\scripts\\RunGeneralT3Observable.py\", line 334, in run_one\n    c5 = np.asarray(matcher.evaluate(uv.final_state, eft.final_state), dtype=complex)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\Numerical\\matching\\GeneralT3FlavourC5.py\", line 204, in evaluate\n    masses, yukawas, basis_diagnostics = prepare_heavy_flavour(\n                                         ^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\Numerical\\matching\\GeneralT3FlavourC5.py\", line 74, in prepare_heavy_flavour\n    _require(basis.right_rotation is not None,\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\Numerical\\matching\\GeneralT3FlavourC5.py\", line 37, in _require\n    raise ValueError('Full-general flavour C5: ' + reason)\nValueError: Full-general flavour C5: missing vectorlike right rotation\n"
+    },
+    {
+      "model": "D_+0",
+      "output_folder": "output\\general_observable\\all16_v1\\D_p0",
+      "rge_status": "Success",
+      "c5_status": "ConditionalC5AndSMRunningSuccess",
+      "uv_trajectory_entries": 1079,
+      "eft1_trajectory_entries": 611,
+      "rge_output": "output\\general_observable\\all16_v1\\D_p0\\running.json",
+      "uv_coupling_names": 27,
+      "eft1_coupling_names": 23,
+      "hierarchy": {
+        "grouped_fermion_matching_scale_gev": 100000.0,
+        "heavy_fermion_singular_masses_at_F_gev": [
+          159478.0780009864,
+          191373.69360118368,
+          212637.43733465168
+        ],
+        "all_fermion_masses_above_mu_F": true,
+        "scalar_matching_scale_gev": 1000.0,
+        "unbroken_scalar_mass_parameters_at_S_gev": [
+          1548.9267838414598,
+          1525.2914981089746
+        ],
+        "all_unsplit_scalar_masses_above_mu_S": true,
+        "scalar_mixed_or_self_bilinear_mass_basis_checked": false,
+        "note": "Scalar masses are unbroken unsplit parameters, not all physical eigenmasses"
+      },
+      "c5_output": "output\\general_observable\\all16_v1\\D_p0\\c5_conditional.json",
+      "neutrino_masses_ev": [
+        0.03726570808743686,
+        0.04042279053352243,
+        0.0464656793973561
+      ],
+      "c5_trajectory_csv": "output\\general_observable\\all16_v1\\D_p0\\c5_trajectory\\c5_running.csv",
+      "c5_endpoint_relative_check": 0.0
+    },
+    {
+      "model": "D_+2",
+      "output_folder": "output\\general_observable\\all16_v1\\D_p2",
+      "rge_status": "Success",
+      "c5_status": "ConditionalC5AndSMRunningSuccess",
+      "uv_trajectory_entries": 884,
+      "eft1_trajectory_entries": 533,
+      "rge_output": "output\\general_observable\\all16_v1\\D_p2\\running.json",
+      "uv_coupling_names": 20,
+      "eft1_coupling_names": 17,
+      "hierarchy": {
+        "grouped_fermion_matching_scale_gev": 100000.0,
+        "heavy_fermion_singular_masses_at_F_gev": [
+          166140.0894352788,
+          199368.1073223345,
+          221520.11924704048
+        ],
+        "all_fermion_masses_above_mu_F": true,
+        "scalar_matching_scale_gev": 1000.0,
+        "unbroken_scalar_mass_parameters_at_S_gev": [
+          1591.8660573777374,
+          1633.9068404203226
+        ],
+        "all_unsplit_scalar_masses_above_mu_S": true,
+        "scalar_mixed_or_self_bilinear_mass_basis_checked": false,
+        "note": "Scalar masses are unbroken unsplit parameters, not all physical eigenmasses"
+      },
+      "c5_output": "output\\general_observable\\all16_v1\\D_p2\\c5_conditional.json",
+      "neutrino_masses_ev": [
+        0.02034841365777529,
+        0.022071249736975093,
+        0.025368510901784953
+      ],
+      "c5_trajectory_csv": "output\\general_observable\\all16_v1\\D_p2\\c5_trajectory\\c5_running.csv",
+      "c5_endpoint_relative_check": 0.0
+    },
+    {
+      "model": "E_-4",
+      "output_folder": "output\\general_observable\\all16_v1\\E_m4",
+      "rge_status": "Success",
+      "c5_status": "ConditionalC5AndSMRunningSuccess",
+      "uv_trajectory_entries": 936,
+      "eft1_trajectory_entries": 585,
+      "rge_output": "output\\general_observable\\all16_v1\\E_m4\\running.json",
+      "uv_coupling_names": 24,
+      "eft1_coupling_names": 21,
+      "hierarchy": {
+        "grouped_fermion_matching_scale_gev": 100000.0,
+        "heavy_fermion_singular_masses_at_F_gev": [
+          165998.33551984918,
+          199198.002623819,
+          221331.1140264681
+        ],
+        "all_fermion_masses_above_mu_F": true,
+        "scalar_matching_scale_gev": 1000.0,
+        "unbroken_scalar_mass_parameters_at_S_gev": [
+          1795.417696614827,
+          1856.4350508083542
+        ],
+        "all_unsplit_scalar_masses_above_mu_S": true,
+        "scalar_mixed_or_self_bilinear_mass_basis_checked": false,
+        "note": "Scalar masses are unbroken unsplit parameters, not all physical eigenmasses"
+      },
+      "c5_output": "output\\general_observable\\all16_v1\\E_m4\\c5_conditional.json",
+      "neutrino_masses_ev": [
+        0.0329131658854553,
+        0.035674762149040515,
+        0.04095111235372391
+      ],
+      "c5_trajectory_csv": "output\\general_observable\\all16_v1\\E_m4\\c5_trajectory\\c5_running.csv",
+      "c5_endpoint_relative_check": 0.0
+    },
+    {
+      "model": "E_-2",
+      "output_folder": "output\\general_observable\\all16_v1\\E_m2",
+      "rge_status": "Success",
+      "c5_status": "C5StageFailed",
+      "uv_trajectory_entries": 1144,
+      "eft1_trajectory_entries": 676,
+      "rge_output": "output\\general_observable\\all16_v1\\E_m2\\running.json",
+      "uv_coupling_names": 32,
+      "eft1_coupling_names": 28,
+      "hierarchy": {
+        "grouped_fermion_matching_scale_gev": 100000.0,
+        "heavy_fermion_singular_masses_at_F_gev": [
+          159402.98518715805,
+          191283.58222458963,
+          212537.31358288095
+        ],
+        "all_fermion_masses_above_mu_F": true,
+        "scalar_matching_scale_gev": 1000.0,
+        "unbroken_scalar_mass_parameters_at_S_gev": [
+          1612.801908105549,
+          1799.247099616284
+        ],
+        "all_unsplit_scalar_masses_above_mu_S": true,
+        "scalar_mixed_or_self_bilinear_mass_basis_checked": false,
+        "note": "Scalar masses are unbroken unsplit parameters, not all physical eigenmasses"
+      },
+      "failure_stage": "Matchete_general_one_scale_matching",
+      "c5_error": "ValueError: Full-general flavour C5: missing vectorlike right rotation",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\scripts\\RunGeneralT3Observable.py\", line 334, in run_one\n    c5 = np.asarray(matcher.evaluate(uv.final_state, eft.final_state), dtype=complex)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\Numerical\\matching\\GeneralT3FlavourC5.py\", line 204, in evaluate\n    masses, yukawas, basis_diagnostics = prepare_heavy_flavour(\n                                         ^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\Numerical\\matching\\GeneralT3FlavourC5.py\", line 74, in prepare_heavy_flavour\n    _require(basis.right_rotation is not None,\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\Numerical\\matching\\GeneralT3FlavourC5.py\", line 37, in _require\n    raise ValueError('Full-general flavour C5: ' + reason)\nValueError: Full-general flavour C5: missing vectorlike right rotation\n"
+    },
+    {
+      "model": "E_+0",
+      "output_folder": "output\\general_observable\\all16_v1\\E_p0",
+      "rge_status": "Success",
+      "c5_status": "ConditionalC5AndSMRunningSuccess",
+      "uv_trajectory_entries": 1144,
+      "eft1_trajectory_entries": 676,
+      "rge_output": "output\\general_observable\\all16_v1\\E_p0\\running.json",
+      "uv_coupling_names": 32,
+      "eft1_coupling_names": 28,
+      "hierarchy": {
+        "grouped_fermion_matching_scale_gev": 100000.0,
+        "heavy_fermion_singular_masses_at_F_gev": [
+          159402.98518715805,
+          191283.58222458966,
+          212537.31358288098
+        ],
+        "all_fermion_masses_above_mu_F": true,
+        "scalar_matching_scale_gev": 1000.0,
+        "unbroken_scalar_mass_parameters_at_S_gev": [
+          1569.7246189538728,
+          1849.7857482532834
+        ],
+        "all_unsplit_scalar_masses_above_mu_S": true,
+        "scalar_mixed_or_self_bilinear_mass_basis_checked": false,
+        "note": "Scalar masses are unbroken unsplit parameters, not all physical eigenmasses"
+      },
+      "c5_output": "output\\general_observable\\all16_v1\\E_p0\\c5_conditional.json",
+      "neutrino_masses_ev": [
+        0.06070265811418952,
+        0.06580432291321497,
+        0.07555466739789517
+      ],
+      "c5_trajectory_csv": "output\\general_observable\\all16_v1\\E_p0\\c5_trajectory\\c5_running.csv",
+      "c5_endpoint_relative_check": 0.0
+    },
+    {
+      "model": "E_+2",
+      "output_folder": "output\\general_observable\\all16_v1\\E_p2",
+      "rge_status": "Success",
+      "c5_status": "ConditionalC5AndSMRunningSuccess",
+      "uv_trajectory_entries": 936,
+      "eft1_trajectory_entries": 585,
+      "rge_output": "output\\general_observable\\all16_v1\\E_p2\\running.json",
+      "uv_coupling_names": 24,
+      "eft1_coupling_names": 21,
+      "hierarchy": {
+        "grouped_fermion_matching_scale_gev": 100000.0,
+        "heavy_fermion_singular_masses_at_F_gev": [
+          165998.3355198492,
+          199198.0026238191,
+          221331.11402646822
+        ],
+        "all_fermion_masses_above_mu_F": true,
+        "scalar_matching_scale_gev": 1000.0,
+        "unbroken_scalar_mass_parameters_at_S_gev": [
+          1625.9869772807601,
+          2055.029188861771
+        ],
+        "all_unsplit_scalar_masses_above_mu_S": true,
+        "scalar_mixed_or_self_bilinear_mass_basis_checked": false,
+        "note": "Scalar masses are unbroken unsplit parameters, not all physical eigenmasses"
+      },
+      "c5_output": "output\\general_observable\\all16_v1\\E_p2\\c5_conditional.json",
+      "neutrino_masses_ev": [
+        0.03270428150839108,
+        0.03544627004286209,
+        0.04068441285706375
+      ],
+      "c5_trajectory_csv": "output\\general_observable\\all16_v1\\E_p2\\c5_trajectory\\c5_running.csv",
+      "c5_endpoint_relative_check": 0.0
+    }
+  ]
+}

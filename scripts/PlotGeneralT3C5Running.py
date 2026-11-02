@@ -282,7 +282,7 @@ def run(args: argparse.Namespace) -> dict:
         "recomputed_solver_atol": args.atol,
         "input_running_sha256": digest(args.running_json),
         "input_c5_sha256": digest(args.c5_json),
-        "matching_method": "FullGeneralUnsplitMatcheteOneScaleCandidate",
+        "matching_method": matched.get("matching_kind", "general-one-scale-C5-unspecified"),
         "source_c5_matching": str(matched.get("coefficient", "")),
         "mu_scalar_gev": scalar_scale, "mu_low_gev": low_scale,
         "samples": args.points, "rge_nfev": int(ode.nfev),

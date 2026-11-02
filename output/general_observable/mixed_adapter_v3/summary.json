@@ -1,0 +1,94 @@
+{
+  "format": "t3-general-all16-numerical-observables-v1",
+  "canonical_run_id": "full16_general_v1",
+  "benchmark": "illustrative-real",
+  "scales_gev": {
+    "UV": 10000000.0,
+    "F": 100000.0,
+    "S": 1000.0,
+    "low": 91.1876
+  },
+  "selected_models": [
+    "B_-1",
+    "C_-1"
+  ],
+  "rge_success_count": 2,
+  "conditional_c5_low_success_count": 2,
+  "mixed_model_conditional_c5_count": 2,
+  "physically_certified_sequential_eft_count": 0,
+  "matchete_rgbeta_coupling_dictionary_certified": false,
+  "results": [
+    {
+      "model": "B_-1",
+      "output_folder": "output\\general_observable\\mixed_adapter_v3\\B_m1",
+      "rge_status": "Success",
+      "c5_status": "ConditionalC5AndSMRunningSuccess",
+      "uv_trajectory_entries": 1001,
+      "eft1_trajectory_entries": 650,
+      "rge_output": "output\\general_observable\\mixed_adapter_v3\\B_m1\\running.json",
+      "uv_coupling_names": 29,
+      "eft1_coupling_names": 26,
+      "hierarchy": {
+        "grouped_fermion_matching_scale_gev": 100000.0,
+        "heavy_fermion_singular_masses_at_F_gev": [
+          149999.99711125903,
+          179999.9965335109,
+          199999.99614835114
+        ],
+        "all_fermion_masses_above_mu_F": true,
+        "scalar_matching_scale_gev": 1000.0,
+        "unbroken_scalar_mass_parameters_at_S_gev": [
+          1387.3059057242608,
+          1600.7697667918765
+        ],
+        "all_unsplit_scalar_masses_above_mu_S": true,
+        "scalar_mixed_or_self_bilinear_mass_basis_checked": false,
+        "note": "Scalar masses are unbroken unsplit parameters, not all physical eigenmasses"
+      },
+      "c5_output": "output\\general_observable\\mixed_adapter_v3\\B_m1\\c5_conditional.json",
+      "neutrino_masses_ev": [
+        0.09350370257711316,
+        0.1014063904649187,
+        0.116526025655043
+      ],
+      "c5_trajectory_csv": "output\\general_observable\\mixed_adapter_v3\\B_m1\\c5_trajectory\\c5_running.csv",
+      "c5_endpoint_relative_check": 0.0
+    },
+    {
+      "model": "C_-1",
+      "output_folder": "output\\general_observable\\mixed_adapter_v3\\C_m1",
+      "rge_status": "Success",
+      "c5_status": "ConditionalC5AndSMRunningSuccess",
+      "uv_trajectory_entries": 1001,
+      "eft1_trajectory_entries": 650,
+      "rge_output": "output\\general_observable\\mixed_adapter_v3\\C_m1\\running.json",
+      "uv_coupling_names": 29,
+      "eft1_coupling_names": 26,
+      "hierarchy": {
+        "grouped_fermion_matching_scale_gev": 100000.0,
+        "heavy_fermion_singular_masses_at_F_gev": [
+          173539.2990594639,
+          208247.1588713567,
+          231385.73207928883
+        ],
+        "all_fermion_masses_above_mu_F": true,
+        "scalar_matching_scale_gev": 1000.0,
+        "unbroken_scalar_mass_parameters_at_S_gev": [
+          1382.931993081438,
+          1595.151626402905
+        ],
+        "all_unsplit_scalar_masses_above_mu_S": true,
+        "scalar_mixed_or_self_bilinear_mass_basis_checked": false,
+        "note": "Scalar masses are unbroken unsplit parameters, not all physical eigenmasses"
+      },
+      "c5_output": "output\\general_observable\\mixed_adapter_v3\\C_m1\\c5_conditional.json",
+      "neutrino_masses_ev": [
+        0.018273805526964688,
+        0.019834818911290124,
+        0.02282732905168286
+      ],
+      "c5_trajectory_csv": "output\\general_observable\\mixed_adapter_v3\\C_m1\\c5_trajectory\\c5_running.csv",
+      "c5_endpoint_relative_check": 0.0
+    }
+  ]
+}

@@ -44,8 +44,35 @@ def _raw_matrix(raw: Any, name: str) -> np.ndarray:
     return value
 
 
+def _diagonal_positive_identity_right_rotation(uv_state: Any,
+                                              basis: Any) -> np.ndarray:
+    """Fill an absent vectorlike right SVD matrix only in the verified identity case.
+
+    FinalC5TrajectoryAdapter._heavy_mass_basis_data has a fast path for already
+    diagonal, positive, real MF. That path returns the identity left rotation
+    but right_rotation=None for both Majorana and vectorlike representations.
+    The vectorlike right rotation is also the identity in precisely that basis.
+    Never silently replace a missing nontrivial SVD rotation with the identity.
+    """
+    mf = _raw_matrix(uv_state.MF, 'MF')
+    diagonal = np.diag(mf)
+    _require(np.allclose(mf, np.diag(diagonal), rtol=0.0, atol=1e-7),
+             'missing vectorlike right rotation for non-diagonal MF')
+    _require(np.allclose(diagonal.imag, 0.0, rtol=0.0, atol=1e-9)
+             and bool(np.all(diagonal.real > 0.0)),
+             'missing vectorlike right rotation for non-positive-real MF')
+    identity = np.eye(3, dtype=complex)
+    _require(np.allclose(np.asarray(basis.rotation), identity,
+                         rtol=0.0, atol=1e-12),
+             'missing vectorlike right rotation with non-identity left rotation')
+    _require(np.allclose(np.asarray(basis.masses_gev, dtype=float), diagonal.real,
+                         rtol=1e-10, atol=1e-7),
+             'missing vectorlike right rotation with nontrivial mass ordering')
+    return identity
+
+
 def prepare_heavy_flavour(uv_state: Any, required: set[str]):
-    """Reuse the original Takagi/SVD transformation for all allowed channels.
+    """Reuse original Takagi/SVD transformations for all allowed channels.
 
     For an extra conjugate-scalar Yukawa the same heavy chiral leg as its
     parent y1 or y2 is assumed. This extra-vertex assignment is provisional.
@@ -63,6 +90,7 @@ def prepare_heavy_flavour(uv_state: Any, required: set[str]):
     yukawas = {'y1': _raw_matrix(basis.y1, 'y1'),
                'y2': _raw_matrix(basis.y2, 'y2')}
     extra = uv_state.general_couplings
+    right_identity_fallback = False
     for key in sorted(required - {'y1', 'y2'}):
         _require(key in extra, 'matching requires missing UV Yukawa ' + key)
         raw = _raw_matrix(extra[key], key)
@@ -71,14 +99,18 @@ def prepare_heavy_flavour(uv_state: Any, required: set[str]):
         elif key == 'y1Conj':
             rotation = basis.rotation.conj()
         else:
-            _require(basis.right_rotation is not None,
-                     'missing vectorlike right rotation')
-            rotation = basis.right_rotation
+            if basis.right_rotation is None:
+                rotation = _diagonal_positive_identity_right_rotation(uv_state, basis)
+                right_identity_fallback = True
+            else:
+                rotation = basis.right_rotation
         yukawas[key] = raw @ rotation
-    return masses, yukawas, {'heavy_basis_residual': float(max(
-        basis.takagi_residual, basis.basis_residual)),
+    return masses, yukawas, {
+        'heavy_basis_residual': float(max(basis.takagi_residual, basis.basis_residual)),
         'extra_yukawa_rotation': 'same-heavy-leg-as-parent-assumption'
-        if required - {'y1', 'y2'} else 'not-applicable'}
+        if required - {'y1', 'y2'} else 'not-applicable',
+        'vectorlike_right_rotation_identity_fast_path': right_identity_fallback,
+    }
 
 
 def flavour_c5_from_channels(rows: list[dict], yukawas: Mapping[str, np.ndarray],
@@ -120,7 +152,6 @@ def flavour_c5_from_channels(rows: list[dict], yukawas: Mapping[str, np.ndarray]
     _require(np.isfinite(result.real).all() and np.isfinite(result.imag).all(),
              'nonfinite assembled C5')
     return result
-
 
 
 def validate_real_self_bilinear(model: str, value: complex) -> complex:

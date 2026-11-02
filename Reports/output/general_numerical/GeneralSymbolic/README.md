@@ -10,6 +10,6 @@ The beta expressions contain their group-dependent coefficients, but no independ
 
 | Model | Extra quartics | Extra bilinears | Extra Yukawa | Status | Report |
 |---|---:|---:|---|---|---|
-| B_+1 | 1 | 0 | — | SymbolicRGExportedMatchingUnverified | [Detail](models/B_p1.md) |
+| C_-1 | 7 | 1 | — | SymbolicRGExportedMassBasisBlocked | [Detail](models/C_m1.md) |
 
 See also [exact group invariants](group_invariants.csv) and [machine-readable status](summary.json).

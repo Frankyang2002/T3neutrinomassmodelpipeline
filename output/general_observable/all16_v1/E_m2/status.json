@@ -1,0 +1,31 @@
+{
+  "model": "E_-2",
+  "output_folder": "output\\general_observable\\all16_v1\\E_m2",
+  "rge_status": "Success",
+  "c5_status": "C5StageFailed",
+  "uv_trajectory_entries": 1144,
+  "eft1_trajectory_entries": 676,
+  "rge_output": "output\\general_observable\\all16_v1\\E_m2\\running.json",
+  "uv_coupling_names": 32,
+  "eft1_coupling_names": 28,
+  "hierarchy": {
+    "grouped_fermion_matching_scale_gev": 100000.0,
+    "heavy_fermion_singular_masses_at_F_gev": [
+      159402.98518715805,
+      191283.58222458963,
+      212537.31358288095
+    ],
+    "all_fermion_masses_above_mu_F": true,
+    "scalar_matching_scale_gev": 1000.0,
+    "unbroken_scalar_mass_parameters_at_S_gev": [
+      1612.801908105549,
+      1799.247099616284
+    ],
+    "all_unsplit_scalar_masses_above_mu_S": true,
+    "scalar_mixed_or_self_bilinear_mass_basis_checked": false,
+    "note": "Scalar masses are unbroken unsplit parameters, not all physical eigenmasses"
+  },
+  "failure_stage": "Matchete_general_one_scale_matching",
+  "c5_error": "ValueError: Full-general flavour C5: missing vectorlike right rotation",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\scripts\\RunGeneralT3Observable.py\", line 334, in run_one\n    c5 = np.asarray(matcher.evaluate(uv.final_state, eft.final_state), dtype=complex)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\Numerical\\matching\\GeneralT3FlavourC5.py\", line 204, in evaluate\n    masses, yukawas, basis_diagnostics = prepare_heavy_flavour(\n                                         ^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\Numerical\\matching\\GeneralT3FlavourC5.py\", line 74, in prepare_heavy_flavour\n    _require(basis.right_rotation is not None,\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\Numerical\\matching\\GeneralT3FlavourC5.py\", line 37, in _require\n    raise ValueError('Full-general flavour C5: ' + reason)\nValueError: Full-general flavour C5: missing vectorlike right rotation\n"
+}

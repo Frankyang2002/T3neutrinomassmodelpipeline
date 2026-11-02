@@ -1,0 +1,967 @@
+{
+  "format": "t3-joint-scalar-physical-readiness-batch-v3",
+  "status": "AllSourcePivotsAndFullSU2Verified_PhysicalInputsPending",
+  "models_checked": 16,
+  "models_source_pivot_su2_verified": 16,
+  "conditional_responses_computed": 0,
+  "blocked_models": 0,
+  "source_release_summary_sha256": "e515d82d118284bab72dbad6ba593aabc529aea08f0a7e47b08cd5049361cfcd",
+  "signed_normalization_evidence": {
+    "absolute_matchete_to_weyl_factor": null,
+    "physical_spinor_normalization_certified": false,
+    "source_boundary_release_sha256": "e515d82d118284bab72dbad6ba593aabc529aea08f0a7e47b08cd5049361cfcd",
+    "blocking_items": [
+      "native signed UV-to-EFT1 four-point amplitude not certified",
+      "declared Weyl contact does not fix native GammaCC phase",
+      "independent numerical Matchete-to-master signed normalization certificate absent"
+    ],
+    "native_feynman": {
+      "status": "Blocked",
+      "sha256": "47132c562a0972b9b58a45cf585f663a3089fd71fc98110890666d916ba757b5",
+      "path": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_fermion_boundary\\normalization_probes\\native_feynman_a_m4_b669a99ea16d439b8c50e81b16dbd1c8.json",
+      "format": "t3-native-matchete-fr-evidence-v1",
+      "blocked_phase": "EFT1 Feynman rules",
+      "reason": "No nonempty native EFT1 LLSS contact vertex"
+    },
+    "grassmann_contact": {
+      "status": "ConditionalSignedContactOnly_NoPhysicalCertification",
+      "sha256": "e7070b3d7e1809151e6372aa950492f7e56cf9c3ecf5d1601a8b1d6f104d41b6",
+      "path": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_fermion_boundary\\normalization_probes\\signed_zero_momentum_d734e270ed0138fa.json",
+      "format": "t3-signed-zero-momentum-grassmann-diagnostic-v1"
+    }
+  },
+  "normalization_certified": false,
+  "physical_C5_certified": false,
+  "notes": "Source resolved F-tree and full-SU2 parity at muF are formal. Optional LLSS-only leading log plus finite joint scalar bubble is conditional, not the full one-loop SMEFT Wilson coefficient.",
+  "sequence": "UV -> integrate out all F together -> EFT1(S1,S2) -> integrate out all scalars together at single muS -> SMEFT",
+  "models": [
+    {
+      "model": "A_-4",
+      "status": "source_pivot_and_full_SU2_verified",
+      "physical_C5_certified": false,
+      "fermion_boundary_source_sha256": "a51a31e437628ab8a1e6adfaf054bf1da5309b158574971999f8a2bce3bb80ed",
+      "mu_f_gev": 100000.0,
+      "source_scalar_real_labels": [
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar2",
+        "NewScalar2",
+        "NewScalar2",
+        "NewScalar2",
+        "NewScalar2",
+        "NewScalar2"
+      ],
+      "pivot": {
+        "pivot_kernel_sha256": "fa2cf6750282d59617b1ee2765a2b76b3d6897b8512b1fbfb9562c443ac22b8a",
+        "source_count": 1,
+        "pivot_per_source_channels": 8,
+        "distinct_scalar_pairs": 8,
+        "cancelled_source_pairs_omitted_by_kernel": 0,
+        "source_vs_kernel_max_abs_error": 0.0,
+        "pivot_convention": "4*(2-delta_ab)*C_formal[lepton_SU2=1,lepton_SU2=1,a,b]",
+        "physical_normalization_certified": false
+      },
+      "full_su2": {
+        "full_su2_source_file_sha256": "181bf16d20956047790a49a1da1492b0f4e5d4b0afd0b58060f86b9df4b779cc",
+        "source_boundary_sha256": "a51a31e437628ab8a1e6adfaf054bf1da5309b158574971999f8a2bce3bb80ed",
+        "source_count_verified": 1,
+        "unordered_source_scalar_pairs_verified": 12,
+        "nonzero_source_scalar_pairs": 12,
+        "distinct_pair_count_before_cancellation": 12,
+        "distinct_pair_count_after_cancellation": 12,
+        "max_component_abs_error_gev_inverse": 0.0,
+        "full_two_lepton_SU2_component_parity": true,
+        "physical_GammaCC_normalization_certified": false,
+        "full_one_loop_certified": false
+      },
+      "spinor_normalization_certified": false,
+      "background_at_muS_available": false,
+      "missing_scalar_background_at_muS": {
+        "required_metadata": "A_m4.json",
+        "required_npz": "A_m4.npz",
+        "required_content": [
+          "source-to-matching real orthogonal basis transform",
+          "positive all-heavy-scalar mass-squared matrix at muS",
+          "full HHSS quartic tensor and independently labelled quartic channels at muS"
+        ],
+        "previous_v2_contract": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\integrated_batch_v2\\scalar_background_contracts\\A_m4.json"
+      },
+      "remaining_physics_blockers": [
+        "signed GammaCC/Weyl source normalization not certified",
+        "full renormalized EFT1 same-scale evolution/finite one-loop matching not certified",
+        "hard one-loop heavy-F matching and possible additional dim5 operator sectors not certified"
+      ]
+    },
+    {
+      "model": "A_-2",
+      "status": "source_pivot_and_full_SU2_verified",
+      "physical_C5_certified": false,
+      "fermion_boundary_source_sha256": "4109d135dcb5080ccb3ae78ebf670ee4c58a596e7ff4a14d44d91a8c94abc805",
+      "mu_f_gev": 100000.0,
+      "source_scalar_real_labels": [
+        "NewScalar1",
+        "NewScalar1",
+        "T3Scalar2Minus",
+        "T3Scalar2Minus",
+        "T3Scalar2Minus",
+        "T3Scalar2Plus",
+        "T3Scalar2Plus",
+        "T3Scalar2Plus"
+      ],
+      "pivot": {
+        "pivot_kernel_sha256": "0654b54b204e89408212c80e51f3a1934c2135ca1fcc2dfaee5027c402e85263",
+        "source_count": 4,
+        "pivot_per_source_channels": 16,
+        "distinct_scalar_pairs": 8,
+        "cancelled_source_pairs_omitted_by_kernel": 0,
+        "source_vs_kernel_max_abs_error": 0.0,
+        "pivot_convention": "4*(2-delta_ab)*C_formal[lepton_SU2=1,lepton_SU2=1,a,b]",
+        "physical_normalization_certified": false
+      },
+      "full_su2": {
+        "full_su2_source_file_sha256": "9a5695d35202fed2a8313047276e509582781ee00923836bb251d733d9791a63",
+        "source_boundary_sha256": "4109d135dcb5080ccb3ae78ebf670ee4c58a596e7ff4a14d44d91a8c94abc805",
+        "source_count_verified": 4,
+        "unordered_source_scalar_pairs_verified": 24,
+        "nonzero_source_scalar_pairs": 24,
+        "distinct_pair_count_before_cancellation": 12,
+        "distinct_pair_count_after_cancellation": 12,
+        "max_component_abs_error_gev_inverse": 0.0,
+        "full_two_lepton_SU2_component_parity": true,
+        "physical_GammaCC_normalization_certified": false,
+        "full_one_loop_certified": false
+      },
+      "spinor_normalization_certified": false,
+      "background_at_muS_available": false,
+      "missing_scalar_background_at_muS": {
+        "required_metadata": "A_m2.json",
+        "required_npz": "A_m2.npz",
+        "required_content": [
+          "source-to-matching real orthogonal basis transform",
+          "positive all-heavy-scalar mass-squared matrix at muS",
+          "full HHSS quartic tensor and independently labelled quartic channels at muS"
+        ],
+        "previous_v2_contract": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\integrated_batch_v2\\scalar_background_contracts\\A_m2.json"
+      },
+      "remaining_physics_blockers": [
+        "signed GammaCC/Weyl source normalization not certified",
+        "full renormalized EFT1 same-scale evolution/finite one-loop matching not certified",
+        "hard one-loop heavy-F matching and possible additional dim5 operator sectors not certified"
+      ]
+    },
+    {
+      "model": "A_+0",
+      "status": "source_pivot_and_full_SU2_verified",
+      "physical_C5_certified": false,
+      "fermion_boundary_source_sha256": "8b6cf6714a1193e4d44e865152d87e576428421ab9207da29aee9369022bdc89",
+      "mu_f_gev": 100000.0,
+      "source_scalar_real_labels": [
+        "T3Scalar1Minus",
+        "T3Scalar1Plus",
+        "NewScalar2",
+        "NewScalar2",
+        "NewScalar2",
+        "NewScalar2",
+        "NewScalar2",
+        "NewScalar2"
+      ],
+      "pivot": {
+        "pivot_kernel_sha256": "ae01926135a2c8edbaa7144e0ad97252c42fdb30fb174bfa9dbe6fe9ddf797c8",
+        "source_count": 4,
+        "pivot_per_source_channels": 16,
+        "distinct_scalar_pairs": 8,
+        "cancelled_source_pairs_omitted_by_kernel": 0,
+        "source_vs_kernel_max_abs_error": 0.0,
+        "pivot_convention": "4*(2-delta_ab)*C_formal[lepton_SU2=1,lepton_SU2=1,a,b]",
+        "physical_normalization_certified": false
+      },
+      "full_su2": {
+        "full_su2_source_file_sha256": "f8c382d9f0101ef4b09e6d00c48015f56dc588f37da36a3d3fe8e7c08518ff32",
+        "source_boundary_sha256": "8b6cf6714a1193e4d44e865152d87e576428421ab9207da29aee9369022bdc89",
+        "source_count_verified": 4,
+        "unordered_source_scalar_pairs_verified": 24,
+        "nonzero_source_scalar_pairs": 24,
+        "distinct_pair_count_before_cancellation": 12,
+        "distinct_pair_count_after_cancellation": 12,
+        "max_component_abs_error_gev_inverse": 0.0,
+        "full_two_lepton_SU2_component_parity": true,
+        "physical_GammaCC_normalization_certified": false,
+        "full_one_loop_certified": false
+      },
+      "spinor_normalization_certified": false,
+      "background_at_muS_available": false,
+      "missing_scalar_background_at_muS": {
+        "required_metadata": "A_p0.json",
+        "required_npz": "A_p0.npz",
+        "required_content": [
+          "source-to-matching real orthogonal basis transform",
+          "positive all-heavy-scalar mass-squared matrix at muS",
+          "full HHSS quartic tensor and independently labelled quartic channels at muS"
+        ],
+        "previous_v2_contract": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\integrated_batch_v2\\scalar_background_contracts\\A_p0.json"
+      },
+      "remaining_physics_blockers": [
+        "signed GammaCC/Weyl source normalization not certified",
+        "full renormalized EFT1 same-scale evolution/finite one-loop matching not certified",
+        "hard one-loop heavy-F matching and possible additional dim5 operator sectors not certified"
+      ]
+    },
+    {
+      "model": "B_-3",
+      "status": "source_pivot_and_full_SU2_verified",
+      "physical_C5_certified": false,
+      "fermion_boundary_source_sha256": "d90d991722162dcb6b98e1a856805ba8ea0a2e801818924c8615acf16f32f535",
+      "mu_f_gev": 100000.0,
+      "source_scalar_real_labels": [
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar2",
+        "NewScalar2",
+        "NewScalar2",
+        "NewScalar2"
+      ],
+      "pivot": {
+        "pivot_kernel_sha256": "297738fefd9135d64fe51c2eeb0317a011a68d769b9bd3ed72521dec887330a1",
+        "source_count": 1,
+        "pivot_per_source_channels": 4,
+        "distinct_scalar_pairs": 4,
+        "cancelled_source_pairs_omitted_by_kernel": 0,
+        "source_vs_kernel_max_abs_error": 0.0,
+        "pivot_convention": "4*(2-delta_ab)*C_formal[lepton_SU2=1,lepton_SU2=1,a,b]",
+        "physical_normalization_certified": false
+      },
+      "full_su2": {
+        "full_su2_source_file_sha256": "a992c1159abe7ee10261b4abb5c4952d0e14a9fb12a56ef8b9c6dd49ff6c9bf9",
+        "source_boundary_sha256": "d90d991722162dcb6b98e1a856805ba8ea0a2e801818924c8615acf16f32f535",
+        "source_count_verified": 1,
+        "unordered_source_scalar_pairs_verified": 16,
+        "nonzero_source_scalar_pairs": 16,
+        "distinct_pair_count_before_cancellation": 16,
+        "distinct_pair_count_after_cancellation": 16,
+        "max_component_abs_error_gev_inverse": 0.0,
+        "full_two_lepton_SU2_component_parity": true,
+        "physical_GammaCC_normalization_certified": false,
+        "full_one_loop_certified": false
+      },
+      "spinor_normalization_certified": false,
+      "background_at_muS_available": false,
+      "missing_scalar_background_at_muS": {
+        "required_metadata": "B_m3.json",
+        "required_npz": "B_m3.npz",
+        "required_content": [
+          "source-to-matching real orthogonal basis transform",
+          "positive all-heavy-scalar mass-squared matrix at muS",
+          "full HHSS quartic tensor and independently labelled quartic channels at muS"
+        ],
+        "previous_v2_contract": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\integrated_batch_v2\\scalar_background_contracts\\B_m3.json"
+      },
+      "remaining_physics_blockers": [
+        "signed GammaCC/Weyl source normalization not certified",
+        "full renormalized EFT1 same-scale evolution/finite one-loop matching not certified",
+        "hard one-loop heavy-F matching and possible additional dim5 operator sectors not certified"
+      ]
+    },
+    {
+      "model": "B_-1",
+      "status": "source_pivot_and_full_SU2_verified",
+      "physical_C5_certified": false,
+      "fermion_boundary_source_sha256": "6a4d1531a9c52ebae69e73cf582196a29bf858027b4511d2771ad3d1eee103b4",
+      "mu_f_gev": 100000.0,
+      "source_scalar_real_labels": [
+        "NewScalarX",
+        "NewScalarX",
+        "NewScalarX",
+        "NewScalarX",
+        "NewScalarY",
+        "NewScalarY",
+        "NewScalarY",
+        "NewScalarY"
+      ],
+      "pivot": {
+        "pivot_kernel_sha256": "0702670e9840189c6a365169dd749789f44d353c7f40be973d671366584e9664",
+        "source_count": 10,
+        "pivot_per_source_channels": 34,
+        "distinct_scalar_pairs": 10,
+        "cancelled_source_pairs_omitted_by_kernel": 0,
+        "source_vs_kernel_max_abs_error": 0.0,
+        "pivot_convention": "4*(2-delta_ab)*C_formal[lepton_SU2=1,lepton_SU2=1,a,b]",
+        "physical_normalization_certified": false
+      },
+      "full_su2": {
+        "full_su2_source_file_sha256": "a20dc3045e11eeddad868800eafbd9eaea7e733678c905aa135013d80b8016a2",
+        "source_boundary_sha256": "6a4d1531a9c52ebae69e73cf582196a29bf858027b4511d2771ad3d1eee103b4",
+        "source_count_verified": 10,
+        "unordered_source_scalar_pairs_verified": 124,
+        "nonzero_source_scalar_pairs": 124,
+        "distinct_pair_count_before_cancellation": 36,
+        "distinct_pair_count_after_cancellation": 36,
+        "max_component_abs_error_gev_inverse": 2.524354896707238e-29,
+        "full_two_lepton_SU2_component_parity": true,
+        "physical_GammaCC_normalization_certified": false,
+        "full_one_loop_certified": false
+      },
+      "spinor_normalization_certified": false,
+      "background_at_muS_available": false,
+      "missing_scalar_background_at_muS": {
+        "required_metadata": "B_m1.json",
+        "required_npz": "B_m1.npz",
+        "required_content": [
+          "source-to-matching real orthogonal basis transform",
+          "positive all-heavy-scalar mass-squared matrix at muS",
+          "full HHSS quartic tensor and independently labelled quartic channels at muS"
+        ],
+        "previous_v2_contract": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\integrated_batch_v2\\scalar_background_contracts\\B_m1.json"
+      },
+      "remaining_physics_blockers": [
+        "signed GammaCC/Weyl source normalization not certified",
+        "full renormalized EFT1 same-scale evolution/finite one-loop matching not certified",
+        "hard one-loop heavy-F matching and possible additional dim5 operator sectors not certified"
+      ]
+    },
+    {
+      "model": "B_+1",
+      "status": "source_pivot_and_full_SU2_verified",
+      "physical_C5_certified": false,
+      "fermion_boundary_source_sha256": "ed0ec711732b8730495b28b0b5c2a738b6ed03f420d236b2b10900fd02a2bda7",
+      "mu_f_gev": 100000.0,
+      "source_scalar_real_labels": [
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar2",
+        "NewScalar2",
+        "NewScalar2",
+        "NewScalar2"
+      ],
+      "pivot": {
+        "pivot_kernel_sha256": "8f21e1ebf6ad1cc07e738827936b5653735f2870303b0de0ae06224e095fbf7e",
+        "source_count": 1,
+        "pivot_per_source_channels": 4,
+        "distinct_scalar_pairs": 4,
+        "cancelled_source_pairs_omitted_by_kernel": 0,
+        "source_vs_kernel_max_abs_error": 0.0,
+        "pivot_convention": "4*(2-delta_ab)*C_formal[lepton_SU2=1,lepton_SU2=1,a,b]",
+        "physical_normalization_certified": false
+      },
+      "full_su2": {
+        "full_su2_source_file_sha256": "8a86982ca8eb191e90551c5b308801f0b8850e45d75eea945ebc8b6cd237e549",
+        "source_boundary_sha256": "ed0ec711732b8730495b28b0b5c2a738b6ed03f420d236b2b10900fd02a2bda7",
+        "source_count_verified": 1,
+        "unordered_source_scalar_pairs_verified": 16,
+        "nonzero_source_scalar_pairs": 16,
+        "distinct_pair_count_before_cancellation": 16,
+        "distinct_pair_count_after_cancellation": 16,
+        "max_component_abs_error_gev_inverse": 0.0,
+        "full_two_lepton_SU2_component_parity": true,
+        "physical_GammaCC_normalization_certified": false,
+        "full_one_loop_certified": false
+      },
+      "spinor_normalization_certified": false,
+      "background_at_muS_available": false,
+      "missing_scalar_background_at_muS": {
+        "required_metadata": "B_p1.json",
+        "required_npz": "B_p1.npz",
+        "required_content": [
+          "source-to-matching real orthogonal basis transform",
+          "positive all-heavy-scalar mass-squared matrix at muS",
+          "full HHSS quartic tensor and independently labelled quartic channels at muS"
+        ],
+        "previous_v2_contract": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\integrated_batch_v2\\scalar_background_contracts\\B_p1.json"
+      },
+      "remaining_physics_blockers": [
+        "signed GammaCC/Weyl source normalization not certified",
+        "full renormalized EFT1 same-scale evolution/finite one-loop matching not certified",
+        "hard one-loop heavy-F matching and possible additional dim5 operator sectors not certified"
+      ]
+    },
+    {
+      "model": "C_-3",
+      "status": "source_pivot_and_full_SU2_verified",
+      "physical_C5_certified": false,
+      "fermion_boundary_source_sha256": "38d938f205f44727c5a756ba1027c2839c3569c08886495de1bd90a8e72671b1",
+      "mu_f_gev": 100000.0,
+      "source_scalar_real_labels": [
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar2",
+        "NewScalar2",
+        "NewScalar2",
+        "NewScalar2"
+      ],
+      "pivot": {
+        "pivot_kernel_sha256": "1530af4c7636ac4cc1575c73291d458fd6a26e28d847a5d9c548d6ce09e22745",
+        "source_count": 2,
+        "pivot_per_source_channels": 4,
+        "distinct_scalar_pairs": 4,
+        "cancelled_source_pairs_omitted_by_kernel": 0,
+        "source_vs_kernel_max_abs_error": 0.0,
+        "pivot_convention": "4*(2-delta_ab)*C_formal[lepton_SU2=1,lepton_SU2=1,a,b]",
+        "physical_normalization_certified": false
+      },
+      "full_su2": {
+        "full_su2_source_file_sha256": "c8040b7ce96bcb462b3318d4c2e0f1710c566cca00ef0a35038d666ee24fd207",
+        "source_boundary_sha256": "38d938f205f44727c5a756ba1027c2839c3569c08886495de1bd90a8e72671b1",
+        "source_count_verified": 2,
+        "unordered_source_scalar_pairs_verified": 16,
+        "nonzero_source_scalar_pairs": 16,
+        "distinct_pair_count_before_cancellation": 16,
+        "distinct_pair_count_after_cancellation": 16,
+        "max_component_abs_error_gev_inverse": 1.262177448353619e-29,
+        "full_two_lepton_SU2_component_parity": true,
+        "physical_GammaCC_normalization_certified": false,
+        "full_one_loop_certified": false
+      },
+      "spinor_normalization_certified": false,
+      "background_at_muS_available": false,
+      "missing_scalar_background_at_muS": {
+        "required_metadata": "C_m3.json",
+        "required_npz": "C_m3.npz",
+        "required_content": [
+          "source-to-matching real orthogonal basis transform",
+          "positive all-heavy-scalar mass-squared matrix at muS",
+          "full HHSS quartic tensor and independently labelled quartic channels at muS"
+        ],
+        "previous_v2_contract": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\integrated_batch_v2\\scalar_background_contracts\\C_m3.json"
+      },
+      "remaining_physics_blockers": [
+        "signed GammaCC/Weyl source normalization not certified",
+        "full renormalized EFT1 same-scale evolution/finite one-loop matching not certified",
+        "hard one-loop heavy-F matching and possible additional dim5 operator sectors not certified"
+      ]
+    },
+    {
+      "model": "C_-1",
+      "status": "source_pivot_and_full_SU2_verified",
+      "physical_C5_certified": false,
+      "fermion_boundary_source_sha256": "e9e181f75309e976ad84d222b80e9c7958fb2bbb206fb6b076d9f7f3eb26198e",
+      "mu_f_gev": 100000.0,
+      "source_scalar_real_labels": [
+        "NewScalarX",
+        "NewScalarX",
+        "NewScalarX",
+        "NewScalarX",
+        "NewScalarY",
+        "NewScalarY",
+        "NewScalarY",
+        "NewScalarY"
+      ],
+      "pivot": {
+        "pivot_kernel_sha256": "f36766aae8daa72558e22721260f74eaa427e896d674bc1cee112bdfdaa7eaeb",
+        "source_count": 12,
+        "pivot_per_source_channels": 34,
+        "distinct_scalar_pairs": 10,
+        "cancelled_source_pairs_omitted_by_kernel": 0,
+        "source_vs_kernel_max_abs_error": 0.0,
+        "pivot_convention": "4*(2-delta_ab)*C_formal[lepton_SU2=1,lepton_SU2=1,a,b]",
+        "physical_normalization_certified": false
+      },
+      "full_su2": {
+        "full_su2_source_file_sha256": "f4df64227aaf9296ecb54269f37f8da5b2d9722d523baefee90b9a63f779fdb2",
+        "source_boundary_sha256": "e9e181f75309e976ad84d222b80e9c7958fb2bbb206fb6b076d9f7f3eb26198e",
+        "source_count_verified": 12,
+        "unordered_source_scalar_pairs_verified": 124,
+        "nonzero_source_scalar_pairs": 124,
+        "distinct_pair_count_before_cancellation": 36,
+        "distinct_pair_count_after_cancellation": 36,
+        "max_component_abs_error_gev_inverse": 1.262177448353619e-29,
+        "full_two_lepton_SU2_component_parity": true,
+        "physical_GammaCC_normalization_certified": false,
+        "full_one_loop_certified": false
+      },
+      "spinor_normalization_certified": false,
+      "background_at_muS_available": false,
+      "missing_scalar_background_at_muS": {
+        "required_metadata": "C_m1.json",
+        "required_npz": "C_m1.npz",
+        "required_content": [
+          "source-to-matching real orthogonal basis transform",
+          "positive all-heavy-scalar mass-squared matrix at muS",
+          "full HHSS quartic tensor and independently labelled quartic channels at muS"
+        ],
+        "previous_v2_contract": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\integrated_batch_v2\\scalar_background_contracts\\C_m1.json"
+      },
+      "remaining_physics_blockers": [
+        "signed GammaCC/Weyl source normalization not certified",
+        "full renormalized EFT1 same-scale evolution/finite one-loop matching not certified",
+        "hard one-loop heavy-F matching and possible additional dim5 operator sectors not certified"
+      ]
+    },
+    {
+      "model": "C_+1",
+      "status": "source_pivot_and_full_SU2_verified",
+      "physical_C5_certified": false,
+      "fermion_boundary_source_sha256": "d1841c22ad51884884bb3e296b13ac8e9e6f7b7f1cbe721b08016bf3562d3def",
+      "mu_f_gev": 100000.0,
+      "source_scalar_real_labels": [
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar2",
+        "NewScalar2",
+        "NewScalar2",
+        "NewScalar2"
+      ],
+      "pivot": {
+        "pivot_kernel_sha256": "c0ecb01d75a3661f2858ce43e4e51bf21799b6402c067c80bfd973c60e71ccde",
+        "source_count": 2,
+        "pivot_per_source_channels": 4,
+        "distinct_scalar_pairs": 4,
+        "cancelled_source_pairs_omitted_by_kernel": 0,
+        "source_vs_kernel_max_abs_error": 0.0,
+        "pivot_convention": "4*(2-delta_ab)*C_formal[lepton_SU2=1,lepton_SU2=1,a,b]",
+        "physical_normalization_certified": false
+      },
+      "full_su2": {
+        "full_su2_source_file_sha256": "5d9ab40b7a3c55b1f6ec71512d490386b76d570ff3022c925d64c1a82c980b5d",
+        "source_boundary_sha256": "d1841c22ad51884884bb3e296b13ac8e9e6f7b7f1cbe721b08016bf3562d3def",
+        "source_count_verified": 2,
+        "unordered_source_scalar_pairs_verified": 16,
+        "nonzero_source_scalar_pairs": 16,
+        "distinct_pair_count_before_cancellation": 16,
+        "distinct_pair_count_after_cancellation": 16,
+        "max_component_abs_error_gev_inverse": 1.262177448353619e-29,
+        "full_two_lepton_SU2_component_parity": true,
+        "physical_GammaCC_normalization_certified": false,
+        "full_one_loop_certified": false
+      },
+      "spinor_normalization_certified": false,
+      "background_at_muS_available": false,
+      "missing_scalar_background_at_muS": {
+        "required_metadata": "C_p1.json",
+        "required_npz": "C_p1.npz",
+        "required_content": [
+          "source-to-matching real orthogonal basis transform",
+          "positive all-heavy-scalar mass-squared matrix at muS",
+          "full HHSS quartic tensor and independently labelled quartic channels at muS"
+        ],
+        "previous_v2_contract": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\integrated_batch_v2\\scalar_background_contracts\\C_p1.json"
+      },
+      "remaining_physics_blockers": [
+        "signed GammaCC/Weyl source normalization not certified",
+        "full renormalized EFT1 same-scale evolution/finite one-loop matching not certified",
+        "hard one-loop heavy-F matching and possible additional dim5 operator sectors not certified"
+      ]
+    },
+    {
+      "model": "D_-2",
+      "status": "source_pivot_and_full_SU2_verified",
+      "physical_C5_certified": false,
+      "fermion_boundary_source_sha256": "cdcb662da4bce608180c7b927e2564069b15d04bdb43876d0ffba9140fbe1af7",
+      "mu_f_gev": 100000.0,
+      "source_scalar_real_labels": [
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar1",
+        "T3Scalar2Minus",
+        "T3Scalar2Plus"
+      ],
+      "pivot": {
+        "pivot_kernel_sha256": "d9f7d99f0dd495ecec0ed05ec6728a3b05be2e4b4970a19a00495dff285d8ffa",
+        "source_count": 4,
+        "pivot_per_source_channels": 16,
+        "distinct_scalar_pairs": 4,
+        "cancelled_source_pairs_omitted_by_kernel": 4,
+        "source_vs_kernel_max_abs_error": 0.0,
+        "pivot_convention": "4*(2-delta_ab)*C_formal[lepton_SU2=1,lepton_SU2=1,a,b]",
+        "physical_normalization_certified": false
+      },
+      "full_su2": {
+        "full_su2_source_file_sha256": "1dabd04d506acc3524ec1f5d548663f8d87f79a3929da90ba41875be78e4f565",
+        "source_boundary_sha256": "cdcb662da4bce608180c7b927e2564069b15d04bdb43876d0ffba9140fbe1af7",
+        "source_count_verified": 4,
+        "unordered_source_scalar_pairs_verified": 24,
+        "nonzero_source_scalar_pairs": 24,
+        "distinct_pair_count_before_cancellation": 12,
+        "distinct_pair_count_after_cancellation": 6,
+        "max_component_abs_error_gev_inverse": 0.0,
+        "full_two_lepton_SU2_component_parity": true,
+        "physical_GammaCC_normalization_certified": false,
+        "full_one_loop_certified": false
+      },
+      "spinor_normalization_certified": false,
+      "background_at_muS_available": false,
+      "missing_scalar_background_at_muS": {
+        "required_metadata": "D_m2.json",
+        "required_npz": "D_m2.npz",
+        "required_content": [
+          "source-to-matching real orthogonal basis transform",
+          "positive all-heavy-scalar mass-squared matrix at muS",
+          "full HHSS quartic tensor and independently labelled quartic channels at muS"
+        ],
+        "previous_v2_contract": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\integrated_batch_v2\\scalar_background_contracts\\D_m2.json"
+      },
+      "remaining_physics_blockers": [
+        "signed GammaCC/Weyl source normalization not certified",
+        "full renormalized EFT1 same-scale evolution/finite one-loop matching not certified",
+        "hard one-loop heavy-F matching and possible additional dim5 operator sectors not certified"
+      ]
+    },
+    {
+      "model": "D_+0",
+      "status": "source_pivot_and_full_SU2_verified",
+      "physical_C5_certified": false,
+      "fermion_boundary_source_sha256": "c2eb897e8518c055f06001831e03dc3f5052ec226dc4526019fd644d20c63cb1",
+      "mu_f_gev": 100000.0,
+      "source_scalar_real_labels": [
+        "T3Scalar1Minus",
+        "T3Scalar1Minus",
+        "T3Scalar1Minus",
+        "T3Scalar1Plus",
+        "T3Scalar1Plus",
+        "T3Scalar1Plus",
+        "NewScalar2",
+        "NewScalar2"
+      ],
+      "pivot": {
+        "pivot_kernel_sha256": "468641cd540bf888957bd8724c061042a2f8de5408218997597f6a7f7e46e69d",
+        "source_count": 4,
+        "pivot_per_source_channels": 16,
+        "distinct_scalar_pairs": 4,
+        "cancelled_source_pairs_omitted_by_kernel": 4,
+        "source_vs_kernel_max_abs_error": 0.0,
+        "pivot_convention": "4*(2-delta_ab)*C_formal[lepton_SU2=1,lepton_SU2=1,a,b]",
+        "physical_normalization_certified": false
+      },
+      "full_su2": {
+        "full_su2_source_file_sha256": "bd11f48c211a5246b06bdef5e572223b56b0ded84593ffaaec73a0da87e32fbe",
+        "source_boundary_sha256": "c2eb897e8518c055f06001831e03dc3f5052ec226dc4526019fd644d20c63cb1",
+        "source_count_verified": 4,
+        "unordered_source_scalar_pairs_verified": 24,
+        "nonzero_source_scalar_pairs": 24,
+        "distinct_pair_count_before_cancellation": 12,
+        "distinct_pair_count_after_cancellation": 6,
+        "max_component_abs_error_gev_inverse": 0.0,
+        "full_two_lepton_SU2_component_parity": true,
+        "physical_GammaCC_normalization_certified": false,
+        "full_one_loop_certified": false
+      },
+      "spinor_normalization_certified": false,
+      "background_at_muS_available": false,
+      "missing_scalar_background_at_muS": {
+        "required_metadata": "D_p0.json",
+        "required_npz": "D_p0.npz",
+        "required_content": [
+          "source-to-matching real orthogonal basis transform",
+          "positive all-heavy-scalar mass-squared matrix at muS",
+          "full HHSS quartic tensor and independently labelled quartic channels at muS"
+        ],
+        "previous_v2_contract": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\integrated_batch_v2\\scalar_background_contracts\\D_p0.json"
+      },
+      "remaining_physics_blockers": [
+        "signed GammaCC/Weyl source normalization not certified",
+        "full renormalized EFT1 same-scale evolution/finite one-loop matching not certified",
+        "hard one-loop heavy-F matching and possible additional dim5 operator sectors not certified"
+      ]
+    },
+    {
+      "model": "D_+2",
+      "status": "source_pivot_and_full_SU2_verified",
+      "physical_C5_certified": false,
+      "fermion_boundary_source_sha256": "ffe6b8ee2c899a9e617290d8d7f54cb0b34f903675e4665a2a8491c4c766f5a7",
+      "mu_f_gev": 100000.0,
+      "source_scalar_real_labels": [
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar2",
+        "NewScalar2"
+      ],
+      "pivot": {
+        "pivot_kernel_sha256": "43a954170d8cdea8777450cffd8337b987594b4f6f134dc824e1dc82e5ed9d69",
+        "source_count": 1,
+        "pivot_per_source_channels": 8,
+        "distinct_scalar_pairs": 8,
+        "cancelled_source_pairs_omitted_by_kernel": 0,
+        "source_vs_kernel_max_abs_error": 0.0,
+        "pivot_convention": "4*(2-delta_ab)*C_formal[lepton_SU2=1,lepton_SU2=1,a,b]",
+        "physical_normalization_certified": false
+      },
+      "full_su2": {
+        "full_su2_source_file_sha256": "2cb7fb99f44ad6e908dae9acf7d63bbd296f6da6dda7a779666740c07c16c5f1",
+        "source_boundary_sha256": "ffe6b8ee2c899a9e617290d8d7f54cb0b34f903675e4665a2a8491c4c766f5a7",
+        "source_count_verified": 1,
+        "unordered_source_scalar_pairs_verified": 12,
+        "nonzero_source_scalar_pairs": 12,
+        "distinct_pair_count_before_cancellation": 12,
+        "distinct_pair_count_after_cancellation": 12,
+        "max_component_abs_error_gev_inverse": 0.0,
+        "full_two_lepton_SU2_component_parity": true,
+        "physical_GammaCC_normalization_certified": false,
+        "full_one_loop_certified": false
+      },
+      "spinor_normalization_certified": false,
+      "background_at_muS_available": false,
+      "missing_scalar_background_at_muS": {
+        "required_metadata": "D_p2.json",
+        "required_npz": "D_p2.npz",
+        "required_content": [
+          "source-to-matching real orthogonal basis transform",
+          "positive all-heavy-scalar mass-squared matrix at muS",
+          "full HHSS quartic tensor and independently labelled quartic channels at muS"
+        ],
+        "previous_v2_contract": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\integrated_batch_v2\\scalar_background_contracts\\D_p2.json"
+      },
+      "remaining_physics_blockers": [
+        "signed GammaCC/Weyl source normalization not certified",
+        "full renormalized EFT1 same-scale evolution/finite one-loop matching not certified",
+        "hard one-loop heavy-F matching and possible additional dim5 operator sectors not certified"
+      ]
+    },
+    {
+      "model": "E_-4",
+      "status": "source_pivot_and_full_SU2_verified",
+      "physical_C5_certified": false,
+      "fermion_boundary_source_sha256": "438c456af08cee4dd23438ec5e28c8f11cc3f0cebadc266f3d9a15bfdf19660f",
+      "mu_f_gev": 100000.0,
+      "source_scalar_real_labels": [
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar2",
+        "NewScalar2",
+        "NewScalar2",
+        "NewScalar2",
+        "NewScalar2",
+        "NewScalar2"
+      ],
+      "pivot": {
+        "pivot_kernel_sha256": "760da5b4828c569bb49fb759ee224977271044689ab80d6a42ece5428ae3e0d6",
+        "source_count": 2,
+        "pivot_per_source_channels": 16,
+        "distinct_scalar_pairs": 16,
+        "cancelled_source_pairs_omitted_by_kernel": 0,
+        "source_vs_kernel_max_abs_error": 0.0,
+        "pivot_convention": "4*(2-delta_ab)*C_formal[lepton_SU2=1,lepton_SU2=1,a,b]",
+        "physical_normalization_certified": false
+      },
+      "full_su2": {
+        "full_su2_source_file_sha256": "d6a62dcad266b4b38169ae697175b256b6f880349520bb1c7990ee9c7568be4e",
+        "source_boundary_sha256": "438c456af08cee4dd23438ec5e28c8f11cc3f0cebadc266f3d9a15bfdf19660f",
+        "source_count_verified": 2,
+        "unordered_source_scalar_pairs_verified": 24,
+        "nonzero_source_scalar_pairs": 24,
+        "distinct_pair_count_before_cancellation": 24,
+        "distinct_pair_count_after_cancellation": 24,
+        "max_component_abs_error_gev_inverse": 0.0,
+        "full_two_lepton_SU2_component_parity": true,
+        "physical_GammaCC_normalization_certified": false,
+        "full_one_loop_certified": false
+      },
+      "spinor_normalization_certified": false,
+      "background_at_muS_available": false,
+      "missing_scalar_background_at_muS": {
+        "required_metadata": "E_m4.json",
+        "required_npz": "E_m4.npz",
+        "required_content": [
+          "source-to-matching real orthogonal basis transform",
+          "positive all-heavy-scalar mass-squared matrix at muS",
+          "full HHSS quartic tensor and independently labelled quartic channels at muS"
+        ],
+        "previous_v2_contract": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\integrated_batch_v2\\scalar_background_contracts\\E_m4.json"
+      },
+      "remaining_physics_blockers": [
+        "signed GammaCC/Weyl source normalization not certified",
+        "full renormalized EFT1 same-scale evolution/finite one-loop matching not certified",
+        "hard one-loop heavy-F matching and possible additional dim5 operator sectors not certified"
+      ]
+    },
+    {
+      "model": "E_-2",
+      "status": "source_pivot_and_full_SU2_verified",
+      "physical_C5_certified": false,
+      "fermion_boundary_source_sha256": "5e1a3f3d6d25b2d848d8edbe421cf9311cd664756384de04756d261697cce9fd",
+      "mu_f_gev": 100000.0,
+      "source_scalar_real_labels": [
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar1",
+        "T3Scalar2Minus",
+        "T3Scalar2Minus",
+        "T3Scalar2Minus",
+        "T3Scalar2Plus",
+        "T3Scalar2Plus",
+        "T3Scalar2Plus"
+      ],
+      "pivot": {
+        "pivot_kernel_sha256": "3cee68ed962547c34163183c7b569f01c774d1de15bdb8a228ca24e9a740ef5d",
+        "source_count": 8,
+        "pivot_per_source_channels": 32,
+        "distinct_scalar_pairs": 8,
+        "cancelled_source_pairs_omitted_by_kernel": 8,
+        "source_vs_kernel_max_abs_error": 0.0,
+        "pivot_convention": "4*(2-delta_ab)*C_formal[lepton_SU2=1,lepton_SU2=1,a,b]",
+        "physical_normalization_certified": false
+      },
+      "full_su2": {
+        "full_su2_source_file_sha256": "cabe5d876e9bcbc6eb1c9eb26fef5959929b00aabdd7efca20eda3d897fd32dc",
+        "source_boundary_sha256": "5e1a3f3d6d25b2d848d8edbe421cf9311cd664756384de04756d261697cce9fd",
+        "source_count_verified": 8,
+        "unordered_source_scalar_pairs_verified": 48,
+        "nonzero_source_scalar_pairs": 48,
+        "distinct_pair_count_before_cancellation": 24,
+        "distinct_pair_count_after_cancellation": 12,
+        "max_component_abs_error_gev_inverse": 0.0,
+        "full_two_lepton_SU2_component_parity": true,
+        "physical_GammaCC_normalization_certified": false,
+        "full_one_loop_certified": false
+      },
+      "spinor_normalization_certified": false,
+      "background_at_muS_available": false,
+      "missing_scalar_background_at_muS": {
+        "required_metadata": "E_m2.json",
+        "required_npz": "E_m2.npz",
+        "required_content": [
+          "source-to-matching real orthogonal basis transform",
+          "positive all-heavy-scalar mass-squared matrix at muS",
+          "full HHSS quartic tensor and independently labelled quartic channels at muS"
+        ],
+        "previous_v2_contract": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\integrated_batch_v2\\scalar_background_contracts\\E_m2.json"
+      },
+      "remaining_physics_blockers": [
+        "signed GammaCC/Weyl source normalization not certified",
+        "full renormalized EFT1 same-scale evolution/finite one-loop matching not certified",
+        "hard one-loop heavy-F matching and possible additional dim5 operator sectors not certified"
+      ]
+    },
+    {
+      "model": "E_+0",
+      "status": "source_pivot_and_full_SU2_verified",
+      "physical_C5_certified": false,
+      "fermion_boundary_source_sha256": "221adb509f3d0ca73f534c781aaf0ba4a6ad20346f6c68dc68880506ce6d0880",
+      "mu_f_gev": 100000.0,
+      "source_scalar_real_labels": [
+        "T3Scalar1Minus",
+        "T3Scalar1Minus",
+        "T3Scalar1Minus",
+        "T3Scalar1Plus",
+        "T3Scalar1Plus",
+        "T3Scalar1Plus",
+        "NewScalar2",
+        "NewScalar2",
+        "NewScalar2",
+        "NewScalar2",
+        "NewScalar2",
+        "NewScalar2"
+      ],
+      "pivot": {
+        "pivot_kernel_sha256": "b119d4c921e312b86113215a70dfbbca33cf6d370db999598c5a5768f6e3d6d7",
+        "source_count": 8,
+        "pivot_per_source_channels": 32,
+        "distinct_scalar_pairs": 8,
+        "cancelled_source_pairs_omitted_by_kernel": 8,
+        "source_vs_kernel_max_abs_error": 0.0,
+        "pivot_convention": "4*(2-delta_ab)*C_formal[lepton_SU2=1,lepton_SU2=1,a,b]",
+        "physical_normalization_certified": false
+      },
+      "full_su2": {
+        "full_su2_source_file_sha256": "de872773960459cd4ea43d23a71cbafe9c60d55712e74aa8ca5fe52c84261f5f",
+        "source_boundary_sha256": "221adb509f3d0ca73f534c781aaf0ba4a6ad20346f6c68dc68880506ce6d0880",
+        "source_count_verified": 8,
+        "unordered_source_scalar_pairs_verified": 48,
+        "nonzero_source_scalar_pairs": 48,
+        "distinct_pair_count_before_cancellation": 24,
+        "distinct_pair_count_after_cancellation": 12,
+        "max_component_abs_error_gev_inverse": 0.0,
+        "full_two_lepton_SU2_component_parity": true,
+        "physical_GammaCC_normalization_certified": false,
+        "full_one_loop_certified": false
+      },
+      "spinor_normalization_certified": false,
+      "background_at_muS_available": false,
+      "missing_scalar_background_at_muS": {
+        "required_metadata": "E_p0.json",
+        "required_npz": "E_p0.npz",
+        "required_content": [
+          "source-to-matching real orthogonal basis transform",
+          "positive all-heavy-scalar mass-squared matrix at muS",
+          "full HHSS quartic tensor and independently labelled quartic channels at muS"
+        ],
+        "previous_v2_contract": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\integrated_batch_v2\\scalar_background_contracts\\E_p0.json"
+      },
+      "remaining_physics_blockers": [
+        "signed GammaCC/Weyl source normalization not certified",
+        "full renormalized EFT1 same-scale evolution/finite one-loop matching not certified",
+        "hard one-loop heavy-F matching and possible additional dim5 operator sectors not certified"
+      ]
+    },
+    {
+      "model": "E_+2",
+      "status": "source_pivot_and_full_SU2_verified",
+      "physical_C5_certified": false,
+      "fermion_boundary_source_sha256": "ffc29b67266bd9057032c543f42993a31d94c1c633593a7f60f876eb636ec917",
+      "mu_f_gev": 100000.0,
+      "source_scalar_real_labels": [
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar1",
+        "NewScalar2",
+        "NewScalar2",
+        "NewScalar2",
+        "NewScalar2",
+        "NewScalar2",
+        "NewScalar2"
+      ],
+      "pivot": {
+        "pivot_kernel_sha256": "34a98d36ea17308bb7581061cea285ee3f6758f4736445734e820d4b11c88424",
+        "source_count": 2,
+        "pivot_per_source_channels": 16,
+        "distinct_scalar_pairs": 16,
+        "cancelled_source_pairs_omitted_by_kernel": 0,
+        "source_vs_kernel_max_abs_error": 0.0,
+        "pivot_convention": "4*(2-delta_ab)*C_formal[lepton_SU2=1,lepton_SU2=1,a,b]",
+        "physical_normalization_certified": false
+      },
+      "full_su2": {
+        "full_su2_source_file_sha256": "3c2b1d10a4ab90e3dea48258f02c9961d5935319e98f7d0b871767ea5d5a8655",
+        "source_boundary_sha256": "ffc29b67266bd9057032c543f42993a31d94c1c633593a7f60f876eb636ec917",
+        "source_count_verified": 2,
+        "unordered_source_scalar_pairs_verified": 24,
+        "nonzero_source_scalar_pairs": 24,
+        "distinct_pair_count_before_cancellation": 24,
+        "distinct_pair_count_after_cancellation": 24,
+        "max_component_abs_error_gev_inverse": 0.0,
+        "full_two_lepton_SU2_component_parity": true,
+        "physical_GammaCC_normalization_certified": false,
+        "full_one_loop_certified": false
+      },
+      "spinor_normalization_certified": false,
+      "background_at_muS_available": false,
+      "missing_scalar_background_at_muS": {
+        "required_metadata": "E_p2.json",
+        "required_npz": "E_p2.npz",
+        "required_content": [
+          "source-to-matching real orthogonal basis transform",
+          "positive all-heavy-scalar mass-squared matrix at muS",
+          "full HHSS quartic tensor and independently labelled quartic channels at muS"
+        ],
+        "previous_v2_contract": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\integrated_batch_v2\\scalar_background_contracts\\E_p2.json"
+      },
+      "remaining_physics_blockers": [
+        "signed GammaCC/Weyl source normalization not certified",
+        "full renormalized EFT1 same-scale evolution/finite one-loop matching not certified",
+        "hard one-loop heavy-F matching and possible additional dim5 operator sectors not certified"
+      ]
+    }
+  ]
+}

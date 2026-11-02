@@ -1,0 +1,27 @@
+{
+  "format": "t3-ws2-live-extra-quartic-source-audit-v6",
+  "description": "Source/operator evidence with optional live Matchete UV CG coefficients; physical coupling normalization and C5 remain blocked",
+  "run_path": "output/general_observable/lo_certification_couplings/<run_name>",
+  "files": {
+    "summary.json": "all16 source and optional native live Matchete CG export aggregate",
+    "source_generator_contract.json": "local generator source evidence and SHA-256 hashes",
+    "<model_slug>/V6_source_evidence.json": "all 50 RGBeta additions and 24 HHSS sector entries, local EFT1 and experimental UV source scan",
+    "<model_slug>/live_operator_validation.json": "live source status and exact CG nonzero entries, if available",
+    "<model_slug>/live_extra_quartic_CG_export.json": "native wolframscript raw JSON when --run-live",
+    "<model_slug>/conditional_tensor_ratio_candidates.json": "conditional source CG proportionality diagnostic with --probe-orientations",
+    "<model_slug>/failure.json": "model-level failure requiring re-audit"
+  },
+  "thresholds": ["all heavy fermions at mu_F", "both heavy scalars at mu_S"],
+  "physical_C5_calculated": false,
+  "full_physical_EFT1_HHSS_certified": false,
+  "no_implicit_zero_for_missing_couplings": true,
+  "do_not_interpret_UV_CG_as_EFT1_boundary": true,
+  "source_coupling_convention": "Matchete experimental PlusHc[lambda[] product CG] with complex coupling",
+  "required_missing_evidence": [
+    "verified RGBeta AddQuartic coupling coefficient and Hermitian conjugate normalization",
+    "Matchete/RGBeta index bar and pseudoreal-map agreement",
+    "valid grouped heavy-fermion EFT1 matching boundary containing extra scalar operators",
+    "RG-closed extra quartic beta functions through mu_F to mu_S",
+    "signed GammaCC-to-Weyl normalization and EFT1 operator closure for physical C5"
+  ]
+}

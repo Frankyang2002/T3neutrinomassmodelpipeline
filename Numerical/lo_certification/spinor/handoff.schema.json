@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://t3.local/schemas/lo-spinor-eft1-boundary-provisional-v1",
+  "title": "T3 provisional fermion-first EFT1 LLSS boundary",
+  "type": "object",
+  "required": ["format", "model", "scale_gev", "matching_history", "index_order", "flavour_generations", "source_resolved_unscaled", "summed_unscaled", "normalization", "inclusions", "downstream_usage", "physical_master_weyl_boundary"],
+  "properties": {
+    "format": {"const": "t3-lo-spinor-eft1-boundary-provisional-v1"},
+    "status": {"const": "CONDITIONAL_TREE_LLSS_BLOCKED_PHYSICAL_NORMALIZATION"},
+    "model": {"type": "string"},
+    "scale_gev": {"type": "number", "exclusiveMinimum": 0},
+    "flavour_generations": {"const": 3},
+    "index_base": {"const": 1},
+    "index_order": {"const": ["lepton_su2_i", "lepton_flavour_p", "lepton_su2_j", "lepton_flavour_q", "real_scalar_a", "real_scalar_b"]},
+    "units": {"const": "GeV^-1"},
+    "matching_history": {"type": "array", "minItems": 2, "maxItems": 2},
+    "source_resolved_unscaled": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/source"}},
+    "summed_unscaled": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/entry"}},
+    "normalization": {
+      "type": "object",
+      "required": ["certified", "matchete_GammaCC_to_master_Weyl_complex_factor"],
+      "properties": {
+        "certified": {"const": false},
+        "matchete_GammaCC_to_master_Weyl_complex_factor": {"type": "null"}
+      }
+    },
+    "physical_master_weyl_boundary": {"type": "null"},
+    "inclusions": {
+      "type": "object",
+      "properties": {"fermion_tree_LLSS": {"const": true}, "fermion_hard_one_loop": {"const": false}, "EFT1_running": {"const": false}, "scalar_matching": {"const": false}}
+    },
+    "downstream_usage": {
+      "type": "object",
+      "properties": {"safe_for_physical_EFT1_or_scalar_matching": {"const": false}}
+    }
+  },
+  "$defs": {
+    "entry": {
+      "type": "object",
+      "required": ["coordinate", "coefficient_real", "coefficient_imag", "orbit_size"],
+      "properties": {
+        "coordinate": {"type": "array", "minItems": 6, "maxItems": 6, "items": {"type": "integer"}},
+        "coefficient_real": {"type": "number"},
+        "coefficient_imag": {"type": "number"},
+        "orbit_size": {"enum": [1, 2, 4]}
+      }
+    },
+    "source": {
+      "type": "object",
+      "required": ["source_id", "matchete_source_index", "native_operator_inputform", "independent_coordinates"],
+      "properties": {
+        "source_id": {"type": "string"},
+        "matchete_source_index": {"type": "integer", "minimum": 1},
+        "chirality": {"const": "PL"},
+        "native_operator_inputform": {"type": "string"},
+        "native_CG_registries": {"type": "array", "items": {"type": "string"}},
+        "independent_coordinates": {"type": "array", "items": {"$ref": "#/$defs/entry"}}
+      }
+    }
+  }
+}

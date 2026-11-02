@@ -1,0 +1,144 @@
+# T3 leading-one-loop completeness — Workstream 3
+
+## Evidence and scope
+
+Read-only GitHub repository `Frankyang2002/T3neutrinomassmodelpipeline`, `main` at commit `2c29e5ba2c0350b7e9be292e02ceb8bc7c52c0d3` (2026-11-02). Only paths in this Workstream 3 ownership are written. This package does not modify or rerun the existing fermion-tree, EFT1 seven-term, scalar-bubble or independent direct-UV calculations. The provided baseline ledger is source-inspection evidence, NOT an all-16 numerical evaluation. Run the audit locally to inspect the actual shared checkout. Other chats' files may differ from the read-only snapshot.
+
+**Strict EFT sequence:**
+
+`UV -> ALL BSM heavy fermions at ONE mu_F -> EFT1(S1,S2,H,SM fermions) -> BOTH BSM scalar multiplets at ONE mu_S -> SMEFT`.
+
+No intermediate EFT with one heavy fermion or one heavy scalar; mass eigenstate sums do **not** constitute multiple thresholds.
+
+## Source-backed findings
+
+* `scripts/RunGeneralT3FermionFirstEFT1Tree.py` constructs formal all-fermion LLSS boundaries. The release bridge (`Numerical/joint_scalar_matching/fermion_boundary_bridge.py`) explicitly declares the **signed GammaCC-to-Weyl coefficient unknown**; formal per-operator extraction is not an independently normalized physical Wilson coefficient.
+* `RGE/running/intermediate/GeneralEFT1C5Mixing.py` contains seven named master-RGE source contributions: Yukawa wavefunction, scalar pair, mixed Yukawa-gauge, crossed Yukawa, conjugate-coefficient Yukawa, scalar anomalous dimension and fermion anomalous dimension. Its required certificate list explicitly includes the independently unproven complete dim-5 inventory and signed normalization. Seven-term machinery is **not** seven-term verified physical input.
+* `Numerical/joint_scalar_matching/core.py` implements the jointly diagonalized scalar bubble with coefficient `-C_LLSS * lambda_HHSS * B0bar /(2*16*pi²)`. Every pair and mass splitting is retained; an upstream full renormalized endpoint is not supplied for every model.
+* `scripts/RunGeneralT3EFT1HardPoleAudit.py` factorizes B_-1/C_-1 raw LLHH poles and logs, but its own report says `physical_majorana_c5_computed=false`, `operator_hard_finite_at_muF_is_scheme_certified=false`, and `independent_counterterm_pole_check_performed=false`. It does not justify setting hard C5 to zero for the other 14 models.
+* `Numerical/direct_one_loop/core.py` implements a fully complex UV Weyl/real-scalar zero-momentum one-loop mass sum; its `README.md` declares the automatic Matchete-to-Weyl vertex map provisional. A direct UV benchmark is an independent comparator, **not** an EFT matching counterterm that may be inserted into C5.
+* **Verified UV Lagrangian scope:** `Lagrangian/interactions/T3Topology.wl` explicitly gates opposite-complex-scalar **extra Yukawas** behind `T3_EXPERIMENTAL_GENERAL_FERMIONS=1`, for those models with one hypercharge-zero heavy scalar. From `Lagrangian/model/T3ModelCatalog.wl`, `Y(S1)=alpha/2`, `Y(S2)=(alpha+2)/2`, so this additional coupling exists for `A_-2`, `A_+0`, `D_-2`, `D_+0`, `E_-2`, `E_+0` only. It can change the tree LLSS boundary and neutrino mass at the *same* one-loop order; its exclusion is NOT higher-loop suppression. `Lagrangian/model/LagrangianBuilder.wl` also flags that general heavy-fermion flavour masses are not certified.
+* `Lagrangian/interactions/GeneralScalarOperators.wl` and `Lagrangian/interactions/ScalarPotential.wl` add scalar operators with opt-in flags; scalar potential completeness of a particular pipeline run cannot be inferred from their presence. No automated all-16 enumeration of every symmetry-allowed dim-5 EFT1 monomial is verified by the inspected modules. Thus the proposition "tree LLSS alone closes the EFT1 operator basis" remains unresolved.
+
+## Leading-one-loop power counting
+
+Assign `hbar` to every loop and treat quartic, Yukawa and mass couplings at `hbar^0`. There is no allowed ordinary tree neutrino mass in the exact inert-Z2 models. At first nonzero order,
+
+```
+C_LLSS(muF)    ~ Y Y / M_F                              O(hbar^0)
+C5_hard(muF)   ~ lambda_HHSS * Y Y / (16pi² M_F)        O(hbar^1)
+Delta C5_EFT1  ~ beta_C5[C_LLSS] * ln(muS/muF)/(16pi²) O(hbar^1)
+Delta C5_muS   ~ - C_LLSS * lambda * B0bar/(32pi²)     O(hbar^1)
+```
+
+There may be additional independent hard amplitudes and operators. Additional opt-in conjugate-neutral-scalar Yukawas, when hypercharge allows them, belong at **leading one loop**, not in a later correction. One-loop corrections to the tree LLSS Wilson itself, multiplied by a further scalar bubble, are **two loops** in C5. One-loop running of couplings inside an O(hbar) source is also two loops at fixed order. Crucially, terms suppressed by `mS²/MF²` in a **single UV loop** are still **one loop**, although they enter the heavy-mass EFT as dimension 7 and above. The code retains and isolates the complete one-loop scalar-portal triangle remainder; it does not insert it spuriously into dimension-five SMEFT.
+
+There is exactly one SM Weinberg operator (up to flavour indices) at dimension five; EFT1 can have multiple independent gauge contractions of `LL S_i S_j` because the BSM scalars remain dynamical. A field content and SU(2)xU(1)xZ2 operator-enumeration proof is still needed before declaring the LLSS basis closed. `LLHS` with exactly one inert-odd scalar vanishes by exact Z2; `LLHH` is Z2 even, **allowed** at one loop and must not be classified as symmetry-zero. `LLSS` operators generated at one loop normally enter neutrino mass only with an additional loop, assuming no odd scalar VEV.
+
+## New conditional hard one-loop scalar-portal term
+
+The new reusable kernel `hard_matching.py` requires a **separate, canonical real-component tree LLSS tensor for every heavy fermion mass eigenstate** `C[k,flavour1,flavour2,SU2_1,SU2_2,scalar_a,scalar_b]`. It is **not** valid to assign the *total* LLSS tensor to every heavy fermion; nor can one extract the individual fermion masses from a generic total C. All Mk are included together at **one** muF.
+
+Let `R^T M_S² R = diag(m_a²)` and rotate `C_k` and `lambda` by this **one** orthogonal matrix for both scalar multiplets. The projective amplitude is defined using the existing real-Higgs Weinberg tensor `T_ijAB` and `LOOP=16pi²`. The matched scalar-portal hard LLHH boundary is
+
+\[
+ {\cal A}_{\mathrm{hard}}(\mu_F) = \frac{1}{2\mathrm{LOOP}}\sum_{k,a,b} C_{k,ab}\lambda_{ab}
+\left[1+\ln\frac{\mu_F^2}{M_k^2}\right].
+\]
+
+The corresponding **one** scalar-source EFT1 log and **one** simultaneous finite scalar matching are
+
+\[
+ {\cal A}_{\mathrm{RG,scalar}}=\frac{\ln(\mu_S/\mu_F)}{\mathrm{LOOP}}\sum_{k,a,b}C_{k,ab}\lambda_{ab},\quad
+ {\cal A}_{\mathrm{scalar}}(\mu_S)=-\frac{1}{2\mathrm{LOOP}}\sum_{k,a,b}C_{k,ab}\lambda_{ab}
+\bar B_0(0;m_a^2,m_b^2;\mu_S).
+\]
+
+All amplitudes above retain their weak/Higgs/flavour tensor indices; they are projected onto C5 **only after summing**. The `1` in the hard expression is not an arbitrary fit: it comes from the difference between the zero-momentum **three-propagator full UV triangle** and the two-scalar EFT1 bubble, at leading order in `m_S²/M_F²` under the **declared** local real-scalar Wilson normalization. It is contingent on the input matching these conventions; it is not a complete model-independent renormalization proof for all other UV hard diagrams.
+
+At any fixed `muF,muS`, the code additionally evaluates
+
+\[
+ {\cal A}_{\rm full\;triangle}=\frac{1}{2\mathrm{LOOP}}\sum_{k,a,b} C_{k,ab}\lambda_{ab}\,
+ K(M_k^2,m_a^2,m_b^2),\quad
+ K=\frac{F(m_a^2/M_k^2)-F(m_b^2/M_k^2)}{(m_a^2-m_b^2)/M_k^2},\quad
+ F(r)=\frac{r\ln r}{1-r}.
+\]
+
+Thus `A_full - (A_hard + A_RG,scalar + A_scalar)` is the **one-loop higher-power remainder** at zero momentum for this topology. It is nonzero at finite `mS/MF`, is independent of the chosen common matching scales, and is not double-counted as a separate physical diagram. For coincident scalar masses `a=b=m²`, with `r=m²/M²`, the exact one-loop expansion is `K=(1-r+ln r)/(1-r)² = 1+ln r + r(1+2 ln r)+O(r² ln r)`; this explicitly shows the one-loop, higher-dimension power remainder. The exact coincident `M²=a=b` kernel is `-1/2`. Stable coincident scalar-mass limits are supported. If unbroken gauge invariance fails in an EWSB-split input, `projection_passed=false` and the result **cannot** be treated as a physical Weinberg coefficient. Individual heavy-fermion/eigenstate pair tensors, including suppressed terms, and independent labelled quartic channel projections are exported; individual pair projections are diagnostic and need not be gauge invariant by themselves.
+
+### Scheme, overlaps and cancellations
+
+* The definition of `B0bar` is MSbar; `1+ln(muF²/Mk²)` is **in the compatible MSbar definition and local operator convention**. Changing the subtraction convention shifts finite hard and scalar pieces while leaving the matched observable invariant only after a full counterterm calculation.
+* At fixed source `C` and quartic, `d A_scalar / d ln muS = -sum(C lambda)/LOOP`; the scalar-source `beta(C5)` cancels it. The hard scale derivative cancels the change of the explicit scalar RG-log partition. This is an algebraic partial-sector check, not a full physical RGE certificate.
+* Do **not** add the new `eft1_scalar_log` to an existing **seven-term EFT1 transport** that already includes the scalar source. In that case supply its complete transported C5 instead, and use only the new hard term once as the missing muF boundary, with the already existing joint scalar threshold once.
+* Do **not** append the full UV triangle to hard + RG + scalar matching. The exact triangle is a comparator (and a higher-dimension one-loop remainder), not another independent diagram.
+* The source-level `C_k` could depend on the phase/sign of the Matchete `GammaCC -> Weyl` dictionary, including vectorlike/Majorana conventions. The current source does not independently settle that sign/normalization. Therefore **the numerical kernel is implemented, but all-16 physical hard C5 remains unresolved**.
+* Universal one-quartic topologies are not a proof that other hard diagrams, extra EFT1 dim-5 structures, finite wavefunction/counterterm pieces, and non-scalar mixing are absent. Never label the partial result physics-complete.
+
+## Contract for optional per-model numerical inputs
+
+Supply `<hard-input-dir>/A_m4.json`, `A_m4.npz`, etc. For instance, `A_m4.json` must have:
+
+```json
+{
+  "model": "A_-4",
+  "tensor_convention": "T3_REAL_LLSS_HHSS_WEINBERG_v1",
+  "scheme": "MSbar",
+  "mu_f_gev": 100000.0,
+  "mu_s_gev": 1000.0,
+  "tensor_npz": "A_m4.npz",
+  "source_normalization_certified": false,
+  "quartic_channel_names": ["physical_source_portal_1", "physical_source_portal_2"],
+  "provenance": {"source": "PUT_VERIFIED_LOCAL_SOURCE_FILE_AND_CERTIFICATE_HERE"}
+}
+```
+
+The numerical values above demonstrate **the schema only**. They are not fitted benchmark inputs. `A_m4.npz` must contain:
+
+| NPZ entry | Shape | Meaning |
+|---|---|---|
+| `C_LLSS_by_fermion` | `(K,3,3,2,2,n,n)` complex | Separate tree Wilson tensor for **each mass eigenstate**; all heavy species |
+| `C_LLSS_total_muF` | `(3,3,2,2,n,n)` complex | Must equal sum over the K sources (explicitly verified) |
+| `fermion_masses_gev` | `(K,)` positive | Mass eigenvalues of all heavy BSM fermions |
+| `lambda_HHSS` | `(4,4,n,n)` real | Full mixed Higgs/scalar quartic at the relevant fixed order |
+| `scalar_mass_squared_gev2` | `(n,n)` real symmetric | Both multiplets at once, full mixing and self-bilinears |
+| `lambda_HHSS_channels` | `(J,4,4,n,n)` real, optional | Independent labelled source contributions whose sum equals the full quartic |
+
+Use `n=8` for A/B/C/D or `n=12` for E, with scalar ordering confirmed from the actual source. The code refuses missing per-species sums or mismatched quartet channels. No unknown normalizations, masses or extra scalar couplings are assigned default zeros or guessed values. Additional full seven-term source inputs belong to their separate workstream; the new calculator does not replace that machinery.
+
+## PowerShell installation and execution
+
+From the repository root:
+
+```powershell
+Set-Location C:\thesistemp\T3neutrinomassmodelpipeline
+Expand-Archive -LiteralPath "$HOME\Downloads\T3_LO_Completeness_Workstream3.zip" -DestinationPath . -Force
+python -m unittest discover -s tests -p 'test_lo_completeness_*.py' -v
+python -m scripts.RunLOCompletenessAudit --all --check-only `
+  --output-dir 'output\general_observable\lo_certification_completeness\check_20261102'
+python -m scripts.RunLOCompletenessAudit --all `
+  --output-dir 'output\general_observable\lo_certification_completeness\local_audit_01'
+Get-Content 'output\general_observable\lo_certification_completeness\local_audit_01\summary.json' -Raw
+```
+
+If and only if **source-verified per-heavy-fermion** input contracts exist, request the conditional all-16 matrix calculation (missing models are reported as `MISSING_INPUT`, not assigned zero):
+
+```powershell
+python -m scripts.RunLOCompletenessAudit --all `
+  --hard-input-dir 'input\lo_hard_conditional' `
+  --output-dir 'output\general_observable\lo_certification_completeness\conditional_hard_01'
+```
+
+The runner requires **a fresh output directory** and refuses overwrites or output paths outside Workstream 3. Its ledger uses exactly `INCLUDED`, `ZERO_BY_SYMMETRY`, `HIGHER_ORDER`, `MISSING`, `UNRESOLVED`. Its optional per-model numeric status is a **separate** readiness field, not a ledger status. The package includes a baseline **read-only-source snapshot** under `output/general_observable/lo_certification_completeness/source_snapshot_20261102/`; run the local audit to record checked-out source-presence and git blob comparisons.
+
+## Outstanding blocks to full one-loop certification
+
+1. Enable and verify every symmetry-allowed extra neutral-scalar conjugate Yukawa (six models), verify general heavy-fermion flavour masses, and certify the full opt-in UV scalar quartic/mass basis.
+2. An independently verified signed and absolutely normalized `GammaCC -> Weyl` map plus mass-eigenstate `C_LLSS_by_fermion` for every model, including vectorlike/mixed chiralities.
+3. Exhaustive symmetry/SU(2)/hypercharge operator enumeration through EFT1 dimension five, checking possible lepton bilinears and redundant/EOM-related operators, with a cross-check of every generated UV term.
+4. A complete counterterm/subtraction and field-renormalization calculation for all one-loop hard muF LLHH diagrams. The B/C raw poles/logs are insufficient.
+5. Full **renormalized**, independently normalized seven-term EFT1 C5 logs and a simultaneous muS endpoint for both scalars with the same tensor convention; independent cancellation against scalar-threshold logarithms.
+6. Comparison of the physical all-16 matched mass matrices to the exact UV direct loop (with the source-derived complex vertex dictionary), including the suppressed higher-dimension one-loop remainder when the EFT hierarchy is not extreme.
+
+Until these blocks are independently resolved, the deliverable is **implemented and algebraically tested but not a physics-complete leading-one-loop T3 pipeline**.

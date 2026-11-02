@@ -1,0 +1,177 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "T3 Workstream 2 all-16 coupling handoff result",
+  "type": "object",
+  "required": [
+    "format",
+    "model_count",
+    "models",
+    "two_matching_thresholds_only",
+    "full_physical_eft1_couplings_certified",
+    "physical_C5_calculated"
+  ],
+  "properties": {
+    "format": {
+      "const": "t3-lo-coupling-dictionary-batch-v1"
+    },
+    "model_count": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 16
+    },
+    "all16_requested": {
+      "type": "boolean"
+    },
+    "scheme": {
+      "const": "MSbar"
+    },
+    "two_matching_thresholds_only": {
+      "const": true
+    },
+    "fermions_integrated_together_at_muF": {
+      "const": true
+    },
+    "both_scalars_integrated_together_at_muS": {
+      "const": true
+    },
+    "full_physical_eft1_couplings_certified": {
+      "const": false
+    },
+    "physical_C5_calculated": {
+      "const": false
+    },
+    "models": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "items": {
+        "type": "object",
+        "required": [
+          "model",
+          "physical_status",
+          "coupling_status",
+          "blocking_dependencies"
+        ],
+        "properties": {
+          "model": {
+            "enum": [
+              "A_-4",
+              "A_-2",
+              "A_+0",
+              "B_-3",
+              "B_-1",
+              "B_+1",
+              "C_-3",
+              "C_-1",
+              "C_+1",
+              "D_-2",
+              "D_+0",
+              "D_+2",
+              "E_-4",
+              "E_-2",
+              "E_+0",
+              "E_+2"
+            ]
+          },
+          "physical_status": {
+            "enum": [
+              "verified",
+              "conditional",
+              "blocked"
+            ]
+          },
+          "coupling_status": {
+            "enum": [
+              "verified",
+              "conditional",
+              "blocked"
+            ]
+          },
+          "blocking_dependencies": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "mu_F_gev": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "mu_S_gev": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "positive_illustrative_mass": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "local_source_recheck": {
+      "type": "object",
+      "required": [
+        "status",
+        "drift",
+        "physical_source_certified"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "inspected_main_exact",
+            "local_structural_recheck",
+            "explicit_unaudited_drift_override"
+          ]
+        },
+        "drift": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "parser_reparsed_models": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "registry_models_checked": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "registry_new_HHSS_candidates": {
+          "type": "object"
+        },
+        "physical_source_certified": {
+          "const": false
+        }
+      }
+    }
+  },
+  "x-model-files": {
+    "symbolic_hhss.json": "Exact native source seed CG polynomial derivative in original scalar basis, plus missing extra source invariants",
+    "running_couplings_muF_muS.json": "Two complete original stored illustrative EFT1 numerical renormalizable state dictionaries",
+    "conditional_numeric_tensors.npz": {
+      "source_to_F_real_R": "(n,n) float64 orthogonal",
+      "source_to_S_real_R": "(n,n) float64 orthogonal",
+      "relative_F_from_S": "(n,n) float64 orthogonal",
+      "mass_squared_gev2_muF_fixed_F": "(n,n) positive real symmetric",
+      "mass_squared_gev2_muS_fixed_F": "(n,n) positive real symmetric",
+      "diagonalizing_U_muS_in_F": "(n,n) float64 orthogonal",
+      "lambda_HHSS_channels_candidate_muS_fixed_F": "(k,4,4,n,n) real symmetric in each field pair; provisional aliases",
+      "lambda_HHSS_candidate_muS_fixed_F": "(4,4,n,n) real, sum over all supplied k channels only",
+      "C_LLSS_formal_muF_in_F": "(3,3,2,2,n,n) complex, per unknown signed Matchete/Weyl normalization"
+    },
+    "conditional_numeric_metadata.json": "Not a certified physical solver file, so its format deliberately differs from the solver input format",
+    "existing_solver_contract.json": "Exact contract produced by existing RGE.running.intermediate.IntegratedEFT1JointScalarBridge.contracts",
+    "status.json": "Separate native tensor, illustrative numeric, conditional basis and physical-input statuses"
+  },
+  "x-notes": [
+    "n=8 for A/B/C/D, n=12 for E",
+    "No missing independent quartic, mass, Yukawa, generator, or phase may be defaulted to zero",
+    "Candidate preview cannot be passed as the existing solver's background format",
+    "No physically normalized Wilson or C5 coefficients are present",
+    "Local structural recheck means changed parser is tensor-equivalent to Matchete-v4 cached source and prior HHSS registry candidates remain present; it is not an absolute physical normalization certificate"
+  ]
+}

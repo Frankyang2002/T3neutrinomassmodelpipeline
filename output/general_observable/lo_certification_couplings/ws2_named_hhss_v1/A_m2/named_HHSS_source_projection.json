@@ -1,0 +1,159 @@
+{
+  "blocking_dependencies": [
+    "RGBeta_AddQuartic_internal_coefficient_normalization_not_cross_certified",
+    "source_index_dual_map_not_physically_fixed_by_Ward_identity_alone",
+    "Matchete_CG_to_RGBeta_named_extra_tensor_transform_not_verified",
+    "missing_complete_extra_coupling_evolution_muF_to_muS",
+    "remaining_spinor_and_scalar_basis_and_operator_closure_dependencies"
+  ],
+  "entries": [
+    {
+      "candidate_orientation_projection_maps": [
+        {
+          "dual_map_field_types": [
+            "BarS2"
+          ],
+          "in_exact_canonical_SU2_reference_span": true,
+          "source_to_reference_polynomial_coefficients": [
+            "1"
+          ]
+        },
+        {
+          "dual_map_field_types": [
+            "BarH"
+          ],
+          "in_exact_canonical_SU2_reference_span": true,
+          "source_to_reference_polynomial_coefficients": [
+            "1"
+          ]
+        }
+      ],
+      "counts": [
+        0,
+        2,
+        0,
+        1,
+        0,
+        1
+      ],
+      "group_invariant_expression": "delS2[SU2L, #4, #1, #2]",
+      "matchete_seed_link": {
+        "matchete_candidate_pattern": "lambdaT3ExtraQ020101I#",
+        "matching_native_terms": [],
+        "verified_named_CG_to_RGBeta_map": false
+      },
+      "numerical_running_coefficients": {
+        "muF": {
+          "accepted_as_physical": false,
+          "symbol_present": true,
+          "value_as_source_data": {
+            "imag": 0.0,
+            "real": 0.01086077346396949
+          }
+        },
+        "muS": {
+          "accepted_as_physical": false,
+          "symbol_present": true,
+          "value_as_source_data": {
+            "imag": 0.0,
+            "real": 0.01163014677539847
+          }
+        }
+      },
+      "physical_C5_certified": false,
+      "physical_Matchete_RGBeta_coupling_dictionary": null,
+      "raw_component_tensor_nonzero": true,
+      "reason_not_certified": "SU2 Ward identity alone does not verify RGBeta/Machete CG coordinate and phase orientation, AddQuartic internal factors or coefficient RG evolution",
+      "reference_dimension": 1,
+      "rgbeta_symbol": "lambdaT3GeneralQ020101I1",
+      "safe_physical_input": false,
+      "self_conjugate_option": "False",
+      "source_category": "new",
+      "source_fields": [
+        "Bar @ H",
+        "Bar @ H",
+        "Bar @ S1",
+        "Bar @ S2"
+      ],
+      "status": "conditional_exact_RGBeta_index_projection_orientation_ambiguous",
+      "tested_orientation_candidates": 4,
+      "valid_canonical_invariant_orientation_count": 2
+    },
+    {
+      "candidate_orientation_projection_maps": [],
+      "counts": [
+        1,
+        1,
+        0,
+        0,
+        0,
+        2
+      ],
+      "group_invariant_expression": "del[SU2L @ fund, #2, #1] * del[SU2L @ S2, #3, #4]",
+      "matchete_seed_link": {
+        "matchete_candidate_pattern": "lambdaT3ExtraQ110002I#",
+        "matching_native_terms": [],
+        "verified_named_CG_to_RGBeta_map": false
+      },
+      "numerical_running_coefficients": {
+        "muF": {
+          "accepted_as_physical": false,
+          "symbol_present": true,
+          "value_as_source_data": {
+            "imag": 0.0,
+            "real": 0.011308407280943272
+          }
+        },
+        "muS": {
+          "accepted_as_physical": false,
+          "symbol_present": true,
+          "value_as_source_data": {
+            "imag": 0.0,
+            "real": 0.012937773142050702
+          }
+        }
+      },
+      "physical_C5_certified": false,
+      "physical_Matchete_RGBeta_coupling_dictionary": null,
+      "raw_component_tensor_nonzero": true,
+      "reason_not_certified": "SU2 Ward identity alone does not verify RGBeta/Machete CG coordinate and phase orientation, AddQuartic internal factors or coefficient RG evolution",
+      "reference_dimension": 1,
+      "rgbeta_symbol": "lambdaT3GeneralQ110002I1",
+      "safe_physical_input": false,
+      "self_conjugate_option": "False",
+      "source_category": "new",
+      "source_fields": [
+        "H",
+        "Bar @ H",
+        "Bar @ S2",
+        "Bar @ S2"
+      ],
+      "status": "blocked_source_tensor_not_in_canonical_invariant_span",
+      "tested_orientation_candidates": 8,
+      "valid_canonical_invariant_orientation_count": 0
+    }
+  ],
+  "format": "t3-ws2-source-named-rgbeta-HHSS-projection-v4",
+  "full_physical_eft1_quartics_certified": false,
+  "model": "A_-2",
+  "muF_gev": 100000.0,
+  "muS_gev": 1000.0,
+  "orientation_ambiguous_symbols": 2,
+  "physical_C5_calculated": false,
+  "physical_named_Matchete_RGBeta_maps_certified": 0,
+  "source_evidence": {
+    "extra_symbols": 2,
+    "native_matchete_seed_sha256": "2f607d804c8b250ce6e2776c7be6fe71addabad1280dc6b6b0f1448d3eda3781",
+    "source_sha256": {
+      "core_rgbeta_wl": "a58c79f18b2abdf9d476588552dfa52e2f131f322094e5b72d1198162aa20abc",
+      "generated_extra_wl": "48d9c49f5623c1d3cc4fe235ee59d0a0a91e108c6c0c5addb90a3fa8425b16d2"
+    },
+    "v3_reference_sha256": "fa36451c758f481beea1d8685fc558941d3a34a0411abd183213292f34c8f301",
+    "v3_status_sha256": "e57d985114abc65921a8a2432e69cea010acdd2ab3d71445b01bb7b2a87e2911"
+  },
+  "source_projection_count": 2,
+  "status": "source_invariant_projections_conditional",
+  "threshold_sequence": "UV -> all heavy fermions at muF -> EFT1 -> both scalars at muS -> SMEFT",
+  "two_thresholds_only": true,
+  "valid_canonical_orientation_symbols": 1
+}

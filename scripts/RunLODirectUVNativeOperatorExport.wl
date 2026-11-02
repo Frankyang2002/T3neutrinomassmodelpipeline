@@ -1,17 +1,42 @@
-(* WS4: live Matchete restricted UV operator inventory for A(0), B(-1).
+(* WS4 (restricted-process environment fix v2): live Matchete restricted
+   UV operator inventory for A(0), B(-1).
    This is an additive native witness, NOT a component Feynman-rule or
    cross-package normalisation certificate. No Match[], RGBeta or EFT runs.
    Run: wolframscript -file scripts/RunLODirectUVNativeOperatorExport.wl OUTPUT.json
-   Output path must not already exist. *)
+   Output path must not already exist.
+   Experimental T3 flags inherited from PowerShell are explicitly disabled
+   ONLY in this disposable wolframscript process; the parent shell and the
+   repository files are not modified. The input flags are recorded. *)
 ClearAll["Global`*"];
 args = Rest[$ScriptCommandLine];
 If[Length[args] =!= 1, Print["Usage: OUTPUT.json"]; Exit[2]];
 out = ExpandFileName[First[args]];
 If[FileExistsQ[out], Print["Refusing to overwrite ", out]; Exit[2]];
-If[AnyTrue[{"T3_EXPERIMENTAL_GENERAL_FERMIONS", "T3_EXPERIMENTAL_GENERAL_QUADRATICS",
-             "T3_EXPERIMENTAL_GENERAL_QUARTICS", "T3_EXPERIMENTAL_FLAVOR_MASSES"},
-            Environment[#] === "1" &],
-   Print["BLOCKED: this witness must use the original restricted default Lagrangian"]; Exit[2]];
+(* The previous version aborted whenever an experimental flag remained set in
+   the caller's PowerShell session. This dedicated child process is explicitly
+   a RESTRICTED audit: force all four relevant opt-in flags to "0" before
+   loading Matchete and before assembling either Lagrangian. This cannot
+   change the parent PowerShell environment (SetEnvironment is process-local).
+   Preserve the inherited values in the JSON for reproducibility. *)
+restrictedFlags = {
+  "T3_EXPERIMENTAL_GENERAL_FERMIONS",
+  "T3_EXPERIMENTAL_GENERAL_QUADRATICS",
+  "T3_EXPERIMENTAL_GENERAL_QUARTICS",
+  "T3_EXPERIMENTAL_FLAVOR_MASSES"
+};
+inheritedFlags = AssociationMap[
+  Function[name, With[{value = Environment[name]},
+    If[StringQ[value], value, "UNSET"]]], restrictedFlags
+];
+If[AnyTrue[Values[inheritedFlags], # === "1" &],
+  Print["NOTICE: inherited experimental T3 flags are enabled; isolating the restricted UV witness within this Wolfram process."]
+];
+flagOverride = Check[SetEnvironment[Map[(# -> "0") &, restrictedFlags]]; True, $Failed];
+If[flagOverride =!= True ||
+   !AllTrue[restrictedFlags, Environment[#] === "0" &],
+  Print["BLOCKED: unable to establish restricted T3 environment"]; Exit[2]
+];
+effectiveFlags = AssociationMap[Environment, restrictedFlags];
 repo = DirectoryName[DirectoryName[ExpandFileName[$InputFileName]]];
 source = FileNameJoin[{repo, "Lagrangian", "model"}];
 loading = CheckAbort[Check[UsingFrontEnd[Needs["Matchete`"]; True], $Failed], $Aborted];
@@ -62,6 +87,12 @@ res = <|
    "LagrangianBuilder" -> FileHash[FileNameJoin[{source,"LagrangianBuilder.wl"}], "SHA256"],
    "ScalarPotential" -> FileHash[FileNameJoin[{repo,"Lagrangian","interactions","ScalarPotential.wl"}], "SHA256"],
    "T3Topology" -> FileHash[FileNameJoin[{repo,"Lagrangian","interactions","T3Topology.wl"}], "SHA256"]|>,
+ "restricted_environment" -> <|
+   "inherited_from_parent_process" -> inheritedFlags,
+   "effective_for_both_native_builds" -> effectiveFlags,
+   "isolated_to_current_wolframscript_process" -> True,
+   "experimental_interactions_intentionally_disabled" -> True
+ |>,
  "physical_cross_package_normalisation_certified" -> False,
  "missing_native_objects" -> {"Concrete GammaCC numeric components in declared Weyl axes",
    "Both Yukawa Feynman rule coefficients with canonical kinetic terms",

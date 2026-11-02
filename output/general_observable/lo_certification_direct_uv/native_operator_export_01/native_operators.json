@@ -1,0 +1,94 @@
+{
+	"format":"t3-ws4-native-matchete-restricted-LInt-operator-export-v1",
+	"status":"native_restricted_operator_inventory_extracted_not_component_physical",
+	"models":[
+		{
+			"model":"A_+0",
+			"native_build_status":"Success",
+			"native_full_lagrangian_validation":true,
+			"allowed_operator_names":[
+				"Yukawa1_GenericCG",
+				"Yukawa2_GenericCG",
+				"Scalar1SelfInv1",
+				"Scalar2SelfInv1",
+				"Scalar2SelfInv2",
+				"HiggsPortal1Inv1",
+				"HiggsPortal2Inv1",
+				"HiggsPortal2Inv2",
+				"ScalarCrossPortalInv1",
+				"T3ScalarMix_GenericCG"
+			],
+			"native_restricted_LInt_function_names":{
+				"unindexed_lambdaH1_function_in_LInt":false,
+				"unindexed_lambdaH2_function_in_LInt":false,
+				"indexed_lambdaH1Inv_in_LInt":true,
+				"indexed_lambdaH2Inv_in_LInt":true,
+				"topology_y1_in_LInt":false,
+				"topology_y2_in_LInt":false,
+				"T3_mixing_in_LInt":false
+			},
+			"native_LInt_string_bytes":5100,
+			"native_full_LInt_inputform":"Bar[Field[H, Scalar, {Index[d$$1, SU2L[fund]]}, {}]]*Bar[Field[NewScalar1, Scalar, {}, {}]]*CG[T3HiggsPortal1CGInv1, {Index[d$$1, SU2L[fund]], Bar[Index[d$$2, SU2L[fund]]]}]*Coupling[lambdaH1Inv1, {}, 0]*Field[H, Scalar, {Index[d$$2, SU2L[fund]]}, {}]*Field[NewScalar1, Scalar, {}, {}] + Bar[Field[NewScalar2, Scalar, {Index[d$$1, T3BSMd3]}, {}]]*CG[T3MixCG, {Bar[Index[d$$1, SU2L[fund]]], Bar[Index[d$$2, SU2L[fund]]], Index[d$$1, T3BSMd3]}]*Coupling[lambdaT3, {}, 0]*Field[H, Scalar, {Index[d$$1, SU2L[fund]]}, {}]*Field[H, Scalar, {Index[d$$2, SU2L[fund]]}, {}]*Field[NewScalar1, Scalar, {}, {}] + (Bar[Field[NewScalar1, Scalar, {}, {}]]^2*Coupling[lambdaS1Inv1, {}, 0]*Field[NewScalar1, Scalar, {}, {}]^2)\/2 + Bar[Coupling[lambdaT3, {}, 0]]*Bar[Field[H, Scalar, {Index[d$$1, SU2L[fund]]}, {}]]*Bar[Field[H, Scalar, {Index[d$$2, SU2L[fund]]}, {}]]*Bar[Field[NewScalar1, Scalar, {}, {}]]*CG[Bar[T3MixCG], {Index[d$$1, SU2L[fund]], Index[d$$2, SU2L[fund]], Index[d$$1, T3BSMd3]}]*Field[NewScalar2, Scalar, {Index[d$$1, T3BSMd3]}, {}] + (Bar[Field[H, Scalar, {Index[d$$1, SU2L[fund]]}, {}]]*Bar[Field[NewScalar2, Scalar, {Index[d$$1, T3BSMd3]}, {}]]*CG[T3HiggsPortal2CGInv1, {Index[d$$1, SU2L[fund]], Bar[Index[d$$2, SU2L[fund]]], Index[d$$1, T3BSMd3], Index[d$$2, T3BSMd3]}]*Coupling[lambdaH2Inv1, {}, 0]*Field[H, Scalar, {Index[d$$2, SU2L[fund]]}, {}]*Field[NewScalar2, Scalar, {Index[d$$2, T3BSMd3]}, {}])\/2 + (Bar[Field[H, Scalar, {Index[d$$1, SU2L[fund]]}, {}]]*Bar[Field[NewScalar2, Scalar, {Index[d$$1, T3BSMd3]}, {}]]*CG[T3HiggsPortal2CGInv1, {Index[d$$1, SU2L[fund]], Bar[Index[d$$2, SU2L[fund]]], Index[d$$2, T3BSMd3], Index[d$$1, T3BSMd3]}]*Coupling[lambdaH2Inv1, {}, 0]*Field[H, Scalar, {Index[d$$2, SU2L[fund]]}, {}]*Field[NewScalar2, Scalar, {Index[d$$2, T3BSMd3]}, {}])\/2 + (Bar[Field[H, Scalar, {Index[d$$1, SU2L[fund]]}, {}]]*Bar[Field[NewScalar2, Scalar, {Index[d$$1, T3BSMd3]}, {}]]*CG[T3HiggsPortal2CGInv2, {Index[d$$1, SU2L[fund]], Bar[Index[d$$2, SU2L[fund]]], Index[d$$1, T3BSMd3], Index[d$$2, T3BSMd3]}]*Coupling[lambdaH2Inv2, {}, 0]*Field[H, Scalar, {Index[d$$2, SU2L[fund]]}, {}]*Field[NewScalar2, Scalar, {Index[d$$2, T3BSMd3]}, {}])\/2 + (Bar[Field[H, Scalar, {Index[d$$1, SU2L[fund]]}, {}]]*Bar[Field[NewScalar2, Scalar, {Index[d$$1, T3BSMd3]}, {}]]*CG[T3HiggsPortal2CGInv2, {Index[d$$1, SU2L[fund]], Bar[Index[d$$2, SU2L[fund]]], Index[d$$2, T3BSMd3], Index[d$$1, T3BSMd3]}]*Coupling[lambdaH2Inv2, {}, 0]*Field[H, Scalar, {Index[d$$2, SU2L[fund]]}, {}]*Field[NewScalar2, Scalar, {Index[d$$2, T3BSMd3]}, {}])\/2 + Bar[Field[NewScalar1, Scalar, {}, {}]]*Bar[Field[NewScalar2, Scalar, {Index[d$$1, T3BSMd3]}, {}]]*CG[T3CrossScalarCGInv1, {Index[d$$1, T3BSMd3], Index[d$$2, T3BSMd3]}]*Coupling[lambda12Inv1, {}, 0]*Field[NewScalar1, Scalar, {}, {}]*Field[NewScalar2, Scalar, {Index[d$$2, T3BSMd3]}, {}] + (Bar[Field[NewScalar2, Scalar, {Index[d$$1, T3BSMd3]}, {}]]*Bar[Field[NewScalar2, Scalar, {Index[d$$2, T3BSMd3]}, {}]]*CG[T3Scalar2SelfCGInv1, {Index[d$$1, T3BSMd3], Index[d$$3, T3BSMd3], Index[d$$2, T3BSMd3], Index[d$$4, T3BSMd3]}]*Coupling[lambdaS2Inv1, {}, 0]*Field[NewScalar2, Scalar, {Index[d$$3, T3BSMd3]}, {}]*Field[NewScalar2, Scalar, {Index[d$$4, T3BSMd3]}, {}])\/2 + (Bar[Field[NewScalar2, Scalar, {Index[d$$1, T3BSMd3]}, {}]]*Bar[Field[NewScalar2, Scalar, {Index[d$$2, T3BSMd3]}, {}]]*CG[T3Scalar2SelfCGInv2, {Index[d$$1, T3BSMd3], Index[d$$3, T3BSMd3], Index[d$$2, T3BSMd3], Index[d$$4, T3BSMd3]}]*Coupling[lambdaS2Inv2, {}, 0]*Field[NewScalar2, Scalar, {Index[d$$3, T3BSMd3]}, {}]*Field[NewScalar2, Scalar, {Index[d$$4, T3BSMd3]}, {}])\/2 + Bar[Field[NewScalar2, Scalar, {Index[d$$1, T3BSMd3]}, {}]]*CG[T3Y2CG, {Index[d$$1, SU2L[fund]], Bar[Index[d$$1, T3BSMd2]], Index[d$$1, T3BSMd3]}]*Coupling[y2, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]*NCM[Bar[Field[l, Fermion, {Index[d$$1, SU2L[fund]], Index[d$$1, Flavor]}, {}]], DiracProduct[Proj[1]], Field[NewFermion, Fermion, {Index[d$$1, T3BSMd2], Index[d$$1, NFlavor]}, {}]] + CG[T3Y1CG, {Index[d$$1, SU2L[fund]], Index[d$$1, T3BSMd2]}]*Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]*Field[NewScalar1, Scalar, {}, {}]*NCM[Bar[Field[l, Fermion, {Index[d$$1, SU2L[fund]], Index[d$$1, Flavor]}, {}]], DiracProduct[GammaCC, Proj[1]], Transp[Bar[Field[NewFermion, Fermion, {Index[d$$1, T3BSMd2], Index[d$$1, NFlavor]}, {}]]]] + Bar[Coupling[y2, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*CG[Bar[T3Y2CG], {Bar[Index[d$$1, SU2L[fund]]], Index[d$$1, T3BSMd2], Index[d$$1, T3BSMd3]}]*Field[NewScalar2, Scalar, {Index[d$$1, T3BSMd3]}, {}]*NCM[Bar[Field[NewFermion, Fermion, {Index[d$$1, T3BSMd2], Index[d$$1, NFlavor]}, {}]], DiracProduct[Proj[-1]], Field[l, Fermion, {Index[d$$1, SU2L[fund]], Index[d$$1, Flavor]}, {}]] + Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Field[NewScalar1, Scalar, {}, {}]]*CG[Bar[T3Y1CG], {Bar[Index[d$$1, SU2L[fund]]], Bar[Index[d$$1, T3BSMd2]]}]*NCM[Transp[Field[l, Fermion, {Index[d$$1, SU2L[fund]], Index[d$$1, Flavor]}, {}]], DiracProduct[GammaCC, Proj[-1]], Field[NewFermion, Fermion, {Index[d$$1, T3BSMd2], Index[d$$1, NFlavor]}, {}]]",
+			"physical_component_spinor_mass_and_portal_normalisation_certified":false
+		},
+		{
+			"model":"B_-1",
+			"native_build_status":"Success",
+			"native_full_lagrangian_validation":true,
+			"allowed_operator_names":[
+				"Yukawa1_GenericCG",
+				"Yukawa2_GenericCG",
+				"Scalar1SelfInv1",
+				"Scalar2SelfInv1",
+				"HiggsPortal1Inv1",
+				"HiggsPortal1Inv2",
+				"HiggsPortal2Inv1",
+				"HiggsPortal2Inv2",
+				"ScalarCrossPortalInv1",
+				"ScalarCrossPortalInv2",
+				"T3ScalarMix_GenericCG"
+			],
+			"native_restricted_LInt_function_names":{
+				"unindexed_lambdaH1_function_in_LInt":false,
+				"unindexed_lambdaH2_function_in_LInt":false,
+				"indexed_lambdaH1Inv_in_LInt":true,
+				"indexed_lambdaH2Inv_in_LInt":true,
+				"topology_y1_in_LInt":false,
+				"topology_y2_in_LInt":false,
+				"T3_mixing_in_LInt":false
+			},
+			"native_LInt_string_bytes":5191,
+			"native_full_LInt_inputform":"Bar[Field[H, Scalar, {Index[d$$1, SU2L[fund]]}, {}]]*Bar[Field[NewScalar1, Scalar, {Index[d$$1, T3BSMd2]}, {}]]*CG[T3HiggsPortal1CGInv1, {Index[d$$1, SU2L[fund]], Bar[Index[d$$2, SU2L[fund]]], Index[d$$1, T3BSMd2], Bar[Index[d$$2, T3BSMd2]]}]*Coupling[lambdaH1Inv1, {}, 0]*Field[H, Scalar, {Index[d$$2, SU2L[fund]]}, {}]*Field[NewScalar1, Scalar, {Index[d$$2, T3BSMd2]}, {}] + Bar[Field[H, Scalar, {Index[d$$1, SU2L[fund]]}, {}]]*Bar[Field[NewScalar1, Scalar, {Index[d$$1, T3BSMd2]}, {}]]*CG[T3HiggsPortal1CGInv2, {Index[d$$1, SU2L[fund]], Bar[Index[d$$2, SU2L[fund]]], Index[d$$1, T3BSMd2], Bar[Index[d$$2, T3BSMd2]]}]*Coupling[lambdaH1Inv2, {}, 0]*Field[H, Scalar, {Index[d$$2, SU2L[fund]]}, {}]*Field[NewScalar1, Scalar, {Index[d$$2, T3BSMd2]}, {}] + Bar[Field[NewScalar2, Scalar, {Index[d$$1, T3BSMd2]}, {}]]*CG[T3MixCG, {Bar[Index[d$$1, SU2L[fund]]], Bar[Index[d$$2, SU2L[fund]]], Bar[Index[d$$2, T3BSMd2]], Index[d$$1, T3BSMd2]}]*Coupling[lambdaT3, {}, 0]*Field[H, Scalar, {Index[d$$1, SU2L[fund]]}, {}]*Field[H, Scalar, {Index[d$$2, SU2L[fund]]}, {}]*Field[NewScalar1, Scalar, {Index[d$$2, T3BSMd2]}, {}] + (Bar[Field[NewScalar1, Scalar, {Index[d$$1, T3BSMd2]}, {}]]*Bar[Field[NewScalar1, Scalar, {Index[d$$2, T3BSMd2]}, {}]]*CG[T3Scalar1SelfCGInv1, {Index[d$$1, T3BSMd2], Bar[Index[d$$3, T3BSMd2]], Index[d$$2, T3BSMd2], Bar[Index[d$$4, T3BSMd2]]}]*Coupling[lambdaS1Inv1, {}, 0]*Field[NewScalar1, Scalar, {Index[d$$3, T3BSMd2]}, {}]*Field[NewScalar1, Scalar, {Index[d$$4, T3BSMd2]}, {}])\/2 + Bar[Coupling[lambdaT3, {}, 0]]*Bar[Field[H, Scalar, {Index[d$$1, SU2L[fund]]}, {}]]*Bar[Field[H, Scalar, {Index[d$$2, SU2L[fund]]}, {}]]*Bar[Field[NewScalar1, Scalar, {Index[d$$1, T3BSMd2]}, {}]]*CG[Bar[T3MixCG], {Index[d$$1, SU2L[fund]], Index[d$$2, SU2L[fund]], Index[d$$1, T3BSMd2], Bar[Index[d$$2, T3BSMd2]]}]*Field[NewScalar2, Scalar, {Index[d$$2, T3BSMd2]}, {}] + Bar[Field[H, Scalar, {Index[d$$1, SU2L[fund]]}, {}]]*Bar[Field[NewScalar2, Scalar, {Index[d$$1, T3BSMd2]}, {}]]*CG[T3HiggsPortal2CGInv1, {Index[d$$1, SU2L[fund]], Bar[Index[d$$2, SU2L[fund]]], Index[d$$1, T3BSMd2], Bar[Index[d$$2, T3BSMd2]]}]*Coupling[lambdaH2Inv1, {}, 0]*Field[H, Scalar, {Index[d$$2, SU2L[fund]]}, {}]*Field[NewScalar2, Scalar, {Index[d$$2, T3BSMd2]}, {}] + Bar[Field[H, Scalar, {Index[d$$1, SU2L[fund]]}, {}]]*Bar[Field[NewScalar2, Scalar, {Index[d$$1, T3BSMd2]}, {}]]*CG[T3HiggsPortal2CGInv2, {Index[d$$1, SU2L[fund]], Bar[Index[d$$2, SU2L[fund]]], Index[d$$1, T3BSMd2], Bar[Index[d$$2, T3BSMd2]]}]*Coupling[lambdaH2Inv2, {}, 0]*Field[H, Scalar, {Index[d$$2, SU2L[fund]]}, {}]*Field[NewScalar2, Scalar, {Index[d$$2, T3BSMd2]}, {}] + Bar[Field[NewScalar1, Scalar, {Index[d$$1, T3BSMd2]}, {}]]*Bar[Field[NewScalar2, Scalar, {Index[d$$2, T3BSMd2]}, {}]]*CG[T3CrossScalarCGInv1, {Index[d$$1, T3BSMd2], Bar[Index[d$$3, T3BSMd2]], Index[d$$2, T3BSMd2], Bar[Index[d$$4, T3BSMd2]]}]*Coupling[lambda12Inv1, {}, 0]*Field[NewScalar1, Scalar, {Index[d$$3, T3BSMd2]}, {}]*Field[NewScalar2, Scalar, {Index[d$$4, T3BSMd2]}, {}] + Bar[Field[NewScalar1, Scalar, {Index[d$$1, T3BSMd2]}, {}]]*Bar[Field[NewScalar2, Scalar, {Index[d$$2, T3BSMd2]}, {}]]*CG[T3CrossScalarCGInv2, {Index[d$$1, T3BSMd2], Bar[Index[d$$3, T3BSMd2]], Index[d$$2, T3BSMd2], Bar[Index[d$$4, T3BSMd2]]}]*Coupling[lambda12Inv2, {}, 0]*Field[NewScalar1, Scalar, {Index[d$$3, T3BSMd2]}, {}]*Field[NewScalar2, Scalar, {Index[d$$4, T3BSMd2]}, {}] + (Bar[Field[NewScalar2, Scalar, {Index[d$$1, T3BSMd2]}, {}]]*Bar[Field[NewScalar2, Scalar, {Index[d$$2, T3BSMd2]}, {}]]*CG[T3Scalar2SelfCGInv1, {Index[d$$1, T3BSMd2], Bar[Index[d$$3, T3BSMd2]], Index[d$$2, T3BSMd2], Bar[Index[d$$4, T3BSMd2]]}]*Coupling[lambdaS2Inv1, {}, 0]*Field[NewScalar2, Scalar, {Index[d$$3, T3BSMd2]}, {}]*Field[NewScalar2, Scalar, {Index[d$$4, T3BSMd2]}, {}])\/2 + Bar[Field[NewScalar2, Scalar, {Index[d$$1, T3BSMd2]}, {}]]*CG[T3Y2CG, {Index[d$$1, SU2L[fund]], Index[d$$1, T3BSMd2]}]*Coupling[y2, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]*NCM[Bar[Field[l, Fermion, {Index[d$$1, SU2L[fund]], Index[d$$1, Flavor]}, {}]], DiracProduct[Proj[1]], Field[NewFermion, Fermion, {Index[d$$1, NFlavor]}, {}]] + CG[T3Y1CG, {Index[d$$1, SU2L[fund]], Bar[Index[d$$1, T3BSMd2]]}]*Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]*Field[NewScalar1, Scalar, {Index[d$$1, T3BSMd2]}, {}]*NCM[Bar[Field[l, Fermion, {Index[d$$1, SU2L[fund]], Index[d$$1, Flavor]}, {}]], DiracProduct[Proj[1]], Field[NewFermion, Fermion, {Index[d$$1, NFlavor]}, {}]] + Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Field[NewScalar1, Scalar, {Index[d$$1, T3BSMd2]}, {}]]*CG[Bar[T3Y1CG], {Bar[Index[d$$1, SU2L[fund]]], Index[d$$1, T3BSMd2]}]*NCM[Transp[Field[NewFermion, Fermion, {Index[d$$1, NFlavor]}, {}]], DiracProduct[GammaCC, Proj[-1]], Field[l, Fermion, {Index[d$$1, SU2L[fund]], Index[d$$1, Flavor]}, {}]] + Bar[Coupling[y2, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*CG[Bar[T3Y2CG], {Bar[Index[d$$1, SU2L[fund]]], Bar[Index[d$$1, T3BSMd2]]}]*Field[NewScalar2, Scalar, {Index[d$$1, T3BSMd2]}, {}]*NCM[Transp[Field[NewFermion, Fermion, {Index[d$$1, NFlavor]}, {}]], DiracProduct[GammaCC, Proj[-1]], Field[l, Fermion, {Index[d$$1, SU2L[fund]], Index[d$$1, Flavor]}, {}]]",
+			"physical_component_spinor_mass_and_portal_normalisation_certified":false
+		}
+	],
+	"source_files":{
+		"LagrangianBuilder":99454071880454314619040785895362079132918249676356484285104955381881744076427,
+		"ScalarPotential":90639073861833107018283214694396959147681125839498362480849522053486161492631,
+		"T3Topology":104431789149421387608124019232298106030081942324055671537951867511254963590417
+	},
+	"restricted_environment":{
+		"inherited_from_parent_process":{
+			"T3_EXPERIMENTAL_GENERAL_FERMIONS":"1",
+			"T3_EXPERIMENTAL_GENERAL_QUADRATICS":"1",
+			"T3_EXPERIMENTAL_GENERAL_QUARTICS":"1",
+			"T3_EXPERIMENTAL_FLAVOR_MASSES":"1"
+		},
+		"effective_for_both_native_builds":{
+			"T3_EXPERIMENTAL_GENERAL_FERMIONS":"0",
+			"T3_EXPERIMENTAL_GENERAL_QUADRATICS":"0",
+			"T3_EXPERIMENTAL_GENERAL_QUARTICS":"0",
+			"T3_EXPERIMENTAL_FLAVOR_MASSES":"0"
+		},
+		"isolated_to_current_wolframscript_process":true,
+		"experimental_interactions_intentionally_disabled":true
+	},
+	"physical_cross_package_normalisation_certified":false,
+	"missing_native_objects":[
+		"Concrete GammaCC numeric components in declared Weyl axes",
+		"Both Yukawa Feynman rule coefficients with canonical kinetic terms",
+		"RGBeta epsilon\/triplet basis in same component axes",
+		"Scalar Hessian derivative of isolated lambdaHiInvN operator"
+	],
+	"one_loop_or_EFT_matching_performed":false
+}

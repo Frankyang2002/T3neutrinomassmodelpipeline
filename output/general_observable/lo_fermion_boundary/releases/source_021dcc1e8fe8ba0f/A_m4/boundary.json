@@ -1,0 +1,1632 @@
+{
+  "format": "t3-lo-fermion-boundary-source-resolved-provisional-v1",
+  "model": "A_-4",
+  "status": "NumericalLLSSBySourceVerified_SpinorNormalizationOpen",
+  "mu_F_gev": 100000.0,
+  "units": "GeV^-1",
+  "field_content": {
+    "heavy_fermions_integrated_out": "all at mu_F",
+    "heavy_scalar_multiplets": "both retained in EFT1"
+  },
+  "index_order": [
+    "lepton_su2_i",
+    "lepton_flavour_p",
+    "lepton_su2_j",
+    "lepton_flavour_q",
+    "real_scalar_a",
+    "real_scalar_b"
+  ],
+  "index_base": 1,
+  "real_scalar_dimension": 12,
+  "scalar_field_offsets_one_based": {
+    "NewScalar1": 5,
+    "NewScalar2": 7
+  },
+  "scalar_field_complex_dimensions": {
+    "NewScalar1": 1,
+    "NewScalar2": 3
+  },
+  "symmetric_tensor_orbit_rule": "All distinct i,p<->j,q and a<->b orbit members equal representative. No extra orbit factor.",
+  "formal_polynomial": "sum C[i,p,j,q,a,b] psi[i,p] psi[j,q] phi[a] phi[b]",
+  "spinor_normalization": {
+    "certified": false,
+    "gamma_cc_to_master_weyl_factor": null,
+    "gamma_cc_to_master_weyl_sign": null,
+    "do_not_use_as_physical_master_wilson_boundary": true
+  },
+  "completeness": {
+    "F_tree_LLSS_included": true,
+    "distinct_PL_sources_retained": true,
+    "PR_Hermitian_conjugate_not_double_counted": true,
+    "one_loop_F_hard_matching_included": false,
+    "complete_physical_leading_one_loop_neutrino_mass_certified": false,
+    "EFT1_running_performed": false,
+    "mu_S_scalar_matching_performed": false
+  },
+  "sources": [
+    {
+      "matchete_source_index": 2,
+      "native_chirality": "PL",
+      "zero_at_this_benchmark": false,
+      "scalar_and_su2_contractions": "native Matchete CG already evaluated in ordered component input",
+      "cg_registry_used": [
+        "T3MixCG"
+      ],
+      "flavour_permutation_lepton_order": [
+        1,
+        0
+      ],
+      "inputform_operator": "(Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Coupling[y2, {Index[d$$2, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Field[NewScalar1, Scalar, {}, {}]]*CG[T3MixCG, {Bar[Index[d$$1, SU2L[fund]]], Bar[Index[d$$2, SU2L[fund]]], Index[d$$1, T3BSMd3]}]*Field[NewScalar2, Scalar, {Index[d$$1, T3BSMd3]}, {}]*NCM[Transp[Field[l, Fermion, {Index[d$$2, SU2L[fund]], Index[d$$2, Flavor]}, {}]], DiracProduct[GammaCC, Proj[-1]], Field[l, Fermion, {Index[d$$1, SU2L[fund]], Index[d$$1, Flavor]}, {}]])/Coupling[MF, {Index[d$$1, NFlavor]}, 0]",
+      "independent_symmetric_coordinates": [
+        {
+          "coordinate": [
+            1,
+            1,
+            1,
+            1,
+            5,
+            7
+          ],
+          "coefficient_real": 2.1535596891394695e-13,
+          "coefficient_imag": 0.0,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            1,
+            1,
+            1,
+            1,
+            5,
+            8
+          ],
+          "coefficient_real": 0.0,
+          "coefficient_imag": 2.1535596891394695e-13,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            1,
+            1,
+            1,
+            1,
+            5,
+            11
+          ],
+          "coefficient_real": 0.0,
+          "coefficient_imag": 2.1535596891394695e-13,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            1,
+            1,
+            1,
+            1,
+            5,
+            12
+          ],
+          "coefficient_real": -2.1535596891394695e-13,
+          "coefficient_imag": 0.0,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            1,
+            1,
+            1,
+            1,
+            6,
+            7
+          ],
+          "coefficient_real": 0.0,
+          "coefficient_imag": -2.1535596891394695e-13,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            1,
+            1,
+            1,
+            1,
+            6,
+            8
+          ],
+          "coefficient_real": 2.1535596891394695e-13,
+          "coefficient_imag": 0.0,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            1,
+            1,
+            1,
+            1,
+            6,
+            11
+          ],
+          "coefficient_real": 2.1535596891394695e-13,
+          "coefficient_imag": 0.0,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            1,
+            1,
+            1,
+            1,
+            6,
+            12
+          ],
+          "coefficient_real": 0.0,
+          "coefficient_imag": 2.1535596891394695e-13,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            1,
+            1,
+            2,
+            1,
+            5,
+            9
+          ],
+          "coefficient_real": -2.1535596891394695e-13,
+          "coefficient_imag": 0.0,
+          "orbit_size": 4
+        },
+        {
+          "coordinate": [
+            1,
+            1,
+            2,
+            1,
+            5,
+            10
+          ],
+          "coefficient_real": 0.0,
+          "coefficient_imag": -2.1535596891394695e-13,
+          "orbit_size": 4
+        },
+        {
+          "coordinate": [
+            1,
+            1,
+            2,
+            1,
+            6,
+            9
+          ],
+          "coefficient_real": 0.0,
+          "coefficient_imag": 2.1535596891394695e-13,
+          "orbit_size": 4
+        },
+        {
+          "coordinate": [
+            1,
+            1,
+            2,
+            1,
+            6,
+            10
+          ],
+          "coefficient_real": -2.1535596891394695e-13,
+          "coefficient_imag": 0.0,
+          "orbit_size": 4
+        },
+        {
+          "coordinate": [
+            1,
+            2,
+            1,
+            2,
+            5,
+            7
+          ],
+          "coefficient_real": 1.7946330551193168e-13,
+          "coefficient_imag": 0.0,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            1,
+            2,
+            1,
+            2,
+            5,
+            8
+          ],
+          "coefficient_real": 0.0,
+          "coefficient_imag": 1.7946330551193168e-13,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            1,
+            2,
+            1,
+            2,
+            5,
+            11
+          ],
+          "coefficient_real": 0.0,
+          "coefficient_imag": 1.7946330551193168e-13,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            1,
+            2,
+            1,
+            2,
+            5,
+            12
+          ],
+          "coefficient_real": -1.7946330551193168e-13,
+          "coefficient_imag": 0.0,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            1,
+            2,
+            1,
+            2,
+            6,
+            7
+          ],
+          "coefficient_real": 0.0,
+          "coefficient_imag": -1.7946330551193168e-13,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            1,
+            2,
+            1,
+            2,
+            6,
+            8
+          ],
+          "coefficient_real": 1.7946330551193168e-13,
+          "coefficient_imag": 0.0,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            1,
+            2,
+            1,
+            2,
+            6,
+            11
+          ],
+          "coefficient_real": 1.7946330551193168e-13,
+          "coefficient_imag": 0.0,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            1,
+            2,
+            1,
+            2,
+            6,
+            12
+          ],
+          "coefficient_real": 0.0,
+          "coefficient_imag": 1.7946330551193168e-13,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            1,
+            2,
+            2,
+            2,
+            5,
+            9
+          ],
+          "coefficient_real": -1.7946330551193168e-13,
+          "coefficient_imag": 0.0,
+          "orbit_size": 4
+        },
+        {
+          "coordinate": [
+            1,
+            2,
+            2,
+            2,
+            5,
+            10
+          ],
+          "coefficient_real": 0.0,
+          "coefficient_imag": -1.7946330551193168e-13,
+          "orbit_size": 4
+        },
+        {
+          "coordinate": [
+            1,
+            2,
+            2,
+            2,
+            6,
+            9
+          ],
+          "coefficient_real": 0.0,
+          "coefficient_imag": 1.7946330551193168e-13,
+          "orbit_size": 4
+        },
+        {
+          "coordinate": [
+            1,
+            2,
+            2,
+            2,
+            6,
+            10
+          ],
+          "coefficient_real": -1.7946330551193168e-13,
+          "coefficient_imag": 0.0,
+          "orbit_size": 4
+        },
+        {
+          "coordinate": [
+            1,
+            3,
+            1,
+            3,
+            5,
+            7
+          ],
+          "coefficient_real": 1.615164975869931e-13,
+          "coefficient_imag": 0.0,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            1,
+            3,
+            1,
+            3,
+            5,
+            8
+          ],
+          "coefficient_real": 0.0,
+          "coefficient_imag": 1.615164975869931e-13,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            1,
+            3,
+            1,
+            3,
+            5,
+            11
+          ],
+          "coefficient_real": 0.0,
+          "coefficient_imag": 1.615164975869931e-13,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            1,
+            3,
+            1,
+            3,
+            5,
+            12
+          ],
+          "coefficient_real": -1.615164975869931e-13,
+          "coefficient_imag": 0.0,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            1,
+            3,
+            1,
+            3,
+            6,
+            7
+          ],
+          "coefficient_real": 0.0,
+          "coefficient_imag": -1.615164975869931e-13,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            1,
+            3,
+            1,
+            3,
+            6,
+            8
+          ],
+          "coefficient_real": 1.615164975869931e-13,
+          "coefficient_imag": 0.0,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            1,
+            3,
+            1,
+            3,
+            6,
+            11
+          ],
+          "coefficient_real": 1.615164975869931e-13,
+          "coefficient_imag": 0.0,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            1,
+            3,
+            1,
+            3,
+            6,
+            12
+          ],
+          "coefficient_real": 0.0,
+          "coefficient_imag": 1.615164975869931e-13,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            1,
+            3,
+            2,
+            3,
+            5,
+            9
+          ],
+          "coefficient_real": -1.615164975869931e-13,
+          "coefficient_imag": 0.0,
+          "orbit_size": 4
+        },
+        {
+          "coordinate": [
+            1,
+            3,
+            2,
+            3,
+            5,
+            10
+          ],
+          "coefficient_real": 0.0,
+          "coefficient_imag": -1.615164975869931e-13,
+          "orbit_size": 4
+        },
+        {
+          "coordinate": [
+            1,
+            3,
+            2,
+            3,
+            6,
+            9
+          ],
+          "coefficient_real": 0.0,
+          "coefficient_imag": 1.615164975869931e-13,
+          "orbit_size": 4
+        },
+        {
+          "coordinate": [
+            1,
+            3,
+            2,
+            3,
+            6,
+            10
+          ],
+          "coefficient_real": -1.615164975869931e-13,
+          "coefficient_imag": 0.0,
+          "orbit_size": 4
+        },
+        {
+          "coordinate": [
+            2,
+            1,
+            2,
+            1,
+            5,
+            7
+          ],
+          "coefficient_real": -2.1535596891394695e-13,
+          "coefficient_imag": 0.0,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            2,
+            1,
+            2,
+            1,
+            5,
+            8
+          ],
+          "coefficient_real": 0.0,
+          "coefficient_imag": -2.1535596891394695e-13,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            2,
+            1,
+            2,
+            1,
+            5,
+            11
+          ],
+          "coefficient_real": 0.0,
+          "coefficient_imag": 2.1535596891394695e-13,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            2,
+            1,
+            2,
+            1,
+            5,
+            12
+          ],
+          "coefficient_real": -2.1535596891394695e-13,
+          "coefficient_imag": 0.0,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            2,
+            1,
+            2,
+            1,
+            6,
+            7
+          ],
+          "coefficient_real": 0.0,
+          "coefficient_imag": 2.1535596891394695e-13,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            2,
+            1,
+            2,
+            1,
+            6,
+            8
+          ],
+          "coefficient_real": -2.1535596891394695e-13,
+          "coefficient_imag": 0.0,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            2,
+            1,
+            2,
+            1,
+            6,
+            11
+          ],
+          "coefficient_real": 2.1535596891394695e-13,
+          "coefficient_imag": 0.0,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            2,
+            1,
+            2,
+            1,
+            6,
+            12
+          ],
+          "coefficient_real": 0.0,
+          "coefficient_imag": 2.1535596891394695e-13,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            2,
+            2,
+            2,
+            2,
+            5,
+            7
+          ],
+          "coefficient_real": -1.7946330551193168e-13,
+          "coefficient_imag": 0.0,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            2,
+            2,
+            2,
+            2,
+            5,
+            8
+          ],
+          "coefficient_real": 0.0,
+          "coefficient_imag": -1.7946330551193168e-13,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            2,
+            2,
+            2,
+            2,
+            5,
+            11
+          ],
+          "coefficient_real": 0.0,
+          "coefficient_imag": 1.7946330551193168e-13,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            2,
+            2,
+            2,
+            2,
+            5,
+            12
+          ],
+          "coefficient_real": -1.7946330551193168e-13,
+          "coefficient_imag": 0.0,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            2,
+            2,
+            2,
+            2,
+            6,
+            7
+          ],
+          "coefficient_real": 0.0,
+          "coefficient_imag": 1.7946330551193168e-13,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            2,
+            2,
+            2,
+            2,
+            6,
+            8
+          ],
+          "coefficient_real": -1.7946330551193168e-13,
+          "coefficient_imag": 0.0,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            2,
+            2,
+            2,
+            2,
+            6,
+            11
+          ],
+          "coefficient_real": 1.7946330551193168e-13,
+          "coefficient_imag": 0.0,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            2,
+            2,
+            2,
+            2,
+            6,
+            12
+          ],
+          "coefficient_real": 0.0,
+          "coefficient_imag": 1.7946330551193168e-13,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            2,
+            3,
+            2,
+            3,
+            5,
+            7
+          ],
+          "coefficient_real": -1.615164975869931e-13,
+          "coefficient_imag": 0.0,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            2,
+            3,
+            2,
+            3,
+            5,
+            8
+          ],
+          "coefficient_real": 0.0,
+          "coefficient_imag": -1.615164975869931e-13,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            2,
+            3,
+            2,
+            3,
+            5,
+            11
+          ],
+          "coefficient_real": 0.0,
+          "coefficient_imag": 1.615164975869931e-13,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            2,
+            3,
+            2,
+            3,
+            5,
+            12
+          ],
+          "coefficient_real": -1.615164975869931e-13,
+          "coefficient_imag": 0.0,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            2,
+            3,
+            2,
+            3,
+            6,
+            7
+          ],
+          "coefficient_real": 0.0,
+          "coefficient_imag": 1.615164975869931e-13,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            2,
+            3,
+            2,
+            3,
+            6,
+            8
+          ],
+          "coefficient_real": -1.615164975869931e-13,
+          "coefficient_imag": 0.0,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            2,
+            3,
+            2,
+            3,
+            6,
+            11
+          ],
+          "coefficient_real": 1.615164975869931e-13,
+          "coefficient_imag": 0.0,
+          "orbit_size": 2
+        },
+        {
+          "coordinate": [
+            2,
+            3,
+            2,
+            3,
+            6,
+            12
+          ],
+          "coefficient_real": 0.0,
+          "coefficient_imag": 1.615164975869931e-13,
+          "orbit_size": 2
+        }
+      ]
+    }
+  ],
+  "summed_independent_symmetric_coordinates": [
+    {
+      "coordinate": [
+        1,
+        1,
+        1,
+        1,
+        5,
+        7
+      ],
+      "coefficient_real": 2.1535596891394695e-13,
+      "coefficient_imag": 0.0,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        1,
+        1,
+        1,
+        1,
+        5,
+        8
+      ],
+      "coefficient_real": 0.0,
+      "coefficient_imag": 2.1535596891394695e-13,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        1,
+        1,
+        1,
+        1,
+        5,
+        11
+      ],
+      "coefficient_real": 0.0,
+      "coefficient_imag": 2.1535596891394695e-13,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        1,
+        1,
+        1,
+        1,
+        5,
+        12
+      ],
+      "coefficient_real": -2.1535596891394695e-13,
+      "coefficient_imag": 0.0,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        1,
+        1,
+        1,
+        1,
+        6,
+        7
+      ],
+      "coefficient_real": 0.0,
+      "coefficient_imag": -2.1535596891394695e-13,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        1,
+        1,
+        1,
+        1,
+        6,
+        8
+      ],
+      "coefficient_real": 2.1535596891394695e-13,
+      "coefficient_imag": 0.0,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        1,
+        1,
+        1,
+        1,
+        6,
+        11
+      ],
+      "coefficient_real": 2.1535596891394695e-13,
+      "coefficient_imag": 0.0,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        1,
+        1,
+        1,
+        1,
+        6,
+        12
+      ],
+      "coefficient_real": 0.0,
+      "coefficient_imag": 2.1535596891394695e-13,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        1,
+        1,
+        2,
+        1,
+        5,
+        9
+      ],
+      "coefficient_real": -2.1535596891394695e-13,
+      "coefficient_imag": 0.0,
+      "orbit_size": 4
+    },
+    {
+      "coordinate": [
+        1,
+        1,
+        2,
+        1,
+        5,
+        10
+      ],
+      "coefficient_real": 0.0,
+      "coefficient_imag": -2.1535596891394695e-13,
+      "orbit_size": 4
+    },
+    {
+      "coordinate": [
+        1,
+        1,
+        2,
+        1,
+        6,
+        9
+      ],
+      "coefficient_real": 0.0,
+      "coefficient_imag": 2.1535596891394695e-13,
+      "orbit_size": 4
+    },
+    {
+      "coordinate": [
+        1,
+        1,
+        2,
+        1,
+        6,
+        10
+      ],
+      "coefficient_real": -2.1535596891394695e-13,
+      "coefficient_imag": 0.0,
+      "orbit_size": 4
+    },
+    {
+      "coordinate": [
+        1,
+        2,
+        1,
+        2,
+        5,
+        7
+      ],
+      "coefficient_real": 1.7946330551193168e-13,
+      "coefficient_imag": 0.0,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        1,
+        2,
+        1,
+        2,
+        5,
+        8
+      ],
+      "coefficient_real": 0.0,
+      "coefficient_imag": 1.7946330551193168e-13,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        1,
+        2,
+        1,
+        2,
+        5,
+        11
+      ],
+      "coefficient_real": 0.0,
+      "coefficient_imag": 1.7946330551193168e-13,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        1,
+        2,
+        1,
+        2,
+        5,
+        12
+      ],
+      "coefficient_real": -1.7946330551193168e-13,
+      "coefficient_imag": 0.0,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        1,
+        2,
+        1,
+        2,
+        6,
+        7
+      ],
+      "coefficient_real": 0.0,
+      "coefficient_imag": -1.7946330551193168e-13,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        1,
+        2,
+        1,
+        2,
+        6,
+        8
+      ],
+      "coefficient_real": 1.7946330551193168e-13,
+      "coefficient_imag": 0.0,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        1,
+        2,
+        1,
+        2,
+        6,
+        11
+      ],
+      "coefficient_real": 1.7946330551193168e-13,
+      "coefficient_imag": 0.0,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        1,
+        2,
+        1,
+        2,
+        6,
+        12
+      ],
+      "coefficient_real": 0.0,
+      "coefficient_imag": 1.7946330551193168e-13,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        1,
+        2,
+        2,
+        2,
+        5,
+        9
+      ],
+      "coefficient_real": -1.7946330551193168e-13,
+      "coefficient_imag": 0.0,
+      "orbit_size": 4
+    },
+    {
+      "coordinate": [
+        1,
+        2,
+        2,
+        2,
+        5,
+        10
+      ],
+      "coefficient_real": 0.0,
+      "coefficient_imag": -1.7946330551193168e-13,
+      "orbit_size": 4
+    },
+    {
+      "coordinate": [
+        1,
+        2,
+        2,
+        2,
+        6,
+        9
+      ],
+      "coefficient_real": 0.0,
+      "coefficient_imag": 1.7946330551193168e-13,
+      "orbit_size": 4
+    },
+    {
+      "coordinate": [
+        1,
+        2,
+        2,
+        2,
+        6,
+        10
+      ],
+      "coefficient_real": -1.7946330551193168e-13,
+      "coefficient_imag": 0.0,
+      "orbit_size": 4
+    },
+    {
+      "coordinate": [
+        1,
+        3,
+        1,
+        3,
+        5,
+        7
+      ],
+      "coefficient_real": 1.615164975869931e-13,
+      "coefficient_imag": 0.0,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        1,
+        3,
+        1,
+        3,
+        5,
+        8
+      ],
+      "coefficient_real": 0.0,
+      "coefficient_imag": 1.615164975869931e-13,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        1,
+        3,
+        1,
+        3,
+        5,
+        11
+      ],
+      "coefficient_real": 0.0,
+      "coefficient_imag": 1.615164975869931e-13,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        1,
+        3,
+        1,
+        3,
+        5,
+        12
+      ],
+      "coefficient_real": -1.615164975869931e-13,
+      "coefficient_imag": 0.0,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        1,
+        3,
+        1,
+        3,
+        6,
+        7
+      ],
+      "coefficient_real": 0.0,
+      "coefficient_imag": -1.615164975869931e-13,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        1,
+        3,
+        1,
+        3,
+        6,
+        8
+      ],
+      "coefficient_real": 1.615164975869931e-13,
+      "coefficient_imag": 0.0,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        1,
+        3,
+        1,
+        3,
+        6,
+        11
+      ],
+      "coefficient_real": 1.615164975869931e-13,
+      "coefficient_imag": 0.0,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        1,
+        3,
+        1,
+        3,
+        6,
+        12
+      ],
+      "coefficient_real": 0.0,
+      "coefficient_imag": 1.615164975869931e-13,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        1,
+        3,
+        2,
+        3,
+        5,
+        9
+      ],
+      "coefficient_real": -1.615164975869931e-13,
+      "coefficient_imag": 0.0,
+      "orbit_size": 4
+    },
+    {
+      "coordinate": [
+        1,
+        3,
+        2,
+        3,
+        5,
+        10
+      ],
+      "coefficient_real": 0.0,
+      "coefficient_imag": -1.615164975869931e-13,
+      "orbit_size": 4
+    },
+    {
+      "coordinate": [
+        1,
+        3,
+        2,
+        3,
+        6,
+        9
+      ],
+      "coefficient_real": 0.0,
+      "coefficient_imag": 1.615164975869931e-13,
+      "orbit_size": 4
+    },
+    {
+      "coordinate": [
+        1,
+        3,
+        2,
+        3,
+        6,
+        10
+      ],
+      "coefficient_real": -1.615164975869931e-13,
+      "coefficient_imag": 0.0,
+      "orbit_size": 4
+    },
+    {
+      "coordinate": [
+        2,
+        1,
+        2,
+        1,
+        5,
+        7
+      ],
+      "coefficient_real": -2.1535596891394695e-13,
+      "coefficient_imag": 0.0,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        2,
+        1,
+        2,
+        1,
+        5,
+        8
+      ],
+      "coefficient_real": 0.0,
+      "coefficient_imag": -2.1535596891394695e-13,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        2,
+        1,
+        2,
+        1,
+        5,
+        11
+      ],
+      "coefficient_real": 0.0,
+      "coefficient_imag": 2.1535596891394695e-13,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        2,
+        1,
+        2,
+        1,
+        5,
+        12
+      ],
+      "coefficient_real": -2.1535596891394695e-13,
+      "coefficient_imag": 0.0,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        2,
+        1,
+        2,
+        1,
+        6,
+        7
+      ],
+      "coefficient_real": 0.0,
+      "coefficient_imag": 2.1535596891394695e-13,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        2,
+        1,
+        2,
+        1,
+        6,
+        8
+      ],
+      "coefficient_real": -2.1535596891394695e-13,
+      "coefficient_imag": 0.0,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        2,
+        1,
+        2,
+        1,
+        6,
+        11
+      ],
+      "coefficient_real": 2.1535596891394695e-13,
+      "coefficient_imag": 0.0,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        2,
+        1,
+        2,
+        1,
+        6,
+        12
+      ],
+      "coefficient_real": 0.0,
+      "coefficient_imag": 2.1535596891394695e-13,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        2,
+        2,
+        2,
+        2,
+        5,
+        7
+      ],
+      "coefficient_real": -1.7946330551193168e-13,
+      "coefficient_imag": 0.0,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        2,
+        2,
+        2,
+        2,
+        5,
+        8
+      ],
+      "coefficient_real": 0.0,
+      "coefficient_imag": -1.7946330551193168e-13,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        2,
+        2,
+        2,
+        2,
+        5,
+        11
+      ],
+      "coefficient_real": 0.0,
+      "coefficient_imag": 1.7946330551193168e-13,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        2,
+        2,
+        2,
+        2,
+        5,
+        12
+      ],
+      "coefficient_real": -1.7946330551193168e-13,
+      "coefficient_imag": 0.0,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        2,
+        2,
+        2,
+        2,
+        6,
+        7
+      ],
+      "coefficient_real": 0.0,
+      "coefficient_imag": 1.7946330551193168e-13,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        2,
+        2,
+        2,
+        2,
+        6,
+        8
+      ],
+      "coefficient_real": -1.7946330551193168e-13,
+      "coefficient_imag": 0.0,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        2,
+        2,
+        2,
+        2,
+        6,
+        11
+      ],
+      "coefficient_real": 1.7946330551193168e-13,
+      "coefficient_imag": 0.0,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        2,
+        2,
+        2,
+        2,
+        6,
+        12
+      ],
+      "coefficient_real": 0.0,
+      "coefficient_imag": 1.7946330551193168e-13,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        2,
+        3,
+        2,
+        3,
+        5,
+        7
+      ],
+      "coefficient_real": -1.615164975869931e-13,
+      "coefficient_imag": 0.0,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        2,
+        3,
+        2,
+        3,
+        5,
+        8
+      ],
+      "coefficient_real": 0.0,
+      "coefficient_imag": -1.615164975869931e-13,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        2,
+        3,
+        2,
+        3,
+        5,
+        11
+      ],
+      "coefficient_real": 0.0,
+      "coefficient_imag": 1.615164975869931e-13,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        2,
+        3,
+        2,
+        3,
+        5,
+        12
+      ],
+      "coefficient_real": -1.615164975869931e-13,
+      "coefficient_imag": 0.0,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        2,
+        3,
+        2,
+        3,
+        6,
+        7
+      ],
+      "coefficient_real": 0.0,
+      "coefficient_imag": 1.615164975869931e-13,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        2,
+        3,
+        2,
+        3,
+        6,
+        8
+      ],
+      "coefficient_real": -1.615164975869931e-13,
+      "coefficient_imag": 0.0,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        2,
+        3,
+        2,
+        3,
+        6,
+        11
+      ],
+      "coefficient_real": 1.615164975869931e-13,
+      "coefficient_imag": 0.0,
+      "orbit_size": 2
+    },
+    {
+      "coordinate": [
+        2,
+        3,
+        2,
+        3,
+        6,
+        12
+      ],
+      "coefficient_real": 0.0,
+      "coefficient_imag": 1.615164975869931e-13,
+      "orbit_size": 2
+    }
+  ],
+  "checksums_sha256": {
+    "ordered": "17e0b84a8aba16fbd53211af062f980a0ff1b3487539768f53e35d7d3d7dd15a",
+    "polynomial": "451ba9fcb076b1ca8116bf167e89ab57c2d9ee4ceeb7e068b6008acb846f0245",
+    "normalization_audit": "8f424070c14044416f7e339a983d25dc51fe7693a09103dcbbd8b5a4737cb5ba",
+    "native_source": "c56fb3e5a4af61c9929ec0faf77f89d98cd9fb07edce53c62b97e45822268c44"
+  }
+}

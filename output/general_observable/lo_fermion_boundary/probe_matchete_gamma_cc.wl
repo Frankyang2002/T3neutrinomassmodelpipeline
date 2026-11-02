@@ -1,16 +1,37 @@
-(* Read-only diagnostic: print the installed Matchete GammaCC conventions and
+(* Read-only v2 diagnostic: print the installed Matchete GammaCC conventions and
    nearby source definitions. Redirect STDOUT into this worker's output folder.
    Does not modify Matchete, the T3 repository or any released boundary. *)
 
-Print["T3_MATCHeTE_GAMMACC_DIAGNOSTIC_V1"];
+Print["T3_MATCHeTE_GAMMACC_DIAGNOSTIC_V2"];
 Print["WOLFRAM_VERSION=", $Version];
-load = Quiet[Check[Needs["Matchete`"], $Failed]];
-If[load === $Failed,
-  Print["ERROR=Matchete package did not load"];
-  Exit[2]
+Print["WOLFRAM_USER_APPLICATIONS=",
+  FileNameJoin[{$UserBaseDirectory, "Applications"}]];
+Print["WOLFRAM_SYSTEM_APPLICATIONS=",
+  FileNameJoin[{$BaseDirectory, "Applications"}]];
+Print["MATCHeTE_FIND_BEFORE=", ToString[InputForm[
+  Quiet[Check[FindFile["Matchete`"], $Failed]]]]];
+
+(* Mirror the frontend-aware initialization in the project's successful
+   Lagrangian/RunGeneralT3FermionFirstEFT1Tree.wl.
+   Deliberately do not suppress loading messages: they diagnose missing
+   dependencies and FrontEnd errors. A message alone does not imply failure. *)
+load = CheckAbort[
+  UsingFrontEnd[Needs["Matchete`"]; True],
+  $Aborted
 ];
 file = Quiet[Check[FindFile["Matchete`"], $Failed]];
+gammaNames = Names["*`GammaCC"];
+packageNames = Names["Matchete`*"];
+Print["FRONTEND_LOAD_RESULT=", ToString[InputForm[load]]];
+Print["GAMMACC_SYMBOLS_AFTER_LOAD=", ToString[InputForm[gammaNames]]];
+Print["MATCHeTE_PUBLIC_SYMBOL_COUNT=", Length[packageNames]];
 Print["MATCHeTE_FILE=", ToString[InputForm[file]]];
+If[load === $Aborted || gammaNames === {} || Length[packageNames] === 0,
+  Print["ERROR=Matchete package initialization did not expose its GammaCC symbol"];
+  Print["STATUS=PackageUnavailable"];
+  Print["NEXT=Check preceding Needs/UsingFrontEnd messages and the installed Matchete application path"];
+  Exit[2]
+];
 Print["MATCHeTE_VERSION=", ToString[InputForm[Quiet[Check[Matchete`$MatcheteVersion, Missing["Unavailable"]]]]]];
 
 names = DeleteDuplicates[Join[
@@ -30,6 +51,7 @@ Do[
 
 If[StringQ[file] && FileExistsQ[file],
   root = DirectoryName[file];
+  If[FileNameTake[root] === "Kernel", root = DirectoryName[root]];
   paths = Quiet[Check[FileNames[{"*.m", "*.wl"}, root, Infinity], {}]];
   Print["PACKAGE_SOURCE_ROOT=", root];
   Print["PACKAGE_SOURCE_FILES_SCANNED=", Length[paths]];

@@ -1,0 +1,102 @@
+{
+  "format": "t3-batch3-uv-vs-conditional-eft-diagnostic-v1",
+  "status": "COMPARISON_ONLY_NOT_PHYSICAL_MATCHING",
+  "model_count": 2,
+  "sources": {
+    "source_mode": "local",
+    "local_source_sha256": {
+      "output/general_observable/lo_joint_scalar_matching/conditional_all16_batch2_v1/summary.json": "be1eaa6d85add985d24d7a66a1e61848274b24964f5680b24bb06e3b70739215",
+      "output/general_observable/lo_certification_direct_uv/native_uv_reference_01/models/A_-4.json": "ffa662e144cdc83ca7183491a91df18640fe6a6f7e408bee19cf827a32d9097a",
+      "output/general_observable/lo_fermion_boundary/releases/source_021dcc1e8fe8ba0f/A_m4/boundary.json": "a51a31e437628ab8a1e6adfaf054bf1da5309b158574971999f8a2bce3bb80ed",
+      "output/general_observable/lo_certification_direct_uv/native_uv_reference_01/models/B_-1.json": "587a4af3046dfc4be84170e45427c19b69f0deda5cb56e1e8c2f02d98cad1017",
+      "output/general_observable/lo_fermion_boundary/releases/source_021dcc1e8fe8ba0f/B_m1/boundary.json": "6a4d1531a9c52ebae69e73cf582196a29bf858027b4511d2771ad3d1eee103b4"
+    },
+    "source_sha256_are_byte_level_not_semantic": true
+  },
+  "models": [
+    {
+      "model": "A_-4",
+      "source_origin": "local_source_reports",
+      "UV_input_scale_gev": 10000000.0,
+      "EFT_mu_F_gev": 100000.0,
+      "EFT_mu_S_gev": 1000.0,
+      "uv_neutrino_mass_singular_values_ev_desc": [
+        0.04360064403685543,
+        0.0075827281045958315,
+        0.0004744829299355003
+      ],
+      "eft_mass_singular_values_ev_per_abs_N_desc": [
+        0.02590212216709167,
+        0.021585101575418215,
+        0.019426534001343504
+      ],
+      "uv_offdiagonal_frobenius_fraction": 0.8031116076976612,
+      "eft_offdiagonal_frobenius_fraction": 0.0,
+      "fermion_boundary_flavour_support": {
+        "total_independent_LLSS_coordinates": 60,
+        "lepton_flavour_offdiagonal_coordinates": 0,
+        "lepton_flavour_diagonal_coordinates": 60
+      },
+      "fermion_boundary_contains_only_same_flavour_lepton_pairs": true,
+      "source_flavour_mismatch_is_a_proved_physics_bug": false,
+      "best_complex_scale_reported_axes": {
+        "real": -0.4742211043265767,
+        "imag": 0.0
+      },
+      "residual_after_best_complex_scale": 0.9089276327726866,
+      "best_complex_scale_is_physical_GammaCC_normalisation": false,
+      "flavour_basis_and_scale_compatibility_established": false,
+      "physical_equality_expected": false,
+      "UV_matrix_units": "GeV converted to eV",
+      "EFT_matrix_units": "eV per unknown signed N_GammaCC"
+    },
+    {
+      "model": "B_-1",
+      "source_origin": "local_source_reports",
+      "UV_input_scale_gev": 10000000.0,
+      "EFT_mu_F_gev": 100000.0,
+      "EFT_mu_S_gev": 1000.0,
+      "uv_neutrino_mass_singular_values_ev_desc": [
+        0.050441309361018635,
+        0.009803383428969251,
+        0.004522492503358704
+      ],
+      "eft_mass_singular_values_ev_per_abs_N_desc": [
+        0.023691066922032496,
+        0.01974255555729403,
+        0.017768247423931106
+      ],
+      "uv_offdiagonal_frobenius_fraction": 0.7947401905417403,
+      "eft_offdiagonal_frobenius_fraction": 0.0,
+      "fermion_boundary_flavour_support": {
+        "total_independent_LLSS_coordinates": 108,
+        "lepton_flavour_offdiagonal_coordinates": 0,
+        "lepton_flavour_diagonal_coordinates": 108
+      },
+      "fermion_boundary_contains_only_same_flavour_lepton_pairs": true,
+      "source_flavour_mismatch_is_a_proved_physics_bug": false,
+      "best_complex_scale_reported_axes": {
+        "real": 0.6693418453513234,
+        "imag": 0.0
+      },
+      "residual_after_best_complex_scale": 0.8869698354393171,
+      "best_complex_scale_is_physical_GammaCC_normalisation": false,
+      "flavour_basis_and_scale_compatibility_established": false,
+      "physical_equality_expected": false,
+      "UV_matrix_units": "GeV converted to eV",
+      "EFT_matrix_units": "eV per unknown signed N_GammaCC"
+    }
+  ],
+  "comparison_scope": "fixed-reported flavour axes; best single complex scale per model",
+  "matching_sequence": "UV -> integrate out ALL heavy BSM fermions at muF -> EFT1 retaining BOTH BSM scalars -> integrate BOTH scalar multiplets at muS -> SMEFT",
+  "known_incompatibilities": [
+    "Direct UV uses frozen high-scale inputs; conditional EFT uses illustrative running endpoint",
+    "Native Matchete GammaCC/Weyl prefactor and cross-package CG/phases not certified",
+    "Same flavour axes and running Yukawa/mass boundary not independently certified",
+    "Hard one-loop heavy-fermion terms and full EFT1 operator matching missing"
+  ],
+  "physical_GammaCC_normalization": null,
+  "physical_C5_gev_inverse": null,
+  "physical_mnu_ev": null,
+  "physical_certification": false
+}

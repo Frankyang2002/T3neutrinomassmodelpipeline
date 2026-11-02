@@ -1,0 +1,636 @@
+{
+  "format": "t3-ws4-registered-native-portal-singlet-dictionary-v2",
+  "status": "native_portal_operator_identity_exact_but_dictionary_nonunique",
+  "source_evidence": {
+    "status": "native_source_bytes_match_and_portal_forms_guarded",
+    "source_sha256": {
+      "Lagrangian/model/T3ModelCatalog.wl": "3ea4006b38617d1c603c564b209a0e0cedb324da127214fe434e18fd9953febc",
+      "Lagrangian/model/LagrangianBuilder.wl": "dbe102874c84c0ae8013eeceb78571e0ae3d44f35e95cf9c8d1e0ba952f32e8b",
+      "Lagrangian/model/SU2Invariants.wl": "78e83bd1730555d15a47f8f2b3343635734b3f3387afb243623b89410faa6c1a",
+      "Lagrangian/model/T3Fields.wl": "2f27f080ab02d1225aab7e5928aba19f238ec6d5dcdd41b72ee2d2c7298e24ab",
+      "Lagrangian/interactions/T3Topology.wl": "e6e24c4a673bddff980885f8354b388ceaa19e53c8b2faa79ba3289a87de1511",
+      "Lagrangian/interactions/ScalarPotential.wl": "c863e5d69bf665e65c7e164aee5ceafe01b8aefc75500099da5847db7d0cfa97",
+      "RGE\\running\\rgbeta\\T3RGBetaModel.wl": "a58c79f18b2abdf9d476588552dfa52e2f131f322094e5b72d1198162aa20abc",
+      "scripts\\BuildT3DirectOneLoopInputs.py": "16fbf7fbb06e630a02e720bd9f3bfbda65748394d3ef50924f39a656998213ec"
+    },
+    "signed_portal_Lagrangian_source": "+lambdaHiInvN (Hdag H)(Si dag Si) times native CG (1/2 PlusHc)",
+    "RGBeta_basic_portal_group_invariant": "delta(Hbar,H) delta(Sbar,S)"
+  },
+  "native_report_sha256": "a8f006d52b025000d09f8697028ce46d3b34a8f3fcb4fc942d59c1fc8b1e4284",
+  "native_portal_representation_classes_checked": 5,
+  "portal_operator_identity_solved_for_five_classes": true,
+  "models_covered_by_class_transfer": 16,
+  "portal_dictionary_by_class": {
+    "A": {
+      "S1": {
+        "status": "exact_full_four_index_operator_identity_unique",
+        "label": "A_+0/S1",
+        "dimension": 1,
+        "raw_registered_CG_rank_over_complex": 1,
+        "real_Hermitian_operator_rank": 1,
+        "native_invariant_count": 1,
+        "rank": 1,
+        "augmented_real_rank": 1,
+        "unique_coupling_dictionary": true,
+        "free_real_coupling_directions": 0,
+        "native_invariant_redundancy_after_PlusHc": false,
+        "identically_zero_Hermitian_projection_indices_one_based": [],
+        "independent_pivot_indices_one_based": [
+          1
+        ],
+        "nullspace_basis_real_coupling_shifts": [],
+        "coefficients_native_lambdaHiInvN_per_RGBeta_lambdaHi": [
+          "1"
+        ],
+        "coefficient_approx": [
+          1.0
+        ],
+        "coefficient_interpretation": "unique exact operator identity",
+        "symbolic_identity_residual_zero": true,
+        "tensor_relation": "sum_k c[k]*HermitianPart(T_native[k])[Hbar,H,Sbar,S]=delta_H*delta_S; c[k] real",
+        "hermitian_conjugate_included": true,
+        "potential_shift_at_H0_v_over_sqrt2": "-lambdaHi*v^2/2 * identity (conditional on source convention)",
+        "not_certified": "RGBeta internal physical action normalisation, scalar free-mass convention, full source-to-Weyl dictionary"
+      },
+      "S2": {
+        "status": "exact_full_four_index_operator_identity_nonunique",
+        "label": "A_+0/S2",
+        "dimension": 3,
+        "raw_registered_CG_rank_over_complex": 2,
+        "real_Hermitian_operator_rank": 1,
+        "native_invariant_count": 2,
+        "rank": 1,
+        "augmented_real_rank": 1,
+        "unique_coupling_dictionary": false,
+        "free_real_coupling_directions": 1,
+        "native_invariant_redundancy_after_PlusHc": true,
+        "identically_zero_Hermitian_projection_indices_one_based": [
+          1
+        ],
+        "independent_pivot_indices_one_based": [
+          2
+        ],
+        "nullspace_basis_real_coupling_shifts": [
+          [
+            "1",
+            "0"
+          ]
+        ],
+        "coefficients_native_lambdaHiInvN_per_RGBeta_lambdaHi": [
+          "0",
+          "1"
+        ],
+        "coefficient_approx": [
+          0.0,
+          1.0
+        ],
+        "coefficient_interpretation": "ONE canonical pivot-column representative; infinitely many equivalent native real-coupling assignments, related by nullspace",
+        "symbolic_identity_residual_zero": true,
+        "tensor_relation": "sum_k c[k]*HermitianPart(T_native[k])[Hbar,H,Sbar,S]=delta_H*delta_S; c[k] real",
+        "hermitian_conjugate_included": true,
+        "potential_shift_at_H0_v_over_sqrt2": "-lambdaHi*v^2/2 * identity (conditional on source convention)",
+        "not_certified": "RGBeta internal physical action normalisation, scalar free-mass convention, full source-to-Weyl dictionary"
+      }
+    },
+    "B": {
+      "S1": {
+        "status": "exact_full_four_index_operator_identity_unique",
+        "label": "B_-1/S1",
+        "dimension": 2,
+        "raw_registered_CG_rank_over_complex": 2,
+        "real_Hermitian_operator_rank": 2,
+        "native_invariant_count": 2,
+        "rank": 2,
+        "augmented_real_rank": 2,
+        "unique_coupling_dictionary": true,
+        "free_real_coupling_directions": 0,
+        "native_invariant_redundancy_after_PlusHc": false,
+        "identically_zero_Hermitian_projection_indices_one_based": [],
+        "independent_pivot_indices_one_based": [
+          1,
+          2
+        ],
+        "nullspace_basis_real_coupling_shifts": [],
+        "coefficients_native_lambdaHiInvN_per_RGBeta_lambdaHi": [
+          "1/2",
+          "sqrt(3)/2"
+        ],
+        "coefficient_approx": [
+          0.5,
+          0.8660254037844386
+        ],
+        "coefficient_interpretation": "unique exact operator identity",
+        "symbolic_identity_residual_zero": true,
+        "tensor_relation": "sum_k c[k]*HermitianPart(T_native[k])[Hbar,H,Sbar,S]=delta_H*delta_S; c[k] real",
+        "hermitian_conjugate_included": true,
+        "potential_shift_at_H0_v_over_sqrt2": "-lambdaHi*v^2/2 * identity (conditional on source convention)",
+        "not_certified": "RGBeta internal physical action normalisation, scalar free-mass convention, full source-to-Weyl dictionary"
+      },
+      "S2": {
+        "status": "exact_full_four_index_operator_identity_unique",
+        "label": "B_-1/S2",
+        "dimension": 2,
+        "raw_registered_CG_rank_over_complex": 2,
+        "real_Hermitian_operator_rank": 2,
+        "native_invariant_count": 2,
+        "rank": 2,
+        "augmented_real_rank": 2,
+        "unique_coupling_dictionary": true,
+        "free_real_coupling_directions": 0,
+        "native_invariant_redundancy_after_PlusHc": false,
+        "identically_zero_Hermitian_projection_indices_one_based": [],
+        "independent_pivot_indices_one_based": [
+          1,
+          2
+        ],
+        "nullspace_basis_real_coupling_shifts": [],
+        "coefficients_native_lambdaHiInvN_per_RGBeta_lambdaHi": [
+          "1/2",
+          "sqrt(3)/2"
+        ],
+        "coefficient_approx": [
+          0.5,
+          0.8660254037844386
+        ],
+        "coefficient_interpretation": "unique exact operator identity",
+        "symbolic_identity_residual_zero": true,
+        "tensor_relation": "sum_k c[k]*HermitianPart(T_native[k])[Hbar,H,Sbar,S]=delta_H*delta_S; c[k] real",
+        "hermitian_conjugate_included": true,
+        "potential_shift_at_H0_v_over_sqrt2": "-lambdaHi*v^2/2 * identity (conditional on source convention)",
+        "not_certified": "RGBeta internal physical action normalisation, scalar free-mass convention, full source-to-Weyl dictionary"
+      }
+    },
+    "C": {
+      "S1": {
+        "status": "exact_full_four_index_operator_identity_unique",
+        "label": "C_-1/S1",
+        "dimension": 2,
+        "raw_registered_CG_rank_over_complex": 2,
+        "real_Hermitian_operator_rank": 2,
+        "native_invariant_count": 2,
+        "rank": 2,
+        "augmented_real_rank": 2,
+        "unique_coupling_dictionary": true,
+        "free_real_coupling_directions": 0,
+        "native_invariant_redundancy_after_PlusHc": false,
+        "identically_zero_Hermitian_projection_indices_one_based": [],
+        "independent_pivot_indices_one_based": [
+          1,
+          2
+        ],
+        "nullspace_basis_real_coupling_shifts": [],
+        "coefficients_native_lambdaHiInvN_per_RGBeta_lambdaHi": [
+          "1/2",
+          "sqrt(3)/2"
+        ],
+        "coefficient_approx": [
+          0.5,
+          0.8660254037844386
+        ],
+        "coefficient_interpretation": "unique exact operator identity",
+        "symbolic_identity_residual_zero": true,
+        "tensor_relation": "sum_k c[k]*HermitianPart(T_native[k])[Hbar,H,Sbar,S]=delta_H*delta_S; c[k] real",
+        "hermitian_conjugate_included": true,
+        "potential_shift_at_H0_v_over_sqrt2": "-lambdaHi*v^2/2 * identity (conditional on source convention)",
+        "not_certified": "RGBeta internal physical action normalisation, scalar free-mass convention, full source-to-Weyl dictionary"
+      },
+      "S2": {
+        "status": "exact_full_four_index_operator_identity_unique",
+        "label": "C_-1/S2",
+        "dimension": 2,
+        "raw_registered_CG_rank_over_complex": 2,
+        "real_Hermitian_operator_rank": 2,
+        "native_invariant_count": 2,
+        "rank": 2,
+        "augmented_real_rank": 2,
+        "unique_coupling_dictionary": true,
+        "free_real_coupling_directions": 0,
+        "native_invariant_redundancy_after_PlusHc": false,
+        "identically_zero_Hermitian_projection_indices_one_based": [],
+        "independent_pivot_indices_one_based": [
+          1,
+          2
+        ],
+        "nullspace_basis_real_coupling_shifts": [],
+        "coefficients_native_lambdaHiInvN_per_RGBeta_lambdaHi": [
+          "1/2",
+          "sqrt(3)/2"
+        ],
+        "coefficient_approx": [
+          0.5,
+          0.8660254037844386
+        ],
+        "coefficient_interpretation": "unique exact operator identity",
+        "symbolic_identity_residual_zero": true,
+        "tensor_relation": "sum_k c[k]*HermitianPart(T_native[k])[Hbar,H,Sbar,S]=delta_H*delta_S; c[k] real",
+        "hermitian_conjugate_included": true,
+        "potential_shift_at_H0_v_over_sqrt2": "-lambdaHi*v^2/2 * identity (conditional on source convention)",
+        "not_certified": "RGBeta internal physical action normalisation, scalar free-mass convention, full source-to-Weyl dictionary"
+      }
+    },
+    "D": {
+      "S1": {
+        "status": "exact_full_four_index_operator_identity_nonunique",
+        "label": "D_+0/S1",
+        "dimension": 3,
+        "raw_registered_CG_rank_over_complex": 2,
+        "real_Hermitian_operator_rank": 1,
+        "native_invariant_count": 2,
+        "rank": 1,
+        "augmented_real_rank": 1,
+        "unique_coupling_dictionary": false,
+        "free_real_coupling_directions": 1,
+        "native_invariant_redundancy_after_PlusHc": true,
+        "identically_zero_Hermitian_projection_indices_one_based": [
+          1
+        ],
+        "independent_pivot_indices_one_based": [
+          2
+        ],
+        "nullspace_basis_real_coupling_shifts": [
+          [
+            "1",
+            "0"
+          ]
+        ],
+        "coefficients_native_lambdaHiInvN_per_RGBeta_lambdaHi": [
+          "0",
+          "1"
+        ],
+        "coefficient_approx": [
+          0.0,
+          1.0
+        ],
+        "coefficient_interpretation": "ONE canonical pivot-column representative; infinitely many equivalent native real-coupling assignments, related by nullspace",
+        "symbolic_identity_residual_zero": true,
+        "tensor_relation": "sum_k c[k]*HermitianPart(T_native[k])[Hbar,H,Sbar,S]=delta_H*delta_S; c[k] real",
+        "hermitian_conjugate_included": true,
+        "potential_shift_at_H0_v_over_sqrt2": "-lambdaHi*v^2/2 * identity (conditional on source convention)",
+        "not_certified": "RGBeta internal physical action normalisation, scalar free-mass convention, full source-to-Weyl dictionary"
+      },
+      "S2": {
+        "status": "exact_full_four_index_operator_identity_unique",
+        "label": "D_+0/S2",
+        "dimension": 1,
+        "raw_registered_CG_rank_over_complex": 1,
+        "real_Hermitian_operator_rank": 1,
+        "native_invariant_count": 1,
+        "rank": 1,
+        "augmented_real_rank": 1,
+        "unique_coupling_dictionary": true,
+        "free_real_coupling_directions": 0,
+        "native_invariant_redundancy_after_PlusHc": false,
+        "identically_zero_Hermitian_projection_indices_one_based": [],
+        "independent_pivot_indices_one_based": [
+          1
+        ],
+        "nullspace_basis_real_coupling_shifts": [],
+        "coefficients_native_lambdaHiInvN_per_RGBeta_lambdaHi": [
+          "1"
+        ],
+        "coefficient_approx": [
+          1.0
+        ],
+        "coefficient_interpretation": "unique exact operator identity",
+        "symbolic_identity_residual_zero": true,
+        "tensor_relation": "sum_k c[k]*HermitianPart(T_native[k])[Hbar,H,Sbar,S]=delta_H*delta_S; c[k] real",
+        "hermitian_conjugate_included": true,
+        "potential_shift_at_H0_v_over_sqrt2": "-lambdaHi*v^2/2 * identity (conditional on source convention)",
+        "not_certified": "RGBeta internal physical action normalisation, scalar free-mass convention, full source-to-Weyl dictionary"
+      }
+    },
+    "E": {
+      "S1": {
+        "status": "exact_full_four_index_operator_identity_nonunique",
+        "label": "E_+0/S1",
+        "dimension": 3,
+        "raw_registered_CG_rank_over_complex": 2,
+        "real_Hermitian_operator_rank": 1,
+        "native_invariant_count": 2,
+        "rank": 1,
+        "augmented_real_rank": 1,
+        "unique_coupling_dictionary": false,
+        "free_real_coupling_directions": 1,
+        "native_invariant_redundancy_after_PlusHc": true,
+        "identically_zero_Hermitian_projection_indices_one_based": [
+          1
+        ],
+        "independent_pivot_indices_one_based": [
+          2
+        ],
+        "nullspace_basis_real_coupling_shifts": [
+          [
+            "1",
+            "0"
+          ]
+        ],
+        "coefficients_native_lambdaHiInvN_per_RGBeta_lambdaHi": [
+          "0",
+          "1"
+        ],
+        "coefficient_approx": [
+          0.0,
+          1.0
+        ],
+        "coefficient_interpretation": "ONE canonical pivot-column representative; infinitely many equivalent native real-coupling assignments, related by nullspace",
+        "symbolic_identity_residual_zero": true,
+        "tensor_relation": "sum_k c[k]*HermitianPart(T_native[k])[Hbar,H,Sbar,S]=delta_H*delta_S; c[k] real",
+        "hermitian_conjugate_included": true,
+        "potential_shift_at_H0_v_over_sqrt2": "-lambdaHi*v^2/2 * identity (conditional on source convention)",
+        "not_certified": "RGBeta internal physical action normalisation, scalar free-mass convention, full source-to-Weyl dictionary"
+      },
+      "S2": {
+        "status": "exact_full_four_index_operator_identity_nonunique",
+        "label": "E_+0/S2",
+        "dimension": 3,
+        "raw_registered_CG_rank_over_complex": 2,
+        "real_Hermitian_operator_rank": 1,
+        "native_invariant_count": 2,
+        "rank": 1,
+        "augmented_real_rank": 1,
+        "unique_coupling_dictionary": false,
+        "free_real_coupling_directions": 1,
+        "native_invariant_redundancy_after_PlusHc": true,
+        "identically_zero_Hermitian_projection_indices_one_based": [
+          1
+        ],
+        "independent_pivot_indices_one_based": [
+          2
+        ],
+        "nullspace_basis_real_coupling_shifts": [
+          [
+            "1",
+            "0"
+          ]
+        ],
+        "coefficients_native_lambdaHiInvN_per_RGBeta_lambdaHi": [
+          "0",
+          "1"
+        ],
+        "coefficient_approx": [
+          0.0,
+          1.0
+        ],
+        "coefficient_interpretation": "ONE canonical pivot-column representative; infinitely many equivalent native real-coupling assignments, related by nullspace",
+        "symbolic_identity_residual_zero": true,
+        "tensor_relation": "sum_k c[k]*HermitianPart(T_native[k])[Hbar,H,Sbar,S]=delta_H*delta_S; c[k] real",
+        "hermitian_conjugate_included": true,
+        "potential_shift_at_H0_v_over_sqrt2": "-lambdaHi*v^2/2 * identity (conditional on source convention)",
+        "not_certified": "RGBeta internal physical action normalisation, scalar free-mass convention, full source-to-Weyl dictionary"
+      }
+    }
+  },
+  "frozen_input_audit": {
+    "status": "all_16_restricted_basic_portal_blocks_agree_with_source_builder",
+    "models_checked": 16,
+    "max_relative_block_residual": 0.0,
+    "models": [
+      {
+        "model": "A_-4",
+        "input_sha256": "14cdf7c7a5167ab5677b75e3faaa4e9b7958f5884319bde21c272f62dea1a48b",
+        "benchmark_sha256": "3cb8dc3e94f2bd6f60571a7a85477638e8fc02109bccfcec0e04055852d81247",
+        "scalar_block_residuals": [
+          0.0,
+          0.0
+        ],
+        "source_basic_portal_blocks_verified": true,
+        "native_portal_dictionary_class": "A",
+        "physical_source_to_Weyl_certified": false
+      },
+      {
+        "model": "A_-2",
+        "input_sha256": "65f36c02a289b8036606f61b1d576a72b22fadf7fed16c78e436fde66fd88fb3",
+        "benchmark_sha256": "9cd1dd65546f045268ee429b81815301e2e65fd680c4abe5aba74c6f20ff0c54",
+        "scalar_block_residuals": [
+          0.0,
+          0.0
+        ],
+        "source_basic_portal_blocks_verified": true,
+        "native_portal_dictionary_class": "A",
+        "physical_source_to_Weyl_certified": false
+      },
+      {
+        "model": "A_+0",
+        "input_sha256": "0aaa9d32bdb1e8da207fad7d443aed7b268fc56acf65e19674c883a2e65f3ce9",
+        "benchmark_sha256": "4824f1278b9838635deec2ff11d1d9290abc5ee726cb56a8f4c2ea6fc77d812d",
+        "scalar_block_residuals": [
+          0.0,
+          0.0
+        ],
+        "source_basic_portal_blocks_verified": true,
+        "native_portal_dictionary_class": "A",
+        "physical_source_to_Weyl_certified": false
+      },
+      {
+        "model": "B_-3",
+        "input_sha256": "71ffd39a6fa0288b65ed0f59868531f66530c683cc9c14485bbabe718b9cdcb0",
+        "benchmark_sha256": "c036c5177cdefaae39201b8e22740dd5ade1e9e904b534c0a5e84d7c9d99f55e",
+        "scalar_block_residuals": [
+          0.0,
+          0.0
+        ],
+        "source_basic_portal_blocks_verified": true,
+        "native_portal_dictionary_class": "B",
+        "physical_source_to_Weyl_certified": false
+      },
+      {
+        "model": "B_-1",
+        "input_sha256": "e5d25ede470961c216f558c462bd19c090a8890918caea69297bb0a2c445855d",
+        "benchmark_sha256": "d83d7d31f9929f21dffad63c429a9e996a3f065a60535243a282a54d6f87dd5f",
+        "scalar_block_residuals": [
+          0.0,
+          0.0
+        ],
+        "source_basic_portal_blocks_verified": true,
+        "native_portal_dictionary_class": "B",
+        "physical_source_to_Weyl_certified": false
+      },
+      {
+        "model": "B_+1",
+        "input_sha256": "f941d6049b2d7eaf21127539f2cd191ba4684ab6df6760bc2b11883f5c532ee2",
+        "benchmark_sha256": "fe1c9e656ba0359e3832b1c96d62260f78e8e5dde31e8abd3da830c62b5d6b31",
+        "scalar_block_residuals": [
+          0.0,
+          0.0
+        ],
+        "source_basic_portal_blocks_verified": true,
+        "native_portal_dictionary_class": "B",
+        "physical_source_to_Weyl_certified": false
+      },
+      {
+        "model": "C_-3",
+        "input_sha256": "9147e7a338e1d375cfb036c41864684197bb139534b222db4d2651eb4bf028a4",
+        "benchmark_sha256": "a1736f4c38c8a56f93969b5528f0822d0fa88e8288457b8e70151dd5d40fab6c",
+        "scalar_block_residuals": [
+          0.0,
+          0.0
+        ],
+        "source_basic_portal_blocks_verified": true,
+        "native_portal_dictionary_class": "C",
+        "physical_source_to_Weyl_certified": false
+      },
+      {
+        "model": "C_-1",
+        "input_sha256": "36e6fd4d905030ef377468ea46c8261e04ab40e53f8ebf96cbb019e47dd36dce",
+        "benchmark_sha256": "782c261c88e364b2db70791ed97d8fa067cf255449900668155b821ba636f03c",
+        "scalar_block_residuals": [
+          0.0,
+          0.0
+        ],
+        "source_basic_portal_blocks_verified": true,
+        "native_portal_dictionary_class": "C",
+        "physical_source_to_Weyl_certified": false
+      },
+      {
+        "model": "C_+1",
+        "input_sha256": "b57ddd02412cd051945b9901baa228f50f385de0d407bce5894d81f16584de8e",
+        "benchmark_sha256": "dd3beb2db859c7b272ebe81b25bc548d0bd159990c7b421a62f9aeeab352339c",
+        "scalar_block_residuals": [
+          0.0,
+          0.0
+        ],
+        "source_basic_portal_blocks_verified": true,
+        "native_portal_dictionary_class": "C",
+        "physical_source_to_Weyl_certified": false
+      },
+      {
+        "model": "D_-2",
+        "input_sha256": "a7a045bb83220294c89a00a9cf628b826abafe665597c52bc299b4d851c7575b",
+        "benchmark_sha256": "fbaae81addefb93ff4749a4f60798682b929fb2e60b934ad18f11dbfe2402fce",
+        "scalar_block_residuals": [
+          0.0,
+          0.0
+        ],
+        "source_basic_portal_blocks_verified": true,
+        "native_portal_dictionary_class": "D",
+        "physical_source_to_Weyl_certified": false
+      },
+      {
+        "model": "D_+0",
+        "input_sha256": "d1d7dce3afa5567284e66778c1e2ea99cfde6652044004e09b60d6035e6e1480",
+        "benchmark_sha256": "59bcfbd972a82202c63fbcea0d02352d90a9acd6f63250bf2a40e2f7a18f88ca",
+        "scalar_block_residuals": [
+          0.0,
+          0.0
+        ],
+        "source_basic_portal_blocks_verified": true,
+        "native_portal_dictionary_class": "D",
+        "physical_source_to_Weyl_certified": false
+      },
+      {
+        "model": "D_+2",
+        "input_sha256": "57e30292c4855ce6af949f2037b66f6c8f06bef374354bbe28ea55828f16f027",
+        "benchmark_sha256": "18d1e743cd6160bc3d33ece098315480fe2ab69ef218b294e831cc7ab39ac6d3",
+        "scalar_block_residuals": [
+          0.0,
+          0.0
+        ],
+        "source_basic_portal_blocks_verified": true,
+        "native_portal_dictionary_class": "D",
+        "physical_source_to_Weyl_certified": false
+      },
+      {
+        "model": "E_-4",
+        "input_sha256": "42363373a59ab0ccca00b77b5748143220bcc64cd678e2f171e5c53d8dc09009",
+        "benchmark_sha256": "347d0c74d67ae827d53b9b2edb5c9f9953dc10b3df519f2ccc85c7a842e89c55",
+        "scalar_block_residuals": [
+          0.0,
+          0.0
+        ],
+        "source_basic_portal_blocks_verified": true,
+        "native_portal_dictionary_class": "E",
+        "physical_source_to_Weyl_certified": false
+      },
+      {
+        "model": "E_-2",
+        "input_sha256": "2bf49749b781ce139d1084530ce6d82bee437ab2c986344cc21fc7276eabd326",
+        "benchmark_sha256": "5fddf5a3cba554a52714ab2837f690620f97fd4edaa9f5ba13d63b7f4a33b6f6",
+        "scalar_block_residuals": [
+          0.0,
+          0.0
+        ],
+        "source_basic_portal_blocks_verified": true,
+        "native_portal_dictionary_class": "E",
+        "physical_source_to_Weyl_certified": false
+      },
+      {
+        "model": "E_+0",
+        "input_sha256": "3f18217920b1a171e78d9721ed873ad3c0012f489bdefae0b2ee2316c024504a",
+        "benchmark_sha256": "01b140875a017cfa10230f2f4012e620d3aa099596ccebfb4e5135ea67aedecb",
+        "scalar_block_residuals": [
+          0.0,
+          0.0
+        ],
+        "source_basic_portal_blocks_verified": true,
+        "native_portal_dictionary_class": "E",
+        "physical_source_to_Weyl_certified": false
+      },
+      {
+        "model": "E_+2",
+        "input_sha256": "a892e2f30982f47f3892535d2d449f08b594ace02b2d7f8057cc3ecba432f1bd",
+        "benchmark_sha256": "c7fedaa074e5cf026eb9a233e406a7a5a686aa21decbe2137241f6a8d1abc34d",
+        "scalar_block_residuals": [
+          0.0,
+          0.0
+        ],
+        "source_basic_portal_blocks_verified": true,
+        "native_portal_dictionary_class": "E",
+        "physical_source_to_Weyl_certified": false
+      }
+    ]
+  },
+  "scope": "Restricted basic Higgs portals only, not opt-in adjoint or holomorphic scalar operators",
+  "basic_RGBeta_to_Matchete_operator_dictionary_verified": true,
+  "exact_operator_embedding_verified": true,
+  "unique_basic_portal_coupling_dictionary_verified": false,
+  "nonunique_operator_subspaces": [
+    {
+      "class": "A",
+      "scalar": "S2",
+      "native_invariant_count": 2,
+      "real_Hermitian_rank": 1,
+      "zero_projected_indices": [
+        1
+      ]
+    },
+    {
+      "class": "D",
+      "scalar": "S1",
+      "native_invariant_count": 2,
+      "real_Hermitian_rank": 1,
+      "zero_projected_indices": [
+        1
+      ]
+    },
+    {
+      "class": "E",
+      "scalar": "S1",
+      "native_invariant_count": 2,
+      "real_Hermitian_rank": 1,
+      "zero_projected_indices": [
+        1
+      ]
+    },
+    {
+      "class": "E",
+      "scalar": "S2",
+      "native_invariant_count": 2,
+      "real_Hermitian_rank": 1,
+      "zero_projected_indices": [
+        1
+      ]
+    }
+  ],
+  "native_RGBeta_quantum_action_prefactors_independently_certified": false,
+  "physical_source_to_Weyl_model_certified": 0,
+  "still_missing": [
+    "native RGBeta internal scalar action prefactor vs Matchete physical fields",
+    "Matchete GammaCC and RGBeta heavy fermion epsilon phase with both Yukawas and MF",
+    "T3 scalar mixing CG coefficient and Higgs vev sign in common components",
+    "mass-free-sector scalar quadratic action and all omitted allowed couplings",
+    "hard one-loop matching of ALL heavy BSM fermions at muF",
+    "integration of BOTH BSM scalars at muS into SMEFT"
+  ],
+  "EFT_sequence": "UV -> all heavy fermions -> EFT1 (both BSM scalars and SM fermions) -> both scalars -> SMEFT",
+  "matching_or_running_performed": false
+}

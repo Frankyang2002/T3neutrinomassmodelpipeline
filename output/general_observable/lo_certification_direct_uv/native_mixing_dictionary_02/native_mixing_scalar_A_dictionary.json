@@ -1,0 +1,639 @@
+{
+  "format": "t3-ws4-native-mixing-to-frozen-scalar-A-v1",
+  "status": "native_lambdaT3_mixing_CG_and_restricted_scalar_A_checked_conditional_physical_dictionary",
+  "native_report_sha256": "b5662895d567b8783d79335025fae508aa9f8b6e4964f87bc91a0f44c6d5b359",
+  "source_contract": {
+    "source_sha256": {
+      "Lagrangian/model/T3ModelCatalog.wl": "3ea4006b38617d1c603c564b209a0e0cedb324da127214fe434e18fd9953febc",
+      "Lagrangian/model/LagrangianBuilder.wl": "dbe102874c84c0ae8013eeceb78571e0ae3d44f35e95cf9c8d1e0ba952f32e8b",
+      "Lagrangian/model/SU2Invariants.wl": "78e83bd1730555d15a47f8f2b3343635734b3f3387afb243623b89410faa6c1a",
+      "Lagrangian/model/T3Fields.wl": "2f27f080ab02d1225aab7e5928aba19f238ec6d5dcdd41b72ee2d2c7298e24ab",
+      "Lagrangian/interactions/T3Topology.wl": "e6e24c4a673bddff980885f8354b388ceaa19e53c8b2faa79ba3289a87de1511",
+      "scripts/BuildT3DirectOneLoopInputs.py": "16fbf7fbb06e630a02e720bd9f3bfbda65748394d3ef50924f39a656998213ec"
+    },
+    "source_forms_verified": true,
+    "native_export_sha_matches_current_sources": true
+  },
+  "native_registered_mixing_classes_checked": 5,
+  "native_CG_tensors_symmetric_under_H_exchange": true,
+  "source_LInt_has_lambdaT3_HH_S1_BarS2_and_HC": true,
+  "Higgs_neutral_weight_index": 1,
+  "Higgs_vev_convention": "H0=v/sqrt(2)",
+  "conditional_scalar_A_lower_left_block": "A[S2_t,S1_s]=-lambdaT3*v^2/2*C[H0,H0,S1_s,BarS2_t]",
+  "no_identical_H_factor_two": "H0*H0=v^2/2; no extra factor two in the potential",
+  "actual_frozen_inputs": {
+    "models_checked": 16,
+    "component_support_audit_path": "output/general_observable/lo_direct_one_loop/source_audits/component_support_audit.json",
+    "component_support_audit_sha256": "8eebe3dc6c3d0bfab48b4ba12244a86187a1c45ad03388d83b98675742f78b4e",
+    "generator_analysis_audit_sha256": "e8bd4a7d8de5115b9440bc142017f9f4536b2dd8a2a23fdfe588c99bafa0d87a",
+    "frozen_input_provenance_sha256_verified": true,
+    "all_native_CG_components_match_legacy_source_audit": true,
+    "all_frozen_mixing_blocks_match_conditional_native_action": true,
+    "max_native_CG_relative_residual": 1.9229626863835638e-16,
+    "max_scalar_A_mixing_relative_residual": 3.897673047207467e-16,
+    "max_independent_Cartesian_Hessian_residual": 2.598448698138311e-16,
+    "models": [
+      {
+        "model": "A_-4",
+        "native_class": "A",
+        "benchmark_sha256": "3cb8dc3e94f2bd6f60571a7a85477638e8fc02109bccfcec0e04055852d81247",
+        "frozen_input_sha256": "14cdf7c7a5167ab5677b75e3faaa4e9b7958f5884319bde21c272f62dea1a48b",
+        "original_source_cg_relative_residual": 0.0,
+        "relative_complex_scalar_A_mixing_block_residual": 1.3961074202027283e-16,
+        "independent_Cartesian_Hessian_relative_residual": 1.3961074202027283e-16,
+        "scalar_mixing_block_gev2": {
+          "real": [
+            [
+              0.0
+            ],
+            [
+              0.0
+            ],
+            [
+              0.0
+            ]
+          ],
+          "imag": [
+            [
+              0.0
+            ],
+            [
+              0.0
+            ],
+            [
+              -3257.251872641937
+            ]
+          ]
+        },
+        "mass_mixing_normalization_under_identified_lambdaT3": "-lambdaT3*v^2/2 * CG[H0,H0,S1,Bar[S2]]",
+        "native_RGBeta_lambdaT3_normalization_certified": false,
+        "physical_source_to_Weyl_certified": false
+      },
+      {
+        "model": "A_-2",
+        "native_class": "A",
+        "benchmark_sha256": "9cd1dd65546f045268ee429b81815301e2e65fd680c4abe5aba74c6f20ff0c54",
+        "frozen_input_sha256": "65f36c02a289b8036606f61b1d576a72b22fadf7fed16c78e436fde66fd88fb3",
+        "original_source_cg_relative_residual": 0.0,
+        "relative_complex_scalar_A_mixing_block_residual": 1.3961074202027283e-16,
+        "independent_Cartesian_Hessian_relative_residual": 1.3961074202027283e-16,
+        "scalar_mixing_block_gev2": {
+          "real": [
+            [
+              0.0
+            ],
+            [
+              0.0
+            ],
+            [
+              0.0
+            ]
+          ],
+          "imag": [
+            [
+              0.0
+            ],
+            [
+              0.0
+            ],
+            [
+              -3257.251872641937
+            ]
+          ]
+        },
+        "mass_mixing_normalization_under_identified_lambdaT3": "-lambdaT3*v^2/2 * CG[H0,H0,S1,Bar[S2]]",
+        "native_RGBeta_lambdaT3_normalization_certified": false,
+        "physical_source_to_Weyl_certified": false
+      },
+      {
+        "model": "A_+0",
+        "native_class": "A",
+        "benchmark_sha256": "4824f1278b9838635deec2ff11d1d9290abc5ee726cb56a8f4c2ea6fc77d812d",
+        "frozen_input_sha256": "0aaa9d32bdb1e8da207fad7d443aed7b268fc56acf65e19674c883a2e65f3ce9",
+        "original_source_cg_relative_residual": 0.0,
+        "relative_complex_scalar_A_mixing_block_residual": 1.3961074202027283e-16,
+        "independent_Cartesian_Hessian_relative_residual": 1.3961074202027283e-16,
+        "scalar_mixing_block_gev2": {
+          "real": [
+            [
+              0.0
+            ],
+            [
+              0.0
+            ],
+            [
+              0.0
+            ]
+          ],
+          "imag": [
+            [
+              0.0
+            ],
+            [
+              0.0
+            ],
+            [
+              -3257.251872641937
+            ]
+          ]
+        },
+        "mass_mixing_normalization_under_identified_lambdaT3": "-lambdaT3*v^2/2 * CG[H0,H0,S1,Bar[S2]]",
+        "native_RGBeta_lambdaT3_normalization_certified": false,
+        "physical_source_to_Weyl_certified": false
+      },
+      {
+        "model": "B_-3",
+        "native_class": "B",
+        "benchmark_sha256": "c036c5177cdefaae39201b8e22740dd5ade1e9e904b534c0a5e84d7c9d99f55e",
+        "frozen_input_sha256": "71ffd39a6fa0288b65ed0f59868531f66530c683cc9c14485bbabe718b9cdcb0",
+        "original_source_cg_relative_residual": 1.9229626863835638e-16,
+        "relative_complex_scalar_A_mixing_block_residual": 3.897673047207467e-16,
+        "independent_Cartesian_Hessian_relative_residual": 2.598448698138311e-16,
+        "scalar_mixing_block_gev2": {
+          "real": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              3500.14492271695,
+              0.0
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "mass_mixing_normalization_under_identified_lambdaT3": "-lambdaT3*v^2/2 * CG[H0,H0,S1,Bar[S2]]",
+        "native_RGBeta_lambdaT3_normalization_certified": false,
+        "physical_source_to_Weyl_certified": false
+      },
+      {
+        "model": "B_-1",
+        "native_class": "B",
+        "benchmark_sha256": "d83d7d31f9929f21dffad63c429a9e996a3f065a60535243a282a54d6f87dd5f",
+        "frozen_input_sha256": "e5d25ede470961c216f558c462bd19c090a8890918caea69297bb0a2c445855d",
+        "original_source_cg_relative_residual": 1.9229626863835638e-16,
+        "relative_complex_scalar_A_mixing_block_residual": 3.897673047207467e-16,
+        "independent_Cartesian_Hessian_relative_residual": 2.598448698138311e-16,
+        "scalar_mixing_block_gev2": {
+          "real": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              3500.14492271695,
+              0.0
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "mass_mixing_normalization_under_identified_lambdaT3": "-lambdaT3*v^2/2 * CG[H0,H0,S1,Bar[S2]]",
+        "native_RGBeta_lambdaT3_normalization_certified": false,
+        "physical_source_to_Weyl_certified": false
+      },
+      {
+        "model": "B_+1",
+        "native_class": "B",
+        "benchmark_sha256": "fe1c9e656ba0359e3832b1c96d62260f78e8e5dde31e8abd3da830c62b5d6b31",
+        "frozen_input_sha256": "f941d6049b2d7eaf21127539f2cd191ba4684ab6df6760bc2b11883f5c532ee2",
+        "original_source_cg_relative_residual": 1.9229626863835638e-16,
+        "relative_complex_scalar_A_mixing_block_residual": 3.897673047207467e-16,
+        "independent_Cartesian_Hessian_relative_residual": 2.598448698138311e-16,
+        "scalar_mixing_block_gev2": {
+          "real": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              3500.14492271695,
+              0.0
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "mass_mixing_normalization_under_identified_lambdaT3": "-lambdaT3*v^2/2 * CG[H0,H0,S1,Bar[S2]]",
+        "native_RGBeta_lambdaT3_normalization_certified": false,
+        "physical_source_to_Weyl_certified": false
+      },
+      {
+        "model": "C_-3",
+        "native_class": "C",
+        "benchmark_sha256": "a1736f4c38c8a56f93969b5528f0822d0fa88e8288457b8e70151dd5d40fab6c",
+        "frozen_input_sha256": "9147e7a338e1d375cfb036c41864684197bb139534b222db4d2651eb4bf028a4",
+        "original_source_cg_relative_residual": 1.9229626863835638e-16,
+        "relative_complex_scalar_A_mixing_block_residual": 3.897673047207467e-16,
+        "independent_Cartesian_Hessian_relative_residual": 2.598448698138311e-16,
+        "scalar_mixing_block_gev2": {
+          "real": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              3500.14492271695,
+              0.0
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "mass_mixing_normalization_under_identified_lambdaT3": "-lambdaT3*v^2/2 * CG[H0,H0,S1,Bar[S2]]",
+        "native_RGBeta_lambdaT3_normalization_certified": false,
+        "physical_source_to_Weyl_certified": false
+      },
+      {
+        "model": "C_-1",
+        "native_class": "C",
+        "benchmark_sha256": "782c261c88e364b2db70791ed97d8fa067cf255449900668155b821ba636f03c",
+        "frozen_input_sha256": "36e6fd4d905030ef377468ea46c8261e04ab40e53f8ebf96cbb019e47dd36dce",
+        "original_source_cg_relative_residual": 1.9229626863835638e-16,
+        "relative_complex_scalar_A_mixing_block_residual": 3.897673047207467e-16,
+        "independent_Cartesian_Hessian_relative_residual": 2.598448698138311e-16,
+        "scalar_mixing_block_gev2": {
+          "real": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              3500.14492271695,
+              0.0
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "mass_mixing_normalization_under_identified_lambdaT3": "-lambdaT3*v^2/2 * CG[H0,H0,S1,Bar[S2]]",
+        "native_RGBeta_lambdaT3_normalization_certified": false,
+        "physical_source_to_Weyl_certified": false
+      },
+      {
+        "model": "C_+1",
+        "native_class": "C",
+        "benchmark_sha256": "dd3beb2db859c7b272ebe81b25bc548d0bd159990c7b421a62f9aeeab352339c",
+        "frozen_input_sha256": "b57ddd02412cd051945b9901baa228f50f385de0d407bce5894d81f16584de8e",
+        "original_source_cg_relative_residual": 1.9229626863835638e-16,
+        "relative_complex_scalar_A_mixing_block_residual": 3.897673047207467e-16,
+        "independent_Cartesian_Hessian_relative_residual": 2.598448698138311e-16,
+        "scalar_mixing_block_gev2": {
+          "real": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              3500.14492271695,
+              0.0
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "mass_mixing_normalization_under_identified_lambdaT3": "-lambdaT3*v^2/2 * CG[H0,H0,S1,Bar[S2]]",
+        "native_RGBeta_lambdaT3_normalization_certified": false,
+        "physical_source_to_Weyl_certified": false
+      },
+      {
+        "model": "D_-2",
+        "native_class": "D",
+        "benchmark_sha256": "fbaae81addefb93ff4749a4f60798682b929fb2e60b934ad18f11dbfe2402fce",
+        "frozen_input_sha256": "a7a045bb83220294c89a00a9cf628b826abafe665597c52bc299b4d851c7575b",
+        "original_source_cg_relative_residual": 0.0,
+        "relative_complex_scalar_A_mixing_block_residual": 1.3961074202027283e-16,
+        "independent_Cartesian_Hessian_relative_residual": 1.3961074202027283e-16,
+        "scalar_mixing_block_gev2": {
+          "real": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "imag": [
+            [
+              -3257.251872641937,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "mass_mixing_normalization_under_identified_lambdaT3": "-lambdaT3*v^2/2 * CG[H0,H0,S1,Bar[S2]]",
+        "native_RGBeta_lambdaT3_normalization_certified": false,
+        "physical_source_to_Weyl_certified": false
+      },
+      {
+        "model": "D_+0",
+        "native_class": "D",
+        "benchmark_sha256": "59bcfbd972a82202c63fbcea0d02352d90a9acd6f63250bf2a40e2f7a18f88ca",
+        "frozen_input_sha256": "d1d7dce3afa5567284e66778c1e2ea99cfde6652044004e09b60d6035e6e1480",
+        "original_source_cg_relative_residual": 0.0,
+        "relative_complex_scalar_A_mixing_block_residual": 1.3961074202027283e-16,
+        "independent_Cartesian_Hessian_relative_residual": 1.3961074202027283e-16,
+        "scalar_mixing_block_gev2": {
+          "real": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "imag": [
+            [
+              -3257.251872641937,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "mass_mixing_normalization_under_identified_lambdaT3": "-lambdaT3*v^2/2 * CG[H0,H0,S1,Bar[S2]]",
+        "native_RGBeta_lambdaT3_normalization_certified": false,
+        "physical_source_to_Weyl_certified": false
+      },
+      {
+        "model": "D_+2",
+        "native_class": "D",
+        "benchmark_sha256": "18d1e743cd6160bc3d33ece098315480fe2ab69ef218b294e831cc7ab39ac6d3",
+        "frozen_input_sha256": "57e30292c4855ce6af949f2037b66f6c8f06bef374354bbe28ea55828f16f027",
+        "original_source_cg_relative_residual": 0.0,
+        "relative_complex_scalar_A_mixing_block_residual": 1.3961074202027283e-16,
+        "independent_Cartesian_Hessian_relative_residual": 1.3961074202027283e-16,
+        "scalar_mixing_block_gev2": {
+          "real": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "imag": [
+            [
+              -3257.251872641937,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "mass_mixing_normalization_under_identified_lambdaT3": "-lambdaT3*v^2/2 * CG[H0,H0,S1,Bar[S2]]",
+        "native_RGBeta_lambdaT3_normalization_certified": false,
+        "physical_source_to_Weyl_certified": false
+      },
+      {
+        "model": "E_-4",
+        "native_class": "E",
+        "benchmark_sha256": "347d0c74d67ae827d53b9b2edb5c9f9953dc10b3df519f2ccc85c7a842e89c55",
+        "frozen_input_sha256": "42363373a59ab0ccca00b77b5748143220bcc64cd678e2f171e5c53d8dc09009",
+        "original_source_cg_relative_residual": 1.5700924586837752e-16,
+        "relative_complex_scalar_A_mixing_block_residual": 1.501929699516038e-16,
+        "independent_Cartesian_Hessian_relative_residual": 1.5002150553455867e-16,
+        "scalar_mixing_block_gev2": {
+          "real": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1515.60721,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              -1515.60721,
+              0.0
+            ]
+          ]
+        },
+        "mass_mixing_normalization_under_identified_lambdaT3": "-lambdaT3*v^2/2 * CG[H0,H0,S1,Bar[S2]]",
+        "native_RGBeta_lambdaT3_normalization_certified": false,
+        "physical_source_to_Weyl_certified": false
+      },
+      {
+        "model": "E_-2",
+        "native_class": "E",
+        "benchmark_sha256": "5fddf5a3cba554a52714ab2837f690620f97fd4edaa9f5ba13d63b7f4a33b6f6",
+        "frozen_input_sha256": "2bf49749b781ce139d1084530ce6d82bee437ab2c986344cc21fc7276eabd326",
+        "original_source_cg_relative_residual": 1.5700924586837752e-16,
+        "relative_complex_scalar_A_mixing_block_residual": 1.501929699516038e-16,
+        "independent_Cartesian_Hessian_relative_residual": 1.5002150553455867e-16,
+        "scalar_mixing_block_gev2": {
+          "real": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1515.60721,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              -1515.60721,
+              0.0
+            ]
+          ]
+        },
+        "mass_mixing_normalization_under_identified_lambdaT3": "-lambdaT3*v^2/2 * CG[H0,H0,S1,Bar[S2]]",
+        "native_RGBeta_lambdaT3_normalization_certified": false,
+        "physical_source_to_Weyl_certified": false
+      },
+      {
+        "model": "E_+0",
+        "native_class": "E",
+        "benchmark_sha256": "01b140875a017cfa10230f2f4012e620d3aa099596ccebfb4e5135ea67aedecb",
+        "frozen_input_sha256": "3f18217920b1a171e78d9721ed873ad3c0012f489bdefae0b2ee2316c024504a",
+        "original_source_cg_relative_residual": 1.5700924586837752e-16,
+        "relative_complex_scalar_A_mixing_block_residual": 1.501929699516038e-16,
+        "independent_Cartesian_Hessian_relative_residual": 1.5002150553455867e-16,
+        "scalar_mixing_block_gev2": {
+          "real": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1515.60721,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              -1515.60721,
+              0.0
+            ]
+          ]
+        },
+        "mass_mixing_normalization_under_identified_lambdaT3": "-lambdaT3*v^2/2 * CG[H0,H0,S1,Bar[S2]]",
+        "native_RGBeta_lambdaT3_normalization_certified": false,
+        "physical_source_to_Weyl_certified": false
+      },
+      {
+        "model": "E_+2",
+        "native_class": "E",
+        "benchmark_sha256": "c7fedaa074e5cf026eb9a233e406a7a5a686aa21decbe2137241f6a8d1abc34d",
+        "frozen_input_sha256": "a892e2f30982f47f3892535d2d449f08b594ace02b2d7f8057cc3ecba432f1bd",
+        "original_source_cg_relative_residual": 1.5700924586837752e-16,
+        "relative_complex_scalar_A_mixing_block_residual": 1.501929699516038e-16,
+        "independent_Cartesian_Hessian_relative_residual": 1.5002150553455867e-16,
+        "scalar_mixing_block_gev2": {
+          "real": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1515.60721,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              -1515.60721,
+              0.0
+            ]
+          ]
+        },
+        "mass_mixing_normalization_under_identified_lambdaT3": "-lambdaT3*v^2/2 * CG[H0,H0,S1,Bar[S2]]",
+        "native_RGBeta_lambdaT3_normalization_certified": false,
+        "physical_source_to_Weyl_certified": false
+      }
+    ]
+  },
+  "physical_Matchete_RGBeta_lambdaT3_coupling_map_certified": false,
+  "physical_y1_y2_MF_GammaCC_and_SU2_mass_dictionary_certified": false,
+  "full_physical_source_to_Weyl_certified_models": 0,
+  "remaining_native_tasks": [
+    "Fix RGBeta delS2 topology mixing invariant components and coupling normalization in common Matchete weight axes",
+    "Derive signed MF and y1,y2 Feynman-rule dictionary using native GammaCC and epsilon in one left-Weyl basis",
+    "Measure scalar free-mass sign and normalization against full native quadratic action",
+    "Treat six optional symmetry-allowed conjugate-scalar Yukawas as zero only in the restricted benchmark",
+    "One-loop hard matching: integrate ALL heavy BSM fermions at muF=1e5 GeV while keeping both BSM scalars and SM fermions",
+    "Integrate BOTH BSM scalars at muS=1e3 GeV into SMEFT"
+  ],
+  "EFT_order": "UV -> integrate all fermions -> EFT1 (both BSM scalars + SM fermions) -> integrate both scalars -> SMEFT",
+  "one_loop_or_EFT_matching_performed": false
+}

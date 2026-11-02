@@ -99,6 +99,51 @@ class BCProductTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             cg.analyze('B_-1',rec,{'T3MENativeY1CG':x,'T3MENativeY2CG':x})
 
+    def test_parse_actual_b_compressed_row_sparse_identity(self):
+        # Exact serialization of native B_-1 T3MENativeY1CG/Y2CG registry.
+        form='SparseArray[Automatic, {2, 2}, 0, {1, {{0, 1, 2}, {{1}, {2}}}, {1, 1}}]'
+        a=cg.parse_matchete_sparse_array(form,tensor_name='B-matched')
+        np.testing.assert_array_equal(a,np.eye(2))
+
+    def test_parse_actual_c_four_index_compressed_row_cg(self):
+        # Exact C_-1 Matchete registry serialization, 6 entries across 2 rows.
+        form=('SparseArray[Automatic, {2, 2, 2, 2}, 0, '
+              '{1, {{0, 3, 6}, {{1, 1, 1}, {2, 1, 2}, {2, 2, 1}, '
+              '{1, 1, 2}, {1, 2, 1}, {2, 2, 2}}}, '
+              '{1, 1/2, 1/2, 1/2, 1/2, 1}}]')
+        a=cg.parse_matchete_sparse_array(form,tensor_name='C-Q')
+        expected,_,_=c_basis()
+        np.testing.assert_array_equal(a,expected['T3ExtraCGQ020020I1'])
+        self.assertEqual(np.count_nonzero(a),6)
+
+    def test_parse_actual_c_bridge_and_epsilon(self):
+        form='SparseArray[Automatic, {2, 2}, 0, {1, {{0, 1, 2}, {{2}, {1}}}, {1, -1}}]'
+        a=cg.parse_matchete_sparse_array(form,tensor_name='C-bridge')
+        np.testing.assert_array_equal(a,np.array([[0,1],[-1,0]]))
+
+    def test_parse_wrong_row_pointer_rejected(self):
+        form='SparseArray[Automatic, {2, 2}, 0, {1, {{0, 1, 3}, {{1}, {2}}}, {1, 1}}]'
+        with self.assertRaises(ValueError):
+            cg.parse_matchete_sparse_array(form)
+        form='SparseArray[Automatic, {2, 2}, 0, {1, {{0, 2, 1}, {{1}, {2}}}, {1, 1}}]'
+        with self.assertRaises(ValueError):
+            cg.parse_matchete_sparse_array(form)
+
+    def test_parse_out_of_range_suffix_rejected(self):
+        form='SparseArray[Automatic, {2, 2}, 0, {1, {{0, 1, 2}, {{1}, {3}}}, {1, 1}}]'
+        with self.assertRaisesRegex(ValueError,'outside dimensions'):
+            cg.parse_matchete_sparse_array(form)
+
+    def test_parse_duplicate_sparse_element_rejected(self):
+        form='SparseArray[Automatic, {2, 2}, 0, {1, {{0, 2, 2}, {{1}, {1}}}, {1, 1}}]'
+        with self.assertRaisesRegex(ValueError,'duplicate'):
+            cg.parse_matchete_sparse_array(form)
+
+    def test_parse_unsupported_expression_rejected(self):
+        form='SparseArray[Automatic, {2, 2}, 0, {1, {{0, 1, 2}, {{1}, {2}}}, {1, Sqrt[2]}}]'
+        with self.assertRaises(ValueError):
+            cg.parse_matchete_sparse_array(form)
+
     def test_reject_nonfinite_tensor(self):
         x=np.eye(2,dtype=complex)
         raw=record('T3MENativeY1CG',x)

@@ -46,43 +46,84 @@ def array(record, name, dims):
     return a.reshape(dims)
 
 
-def cg_registry(root, model):
+def parse_matchete_sparse_array(form, *, tensor_name='CG'):
+    """Decode Matchete/Wolfram SparseArray InputForm in compressed-row form.
+
+    Matchete stores row pointers for dimension 1 and suffix coordinates for
+    dimensions 2..rank, NOT full-rank coordinates. For example, the two-by-two
+    identity has row pointers {0,1,2} and stored coordinates {{1},{2}}.
+    Restrict to the exact integer/rational grammar present in the pinned B/C
+    matched registries; never evaluate arbitrary Wolfram expressions.
+    """
     import re
+    from fractions import Fraction
+
+    if not isinstance(form, str):
+        raise ValueError(f'{tensor_name}: native sparse tensor is not text')
+    pattern = (r'SparseArray\[Automatic,\s*\{(?P<dims>\d+(?:,\s*\d+)*)\},'
+               r'\s*0,\s*\{1,\s*\{\{(?P<ptr>\d+(?:,\s*\d+)*)\},'
+               r'\s*\{(?P<coords>.*?)\}\},\s*\{(?P<vals>[^{}]*)\}\}\]')
+    match = re.fullmatch(pattern, form, flags=re.DOTALL)
+    if not match:
+        raise ValueError(f'{tensor_name}: unsupported native SparseArray InputForm')
+
+    def integers(text):
+        return tuple(int(x.strip()) for x in text.split(','))
+
+    dims = integers(match['dims'])
+    ptr = integers(match['ptr'])
+    if len(dims) < 2 or any(x < 1 for x in dims):
+        raise ValueError(f'{tensor_name}: invalid tensor rank/dimensions')
+    if len(ptr) != dims[0] + 1 or ptr[0] != 0 or any(
+            a > b for a, b in zip(ptr, ptr[1:])):
+        raise ValueError(f'{tensor_name}: malformed compressed-row pointers')
+
+    coord_text = match['coords'].strip()
+    coord_grammar = r'\{\d+(?:,\s*\d+)*\}(?:,\s*\{\d+(?:,\s*\d+)*\})*'
+    if not re.fullmatch(coord_grammar, coord_text):
+        raise ValueError(f'{tensor_name}: malformed sparse suffix coordinates')
+    suffixes = [integers(x) for x in re.findall(r'\{(\d+(?:,\s*\d+)*)\}',coord_text)]
+    vals = [x.strip() for x in match['vals'].split(',')]
+    if ptr[-1] != len(suffixes) or len(suffixes) != len(vals):
+        raise ValueError(f'{tensor_name}: sparse pointers, coordinates and values disagree')
+
+    arr = np.zeros(dims, dtype=complex)
+    seen = set()
+    for first in range(dims[0]):
+        for offset in range(ptr[first], ptr[first+1]):
+            suffix = suffixes[offset]
+            if len(suffix) != len(dims)-1 or any(
+                    not 1 <= idx <= dim for idx, dim in zip(suffix, dims[1:])):
+                raise ValueError(f'{tensor_name}: sparse suffix coordinate outside dimensions')
+            key = (first,) + tuple(idx-1 for idx in suffix)
+            if key in seen:
+                raise ValueError(f'{tensor_name}: duplicate sparse coordinate')
+            seen.add(key)
+            val = vals[offset]
+            if val not in ('1','-1','1/2','-1/2'):
+                raise ValueError(f'{tensor_name}: unsupported exact CG entry {val!r}')
+            arr[key] = float(Fraction(val))
+    if not np.any(arr):
+        raise ValueError(f'{tensor_name}: empty native CG tensor')
+    return arr
+
+
+def cg_registry(root, model):
     folder=root/'output/general_observable/ordered_wilson_tensor_v4'/model.replace('-','m').replace('+','p')
     path=folder/'mixed_native_tree_llss_cg_registry.json'
     data=read(path)
     if data.get('format')!='t3-mixed-matchete-native-cg-registry-v1' or data.get('model')!=model:
         raise ValueError(f'{model}: incompatible native matched CG registry')
-    # Parse exact SparseArray InputForm as *data*. The numeric component lists
-    # are generated from a fixed sparse-array grammar, never eval/exec.
-    # Entries use Mathematica 1-based coordinates. The structure is sourced
-    # by the existing Matchete matching run, not invented tensor components.
     out={}
     for entry in data['CGRegistry']:
-        form=entry['TensorInputForm']
-        m=re.fullmatch(r'SparseArray\[Automatic, \{([0-9, ]+)\}, 0, \{1, \{\{[0-9, ]+\}, \{(.+)\}\}, \{(.+)\}\}\]', form)
-        if not m:
-            raise ValueError(f'{model}: unsupported Matchete sparse-array serialization for {entry["Name"]}')
-        dims=tuple(int(s.strip()) for s in m.group(1).split(','))
-        coord_matches=re.findall(r'\{([0-9]+(?:, [0-9]+)*)\}',m.group(2))
-        if not coord_matches:
-            raise ValueError('Empty sparse-array coordinate inventory')
-        coords=[tuple(int(k.strip()) for k in c.split(',')) for c in coord_matches]
-        values=m.group(3).split(', ')
-        if len(coords)!=len(values):
-            raise ValueError(f'{entry["Name"]}: sparse components count mismatch')
-        arr=np.zeros(dims,dtype=complex)
-        for ix, val in zip(coords, values):
-            if len(ix)!=len(dims) or any(not 1<=k<=d for k,d in zip(ix,dims)):
-                raise ValueError('Sparse coordinate outside dimensions')
-            v=val.strip()
-            # The certified registries contain only 1, -1, 1/2.
-            # Reject unfamiliar symbolic values rather than approximating.
-            if v not in ('1','-1','1/2','-1/2'):
-                raise ValueError(f'Unsupported native CG entry {v!r}')
-            from fractions import Fraction
-            arr[tuple(k-1 for k in ix)]=float(Fraction(v))
-        out[entry['Name']]=arr
+        name=entry['Name']
+        if name in out:
+            raise ValueError(f'{model}: duplicated matched CG {name}')
+        out[name]=parse_matchete_sparse_array(entry['TensorInputForm'],tensor_name=name)
+    required=(('T3MENativeY1CG','T3MENativeY2CG') if model=='B_-1'
+              else ('T3ExtraCGQ020020I1','T3MEBridgeBB','eps[SU2L]'))
+    if set(out)!=set(required):
+        raise ValueError(f'{model}: unexpected matched CG registry inventory')
     return out,sha(path)
 
 

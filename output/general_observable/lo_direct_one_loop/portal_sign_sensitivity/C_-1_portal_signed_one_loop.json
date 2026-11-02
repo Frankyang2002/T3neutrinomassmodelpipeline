@@ -1,0 +1,315 @@
+{
+  "status": "uv_mass_evaluated_unverified_source_mapping",
+  "model": "C_-1",
+  "input_basis": "two_component_Weyl_plus_complex_scalars",
+  "loop_order": 1,
+  "loop_momentum": "p=0",
+  "subtraction": "MSbar finite B0; renormalization-scale cancellation checked",
+  "renormalization_scale_gev": 10000000.0,
+  "source_provenance": {
+    "benchmark_path": "Numerical\\benchmarks\\fitted_reference\\T3_dS1_2_dS2_2_dF_3_alpha_m1.json",
+    "benchmark_sha256": "782c261c88e364b2db70791ed97d8fa067cf255449900668155b821ba636f03c",
+    "cg_support_path": "output\\general_observable\\lo_direct_one_loop\\source_audits\\component_support_audit.json",
+    "cg_support_sha256": "8eebe3dc6c3d0bfab48b4ba12244a86187a1c45ad03388d83b98675742f78b4e",
+    "generator_analysis_path": "output\\general_observable\\lo_direct_one_loop\\source_audits\\matchete_generator_analysis.json",
+    "generator_analysis_sha256": "e8bd4a7d8de5115b9440bc142017f9f4536b2dd8a2a23fdfe588c99bafa0d87a",
+    "cg_generator_covariance_checked": true,
+    "validated_uv_component_conventions": false,
+    "unverified_items": [
+      "source lambdaT3 mixing normalization/sign",
+      "Matchete four-spinor to Weyl phase convention",
+      "self-conjugate fermion charge-pairing phase",
+      "extra symmetry-allowed Yukawas/quadratics not supplied by the restricted benchmark"
+    ],
+    "input_assumptions": [
+      "frozen fitted_reference benchmark evaluated at base_state.mu_gev",
+      "all unspecified UV general-coupling extras set to zero",
+      "source Yukawas at the same UV scale; no RGE running"
+    ],
+    "portal_sign_sensitivity_only": true,
+    "portal_lagrangian_map_conditional": "lambdaH{j}Inv{k}_Matchete = -c_{jk} lambdaH{j}_RGBeta; other UV interaction sign/phase mappings not established",
+    "portal_diagonal_shift_relative_to_original_gev2": [
+      1212.485768,
+      1212.485768,
+      1818.7286519999998,
+      1818.7286519999998
+    ],
+    "native_identity_coefficients": {
+      "S1": [
+        0.49999999999999994,
+        0.8660254037844389
+      ],
+      "S2": [
+        0.49999999999999994,
+        0.8660254037844389
+      ]
+    }
+  },
+  "mass_hierarchy": {
+    "min_scalar_to_fermion_mass_ratio": 0.008336954671173576,
+    "max_scalar_to_fermion_mass_ratio": 0.011431398629498797,
+    "max_scalar_squared_to_fermion_squared_ratio": 0.000130676874626507,
+    "eft_expansion_small_parameter_is_ms2_over_mf2": true
+  },
+  "fermion_eigenmasses_gev": [
+    100000.0,
+    100000.0,
+    100000.0,
+    110000.00000000001,
+    110000.00000000001,
+    110000.00000000001,
+    120000.0,
+    120000.0,
+    120000.0
+  ],
+  "scalar_eigenmasses_gev": [
+    1000.434560540829,
+    1000.434560540829,
+    1000.4545788420381,
+    1000.4545788420381,
+    1143.1223433489486,
+    1143.1223433489486,
+    1143.1398629498797,
+    1143.1398629498797
+  ],
+  "fermion_takagi_residual": 5.466494742872059e-16,
+  "scalar_mass_diagonalization_residual": 3.5005732339249056e-16,
+  "vertex_pair_matrices_gev": {
+    "y1_HC x y1_HC": {
+      "real": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    "y1_HC x y2_HC": {
+      "real": [
+        [
+          -1.5055125121250042e-11,
+          -3.0192700825097264e-11,
+          1.863685719231152e-11
+        ],
+        [
+          -3.0192700825097264e-11,
+          -1.551614013838125e-11,
+          -3.774922890899249e-11
+        ],
+        [
+          1.863685719231152e-11,
+          -3.774922890899249e-11,
+          -3.0611955669661315e-11
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    "y2_HC x y2_HC": {
+      "real": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    }
+  },
+  "individual_terms": null,
+  "total": {
+    "complex_symmetric_matrix_gev": {
+      "real": [
+        [
+          -1.5055125121250042e-11,
+          -3.0192700825097264e-11,
+          1.863685719231152e-11
+        ],
+        [
+          -3.0192700825097264e-11,
+          -1.551614013838125e-11,
+          -3.774922890899249e-11
+        ],
+        [
+          1.863685719231152e-11,
+          -3.774922890899249e-11,
+          -3.0611955669661315e-11
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    "neutrino_masses_ev": [
+      0.0374907725660818,
+      0.0385826711537885,
+      0.06227511951699931
+    ],
+    "takagi_rotation": {
+      "real": [
+        [
+          0.0,
+          -0.5496896511556464,
+          0.0
+        ],
+        [
+          0.0,
+          0.6621618317337435,
+          0.0
+        ],
+        [
+          0.0,
+          -0.5092965697974001,
+          0.0
+        ]
+      ],
+      "imag": [
+        [
+          0.8219643517530741,
+          0.0,
+          0.1490499643057075
+        ],
+        [
+          0.31994500078747495,
+          0.0,
+          0.6776259329940943
+        ],
+        [
+          -0.47117916010605926,
+          0.0,
+          0.7201438766485148
+        ]
+      ]
+    },
+    "takagi_residual": 1.1390929497240215e-15,
+    "matrix_relative_asymmetry": 0.0
+  },
+  "diagnostics": {
+    "max_single_term_frobenius_gev": 0.00034758960458279,
+    "sum_individual_frobenius_gev": 0.005255430162785347,
+    "total_frobenius_gev": 8.229441689336891e-11,
+    "cancellation_ratio_total_over_sum": 1.5658930733417522e-08,
+    "cancellation_factor_sum_over_total": 63861320.86694227,
+    "relative_uv_pole_coefficient": 0.0,
+    "uv_pole_matrix_gev": {
+      "real": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    "uv_finite": true,
+    "neutrino_mass_matrix_symmetric": true
+  }
+}

@@ -1,11 +1,11 @@
-(* Native Matchete v0.6.0 A_-4 Feynman-rule extraction.
+(* Native Matchete v0.6.0 A_-4 Feynman-rule extraction, HC-input fix.
    Deliberately does NOT claim to evaluate a connected UV four-point amplitude:
    FeynmanRules returns vertices, not a contracted heavy propagator exchange.
    Writes new evidence ONLY below output/general_observable/lo_fermion_boundary/.
    Launch from the repository with wolframscript -file PATH.
 *)
 ClearAll["Global`*"];
-$T3NativeProbeVersion = "t3-native-matchete-fr-evidence-v1";
+$T3NativeProbeVersion = "t3-native-matchete-fr-evidence-v1"; (* retain report schema *)
 probeFile = ExpandFileName[$InputFileName];
 repoRoot = Nest[DirectoryName, probeFile, 4];
 probeDir = DirectoryName[probeFile];
@@ -29,9 +29,9 @@ writeProbe[rec_Association] := Module[{payload},
   Print["NATIVE_FR_REPORT=", reportPath];
   payload
 ];
-failProbe[phase_String, why_String] := (
-  writeProbe[<|"status" -> "Blocked", "blocked_phase" -> phase,
-    "reason" -> why|>];
+failProbe[phase_String, why_String, evidence_: <||>] := (
+  writeProbe[Join[<|"status" -> "Blocked", "blocked_phase" -> phase,
+    "reason" -> why|>, evidence]];
   Print["NATIVE_FR_STATUS=Blocked; PHASE=", phase, "; REASON=", why];
   Exit[2]
 );
@@ -125,6 +125,23 @@ contact = Quiet[Check[ToExpression[sourceText, InputForm], $Failed]];
 If[contact === $Failed || FreeQ[contact, GammaCC, Infinity] ||
     FreeQ[contact, Proj[-1], Infinity],
   failProbe["EFT1 vertex", "Could not parse native PL contact operator"]];
+
+(* Matchete v0.6.0 FeynmanRules requires a Hermitian interaction input.
+   sourceText is deliberately the isolated HOLomorphic PL term, so passing
+   contact alone fails CheckLagrangian::Hermiticity. The native PlusHc adds
+   precisely the conjugate interaction, including complex couplings, Grassmann
+   ordering, and barred field orientations. DO NOT multiply contact by 2,
+   and DO NOT add the conjugate into the PL Wilson boundary. *)
+contactWithHC = RelabelIndices[PlusHc[contact]];
+If[contactWithHC === $Failed ||
+    FreeQ[contactWithHC, GammaCC, Infinity] ||
+    FreeQ[contactWithHC, Proj[-1], Infinity] ||
+    FreeQ[contactWithHC, Proj[1], Infinity],
+  failProbe["EFT1 contact plus HC",
+    "Matchete PlusHc did not preserve both PL and PR contact sectors",
+    <|"original_holomorphic_contact" -> description[contact],
+      "hermitian_contact_candidate" -> description[contactWithHC]|>]];
+Print["NATIVE_FR_CONTACT_PLUS_HC=True"];
 Print["NATIVE_FR_STAGE=FeynmanRules_UV_3point"];
 frOptions = inputFormOf[Options[FeynmanRules]];
 uvRules = CheckAbort[UsingFrontEnd[FeynmanRules[uvYukawa]], $Aborted];
@@ -132,10 +149,16 @@ If[uvRules === $Aborted || uvRules === $Failed ||
    Head[uvRules] === FeynmanRules || uvRules === Null || uvRules === {},
   failProbe["UV Feynman rules", "No nonempty native UV three-point vertices"]];
 Print["NATIVE_FR_STAGE=FeynmanRules_EFT1_4point"];
-eftRules = CheckAbort[UsingFrontEnd[FeynmanRules[contact]], $Aborted];
+eftRules = CheckAbort[UsingFrontEnd[FeynmanRules[contactWithHC]], $Aborted];
 If[eftRules === $Aborted || eftRules === $Failed ||
    Head[eftRules] === FeynmanRules || eftRules === Null || eftRules === {},
-  failProbe["EFT1 Feynman rules", "No nonempty native EFT1 LLSS contact vertex"]];
+  failProbe["EFT1 Feynman rules",
+    "No nonempty native EFT1 LLSS vertex after supplying PlusHc[contact]",
+    <|"eft1_contact_input_contains_native_hc" -> True,
+      "uv_three_point_rules" -> description[uvRules],
+      "original_holomorphic_contact" -> description[contact],
+      "hermitian_contact_candidate" -> description[contactWithHC],
+      "eft1_rule_candidate" -> description[eftRules]|>]];
 
 report = <|
   "status" -> "NativeUV3pointAndEFT1ContactVerticesExtracted_AmplitudeOpen",
@@ -143,7 +166,10 @@ report = <|
   "uv_y1_with_hc" -> uvY1,
   "uv_y2_with_hc" -> uvY2,
   "native_source_index" -> 2,
+  "eft1_contact_input_contains_native_hc" -> True,
   "native_source_inputform" -> sourceText,
+  "original_holomorphic_contact" -> description[contact],
+  "hermitian_contact_candidate" -> description[contactWithHC],
   "feynman_rule_options" -> frOptions,
   "uv_yukawa_lagrangian" -> description[uvYukawa],
   "uv_three_point_rules" -> description[uvRules],

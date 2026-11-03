@@ -1,0 +1,432 @@
+{
+  "B2_evidence": {
+    "relative_SU2_physical_phase_measured": false,
+    "supplied": false
+  },
+  "absolute_native_GammaCC_phase_measured": false,
+  "exact_source_monomial_phase_witnesses": {
+    "Dirac": {
+      "external_neutrino_charge": 2,
+      "external_nu_pair_covariance_exact": true,
+      "fermion_case": "Dirac",
+      "field_exponent_matrix": [
+        [
+          1,
+          1,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          1,
+          0,
+          -1
+        ],
+        [
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          -1
+        ]
+      ],
+      "field_order": [
+        "nu",
+        "chi",
+        "xi",
+        "S1",
+        "S2"
+      ],
+      "internal_invariant_witness_exact": true,
+      "invariant_source_spurion": "y1*y2*conjugate(MF)*conjugate(lambdaT3)",
+      "operator_order": [
+        "y1",
+        "y2",
+        "MF",
+        "lambdaT3"
+      ],
+      "unique_internal_invariant_exponents": [
+        1,
+        1,
+        -1,
+        -1
+      ]
+    },
+    "Majorana": {
+      "external_neutrino_charge": 2,
+      "external_nu_pair_covariance_exact": true,
+      "fermion_case": "Majorana",
+      "field_exponent_matrix": [
+        [
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          0,
+          -1
+        ],
+        [
+          0,
+          2,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          -1
+        ]
+      ],
+      "field_order": [
+        "nu",
+        "chi",
+        "S1",
+        "S2"
+      ],
+      "internal_invariant_witness_exact": true,
+      "invariant_source_spurion": "y1*y2*conjugate(MF)*conjugate(lambdaT3)",
+      "operator_order": [
+        "y1",
+        "y2",
+        "MF",
+        "lambdaT3"
+      ],
+      "unique_internal_invariant_exponents": [
+        1,
+        1,
+        -1,
+        -1
+      ]
+    }
+  },
+  "format": "t3-b1-phase-transport-source-spurion-v1",
+  "full_one_loop_neutrino_mass_computed_here": false,
+  "interpretation": [
+    "The source rephasing invariant is a conditional source-coupling numerator, NOT a computed neutrino mass.",
+    "For non-diagonal 3x3 heavy masses the U(3) result is an exact algebraic extension, not a native source validation.",
+    "Global neutrino phase produces expected nu-nu congruence; fixed external neutrino basis gives an internal invariant.",
+    "A single Yukawa sign change is not an internal rephasing of the four source coefficients if the other three remain fixed.",
+    "Concrete installed GammaCC sign and RGBeta CG phase still require source-linked physical measurement."
+  ],
+  "local_git_revision": "6c6321f836af94c3a86b698ca8f25a9b92a36cab",
+  "maximum_numerator_covariance_residual": 9.853250372937784e-16,
+  "maximum_symmetrised_covariance_residual": 1.4068061754378235e-15,
+  "models": [
+    {
+      "U3_flavour_covariance_residual": 3.9243551534982366e-16,
+      "double_yukawa_sign_rephase_verified": true,
+      "fermion_type": "Dirac",
+      "frozen_candidate_sha256": "14cdf7c7a5167ab5677b75e3faaa4e9b7958f5884319bde21c272f62dea1a48b",
+      "mass_and_yukawa_coherent_sign_verified": true,
+      "model": "A_-4",
+      "physical_amplitude_computed": false,
+      "physical_source_certified": false,
+      "scalar_mixing_and_yukawa_coherent_sign_verified": true,
+      "single_yukawa_sign_flips_source_spurion": true,
+      "source_benchmark_sha256": "3cb8dc3e94f2bd6f60571a7a85477638e8fc02109bccfcec0e04055852d81247",
+      "source_spurion_numerator_frobenius": 0.00017796743727808786,
+      "symmetric_nu_pair_covariance_residual": 4.1619280150568733e-16
+    },
+    {
+      "U3_flavour_covariance_residual": 9.853250372937784e-16,
+      "double_yukawa_sign_rephase_verified": true,
+      "fermion_type": "Dirac",
+      "frozen_candidate_sha256": "65f36c02a289b8036606f61b1d576a72b22fadf7fed16c78e436fde66fd88fb3",
+      "mass_and_yukawa_coherent_sign_verified": true,
+      "model": "A_-2",
+      "physical_amplitude_computed": false,
+      "physical_source_certified": false,
+      "scalar_mixing_and_yukawa_coherent_sign_verified": true,
+      "single_yukawa_sign_flips_source_spurion": true,
+      "source_benchmark_sha256": "9cd1dd65546f045268ee429b81815301e2e65fd680c4abe5aba74c6f20ff0c54",
+      "source_spurion_numerator_frobenius": 0.00020181387080741382,
+      "symmetric_nu_pair_covariance_residual": 7.905621068215438e-16
+    },
+    {
+      "U3_flavour_covariance_residual": 7.181205854584583e-16,
+      "double_yukawa_sign_rephase_verified": true,
+      "fermion_type": "Dirac",
+      "frozen_candidate_sha256": "0aaa9d32bdb1e8da207fad7d443aed7b268fc56acf65e19674c883a2e65f3ce9",
+      "mass_and_yukawa_coherent_sign_verified": true,
+      "model": "A_+0",
+      "physical_amplitude_computed": false,
+      "physical_source_certified": false,
+      "scalar_mixing_and_yukawa_coherent_sign_verified": true,
+      "single_yukawa_sign_flips_source_spurion": true,
+      "source_benchmark_sha256": "4824f1278b9838635deec2ff11d1d9290abc5ee726cb56a8f4c2ea6fc77d812d",
+      "source_spurion_numerator_frobenius": 0.0002017140573700454,
+      "symmetric_nu_pair_covariance_residual": 7.020396088262002e-16
+    },
+    {
+      "U3_flavour_covariance_residual": 3.82685236261673e-16,
+      "double_yukawa_sign_rephase_verified": true,
+      "fermion_type": "Dirac",
+      "frozen_candidate_sha256": "71ffd39a6fa0288b65ed0f59868531f66530c683cc9c14485bbabe718b9cdcb0",
+      "mass_and_yukawa_coherent_sign_verified": true,
+      "model": "B_-3",
+      "physical_amplitude_computed": false,
+      "physical_source_certified": false,
+      "scalar_mixing_and_yukawa_coherent_sign_verified": true,
+      "single_yukawa_sign_flips_source_spurion": true,
+      "source_benchmark_sha256": "c036c5177cdefaae39201b8e22740dd5ade1e9e904b534c0a5e84d7c9d99f55e",
+      "source_spurion_numerator_frobenius": 0.0002012728015829467,
+      "symmetric_nu_pair_covariance_residual": 3.525929692589713e-16
+    },
+    {
+      "U3_flavour_covariance_residual": 5.877470814796593e-16,
+      "double_yukawa_sign_rephase_verified": true,
+      "fermion_type": "Majorana",
+      "frozen_candidate_sha256": "e5d25ede470961c216f558c462bd19c090a8890918caea69297bb0a2c445855d",
+      "mass_and_yukawa_coherent_sign_verified": true,
+      "model": "B_-1",
+      "physical_amplitude_computed": false,
+      "physical_source_certified": false,
+      "scalar_mixing_and_yukawa_coherent_sign_verified": true,
+      "single_yukawa_sign_flips_source_spurion": true,
+      "source_benchmark_sha256": "d83d7d31f9929f21dffad63c429a9e996a3f065a60535243a282a54d6f87dd5f",
+      "source_spurion_numerator_frobenius": 0.0003944763984064533,
+      "symmetric_nu_pair_covariance_residual": 1.4068061754378235e-15
+    },
+    {
+      "U3_flavour_covariance_residual": 3.7488252678713813e-16,
+      "double_yukawa_sign_rephase_verified": true,
+      "fermion_type": "Dirac",
+      "frozen_candidate_sha256": "f941d6049b2d7eaf21127539f2cd191ba4684ab6df6760bc2b11883f5c532ee2",
+      "mass_and_yukawa_coherent_sign_verified": true,
+      "model": "B_+1",
+      "physical_amplitude_computed": false,
+      "physical_source_certified": false,
+      "scalar_mixing_and_yukawa_coherent_sign_verified": true,
+      "single_yukawa_sign_flips_source_spurion": true,
+      "source_benchmark_sha256": "fe1c9e656ba0359e3832b1c96d62260f78e8e5dde31e8abd3da830c62b5d6b31",
+      "source_spurion_numerator_frobenius": 0.00019762082952508905,
+      "symmetric_nu_pair_covariance_residual": 3.491653977843208e-16
+    },
+    {
+      "U3_flavour_covariance_residual": 5.618990106219106e-16,
+      "double_yukawa_sign_rephase_verified": true,
+      "fermion_type": "Dirac",
+      "frozen_candidate_sha256": "9147e7a338e1d375cfb036c41864684197bb139534b222db4d2651eb4bf028a4",
+      "mass_and_yukawa_coherent_sign_verified": true,
+      "model": "C_-3",
+      "physical_amplitude_computed": false,
+      "physical_source_certified": false,
+      "scalar_mixing_and_yukawa_coherent_sign_verified": true,
+      "single_yukawa_sign_flips_source_spurion": true,
+      "source_benchmark_sha256": "a1736f4c38c8a56f93969b5528f0822d0fa88e8288457b8e70151dd5d40fab6c",
+      "source_spurion_numerator_frobenius": 0.0004647241587657388,
+      "symmetric_nu_pair_covariance_residual": 6.162916398450893e-16
+    },
+    {
+      "U3_flavour_covariance_residual": 9.331426383764037e-16,
+      "double_yukawa_sign_rephase_verified": true,
+      "fermion_type": "Majorana",
+      "frozen_candidate_sha256": "36e6fd4d905030ef377468ea46c8261e04ab40e53f8ebf96cbb019e47dd36dce",
+      "mass_and_yukawa_coherent_sign_verified": true,
+      "model": "C_-1",
+      "physical_amplitude_computed": false,
+      "physical_source_certified": false,
+      "scalar_mixing_and_yukawa_coherent_sign_verified": true,
+      "single_yukawa_sign_flips_source_spurion": true,
+      "source_benchmark_sha256": "782c261c88e364b2db70791ed97d8fa067cf255449900668155b821ba636f03c",
+      "source_spurion_numerator_frobenius": 0.000769106825839917,
+      "symmetric_nu_pair_covariance_residual": 1.1748173638583316e-15
+    },
+    {
+      "U3_flavour_covariance_residual": 4.4406754533534263e-16,
+      "double_yukawa_sign_rephase_verified": true,
+      "fermion_type": "Dirac",
+      "frozen_candidate_sha256": "b57ddd02412cd051945b9901baa228f50f385de0d407bce5894d81f16584de8e",
+      "mass_and_yukawa_coherent_sign_verified": true,
+      "model": "C_+1",
+      "physical_amplitude_computed": false,
+      "physical_source_certified": false,
+      "scalar_mixing_and_yukawa_coherent_sign_verified": true,
+      "single_yukawa_sign_flips_source_spurion": true,
+      "source_benchmark_sha256": "dd3beb2db859c7b272ebe81b25bc548d0bd159990c7b421a62f9aeeab352339c",
+      "source_spurion_numerator_frobenius": 0.00040729295960597494,
+      "symmetric_nu_pair_covariance_residual": 5.565563919008395e-16
+    },
+    {
+      "U3_flavour_covariance_residual": 6.3800010473276015e-16,
+      "double_yukawa_sign_rephase_verified": true,
+      "fermion_type": "Dirac",
+      "frozen_candidate_sha256": "a7a045bb83220294c89a00a9cf628b826abafe665597c52bc299b4d851c7575b",
+      "mass_and_yukawa_coherent_sign_verified": true,
+      "model": "D_-2",
+      "physical_amplitude_computed": false,
+      "physical_source_certified": false,
+      "scalar_mixing_and_yukawa_coherent_sign_verified": true,
+      "single_yukawa_sign_flips_source_spurion": true,
+      "source_benchmark_sha256": "fbaae81addefb93ff4749a4f60798682b929fb2e60b934ad18f11dbfe2402fce",
+      "source_spurion_numerator_frobenius": 0.00020188060602070672,
+      "symmetric_nu_pair_covariance_residual": 5.057939109904929e-16
+    },
+    {
+      "U3_flavour_covariance_residual": 5.111265529725166e-16,
+      "double_yukawa_sign_rephase_verified": true,
+      "fermion_type": "Dirac",
+      "frozen_candidate_sha256": "d1d7dce3afa5567284e66778c1e2ea99cfde6652044004e09b60d6035e6e1480",
+      "mass_and_yukawa_coherent_sign_verified": true,
+      "model": "D_+0",
+      "physical_amplitude_computed": false,
+      "physical_source_certified": false,
+      "scalar_mixing_and_yukawa_coherent_sign_verified": true,
+      "single_yukawa_sign_flips_source_spurion": true,
+      "source_benchmark_sha256": "59bcfbd972a82202c63fbcea0d02352d90a9acd6f63250bf2a40e2f7a18f88ca",
+      "source_spurion_numerator_frobenius": 0.00020179329977442745,
+      "symmetric_nu_pair_covariance_residual": 4.0163441372750975e-16
+    },
+    {
+      "U3_flavour_covariance_residual": 6.530414008896389e-16,
+      "double_yukawa_sign_rephase_verified": true,
+      "fermion_type": "Dirac",
+      "frozen_candidate_sha256": "57e30292c4855ce6af949f2037b66f6c8f06bef374354bbe28ea55828f16f027",
+      "mass_and_yukawa_coherent_sign_verified": true,
+      "model": "D_+2",
+      "physical_amplitude_computed": false,
+      "physical_source_certified": false,
+      "scalar_mixing_and_yukawa_coherent_sign_verified": true,
+      "single_yukawa_sign_flips_source_spurion": true,
+      "source_benchmark_sha256": "18d1e743cd6160bc3d33ece098315480fe2ab69ef218b294e831cc7ab39ac6d3",
+      "source_spurion_numerator_frobenius": 0.00017796782759385105,
+      "symmetric_nu_pair_covariance_residual": 6.290520564430931e-16
+    },
+    {
+      "U3_flavour_covariance_residual": 7.751413471052772e-16,
+      "double_yukawa_sign_rephase_verified": true,
+      "fermion_type": "Dirac",
+      "frozen_candidate_sha256": "42363373a59ab0ccca00b77b5748143220bcc64cd678e2f171e5c53d8dc09009",
+      "mass_and_yukawa_coherent_sign_verified": true,
+      "model": "E_-4",
+      "physical_amplitude_computed": false,
+      "physical_source_certified": false,
+      "scalar_mixing_and_yukawa_coherent_sign_verified": true,
+      "single_yukawa_sign_flips_source_spurion": true,
+      "source_benchmark_sha256": "347d0c74d67ae827d53b9b2edb5c9f9953dc10b3df519f2ccc85c7a842e89c55",
+      "source_spurion_numerator_frobenius": 0.00019915378810313793,
+      "symmetric_nu_pair_covariance_residual": 1.3504121008819483e-15
+    },
+    {
+      "U3_flavour_covariance_residual": 6.301693617911332e-16,
+      "double_yukawa_sign_rephase_verified": true,
+      "fermion_type": "Dirac",
+      "frozen_candidate_sha256": "2bf49749b781ce139d1084530ce6d82bee437ab2c986344cc21fc7276eabd326",
+      "mass_and_yukawa_coherent_sign_verified": true,
+      "model": "E_-2",
+      "physical_amplitude_computed": false,
+      "physical_source_certified": false,
+      "scalar_mixing_and_yukawa_coherent_sign_verified": true,
+      "single_yukawa_sign_flips_source_spurion": true,
+      "source_benchmark_sha256": "5fddf5a3cba554a52714ab2837f690620f97fd4edaa9f5ba13d63b7f4a33b6f6",
+      "source_spurion_numerator_frobenius": 0.00023039868767382127,
+      "symmetric_nu_pair_covariance_residual": 8.198567085796946e-16
+    },
+    {
+      "U3_flavour_covariance_residual": 5.230481243776525e-16,
+      "double_yukawa_sign_rephase_verified": true,
+      "fermion_type": "Dirac",
+      "frozen_candidate_sha256": "3f18217920b1a171e78d9721ed873ad3c0012f489bdefae0b2ee2316c024504a",
+      "mass_and_yukawa_coherent_sign_verified": true,
+      "model": "E_+0",
+      "physical_amplitude_computed": false,
+      "physical_source_certified": false,
+      "scalar_mixing_and_yukawa_coherent_sign_verified": true,
+      "single_yukawa_sign_flips_source_spurion": true,
+      "source_benchmark_sha256": "01b140875a017cfa10230f2f4012e620d3aa099596ccebfb4e5135ea67aedecb",
+      "source_spurion_numerator_frobenius": 0.00022851859690605278,
+      "symmetric_nu_pair_covariance_residual": 9.16808942194623e-16
+    },
+    {
+      "U3_flavour_covariance_residual": 3.854919520477936e-16,
+      "double_yukawa_sign_rephase_verified": true,
+      "fermion_type": "Dirac",
+      "frozen_candidate_sha256": "a892e2f30982f47f3892535d2d449f08b594ace02b2d7f8057cc3ecba432f1bd",
+      "mass_and_yukawa_coherent_sign_verified": true,
+      "model": "E_+2",
+      "physical_amplitude_computed": false,
+      "physical_source_certified": false,
+      "scalar_mixing_and_yukawa_coherent_sign_verified": true,
+      "single_yukawa_sign_flips_source_spurion": true,
+      "source_benchmark_sha256": "c7fedaa074e5cf026eb9a233e406a7a5a686aa21decbe2137241f6a8d1abc34d",
+      "source_spurion_numerator_frobenius": 0.0001995534837520667,
+      "symmetric_nu_pair_covariance_residual": 6.033655597841312e-16
+    }
+  ],
+  "non_diagonal_MF_native_source_verified": false,
+  "physical_B1_scope_complete": false,
+  "physical_crosspackage_SU2_dictionary_verified": false,
+  "physical_source_certified": false,
+  "physical_source_certified_models": 0,
+  "physically_normalized_loop_amplitude_verified": false,
+  "provenance": {
+    "all16_conditional_audit_sha256": "b1669b9a07f91fdadd3822bee0f44ab613240a51bcdb7462fceed34441dfda7c",
+    "current_guarded_source_blobs": {
+      "Lagrangian/interactions/T3Topology.wl": "a45a099a8b766cbad0114a0559cb0bcb80895649",
+      "Lagrangian/model/LagrangianBuilder.wl": "98d549cda503b751380dc10c4a56212e5312ccd8",
+      "Lagrangian/model/SU2Invariants.wl": "dbe0cd490204dec363fcf4278f079b58c8ddcefc",
+      "Lagrangian/model/T3Fields.wl": "65467ede6ef06a7743e3ca2878debf777dc94507",
+      "Numerical/direct_one_loop/core.py": "abbf261fbf2ca2561482d3e53b84452d1654610e",
+      "RGE/running/rgbeta/T3RGBetaModel.wl": "7af7a4ddf99a7e38210543a21b3b1cda203eaf02",
+      "scripts/BuildT3DirectOneLoopInputs.py": "976a5c6303c637b7d1e45942a8dfa06f7e780ac7"
+    },
+    "native_abstract_cc_sha256": "5c25864fbc4b262192a4499c9b3bf9211af5f7e5f3ff350c6551c36c5de87829",
+    "native_action_audit_sha256": "42e660c7ad5e98da07dad602290b81960d44e54b5a7c976ad714b655236dc094",
+    "native_actions_sha256": {
+      "A_p0": "f927475c1eb3549c7038591957d449e97c6405dbcf679f590d0696cac239ec48",
+      "B_m1": "2854f420a104e2254617a41862c612f79ebc145d44dc371fe3162dd5591b57fc",
+      "C_m1": "cff78b33560cd8afde274a036751957cee72dc3d8dec3ff4aa048d8ade518422"
+    },
+    "previous_conditional_count": 16,
+    "previous_conditional_max_residuals": {
+      "max_Y_relative_residual": 1.6640541641034287e-16,
+      "max_Z_relative_residual": 0.0,
+      "max_mass_relative_residual": 2.1823440252295523e-16
+    }
+  },
+  "relative_physical_factors_verified": false,
+  "running_or_EFT_performed": false,
+  "safe_to_integrate_into_production": false,
+  "sign_rephasing_orbit": {
+    "cases": [
+      {
+        "Yukawa_plus_MF_flip_in_internal_orbit": true,
+        "Yukawa_plus_lambda_flip_in_internal_orbit": true,
+        "allowed_internal_rephase_sign_patterns": 8,
+        "both_yukawas_flip_in_internal_orbit": true,
+        "even_sign_patterns_are_internal_rephasings": true,
+        "fermion_case": "Dirac",
+        "fourth_root_field_phases_sufficient": true,
+        "single_yukawa_flip_in_internal_orbit": false
+      },
+      {
+        "Yukawa_plus_MF_flip_in_internal_orbit": true,
+        "Yukawa_plus_lambda_flip_in_internal_orbit": true,
+        "allowed_internal_rephase_sign_patterns": 8,
+        "both_yukawas_flip_in_internal_orbit": true,
+        "even_sign_patterns_are_internal_rephasings": true,
+        "fermion_case": "Majorana",
+        "fourth_root_field_phases_sufficient": true,
+        "single_yukawa_flip_in_internal_orbit": false
+      }
+    ],
+    "external_nu_convention_fixed": true
+  },
+  "source_flavour_benchmarks_checked_count": 16,
+  "status": "All16SourceSpurionFlavourAndPhaseCovarianceVerified_PhysicalDictionaryPending",
+  "timestamp_utc": "2026-11-02T23:50:44.319577+00:00"
+}

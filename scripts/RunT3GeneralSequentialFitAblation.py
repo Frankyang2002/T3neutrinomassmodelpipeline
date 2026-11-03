@@ -16,7 +16,7 @@ This guarantees no double-counting but is NOT an independently calculated
 hard matching. Matchete/GammaCC and extra-HHSS basis assumptions are explicit.
 
 14 nonmixed models use the actual muF UV Yukawa matrices and all source terms.
-B(-1)/C(-1) use a declared provisional native-mixed source flavour lift.
+B(-1)/C(-1) use source-exact native-CG Majorana Yukawa channels and U(muS).
 No restricted C5 kernels and no GitHub writes.
 """
 from __future__ import annotations
@@ -37,7 +37,7 @@ from Numerical.running.GeneralT3SequentialLeadingLog import (
     MODELS, encode, decode, require, response, scalar_tensors,
 )
 from Numerical.running.GeneralT3DynamicFermionWilson import (
-    nonmixed_boundary, mixed_reference_boundary, uv_from_json,
+    nonmixed_boundary,
 )
 from scripts.RunT3GeneralSequentialLeadingLog import low_energy, hash_file, load, save, tag
 
@@ -243,6 +243,7 @@ def _mixed(model: str, saved: Path, quartic_source: tuple,
     from Numerical.fitting.OscillationFit import OscillationFitTarget
     from Numerical.orchestration.RunSmallLambdaRefit import TARGET
     from Numerical.orchestration.GeneralRunningBenchmark import _state_values
+    from Numerical.running.GeneralT3MixedExactFermionWilson import mixed_exact_boundary
 
     fit=load(saved/'result.json')
     source=runner.build_reference_source(model)
@@ -258,8 +259,6 @@ def _mixed(model: str, saved: Path, quartic_source: tuple,
     initial,uv_layout,_,_=pilot.prepare_initial(source,registry_legacy,
                     'general_quartics_and_mixing' if m>0 else 'general_quartics',q,m)
     static_source,channels=quartic_source
-    running_record=load(reference_running/tag(model)/'running.json')
-    reference_uv=uv_from_json(model,running_record['uv_at_fermion_threshold'])
     from Numerical.lo_certification.couplings.extra_hhss_geometry import model_extra_geometry
     geometry=model_extra_geometry(model,registry['models'][model],include_components=True)
     cases={};source_details={}
@@ -275,8 +274,6 @@ def _mixed(model: str, saved: Path, quartic_source: tuple,
             uv_vec,uv_nfev=initial.copy(),0
         heavy=unpack_general_scalar_state(uv_vec[:uv_layout.size],uv_layout,
                          registry_legacy,uv=True,mu_gev=SCALES[1]).baseline
-        tree,tree_diag=mixed_reference_boundary(model,static_source,reference_uv,heavy)
-        source_details[str(int(uv_on))]=tree_diag
         eft=project_general_after_fermion(
               unpack_general_scalar_state(uv_vec[:uv_layout.size],uv_layout,
                      registry_legacy,uv=True,mu_gev=SCALES[1]),registry_legacy)
@@ -307,6 +304,10 @@ def _mixed(model: str, saved: Path, quartic_source: tuple,
             for name,value in endpoint['reused_quartics'].items():
                 if name not in state: state[name]=value
             state['muT3GeneralS1S2']=endpoint['quadratic_mu2_gev2']
+            # Mixed F-tree source depends on U(muS); rebuild per U/E endpoint.
+            tree,tree_diag=mixed_exact_boundary(
+                model,heavy,state,repo_root=ROOT,mu_f=SCALES[1])
+            source_details[f'{int(uv_on)}{int(eft_on)}']=tree_diag
             snap=snapshot(model,state,saved/'fitted_config.json')
             tensor=scalar_tensors(model,tree,channels,snap,registry,geometry=geometry)
             scalar=ScalarEndpoint(tensor,state)
@@ -316,7 +317,7 @@ def _mixed(model: str, saved: Path, quartic_source: tuple,
                 uv_on=uv_on,eft_on=eft_on,uv_nfev=uv_nfev,eft_nfev=eft_nfev,
                 spinor_factor=spinor_factor,vev=vev)
             cases.update(block)
-    return cases,{'mixed_reference_flavour_lift':source_details,
+    return cases,{'mixed_native_CG_exact_majorana_source':source_details,
                   'C5_source_path':str(coefficient),
                   'C5_source_sha256':hash_file(coefficient),
                   'fitted_config_sha256':hash_file(saved/'fitted_config.json')}
@@ -346,7 +347,11 @@ def preflight(model: str, saved: Path, args, canonical_run_id: str) -> dict:
     else:
         from scripts import RunT3ZeroExtraBoundaryBenchmark as core
         from scripts.RunGeneralT3NumericalC5 import DEFAULT_SOURCE
-        inputs['mixed_reference_running']=args.reference_running_dir/tag(model)/'running.json'
+        from Numerical.running.GeneralT3MixedExactFermionWilson import SOURCE_ROOT, source_tag
+        native=ROOT/SOURCE_ROOT/source_tag(model)
+        inputs['mixed_exact_source_flavour']=native/'source_flavour.json'
+        inputs['mixed_exact_source_CG']=native/'mixed_native_tree_llss_cg_registry.json'
+        inputs['mixed_exact_ordered_reference']=native/'ordered_tensor.json'
         inputs['mixed_general_UV_rgbeta']=core.beta_path(model,'UV')
         inputs['mixed_general_EFT1_rgbeta']=core.beta_path(model,'EFT1')
         inputs['mixed_general_C5_source']=(Path(DEFAULT_SOURCE)/

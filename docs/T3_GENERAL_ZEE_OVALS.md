@@ -1,82 +1,124 @@
-# T3 Section 5.3: merged-fit Zee sensitivity against NuFIT and JUNO
+# Section 5.3 — General T3 Zee-style sensitivity figures (Windows-safe v2)
 
-**New file, no physics-code modification:** `scripts/PlotT3GeneralZeeOvals.py`.
+## Purpose and scope
 
-Read-only postprocessor for the completed 16-model campaign:
+This replaces the original ellipse-grid rendering in
+`scripts/PlotT3GeneralZeeOvals.py` with a plotting style based on **Fig. 9** of
+Schmidt & Vandeleur, *Running of neutrino mass parameters in the Zee model*.
 
-`output/studies/general_scalar_extended/zee_style_general_sensitivity/zee_general_all16_merged_v1/`
+- **All 16 T3 models** are plotted, not only B(-1) and C(-1).
+- The saved **merged-fit** UV sensitivity data are read without changing fitted
+  Yukawas or running RGEs/Matchete again.
+- Three coloured gamma trajectories T1/T2/T3 and a black star at gamma=1 are
+  drawn on each panel. Endpoints are marked.
+- Filled **marginal** NuFIT 6.1 NO ±1σ/±3σ (blue) and measured JUNO 2026 ±1σ
+  (green) bands replace the previous outline-only Gaussian ellipses.
+- These bands are **one-dimensional marginal intervals**, with vertical and
+  horizontal strips; their intersection is *not* a joint 2D confidence contour.
+- An optional `--model-oval` flag superposes the descriptive empirical response
+  oval. That oval is **not** a statistical confidence region.
+- The matching input remains the existing conditional general UV/EFT1 RGE and
+  one-scale C5 result, **not** a certified full sequential EFT Wilson match.
 
-It reads `points.csv` and `summary.json`; it does **not** refit, run UV RGEs,
-change the matched coefficients, or modify the existing scans.
+The script does not need the historical restricted scalar potential results.
 
-## Experimental inputs
+## Why the old plot command failed on Windows
 
-- **NuFIT 6.1**, November 2025, IC24 + SK atmospheric, normal ordering: repository
-  `configs/nufit_6_1_ic24_no.json`. The five uncertainties are Gaussianised
-  symmetric *marginal* 1σ errors; the correlation matrix is not supplied.
-- **JUNO**, 207.2-live-day measurement (JUNO Collaboration, arXiv:2609.37895,
-  29 September 2026):
-  `sin²θ12 = 0.3036 ± 0.0064`,
-  `Δm²21 = (7.388 ± 0.078) × 10⁻⁵ eV²`.
-  These are **measured**, not the older JUNO six-year projection.
+The user's traceback ended in `PIL.Image.save` when trying to open an existing
+PNG destination under `Reports/output/thesis_general_5_3/zee_general_merged_ovals_v1`.
+The log alone does **not** establish whether an existing file lock, access
+control, or a Windows/Pillow pathname interaction caused `OSError [Errno 22]`.
 
-For display, both experimental 2D regions assume *zero correlation* and use
-`r² = 2.30` (68.27% joint) and `r² = 11.83` (99.73% joint).
-These are visual approximations, **not official experimental joint likelihood contours**.
-JUNO data are drawn only for the solar (`sin2_theta12`, `delta_m21_sq_ev2`) pair.
+This replacement:
 
-The **model-sensitivity oval** is computed from all 30 off-centre scan points
-for each model:
+1. Writes by default to a **new** directory, `zee_style_all16_v2`.
+2. Saves each image to a `BytesIO` buffer first; Pillow never opens the Windows
+   destination pathname directly.
+3. Writes **individual models before** the large 4×4 grid.
+4. Saves **PNG and vector PDF** for every figure.
+5. Supports `--no-grid` if only the large combined figure is problematic.
 
-`Σ_model = Σ_p (O_p - O_gamma=1)(O_p - O_gamma=1)^T/(30-1)`.
+## Install paths
 
-The drawn semi-axes are twice the square roots of its two eigenvalues. It is
-an empirical descriptive variation envelope, **not a model confidence region**.
-The central sensitivity coefficient is the finite difference
+The ZIP contains complete replacements, preserving the repository structure:
 
-`dO/dlnγ ≈ [O(γ+) - O(γ-)]/[ln(γ+) - ln(γ-)]`
+- `scripts/PlotT3GeneralZeeOvals.py`
+- `tests/test_t3_general_zee_ovals.py`
+- `docs/T3_GENERAL_ZEE_OVALS.md`
 
-with nearest saved gamma points on either side of 1. CSV summaries report
-an estimated one-percent UV variation `0.01*dO/dlnγ` in NuFIT/JUNO 1σ units.
-The JUNO solar χ² in the output is only the sum of two *diagonal Gaussian*
-residual squares, **not the official JUNO likelihood** and not the same as
-saved five-observable NuFIT fit χ².
+No GitHub changes. No physics code or saved scan modifications.
 
-## Installation and PowerShell commands
+## PowerShell commands
 
-Extract the provided ZIP **into your local repository root**:
+Run from `C:\thesistemp\T3neutrinomassmodelpipeline`:
 
 ```powershell
-Expand-Archive -LiteralPath "$HOME\Downloads\T3_General_Zee_Ovals_2026.zip" `
-    -DestinationPath . -Force
+Expand-Archive -LiteralPath "$HOME\Downloads\T3_General_Zee_Style_Windows_Fix_v2.zip" `
+  -DestinationPath . -Force
+
 python -X utf8 -m pytest -q tests\test_t3_general_zee_ovals.py
 
 python -X utf8 -m scripts.PlotT3GeneralZeeOvals
 ```
 
-Outputs:
+Open the new folder:
 
-`Reports/output/thesis_general_5_3/zee_general_merged_ovals_v1/`
+```powershell
+Start-Process "Reports\output\thesis_general_5_3\zee_style_all16_v2"
+```
 
-- `model_grid_sin2_theta12_vs_delta_m21_sq_ev2.png`: 16-panel model comparison.
-- `models/*.png`: individual model plots with NuFIT/JUNO overlays.
-- `local_sensitivity_slopes.csv`: five-observable central finite-difference slopes.
-- `solar_sensitivity_ranking.csv`: solar sensitivity measured in JUNO/NuFIT σ units.
-- `baseline_nufit_juno_comparison.csv`: gamma=1 fit and independent solar Gaussian χ².
-- `provenance.json`: sources, definitions, restrictions, input hashes.
+Output structure:
 
-Other observable pairs:
+```
+Reports/output/thesis_general_5_3/zee_style_all16_v2/
+    model_grid_zee_solar.png
+    model_grid_zee_solar.pdf
+    models/A_m4_zee_solar.png
+    models/A_m4_zee_solar.pdf
+    ...
+    models/E_p2_zee_solar.png
+    models/E_p2_zee_solar.pdf
+    local_sensitivity_slopes.csv
+    solar_sensitivity_ranking.csv
+    baseline_nufit_juno_comparison.csv
+    provenance.json
+```
+
+The 4×4 grid and all individual figures use the saved data at:
+
+`output/studies/general_scalar_extended/zee_style_general_sensitivity/zee_general_all16_merged_v1/`
+
+If Windows still rejects a large grid PNG (or you want only the 16 figures):
 
 ```powershell
 python -X utf8 -m scripts.PlotT3GeneralZeeOvals `
-    --x sin2_theta13 --y sin2_theta23 `
-    --output-dir Reports\output\thesis_general_5_3\atmospheric_ovals_v1
+  --no-grid `
+  --output-dir "Reports\output\thesis_general_5_3\zee_style_models_only_v2"
 ```
 
-## EFT scope
+If an existing output PNG is open/locked, choose another new output directory:
 
-The saved general-Lagrangian sensitivity scans use the existing **conditional**
-renormalisable UV/effective-scalar RGE and one-scale C5 framework.
-They are **not** a certified physical sequential Wilson calculation
-`UV → integrate out ALL fermions → integrate out ALL scalars → SMEFT`.
-Do not describe these candidate ovals as a full-general EFT prediction.
+```powershell
+python -X utf8 -m scripts.PlotT3GeneralZeeOvals `
+  --output-dir "Reports\output\thesis_general_5_3\zee_style_all16_v2_new"
+```
+
+To overlay the optional *descriptive* model covariance oval:
+
+```powershell
+python -X utf8 -m scripts.PlotT3GeneralZeeOvals `
+  --model-oval `
+  --output-dir "Reports\output\thesis_general_5_3\zee_style_with_model_ovals_v2"
+```
+
+## Scientific interpretation
+
+The coloured T1/T2/T3 traces represent full numerical response to the chosen
+UV compensated-coupling perturbation over gamma in [0.99, 1.01]. They are not
+oscillation-fit credible regions. Near-perfect fits may be almost invisible
+at the NuFIT/JUNO uncertainty scale, while B(-1)/C(-1) can have long solar
+mass-splitting excursions. Never interpret the shaded marginal bands as a
+combined NuFIT+JUNO likelihood.
+
+Data references (in the source file): `configs/nufit_6_1_ic24_no.json` and
+JUNO 207.2 live-day solar measurement, arXiv:2609.37895.

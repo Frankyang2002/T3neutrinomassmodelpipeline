@@ -112,10 +112,61 @@ def test_full_end_to_end_one_model(tmp_path):
     assert plot.main(["--source", str(src), "--nufit", str(nu),
                       "--output-dir", str(out), "--models", "A_-2",
                       "--no-per-model"]) == 0
-    assert (out / "model_grid_sin2_theta12_vs_delta_m21_sq_ev2.png").stat().st_size > 1000
+    assert (out / "model_grid_zee_solar.png").stat().st_size > 1000
+    assert (out / "model_grid_zee_solar.pdf").stat().st_size > 1000
     assert (out / "solar_sensitivity_ranking.csv").is_file()
     assert (out / "baseline_nufit_juno_comparison.csv").is_file()
     prov = json.loads((out / "provenance.json").read_text())
     assert prov["plots_use_saved_points_only"] is True
     assert prov["models"] == ["A_-2"]
     assert "NOT" in prov["physics_scope"]
+
+
+def test_per_model_files_and_no_grid(tmp_path):
+    src, nu = _fixture(tmp_path)
+    out = tmp_path / "pictures"
+    assert plot.main(["--source", str(src), "--nufit", str(nu),
+                      "--output-dir", str(out), "--models", "A_-2",
+                      "--no-grid"]) == 0
+    assert (out / "models" / "A_m2_zee_solar.png").stat().st_size > 1000
+    assert (out / "models" / "A_m2_zee_solar.pdf").stat().st_size > 1000
+    assert not (out / "model_grid_zee_solar.png").exists()
+
+
+def test_save_figure_avoids_pillow_path_open(tmp_path,monkeypatch):
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    from matplotlib.figure import Figure
+    fig, ax = plt.subplots()
+    ax.plot([0,1],[2,3])
+    real = Figure.savefig
+    seen = []
+    def wrapper(self, target, *args, **kwargs):
+        assert hasattr(target, "write"), "Savefig must target in-memory buffer"
+        seen.append(kwargs.get("format"))
+        return real(self,target,*args,**kwargs)
+    monkeypatch.setattr(Figure,"savefig",wrapper)
+    plot._save_figure(fig, tmp_path / "output_image.png",dpi=120)
+    plt.close(fig)
+    assert seen == ["png", "pdf"]
+    assert (tmp_path / "output_image.png").is_file()
+    assert (tmp_path / "output_image.pdf").is_file()
+
+
+def test_model_sensitivity_survives_zee_style(tmp_path):
+    src, nu_path = _fixture(tmp_path)
+    data, _ = plot.load_points(src / "points.csv",src / "summary.json",models=["A_-2"])
+    nu = plot.load_nufit(nu_path)
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    fig, ax = plt.subplots()
+    handles=plot._plot_panel(ax,"A_-2",data["A_-2"],nu,
+                             "sin2_theta12","delta_m21_sq_ev2")
+    labels=[h.get_label() for h in handles]
+    assert "NuFIT 6.1 ±1σ (marginal)" in labels
+    assert "JUNO 2026 ±1σ (marginal)" in labels
+    assert "T1" in labels and "T3" in labels
+    assert "Descriptive model response oval" not in labels
+    plt.close(fig)

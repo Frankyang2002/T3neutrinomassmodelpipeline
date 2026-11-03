@@ -1,0 +1,783 @@
+{
+  "format": "t3-general-fit-continuation-18-yukawas-conditional-v1",
+  "model": "D_+0",
+  "status": "ExploratoryAcceptedFit",
+  "source_status": "Blocked",
+  "source_chi2": null,
+  "chi2_final": 0.07790312472190157,
+  "prediction": {
+    "delta_m21_sq_ev2": 7.558732017063197e-05,
+    "delta_m3l_sq_ev2": 0.0025142417601482395,
+    "sin2_theta12": 0.3084626620215978,
+    "sin2_theta13": 0.022473648213742575,
+    "sin2_theta23": 0.4699669479630051
+  },
+  "whitened_residual": [
+    0.22404141302264438,
+    0.1581346413775239,
+    -0.05072751554920921,
+    -0.011143484662149847,
+    -0.0021323894835409687
+  ],
+  "best_parameters": {
+    "y1_00": -1.3438077044373054e-05,
+    "y1_01": 3.3543346208250606e-05,
+    "y1_02": 4.2155798860458855e-05,
+    "y1_10": -0.00014350384282179387,
+    "y1_11": 8.876511598570527e-05,
+    "y1_12": -0.00010193113818627004,
+    "y1_20": -8.29005410788233e-05,
+    "y1_21": 4.13589750495699e-05,
+    "y1_22": -2.780864496119125e-05,
+    "y2_00": 0.00013620947858137829,
+    "y2_01": 0.00011642721800845112,
+    "y2_02": -3.132752851961284e-05,
+    "y2_10": -6.271241633392326e-06,
+    "y2_11": -8.012509047985087e-06,
+    "y2_12": 0.0001303394418638248,
+    "y2_20": 5.474681192739086e-05,
+    "y2_21": -0.00016337967522996887,
+    "y2_22": 6.711566505482346e-05
+  },
+  "best_source": "Dminus2_general_fitted_flavour_seed",
+  "local_refinement_continuation": [],
+  "matching_and_rge_provenance": {
+    "method": "full-general-matchete-one-scale-channels",
+    "general_symbolic_provenance": {
+      "source": "canonical_full_general_symbolic",
+      "model": "D_+0",
+      "run_id": "full16_general_v1",
+      "extra_yukawa": "y1Conj",
+      "additional_quartics": 5,
+      "additional_bilinears": 1,
+      "mass_basis": "CheckedNotMatched",
+      "lagrangian_inventory_checked": true,
+      "rge_inventory_checked": true,
+      "physical_matchete_rgbeta_mapping_certified": false,
+      "physical_neutrino_mass_prediction": false,
+      "uv_json": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\studies\\general_scalar_extended\\complete_scalar_symbolic\\full16_general_v1\\D_p0\\uv_rgbeta.json",
+      "eft1_json": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\studies\\general_scalar_extended\\complete_scalar_symbolic\\full16_general_v1\\D_p0\\eft1_rgbeta.json",
+      "uv_sha256": "7e7d7ded693e7569e8442efe38aa6b178572cd75a72567642163a4e55f3f749d",
+      "eft1_sha256": "85522e0573694763e341224b658c3eaa2627f02a8541edd2a48d3f7de0f2015d"
+    },
+    "source_reference": "Numerical\\benchmarks\\fitted_reference\\T3_dS1_3_dS2_1_dF_2_alpha_p0.json",
+    "source_reference_sha256": "59bcfbd972a82202c63fbcea0d02352d90a9acd6f63250bf2a40e2f7a18f88ca",
+    "general_c5_coefficient": "output\\general_matchete_matching\\D_p0\\c5_coefficient.txt",
+    "general_c5_coefficient_sha256": "3e497e7472a0adbf374e34d8f08500f6e95e4bd54b6dfe8cd3fa5b88700dddae",
+    "quartic_fraction": 0.1,
+    "mu2_fraction": 0.01,
+    "extra_yukawa_fraction": 0.05,
+    "modified_scalar_boundary": false
+  },
+  "c5": {
+    "C5_muS_gev_inv": {
+      "real": [
+        [
+          -4.1328775243202535e-17,
+          8.031030508438752e-17,
+          3.009575047234322e-16
+        ],
+        [
+          8.031030508438752e-17,
+          7.235139914890175e-16,
+          9.656971848580169e-16
+        ],
+        [
+          3.009575047234322e-16,
+          9.656971848580169e-16,
+          7.948149748743108e-16
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    "C5_low_gev_inv": {
+      "real": [
+        [
+          -3.8695796582270017e-17,
+          7.519388692891136e-17,
+          2.817846832650349e-16
+        ],
+        [
+          7.519388692891136e-17,
+          6.774202840156323e-16,
+          9.04176414130823e-16
+        ],
+        [
+          2.817846832650349e-16,
+          9.04176414130823e-16,
+          7.441820590929536e-16
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    }
+  },
+  "numerical_details": {
+    "uv_at_fermion_threshold": {
+      "yd": [
+        [
+          {
+            "real": 1.1155138264495326e-05,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": 0.0,
+            "imag": 0.0
+          },
+          {
+            "real": 0.00022195280577089974,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": 0.0,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0,
+            "imag": 0.0
+          },
+          {
+            "real": 0.011281852148283528,
+            "imag": 0.0
+          }
+        ]
+      ],
+      "yu": [
+        [
+          {
+            "real": 5.069360541554115e-06,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": 0.0,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0025635484343832266,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": 0.0,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0,
+            "imag": 0.0
+          },
+          {
+            "real": 0.7309738162442107,
+            "imag": 0.0
+          }
+        ]
+      ],
+      "g2": 0.5980243655833344,
+      "ye": [
+        [
+          {
+            "real": 2.860953876447654e-06,
+            "imag": 0.0
+          },
+          {
+            "real": 4.589206126590067e-14,
+            "imag": 0.0
+          },
+          {
+            "real": 1.8374576852452446e-12,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": 2.178431686920723e-16,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0006027045476443034,
+            "imag": 0.0
+          },
+          {
+            "real": -5.8816447066858515e-12,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": 5.134463010814918e-16,
+            "imag": 0.0
+          },
+          {
+            "real": -3.462342993741716e-13,
+            "imag": 0.0
+          },
+          {
+            "real": 0.010238379187137122,
+            "imag": 0.0
+          }
+        ]
+      ],
+      "gY": 0.36849806894787096,
+      "lambdaH": 0.27636427660260876,
+      "g3": 0.8767494625499781,
+      "y1": [
+        [
+          {
+            "real": -1.4167472194856505e-05,
+            "imag": 0.0
+          },
+          {
+            "real": 3.5364019909740315e-05,
+            "imag": 0.0
+          },
+          {
+            "real": 4.444394128335251e-05,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": -0.0001512929772824776,
+            "imag": 0.0
+          },
+          {
+            "real": 9.358312930136634e-05,
+            "imag": 0.0
+          },
+          {
+            "real": -0.0001074637798888825,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": -8.740010193298257e-05,
+            "imag": 0.0
+          },
+          {
+            "real": 4.360380025244029e-05,
+            "imag": 0.0
+          },
+          {
+            "real": -2.931800404769742e-05,
+            "imag": 0.0
+          }
+        ]
+      ],
+      "y2": [
+        [
+          {
+            "real": 0.0001436026883579927,
+            "imag": 0.0
+          },
+          {
+            "real": 0.00012274668155522295,
+            "imag": 0.0
+          },
+          {
+            "real": -3.302793134766716e-05,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": -6.611633525704899e-06,
+            "imag": 0.0
+          },
+          {
+            "real": -8.447413684602972e-06,
+            "imag": 0.0
+          },
+          {
+            "real": 0.00013741403556732907,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": 5.771828356216259e-05,
+            "imag": 0.0
+          },
+          {
+            "real": -0.00017224737072994362,
+            "imag": 0.0
+          },
+          {
+            "real": 7.075847598227473e-05,
+            "imag": 0.0
+          }
+        ]
+      ],
+      "MF": [
+        [
+          {
+            "real": 105427.82381569647,
+            "imag": 0.0
+          },
+          {
+            "real": 3.322414535327333e-05,
+            "imag": 0.0
+          },
+          {
+            "real": -4.5537109722998666e-05,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": 2.8047974110377126e-05,
+            "imag": 0.0
+          },
+          {
+            "real": 115970.60620921876,
+            "imag": 0.0
+          },
+          {
+            "real": 5.359238139415056e-05,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": -3.710921537789252e-05,
+            "imag": 0.0
+          },
+          {
+            "real": 5.3992253187525654e-05,
+            "imag": 0.0
+          },
+          {
+            "real": 126513.38862007274,
+            "imag": 0.0
+          }
+        ]
+      ],
+      "mS1Sq": 1454921.6857315856,
+      "mS2Sq": 1008868.6455071875,
+      "lambdaS1": 0.03199284502182729,
+      "lambdaS2": 0.1146418754826722,
+      "lambdaH1": -0.0032680126124482387,
+      "lambdaH2": 0.022772577052569097,
+      "lambda12": 0.009740967768469604,
+      "lambdaT3": {
+        "real": 0.10250459440225221,
+        "imag": 0.0
+      },
+      "lambdaH1Adj": 0.0008197946396052553,
+      "lambdaS1Adj": 0.008656693680983816,
+      "lambdaT3GeneralQ000211I1": {
+        "real": 0.01104688456020099,
+        "imag": 0.0
+      },
+      "lambdaT3GeneralQ000400I1": {
+        "real": 0.012488257882120712,
+        "imag": 0.0
+      },
+      "lambdaT3GeneralQ001300I1": {
+        "real": 0.011920459033763792,
+        "imag": 0.0
+      },
+      "lambdaT3GeneralQ021010I1": {
+        "real": 0.00988627524580007,
+        "imag": 0.0
+      },
+      "lambdaT3GeneralQ110200I1": {
+        "real": 0.01014911490001619,
+        "imag": 0.0
+      },
+      "muT3GeneralS1Sq": {
+        "real": 5876.438733225682,
+        "imag": 0.0
+      },
+      "y1Conj": [
+        [
+          {
+            "real": -1.3804896824138243e-06,
+            "imag": 0.0
+          },
+          {
+            "real": 1.8862658943103745e-06,
+            "imag": 0.0
+          },
+          {
+            "real": 2.238878276118063e-06,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": -5.081088932167844e-06,
+            "imag": 0.0
+          },
+          {
+            "real": 3.329726195408765e-06,
+            "imag": 0.0
+          },
+          {
+            "real": -3.931131379461969e-06,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": -3.008079796745949e-06,
+            "imag": 0.0
+          },
+          {
+            "real": 1.4524332053576985e-06,
+            "imag": 0.0
+          },
+          {
+            "real": -1.4961000640523824e-06,
+            "imag": 0.0
+          }
+        ]
+      ]
+    },
+    "eft1_at_scalar_threshold": {
+      "yd": [
+        [
+          {
+            "real": 1.3437799104167808e-05,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": 0.0,
+            "imag": 0.0
+          },
+          {
+            "real": 0.00026737079972916414,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": 0.0,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0,
+            "imag": 0.0
+          },
+          {
+            "real": 0.01396745324996455,
+            "imag": 0.0
+          }
+        ]
+      ],
+      "yu": [
+        [
+          {
+            "real": 6.1302634774691664e-06,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": 0.0,
+            "imag": 0.0
+          },
+          {
+            "real": 0.003100040293851771,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": 0.0,
+            "imag": 0.0
+          },
+          {
+            "real": 0.0,
+            "imag": 0.0
+          },
+          {
+            "real": 0.8600904891915658,
+            "imag": 0.0
+          }
+        ]
+      ],
+      "g2": 0.6142547241689964,
+      "ye": [
+        [
+          {
+            "real": 2.814943059998194e-06,
+            "imag": 0.0
+          },
+          {
+            "real": 4.515400909020644e-14,
+            "imag": 0.0
+          },
+          {
+            "real": 1.8078988961019006e-12,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": 2.143397353222484e-16,
+            "imag": 0.0
+          },
+          {
+            "real": 0.000593011642370482,
+            "imag": 0.0
+          },
+          {
+            "real": -5.787027763635486e-12,
+            "imag": 0.0
+          }
+        ],
+        [
+          {
+            "real": 5.051843142348922e-16,
+            "imag": 0.0
+          },
+          {
+            "real": -3.4066295537221266e-13,
+            "imag": 0.0
+          },
+          {
+            "real": 0.01007367656896025,
+            "imag": 0.0
+          }
+        ]
+      ],
+      "gY": 0.35846520036499574,
+      "lambdaH": 0.3359210349113802,
+      "g3": 1.0584297978011075,
+      "mS1Sq": 1655395.3057478748,
+      "mS2Sq": 1016370.8471233548,
+      "lambdaS1": -0.060268597522324316,
+      "lambdaS2": 0.10989558985475242,
+      "lambdaH1": -0.02867284043098356,
+      "lambdaH2": 0.015554510092814933,
+      "lambda12": 0.009621988032107186,
+      "lambdaT3": {
+        "real": 0.10265845236213428,
+        "imag": 0.0
+      },
+      "lambdaH1Adj": 0.0016998323806122662,
+      "lambdaS1Adj": 0.020707591034810763,
+      "lambdaT3GeneralQ000211I1": {
+        "real": 0.01229251749961417,
+        "imag": 0.0
+      },
+      "lambdaT3GeneralQ000400I1": {
+        "real": 0.016190158953367353,
+        "imag": 0.0
+      },
+      "lambdaT3GeneralQ001300I1": {
+        "real": 0.014983470007216781,
+        "imag": 0.0
+      },
+      "lambdaT3GeneralQ021010I1": {
+        "real": 0.00951843615885245,
+        "imag": 0.0
+      },
+      "lambdaT3GeneralQ110200I1": {
+        "real": 0.010179783769264993,
+        "imag": 0.0
+      },
+      "muT3GeneralS1Sq": {
+        "real": -516.5872975261409,
+        "imag": 0.0
+      }
+    },
+    "uv_nfev": 38,
+    "eft1_nfev": 38,
+    "c5_at_scalar_threshold": {
+      "real": [
+        [
+          -4.1328775243202535e-17,
+          8.031030508438752e-17,
+          3.009575047234322e-16
+        ],
+        [
+          8.031030508438752e-17,
+          7.235139914890175e-16,
+          9.656971848580169e-16
+        ],
+        [
+          3.009575047234322e-16,
+          9.656971848580169e-16,
+          7.948149748743108e-16
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    "c5_at_low_scale": {
+      "real": [
+        [
+          -3.8695796582270017e-17,
+          7.519388692891136e-17,
+          2.817846832650349e-16
+        ],
+        [
+          7.519388692891136e-17,
+          6.774202840156323e-16,
+          9.04176414130823e-16
+        ],
+        [
+          2.817846832650349e-16,
+          9.04176414130823e-16,
+          7.441820590929536e-16
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    "matching_scope": "full-general Matchete quadratic Yukawa channels, one-scale",
+    "general_c5_diagnostics": {
+      "matching_kind": "full-general-Matchete-one-scale-Yukawa-channels",
+      "self_bilinear_real_mass_basis_candidate": true,
+      "self_bilinear_signed_real_mass_labels": true,
+      "self_bilinear_negative_real_mu2": true,
+      "self_bilinear_mu2_at_scalar_threshold_gev2": {
+        "real": -516.5872975261409,
+        "imag": 0.0
+      },
+      "matched_yukawas": [
+        "y1",
+        "y1Conj",
+        "y2"
+      ],
+      "n_yukawa_channels": 2,
+      "channels": [
+        "T3YUKy1Bar__T3YUKy2Bar",
+        "T3YUKy1ConjBar__T3YUKy2Bar"
+      ],
+      "quartic_basis_mapping_assumptions": [
+        "UNCERTIFIED lambdaT3ExtraQ021010I1 -> lambdaT3GeneralQ021010I1"
+      ],
+      "hbar_value": 0.006332573977646111,
+      "heavy_basis_residual": 7.411426130200236e-11,
+      "extra_yukawa_rotation": "same-heavy-leg-as-parent-assumption",
+      "vectorlike_right_rotation_identity_fast_path": false,
+      "sequential_eft_wilson_matching_performed": false,
+      "physical_general_c5_certified": false
+    }
+  },
+  "original_result_sha256": null,
+  "fit_target_sha256": "27bd4d4297fddb3ef71b5b804afd8e31d44d302b569f7cf8c34d37d54005e15e",
+  "use_for_merged_summary": true,
+  "physical_general_c5_certified": false,
+  "full_general_sequential_matching_performed": false
+}

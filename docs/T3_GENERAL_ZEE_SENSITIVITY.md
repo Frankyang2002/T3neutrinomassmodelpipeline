@@ -1,132 +1,99 @@
-# Section 5.3: Zee-style compensated sensitivity, general T3 candidate
+# Section 5.3 — Zee-style compensated sensitivity with individually fitted general T3 inputs
 
-## Install paths
+## Installation and changes
 
-Copy the ZIP contents into the **local** repository root. This adds only:
+This is a **full replacement** of three existing project files (not a patch):
 
-- `scripts/RunT3GeneralZeeSensitivity.py` (new numerical driver)
-- `tests/test_t3_general_zee_sensitivity.py` (pure unit tests)
-- `docs/T3_GENERAL_ZEE_SENSITIVITY.md` (this guide)
+- `scripts/RunT3GeneralZeeSensitivity.py` — numerical driver and merged-fit source checks;
+- `tests/test_t3_general_zee_sensitivity.py` — pure source-selection/transformation contracts;
+- `docs/T3_GENERAL_ZEE_SENSITIVITY.md` — this guide.
 
-No existing files are modified and no GitHub push is performed.
+Extract the archive into the **local repository root**, preserving the directory structure. No change or push to GitHub is performed. The old fitted inputs and existing scan outputs are read-only.
 
-## Correct source and treatment
+## Verified benchmark selection (GitHub main, 4 November 2026)
 
-The older `scripts.RunT3FrozenFullScalar64 --plan` asks for missing historical
-`output/studies/fermion_start_lambda_comparison/{5e-9,0p5}/fitted/*.json`.
-**This new driver does not read those files.** It instead reads already fitted
-*general-Lagrangian* candidates from:
+The default `--fit-run-id merged` loads the saved accepted-candidate manifest:
 
-`output/studies/general_scalar_extended/thesis_general_all16/thesis16_general_c5_full_v1/<MODEL>/`
+`output/studies/general_scalar_extended/thesis_general_all16/continue_general16_v1/merged_all16.json`
 
-- `fitted_config.json` and `result.json` for each model;
-- `general_uv_overrides.json` for nonmixed models (including the saved extra quartics,
-  allowed complex self-bilinears and extra Yukawas).
+The manifest reports **16 accepted and zero blocked** under the exploratory `chi2 <= 5.86` fit screen. It is assembled from:
 
-For the 14 nonmixed cases, the driver reuses:
+- `OriginalGeneralCampaign`: 11 model-specific fits from `thesis16_general_c5_full_v1`;
+- `GeneralFitContinuation`: improved A(-2), B(+1), C(-1), D(0), D(+2) fits from `continue_general16_v1`.
 
-- `scripts.RunT3GeneralAll16FromReference.nonmixed_inputs`,
-- `scripts.RunT3GeneralAll16FromReference.NonMixedEvaluator`,
-- `output/studies/general_scalar_extended/complete_scalar_symbolic/full16_general_v1/<MODEL>/{uv_rgbeta,eft1_rgbeta}.json`,
-- `output/general_matchete_matching/<MODEL>/c5_coefficient.txt` and its matching status.
+For example, A(-2) must use the continuation (`chi2 = 5.520689216404163e-11`), **not** the original (`chi2 = 34.52948208294043`). C(-1) uses its improved continuation (`chi2 = 1.79419851843013e-12`). The very small `2.7451024734292607e-12` E(+2) result comes from the original campaign and is already included in the merged manifest.
 
-For B(-1)/C(-1), it reuses the separate **conditional** general-quartic + mixed-bilinear UV/EFT1 evaluator from
-`RunT3GeneralScalarBCExploratoryFit`, with the saved one-scale mass-basis coefficient and
-`output/general_t3_quadratic_eft1/*_live_rgbeta.json`.
+Each selected model's `result_path` must equal its expected location within these **two allowed directories**. Its `fitted_config.json` and any `general_uv_overrides.json` are always read from that same run and model folder. The driver refuses malformed/incomplete manifests, poor fits, model mismatches, mismatched saved chi-square, inconsistent saved 18-entry `y1/y2` optimiser parameters, inconsistent general UV overrides, and unexpected EFT-matching certification. It saves the per-model source selection and source SHA-256 hashes with results.
 
-The saved *general-fit* input for B/C is substituted into the existing reference-source
-inventory; historical fitting directories are not read.
+**Important:** The existing fit optimised 18 real entries of `y1` and `y2`. It did **not** independently optimise every scalar coupling or each additional conjugate Yukawa. The latter retain the saved general-boundary assumptions.
 
-## UV deformations
+### Source compatibility
 
-For all three directions, `gamma` is positive. `lambda` denotes `lambdaT3`.
+The continuation `result.json` format differs from the original campaign: the nonmixed continuation stores its general-RGE/matching provenance in `matching_and_rge_provenance`, and C(-1)'s independent quartic/bilinear fractions are nested in that record rather than the original top-level keys. The driver accepts each verified format and does not mix their parameter values.
 
-- T1: `lambda -> gamma*lambda`, `y1,y2 -> gamma**(-1/2)*(y1,y2)`.
-- T2: `lambda -> gamma*lambda`, `y2 -> gamma**(-1)*y2`, `y1` unchanged.
-- T3: `lambda` unchanged, `y1 -> gamma*y1`, `y2 -> gamma**(-1)*y2`.
+`--fit-run-id thesis16_general_c5_full_v1` is retained **only** as an explicit option to reproduce the old campaign. If omitted, the driver uses `merged`.
 
-This is the established T3 T1/T2/T3 convention, analogous to the *method* of
-Zee section 4.4; T3 is **not** the exact Zee S3 transformation.
+## Physics calculation
 
-The nominal UV tensor `lambdaT3*(y1@y2.T + y2@y1.T)` is verified unchanged
-at every gamma point. This is *not* a proof that the **complete general-C5**
-source is unchanged: extra Yukawa channels and extra scalar interactions may
-have additional dependence. The extra `y1Conj`/`y2Conj` Yukawas and independent
-additional quartics/bilinears are held fixed at the UV boundary.
+The three UV transformations remain:
 
-In the B/C adapter, the existing general beta evaluator sets extra quartics
-as `quartic_fraction*abs(lambdaT3)`. To avoid accidentally moving independent
-scalar couplings, the driver counter-scales `quartic_fraction` by
-`abs(lambda_original)/abs(lambda_gamma)` for T1/T2. If this requires a fraction
-above 1, it **fails** that point rather than using a changed scalar boundary.
+- **T1:** `lambdaT3 -> gamma*lambdaT3`, `y1,y2 -> gamma**(-1/2)*(y1,y2)`;
+- **T2:** `lambdaT3 -> gamma*lambdaT3`, `y2 -> gamma**(-1)*y2`;
+- **T3:** `y1 -> gamma*y1`, `y2 -> gamma**(-1)*y2`, `lambdaT3` unchanged.
 
-Every point reruns the UV beta evolution (1e7 -> 1e5 GeV), fermion boundary,
-scalar EFT1 beta evolution (1e5 -> 1e3 GeV), available one-scale scalar
-matching, and SM+Weinberg evolution to 100 GeV.
+The nominal tensor `lambdaT3*(y1@y2.T + y2@y1.T)` is invariant at the UV scale. Other general-sector couplings, including independent extra quartics, allowed scalar bilinears, and conjugate Yukawas, are held fixed at the UV boundary. For B/C, the numerical adapter's independent quartic input fraction is compensated to prevent it from changing when `lambdaT3` changes.
 
-## PowerShell from local repository root
+Each gamma point re-evaluates the existing general one-loop UV RGE from `1e7` to `1e5` GeV, performs the existing fermion threshold projection, evolves the general scalar EFT between `1e5` and `1e3` GeV, evaluates the available model-specific general **one-scale candidate C5**, then evolves the SM+Weinberg theory to `1e2` GeV.
+
+This is **not certified complete sequential general EFT matching**. The original general Matchete C5 is conditional for 14 nonmixed models, and B(-1)/C(-1) use separate conditional mixed-mass one-scale matching with an uncertified signed quartic map. Full fermion-first Wilson matching and scalar mass-basis threshold matching are not implemented here. The scan never replaces missing general matching with historical restricted kernels.
+
+## Commands (PowerShell)
+
+From the **local** `T3neutrinomassmodelpipeline` project root:
 
 ```powershell
-# Verify newly installed numerical driver's pure scaling contracts.
+# If the archive is in Downloads, change the path to its actual location.
+Expand-Archive -LiteralPath "$HOME\Downloads\T3_General_Zee_MergedFits_Update.zip" `
+    -DestinationPath . -Force
+
+# Pure unit tests: no RGE integrations or Wolfram calls.
 python -X utf8 -m pytest -q tests\test_t3_general_zee_sensitivity.py
 
-# Check the GENERAL fitted/canonical symbolic inputs, with no physics run or outputs.
+# Verify exactly which general fit A(-2), B(-1), C(-1) will use.
 python -X utf8 -m scripts.RunT3GeneralZeeSensitivity `
-  --models A_-2,B_-1,C_-1 --preflight
+    --models A_-2,B_-1,C_-1 --preflight
 
-# One-model pilot, Zee paper ±1% window (33 full integrations total):
+# First, repeat A(-2) with IMPROVED continuation Yukawas.
+# Use a new run ID: the previous zee_general_a2_v1 contains the OLD fit.
 python -u -X utf8 -m scripts.RunT3GeneralZeeSensitivity `
-  --models A_-2 --run-id zee_general_a2_v1 `
-  --gamma-min 0.99 --gamma-max 1.01 --points 11
+    --models A_-2 --run-id zee_general_a2_merged_v1 `
+    --gamma-min 0.99 --gamma-max 1.01 --points 11
 
-# Later, if the pilot and source checks succeed, scan A/B/C conditional models:
+# If gamma=1 reproduces the continued saved fit, scan all 16.
 python -u -X utf8 -m scripts.RunT3GeneralZeeSensitivity `
-  --models A_-2,B_-1,C_-1 --run-id zee_general_abc_v1 `
-  --gamma-min 0.99 --gamma-max 1.01 --points 11
-
-# Optional: all 16 model candidates, each on its own matching scheme:
-python -u -X utf8 -m scripts.RunT3GeneralZeeSensitivity `
-  --models all --run-id zee_general_all16_v1
+    --models all --run-id zee_general_all16_merged_v1 `
+    --gamma-min 0.99 --gamma-max 1.01 --points 11
 ```
 
-Never reuse an output `--run-id`: a prior output folder causes an immediate
-error. Failed points are recorded, not interpolated. A failed gamma=1 baseline
-blocks the model from being labelled complete. The saved baseline predictions
-are cross-checked against the new gamma=1 calculations.
+The `--preflight` command checks the merged selection and actual general sources, **without numerical integration or output creation**. The full run aborts rather than overwriting an existing `--run-id`; give each attempt a unique ID.
 
 ## Outputs
 
+Under
+
 `output/studies/general_scalar_extended/zee_style_general_sensitivity/<run-id>/`
 
-- `summary.json`: per-model status and saved baseline chi-square;
-- `points.csv`: model, T1/T2/T3, gamma, five low-energy observables, chi-square, errors;
-- `<MODEL>/scan.json`: gamma points plus input SHA256 fingerprints and matching caveats;
-- `<MODEL>/solar_sensitivity.png`: solar mixing versus solar mass-squared splitting, if matplotlib is installed.
+- `summary.json`: model status, selected source and saved chi-square, manifest SHA-256;
+- `points.csv`: direction, gamma, five oscillation observables and chi-square;
+- `<model_tag>/scan.json`: every evaluated point, the exact source run (original or continued), SHA-256 source hashes, matching limitations and gamma=1 verification;
+- `<model_tag>/solar_sensitivity.png`: the **T1/T2/T3 trajectories only**, if matplotlib is available.
 
-The five computed observables are `delta_m21_sq_ev2`, `delta_m3l_sq_ev2`,
-`sin2_theta12`, `sin2_theta13`, and `sin2_theta23`. Real-Yukawa inputs
-only; CP-phase sensitivity is not computed.
+A scan requires **all three gamma=1 predictions to reproduce the selected model's saved values**. If this fails, the model is recorded as `Blocked`; that is a diagnostic, not permission to substitute an older fit. Failed noncentral points are saved with errors, not interpolated.
 
-## Interpretation constraints
+### Subsequent NuFIT/JUNO sensitivity ovals
 
-1. **Not the historical reduced scalar potential.** All 14 nonmixed systems
-   use canonical *general* UV and scalar-EFT RGBeta exports and the general
-   Matchete source. B/C use a separate conditional general beta/C5 adapter.
-2. **Not fully sequential general-potential matching.** For nonmixed systems,
-   the saved scalar C5 is one-scale; for B/C it uses a conditional signed
-   quartic map. Full fermion-first higher-dimensional Wilson matching and
-   two-threshold physical certification remain unavailable in these evaluators.
-3. **Not a fresh fit.** It rescans saved fitted inputs, some of which already
-   have chi-square >5.86. The scan records those failed baseline screens.
-4. **Not an isolated RG-only effect.** Each point uses a changed UV input.
-   Changes can come from general matching as well as UV/EFT running. A dedicated
-   running-vs-frozen-parameter comparison would be required to isolate RG effects.
-5. **Method differences across representations.** Do not compare B/C and
-   nonmixed absolute predictions as if they used a single certified matching
-   prescription.
+The numerical driver currently generates trajectories but **does not yet overlay** NuFIT or JUNO confidence regions. Build that separate plotting layer from the *new merged-fit* `points.csv`, not historical reduced-potential sensitivity files. Existing repository target: `configs/nufit_6_1_ic24_no.json` is a diagonal Gaussianised **NuFIT 6.1** approximation, not the official correlated likelihood. Existing `docs/FROZEN_LAMBDA_TARGET_REFERENCE.json` includes a **JUNO six-year projection** for solar parameters; it is a future precision estimate, not a measurement. Distinguish (a) model sample-covariance sensitivity ovals, (b) NuFIT approximate confidence regions, and (c) JUNO projected precision. No official experimental 2D contour is implied by independent 1-sigma inputs.
 
-Development verification: Python syntax compiled and pure Python scaling
-contract tests passed. **No full RG integration or Matchete evaluation was
-possible in the artifact container**, which does not have the user's full local
-repository or installed Wolfram environment. The local preflight and gamma=1
-checks are therefore essential.
+## Validation scope
+
+Pure Python tests verify 21 contracts, including all three scaling directions, nominal tensor invariance, independent scalar boundary invariance, mixed B/C compensation, merged source provenance/path selection, prevention of poor-fit fallback, continuation B/C scalar input reading, and rejection of mismatched fitted Yukawas. They do **not** execute the full RGEs or Wolfram/Matchete in this artifact environment. A real local `--preflight` and gamma=1 scan remain necessary.

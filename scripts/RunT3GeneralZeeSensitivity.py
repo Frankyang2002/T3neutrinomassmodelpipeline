@@ -4,8 +4,10 @@ NONMIXED: canonical full-general UV/EFT1 RGBeta and one-scale Matchete C5
            Yukawa-channel evaluator (RunT3GeneralAll16FromReference).
 B(-1)/C(-1): existing mixed-scalar, conditional one-scale C5 evaluator.
 
-Every gamma point re-evolves UV and scalar EFT1. No legacy/restricted beta or C5
-fallback, new fit, Wolfram matching generation, or GitHub modification.
+Each model defaults to its BEST ACCEPTED FIT selected by the saved 16-model
+merged manifest (original 11 + continued 5). Every gamma point re-evolves
+UV and scalar EFT1. No legacy/restricted beta or C5 fallback, new fit,
+Wolfram matching generation, or GitHub modification.
 This is candidate general-Lagrangian sensitivity, NOT certified sequential
 fermion-first Wilson matching and NOT a fully physical 16-model prediction.
 
@@ -31,6 +33,12 @@ ROOT = Path(__file__).resolve().parents[1]
 FIT_ROOT = ROOT / 'output/studies/general_scalar_extended/thesis_general_all16'
 OUT_ROOT = ROOT / 'output/studies/general_scalar_extended/zee_style_general_sensitivity'
 CANONICAL_ROOT = ROOT / 'output/studies/general_scalar_extended/complete_scalar_symbolic'
+MERGED_FILE = FIT_ROOT / 'continue_general16_v1' / 'merged_all16.json'
+MERGED_FORMAT = 't3-general-fit-continuation-18-yukawas-conditional-v1'
+MERGED_SOURCES = {
+    'OriginalGeneralCampaign': 'thesis16_general_c5_full_v1',
+    'GeneralFitContinuation': 'continue_general16_v1',
+}
 OBS = ('delta_m21_sq_ev2', 'delta_m3l_sq_ev2',
        'sin2_theta12', 'sin2_theta13', 'sin2_theta23')
 DIRECTIONS = ('T1', 'T2', 'T3')
@@ -136,6 +144,91 @@ def params_from(config: dict) -> dict[str,float]:
     return result
 
 
+def fit_selections(models: list[str], fit_run_id: str) -> dict[str,dict]:
+    """Select exactly the saved, model-specific best general fit, not a shared seed.
+
+    The merged file lists one *result.json* source per model; the neighbouring
+    fitted_config.json and general_uv_overrides.json must belong to that SAME
+    source. Never combine continued parameters with original scalar boundaries.
+    """
+    if fit_run_id != 'merged':
+        return {m: {'run_id': fit_run_id, 'source': 'ExplicitCampaign',
+                    'manifest': None} for m in models}
+
+    doc = load(MERGED_FILE)
+    if (doc.get('format') != MERGED_FORMAT or doc.get('accepted_count') != 16 or
+            doc.get('blocked_count') != 0 or not isinstance(doc.get('rows'), list) or
+            len(doc['rows']) != len(MODEL_ORDER)):
+        raise ValueError('Merged general-fit manifest is not the accepted 16-model campaign')
+    indexed = {}
+    for row in doc['rows']:
+        if not isinstance(row, dict):
+            raise ValueError('Malformed merged model row')
+        model = row.get('model')
+        if model not in MODEL_ORDER or model in indexed:
+            raise ValueError('Duplicate or unrecognised model in merged fit manifest: '+str(model))
+        source = row.get('source')
+        if source not in MERGED_SOURCES:
+            raise ValueError('Unrecognised merged fit provenance: '+str(source))
+        run_id = MERGED_SOURCES[source]
+        expected = (Path('output/studies/general_scalar_extended/thesis_general_all16') /
+                    run_id / tag(model) / 'result.json').as_posix()
+        declared = str(row.get('result_path','')).replace('\\','/')
+        if declared != expected:
+            raise ValueError(f'{model}: merged source does not match expected path: {declared}')
+        chi2 = float(row.get('chi2_final',float('nan')))
+        if (row.get('status') != 'ExploratoryAcceptedFit' or
+                not math.isfinite(chi2) or not 0 <= chi2 <= 5.86):
+            raise ValueError(f'{model}: merged source does not pass saved fit screen')
+        indexed[model] = {'run_id': run_id, 'source': source,
+                          'manifest': {'result_path': expected, 'chi2_final': chi2}}
+    if set(indexed) != set(MODEL_ORDER):
+        raise ValueError('Incomplete merged 16-model fit manifest')
+    return {m: indexed[m] for m in models}
+
+
+def _check_fit_yukawas(config: dict, fit: dict) -> None:
+    """Prevent silently using a saved config from a different optimisation."""
+    stored = params_from(config)
+    optimum = fit.get('best_parameters')
+    if not isinstance(optimum, dict) or set(stored) != set(optimum):
+        raise ValueError('Fitted Yukawa config and saved optimiser parameters differ')
+    for name, value in stored.items():
+        if not math.isclose(value,float(optimum[name]),rel_tol=1e-9,abs_tol=1e-13):
+            raise ValueError('Fitted Yukawa mismatch: '+name)
+
+
+def _verify_conditional_matching(fit: dict) -> None:
+    """Both historical and continuation result schemas explicitly deny sequential matching."""
+    names=('full_general_sequential_matching_performed',
+           'full_sequential_general_scalar_matching_performed')
+    statuses=[fit[name] for name in names if name in fit]
+    if not statuses or any(status is not False for status in statuses):
+        raise ValueError('Missing or unexpected general sequential-matching certification')
+
+
+def _bc_input_fractions(fit: dict) -> tuple[float,float]:
+    provenance = fit.get('matching_and_rge_provenance', {})
+    if not isinstance(provenance, dict):
+        raise ValueError('Malformed continued general-fit provenance')
+    q = fit.get('extra_quartic_fraction', provenance.get('quartic_fraction'))
+    mu = fit.get('extra_mixed_scalar_bilinear_fraction', provenance.get('mu2_fraction'))
+    if q is None or mu is None:
+        raise ValueError('Missing B/C saved independent scalar boundary fractions')
+    q, mu = float(q),float(mu)
+    if not (math.isfinite(q) and 0 < q <= 1 and math.isfinite(mu) and 0 <= mu <= .2):
+        raise ValueError('Invalid B/C saved independent scalar boundary fractions')
+    return q,mu
+
+
+def _matrix_from_uv_entries(rows: list) -> np.ndarray:
+    values = np.asarray([[complex(float(z['real']),float(z['imag'])) for z in row]
+                         for row in rows],dtype=complex)
+    if values.shape != (3,3) or not np.isfinite(values).all():
+        raise ValueError('Bad saved general UV Yukawa override')
+    return values
+
+
 def source_paths(model: str, fit_run: str, canonical_run: str) -> dict[str,Path]:
     root = FIT_ROOT / fit_run / tag(model)
     canon = CANONICAL_ROOT / canonical_run / tag(model)
@@ -156,24 +249,56 @@ def source_paths(model: str, fit_run: str, canonical_run: str) -> dict[str,Path]
     return p
 
 
-def sources(model: str, args) -> tuple[dict,dict,dict[str,Path]]:
-    paths = source_paths(model,args.fit_run_id,args.canonical_run_id)
+def sources(model: str, args, selection: dict | None = None) -> tuple[dict,dict,dict[str,Path]]:
+    if selection is None:
+        selection = fit_selections([model],args.fit_run_id)[model]
+    run_id = selection['run_id']
+    paths = source_paths(model,run_id,args.canonical_run_id)
     missing = [str(p) for p in paths.values() if not p.is_file()]
     if missing:
         raise FileNotFoundError('Missing general source(s): '+ '; '.join(missing))
     config, fit = load(paths['config']), load(paths['fit'])
     if fit.get('model') != model or not isinstance(config.get('base_state'),dict):
         raise ValueError('Wrong saved general-fit model/source')
-    if not math.isfinite(float(fit.get('chi2_final', float('nan')))):
+    chi2 = float(fit.get('chi2_final',float('nan')))
+    if not math.isfinite(chi2):
         raise ValueError('General source lacks a finite chi2_final')
+    _check_fit_yukawas(config,fit)
+    _verify_conditional_matching(fit)
+    manifest = selection.get('manifest')
+    if manifest:
+        if not math.isclose(chi2,manifest['chi2_final'],rel_tol=1e-9,abs_tol=1e-13):
+            raise ValueError('Merged chi2 differs from saved fitted result')
+        if selection['source'] == 'GeneralFitContinuation':
+            continuation = config.get('general_fit_continuation',{})
+            provenance = fit.get('matching_and_rge_provenance',{})
+            expected = ('mixed-scalar-conditional-one-scale' if model in MIXED
+                        else 'full-general-matchete-one-scale-channels')
+            if (continuation.get('source_model') != model or
+                    continuation.get('source_campaign') != 'thesis16_general_c5_full_v1' or
+                    continuation.get('source_scalar_boundary_modified') is not False or
+                    provenance.get('modified_scalar_boundary') is not False or
+                    provenance.get('method') != expected or
+                    fit.get('physical_general_c5_certified') is not False):
+                raise ValueError('Continued general-fit physics provenance differs')
+            original_hash = fit.get('original_result_sha256')
+            original_path = FIT_ROOT / 'thesis16_general_c5_full_v1' / tag(model) / 'result.json'
+            if original_hash is not None:
+                if not original_path.is_file() or digest(original_path) != original_hash:
+                    raise ValueError('Continued fit no longer matches original-fit source SHA256')
+                paths['original_fit'] = original_path
+        elif selection['source'] != 'OriginalGeneralCampaign':
+            raise ValueError('Unrecognised general-fit source')
     if model in MIXED:
-        if fit.get('full_sequential_general_scalar_matching_performed') is not False:
-            raise ValueError('Unexpected B/C matching certification/status')
-        for fld in ('extra_quartic_fraction','extra_mixed_scalar_bilinear_fraction'):
-            if fld not in fit:
-                raise ValueError('Missing mixed general-input fraction: '+fld)
+        _bc_input_fractions(fit)
     else:
-        if fit.get('general_rges_used') is not True or fit.get('general_matchete_matching_used') is not True:
+        if selection['source'] == 'GeneralFitContinuation':
+            general_provenance = fit['matching_and_rge_provenance'].get('general_symbolic_provenance',{})
+            if (general_provenance.get('source') != 'canonical_full_general_symbolic' or
+                    general_provenance.get('model') != model or
+                    general_provenance.get('run_id') != args.canonical_run_id):
+                raise ValueError('Continued fit did not use selected canonical general RGEs')
+        elif fit.get('general_rges_used') is not True or fit.get('general_matchete_matching_used') is not True:
             raise ValueError('Input was not generated by general RGE + Matchete matching')
         if load(paths['matching_status']).get('status') != 'Matched':
             raise ValueError('Full-general one-scale C5 is not marked Matched')
@@ -184,6 +309,16 @@ def sources(model: str, args) -> tuple[dict,dict,dict[str,Path]]:
         for k in ('y1','y2','lambdaT3'):
             if k not in overrides:
                 raise ValueError('Missing mandatory general UV override '+k)
+        for name in ('y1','y2'):
+            if not np.allclose(_matrix_from_uv_entries(overrides[name]),
+                               matrix(config['base_state']['ordinary'][name]),
+                               rtol=1e-9,atol=1e-13):
+                raise ValueError('Saved general UV override/Yukawa config mismatch: '+name)
+        lam_override = complex(float(overrides['lambdaT3']['real']),
+                               float(overrides['lambdaT3']['imag']))
+        if not np.isclose(lam_override,scalar(config['base_state']['ordinary']['lambdaT3']),
+                          rtol=1e-12,atol=1e-14):
+            raise ValueError('Saved general UV override/scalar config mismatch')
     return config,fit,paths
 
 
@@ -222,8 +357,7 @@ def make_runner(model: str, config: dict, fit: dict, paths: dict[str,Path], args
     bundle = bc.beta_bundle(model,reference,reference['registry'])
     compiled = bc.compile_source(paths['matching'])
     initial_lambda_abs = abs(scalar(config['base_state']['ordinary']['lambdaT3']))
-    q0 = float(fit['extra_quartic_fraction'])
-    mu0 = float(fit['extra_mixed_scalar_bilinear_fraction'])
+    q0, mu0 = _bc_input_fractions(fit)
     if not (0 < q0 <= 1 and 0 <= mu0 <= 0.2):
         raise ValueError('Invalid saved B/C general scalar boundary fractions')
     def evaluate(shifted: dict, gamma: float):
@@ -282,20 +416,21 @@ def plot_solar(rows: list[dict], output: Path, model: str) -> None:
     plt.close(fig)
 
 
-def baseline_consistency(gamma_one: list[dict], saved: dict, tolerance: float = 1e-3) -> None:
+def baseline_consistency(gamma_one: list[dict], saved: dict, tolerance: float = 1e-5) -> None:
     if len(gamma_one)!=3 or any(r['status']!='Success' for r in gamma_one):
         raise RuntimeError('At least one gamma=1 baseline failed')
     for k in OBS:
         expected = float(saved['prediction'][k])
         for r in gamma_one:
-            if abs(r[k]-expected) > max(1e-8, tolerance*abs(expected)):
+            if abs(r[k]-expected) > max(1e-10, tolerance*abs(expected)):
                 raise RuntimeError(f'gamma=1 {k}: recomputed={r[k]:g}, saved={expected:g}')
 
 
 def main(argv=None) -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--models', default='A_-2',help='Comma-separated, or all')
-    p.add_argument('--fit-run-id',default='thesis16_general_c5_full_v1')
+    p.add_argument('--fit-run-id',default='merged',
+                   help='Default: merged accepted best-fit source per model; alternatively a single campaign run ID')
     p.add_argument('--canonical-run-id',default='full16_general_v1')
     p.add_argument('--run-id', default='zee_general_pilot_v1')
     p.add_argument('--gamma-min',type=float,default=0.99)
@@ -312,12 +447,17 @@ def main(argv=None) -> int:
     try: grid = gamma_grid(args.gamma_min,args.gamma_max,args.points)
     except ValueError as exc: p.error(str(exc))
     selected = [m for m in MODEL_ORDER if m in wanted]
+    try:
+        selections = fit_selections(selected,args.fit_run_id)
+    except (ValueError,FileNotFoundError) as exc:
+        p.error(str(exc))
     if args.preflight:
         failed=0
         for model in selected:
             try:
-                _,fit,paths = sources(model,args)
-                print(f'READY {model}: general fitted input, UV/EFT1 betas, '
+                _,fit,paths = sources(model,args,selections[model])
+                print(f'READY {model}: {selections[model]["source"]} '+
+                      f'({selections[model]["run_id"]}), general fitted input, UV/EFT1 betas, '
                       f'C5 matching, chi2={float(fit["chi2_final"]):.7g}; '
                       f'matching={"conditional B/C" if model in MIXED else "full-general one-scale"}')
             except Exception as exc:
@@ -336,7 +476,7 @@ def main(argv=None) -> int:
         folder.mkdir()
         rows=[]
         try:
-            config,fit,paths=sources(model,args)
+            config,fit,paths=sources(model,args,selections[model])
             evaluator,scheme=make_runner(model,config,fit,paths,args)
             for direction in DIRECTIONS:
                 for gamma in grid:
@@ -362,6 +502,8 @@ def main(argv=None) -> int:
                  'status':status,'baseline_chi2_saved':float(fit['chi2_final']),
                  'baseline_acceptable_chi2_le_5p86':float(fit['chi2_final'])<=5.86,
                  'source_sha256':{name:digest(path) for name,path in paths.items()},
+                 'fit_source': selections[model],
+                 'merged_manifest_sha256':digest(MERGED_FILE) if args.fit_run_id=='merged' else None,
                  'gamma_grid':grid,'points':rows,
                  'nominal_invariant':'lambdaT3 * (y1 y2.T + y2 y1.T) at UV',
                  'extra_scalar_quartics_and_bilinears_held_fixed':True,
@@ -369,13 +511,17 @@ def main(argv=None) -> int:
                  'full_general_sequential_matching_performed':False,
                  'scope':'conditional general UV/EFT1 RG and one-scale C5; not full sequential EFT'})
             summary={'model':model,'status':status,'matching':scheme,'failed_points':failures,
-                     'baseline_chi2_saved':float(fit['chi2_final'])}
+                     'baseline_chi2_saved':float(fit['chi2_final']),
+                     'fit_source':selections[model]}
         except Exception as exc:
             summary={'model':model,'status':'Blocked', 'failed_points':None,
-                     'error':f'{type(exc).__name__}: {exc}'[:1000]}
+                     'error':f'{type(exc).__name__}: {exc}'[:1000],
+                     'fit_source':selections[model]}
             print('BLOCKED',model,summary['error'],flush=True)
         all_rows.extend(rows);summaries.append(summary)
-        save(dest/'summary.json',{'schema':SCHEMA,'models':summaries,'gamma_grid':grid})
+        save(dest/'summary.json',{'schema':SCHEMA,'models':summaries,'gamma_grid':grid,
+                                   'fit_run_id_requested':args.fit_run_id,
+                                   'merged_manifest_sha256':digest(MERGED_FILE) if args.fit_run_id=='merged' else None})
     with (dest/'points.csv').open('w',newline='',encoding='utf-8') as f:
         fields=('model','direction','gamma','status','chi2',*OBS,'error')
         w=csv.DictWriter(f,fieldnames=fields);w.writeheader()

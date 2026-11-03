@@ -1,0 +1,86 @@
+{
+	"format":"t3-b1-live-native-flavour-diagonal-mass-contract-v1",
+	"status":"NativeThreeModelFlavourMassActionAccepted",
+	"models":{
+		"A_p0":{
+			"checks":{
+				"native_action_accepted":true,
+				"exactly_one_MF_mass_monomial":true,
+				"correct_Dirac_or_Majorana_mass_coefficient":true,
+				"MF_has_exactly_one_NFlavor_index":true,
+				"both_fermion_fields_share_MF_flavour_index":true,
+				"other_three_experimental_flags_disabled":true,
+				"flavour_mass_flag_enabled":true
+			},
+			"mass_prefactor":"-1",
+			"mass_term_inputform":"-(Coupling[MF, {Index[d$$1, NFlavor]}, 0]*NCM[Bar[Field[NewFermion, Fermion, {Index[d$$1, T3BSMd2], Index[d$$1, NFlavor]}, {}]], Field[NewFermion, Fermion, {Index[d$$1, T3BSMd2], Index[d$$1, NFlavor]}, {}]])",
+			"mass_coupling_index_inputform":"Index[d$$1, NFlavor]",
+			"source_MF_is_one_symbol_with_index_not_a_general_flavour_matrix":true,
+			"diagonal_mass_eigenvalue_interpretation_native":true,
+			"three_numeric_MF_values_assigned_inside_Matchete":false
+		},
+		"B_m1":{
+			"checks":{
+				"native_action_accepted":true,
+				"exactly_one_MF_mass_monomial":true,
+				"correct_Dirac_or_Majorana_mass_coefficient":true,
+				"MF_has_exactly_one_NFlavor_index":true,
+				"both_fermion_fields_share_MF_flavour_index":true,
+				"other_three_experimental_flags_disabled":true,
+				"flavour_mass_flag_enabled":true
+			},
+			"mass_prefactor":"-1\/2",
+			"mass_term_inputform":"-1\/2*(Coupling[MF, {Index[d$$1, NFlavor]}, 0]*NCM[Transp[Field[NewFermion, Fermion, {Index[d$$1, NFlavor]}, {}]], DiracProduct[GammaCC], Field[NewFermion, Fermion, {Index[d$$1, NFlavor]}, {}]])",
+			"mass_coupling_index_inputform":"Index[d$$1, NFlavor]",
+			"source_MF_is_one_symbol_with_index_not_a_general_flavour_matrix":true,
+			"diagonal_mass_eigenvalue_interpretation_native":true,
+			"three_numeric_MF_values_assigned_inside_Matchete":false
+		},
+		"C_m1":{
+			"checks":{
+				"native_action_accepted":true,
+				"exactly_one_MF_mass_monomial":true,
+				"correct_Dirac_or_Majorana_mass_coefficient":true,
+				"MF_has_exactly_one_NFlavor_index":true,
+				"both_fermion_fields_share_MF_flavour_index":true,
+				"other_three_experimental_flags_disabled":true,
+				"flavour_mass_flag_enabled":true
+			},
+			"mass_prefactor":"-1\/2",
+			"mass_term_inputform":"-1\/2*(Coupling[MF, {Index[d$$1, NFlavor]}, 0]*NCM[Transp[Field[NewFermion, Fermion, {Index[d$$1, T3BSMd3], Index[d$$1, NFlavor]}, {}]], DiracProduct[GammaCC], Field[NewFermion, Fermion, {Index[d$$1, T3BSMd3], Index[d$$1, NFlavor]}, {}]])",
+			"mass_coupling_index_inputform":"Index[d$$1, NFlavor]",
+			"source_MF_is_one_symbol_with_index_not_a_general_flavour_matrix":true,
+			"diagonal_mass_eigenvalue_interpretation_native":true,
+			"three_numeric_MF_values_assigned_inside_Matchete":false
+		}
+	},
+	"source_sha256":{
+		"Lagrangian\/model\/T3ModelCatalog.wl":"3ea4006b38617d1c603c564b209a0e0cedb324da127214fe434e18fd9953febc",
+		"Lagrangian\/model\/LagrangianBuilder.wl":"dbe102874c84c0ae8013eeceb78571e0ae3d44f35e95cf9c8d1e0ba952f32e8b",
+		"Lagrangian\/model\/T3Fields.wl":"2f27f080ab02d1225aab7e5928aba19f238ec6d5dcdd41b72ee2d2c7298e24ab",
+		"Lagrangian\/model\/SU2Invariants.wl":"78e83bd1730555d15a47f8f2b3343635734b3f3387afb243623b89410faa6c1a",
+		"Lagrangian\/interactions\/T3Topology.wl":"e6e24c4a673bddff980885f8354b388ceaa19e53c8b2faa79ba3289a87de1511",
+		"Lagrangian\/interactions\/ScalarPotential.wl":"c863e5d69bf665e65c7e164aee5ceafe01b8aefc75500099da5847db7d0cfa97"
+	},
+	"local_git_head":"UNAVAILABLE",
+	"experimental_flags_prior":{
+		"T3_EXPERIMENTAL_GENERAL_FERMIONS":"0",
+		"T3_EXPERIMENTAL_GENERAL_QUADRATICS":"0",
+		"T3_EXPERIMENTAL_GENERAL_QUARTICS":"0",
+		"T3_EXPERIMENTAL_FLAVOR_MASSES":"0"
+	},
+	"experimental_flags_effective":{
+		"T3_EXPERIMENTAL_GENERAL_FERMIONS":"0",
+		"T3_EXPERIMENTAL_GENERAL_QUADRATICS":"0",
+		"T3_EXPERIMENTAL_GENERAL_QUARTICS":"0",
+		"T3_EXPERIMENTAL_FLAVOR_MASSES":"1"
+	},
+	"general_offdiagonal_MF_matrix_certified":false,
+	"three_numeric_MF_values_assigned_inside_Matchete":false,
+	"benchmark_MF_diagonal_extension_supported_by_native_action_form":true,
+	"installed_GammaCC_numerical_phase_measured":false,
+	"absolute_cross_package_spinor_phase_certified":false,
+	"matching_or_running_performed":false,
+	"physical_source_certified":false,
+	"certified_models":0
+}

@@ -170,9 +170,116 @@ def test_dynamic_tree_contracts_all_flavour_axes_without_dropping_terms(monkeypa
          'ordered_flavour_coefficient_gev_inv':encode(m)}]}
     by,indices,meta=_dense_operator([op],[{'source_index':7}],model='A_-4')
     assert indices==(7,)
-    assert by.shape==(1,2,3,2,3,8,8)
+    assert by.shape==(1,3,3,2,2,8,8)
     # Matchete lepton axes [1,0] map input flavour [p,q]=[1,2] -> [2,1].
-    assert by[0,0,1,1,0,0,1]==0.5j
-    assert by[0,1,0,0,1,1,0]==0.5j
+    assert by[0,1,0,0,1,0,1]==0.5j
+    assert by[0,0,1,1,0,1,0]==0.5j
     assert np.count_nonzero(by)==4
+    np.testing.assert_allclose(by[0],by[0].transpose(1,0,3,2,4,5))
+    np.testing.assert_allclose(by[0],by[0].swapaxes(4,5))
     assert meta['operator_symmetrisation'].startswith('exact')
+
+
+def test_mixed_reference_flavour_lift_uses_matcher_axis_order(monkeypatch):
+    """Regression for B/C: reference tensors have (flav,flav,SU2,SU2,S,S)."""
+    import types
+    from Numerical.running import GeneralT3DynamicFermionWilson as dyn
+
+    fake_bridge = types.ModuleType('Numerical.joint_scalar_matching.fermion_boundary_bridge')
+
+    class SourceBoundary:
+        def __init__(self, model, path, hash, mu_f_gev, raw, by_source,
+                     source_indices, labels, normalization_certified, source_status):
+            self.model = model
+            self.path = path
+            self.hash = hash
+            self.mu_f_gev = mu_f_gev
+            self.raw = raw
+            self.by_source = by_source
+            self.source_indices = source_indices
+            self.labels = labels
+            self.normalization_certified = normalization_certified
+            self.source_status = source_status
+
+    fake_bridge.SourceBoundary = SourceBoundary
+    monkeypatch.setitem(sys.modules, 'Numerical.joint_scalar_matching.fermion_boundary_bridge', fake_bridge)
+    monkeypatch.setattr(dyn, '_heavy_bilinear', lambda state: state.bilinear)
+
+    reference = np.array([[1., 2j, 0.], [2j, 3., 0.], [0., 0., 4.]], complex)
+    current = np.array([[3., 1j, 0.], [1j, 4., 0.], [0., 0., 5.]], complex)
+    geometry = np.zeros((2, 2, 8, 8), complex)
+    geometry[0, 0, 0, 0] = 1.2
+    geometry[1, 1, 1, 1] = -0.3
+    ref_tensor = np.einsum('pq,ijab->pqijab', reference, geometry)
+    old = SourceBoundary('B_-1', Path('reference.json'), 'reference_hash', 1e5,
+                         ref_tensor, np.stack([ref_tensor]), (7,),
+                         tuple('S' for _ in range(8)), False, 'reference')
+    result, details = dyn.mixed_reference_boundary(
+        'B_-1', old, SimpleNamespace(bilinear=reference),
+        SimpleNamespace(bilinear=current))
+    expected = np.einsum('pq,ijab->pqijab', current, geometry)
+    assert result.raw.shape == (3, 3, 2, 2, 8, 8)
+    np.testing.assert_allclose(result.raw, expected, rtol=1e-12, atol=1e-14)
+    np.testing.assert_allclose(result.raw, result.raw.transpose(1, 0, 3, 2, 4, 5))
+    np.testing.assert_allclose(result.raw, result.raw.swapaxes(4, 5))
+    assert details['reference_bilinear_reconstruction_max_relative_residual'] < 1e-12
+
+
+def test_dynamic_tensor_is_accepted_by_scalar_response_interface(monkeypatch):
+    """The exact array layout must produce (3,3,2,2,4,4) after HHSS contraction."""
+    import types
+    from Numerical.running.GeneralT3SequentialLeadingLog import TensorBundle, response
+    from Numerical.running import GeneralT3DynamicFermionWilson as dyn
+    from collections import defaultdict
+    polynomial = types.ModuleType('Numerical.running.GeneralT3WilsonPolynomialBatch')
+
+    def orbit(k):
+        i, p, j, q, a, b = k
+        return sorted({(i, p, j, q, a, b), (j, q, i, p, a, b),
+                       (i, p, j, q, b, a), (j, q, i, p, b, a)})
+
+    def symmetrise(raw):
+        sums = defaultdict(complex)
+        for key, value in raw.items():
+            sums[min(orbit(key))] += value
+        return {key: z / len(orbit(key)) for key, z in sums.items()}, dict(sums)
+
+    polynomial.source_term_alignment = lambda *args: {
+        'flavour_axis_permutation_for_lepton_order': [0, 1]}
+    polynomial.canonical_polynomial = symmetrise
+    polynomial.distinct_orbit = orbit
+    basis = types.ModuleType('Numerical.running.GeneralT3OrderedTensor')
+    basis.scalar_basis = lambda model: SimpleNamespace(total_dimension=12)
+    monkeypatch.setitem(sys.modules, 'Numerical.running.GeneralT3WilsonPolynomialBatch', polynomial)
+    monkeypatch.setitem(sys.modules, 'Numerical.running.GeneralT3OrderedTensor', basis)
+
+    m = np.eye(3, dtype=complex) * 1e-5
+    op = {'source_index': 3, 'components': [
+        {'lepton_su2': [1, 1], 'scalar_real': [5, 5],
+         'ordered_flavour_coefficient_gev_inv': encode(m)}]}
+    by_source, indexes, _ = dyn._dense_operator([op], [{'source_index': 3}], 'A_-4')
+    raw = by_source.sum(axis=0)
+    fake = SimpleNamespace(model='A_-4', raw=raw, by_source=by_source,
+                           source_indices=indexes, mu_f_gev=1e5)
+    quartic = np.zeros((4, 4, 8, 8))
+    quartic[0, 0, 0, 0] = 0.5
+    bundle = TensorBundle('A_-4', np.eye(8) * 1e6, quartic,
+                          quartic[None, ...], ('quartic',), {})
+    large = types.ModuleType('Numerical.joint_scalar_matching.large_batch')
+
+    def scalar_matcher(C, q, mass2, mu_f, mu_s):
+        assert C.shape == (3, 3, 2, 2, 8, 8)
+        amp = np.einsum('fgijab,ABab->fgijAB', C, q)
+        assert amp.shape == (3, 3, 2, 2, 4, 4)
+        projected = amp[:, :, 0, 0, 0, 0]
+        c5 = 0.5 * (projected + projected.T)
+        return {'beta': c5, 'running': c5 * 0.1,
+                'bubble': c5 * 0.2, 'sum': c5 * 0.3,
+                'beta_residual': 0., 'bubble_residual': 0.}
+
+    large._response = scalar_matcher
+    monkeypatch.setitem(sys.modules, 'Numerical.joint_scalar_matching.large_batch', large)
+    result = response(fake, bundle, mu_f=1e5, mu_s=1e3, spinor_factor=1.)
+    assert result['model'] == 'A_-4'
+    assert len(result['per_channel']) == 2  # quartic + fermion-tree source
+    assert decode(result['c5_eft1_leading_log']).shape == (3, 3)

@@ -63,11 +63,18 @@ def _dense_operator(operators: list[dict], rows: list[dict], model: str
                     key=(i,flav[perm[0]],j,flav[perm[1]],a,b)
                     ordered[key]=ordered.get(key,0j)+x
         sym,_=canonical_polynomial(ordered)
-        C=np.zeros((2,3,2,3,n,n),complex)
+        # The joint-scalar matcher uses C[flavour_p, flavour_q,
+        # lepton_SU2_i, lepton_SU2_j, scalar_a, scalar_b], NOT the
+        # interleaved ordering of the Matchete polynomial keys.
+        C=np.zeros((3,3,2,2,n,n),complex)
         for key,coeff in sym.items():
             for i,p,j,q,a,b in distinct_orbit(key):
-                C[i-1,p-1,j-1,q-1,a-5,b-5]=complex(coeff)
+                C[p-1,q-1,i-1,j-1,a-5,b-5]=complex(coeff)
         require(np.isfinite(C).all(),'nonfinite normalized F-tree source tensor')
+        require(np.allclose(C,C.transpose(1,0,3,2,4,5),rtol=1e-12,atol=1e-30),
+                'fermion-threshold tensor violates combined lepton exchange')
+        require(np.allclose(C,C.swapaxes(4,5),rtol=1e-12,atol=1e-30),
+                'fermion-threshold tensor violates scalar exchange')
         tensors.append(C)
         indices.append(idx)
         audits.append({'source_index':idx,'raw_ordered_components':len(ordered),
@@ -163,17 +170,21 @@ def mixed_reference_boundary(model: str, ref_source: Any,
     require(den>1e-50 and np.isfinite(den),'reference heavy Yukawa bilinear vanishes')
     tensors=[]; max_res=0.
     for tensor in ref_source.by_source:
-        # tensor[i,p,j,q,a,b] -> component[i,j,a,b,p,q]
-        axes=np.transpose(tensor,(0,2,4,5,1,3))
+        # The release already stores tensor[p,q,i,j,a,b], with generation
+        # axes first. Move SU(2)/scalar indices in front of generation axes
+        # only for the reference-flavour least-squares contraction.
+        require(tensor.ndim==6 and tensor.shape[:4]==(3,3,2,2),
+                'mixed source tensor axes must be (flavour,flavour,SU2,SU2,scalar,scalar)')
+        axes=np.transpose(tensor,(2,3,4,5,0,1))  # (i,j,a,b,p,q)
         geom=np.einsum('ijabpq,pq->ijab',axes,A.conj(),optimize=True)/den
         estimated=np.einsum('ijab,pq->ijabpq',geom,A,optimize=True)
         den_rel=max(float(np.linalg.norm(axes)),1e-40)
         max_res=max(max_res,float(np.linalg.norm(axes-estimated)/den_rel))
-        updated=np.einsum('ijab,pq->ipjqab',geom,B,optimize=True)
-        # Preserve exact polynomial symmetry at the boundary.
-        updated=(updated+updated.transpose(2,3,0,1,4,5)
-                 +updated.transpose(0,1,2,3,5,4)
-                 +updated.transpose(2,3,0,1,5,4))/4
+        updated=np.einsum('ijab,pq->pqijab',geom,B,optimize=True)
+        # Preserve exact polynomial symmetry in the matcher ordering.
+        updated=(updated+updated.transpose(1,0,3,2,4,5)
+                 +updated.swapaxes(4,5)
+                 +updated.transpose(1,0,3,2,5,4))/4
         tensors.append(updated)
     by=np.stack(tensors)
     raw=by.sum(axis=0)

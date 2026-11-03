@@ -524,7 +524,7 @@ def main(argv: list[str] | None = None) -> int:
     dest = OUTPUT / args.run_id
     settings_path = dest / 'settings.json'
     signature = {'format': FORMAT, 'source_input_sha256': {m: d['hashes'] for m, d in source_data.items()},
-                 'source_models': SOURCE_MODELS, 'models': selected,
+                 'source_models': list(SOURCE_MODELS), 'models': list(selected),
                  'canonical_run_id': args.canonical_run_id,
                  'quartic_fraction': args.quartic_fraction,
                  'mu2_fraction': args.mu2_fraction,

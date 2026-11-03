@@ -8,8 +8,8 @@ Additional Yukawas: exact source y2Conj copied for D(-2),
 otherwise 0.05 * shared y1/y2 where that extra channel exists.
 The exact-source and assumed-fraction cases are not equivalent controls.
 
-Completed conditional evaluations: 0/32.
-Blocked: 0; preflight-ready: 32.
+Completed conditional evaluations: 32/32.
+Blocked: 0; preflight-ready: 0.
 
 summary.csv: C5 norm, source-relative residual, masses and oscillation observables.
 six_pair_comparison.csv: A(-2)/D(-2), B(-3)/C(-3), B(-1)/C(-1) under both Yukawa benchmarks.

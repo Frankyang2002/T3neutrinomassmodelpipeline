@@ -272,3 +272,95 @@ def test_certified_source_is_plotted_only_in_original_yellow_stage(tmp_path, mon
     assert '"eft1_delta_c5_fnorm"' in page and '"c5_fnorm"' in page
     assert page.count('"eft1_delta_c5_ee_abs"')>=1
     assert 'if(META[q]&&META[q].eft1_only)' in page
+
+
+def _proxy_centre(k: np.ndarray) -> dict:
+    return {
+        'model':'A_-2','status':'Success',
+        'numerical_details':{
+            'matching_scope':'full-general Matchete quadratic Yukawa channels, one-scale',
+            'c5_at_scalar_threshold':{
+                'real':np.real(k).tolist(),'imag':np.imag(k).tolist(),
+            }
+        },
+    }
+
+
+def _boundary_smeft(k: np.ndarray) -> dict:
+    data={'c5_fnorm':[float(np.linalg.norm(k))]}
+    for n,(i,j) in mod._C5_INDEPENDENT.items():
+        data['c5_'+n+'_abs']=[float(abs(k[i,j]))]
+        data['c5_'+n+'_real']=[float(k[i,j].real)]
+        data['c5_'+n+'_imag']=[float(k[i,j].imag)]
+    return {'series':data}
+
+
+def test_eft1_visual_proxy_logarithm_and_joins_saved_boundary():
+    k=np.array([[1e-15, 2e-16+1e-16j, 0],
+                [2e-16+1e-16j,3e-15,0],
+                [0,0,5e-15]], dtype=complex)
+    proxy=mod.visual_eft1_c5_proxy(_proxy_centre(k),[1e5,1e4,1e3],_boundary_smeft(k))
+    assert proxy['physical_eft1_c5'] is False
+    assert proxy['eft1_beta_function_solved'] is False
+    assert proxy['status']=='IllustrativeInterpolation_NotEFT1RGESolution'
+    assert np.allclose(proxy['series']['c5_ee_real'],[0,5e-16,1e-15],rtol=1e-12,atol=1e-29)
+    assert np.allclose(proxy['series']['c5_emu_imag'],[0,5e-17,1e-16],rtol=1e-12,atol=1e-29)
+    assert np.allclose(proxy['series']['c5_fnorm'],np.linalg.norm(k)*np.array([0,.5,1]),rtol=1e-12,atol=1e-29)
+    assert set(proxy['series'])==set(mod.SMEFT_C5)
+
+
+def test_eft1_visual_proxy_rejects_discontinuous_c5_boundary():
+    k=np.eye(3,dtype=complex)*1e-15
+    bad=_boundary_smeft(k)
+    bad['series']['c5_fnorm'][0]*=1.5
+    with pytest.raises(ValueError,match='threshold mismatch'):
+        mod.visual_eft1_c5_proxy(_proxy_centre(k),[1e5,1e4,1e3],bad)
+
+
+def test_eft1_visual_proxy_is_in_original_yellow_dashboard(tmp_path,monkeypatch):
+    run='fixture'; folder=tmp_path/run; model_dir=folder/'A_m2';model_dir.mkdir(parents=True)
+    (folder/'manifest.json').write_text(json.dumps({'interactive_rge_generated':True}))
+    k=np.zeros((3,3),dtype=complex); k[0,0]=1e-15
+    (model_dir/'centre.json').write_text(json.dumps(_proxy_centre(k)))
+    stages=make_stages()
+    (model_dir/'rge_trajectories.json').write_text(json.dumps({
+        'format':mod.UV_EFT_FORMAT,'status':'Success','model':'A_-2',
+        'uv':stages['uv'],'eft1':stages['eft1'],
+    }))
+    template=tmp_path/'template.html';template.write_text(sample_template())
+    def fake_smeft(centre,points):
+        vals={n:[0.,0.,0.] for n in mod.SMEFT_KEYS}
+        vals.update(stages['smeft']['series'])
+        vals['c5_ee_abs']=[1e-15,.96e-15,.9e-15]
+        vals['c5_ee_real']=[1e-15,.96e-15,.9e-15]
+        return {'model':'A_-2','format':mod.SMEFT_FORMAT,'status':'Success',
+                'mu_gev':stages['smeft']['mu_gev'],'series':vals,
+                'relative_endpoint_c5_residual':0.,'nfev':7}
+    monkeypatch.setattr(mod,'sample_smeft',fake_smeft)
+    summary=mod.run(run,3,root=tmp_path,template_path=template,
+                    certified_root=tmp_path/'nonexistent_certified',display_proxy=True)
+    assert summary['eft1_c5_visual_proxy_model_count']==1
+    assert summary['eft1_certified_source_count']==0
+    proxy=json.loads((model_dir/'eft1_c5_visual_proxy.json').read_text())
+    assert proxy['mu_gev']==[1e5,1e4,1e3]
+    assert proxy['series']['c5_fnorm'][0]==0
+    ready=json.loads((folder/'eft1_c5_readiness.json').read_text())
+    assert ready['models'][0]['status']=='VisualProxyPlotted_NoCertifiedBoundary'
+    page=(folder/'interactive_RGE.html').read_text()
+    assert 'ILLUSTRATIVE ONLY' in page
+    assert 'C5 — yellow DISPLAY PROXY / green SMEFT solver' in page
+    assert '"visual_proxy":true' in page
+    assert '"c5_fnorm"' in page
+    assert '"eft1_c5_visual_proxy":true' in page
+    page_data=json.loads(page.split('const DATA=',1)[1].split(';',1)[0])
+    curve=page_data['quantities']['c5_fnorm']['A(-2)']
+    assert curve['x']==[1e5,1e4,1e3,5e2,1e2]
+    assert np.allclose(curve['y'],[0,5e-16,1e-15,.96e-15,.9e-15],rtol=1e-12,atol=1e-27)
+    assert '#fff1cf' in page and '#e5f5e9' in page
+
+
+def test_eft1_visual_proxy_disabled_by_default():
+    stages=make_stages()
+    data,meta=mod._assemble_curves({'A_-2':stages})
+    assert not data['eft1_c5_visual_proxy']
+    assert not meta['c5_fnorm']['visual_proxy']

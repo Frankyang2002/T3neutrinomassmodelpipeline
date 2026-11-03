@@ -4,6 +4,8 @@ Reads the installed Numerical/plotting/templates/T3OptimisedReferenceRGE.html
 (the original three-colour UV/EFT1/SMEFT presentation) unchanged; supplies
 validated existing UV/EFT1 solver samples and new SMEFT ODE samples.
 
+Optional VISUAL-ONLY EFT1 C5 proxy uses the actual saved model C5(MS) as its
+endpoint and a logarithmic interpolation, NOT an EFT1 beta-function solution.
 EFT1 leading-log source mixing is available only with an EXTERNALLY CERTIFIED
 master-Weyl boundary. The repository's existing seven-term EFT1 source RGE is
 then used unchanged. Synthetic/legacy ordered tensors are never plotted as
@@ -28,6 +30,7 @@ DEFAULT_RUN = 'shared_A2_general16_gamma08_12_v1'
 CERTIFIED_ROOT = ROOT / 'output/general_observable/lo_eft1_mixing/certified_boundaries'
 EFT1_SOURCE_FORMAT = 't3-eft1-one-loop-c5-source-v1'
 EFT1_PHYSICAL_STATUS = 'CertifiedLeadingOneLoopLog_RequiresFiniteJointScalarMatching'
+EFT1_VISUAL_FORMAT = 't3-eft1-c5-endpoint-anchored-visual-proxy-v1'
 # Source-defined independent gates, reported even before a boundary file exists.
 EFT1_CERTIFICATE_GATES = (
     'matchete_gamma_cc_to_weyl_factor_and_sign',
@@ -50,6 +53,7 @@ OBSOLETE_LOCAL_FILES = (
     'README_T3_THREE_STAGE_RGE.md',
     'README_T3_ORIGINAL_RGE.md',
     'README_T3_ORIGINAL_COLOURED_RGE.md',
+    'README_T3_EFT1_C5_RUNNING.md',
 )
 
 SMEFT_KEYS = {
@@ -223,6 +227,67 @@ def sample_smeft(centre: dict, n: int, *, rtol: float = 1e-8, atol: float = 1e-1
         ]
     }
 
+
+
+
+def visual_eft1_c5_proxy(centre: dict, mu: list[float], smeft: dict) -> dict:
+    """Illustrative log-interpolation, NOT EFT1 physical/Wilson RGE evolution.
+
+    K_proxy(mu) = K_saved(MS) * ln(MF/mu)/ln(MF/MS), MF=1e5, MS=1e3 GeV.
+    Anchors the REAL saved one-scale C5(MS) at the lower end and chooses
+    zero at MF solely to make a visible numerical display. The zero is NOT a
+    UV/EFT1 matching result. No synthetic/external C5 values are imported.
+    """
+    if centre.get('status') != 'Success' or not isinstance(centre.get('numerical_details'), dict):
+        raise ValueError('Cannot construct display proxy without successful saved model centre')
+    detail = centre['numerical_details']
+    if detail.get('matching_scope') != 'full-general Matchete quadratic Yukawa channels, one-scale':
+        raise ValueError('Display proxy requires the nonmixed full-general matched C5 boundary')
+    k_ms = matrix(detail['c5_at_scalar_threshold'])
+    asym = np.linalg.norm(k_ms-k_ms.T) / max(np.linalg.norm(k_ms),1e-90)
+    if asym > 1e-7:
+        raise ValueError('Saved threshold C5 is not flavour symmetric')
+    k_ms = 0.5 * (k_ms + k_ms.T)
+    x = np.asarray(mu, dtype=float)
+    if x.ndim != 1 or x.size < 3 or not np.isfinite(x).all() or np.any(x <= 0):
+        raise ValueError('Invalid EFT1 scale samples')
+    if not np.isclose(x[0], 1e5, rtol=1e-9) or not np.isclose(x[-1], 1e3, rtol=1e-9):
+        raise ValueError('Visual EFT1 proxy requires the saved 1e5 -> 1e3 GeV interval')
+    if np.any(x[:-1] <= x[1:]):
+        raise ValueError('Visual EFT1 scales must descend')
+    w = np.log(1e5/x) / math.log(1e5/1e3)
+    w[0], w[-1] = 0.0, 1.0
+    if np.any(w < -1e-8) or np.any(w > 1+1e-8):
+        raise ValueError('EFT1 proxy interpolation escaped [0,1]')
+    mats = w[:,None,None] * k_ms[None,:,:]
+    series = {'c5_fnorm': np.linalg.norm(mats, axis=(1,2)).astype(float).tolist()}
+    for name, (i,j) in _C5_INDEPENDENT.items():
+        vals=mats[:,i,j]
+        series['c5_'+name+'_abs'] = np.abs(vals).astype(float).tolist()
+        series['c5_'+name+'_real'] = vals.real.astype(float).tolist()
+        series['c5_'+name+'_imag'] = vals.imag.astype(float).tolist()
+    # Every proxy channel must join the ACTUAL SMEFT solver boundary; don't
+    # silently draw a discontinuity or invent a threshold matching factor.
+    for key in SMEFT_C5:
+        green = smeft.get('series', {}).get(key)
+        if not isinstance(green, list) or not green:
+            raise ValueError('Missing SMEFT C5 sample for proxy continuity: '+key)
+        if not math.isclose(series[key][-1], float(green[0]), rel_tol=5e-6, abs_tol=1e-25):
+            raise ValueError('Proxy/Smeft C5 threshold mismatch: '+key)
+    return {
+        'format': EFT1_VISUAL_FORMAT,
+        'model': centre['model'],
+        'status': 'IllustrativeInterpolation_NotEFT1RGESolution',
+        'mu_gev': x.tolist(), 'series': series,
+        'c5_muS_source': 'centre.json numerical_details.c5_at_scalar_threshold',
+        'formula': 'C5_proxy(mu)=C5_matched(muS)*ln(muF/mu)/ln(muF/muS)',
+        'muF_gev': 1e5, 'muS_gev': 1e3,
+        'chosen_proxy_C5_muF_gev_inv': 'zero (display convention, NOT matched Wilson boundary)',
+        'physical_eft1_c5': False,
+        'eft1_beta_function_solved': False,
+        'matched_to_smeft_at_muS': True,
+        'do_not_interpret_as_neutrino_mass_prediction': True,
+    }
 
 
 # Original template source (not the later shared-A2 custom-canvas renderer).
@@ -441,9 +506,14 @@ def _assemble_curves(trajectories: dict[str, dict]) -> tuple[dict, dict]:
             if curve:
                 quantities.setdefault(q, {})[model] = curve
                 title, unit = RUNNING_KEYS.get(q, EFT1_SOURCE_KEYS.get(q, (SMEFT_KEYS.get(q, q), '')))
-                labels[q] = {'label': title, 'unit': unit, 'block': 'saved_ode',
+                proxy = (q in SMEFT_C5 and q in stages.get('eft1', {}).get('series', {}))
+                if proxy:
+                    title += ' — yellow: DISPLAY PROXY; green: SMEFT ODE'
+                labels[q] = {'label': title, 'unit': unit,
+                             'block': 'eft1_visual_proxy_plus_smeft_ode' if proxy else 'saved_ode',
                              'weinberg': q.startswith('c5_'),
-                             'smeft_only': q in SMEFT_ONLY,
+                             'visual_proxy': proxy,
+                             'smeft_only': q in SMEFT_ONLY and not proxy,
                              'eft1_only': q in EFT1_SOURCE_KEYS}
     keys = set(quantities)
     if not keys.intersection(SMEFT_C5):
@@ -458,6 +528,7 @@ def _assemble_curves(trajectories: dict[str, dict]) -> tuple[dict, dict]:
         'continuation_methods': {}, 'continuation_issues': {},
         'eft1_wilson_c5_running_certified': False,
         'eft1_leading_log_source_only': bool(set(quantities) & set(EFT1_SOURCE_KEYS)),
+        'eft1_c5_visual_proxy': any(v.get('visual_proxy') for v in labels.values()),
         'smeft_boundary_one_scale_conditional': True,
     }
     labels['llss_kernel'] = {
@@ -479,7 +550,10 @@ def _options(meta: dict) -> str:
         return '<optgroup label="' + html.escape(name, quote=True) + '">' + options + '</optgroup>' if options else ''
     return (
         group('EFT1 C5 — certified one-loop source ONLY', list(EFT1_SOURCE_KEYS))
-        + group('SMEFT C5 — actual ODE samples', SMEFT_C5)
+        + group('C5 — yellow DISPLAY PROXY / green SMEFT solver',
+                [k for k in SMEFT_C5 if meta.get(k,{}).get('visual_proxy')])
+        + group('SMEFT C5 — actual ODE samples',
+                [k for k in SMEFT_C5 if not meta.get(k,{}).get('visual_proxy')])
         + group('SMEFT neutrino masses and mixing', SMEFT_NEUTRINO)
         + group('Renormalisable couplings — UV / EFT1 / SMEFT', list(RUNNING_KEYS))
         + group('Separate unjoined threshold stages', [k for k in meta if '__' in k])
@@ -517,7 +591,7 @@ def actual_original_template_page(template: str, data: dict, meta: dict,
         template,
         'Numerical integration direction: UV → IR. Saved benchmark trajectories; no matching or RGE recalculation.',
         'UV/EFT1 from saved general-RGBeta trajectories; SMEFT integrated using the existing SM + Weinberg ODE. '
-        'Conditional one-scale C5 matching. Physical EFT1 LLSS Wilson running is NOT available.',
+        'Conditional one-scale C5 matching. Yellow C5 (when present) is an ILLUSTRATIVE endpoint-anchored log INTERPOLATION, NOT an EFT1 RGE. Physical EFT1 LLSS Wilson running is NOT available.',
         'header provenance')
     template = _replace_one(
         template,
@@ -529,22 +603,24 @@ def actual_original_template_page(template: str, data: dict, meta: dict,
     template = _replace_one(
         template,
         'const showParts=weinberg&&showComponents.checked;',
-        'const showParts=weinberg&&!(META[q]&&META[q].smeft_only)&&showComponents.checked;',
+        'const showParts=weinberg&&!(META[q]&&(META[q].smeft_only||META[q].visual_proxy))&&showComponents.checked;',
         'unavailable hard/direct components')
     template = _replace_one(
         template,
         "document.getElementById('weinbergLegend').hidden=!weinberg;",
-        "document.getElementById('weinbergLegend').hidden=!weinberg||(META[q]&&META[q].smeft_only);",
+        "document.getElementById('weinbergLegend').hidden=!weinberg||(META[q]&&(META[q].smeft_only||META[q].visual_proxy));",
         'legend for SMEFT-only')
     template = _replace_one(
         template,
         'componentControl.hidden=!weinberg;',
-        'componentControl.hidden=!weinberg||(META[q]&&META[q].smeft_only);',
+        'componentControl.hidden=!weinberg||(META[q]&&(META[q].smeft_only||META[q].visual_proxy));',
         'component selector for SMEFT-only')
     template = _replace_one(
         template,
         '}else if(weinberg){',
-        "}else if(weinberg&&META[q]&&META[q].smeft_only){\n"
+        "}else if(weinberg&&META[q]&&META[q].visual_proxy){\n"
+        "  caption.textContent='ILLUSTRATIVE ONLY: yellow EFT1 C5 is logarithmic interpolation from a chosen zero at MF=10^5 GeV to the SAVED one-scale C5(MS) at MS=10^3 GeV. This is NOT an EFT1 Wilson RGE solution or physical matched C5 above MS. Green: numerically integrated SMEFT C5. Do NOT use the yellow part as a physics prediction.';\n"
+        '}else if(weinberg&&META[q]&&META[q].smeft_only){\n'
         "  caption.textContent='Green region: genuinely integrated SMEFT C5(μ), starting from the saved conditional one-scale scalar-threshold boundary. Yellow region: physical EFT1 C5 / LLSS Wilson evolution has NOT been computed; no continuation is shown.';\n"
         '}else if(weinberg){',
         'honest C5 caption')
@@ -580,7 +656,7 @@ def _save_smeft_csv(path: Path, payload: dict) -> None:
 
 def run(run_id: str = DEFAULT_RUN, points: int = 41, *, root: Path = STUDY_ROOT,
         template_path: Path = TEMPLATE, certified_root: Path = CERTIFIED_ROOT,
-        clean_obsolete: bool = False) -> dict:
+        clean_obsolete: bool = False, display_proxy: bool = False) -> dict:
     """Regenerate ORIGINAL styled interactive_RGE.html, discarding wrong separate view."""
     import hashlib
     import re
@@ -665,6 +741,16 @@ def run(run_id: str = DEFAULT_RUN, points: int = 41, *, root: Path = STUDY_ROOT,
             if not math.isclose(mu[0],1e3,rel_tol=1e-9) or not math.isclose(mu[-1],1e2,rel_tol=1e-9):
                 raise ValueError('SMEFT sample endpoints not at 1e3 and 1e2 GeV')
             stages['smeft'] = {'mu_gev':mu,'series':series}
+            if display_proxy:
+                proxy = visual_eft1_c5_proxy(centre, stages['eft1']['mu_gev'], smeft)
+                stages['eft1']['series'].update(proxy['series'])
+                save(model_dir / 'eft1_c5_visual_proxy.json', proxy)
+                for row in eft1_readiness:
+                    if row['model']==tag:
+                        row['visual_proxy_plotted'] = True
+                        if row['status']=='MissingCertifiedBoundary':
+                            row['status']='VisualProxyPlotted_NoCertifiedBoundary'
+                        break
             if eft1_stage is not None:
                 stages['eft1_c5'] = eft1_stage
             models[raw['model']] = stages
@@ -707,7 +793,8 @@ def run(run_id: str = DEFAULT_RUN, points: int = 41, *, root: Path = STUDY_ROOT,
         'synthetic_or_legacy_source_accepted':False,
         'full_LLSS_wilson_running_computed':False,
         'finite_joint_scalar_matching_computed':False,
-        'notes':'Only certified fixed-order Delta C5 from LLSS-to-LLHH mixing is eligible for the original yellow-region plot.'})
+        'notes':('Visual-proxy mode draws an explicitly unphysical, endpoint-anchored C5 interpolation in yellow. '
+                 'Only certified fixed-order Delta C5 is eligible for the physical-source plot.')})
     result = {
         'format': OUTPUT_FORMAT, 'run_id': run_id,
         'original_renderer_source': 'Numerical/plotting/templates/T3OptimisedReferenceRGE.html',
@@ -719,6 +806,8 @@ def run(run_id: str = DEFAULT_RUN, points: int = 41, *, root: Path = STUDY_ROOT,
         'scalar_threshold_one_scale_matching_conditional': True,
         'wrong_parallel_dashboard_removed': not (folder / 'interactive_RGE_with_SMEFT.html').exists(),
         'eft1_certified_source_count': sum(r['status']=='CertifiedSourceComputed' for r in eft1_readiness),
+        'eft1_c5_visual_proxy_model_count': sum(bool(r.get('visual_proxy_plotted')) for r in eft1_readiness),
+        'eft1_c5_visual_proxy_not_physical': bool(display_proxy),
         'eft1_readiness_report': str(folder/'eft1_c5_readiness.json'),
         'removed_obsolete_files': removed,
     }
@@ -732,11 +821,13 @@ def main(argv=None) -> int:
     p.add_argument('--points', type=int, default=41)
     p.add_argument('--certified-boundary-root', type=Path, default=CERTIFIED_ROOT,
                    help='Only externally certified master-Weyl boundary.json files; synthetic rejected')
+    p.add_argument('--eft1-display-proxy', action='store_true',
+                   help='SHOW numerical but UNPHYSICAL endpoint-anchored C5 curves in original yellow EFT1 region')
     p.add_argument('--clean-obsolete', action='store_true',
                    help='Delete only the explicitly superseded additive dashboard scripts/tests/readmes')
     args = p.parse_args(argv)
     status = run(args.run_id,args.points,certified_root=args.certified_boundary_root,
-                 clean_obsolete=args.clean_obsolete)
+                 clean_obsolete=args.clean_obsolete,display_proxy=args.eft1_display_proxy)
     print(json.dumps(status,ensure_ascii=False,indent=2))
     return 0 if status['smeft_model_count'] else 2
 

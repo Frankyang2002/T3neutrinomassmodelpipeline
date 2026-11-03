@@ -283,3 +283,100 @@ def test_dynamic_tensor_is_accepted_by_scalar_response_interface(monkeypatch):
     assert result['model'] == 'A_-4'
     assert len(result['per_channel']) == 2  # quartic + fermion-tree source
     assert decode(result['c5_eft1_leading_log']).shape == (3, 3)
+
+
+def test_mixed_boundary_fractions_original_and_continuation():
+    from scripts.RunT3GeneralSequentialFitAblation import mixed_fit_fractions
+    original={'extra_quartic_fraction':0.1,
+              'extra_mixed_scalar_bilinear_fraction':0.01}
+    continuation={'matching_and_rge_provenance':{
+                  'method':'mixed-scalar-conditional-one-scale',
+                  'quartic_fraction':0.1,'mu2_fraction':0.01,
+                  'modified_scalar_boundary':False}}
+    assert mixed_fit_fractions(original)==(0.1,0.01)
+    assert mixed_fit_fractions(continuation)==(0.1,0.01)
+    assert mixed_fit_fractions({**original,**continuation})==(0.1,0.01)
+
+
+def test_mixed_boundary_fractions_never_silently_invented():
+    from scripts.RunT3GeneralSequentialFitAblation import mixed_fit_fractions
+    with pytest.raises(ValueError,match='missing mixed-fit boundary fraction'):
+        mixed_fit_fractions({'matching_and_rge_provenance':{}})
+    with pytest.raises(ValueError,match='conflicting saved mixed-fit boundary fractions'):
+        mixed_fit_fractions({'extra_quartic_fraction':0.2,
+            'extra_mixed_scalar_bilinear_fraction':0.01,
+            'matching_and_rge_provenance':{'quartic_fraction':0.1,'mu2_fraction':0.01}})
+    with pytest.raises(ValueError,match='continuation changed scalar boundary'):
+        mixed_fit_fractions({'matching_and_rge_provenance':{
+            'quartic_fraction':0.1,'mu2_fraction':0.01,'modified_scalar_boundary':True}})
+
+
+def test_resume_flag_exposed():
+    from scripts.RunT3GeneralSequentialFitAblation import parse_args
+    args=parse_args(['--source-run','thesis16_merged_v1','--run-id','general_seq_05',
+                     '--spinor-factor','1','--resume'])
+    assert args.resume is True
+    assert args.source_run=='thesis16_merged_v1'
+
+
+def test_resume_reuses_15_saved_models_and_retries_only_mixed_failure(monkeypatch, tmp_path):
+    """Exercise the existing-run path without invoking symbolic or numerical physics."""
+    import json
+    import types
+    from scripts import RunT3GeneralSequentialFitAblation as ab
+    from scripts.RunT3GeneralSequentialLeadingLog import tag
+
+    output = tmp_path / 'ablation'
+    saved_run = output / 'general_seq_05'
+    saved_run.mkdir(parents=True)
+    fitroot = tmp_path / 'fits'
+    (fitroot/'thesis16_merged_v1').mkdir(parents=True)
+    (fitroot/'thesis16_merged_v1'/'settings.json').write_text(
+        json.dumps({'canonical_run_id':'full16_general_v1'}),encoding='utf-8')
+    registry = tmp_path / 'registry.json'
+    registry.write_text('{}',encoding='utf-8')
+    previous={'format':'t3-full-general-16_U_E_W_S_ablation-v1',
+              'requested_models':list(MODELS),'spinor_factor_assumed':1.,
+              'computed':15}
+    ab.save(saved_run/'summary.json',previous)
+    cases={f'{i:04b}':{} for i in range(16)}
+    prior={}
+    for model in MODELS:
+        if model=='C_-1':
+            continue
+        record={'model':model,'status':'Computed','cases':cases,
+                'provenance':{'test':'unchanged'}}
+        path=saved_run/tag(model)/'cases.json'
+        ab.save(path,record)
+        prior[model]=path.read_bytes()
+    ab.save(saved_run/tag('C_-1')/'error.json',
+            {'model':'C_-1','status':'Blocked','error':'KeyError: extra_quartic_fraction'})
+
+    general=types.ModuleType('scripts.RunT3GeneralAll16FromReference')
+    general.OUTPUT=fitroot
+    bridge=types.ModuleType('Numerical.joint_scalar_matching.fermion_boundary_bridge')
+    bridge.load_release_manifest=lambda _: {m:tmp_path/m for m in MODELS}
+    bridge.load_source=lambda _,expected_model:object()
+    q=types.ModuleType('Numerical.joint_scalar_matching.source_quartic_v4')
+    q.source_seed_path=lambda *_:None
+    monkeypatch.setitem(sys.modules,general.__name__,general)
+    monkeypatch.setitem(sys.modules,bridge.__name__,bridge)
+    monkeypatch.setitem(sys.modules,q.__name__,q)
+    monkeypatch.setattr(ab,'OUT',output)
+    monkeypatch.setattr(ab,'preflight',lambda *args,**kwargs:{'ready':True,'missing':{},'issues':{}})
+    monkeypatch.setattr(ab,'_load_channels',lambda *args,**kwargs:object())
+    called=[]
+    def fake_mixed(model,*args,**kwargs):
+        called.append(model)
+        return cases, {'test':'new C(−1) result'}
+    monkeypatch.setattr(ab,'_mixed',fake_mixed)
+    monkeypatch.setattr(ab,'write_csv',lambda *args,**kwargs:None)
+    rc=ab.main(['--source-run','thesis16_merged_v1','--run-id','general_seq_05',
+                '--spinor-factor','1','--registry',str(registry),'--resume'])
+    assert rc==0
+    assert called==['C_-1']
+    assert ab.load(saved_run/'summary.json')['computed']==16
+    assert ab.load(saved_run/tag('C_-1')/'cases.json')['status']=='Computed'
+    assert not (saved_run/tag('C_-1')/'error.json').exists()
+    for model,content in prior.items():
+        assert (saved_run/tag(model)/'cases.json').read_bytes()==content

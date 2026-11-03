@@ -1,5 +1,6 @@
 {
   "format": "t3-full-general-16_U_E_W_S_ablation-v1",
+  "source_run": "thesis16_merged_v1",
   "requested_models": [
     "A_-4",
     "A_-2",
@@ -18,7 +19,7 @@
     "E_+0",
     "E_+2"
   ],
-  "computed": 15,
+  "computed": 16,
   "spinor_factor_assumed": 1.0,
   "basis_assumed": true,
   "one_scale_C5_used_as_W_on_reference": true,
@@ -611,9 +612,31 @@
     },
     {
       "model": "C_-1",
-      "status": "Blocked",
-      "error": "KeyError: 'extra_quartic_fraction'",
-      "traceback": "Traceback (most recent call last):\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\scripts\\RunT3GeneralSequentialFitAblation.py\", line 409, in main\n    cases,provenance=_mixed(model,saved,(ref,channels),\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\scripts\\RunT3GeneralSequentialFitAblation.py\", line 217, in _mixed\n    q=float(fit['extra_quartic_fraction']);m=float(fit['extra_mixed_scalar_bilinear_fraction'])\n            ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^\nKeyError: 'extra_quartic_fraction'\n"
+      "status": "Computed",
+      "provenance": {
+        "mixed_reference_flavour_lift": {
+          "0": {
+            "status": "provisional_mixed_mass_source_flavour_lift",
+            "reference_bilinear_reconstruction_max_relative_residual": 2.401396973938779e-16,
+            "reference_source": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_fermion_boundary\\releases\\source_021dcc1e8fe8ba0f\\C_m1\\boundary.json",
+            "current_Yukawa_bilinear_norm": 2.7027364241472865e-13,
+            "spinor_factor_certified": false
+          },
+          "1": {
+            "status": "provisional_mixed_mass_source_flavour_lift",
+            "reference_bilinear_reconstruction_max_relative_residual": 2.401396973938779e-16,
+            "reference_source": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_fermion_boundary\\releases\\source_021dcc1e8fe8ba0f\\C_m1\\boundary.json",
+            "current_Yukawa_bilinear_norm": 2.847320082663513e-13,
+            "spinor_factor_certified": false
+          }
+        },
+        "C5_source_path": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_t3_mass_eigen_matchete\\one_loop_probe\\C_m1_final_one_loop_probe_weinberg_ordered_coefficient.inputform.txt",
+        "C5_source_sha256": "83e587e503f4945b4af4ffad2334593d1e7fc7275ca20536c95a386084c6984d",
+        "fitted_config_sha256": "689cd17d2871d72f9379ba7d8dc9ae19488f324b222eb42f40283cc4afce8ffc"
+      },
+      "general_Lagrangian": true,
+      "C5_hard_matching_is_independent": false,
+      "full_sequential_general_C5_certified": false
     },
     {
       "model": "C_+1",

@@ -195,6 +195,40 @@ def _nonmixed(model: str, saved: Path, canonical_run_id: str,
                   'fitted_uv_sha256':hash_file(saved/'general_uv_overrides.json')}
 
 
+def mixed_fit_fractions(fit: dict) -> tuple[float, float]:
+    """Read B/C boundary fractions from either original-fit or continuation metadata.
+
+    Original B/C fitting records keep the fractions at the top level. A
+    continuation changes fitted Yukawas but preserves the scalar boundary;
+    its saved provenance calls these fractions quartic_fraction/mu2_fraction.
+    Never silently substitute a new scalar boundary when metadata is absent.
+    """
+    direct = ('extra_quartic_fraction', 'extra_mixed_scalar_bilinear_fraction')
+    continuation = ('quartic_fraction', 'mu2_fraction')
+    meta = fit.get('matching_and_rge_provenance', {})
+    require(isinstance(meta, dict), 'invalid mixed-fit matching provenance')
+    if meta.get('modified_scalar_boundary') is True:
+        raise ValueError('continuation changed scalar boundary; cannot reuse original fractions')
+
+    values=[]
+    for original, carried in zip(direct, continuation):
+        has_direct = original in fit
+        has_carried = carried in meta
+        require(has_direct or has_carried,
+                f'missing mixed-fit boundary fraction {original!r} or '
+                f'matching_and_rge_provenance.{carried}')
+        value = float(fit[original] if has_direct else meta[carried])
+        require(math.isfinite(value) and value >= 0,
+                f'invalid mixed-fit boundary fraction {original}: {value}')
+        if has_direct and has_carried:
+            other = float(meta[carried])
+            require(math.isfinite(other) and math.isclose(value, other,
+                    rel_tol=1e-12, abs_tol=1e-15),
+                    f'conflicting saved mixed-fit boundary fractions: {original} vs {carried}')
+        values.append(value)
+    return values[0], values[1]
+
+
 def _mixed(model: str, saved: Path, quartic_source: tuple,
            reference_running: Path, registry: dict,
            *, spinor_factor: float, vev: float):
@@ -214,7 +248,7 @@ def _mixed(model: str, saved: Path, quartic_source: tuple,
     source=runner.build_reference_source(model)
     source['cfg']=load(saved/'fitted_config.json')
     registry_legacy,new,reused=source['registry'],source['new'],source['reused']
-    q=float(fit['extra_quartic_fraction']);m=float(fit['extra_mixed_scalar_bilinear_fraction'])
+    q,m=mixed_fit_fractions(fit)
     beta_bundle=bc.beta_bundle(model,source,registry_legacy)
     coefficient=Path(DEFAULT_SOURCE)/({'B_-1':'B_m1_final',
                                        'C_-1':'C_m1_final'}[model]+
@@ -362,6 +396,8 @@ def parse_args(argv=None):
     p.add_argument('--spinor-factor',type=float,default=1.,
                    help='Explicit provisional Matchete GammaCC-to-Weyl factor')
     p.add_argument('--vev',type=float,default=246.22)
+    p.add_argument('--resume',action='store_true',
+                   help='Reuse existing computed cases; retry only failed/missing models')
     p.add_argument('--check-only',action='store_true')
     return p.parse_args(argv)
 
@@ -394,11 +430,34 @@ def main(argv=None):
     release=load_release_manifest(args.release_dir)
     require(set(release)==set(MODELS),'expected all16 source release')
     dest=OUT/args.run_id
-    require(not dest.exists(),f'output already exists: {dest}')
-    dest.mkdir(parents=True)
+    if args.resume:
+        require(dest.is_dir(),f'no existing run to resume: {dest}')
+        previous=load(dest/'summary.json')
+        require(previous.get('format')=='t3-full-general-16_U_E_W_S_ablation-v1',
+                'existing run is not a compatible sequential ablation')
+        require(previous.get('requested_models')==list(selected),
+                '--resume model selection differs from saved run')
+        require(math.isclose(float(previous['spinor_factor_assumed']),
+                             args.spinor_factor,rel_tol=0,abs_tol=1e-15),
+                '--resume spinor factor differs from saved run')
+        if previous.get('source_run') is not None:
+            require(previous['source_run']==args.source_run,
+                    '--resume source campaign differs from saved run')
+    else:
+        require(not dest.exists(),f'output already exists: {dest}; pass --resume to retry blocked models')
+        dest.mkdir(parents=True)
     results=[]
     for model in selected:
         saved=source_root/tag(model)
+        cases_path=dest/tag(model)/'cases.json'
+        if args.resume and cases_path.is_file():
+            record=load(cases_path)
+            require(record.get('model')==model and record.get('status')=='Computed'
+                    and isinstance(record.get('cases'),dict) and len(record['cases'])==16,
+                    f'{model}: stored cases cannot be reused')
+            results.append(record)
+            print(model,'Reused 16 cases',flush=True)
+            continue
         try:
             ready=preflight(model,saved,args,canonical_run_id)
             require(ready['ready'],f'{model}: missing prerequisites {ready["missing"]}; issues={ready["issues"]}')
@@ -420,7 +479,8 @@ def main(argv=None):
                     'general_Lagrangian':True,
                     'C5_hard_matching_is_independent':False,
                     'full_sequential_general_C5_certified':False}
-            save(dest/tag(model)/'cases.json',record)
+            save(cases_path,record)
+            (dest/tag(model)/'error.json').unlink(missing_ok=True)
         except Exception as e:
             record={'model':model,'status':'Blocked',
                     'error':f'{type(e).__name__}: {e}',
@@ -429,6 +489,7 @@ def main(argv=None):
         print(model,record['status'],record.get('error','')[:180],flush=True)
         results.append(record)
         summary={'format':'t3-full-general-16_U_E_W_S_ablation-v1',
+                 'source_run':args.source_run,
                  'requested_models':list(selected),
                  'computed':sum(x['status']=='Computed' for x in results),
                  'spinor_factor_assumed':args.spinor_factor,
@@ -438,6 +499,18 @@ def main(argv=None):
                  'no_double_counting_by_construction':True,
                  'model_rows':[{k:v for k,v in x.items() if k!='cases'} for x in results]}
         save(dest/'summary.json',summary)
+    # Rebuild summary and CSV from every stored case, including reused models.
+    summary={'format':'t3-full-general-16_U_E_W_S_ablation-v1',
+             'source_run':args.source_run,
+             'requested_models':list(selected),
+             'computed':sum(x['status']=='Computed' for x in results),
+             'spinor_factor_assumed':args.spinor_factor,
+             'basis_assumed':True,
+             'one_scale_C5_used_as_W_on_reference':True,
+             'hard_matching_residual_independently_calculated':False,
+             'no_double_counting_by_construction':True,
+             'model_rows':[{k:v for k,v in x.items() if k!='cases'} for x in results]}
+    save(dest/'summary.json',summary)
     write_csv(results,dest)
     print('Results:',dest/'summary.json')
     return 0 if len(results)==len(selected) and all(x['status']=='Computed' for x in results) else 2

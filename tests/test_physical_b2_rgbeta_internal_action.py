@@ -31,8 +31,13 @@ def fixture():
                          'expected_internal_ratio_inputform':exp,
                          'sample_Coupling_over_Matrix_inputform':exp,
                          'sample_CouplingBar_over_Matrix_inputform':exp,
-                         'sample_Coupling_inputform':f'{exp}*Matrix[Bar[{name}]][b4p,b4r]',
-                         'sample_CouplingBar_inputform':f'{exp}*Matrix[{name}][b4p,b4r]',
+                         'sample_Coupling_inputform':(
+                             f'{exp}*{name}' if kind=='quartic' else
+                             f'{exp}*Matrix[Bar[{name}]][b4p,b4r]'),
+                         'sample_CouplingBar_inputform':(
+                             f'{exp}*Bar[{name}]' if name=='lambdaT3' else
+                             f'{exp}*{name}' if kind=='quartic' else
+                             f'{exp}*Matrix[{name}][b4p,b4r]'),
                          'registered_invariant_inputform':'eps[SU2L[fund], b4a, b4b]',
                          'unique_arrangements_count':1})
         families.append({'family':family,'dimensions_alpha':[d1,d2,df,alpha],
@@ -184,3 +189,32 @@ def test_physical_action_is_never_identified_from_sqrt2():
                 family['operator_internal_conventions']]==[
                     'Sqrt[2]','Sqrt[2]','2','6','6','6']
         assert not family['physical_action_certified']
+
+
+@pytest.mark.parametrize('coupling', ('lambdaT3', 'lambdaH1', 'lambdaH2'))
+def test_native_scalar_quartic_samples_accepted(coupling):
+    # Actual RGBeta v1.2.0 InputForm from the user's native witness.
+    data=fixture()
+    for cls in data['classes']:
+        op=next(r for r in cls['operators'] if r['coupling']==coupling)
+        assert 'Matrix[' not in op['sample_Coupling_inputform']
+        assert 'Matrix[' not in op['sample_CouplingBar_inputform']
+    assert B.validate_native_data(data)['native_registry_ratios_measured']==30
+
+
+@pytest.mark.parametrize('coupling,bad_original,bad_bar', [
+    ('lambdaT3','6*Bar[lambdaT3]','6*lambdaT3'),
+    ('lambdaT3','6*lambdaH1','6*Bar[lambdaT3]'),
+    ('lambdaH1','6*lambdaH1','6*Bar[lambdaH1]'),
+    ('lambdaH2','6*Matrix[lambdaH2][]','6*lambdaH2'),
+    ('y1','Sqrt[2]*y1','Sqrt[2]*Matrix[y1][b4p,b4r]'),
+    ('MF','2*Matrix[MF][b4p,b4r]','2*Matrix[Bar[MF]][b4p,b4r]'),
+])
+def test_native_sample_orientation_and_shape_mutations_blocked(
+    coupling,bad_original,bad_bar
+):
+    data=change(lambda x,r,o:o.update(
+        sample_Coupling_inputform=bad_original,
+        sample_CouplingBar_inputform=bad_bar),coupling=coupling)
+    with pytest.raises(AuditBlocked,match='unexpected native coupling sample'):
+        B.validate_native_data(data)

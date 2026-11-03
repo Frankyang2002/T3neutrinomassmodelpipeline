@@ -1,0 +1,3521 @@
+{
+  "format": "t3-chatA-batch05-analytical-yukawa-texture-v1",
+  "source_conditional_only": true,
+  "physical_normalisation_certified": false,
+  "safe_for_physical_source_certification": false,
+  "model_count": 16,
+  "reference_texture_models": [
+    "A_-2",
+    "C_-1",
+    "C_+1",
+    "E_-2"
+  ],
+  "common_scalar_mixing_abs": 0.1,
+  "methods": {
+    "tensor_factorization": "Z[i,I,s]=sum_r conjugate(y1[i,r])*C1[r,I,s]; Y similarly",
+    "mass_kernel": "Batch3 exact finite 2x2 scalar divided difference and invariant heavy eigenspace projector",
+    "counterfactual": "replace only candidate Yukawa vertices; preserve original fermion/scalar/CG inputs",
+    "phasor": "Batch4 u1-dagger H_g v1 complex projected amplitudes",
+    "trajectory": "linear complex Yukawa interpolation; not a fit or RGE"
+  },
+  "models": [
+    {
+      "model": "A_-4",
+      "family": "A",
+      "alpha": -4,
+      "fermion_type": "Dirac",
+      "active_charge_channels": 1,
+      "observed": {
+        "m1_ev": 0.00047448292992971735,
+        "m2_ev": 0.007582728104564633,
+        "m3_ev": 0.043600644036753816,
+        "m1_over_m3": 0.010882475257240348,
+        "m2_over_m3": 0.17391321325833303,
+        "m1_geometry_A": 0.10249549839493828,
+        "m1_coherence_C": 0.05711602101589079,
+        "m1_mechanism": "mixed_or_neither_dominant",
+        "group_strength_ev": 0.08105090276506162,
+        "max_group_matrix_norm_ev": 0.03416147600665408
+      },
+      "phasor_explanation": {
+        "model": "A_-4",
+        "mode": 1,
+        "m1_ev": 0.00047448292992971735,
+        "phasor_sum_ev": {
+          "real": 0.00047448292992971486,
+          "imag": 0.0
+        },
+        "sum_absolute_projected_ev": 0.008307352674264672,
+        "cancelled_fraction": 0.9428839789841093,
+        "phasors": [
+          {
+            "heavy_group": 1,
+            "heavy_mass_gev": 100000.0,
+            "amplitude_ev": {
+              "real": 0.000932071855989512,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.000932071855989512,
+            "relative_phase_deg": 0.0,
+            "fraction_of_abs_sum": 0.11219842139084514
+          },
+          {
+            "heavy_group": 2,
+            "heavy_mass_gev": 110000.0,
+            "amplitude_ev": {
+              "real": 0.0034588459461076817,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.0034588459461076817,
+            "relative_phase_deg": 0.0,
+            "fraction_of_abs_sum": 0.4163595891171001
+          },
+          {
+            "heavy_group": 3,
+            "heavy_mass_gev": 120000.0,
+            "amplitude_ev": {
+              "real": -0.003916434872167479,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.003916434872167479,
+            "relative_phase_deg": 180.0,
+            "fraction_of_abs_sum": 0.4714419894920548
+          }
+        ],
+        "strongest_destructive_pair": {
+          "g": 2,
+          "h": 3,
+          "phase_cosine": -1.0,
+          "destructive_cross_term_ev2": -2.709268976158248e-05,
+          "pair_residual_fraction": 0.06204359363862328
+        },
+        "all_pairs": [
+          {
+            "g": 2,
+            "h": 3,
+            "phase_cosine": -1.0,
+            "destructive_cross_term_ev2": -2.709268976158248e-05,
+            "pair_residual_fraction": 0.06204359363862328
+          },
+          {
+            "g": 1,
+            "h": 3,
+            "phase_cosine": -1.0,
+            "destructive_cross_term_ev2": -7.300797440326378e-06,
+            "pair_residual_fraction": 0.6155220944309959
+          },
+          {
+            "g": 1,
+            "h": 2,
+            "phase_cosine": 1.0,
+            "destructive_cross_term_ev2": 6.447785921140773e-06,
+            "pair_residual_fraction": 1.0
+          }
+        ],
+        "original_Batch4_coherence": 0.05711602101444556
+      },
+      "tensor_reconstruction": {
+        "y1_HC": {
+          "relative_reconstruction_error": 0.0,
+          "yukawa_condition_number": 42.796802030541976,
+          "tensor_norm": 1.7320508075688776
+        },
+        "y2_HC": {
+          "relative_reconstruction_error": 6.492561858958544e-17,
+          "yukawa_condition_number": 20.29200450241996,
+          "tensor_norm": 2.2795070569547775
+        }
+      },
+      "common_mixing_controlled": {
+        "A_-2": {
+          "m1_ev": 0.007214753468406735,
+          "m2_ev": 0.01100845784254718,
+          "m3_ev": 0.048560209099649955,
+          "m1_over_m3": 0.14857336082720332,
+          "m2_over_m3": 0.22669708484897225,
+          "m1_geometry_A": 0.16842594164311026,
+          "m1_coherence_C": 0.48064525369622824,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.08912260115720214,
+          "max_group_matrix_norm_ev": 0.03227075555893325
+        },
+        "C_-1": {
+          "m1_ev": 0.06494715214821606,
+          "m2_ev": 0.06683788662613661,
+          "m3_ev": 0.1078807903041594,
+          "m1_over_m3": 0.6020270334051492,
+          "m2_over_m3": 0.6195531793722839,
+          "m1_geometry_A": 0.5691004981201547,
+          "m1_coherence_C": 0.28577815451183347,
+          "m1_mechanism": "mixed_or_neither_dominant",
+          "group_strength_ev": 0.39933936175365503,
+          "max_group_matrix_norm_ev": 0.1650182469054592
+        },
+        "C_+1": {
+          "m1_ev": 0.000633043404728199,
+          "m2_ev": 0.01432181746125603,
+          "m3_ev": 0.08276796525307252,
+          "m1_over_m3": 0.007648410865152918,
+          "m2_over_m3": 0.17303575625503703,
+          "m1_geometry_A": 0.3191973173468353,
+          "m1_coherence_C": 0.01312206007232344,
+          "m1_mechanism": "heavy_eigenspace_cancellation_dominant",
+          "group_strength_ev": 0.1511375000015022,
+          "max_group_matrix_norm_ev": 0.07686821581643088
+        },
+        "E_-2": {
+          "m1_ev": 0.006666873781752015,
+          "m2_ev": 0.012273719055553247,
+          "m3_ev": 0.060060918963324716,
+          "m1_over_m3": 0.11100186105748798,
+          "m2_over_m3": 0.2043544998545228,
+          "m1_geometry_A": 0.03895770838497755,
+          "m1_coherence_C": 1.0000000000000002,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.1711310561666102,
+          "max_group_matrix_norm_ev": 0.07950753204729996
+        }
+      },
+      "C_family_swaps": {},
+      "conditional_only": true,
+      "physical_normalisation_certified": false
+    },
+    {
+      "model": "A_-2",
+      "family": "A",
+      "alpha": -2,
+      "fermion_type": "Dirac",
+      "active_charge_channels": 1,
+      "observed": {
+        "m1_ev": 0.007214753468406734,
+        "m2_ev": 0.011008457842547179,
+        "m3_ev": 0.04856020909964995,
+        "m1_over_m3": 0.14857336082720332,
+        "m2_over_m3": 0.22669708484897225,
+        "m1_geometry_A": 0.16842594164311014,
+        "m1_coherence_C": 0.4806452536962287,
+        "m1_mechanism": "mode_geometry_dominant",
+        "group_strength_ev": 0.08912260115720212,
+        "max_group_matrix_norm_ev": 0.03227075555893326
+      },
+      "phasor_explanation": {
+        "model": "A_-2",
+        "mode": 1,
+        "m1_ev": 0.007214753468406734,
+        "phasor_sum_ev": {
+          "real": 0.007214753468406738,
+          "imag": 0.0
+        },
+        "sum_absolute_projected_ev": 0.015010558021585105,
+        "cancelled_fraction": 0.5193547463037713,
+        "phasors": [
+          {
+            "heavy_group": 1,
+            "heavy_mass_gev": 100000.0,
+            "amplitude_ev": {
+              "real": -0.00317511317967838,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.00317511317967838,
+            "relative_phase_deg": 180.0,
+            "fraction_of_abs_sum": 0.21152532604801125
+          },
+          {
+            "heavy_group": 2,
+            "heavy_mass_gev": 110000.0,
+            "amplitude_ev": {
+              "real": -0.000722789096910804,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.000722789096910804,
+            "relative_phase_deg": 180.0,
+            "fraction_of_abs_sum": 0.04815204710387428
+          },
+          {
+            "heavy_group": 3,
+            "heavy_mass_gev": 120000.0,
+            "amplitude_ev": {
+              "real": 0.011112655744995922,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.011112655744995922,
+            "relative_phase_deg": 0.0,
+            "fraction_of_abs_sum": 0.7403226268481145
+          }
+        ],
+        "strongest_destructive_pair": {
+          "g": 1,
+          "h": 3,
+          "phase_cosine": -1.0,
+          "destructive_cross_term_ev2": -7.056787943433043e-05,
+          "pair_residual_fraction": 0.5555480780214593
+        },
+        "all_pairs": [
+          {
+            "g": 1,
+            "h": 3,
+            "phase_cosine": -1.0,
+            "destructive_cross_term_ev2": -7.056787943433043e-05,
+            "pair_residual_fraction": 0.5555480780214593
+          },
+          {
+            "g": 2,
+            "h": 3,
+            "phase_cosine": -1.0,
+            "destructive_cross_term_ev2": -1.606421282041252e-05,
+            "pair_residual_fraction": 0.8778602567853528
+          },
+          {
+            "g": 1,
+            "h": 2,
+            "phase_cosine": 1.0,
+            "destructive_cross_term_ev2": 4.589874375458655e-06,
+            "pair_residual_fraction": 1.0
+          }
+        ],
+        "original_Batch4_coherence": 0.4806452537087429
+      },
+      "tensor_reconstruction": {
+        "y1_HC": {
+          "relative_reconstruction_error": 9.147838846559609e-17,
+          "yukawa_condition_number": 16.24419451982986,
+          "tensor_norm": 1.7320508075688772
+        },
+        "y2_HC": {
+          "relative_reconstruction_error": 1.4302554326601616e-17,
+          "yukawa_condition_number": 1.6866013232722499,
+          "tensor_norm": 2.2795070569547775
+        }
+      },
+      "common_mixing_controlled": {
+        "A_-2": {
+          "m1_ev": 0.007214753468406734,
+          "m2_ev": 0.011008457842547179,
+          "m3_ev": 0.04856020909964995,
+          "m1_over_m3": 0.14857336082720332,
+          "m2_over_m3": 0.22669708484897225,
+          "m1_geometry_A": 0.16842594164311014,
+          "m1_coherence_C": 0.4806452536962287,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.08912260115720212,
+          "max_group_matrix_norm_ev": 0.03227075555893326
+        },
+        "C_-1": {
+          "m1_ev": 0.0649471521482159,
+          "m2_ev": 0.06683788662613667,
+          "m3_ev": 0.1078807903041594,
+          "m1_over_m3": 0.6020270334051477,
+          "m2_over_m3": 0.6195531793722844,
+          "m1_geometry_A": 0.5691004981201535,
+          "m1_coherence_C": 0.2857781545118336,
+          "m1_mechanism": "mixed_or_neither_dominant",
+          "group_strength_ev": 0.399339361753655,
+          "max_group_matrix_norm_ev": 0.16501824690545913
+        },
+        "C_+1": {
+          "m1_ev": 0.0006330434047281923,
+          "m2_ev": 0.01432181746125604,
+          "m3_ev": 0.08276796525307252,
+          "m1_over_m3": 0.007648410865152836,
+          "m2_over_m3": 0.17303575625503714,
+          "m1_geometry_A": 0.3191973173468351,
+          "m1_coherence_C": 0.013122060072323308,
+          "m1_mechanism": "heavy_eigenspace_cancellation_dominant",
+          "group_strength_ev": 0.1511375000015022,
+          "max_group_matrix_norm_ev": 0.0768682158164309
+        },
+        "E_-2": {
+          "m1_ev": 0.006666873781751999,
+          "m2_ev": 0.012273719055553214,
+          "m3_ev": 0.06006091896332474,
+          "m1_over_m3": 0.11100186105748767,
+          "m2_over_m3": 0.20435449985452217,
+          "m1_geometry_A": 0.03895770838497749,
+          "m1_coherence_C": 0.9999999999999999,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.17113105616661015,
+          "max_group_matrix_norm_ev": 0.07950753204729992
+        }
+      },
+      "C_family_swaps": {},
+      "conditional_only": true,
+      "physical_normalisation_certified": false
+    },
+    {
+      "model": "A_+0",
+      "family": "A",
+      "alpha": 0,
+      "fermion_type": "Dirac",
+      "active_charge_channels": 1,
+      "observed": {
+        "m1_ev": 0.007214274912808156,
+        "m2_ev": 0.011000035911185852,
+        "m3_ev": 0.048498954012349514,
+        "m1_over_m3": 0.1487511444261489,
+        "m2_over_m3": 0.22680975569874892,
+        "m1_geometry_A": 0.1686791635369603,
+        "m1_coherence_C": 0.48007407976194727,
+        "m1_mechanism": "mode_geometry_dominant",
+        "group_strength_ev": 0.08908877576925084,
+        "max_group_matrix_norm_ev": 0.03225043111139511
+      },
+      "phasor_explanation": {
+        "model": "A_+0",
+        "mode": 1,
+        "m1_ev": 0.007214274912808156,
+        "phasor_sum_ev": {
+          "real": 0.007214274912808158,
+          "imag": 0.0
+        },
+        "sum_absolute_projected_ev": 0.01502742017728905,
+        "cancelled_fraction": 0.5199259202380528,
+        "phasors": [
+          {
+            "heavy_group": 1,
+            "heavy_mass_gev": 100000.0,
+            "amplitude_ev": {
+              "real": -0.00318375167750332,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.00318375167750332,
+            "relative_phase_deg": 180.0,
+            "fraction_of_abs_sum": 0.2118628240870596
+          },
+          {
+            "heavy_group": 2,
+            "heavy_mass_gev": 110000.0,
+            "amplitude_ev": {
+              "real": -0.0007228209547371259,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.0007228209547371259,
+            "relative_phase_deg": 180.0,
+            "fraction_of_abs_sum": 0.0481001360319668
+          },
+          {
+            "heavy_group": 3,
+            "heavy_mass_gev": 120000.0,
+            "amplitude_ev": {
+              "real": 0.011120847545048603,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.011120847545048603,
+            "relative_phase_deg": 0.0,
+            "fraction_of_abs_sum": 0.7400370398809736
+          }
+        ],
+        "strongest_destructive_pair": {
+          "g": 1,
+          "h": 3,
+          "phase_cosine": -1.0,
+          "destructive_cross_term_ev2": -7.081203405361434e-05,
+          "pair_residual_fraction": 0.5548632117586385
+        },
+        "all_pairs": [
+          {
+            "g": 1,
+            "h": 3,
+            "phase_cosine": -1.0,
+            "destructive_cross_term_ev2": -7.081203405361434e-05,
+            "pair_residual_fraction": 0.5548632117586385
+          },
+          {
+            "g": 2,
+            "h": 3,
+            "phase_cosine": -1.0,
+            "destructive_cross_term_ev2": -1.607676327999611e-05,
+            "pair_residual_fraction": 0.8779396848619662
+          },
+          {
+            "g": 1,
+            "h": 2,
+            "phase_cosine": 1.0,
+            "destructive_cross_term_ev2": 4.6025648543577515e-06,
+            "pair_residual_fraction": 1.0
+          }
+        ],
+        "original_Batch4_coherence": 0.4800740797698255
+      },
+      "tensor_reconstruction": {
+        "y1_HC": {
+          "relative_reconstruction_error": 4.575347094643921e-17,
+          "yukawa_condition_number": 16.265365000239704,
+          "tensor_norm": 1.7320508075688772
+        },
+        "y2_HC": {
+          "relative_reconstruction_error": 1.5719987125610432e-16,
+          "yukawa_condition_number": 1.6861777057416323,
+          "tensor_norm": 2.279507056954778
+        }
+      },
+      "common_mixing_controlled": {
+        "A_-2": {
+          "m1_ev": 0.007214753468406747,
+          "m2_ev": 0.011008457842547182,
+          "m3_ev": 0.04856020909964997,
+          "m1_over_m3": 0.14857336082720354,
+          "m2_over_m3": 0.22669708484897222,
+          "m1_geometry_A": 0.1684259416431101,
+          "m1_coherence_C": 0.4806452536962297,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.08912260115720214,
+          "max_group_matrix_norm_ev": 0.03227075555893327
+        },
+        "C_-1": {
+          "m1_ev": 0.06494715214821602,
+          "m2_ev": 0.06683788662613661,
+          "m3_ev": 0.10788079030415937,
+          "m1_over_m3": 0.602027033405149,
+          "m2_over_m3": 0.619553179372284,
+          "m1_geometry_A": 0.5691004981201548,
+          "m1_coherence_C": 0.2857781545118334,
+          "m1_mechanism": "mixed_or_neither_dominant",
+          "group_strength_ev": 0.3993393617536549,
+          "max_group_matrix_norm_ev": 0.16501824690545916
+        },
+        "C_+1": {
+          "m1_ev": 0.0006330434047282088,
+          "m2_ev": 0.01432181746125604,
+          "m3_ev": 0.08276796525307253,
+          "m1_over_m3": 0.007648410865153034,
+          "m2_over_m3": 0.1730357562550371,
+          "m1_geometry_A": 0.31919731734683526,
+          "m1_coherence_C": 0.01312206007232364,
+          "m1_mechanism": "heavy_eigenspace_cancellation_dominant",
+          "group_strength_ev": 0.15113750000150225,
+          "max_group_matrix_norm_ev": 0.07686821581643093
+        },
+        "E_-2": {
+          "m1_ev": 0.0066668737817520115,
+          "m2_ev": 0.012273719055553236,
+          "m3_ev": 0.06006091896332473,
+          "m1_over_m3": 0.1110018610574879,
+          "m2_over_m3": 0.2043544998545226,
+          "m1_geometry_A": 0.038957708384977544,
+          "m1_coherence_C": 0.9999999999999999,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.17113105616661017,
+          "max_group_matrix_norm_ev": 0.07950753204729993
+        }
+      },
+      "C_family_swaps": {},
+      "conditional_only": true,
+      "physical_normalisation_certified": false
+    },
+    {
+      "model": "B_-3",
+      "family": "B",
+      "alpha": -3,
+      "fermion_type": "Dirac",
+      "active_charge_channels": 1,
+      "observed": {
+        "m1_ev": 0.00721823052848515,
+        "m2_ev": 0.010981448529725652,
+        "m3_ev": 0.04833239941916282,
+        "m1_over_m3": 0.14934558629885167,
+        "m2_over_m3": 0.22720677354519522,
+        "m1_geometry_A": 0.1688773330061573,
+        "m1_coherence_C": 0.4801214357981737,
+        "m1_mechanism": "mode_geometry_dominant",
+        "group_strength_ev": 0.08902424312928425,
+        "max_group_matrix_norm_ev": 0.03224595451866864
+      },
+      "phasor_explanation": {
+        "model": "B_-3",
+        "mode": 1,
+        "m1_ev": 0.00721823052848515,
+        "phasor_sum_ev": {
+          "real": 0.00721823052848515,
+          "imag": 0.0
+        },
+        "sum_absolute_projected_ev": 0.015034176752565246,
+        "cancelled_fraction": 0.5198785642018263,
+        "phasors": [
+          {
+            "heavy_group": 1,
+            "heavy_mass_gev": 100000.0,
+            "amplitude_ev": {
+              "real": -0.0031879017711556753,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.0031879017711556753,
+            "relative_phase_deg": 180.0,
+            "fraction_of_abs_sum": 0.2120436538443471
+          },
+          {
+            "heavy_group": 2,
+            "heavy_mass_gev": 110000.0,
+            "amplitude_ev": {
+              "real": -0.0007200713408843732,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.0007200713408843732,
+            "relative_phase_deg": 180.0,
+            "fraction_of_abs_sum": 0.047895628256566104
+          },
+          {
+            "heavy_group": 3,
+            "heavy_mass_gev": 120000.0,
+            "amplitude_ev": {
+              "real": 0.011126203640525198,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.011126203640525198,
+            "relative_phase_deg": 0.0,
+            "fraction_of_abs_sum": 0.7400607178990869
+          }
+        ],
+        "strongest_destructive_pair": {
+          "g": 1,
+          "h": 3,
+          "phase_cosine": -1.0,
+          "destructive_cross_term_ev2": -7.0938488583738e-05,
+          "pair_residual_fraction": 0.554578972353491
+        },
+        "all_pairs": [
+          {
+            "g": 1,
+            "h": 3,
+            "phase_cosine": -1.0,
+            "destructive_cross_term_ev2": -7.0938488583738e-05,
+            "pair_residual_fraction": 0.554578972353491
+          },
+          {
+            "g": 2,
+            "h": 3,
+            "phase_cosine": -1.0,
+            "destructive_cross_term_ev2": -1.602332074877115e-05,
+            "pair_residual_fraction": 0.8784307570076862
+          },
+          {
+            "g": 1,
+            "h": 2,
+            "phase_cosine": 1.0,
+            "destructive_cross_term_ev2": 4.591033405927471e-06,
+            "pair_residual_fraction": 1.0
+          }
+        ],
+        "original_Batch4_coherence": 0.480121435812701
+      },
+      "tensor_reconstruction": {
+        "y1_HC": {
+          "relative_reconstruction_error": 9.151375465159e-17,
+          "yukawa_condition_number": 16.257716459637635,
+          "tensor_norm": 1.7320508075688772
+        },
+        "y2_HC": {
+          "relative_reconstruction_error": 5.860319080566974e-18,
+          "yukawa_condition_number": 1.6877760047813217,
+          "tensor_norm": 1.7320508075688772
+        }
+      },
+      "common_mixing_controlled": {
+        "A_-2": {
+          "m1_ev": 0.007214753642528704,
+          "m2_ev": 0.011008458118245685,
+          "m3_ev": 0.04856021032030415,
+          "m1_over_m3": 0.14857336067821864,
+          "m2_over_m3": 0.2266970848279624,
+          "m1_geometry_A": 0.16842594190383198,
+          "m1_coherence_C": 0.48064525243010336,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.08912260340490827,
+          "max_group_matrix_norm_ev": 0.03227075635521264
+        },
+        "C_-1": {
+          "m1_ev": 0.06494715390450177,
+          "m2_ev": 0.06683788830504614,
+          "m3_ev": 0.10788079298025448,
+          "m1_over_m3": 0.6020270347511175,
+          "m2_over_m3": 0.6195531795662601,
+          "m1_geometry_A": 0.5691004979720028,
+          "m1_coherence_C": 0.2857781550819893,
+          "m1_mechanism": "mixed_or_neither_dominant",
+          "group_strength_ev": 0.39933937185973367,
+          "max_group_matrix_norm_ev": 0.16501825116045646
+        },
+        "C_+1": {
+          "m1_ev": 0.0006330434173111991,
+          "m2_ev": 0.014321817834433384,
+          "m3_ev": 0.08276796731355532,
+          "m1_over_m3": 0.007648410826775523,
+          "m2_over_m3": 0.17303575645608285,
+          "m1_geometry_A": 0.3191973173209086,
+          "m1_coherence_C": 0.01312206000484899,
+          "m1_mechanism": "heavy_eigenspace_cancellation_dominant",
+          "group_strength_ev": 0.151137503795096,
+          "max_group_matrix_norm_ev": 0.07686821771315051
+        },
+        "E_-2": {
+          "m1_ev": 0.006666873950707881,
+          "m2_ev": 0.012273719395120397,
+          "m3_ev": 0.06006092048758315,
+          "m1_over_m3": 0.11100186105349774,
+          "m2_over_m3": 0.20435450032201613,
+          "m1_geometry_A": 0.03895770838226239,
+          "m1_coherence_C": 1.0000000000000004,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.17113106051544172,
+          "max_group_matrix_norm_ev": 0.07950753409740255
+        }
+      },
+      "C_family_swaps": {},
+      "conditional_only": true,
+      "physical_normalisation_certified": false
+    },
+    {
+      "model": "B_-1",
+      "family": "B",
+      "alpha": -1,
+      "fermion_type": "Majorana",
+      "active_charge_channels": 1,
+      "observed": {
+        "m1_ev": 0.0045224925033725836,
+        "m2_ev": 0.009803383428925805,
+        "m3_ev": 0.05044130936085001,
+        "m1_over_m3": 0.08965850729645636,
+        "m2_over_m3": 0.1943522789782038,
+        "m1_geometry_A": 0.1570077441551742,
+        "m1_coherence_C": 0.2085368712655095,
+        "m1_mechanism": "mixed_or_neither_dominant",
+        "group_strength_ev": 0.1381255207573442,
+        "max_group_matrix_norm_ev": 0.07076412030808411
+      },
+      "phasor_explanation": {
+        "model": "B_-1",
+        "mode": 1,
+        "m1_ev": 0.0045224925033725836,
+        "phasor_sum_ev": {
+          "real": 0.004522492503372586,
+          "imag": 0.0
+        },
+        "sum_absolute_projected_ev": 0.0216867764243693,
+        "cancelled_fraction": 0.7914631287344907,
+        "phasors": [
+          {
+            "heavy_group": 1,
+            "heavy_mass_gev": 100000.0,
+            "amplitude_ev": {
+              "real": -0.008582141960498358,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.008582141960498358,
+            "relative_phase_deg": 180.0,
+            "fraction_of_abs_sum": 0.39573156436724527
+          },
+          {
+            "heavy_group": 2,
+            "heavy_mass_gev": 110000.0,
+            "amplitude_ev": {
+              "real": 0.010195487355100768,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.010195487355100768,
+            "relative_phase_deg": 0.0,
+            "fraction_of_abs_sum": 0.4701246121412567
+          },
+          {
+            "heavy_group": 3,
+            "heavy_mass_gev": 120000.0,
+            "amplitude_ev": {
+              "real": 0.0029091471087701764,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.0029091471087701764,
+            "relative_phase_deg": 0.0,
+            "fraction_of_abs_sum": 0.13414382349149803
+          }
+        ],
+        "strongest_destructive_pair": {
+          "g": 1,
+          "h": 2,
+          "phase_cosine": -1.0,
+          "destructive_cross_term_ev2": -0.00017499823967588143,
+          "pair_residual_fraction": 0.08591848137411877
+        },
+        "all_pairs": [
+          {
+            "g": 1,
+            "h": 2,
+            "phase_cosine": -1.0,
+            "destructive_cross_term_ev2": -0.00017499823967588143,
+            "pair_residual_fraction": 0.08591848137411877
+          },
+          {
+            "g": 1,
+            "h": 3,
+            "phase_cosine": -1.0,
+            "destructive_cross_term_ev2": -4.993342694287802e-05,
+            "pair_residual_fraction": 0.4936778474139708
+          },
+          {
+            "g": 2,
+            "h": 3,
+            "phase_cosine": 1.0,
+            "destructive_cross_term_ev2": 5.932034512318858e-05,
+            "pair_residual_fraction": 1.0
+          }
+        ],
+        "original_Batch4_coherence": 0.20853687125574333
+      },
+      "tensor_reconstruction": {
+        "y1_HC": {
+          "relative_reconstruction_error": 4.911171990675796e-17,
+          "yukawa_condition_number": 6.596989619719071,
+          "tensor_norm": 1.7320508075688772
+        },
+        "y2_HC": {
+          "relative_reconstruction_error": 0.0,
+          "yukawa_condition_number": 2.21051063071344,
+          "tensor_norm": 1.7320508075688772
+        }
+      },
+      "common_mixing_controlled": {
+        "A_-2": {
+          "m1_ev": 0.0072147536425287125,
+          "m2_ev": 0.011008458118245685,
+          "m3_ev": 0.048560210320304144,
+          "m1_over_m3": 0.14857336067821883,
+          "m2_over_m3": 0.22669708482796241,
+          "m1_geometry_A": 0.168425941903832,
+          "m1_coherence_C": 0.4806452524301039,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.08912260340490827,
+          "max_group_matrix_norm_ev": 0.03227075635521264
+        },
+        "C_-1": {
+          "m1_ev": 0.0649471539045018,
+          "m2_ev": 0.06683788830504613,
+          "m3_ev": 0.10788079298025446,
+          "m1_over_m3": 0.6020270347511179,
+          "m2_over_m3": 0.6195531795662601,
+          "m1_geometry_A": 0.5691004979720031,
+          "m1_coherence_C": 0.28577815508198934,
+          "m1_mechanism": "mixed_or_neither_dominant",
+          "group_strength_ev": 0.39933937185973367,
+          "max_group_matrix_norm_ev": 0.16501825116045646
+        },
+        "C_+1": {
+          "m1_ev": 0.000633043417311202,
+          "m2_ev": 0.014321817834433372,
+          "m3_ev": 0.08276796731355533,
+          "m1_over_m3": 0.0076484108267755565,
+          "m2_over_m3": 0.17303575645608268,
+          "m1_geometry_A": 0.3191973173209087,
+          "m1_coherence_C": 0.013122060004849041,
+          "m1_mechanism": "heavy_eigenspace_cancellation_dominant",
+          "group_strength_ev": 0.151137503795096,
+          "max_group_matrix_norm_ev": 0.07686821771315051
+        },
+        "E_-2": {
+          "m1_ev": 0.0066668739507078825,
+          "m2_ev": 0.012273719395120404,
+          "m3_ev": 0.06006092048758313,
+          "m1_over_m3": 0.11100186105349781,
+          "m2_over_m3": 0.20435450032201632,
+          "m1_geometry_A": 0.03895770838226242,
+          "m1_coherence_C": 1.0000000000000002,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.17113106051544172,
+          "max_group_matrix_norm_ev": 0.07950753409740255
+        }
+      },
+      "C_family_swaps": {},
+      "conditional_only": true,
+      "physical_normalisation_certified": false
+    },
+    {
+      "model": "B_+1",
+      "family": "B",
+      "alpha": 1,
+      "fermion_type": "Dirac",
+      "active_charge_channels": 1,
+      "observed": {
+        "m1_ev": 0.0072158271197716945,
+        "m2_ev": 0.010946104201487871,
+        "m3_ev": 0.04807431856919185,
+        "m1_over_m3": 0.1500973354283989,
+        "m2_over_m3": 0.22769130228509613,
+        "m1_geometry_A": 0.15949253823319923,
+        "m1_coherence_C": 0.5052187954339021,
+        "m1_mechanism": "mode_geometry_dominant",
+        "group_strength_ev": 0.08955013624176193,
+        "max_group_matrix_norm_ev": 0.03322837942251191
+      },
+      "phasor_explanation": {
+        "model": "B_+1",
+        "mode": 1,
+        "m1_ev": 0.0072158271197716945,
+        "phasor_sum_ev": {
+          "real": 0.007215827119771702,
+          "imag": 0.0
+        },
+        "sum_absolute_projected_ev": 0.014282578528327415,
+        "cancelled_fraction": 0.49478120456609764,
+        "phasors": [
+          {
+            "heavy_group": 1,
+            "heavy_mass_gev": 100000.0,
+            "amplitude_ev": {
+              "real": -0.0028126721243307818,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.0028126721243307818,
+            "relative_phase_deg": 180.0,
+            "fraction_of_abs_sum": 0.19693027549277997
+          },
+          {
+            "heavy_group": 2,
+            "heavy_mass_gev": 110000.0,
+            "amplitude_ev": {
+              "real": -0.0007207035799470752,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.0007207035799470752,
+            "relative_phase_deg": 180.0,
+            "fraction_of_abs_sum": 0.05046032679026862
+          },
+          {
+            "heavy_group": 3,
+            "heavy_mass_gev": 120000.0,
+            "amplitude_ev": {
+              "real": 0.010749202824049559,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.010749202824049559,
+            "relative_phase_deg": 0.0,
+            "fraction_of_abs_sum": 0.7526093977169515
+          }
+        ],
+        "strongest_destructive_pair": {
+          "g": 1,
+          "h": 3,
+          "phase_cosine": -1.0,
+          "destructive_cross_term_ev2": -6.046796628396382e-05,
+          "pair_residual_fraction": 0.5852089574580995
+        },
+        "all_pairs": [
+          {
+            "g": 1,
+            "h": 3,
+            "phase_cosine": -1.0,
+            "destructive_cross_term_ev2": -6.046796628396382e-05,
+            "pair_residual_fraction": 0.5852089574580995
+          },
+          {
+            "g": 2,
+            "h": 3,
+            "phase_cosine": -1.0,
+            "destructive_cross_term_ev2": -1.5493977913739456e-05,
+            "pair_residual_fraction": 0.8743313930275929
+          },
+          {
+            "g": 1,
+            "h": 2,
+            "phase_cosine": 1.0,
+            "destructive_cross_term_ev2": 4.054205738445079e-06,
+            "pair_residual_fraction": 1.0
+          }
+        ],
+        "original_Batch4_coherence": 0.5052187954449181
+      },
+      "tensor_reconstruction": {
+        "y1_HC": {
+          "relative_reconstruction_error": 9.014744460566903e-17,
+          "yukawa_condition_number": 16.211824136334865,
+          "tensor_norm": 1.7320508075688772
+        },
+        "y2_HC": {
+          "relative_reconstruction_error": 4.09884590518975e-18,
+          "yukawa_condition_number": 1.7599236051886726,
+          "tensor_norm": 1.7320508075688772
+        }
+      },
+      "common_mixing_controlled": {
+        "A_-2": {
+          "m1_ev": 0.007214753642528704,
+          "m2_ev": 0.011008458118245685,
+          "m3_ev": 0.04856021032030415,
+          "m1_over_m3": 0.14857336067821864,
+          "m2_over_m3": 0.2266970848279624,
+          "m1_geometry_A": 0.16842594190383198,
+          "m1_coherence_C": 0.48064525243010336,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.08912260340490827,
+          "max_group_matrix_norm_ev": 0.03227075635521264
+        },
+        "C_-1": {
+          "m1_ev": 0.06494715390450177,
+          "m2_ev": 0.06683788830504614,
+          "m3_ev": 0.10788079298025448,
+          "m1_over_m3": 0.6020270347511175,
+          "m2_over_m3": 0.6195531795662601,
+          "m1_geometry_A": 0.5691004979720028,
+          "m1_coherence_C": 0.2857781550819893,
+          "m1_mechanism": "mixed_or_neither_dominant",
+          "group_strength_ev": 0.39933937185973367,
+          "max_group_matrix_norm_ev": 0.16501825116045646
+        },
+        "C_+1": {
+          "m1_ev": 0.0006330434173111991,
+          "m2_ev": 0.014321817834433384,
+          "m3_ev": 0.08276796731355532,
+          "m1_over_m3": 0.007648410826775523,
+          "m2_over_m3": 0.17303575645608285,
+          "m1_geometry_A": 0.3191973173209086,
+          "m1_coherence_C": 0.01312206000484899,
+          "m1_mechanism": "heavy_eigenspace_cancellation_dominant",
+          "group_strength_ev": 0.151137503795096,
+          "max_group_matrix_norm_ev": 0.07686821771315051
+        },
+        "E_-2": {
+          "m1_ev": 0.006666873950707881,
+          "m2_ev": 0.012273719395120397,
+          "m3_ev": 0.06006092048758315,
+          "m1_over_m3": 0.11100186105349774,
+          "m2_over_m3": 0.20435450032201613,
+          "m1_geometry_A": 0.03895770838226239,
+          "m1_coherence_C": 1.0000000000000004,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.17113106051544172,
+          "max_group_matrix_norm_ev": 0.07950753409740255
+        }
+      },
+      "C_family_swaps": {},
+      "conditional_only": true,
+      "physical_normalisation_certified": false
+    },
+    {
+      "model": "C_-3",
+      "family": "C",
+      "alpha": -3,
+      "fermion_type": "Dirac",
+      "active_charge_channels": 1,
+      "observed": {
+        "m1_ev": 0.026946874336522278,
+        "m2_ev": 0.02819228568991202,
+        "m3_ev": 0.0550407443995085,
+        "m1_over_m3": 0.4895804849754704,
+        "m2_over_m3": 0.5122075654587944,
+        "m1_geometry_A": 0.2687839047034746,
+        "m1_coherence_C": 1.0000000000000004,
+        "m1_mechanism": "mode_geometry_dominant",
+        "group_strength_ev": 0.10025479154434619,
+        "max_group_matrix_norm_ev": 0.054854665053258284
+      },
+      "phasor_explanation": {
+        "model": "C_-3",
+        "mode": 1,
+        "m1_ev": 0.026946874336522278,
+        "phasor_sum_ev": {
+          "real": 0.026946874336522254,
+          "imag": 0.0
+        },
+        "sum_absolute_projected_ev": 0.026946874336522257,
+        "cancelled_fraction": 0.0,
+        "phasors": [
+          {
+            "heavy_group": 1,
+            "heavy_mass_gev": 100000.0,
+            "amplitude_ev": {
+              "real": 0.02112105596272479,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.02112105596272479,
+            "relative_phase_deg": 0.0,
+            "fraction_of_abs_sum": 0.7838035572867356
+          },
+          {
+            "heavy_group": 2,
+            "heavy_mass_gev": 110000.0,
+            "amplitude_ev": {
+              "real": 0.00208145356296358,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.00208145356296358,
+            "relative_phase_deg": 0.0,
+            "fraction_of_abs_sum": 0.07724285707387206
+          },
+          {
+            "heavy_group": 3,
+            "heavy_mass_gev": 120000.0,
+            "amplitude_ev": {
+              "real": 0.0037443648108338875,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.0037443648108338875,
+            "relative_phase_deg": 0.0,
+            "fraction_of_abs_sum": 0.13895358563939228
+          }
+        ],
+        "strongest_destructive_pair": {
+          "g": 2,
+          "h": 3,
+          "phase_cosine": 1.0,
+          "destructive_cross_term_ev2": 1.5587442953091292e-05,
+          "pair_residual_fraction": 1.0
+        },
+        "all_pairs": [
+          {
+            "g": 2,
+            "h": 3,
+            "phase_cosine": 1.0,
+            "destructive_cross_term_ev2": 1.5587442953091292e-05,
+            "pair_residual_fraction": 1.0
+          },
+          {
+            "g": 1,
+            "h": 2,
+            "phase_cosine": 1.0,
+            "destructive_cross_term_ev2": 8.792499437433334e-05,
+            "pair_residual_fraction": 1.0
+          },
+          {
+            "g": 1,
+            "h": 3,
+            "phase_cosine": 1.0,
+            "destructive_cross_term_ev2": 0.00015816987742895992,
+            "pair_residual_fraction": 1.0
+          }
+        ],
+        "original_Batch4_coherence": 1.0000000000050753
+      },
+      "tensor_reconstruction": {
+        "y1_HC": {
+          "relative_reconstruction_error": 6.926853475805237e-17,
+          "yukawa_condition_number": 5.193854025915728,
+          "tensor_norm": 2.2795070569547775
+        },
+        "y2_HC": {
+          "relative_reconstruction_error": 5.118811273022481e-17,
+          "yukawa_condition_number": 10.51443133736516,
+          "tensor_norm": 2.2795070569547775
+        }
+      },
+      "common_mixing_controlled": {
+        "A_-2": {
+          "m1_ev": 0.004165439957650777,
+          "m2_ev": 0.006355736257931865,
+          "m3_ev": 0.028036250500332434,
+          "m1_over_m3": 0.14857336067821858,
+          "m2_over_m3": 0.2266970848279624,
+          "m1_geometry_A": 0.16842594190383214,
+          "m1_coherence_C": 0.4806452524301027,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.05145495906670404,
+          "max_group_matrix_norm_ev": 0.01863152986863484
+        },
+        "C_-1": {
+          "m1_ev": 0.03749725678986416,
+          "m2_ev": 0.03858887280498451,
+          "m3_ev": 0.06228500486754018,
+          "m1_over_m3": 0.602027034751118,
+          "m2_over_m3": 0.6195531795662602,
+          "m1_geometry_A": 0.5691004979720025,
+          "m1_coherence_C": 0.2857781550819896,
+          "m1_mechanism": "mixed_or_neither_dominant",
+          "group_strength_ev": 0.2305586938412333,
+          "max_group_matrix_norm_ev": 0.09527333172869082
+        },
+        "C_+1": {
+          "m1_ev": 0.00036548778739334476,
+          "m2_ev": 0.008268705381994885,
+          "m3_ev": 0.047786108208759316,
+          "m1_over_m3": 0.007648410826775592,
+          "m2_over_m3": 0.17303575645608257,
+          "m1_geometry_A": 0.31919731732090856,
+          "m1_coherence_C": 0.013122060004849109,
+          "m1_mechanism": "heavy_eigenspace_cancellation_dominant",
+          "group_strength_ev": 0.08725927850074675,
+          "max_group_matrix_norm_ev": 0.0443798861888142
+        },
+        "E_-2": {
+          "m1_ev": 0.003849121470094497,
+          "m2_ev": 0.007086235196730693,
+          "m3_ev": 0.034676188611282834,
+          "m1_over_m3": 0.11100186105349771,
+          "m2_over_m3": 0.2043545003220162,
+          "m1_geometry_A": 0.03895770838226238,
+          "m1_coherence_C": 1.0000000000000009,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.0988025638552964,
+          "max_group_matrix_norm_ev": 0.0459036962137387
+        }
+      },
+      "C_family_swaps": {
+        "frozen": {
+          "m1_ev": 0.026946874336522278,
+          "m2_ev": 0.02819228568991202,
+          "m3_ev": 0.0550407443995085,
+          "m1_over_m3": 0.4895804849754704,
+          "m2_over_m3": 0.5122075654587944,
+          "m1_geometry_A": 0.2687839047034746,
+          "m1_coherence_C": 1.0000000000000004,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.10025479154434619,
+          "max_group_matrix_norm_ev": 0.054854665053258284
+        },
+        "C_-1_both": {
+          "m1_ev": 0.03749725678986416,
+          "m2_ev": 0.03858887280498451,
+          "m3_ev": 0.06228500486754018,
+          "m1_over_m3": 0.602027034751118,
+          "m2_over_m3": 0.6195531795662602,
+          "m1_geometry_A": 0.5691004979720025,
+          "m1_coherence_C": 0.2857781550819896,
+          "m1_mechanism": "mixed_or_neither_dominant",
+          "group_strength_ev": 0.2305586938412333,
+          "max_group_matrix_norm_ev": 0.09527333172869082
+        },
+        "C_+1_both": {
+          "m1_ev": 0.00036548778739334476,
+          "m2_ev": 0.008268705381994885,
+          "m3_ev": 0.047786108208759316,
+          "m1_over_m3": 0.007648410826775592,
+          "m2_over_m3": 0.17303575645608257,
+          "m1_geometry_A": 0.31919731732090856,
+          "m1_coherence_C": 0.013122060004849109,
+          "m1_mechanism": "heavy_eigenspace_cancellation_dominant",
+          "group_strength_ev": 0.08725927850074675,
+          "max_group_matrix_norm_ev": 0.0443798861888142
+        },
+        "C_-1_y1_only": {
+          "m1_ev": 0.01163412077306398,
+          "m2_ev": 0.07867431481661476,
+          "m3_ev": 0.1423857881957746,
+          "m1_over_m3": 0.08170844099319478,
+          "m2_over_m3": 0.5525433107722858,
+          "m1_geometry_A": 0.09510152919982037,
+          "m1_coherence_C": 0.5165183059040909,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.23684288882530938,
+          "max_group_matrix_norm_ev": 0.14202959832221462
+        },
+        "C_-1_y2_only": {
+          "m1_ev": 0.003580784616278183,
+          "m2_ev": 0.021514197112930445,
+          "m3_ev": 0.05358866730300559,
+          "m1_over_m3": 0.06681981091321802,
+          "m2_over_m3": 0.40146915748591105,
+          "m1_geometry_A": 0.13705990306026775,
+          "m1_coherence_C": 0.21277321580989672,
+          "m1_mechanism": "mixed_or_neither_dominant",
+          "group_strength_ev": 0.12278655687920814,
+          "max_group_matrix_norm_ev": 0.07423799628789189
+        },
+        "C_+1_y1_only": {
+          "m1_ev": 0.006155299898587581,
+          "m2_ev": 0.03135983900704602,
+          "m3_ev": 0.06484128225761966,
+          "m1_over_m3": 0.09492871954832842,
+          "m2_over_m3": 0.48364001936992607,
+          "m1_geometry_A": 0.05223739683587847,
+          "m1_coherence_C": 0.9999999999999999,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.11783320516385122,
+          "max_group_matrix_norm_ev": 0.05822566345232283
+        },
+        "C_+1_y2_only": {
+          "m1_ev": 0.00895058632417214,
+          "m2_ev": 0.015270855177184963,
+          "m3_ev": 0.015491693795828397,
+          "m1_over_m3": 0.5777667982685246,
+          "m2_over_m3": 0.9857447079993988,
+          "m1_geometry_A": 0.4662036144444639,
+          "m1_coherence_C": 0.295992100172528,
+          "m1_mechanism": "mixed_or_neither_dominant",
+          "group_strength_ev": 0.0648628054750601,
+          "max_group_matrix_norm_ev": 0.02374147152895125
+        }
+      },
+      "conditional_only": true,
+      "physical_normalisation_certified": false
+    },
+    {
+      "model": "C_-1",
+      "family": "C",
+      "alpha": -1,
+      "fermion_type": "Majorana",
+      "active_charge_channels": 1,
+      "observed": {
+        "m1_ev": 0.037497256789864174,
+        "m2_ev": 0.038588872804984506,
+        "m3_ev": 0.06228500486754018,
+        "m1_over_m3": 0.6020270347511182,
+        "m2_over_m3": 0.6195531795662601,
+        "m1_geometry_A": 0.5691004979720028,
+        "m1_coherence_C": 0.28577815508198967,
+        "m1_mechanism": "mixed_or_neither_dominant",
+        "group_strength_ev": 0.2305586938412333,
+        "max_group_matrix_norm_ev": 0.09527333172869083
+      },
+      "phasor_explanation": {
+        "model": "C_-1",
+        "mode": 1,
+        "m1_ev": 0.037497256789864174,
+        "phasor_sum_ev": {
+          "real": 0.03749725678986419,
+          "imag": 0.0
+        },
+        "sum_absolute_projected_ev": 0.1312110674768204,
+        "cancelled_fraction": 0.7142218449180104,
+        "phasors": [
+          {
+            "heavy_group": 1,
+            "heavy_mass_gev": 100000.0,
+            "amplitude_ev": {
+              "real": 0.08435416213334229,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.08435416213334229,
+            "relative_phase_deg": 0.0,
+            "fraction_of_abs_sum": 0.6428890775409948
+          },
+          {
+            "heavy_group": 2,
+            "heavy_mass_gev": 110000.0,
+            "amplitude_ev": {
+              "real": -0.009368634869576451,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.009368634869576451,
+            "relative_phase_deg": 180.0,
+            "fraction_of_abs_sum": 0.0714012548616107
+          },
+          {
+            "heavy_group": 3,
+            "heavy_mass_gev": 120000.0,
+            "amplitude_ev": {
+              "real": -0.03748827047390165,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.03748827047390165,
+            "relative_phase_deg": 180.0,
+            "fraction_of_abs_sum": 0.28570966759739447
+          }
+        ],
+        "strongest_destructive_pair": {
+          "g": 1,
+          "h": 3,
+          "phase_cosine": -1.0,
+          "destructive_cross_term_ev2": -0.006324583291308177,
+          "pair_residual_fraction": 0.3846434337905225
+        },
+        "all_pairs": [
+          {
+            "g": 1,
+            "h": 3,
+            "phase_cosine": -1.0,
+            "destructive_cross_term_ev2": -0.006324583291308177,
+            "pair_residual_fraction": 0.3846434337905225
+          },
+          {
+            "g": 1,
+            "h": 2,
+            "phase_cosine": -1.0,
+            "destructive_cross_term_ev2": -0.0015805666895126723,
+            "pair_residual_fraction": 0.8000777789573503
+          },
+          {
+            "g": 2,
+            "h": 3,
+            "phase_cosine": 1.0,
+            "destructive_cross_term_ev2": 0.0007024278359238166,
+            "pair_residual_fraction": 1.0
+          }
+        ],
+        "original_Batch4_coherence": 0.28577815508140025
+      },
+      "tensor_reconstruction": {
+        "y1_HC": {
+          "relative_reconstruction_error": 7.84719641110081e-17,
+          "yukawa_condition_number": 20.27087885581112,
+          "tensor_norm": 2.279507056954778
+        },
+        "y2_HC": {
+          "relative_reconstruction_error": 1.3763020674127897e-16,
+          "yukawa_condition_number": 10.586648489899664,
+          "tensor_norm": 2.279507056954778
+        }
+      },
+      "common_mixing_controlled": {
+        "A_-2": {
+          "m1_ev": 0.00416543995765078,
+          "m2_ev": 0.006355736257931869,
+          "m3_ev": 0.028036250500332448,
+          "m1_over_m3": 0.1485733606782186,
+          "m2_over_m3": 0.22669708482796244,
+          "m1_geometry_A": 0.16842594190383195,
+          "m1_coherence_C": 0.4806452524301034,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.05145495906670406,
+          "max_group_matrix_norm_ev": 0.018631529868634856
+        },
+        "C_-1": {
+          "m1_ev": 0.037497256789864174,
+          "m2_ev": 0.038588872804984506,
+          "m3_ev": 0.06228500486754018,
+          "m1_over_m3": 0.6020270347511182,
+          "m2_over_m3": 0.6195531795662601,
+          "m1_geometry_A": 0.5691004979720028,
+          "m1_coherence_C": 0.28577815508198967,
+          "m1_mechanism": "mixed_or_neither_dominant",
+          "group_strength_ev": 0.2305586938412333,
+          "max_group_matrix_norm_ev": 0.09527333172869083
+        },
+        "C_+1": {
+          "m1_ev": 0.0003654877873933407,
+          "m2_ev": 0.008268705381994887,
+          "m3_ev": 0.04778610820875933,
+          "m1_over_m3": 0.007648410826775505,
+          "m2_over_m3": 0.17303575645608255,
+          "m1_geometry_A": 0.3191973173209085,
+          "m1_coherence_C": 0.013122060004848965,
+          "m1_mechanism": "heavy_eigenspace_cancellation_dominant",
+          "group_strength_ev": 0.08725927850074676,
+          "max_group_matrix_norm_ev": 0.04437988618881422
+        },
+        "E_-2": {
+          "m1_ev": 0.003849121470094503,
+          "m2_ev": 0.007086235196730694,
+          "m3_ev": 0.03467618861128284,
+          "m1_over_m3": 0.11100186105349787,
+          "m2_over_m3": 0.2043545003220162,
+          "m1_geometry_A": 0.03895770838226245,
+          "m1_coherence_C": 1.0000000000000002,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.09880256385529641,
+          "max_group_matrix_norm_ev": 0.04590369621373871
+        }
+      },
+      "C_family_swaps": {
+        "frozen": {
+          "m1_ev": 0.037497256789864174,
+          "m2_ev": 0.038588872804984506,
+          "m3_ev": 0.06228500486754018,
+          "m1_over_m3": 0.6020270347511182,
+          "m2_over_m3": 0.6195531795662601,
+          "m1_geometry_A": 0.5691004979720028,
+          "m1_coherence_C": 0.28577815508198967,
+          "m1_mechanism": "mixed_or_neither_dominant",
+          "group_strength_ev": 0.2305586938412333,
+          "max_group_matrix_norm_ev": 0.09527333172869083
+        },
+        "C_-1_both": {
+          "m1_ev": 0.037497256789864174,
+          "m2_ev": 0.038588872804984506,
+          "m3_ev": 0.06228500486754018,
+          "m1_over_m3": 0.6020270347511182,
+          "m2_over_m3": 0.6195531795662601,
+          "m1_geometry_A": 0.5691004979720028,
+          "m1_coherence_C": 0.28577815508198967,
+          "m1_mechanism": "mixed_or_neither_dominant",
+          "group_strength_ev": 0.2305586938412333,
+          "max_group_matrix_norm_ev": 0.09527333172869083
+        },
+        "C_+1_both": {
+          "m1_ev": 0.0003654877873933407,
+          "m2_ev": 0.008268705381994887,
+          "m3_ev": 0.04778610820875933,
+          "m1_over_m3": 0.007648410826775505,
+          "m2_over_m3": 0.17303575645608255,
+          "m1_geometry_A": 0.3191973173209085,
+          "m1_coherence_C": 0.013122060004848965,
+          "m1_mechanism": "heavy_eigenspace_cancellation_dominant",
+          "group_strength_ev": 0.08725927850074676,
+          "max_group_matrix_norm_ev": 0.04437988618881422
+        },
+        "C_-1_y1_only": {
+          "m1_ev": 0.037497256789864174,
+          "m2_ev": 0.038588872804984506,
+          "m3_ev": 0.06228500486754018,
+          "m1_over_m3": 0.6020270347511182,
+          "m2_over_m3": 0.6195531795662601,
+          "m1_geometry_A": 0.5691004979720028,
+          "m1_coherence_C": 0.28577815508198967,
+          "m1_mechanism": "mixed_or_neither_dominant",
+          "group_strength_ev": 0.2305586938412333,
+          "max_group_matrix_norm_ev": 0.09527333172869083
+        },
+        "C_-1_y2_only": {
+          "m1_ev": 0.037497256789864174,
+          "m2_ev": 0.038588872804984506,
+          "m3_ev": 0.06228500486754018,
+          "m1_over_m3": 0.6020270347511182,
+          "m2_over_m3": 0.6195531795662601,
+          "m1_geometry_A": 0.5691004979720028,
+          "m1_coherence_C": 0.28577815508198967,
+          "m1_mechanism": "mixed_or_neither_dominant",
+          "group_strength_ev": 0.2305586938412333,
+          "max_group_matrix_norm_ev": 0.09527333172869083
+        },
+        "C_+1_y1_only": {
+          "m1_ev": 0.0010263043751320945,
+          "m2_ev": 0.022499700097947897,
+          "m3_ev": 0.08330929105894654,
+          "m1_over_m3": 0.012319206682552609,
+          "m2_over_m3": 0.2700743195861306,
+          "m1_geometry_A": 0.24644072245389192,
+          "m1_coherence_C": 0.03127510504734067,
+          "m1_mechanism": "heavy_eigenspace_cancellation_dominant",
+          "group_strength_ev": 0.13315728450306016,
+          "max_group_matrix_norm_ev": 0.07901148120935615
+        },
+        "C_+1_y2_only": {
+          "m1_ev": 0.024977370195486445,
+          "m2_ev": 0.06294037565898217,
+          "m3_ev": 0.12067920373402773,
+          "m1_over_m3": 0.2069732764440143,
+          "m2_over_m3": 0.5215511348392744,
+          "m1_geometry_A": 0.30957969982145916,
+          "m1_coherence_C": 0.4551881264221868,
+          "m1_mechanism": "mixed_or_neither_dominant",
+          "group_strength_ev": 0.17724880296921408,
+          "max_group_matrix_norm_ev": 0.0889417961285651
+        }
+      },
+      "conditional_only": true,
+      "physical_normalisation_certified": false
+    },
+    {
+      "model": "C_+1",
+      "family": "C",
+      "alpha": 1,
+      "fermion_type": "Dirac",
+      "active_charge_channels": 1,
+      "observed": {
+        "m1_ev": 0.00036548778739333825,
+        "m2_ev": 0.008268705381994887,
+        "m3_ev": 0.047786108208759295,
+        "m1_over_m3": 0.007648410826775459,
+        "m2_over_m3": 0.17303575645608268,
+        "m1_geometry_A": 0.3191973173209087,
+        "m1_coherence_C": 0.013122060004848874,
+        "m1_mechanism": "heavy_eigenspace_cancellation_dominant",
+        "group_strength_ev": 0.08725927850074673,
+        "max_group_matrix_norm_ev": 0.0443798861888142
+      },
+      "phasor_explanation": {
+        "model": "C_+1",
+        "mode": 1,
+        "m1_ev": 0.00036548778739333825,
+        "phasor_sum_ev": {
+          "real": 0.00036548778739334264,
+          "imag": 0.0
+        },
+        "sum_absolute_projected_ev": 0.027852927608796405,
+        "cancelled_fraction": 0.9868779399951512,
+        "phasors": [
+          {
+            "heavy_group": 1,
+            "heavy_mass_gev": 100000.0,
+            "amplitude_ev": {
+              "real": 0.004881218058272346,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.004881218058272346,
+            "relative_phase_deg": 0.0,
+            "fraction_of_abs_sum": 0.17524973054289553
+          },
+          {
+            "heavy_group": 2,
+            "heavy_mass_gev": 110000.0,
+            "amplitude_ev": {
+              "real": -0.013743719910701531,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.013743719910701531,
+            "relative_phase_deg": 180.0,
+            "fraction_of_abs_sum": 0.49343896999757547
+          },
+          {
+            "heavy_group": 3,
+            "heavy_mass_gev": 120000.0,
+            "amplitude_ev": {
+              "real": 0.009227989639822527,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.009227989639822527,
+            "relative_phase_deg": 0.0,
+            "fraction_of_abs_sum": 0.3313112994595289
+          }
+        ],
+        "strongest_destructive_pair": {
+          "g": 2,
+          "h": 3,
+          "phase_cosine": -1.0,
+          "destructive_cross_term_ev2": -0.00025365380989715266,
+          "pair_residual_fraction": 0.19657789338434264
+        },
+        "all_pairs": [
+          {
+            "g": 2,
+            "h": 3,
+            "phase_cosine": -1.0,
+            "destructive_cross_term_ev2": -0.00025365380989715266,
+            "pair_residual_fraction": 0.19657789338434264
+          },
+          {
+            "g": 1,
+            "h": 2,
+            "phase_cosine": -1.0,
+            "destructive_cross_term_ev2": -0.000134172187631907,
+            "pair_residual_fraction": 0.4758406104327796
+          },
+          {
+            "g": 1,
+            "h": 3,
+            "phase_cosine": 1.0,
+            "destructive_cross_term_ev2": 9.008765934290369e-05,
+            "pair_residual_fraction": 1.0
+          }
+        ],
+        "original_Batch4_coherence": 0.013122059990926294
+      },
+      "tensor_reconstruction": {
+        "y1_HC": {
+          "relative_reconstruction_error": 1.6330720987219785e-16,
+          "yukawa_condition_number": 3.42931685179008,
+          "tensor_norm": 2.2795070569547775
+        },
+        "y2_HC": {
+          "relative_reconstruction_error": 1.084786390163715e-16,
+          "yukawa_condition_number": 3.236887145116917,
+          "tensor_norm": 2.2795070569547775
+        }
+      },
+      "common_mixing_controlled": {
+        "A_-2": {
+          "m1_ev": 0.004165439957650774,
+          "m2_ev": 0.006355736257931867,
+          "m3_ev": 0.02803625050033244,
+          "m1_over_m3": 0.14857336067821844,
+          "m2_over_m3": 0.22669708482796241,
+          "m1_geometry_A": 0.16842594190383214,
+          "m1_coherence_C": 0.4806452524301024,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.05145495906670404,
+          "max_group_matrix_norm_ev": 0.018631529868634842
+        },
+        "C_-1": {
+          "m1_ev": 0.037497256789864146,
+          "m2_ev": 0.038588872804984506,
+          "m3_ev": 0.06228500486754019,
+          "m1_over_m3": 0.6020270347511176,
+          "m2_over_m3": 0.61955317956626,
+          "m1_geometry_A": 0.5691004979720028,
+          "m1_coherence_C": 0.28577815508198934,
+          "m1_mechanism": "mixed_or_neither_dominant",
+          "group_strength_ev": 0.2305586938412333,
+          "max_group_matrix_norm_ev": 0.09527333172869083
+        },
+        "C_+1": {
+          "m1_ev": 0.00036548778739333825,
+          "m2_ev": 0.008268705381994887,
+          "m3_ev": 0.047786108208759295,
+          "m1_over_m3": 0.007648410826775459,
+          "m2_over_m3": 0.17303575645608268,
+          "m1_geometry_A": 0.3191973173209087,
+          "m1_coherence_C": 0.013122060004848874,
+          "m1_mechanism": "heavy_eigenspace_cancellation_dominant",
+          "group_strength_ev": 0.08725927850074673,
+          "max_group_matrix_norm_ev": 0.0443798861888142
+        },
+        "E_-2": {
+          "m1_ev": 0.003849121470094497,
+          "m2_ev": 0.0070862351967307,
+          "m3_ev": 0.03467618861128283,
+          "m1_over_m3": 0.11100186105349773,
+          "m2_over_m3": 0.20435450032201646,
+          "m1_geometry_A": 0.03895770838226238,
+          "m1_coherence_C": 1.0000000000000004,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.09880256385529641,
+          "max_group_matrix_norm_ev": 0.045903696213738694
+        }
+      },
+      "C_family_swaps": {
+        "frozen": {
+          "m1_ev": 0.00036548778739333825,
+          "m2_ev": 0.008268705381994887,
+          "m3_ev": 0.047786108208759295,
+          "m1_over_m3": 0.007648410826775459,
+          "m2_over_m3": 0.17303575645608268,
+          "m1_geometry_A": 0.3191973173209087,
+          "m1_coherence_C": 0.013122060004848874,
+          "m1_mechanism": "heavy_eigenspace_cancellation_dominant",
+          "group_strength_ev": 0.08725927850074673,
+          "max_group_matrix_norm_ev": 0.0443798861888142
+        },
+        "C_-1_both": {
+          "m1_ev": 0.037497256789864146,
+          "m2_ev": 0.038588872804984506,
+          "m3_ev": 0.06228500486754019,
+          "m1_over_m3": 0.6020270347511176,
+          "m2_over_m3": 0.61955317956626,
+          "m1_geometry_A": 0.5691004979720028,
+          "m1_coherence_C": 0.28577815508198934,
+          "m1_mechanism": "mixed_or_neither_dominant",
+          "group_strength_ev": 0.2305586938412333,
+          "max_group_matrix_norm_ev": 0.09527333172869083
+        },
+        "C_+1_both": {
+          "m1_ev": 0.00036548778739333825,
+          "m2_ev": 0.008268705381994887,
+          "m3_ev": 0.047786108208759295,
+          "m1_over_m3": 0.007648410826775459,
+          "m2_over_m3": 0.17303575645608268,
+          "m1_geometry_A": 0.3191973173209087,
+          "m1_coherence_C": 0.013122060004848874,
+          "m1_mechanism": "heavy_eigenspace_cancellation_dominant",
+          "group_strength_ev": 0.08725927850074673,
+          "max_group_matrix_norm_ev": 0.0443798861888142
+        },
+        "C_-1_y1_only": {
+          "m1_ev": 0.024977370195486435,
+          "m2_ev": 0.06294037565898217,
+          "m3_ev": 0.12067920373402771,
+          "m1_over_m3": 0.20697327644401425,
+          "m2_over_m3": 0.5215511348392745,
+          "m1_geometry_A": 0.3095796998214591,
+          "m1_coherence_C": 0.4551881264221866,
+          "m1_mechanism": "mixed_or_neither_dominant",
+          "group_strength_ev": 0.17724880296921408,
+          "max_group_matrix_norm_ev": 0.0889417961285651
+        },
+        "C_-1_y2_only": {
+          "m1_ev": 0.0010263043751321025,
+          "m2_ev": 0.022499700097947883,
+          "m3_ev": 0.08330929105894654,
+          "m1_over_m3": 0.012319206682552705,
+          "m2_over_m3": 0.27007431958613043,
+          "m1_geometry_A": 0.24644072245389187,
+          "m1_coherence_C": 0.03127510504734093,
+          "m1_mechanism": "heavy_eigenspace_cancellation_dominant",
+          "group_strength_ev": 0.13315728450306014,
+          "max_group_matrix_norm_ev": 0.07901148120935614
+        },
+        "C_+1_y1_only": {
+          "m1_ev": 0.00036548778739333825,
+          "m2_ev": 0.008268705381994887,
+          "m3_ev": 0.047786108208759295,
+          "m1_over_m3": 0.007648410826775459,
+          "m2_over_m3": 0.17303575645608268,
+          "m1_geometry_A": 0.3191973173209087,
+          "m1_coherence_C": 0.013122060004848874,
+          "m1_mechanism": "heavy_eigenspace_cancellation_dominant",
+          "group_strength_ev": 0.08725927850074673,
+          "max_group_matrix_norm_ev": 0.0443798861888142
+        },
+        "C_+1_y2_only": {
+          "m1_ev": 0.00036548778739333825,
+          "m2_ev": 0.008268705381994887,
+          "m3_ev": 0.047786108208759295,
+          "m1_over_m3": 0.007648410826775459,
+          "m2_over_m3": 0.17303575645608268,
+          "m1_geometry_A": 0.3191973173209087,
+          "m1_coherence_C": 0.013122060004848874,
+          "m1_mechanism": "heavy_eigenspace_cancellation_dominant",
+          "group_strength_ev": 0.08725927850074673,
+          "max_group_matrix_norm_ev": 0.0443798861888142
+        }
+      },
+      "conditional_only": true,
+      "physical_normalisation_certified": false
+    },
+    {
+      "model": "D_-2",
+      "family": "D",
+      "alpha": -2,
+      "fermion_type": "Dirac",
+      "active_charge_channels": 1,
+      "observed": {
+        "m1_ev": 0.007214174883819532,
+        "m2_ev": 0.01099775394462876,
+        "m3_ev": 0.048482372402266126,
+        "m1_over_m3": 0.14879995607397983,
+        "m2_over_m3": 0.22684025965929652,
+        "m1_geometry_A": 0.16929883086811418,
+        "m1_coherence_C": 0.47850537027408374,
+        "m1_mechanism": "mode_geometry_dominant",
+        "group_strength_ev": 0.08905245383244124,
+        "max_group_matrix_norm_ev": 0.032211895388524675
+      },
+      "phasor_explanation": {
+        "model": "D_-2",
+        "mode": 1,
+        "m1_ev": 0.007214174883819532,
+        "phasor_sum_ev": {
+          "real": 0.007214174883819528,
+          "imag": 0.0
+        },
+        "sum_absolute_projected_ev": 0.015076476319769015,
+        "cancelled_fraction": 0.521494629725916,
+        "phasors": [
+          {
+            "heavy_group": 1,
+            "heavy_mass_gev": 100000.0,
+            "amplitude_ev": {
+              "real": -0.003208025995278709,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.003208025995278709,
+            "relative_phase_deg": 180.0,
+            "fraction_of_abs_sum": 0.21278353955109444
+          },
+          {
+            "heavy_group": 2,
+            "heavy_mass_gev": 110000.0,
+            "amplitude_ev": {
+              "real": -0.0007231247226960345,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.0007231247226960345,
+            "relative_phase_deg": 180.0,
+            "fraction_of_abs_sum": 0.04796377531186368
+          },
+          {
+            "heavy_group": 3,
+            "heavy_mass_gev": 120000.0,
+            "amplitude_ev": {
+              "real": 0.011145325601794272,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.011145325601794272,
+            "relative_phase_deg": 0.0,
+            "fraction_of_abs_sum": 0.7392526851370419
+          }
+        ],
+        "strongest_destructive_pair": {
+          "g": 1,
+          "h": 3,
+          "phase_cosine": -1.0,
+          "destructive_cross_term_ev2": -7.15089885128027e-05,
+          "pair_residual_fraction": 0.5529927663817684
+        },
+        "all_pairs": [
+          {
+            "g": 1,
+            "h": 3,
+            "phase_cosine": -1.0,
+            "destructive_cross_term_ev2": -7.15089885128027e-05,
+            "pair_residual_fraction": 0.5529927663817684
+          },
+          {
+            "g": 2,
+            "h": 3,
+            "phase_cosine": -1.0,
+            "destructive_cross_term_ev2": -1.6118920970308995e-05,
+            "pair_residual_fraction": 0.8781433627937285
+          },
+          {
+            "g": 1,
+            "h": 2,
+            "phase_cosine": 1.0,
+            "destructive_cross_term_ev2": 4.639605816475173e-06,
+            "pair_residual_fraction": 1.0
+          }
+        ],
+        "original_Batch4_coherence": 0.47850537027360374
+      },
+      "tensor_reconstruction": {
+        "y1_HC": {
+          "relative_reconstruction_error": 9.592618787444752e-17,
+          "yukawa_condition_number": 16.288158900161456,
+          "tensor_norm": 2.2795070569547775
+        },
+        "y2_HC": {
+          "relative_reconstruction_error": 5.22029790668236e-18,
+          "yukawa_condition_number": 1.682988513758355,
+          "tensor_norm": 1.7320508075688772
+        }
+      },
+      "common_mixing_controlled": {
+        "A_-2": {
+          "m1_ev": 0.007214753468406735,
+          "m2_ev": 0.011008457842547175,
+          "m3_ev": 0.04856020909964995,
+          "m1_over_m3": 0.14857336082720335,
+          "m2_over_m3": 0.2266970848489722,
+          "m1_geometry_A": 0.1684259416431101,
+          "m1_coherence_C": 0.4806452536962291,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.08912260115720212,
+          "max_group_matrix_norm_ev": 0.03227075555893326
+        },
+        "C_-1": {
+          "m1_ev": 0.06494715214821593,
+          "m2_ev": 0.06683788662613664,
+          "m3_ev": 0.10788079030415933,
+          "m1_over_m3": 0.6020270334051484,
+          "m2_over_m3": 0.6195531793722846,
+          "m1_geometry_A": 0.5691004981201537,
+          "m1_coherence_C": 0.2857781545118337,
+          "m1_mechanism": "mixed_or_neither_dominant",
+          "group_strength_ev": 0.3993393617536549,
+          "max_group_matrix_norm_ev": 0.16501824690545913
+        },
+        "C_+1": {
+          "m1_ev": 0.0006330434047281921,
+          "m2_ev": 0.014321817461256029,
+          "m3_ev": 0.08276796525307252,
+          "m1_over_m3": 0.0076484108651528335,
+          "m2_over_m3": 0.173035756255037,
+          "m1_geometry_A": 0.31919731734683526,
+          "m1_coherence_C": 0.013122060072323296,
+          "m1_mechanism": "heavy_eigenspace_cancellation_dominant",
+          "group_strength_ev": 0.15113750000150222,
+          "max_group_matrix_norm_ev": 0.07686821581643091
+        },
+        "E_-2": {
+          "m1_ev": 0.006666873781752008,
+          "m2_ev": 0.012273719055553222,
+          "m3_ev": 0.06006091896332473,
+          "m1_over_m3": 0.11100186105748784,
+          "m2_over_m3": 0.20435449985452236,
+          "m1_geometry_A": 0.038957708384977564,
+          "m1_coherence_C": 0.9999999999999994,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.17113105616661015,
+          "max_group_matrix_norm_ev": 0.07950753204729992
+        }
+      },
+      "C_family_swaps": {},
+      "conditional_only": true,
+      "physical_normalisation_certified": false
+    },
+    {
+      "model": "D_+0",
+      "family": "D",
+      "alpha": 0,
+      "fermion_type": "Dirac",
+      "active_charge_channels": 1,
+      "observed": {
+        "m1_ev": 0.00721467031370822,
+        "m2_ev": 0.011007039496764364,
+        "m3_ev": 0.0485499027028022,
+        "m1_over_m3": 0.14860318789664237,
+        "m2_over_m3": 0.22671599496591907,
+        "m1_geometry_A": 0.168457779456636,
+        "m1_coherence_C": 0.4805766198379874,
+        "m1_mechanism": "mode_geometry_dominant",
+        "group_strength_ev": 0.08911745590727024,
+        "max_group_matrix_norm_ev": 0.03226842009533063
+      },
+      "phasor_explanation": {
+        "model": "D_+0",
+        "mode": 1,
+        "m1_ev": 0.00721467031370822,
+        "phasor_sum_ev": {
+          "real": 0.00721467031370822,
+          "imag": 0.0
+        },
+        "sum_absolute_projected_ev": 0.015012528732963415,
+        "cancelled_fraction": 0.5194233801620127,
+        "phasors": [
+          {
+            "heavy_group": 1,
+            "heavy_mass_gev": 100000.0,
+            "amplitude_ev": {
+              "real": -0.003176139393279275,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.003176139393279275,
+            "relative_phase_deg": 180.0,
+            "fraction_of_abs_sum": 0.21156591602754707
+          },
+          {
+            "heavy_group": 2,
+            "heavy_mass_gev": 110000.0,
+            "amplitude_ev": {
+              "real": -0.0007227898163483215,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.0007227898163483215,
+            "relative_phase_deg": 180.0,
+            "fraction_of_abs_sum": 0.04814577405345925
+          },
+          {
+            "heavy_group": 3,
+            "heavy_mass_gev": 120000.0,
+            "amplitude_ev": {
+              "real": 0.011113599523335817,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.011113599523335817,
+            "relative_phase_deg": 0.0,
+            "fraction_of_abs_sum": 0.7402883099189936
+          }
+        ],
+        "strongest_destructive_pair": {
+          "g": 1,
+          "h": 3,
+          "phase_cosine": -1.0,
+          "destructive_cross_term_ev2": -7.059668249439333e-05,
+          "pair_residual_fraction": 0.5554657209886059
+        },
+        "all_pairs": [
+          {
+            "g": 1,
+            "h": 3,
+            "phase_cosine": -1.0,
+            "destructive_cross_term_ev2": -7.059668249439333e-05,
+            "pair_residual_fraction": 0.5554657209886059
+          },
+          {
+            "g": 2,
+            "h": 3,
+            "phase_cosine": -1.0,
+            "destructive_cross_term_ev2": -1.6065593116881377e-05,
+            "pair_residual_fraction": 0.8778698814975597
+          },
+          {
+            "g": 1,
+            "h": 2,
+            "phase_cosine": 1.0,
+            "destructive_cross_term_ev2": 4.591362417529993e-06,
+            "pair_residual_fraction": 1.0
+          }
+        ],
+        "original_Batch4_coherence": 0.48057661983714595
+      },
+      "tensor_reconstruction": {
+        "y1_HC": {
+          "relative_reconstruction_error": 1.0073112934051928e-16,
+          "yukawa_condition_number": 16.247460273064537,
+          "tensor_norm": 2.2795070569547775
+        },
+        "y2_HC": {
+          "relative_reconstruction_error": 8.915938636442431e-19,
+          "yukawa_condition_number": 1.6865911160539697,
+          "tensor_norm": 1.7320508075688772
+        }
+      },
+      "common_mixing_controlled": {
+        "A_-2": {
+          "m1_ev": 0.007214753468406745,
+          "m2_ev": 0.011008457842547174,
+          "m3_ev": 0.048560209099649934,
+          "m1_over_m3": 0.1485733608272036,
+          "m2_over_m3": 0.22669708484897222,
+          "m1_geometry_A": 0.16842594164311014,
+          "m1_coherence_C": 0.48064525369622946,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.08912260115720212,
+          "max_group_matrix_norm_ev": 0.03227075555893326
+        },
+        "C_-1": {
+          "m1_ev": 0.06494715214821586,
+          "m2_ev": 0.0668378866261367,
+          "m3_ev": 0.10788079030415945,
+          "m1_over_m3": 0.6020270334051471,
+          "m2_over_m3": 0.6195531793722844,
+          "m1_geometry_A": 0.5691004981201535,
+          "m1_coherence_C": 0.28577815451183336,
+          "m1_mechanism": "mixed_or_neither_dominant",
+          "group_strength_ev": 0.3993393617536551,
+          "max_group_matrix_norm_ev": 0.16501824690545913
+        },
+        "C_+1": {
+          "m1_ev": 0.0006330434047281562,
+          "m2_ev": 0.014321817461256011,
+          "m3_ev": 0.08276796525307249,
+          "m1_over_m3": 0.007648410865152402,
+          "m2_over_m3": 0.17303575625503687,
+          "m1_geometry_A": 0.3191973173468351,
+          "m1_coherence_C": 0.013122060072322564,
+          "m1_mechanism": "heavy_eigenspace_cancellation_dominant",
+          "group_strength_ev": 0.15113750000150217,
+          "max_group_matrix_norm_ev": 0.07686821581643086
+        },
+        "E_-2": {
+          "m1_ev": 0.0066668737817520115,
+          "m2_ev": 0.01227371905555321,
+          "m3_ev": 0.06006091896332475,
+          "m1_over_m3": 0.11100186105748786,
+          "m2_over_m3": 0.2043544998545221,
+          "m1_geometry_A": 0.03895770838497754,
+          "m1_coherence_C": 1.0000000000000002,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.17113105616661015,
+          "max_group_matrix_norm_ev": 0.07950753204729992
+        }
+      },
+      "C_family_swaps": {},
+      "conditional_only": true,
+      "physical_normalisation_certified": false
+    },
+    {
+      "model": "D_+2",
+      "family": "D",
+      "alpha": 2,
+      "fermion_type": "Dirac",
+      "active_charge_channels": 1,
+      "observed": {
+        "m1_ev": 0.00047473317438079113,
+        "m2_ev": 0.007581737808906305,
+        "m3_ev": 0.04359481976388834,
+        "m1_over_m3": 0.010889669390812234,
+        "m2_over_m3": 0.17391373218123998,
+        "m1_geometry_A": 0.10255005200263048,
+        "m1_coherence_C": 0.05711788651721404,
+        "m1_mechanism": "mixed_or_neither_dominant",
+        "group_strength_ev": 0.08104786279187826,
+        "max_group_matrix_norm_ev": 0.03415922042076814
+      },
+      "phasor_explanation": {
+        "model": "D_+2",
+        "mode": 1,
+        "m1_ev": 0.00047473317438079113,
+        "phasor_sum_ev": {
+          "real": 0.00047473317438079254,
+          "imag": 0.0
+        },
+        "sum_absolute_projected_ev": 0.008311462544009175,
+        "cancelled_fraction": 0.9428821134827859,
+        "phasors": [
+          {
+            "heavy_group": 1,
+            "heavy_mass_gev": 100000.0,
+            "amplitude_ev": {
+              "real": 0.0009345382574871403,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.0009345382574871403,
+            "relative_phase_deg": 0.0,
+            "fraction_of_abs_sum": 0.11243968826650694
+          },
+          {
+            "heavy_group": 2,
+            "heavy_mass_gev": 110000.0,
+            "amplitude_ev": {
+              "real": 0.0034585596017078436,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.0034585596017078436,
+            "relative_phase_deg": 0.0,
+            "fraction_of_abs_sum": 0.4161192549921002
+          },
+          {
+            "heavy_group": 3,
+            "heavy_mass_gev": 120000.0,
+            "amplitude_ev": {
+              "real": -0.003918364684814191,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.003918364684814191,
+            "relative_phase_deg": 180.0,
+            "fraction_of_abs_sum": 0.4714410567413929
+          }
+        ],
+        "strongest_destructive_pair": {
+          "g": 2,
+          "h": 3,
+          "phase_cosine": -1.0,
+          "destructive_cross_term_ev2": -2.7103795607314098e-05,
+          "pair_residual_fraction": 0.062330188740913554
+        },
+        "all_pairs": [
+          {
+            "g": 2,
+            "h": 3,
+            "phase_cosine": -1.0,
+            "destructive_cross_term_ev2": -2.7103795607314098e-05,
+            "pair_residual_fraction": 0.062330188740913554
+          },
+          {
+            "g": 1,
+            "h": 3,
+            "phase_cosine": -1.0,
+            "destructive_cross_term_ev2": -7.3237234094908035e-06,
+            "pair_residual_fraction": 0.6148539261558089
+          },
+          {
+            "g": 1,
+            "h": 2,
+            "phase_cosine": 1.0,
+            "destructive_cross_term_ev2": 6.4643125271909326e-06,
+            "pair_residual_fraction": 1.0
+          }
+        ],
+        "original_Batch4_coherence": 0.057117886525751574
+      },
+      "tensor_reconstruction": {
+        "y1_HC": {
+          "relative_reconstruction_error": 8.116919503290537e-17,
+          "yukawa_condition_number": 42.838956775817145,
+          "tensor_norm": 2.2795070569547766
+        },
+        "y2_HC": {
+          "relative_reconstruction_error": 9.412076157132187e-18,
+          "yukawa_condition_number": 20.25803614971219,
+          "tensor_norm": 1.7320508075688772
+        }
+      },
+      "common_mixing_controlled": {
+        "A_-2": {
+          "m1_ev": 0.007214753468406736,
+          "m2_ev": 0.01100845784254718,
+          "m3_ev": 0.04856020909965,
+          "m1_over_m3": 0.1485733608272032,
+          "m2_over_m3": 0.22669708484897205,
+          "m1_geometry_A": 0.16842594164310998,
+          "m1_coherence_C": 0.48064525369622896,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.08912260115720219,
+          "max_group_matrix_norm_ev": 0.03227075555893329
+        },
+        "C_-1": {
+          "m1_ev": 0.06494715214821595,
+          "m2_ev": 0.06683788662613657,
+          "m3_ev": 0.10788079030415927,
+          "m1_over_m3": 0.6020270334051488,
+          "m2_over_m3": 0.6195531793722843,
+          "m1_geometry_A": 0.5691004981201536,
+          "m1_coherence_C": 0.2857781545118338,
+          "m1_mechanism": "mixed_or_neither_dominant",
+          "group_strength_ev": 0.39933936175365475,
+          "max_group_matrix_norm_ev": 0.16501824690545913
+        },
+        "C_+1": {
+          "m1_ev": 0.0006330434047282609,
+          "m2_ev": 0.014321817461256013,
+          "m3_ev": 0.08276796525307259,
+          "m1_over_m3": 0.007648410865153659,
+          "m2_over_m3": 0.17303575625503667,
+          "m1_geometry_A": 0.3191973173468348,
+          "m1_coherence_C": 0.013122060072324743,
+          "m1_mechanism": "heavy_eigenspace_cancellation_dominant",
+          "group_strength_ev": 0.15113750000150225,
+          "max_group_matrix_norm_ev": 0.07686821581643094
+        },
+        "E_-2": {
+          "m1_ev": 0.006666873781752012,
+          "m2_ev": 0.012273719055553153,
+          "m3_ev": 0.06006091896332469,
+          "m1_over_m3": 0.11100186105748798,
+          "m2_over_m3": 0.20435449985452134,
+          "m1_geometry_A": 0.03895770838497754,
+          "m1_coherence_C": 1.0000000000000007,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.1711310561666101,
+          "max_group_matrix_norm_ev": 0.07950753204729993
+        }
+      },
+      "C_family_swaps": {},
+      "conditional_only": true,
+      "physical_normalisation_certified": false
+    },
+    {
+      "model": "E_-4",
+      "family": "E",
+      "alpha": -4,
+      "fermion_type": "Dirac",
+      "active_charge_channels": 2,
+      "observed": {
+        "m1_ev": 0.0033193970978734463,
+        "m2_ev": 0.007416937057892064,
+        "m3_ev": 0.03848845478705307,
+        "m1_over_m3": 0.08624396890545061,
+        "m2_over_m3": 0.1927055034796307,
+        "m1_geometry_A": 0.1572623664901449,
+        "m1_coherence_C": 0.21399989585211013,
+        "m1_mechanism": "mixed_or_neither_dominant",
+        "group_strength_ev": 0.09863268172160591,
+        "max_group_matrix_norm_ev": 0.051706982315041096
+      },
+      "phasor_explanation": {
+        "model": "E_-4",
+        "mode": 1,
+        "m1_ev": 0.0033193970978734463,
+        "phasor_sum_ev": {
+          "real": 0.003319397097873442,
+          "imag": 0.0
+        },
+        "sum_absolute_projected_ev": 0.015511208940809007,
+        "cancelled_fraction": 0.7860001041478899,
+        "phasors": [
+          {
+            "heavy_group": 1,
+            "heavy_mass_gev": 100000.0,
+            "amplitude_ev": {
+              "real": -0.006095905921467783,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.006095905921467783,
+            "relative_phase_deg": 180.0,
+            "fraction_of_abs_sum": 0.3930000520739451
+          },
+          {
+            "heavy_group": 2,
+            "heavy_mass_gev": 110000.0,
+            "amplitude_ev": {
+              "real": 0.007360396703418472,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.007360396703418472,
+            "relative_phase_deg": 0.0,
+            "fraction_of_abs_sum": 0.4745211499313722
+          },
+          {
+            "heavy_group": 3,
+            "heavy_mass_gev": 120000.0,
+            "amplitude_ev": {
+              "real": 0.002054906315922753,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.002054906315922753,
+            "relative_phase_deg": 0.0,
+            "fraction_of_abs_sum": 0.1324787979946827
+          }
+        ],
+        "strongest_destructive_pair": {
+          "g": 1,
+          "h": 2,
+          "phase_cosine": -1.0,
+          "destructive_cross_term_ev2": -8.973657169744121e-05,
+          "pair_residual_fraction": 0.0939701504343492
+        },
+        "all_pairs": [
+          {
+            "g": 1,
+            "h": 2,
+            "phase_cosine": -1.0,
+            "destructive_cross_term_ev2": -8.973657169744121e-05,
+            "pair_residual_fraction": 0.0939701504343492
+          },
+          {
+            "g": 1,
+            "h": 3,
+            "phase_cosine": -1.0,
+            "destructive_cross_term_ev2": -2.505303115859011e-05,
+            "pair_residual_fraction": 0.4957787626376175
+          },
+          {
+            "g": 2,
+            "h": 3,
+            "phase_cosine": 1.0,
+            "destructive_cross_term_ev2": 3.0249851347103252e-05,
+            "pair_residual_fraction": 1.0
+          }
+        ],
+        "original_Batch4_coherence": 0.21399989586420756
+      },
+      "tensor_reconstruction": {
+        "y1_HC": {
+          "relative_reconstruction_error": 6.922398269080578e-17,
+          "yukawa_condition_number": 6.448492919330601,
+          "tensor_norm": 2.279507056954778
+        },
+        "y2_HC": {
+          "relative_reconstruction_error": 1.5480948169909547e-16,
+          "yukawa_condition_number": 2.132804791461914,
+          "tensor_norm": 2.2795070569547775
+        }
+      },
+      "common_mixing_controlled": {
+        "A_-2": {
+          "m1_ev": 0.010203201990967251,
+          "m2_ev": 0.01556831004421023,
+          "m3_ev": 0.06867450480565557,
+          "m1_over_m3": 0.14857336095602955,
+          "m2_over_m3": 0.2266970848682134,
+          "m1_geometry_A": 0.16842594141678494,
+          "m1_coherence_C": 0.48064525479370807,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.1260383885180438,
+          "max_group_matrix_norm_ev": 0.04563773920434093
+        },
+        "C_-1": {
+          "m1_ev": 0.09184914125448602,
+          "m2_ev": 0.09452304369117438,
+          "m3_ev": 0.15256647349115957,
+          "m1_over_m3": 0.6020270322352846,
+          "m2_over_m3": 0.6195531792025821,
+          "m1_geometry_A": 0.5691004982495895,
+          "m1_coherence_C": 0.2857781540163796,
+          "m1_mechanism": "mixed_or_neither_dominant",
+          "group_strength_ev": 0.5647511290061,
+          "max_group_matrix_norm_ev": 0.23337103760184244
+        },
+        "C_+1": {
+          "m1_ev": 0.0008952585529692428,
+          "m2_ev": 0.020254108034421875,
+          "m3_ev": 0.11705157646763378,
+          "m1_over_m3": 0.007648410897027029,
+          "m2_over_m3": 0.1730357560799054,
+          "m1_geometry_A": 0.3191973173694589,
+          "m1_coherence_C": 0.013122060128405255,
+          "m1_mechanism": "heavy_eigenspace_cancellation_dominant",
+          "group_strength_ev": 0.21374069763976958,
+          "max_group_matrix_norm_ev": 0.10870807100028215
+        },
+        "E_-2": {
+          "m1_ev": 0.009428383113889653,
+          "m2_ev": 0.017357659533100395,
+          "m3_ev": 0.08493896430019206,
+          "m1_over_m3": 0.11100186106069973,
+          "m2_over_m3": 0.20435449944685924,
+          "m1_geometry_A": 0.038957708387315146,
+          "m1_coherence_C": 0.9999999999999997,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.24201585524880592,
+          "max_group_matrix_norm_ev": 0.11244062762144336
+        }
+      },
+      "C_family_swaps": {},
+      "conditional_only": true,
+      "physical_normalisation_certified": false
+    },
+    {
+      "model": "E_-2",
+      "family": "E",
+      "alpha": -2,
+      "fermion_type": "Dirac",
+      "active_charge_channels": 2,
+      "observed": {
+        "m1_ev": 0.004714191055353341,
+        "m2_ev": 0.008678828758139636,
+        "m3_ev": 0.04246947762517033,
+        "m1_over_m3": 0.11100186107679808,
+        "m2_over_m3": 0.20435449747552265,
+        "m1_geometry_A": 0.038957708398682664,
+        "m1_coherence_C": 1.0000000000000013,
+        "m1_mechanism": "mode_geometry_dominant",
+        "group_strength_ev": 0.12100791471381166,
+        "max_group_matrix_norm_ev": 0.05622030772408841
+      },
+      "phasor_explanation": {
+        "model": "E_-2",
+        "mode": 1,
+        "m1_ev": 0.004714191055353341,
+        "phasor_sum_ev": {
+          "real": 0.004714191055353336,
+          "imag": 0.0
+        },
+        "sum_absolute_projected_ev": 0.004714191055353336,
+        "cancelled_fraction": 0.0,
+        "phasors": [
+          {
+            "heavy_group": 1,
+            "heavy_mass_gev": 100000.0,
+            "amplitude_ev": {
+              "real": 0.002077447509208256,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.002077447509208256,
+            "relative_phase_deg": 0.0,
+            "fraction_of_abs_sum": 0.44067953224957873
+          },
+          {
+            "heavy_group": 2,
+            "heavy_mass_gev": 110000.0,
+            "amplitude_ev": {
+              "real": 0.0016121679125090597,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.0016121679125090597,
+            "relative_phase_deg": 0.0,
+            "fraction_of_abs_sum": 0.34198187845575667
+          },
+          {
+            "heavy_group": 3,
+            "heavy_mass_gev": 120000.0,
+            "amplitude_ev": {
+              "real": 0.0010245756336360206,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.0010245756336360206,
+            "relative_phase_deg": 0.0,
+            "fraction_of_abs_sum": 0.2173385892946647
+          }
+        ],
+        "strongest_destructive_pair": {
+          "g": 2,
+          "h": 3,
+          "phase_cosine": 1.0,
+          "destructive_cross_term_ev2": 3.303575920973261e-06,
+          "pair_residual_fraction": 1.0
+        },
+        "all_pairs": [
+          {
+            "g": 2,
+            "h": 3,
+            "phase_cosine": 1.0,
+            "destructive_cross_term_ev2": 3.303575920973261e-06,
+            "pair_residual_fraction": 1.0
+          },
+          {
+            "g": 1,
+            "h": 3,
+            "phase_cosine": 1.0,
+            "destructive_cross_term_ev2": 4.257004196185243e-06,
+            "pair_residual_fraction": 1.0
+          },
+          {
+            "g": 1,
+            "h": 2,
+            "phase_cosine": 1.0,
+            "destructive_cross_term_ev2": 6.698388428534839e-06,
+            "pair_residual_fraction": 1.0
+          }
+        ],
+        "original_Batch4_coherence": 1.0000000000053095
+      },
+      "tensor_reconstruction": {
+        "y1_HC": {
+          "relative_reconstruction_error": 8.899897644668902e-17,
+          "yukawa_condition_number": 139.6590922100266,
+          "tensor_norm": 2.279507056954774
+        },
+        "y2_HC": {
+          "relative_reconstruction_error": 2.2812979629071913e-16,
+          "yukawa_condition_number": 500.3886718751047,
+          "tensor_norm": 2.2795070569547713
+        }
+      },
+      "common_mixing_controlled": {
+        "A_-2": {
+          "m1_ev": 0.010203201990967286,
+          "m2_ev": 0.015568310044210202,
+          "m3_ev": 0.06867450480565637,
+          "m1_over_m3": 0.14857336095602833,
+          "m2_over_m3": 0.22669708486821033,
+          "m1_geometry_A": 0.16842594141677944,
+          "m1_coherence_C": 0.48064525479372855,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.12603838851804297,
+          "max_group_matrix_norm_ev": 0.045637739204340604
+        },
+        "C_-1": {
+          "m1_ev": 0.09184914125448718,
+          "m2_ev": 0.09452304369117358,
+          "m3_ev": 0.15256647349116043,
+          "m1_over_m3": 0.6020270322352889,
+          "m2_over_m3": 0.6195531792025734,
+          "m1_geometry_A": 0.5691004982495894,
+          "m1_coherence_C": 0.28577815401638373,
+          "m1_mechanism": "mixed_or_neither_dominant",
+          "group_strength_ev": 0.5647511290060989,
+          "max_group_matrix_norm_ev": 0.23337103760184286
+        },
+        "C_+1": {
+          "m1_ev": 0.0008952585529695065,
+          "m2_ev": 0.020254108034421358,
+          "m3_ev": 0.11705157646763525,
+          "m1_over_m3": 0.007648410897029186,
+          "m2_over_m3": 0.17303575607989882,
+          "m1_geometry_A": 0.3191973173694574,
+          "m1_coherence_C": 0.013122060128409156,
+          "m1_mechanism": "heavy_eigenspace_cancellation_dominant",
+          "group_strength_ev": 0.21374069763976994,
+          "max_group_matrix_norm_ev": 0.10870807100028151
+        },
+        "E_-2": {
+          "m1_ev": 0.009428383113889651,
+          "m2_ev": 0.01735765953310041,
+          "m3_ev": 0.0849389643001921,
+          "m1_over_m3": 0.11100186106069966,
+          "m2_over_m3": 0.2043544994468593,
+          "m1_geometry_A": 0.03895770838731515,
+          "m1_coherence_C": 0.9999999999999994,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.24201585524880592,
+          "max_group_matrix_norm_ev": 0.11244062762144334
+        }
+      },
+      "C_family_swaps": {},
+      "conditional_only": true,
+      "physical_normalisation_certified": false
+    },
+    {
+      "model": "E_+0",
+      "family": "E",
+      "alpha": 0,
+      "fermion_type": "Dirac",
+      "active_charge_channels": 2,
+      "observed": {
+        "m1_ev": 0.0046435842810503445,
+        "m2_ev": 0.008648589446347351,
+        "m3_ev": 0.042515356861588124,
+        "m1_over_m3": 0.1092213408008752,
+        "m2_over_m3": 0.20342271792527747,
+        "m1_geometry_A": 0.03875179025730295,
+        "m1_coherence_C": 0.9999999999999998,
+        "m1_mechanism": "mode_geometry_dominant",
+        "group_strength_ev": 0.1198288969417417,
+        "max_group_matrix_norm_ev": 0.055648685165571886
+      },
+      "phasor_explanation": {
+        "model": "E_+0",
+        "mode": 1,
+        "m1_ev": 0.0046435842810503445,
+        "phasor_sum_ev": {
+          "real": 0.004643584281050345,
+          "imag": 0.0
+        },
+        "sum_absolute_projected_ev": 0.004643584281050345,
+        "cancelled_fraction": 2.220446049250313e-16,
+        "phasors": [
+          {
+            "heavy_group": 1,
+            "heavy_mass_gev": 100000.0,
+            "amplitude_ev": {
+              "real": 0.00205236538185966,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.00205236538185966,
+            "relative_phase_deg": 0.0,
+            "fraction_of_abs_sum": 0.4419787081791545
+          },
+          {
+            "heavy_group": 2,
+            "heavy_mass_gev": 110000.0,
+            "amplitude_ev": {
+              "real": 0.0015318979970121009,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.0015318979970121009,
+            "relative_phase_deg": 0.0,
+            "fraction_of_abs_sum": 0.329895594500892
+          },
+          {
+            "heavy_group": 3,
+            "heavy_mass_gev": 120000.0,
+            "amplitude_ev": {
+              "real": 0.0010593209021785845,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.0010593209021785845,
+            "relative_phase_deg": 0.0,
+            "fraction_of_abs_sum": 0.2281256973199534
+          }
+        ],
+        "strongest_destructive_pair": {
+          "g": 2,
+          "h": 3,
+          "phase_cosine": 1.0,
+          "destructive_cross_term_ev2": 3.2455431364808507e-06,
+          "pair_residual_fraction": 1.0
+        },
+        "all_pairs": [
+          {
+            "g": 2,
+            "h": 3,
+            "phase_cosine": 1.0,
+            "destructive_cross_term_ev2": 3.2455431364808507e-06,
+            "pair_residual_fraction": 1.0
+          },
+          {
+            "g": 1,
+            "h": 3,
+            "phase_cosine": 1.0,
+            "destructive_cross_term_ev2": 4.34822709582334e-06,
+            "pair_residual_fraction": 1.0
+          },
+          {
+            "g": 1,
+            "h": 2,
+            "phase_cosine": 1.0,
+            "destructive_cross_term_ev2": 6.288028835215577e-06,
+            "pair_residual_fraction": 1.0
+          }
+        ],
+        "original_Batch4_coherence": 1.0000000000203484
+      },
+      "tensor_reconstruction": {
+        "y1_HC": {
+          "relative_reconstruction_error": 1.3141214649976185e-16,
+          "yukawa_condition_number": 164.30077851027715,
+          "tensor_norm": 2.2795070569547775
+        },
+        "y2_HC": {
+          "relative_reconstruction_error": 7.005127857796231e-17,
+          "yukawa_condition_number": 262.41717349426136,
+          "tensor_norm": 2.27950705695478
+        }
+      },
+      "common_mixing_controlled": {
+        "A_-2": {
+          "m1_ev": 0.010203201990967392,
+          "m2_ev": 0.015568310044210233,
+          "m3_ev": 0.06867450480565562,
+          "m1_over_m3": 0.1485733609560315,
+          "m2_over_m3": 0.22669708486821327,
+          "m1_geometry_A": 0.16842594141678244,
+          "m1_coherence_C": 0.4806452547937213,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.12603838851804394,
+          "max_group_matrix_norm_ev": 0.045637739204341166
+        },
+        "C_-1": {
+          "m1_ev": 0.09184914125448654,
+          "m2_ev": 0.09452304369117427,
+          "m3_ev": 0.15256647349116176,
+          "m1_over_m3": 0.6020270322352794,
+          "m2_over_m3": 0.6195531792025726,
+          "m1_geometry_A": 0.5691004982495971,
+          "m1_coherence_C": 0.28577815401637685,
+          "m1_mechanism": "mixed_or_neither_dominant",
+          "group_strength_ev": 0.5647511290061008,
+          "max_group_matrix_norm_ev": 0.23337103760184189
+        },
+        "C_+1": {
+          "m1_ev": 0.0008952585529688748,
+          "m2_ev": 0.020254108034421757,
+          "m3_ev": 0.11705157646763377,
+          "m1_over_m3": 0.007648410897023886,
+          "m2_over_m3": 0.17303575607990443,
+          "m1_geometry_A": 0.3191973173694593,
+          "m1_coherence_C": 0.013122060128399815,
+          "m1_mechanism": "heavy_eigenspace_cancellation_dominant",
+          "group_strength_ev": 0.21374069763977005,
+          "max_group_matrix_norm_ev": 0.10870807100028253
+        },
+        "E_-2": {
+          "m1_ev": 0.009428383113889651,
+          "m2_ev": 0.01735765953310042,
+          "m3_ev": 0.08493896430019209,
+          "m1_over_m3": 0.11100186106069967,
+          "m2_over_m3": 0.20435449944685946,
+          "m1_geometry_A": 0.038957708387315125,
+          "m1_coherence_C": 1.0000000000000002,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.24201585524880592,
+          "max_group_matrix_norm_ev": 0.11244062762144334
+        }
+      },
+      "C_family_swaps": {},
+      "conditional_only": true,
+      "physical_normalisation_certified": false
+    },
+    {
+      "model": "E_+2",
+      "family": "E",
+      "alpha": 2,
+      "fermion_type": "Dirac",
+      "active_charge_channels": 2,
+      "observed": {
+        "m1_ev": 0.003325966842521223,
+        "m2_ev": 0.00744248479621186,
+        "m3_ev": 0.03863356002604827,
+        "m1_over_m3": 0.08609009473314716,
+        "m2_over_m3": 0.19264299720744976,
+        "m1_geometry_A": 0.15766061008028162,
+        "m1_coherence_C": 0.21322240306027204,
+        "m1_mechanism": "mixed_or_neither_dominant",
+        "group_strength_ev": 0.0989377156699559,
+        "max_group_matrix_norm_ev": 0.05192567299643105
+      },
+      "phasor_explanation": {
+        "model": "E_+2",
+        "mode": 1,
+        "m1_ev": 0.003325966842521223,
+        "phasor_sum_ev": {
+          "real": 0.0033259668425212174,
+          "imag": 0.0
+        },
+        "sum_absolute_projected_ev": 0.015598580612474688,
+        "cancelled_fraction": 0.7867775969397279,
+        "phasors": [
+          {
+            "heavy_group": 1,
+            "heavy_mass_gev": 100000.0,
+            "amplitude_ev": {
+              "real": -0.006136306884976735,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.006136306884976735,
+            "relative_phase_deg": 180.0,
+            "fraction_of_abs_sum": 0.3933887984698642
+          },
+          {
+            "heavy_group": 2,
+            "heavy_mass_gev": 110000.0,
+            "amplitude_ev": {
+              "real": 0.007407356486390234,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.007407356486390234,
+            "relative_phase_deg": 0.0,
+            "fraction_of_abs_sum": 0.47487375104285656
+          },
+          {
+            "heavy_group": 3,
+            "heavy_mass_gev": 120000.0,
+            "amplitude_ev": {
+              "real": 0.0020549172411077187,
+              "imag": 0.0
+            },
+            "magnitude_ev": 0.0020549172411077187,
+            "relative_phase_deg": 0.0,
+            "fraction_of_abs_sum": 0.13173745048727928
+          }
+        ],
+        "strongest_destructive_pair": {
+          "g": 1,
+          "h": 2,
+          "phase_cosine": -1.0,
+          "destructive_cross_term_ev2": -9.090762521382695e-05,
+          "pair_residual_fraction": 0.0938482865795867
+        },
+        "all_pairs": [
+          {
+            "g": 1,
+            "h": 2,
+            "phase_cosine": -1.0,
+            "destructive_cross_term_ev2": -9.090762521382695e-05,
+            "pair_residual_fraction": 0.0938482865795867
+          },
+          {
+            "g": 1,
+            "h": 3,
+            "phase_cosine": -1.0,
+            "destructive_cross_term_ev2": -2.5219205629333385e-05,
+            "pair_residual_fraction": 0.4982637004000513
+          },
+          {
+            "g": 2,
+            "h": 3,
+            "phase_cosine": 1.0,
+            "destructive_cross_term_ev2": 3.044300910982877e-05,
+            "pair_residual_fraction": 1.0
+          }
+        ],
+        "original_Batch4_coherence": 0.21322240306619217
+      },
+      "tensor_reconstruction": {
+        "y1_HC": {
+          "relative_reconstruction_error": 1.577024651392769e-16,
+          "yukawa_condition_number": 6.470717309491642,
+          "tensor_norm": 2.279507056954778
+        },
+        "y2_HC": {
+          "relative_reconstruction_error": 1.0054640522025331e-16,
+          "yukawa_condition_number": 2.1321213232738128,
+          "tensor_norm": 2.279507056954778
+        }
+      },
+      "common_mixing_controlled": {
+        "A_-2": {
+          "m1_ev": 0.010203201990967256,
+          "m2_ev": 0.015568310044210236,
+          "m3_ev": 0.0686745048056556,
+          "m1_over_m3": 0.14857336095602958,
+          "m2_over_m3": 0.2266970848682134,
+          "m1_geometry_A": 0.16842594141678469,
+          "m1_coherence_C": 0.48064525479370895,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.12603838851804383,
+          "max_group_matrix_norm_ev": 0.04563773920434092
+        },
+        "C_-1": {
+          "m1_ev": 0.091849141254486,
+          "m2_ev": 0.09452304369117444,
+          "m3_ev": 0.15256647349115968,
+          "m1_over_m3": 0.6020270322352841,
+          "m2_over_m3": 0.619553179202582,
+          "m1_geometry_A": 0.5691004982495891,
+          "m1_coherence_C": 0.28577815401637957,
+          "m1_mechanism": "mixed_or_neither_dominant",
+          "group_strength_ev": 0.5647511290061002,
+          "max_group_matrix_norm_ev": 0.23337103760184247
+        },
+        "C_+1": {
+          "m1_ev": 0.0008952585529692323,
+          "m2_ev": 0.020254108034421875,
+          "m3_ev": 0.11705157646763381,
+          "m1_over_m3": 0.0076484108970269376,
+          "m2_over_m3": 0.17303575607990537,
+          "m1_geometry_A": 0.31919731736945894,
+          "m1_coherence_C": 0.013122060128405097,
+          "m1_mechanism": "heavy_eigenspace_cancellation_dominant",
+          "group_strength_ev": 0.21374069763976963,
+          "max_group_matrix_norm_ev": 0.10870807100028218
+        },
+        "E_-2": {
+          "m1_ev": 0.009428383113889641,
+          "m2_ev": 0.01735765953310041,
+          "m3_ev": 0.08493896430019209,
+          "m1_over_m3": 0.11100186106069955,
+          "m2_over_m3": 0.20435449944685935,
+          "m1_geometry_A": 0.038957708387315125,
+          "m1_coherence_C": 0.9999999999999991,
+          "m1_mechanism": "mode_geometry_dominant",
+          "group_strength_ev": 0.24201585524880595,
+          "max_group_matrix_norm_ev": 0.11244062762144336
+        }
+      },
+      "C_family_swaps": {},
+      "conditional_only": true,
+      "physical_normalisation_certified": false
+    }
+  ],
+  "matched_pairs": [
+    {
+      "model_a": "A_-4",
+      "model_b": "D_+2",
+      "frozen_complex_scale_best_fit": {
+        "real": 0.999866580913911,
+        "imag": 0.0
+      },
+      "frozen_matrix_proportional_residual": 2.805433660715902e-05,
+      "frozen_ratio_m1_over_m3": 1.0006610751140554,
+      "common_reference_m1_over_m3_ratios": {
+        "A_-2": 0.9999999999999992,
+        "C_-1": 0.9999999999999994,
+        "C_+1": 1.000000000000097,
+        "E_-2": 1.0
+      },
+      "common_reference_matrix_shapes": {
+        "A_-2": {
+          "best_complex_scale": {
+            "real": 1.0000000000000009,
+            "imag": 0.0
+          },
+          "proportional_matrix_residual": 5.632623153828261e-16,
+          "frob_norm_ratio_b_over_a": 1.0000000000000007
+        },
+        "C_-1": {
+          "best_complex_scale": {
+            "real": 0.999999999999999,
+            "imag": 0.0
+          },
+          "proportional_matrix_residual": 1.844811209752005e-15,
+          "frob_norm_ratio_b_over_a": 0.9999999999999989
+        },
+        "C_+1": {
+          "best_complex_scale": {
+            "real": 1.0000000000000009,
+            "imag": 0.0
+          },
+          "proportional_matrix_residual": 1.1697463201394976e-15,
+          "frob_norm_ratio_b_over_a": 1.0000000000000009
+        },
+        "E_-2": {
+          "best_complex_scale": {
+            "real": 0.9999999999999992,
+            "imag": 0.0
+          },
+          "proportional_matrix_residual": 1.6651954706602988e-15,
+          "frob_norm_ratio_b_over_a": 0.9999999999999993
+        }
+      }
+    },
+    {
+      "model_a": "A_-2",
+      "model_b": "D_+0",
+      "frozen_complex_scale_best_fit": {
+        "real": 0.9997958804376837,
+        "imag": 0.0
+      },
+      "frozen_matrix_proportional_residual": 3.3109039836760346e-05,
+      "frozen_ratio_m1_over_m3": 1.000200756510272,
+      "common_reference_m1_over_m3_ratios": {
+        "A_-2": 1.0000000000000018,
+        "C_-1": 0.9999999999999989,
+        "C_+1": 0.9999999999999433,
+        "E_-2": 1.0000000000000016
+      },
+      "common_reference_matrix_shapes": {
+        "A_-2": {
+          "best_complex_scale": {
+            "real": 0.9999999999999998,
+            "imag": 0.0
+          },
+          "proportional_matrix_residual": 1.8749649589794706e-16,
+          "frob_norm_ratio_b_over_a": 0.9999999999999999
+        },
+        "C_-1": {
+          "best_complex_scale": {
+            "real": 1.0000000000000002,
+            "imag": 0.0
+          },
+          "proportional_matrix_residual": 4.839955949011686e-16,
+          "frob_norm_ratio_b_over_a": 1.0000000000000002
+        },
+        "C_+1": {
+          "best_complex_scale": {
+            "real": 0.9999999999999998,
+            "imag": 0.0
+          },
+          "proportional_matrix_residual": 5.59911484364134e-16,
+          "frob_norm_ratio_b_over_a": 0.9999999999999999
+        },
+        "E_-2": {
+          "best_complex_scale": {
+            "real": 1.0,
+            "imag": 0.0
+          },
+          "proportional_matrix_residual": 2.5401835852145776e-16,
+          "frob_norm_ratio_b_over_a": 1.0000000000000002
+        }
+      }
+    },
+    {
+      "model_a": "A_+0",
+      "model_b": "D_-2",
+      "frozen_complex_scale_best_fit": {
+        "real": 0.9996713069407401,
+        "imag": 0.0
+      },
+      "frozen_matrix_proportional_residual": 5.399301839930241e-05,
+      "frozen_ratio_m1_over_m3": 1.0003281430070285,
+      "common_reference_m1_over_m3_ratios": {
+        "A_-2": 0.9999999999999987,
+        "C_-1": 0.9999999999999991,
+        "C_+1": 0.9999999999999738,
+        "E_-2": 0.9999999999999994
+      },
+      "common_reference_matrix_shapes": {
+        "A_-2": {
+          "best_complex_scale": {
+            "real": 0.9999999999999997,
+            "imag": 0.0
+          },
+          "proportional_matrix_residual": 1.877541051276089e-16,
+          "frob_norm_ratio_b_over_a": 0.9999999999999998
+        },
+        "C_-1": {
+          "best_complex_scale": {
+            "real": 0.9999999999999997,
+            "imag": 0.0
+          },
+          "proportional_matrix_residual": 8.654415652667834e-16,
+          "frob_norm_ratio_b_over_a": 0.9999999999999997
+        },
+        "C_+1": {
+          "best_complex_scale": {
+            "real": 1.0,
+            "imag": 0.0
+          },
+          "proportional_matrix_residual": 1.7574895836986283e-16,
+          "frob_norm_ratio_b_over_a": 0.9999999999999999
+        },
+        "E_-2": {
+          "best_complex_scale": {
+            "real": 1.0000000000000002,
+            "imag": 0.0
+          },
+          "proportional_matrix_residual": 2.6052780332867685e-16,
+          "frob_norm_ratio_b_over_a": 1.0
+        }
+      }
+    },
+    {
+      "model_a": "B_-3",
+      "model_b": "B_+1",
+      "frozen_complex_scale_best_fit": {
+        "real": 0.9948662391961649,
+        "imag": 0.0
+      },
+      "frozen_matrix_proportional_residual": 0.0008378197419630016,
+      "frozen_ratio_m1_over_m3": 1.005033621335437,
+      "common_reference_m1_over_m3_ratios": {
+        "A_-2": 1.0,
+        "C_-1": 1.0,
+        "C_+1": 1.0,
+        "E_-2": 1.0
+      },
+      "common_reference_matrix_shapes": {
+        "A_-2": {
+          "best_complex_scale": {
+            "real": 0.9999999999999999,
+            "imag": 0.0
+          },
+          "proportional_matrix_residual": 1.3659036052088153e-16,
+          "frob_norm_ratio_b_over_a": 1.0
+        },
+        "C_-1": {
+          "best_complex_scale": {
+            "real": 1.0,
+            "imag": 0.0
+          },
+          "proportional_matrix_residual": 0.0,
+          "frob_norm_ratio_b_over_a": 1.0
+        },
+        "C_+1": {
+          "best_complex_scale": {
+            "real": 1.0,
+            "imag": 0.0
+          },
+          "proportional_matrix_residual": 0.0,
+          "frob_norm_ratio_b_over_a": 1.0
+        },
+        "E_-2": {
+          "best_complex_scale": {
+            "real": 1.0,
+            "imag": 0.0
+          },
+          "proportional_matrix_residual": 0.0,
+          "frob_norm_ratio_b_over_a": 1.0
+        }
+      }
+    },
+    {
+      "model_a": "C_-3",
+      "model_b": "C_+1",
+      "frozen_complex_scale_best_fit": {
+        "real": 0.1090003430249258,
+        "imag": 0.0
+      },
+      "frozen_matrix_proportional_residual": 0.9884400900466731,
+      "frozen_ratio_m1_over_m3": 0.015622376833828803,
+      "common_reference_m1_over_m3_ratios": {
+        "A_-2": 0.9999999999999991,
+        "C_-1": 0.9999999999999994,
+        "C_+1": 0.9999999999999827,
+        "E_-2": 1.0000000000000002
+      },
+      "common_reference_matrix_shapes": {
+        "A_-2": {
+          "best_complex_scale": {
+            "real": 1.0,
+            "imag": 0.0
+          },
+          "proportional_matrix_residual": 1.599021248942737e-16,
+          "frob_norm_ratio_b_over_a": 1.0000000000000002
+        },
+        "C_-1": {
+          "best_complex_scale": {
+            "real": 0.9999999999999999,
+            "imag": 0.0
+          },
+          "proportional_matrix_residual": 3.189272085818306e-16,
+          "frob_norm_ratio_b_over_a": 1.0000000000000002
+        },
+        "C_+1": {
+          "best_complex_scale": {
+            "real": 1.0,
+            "imag": 0.0
+          },
+          "proportional_matrix_residual": 1.8321997856880965e-16,
+          "frob_norm_ratio_b_over_a": 0.9999999999999999
+        },
+        "E_-2": {
+          "best_complex_scale": {
+            "real": 1.0000000000000002,
+            "imag": 0.0
+          },
+          "proportional_matrix_residual": 5.570311400638141e-16,
+          "frob_norm_ratio_b_over_a": 1.0000000000000002
+        }
+      }
+    },
+    {
+      "model_a": "E_-4",
+      "model_b": "E_+2",
+      "frozen_complex_scale_best_fit": {
+        "real": 1.0037457706784412,
+        "imag": 0.0
+      },
+      "frozen_matrix_proportional_residual": 0.00016072835137716384,
+      "frozen_ratio_m1_over_m3": 0.9982158268658514,
+      "common_reference_m1_over_m3_ratios": {
+        "A_-2": 1.0000000000000002,
+        "C_-1": 0.9999999999999991,
+        "C_+1": 0.9999999999999881,
+        "E_-2": 0.9999999999999983
+      },
+      "common_reference_matrix_shapes": {
+        "A_-2": {
+          "best_complex_scale": {
+            "real": 1.0000000000000002,
+            "imag": 0.0
+          },
+          "proportional_matrix_residual": 2.7282664330563317e-16,
+          "frob_norm_ratio_b_over_a": 1.0000000000000002
+        },
+        "C_-1": {
+          "best_complex_scale": {
+            "real": 1.0000000000000002,
+            "imag": 0.0
+          },
+          "proportional_matrix_residual": 3.5979843294952655e-16,
+          "frob_norm_ratio_b_over_a": 1.0000000000000002
+        },
+        "C_+1": {
+          "best_complex_scale": {
+            "real": 1.0000000000000002,
+            "imag": 0.0
+          },
+          "proportional_matrix_residual": 2.2159848974511963e-16,
+          "frob_norm_ratio_b_over_a": 1.0
+        },
+        "E_-2": {
+          "best_complex_scale": {
+            "real": 1.0000000000000004,
+            "imag": 0.0
+          },
+          "proportional_matrix_residual": 3.1231522283450275e-16,
+          "frob_norm_ratio_b_over_a": 1.0000000000000002
+        }
+      }
+    },
+    {
+      "model_a": "E_-2",
+      "model_b": "E_+0",
+      "frozen_complex_scale_best_fit": {
+        "real": 1.000711745079998,
+        "imag": 0.0
+      },
+      "frozen_matrix_proportional_residual": 0.0019232050598181668,
+      "frozen_ratio_m1_over_m3": 0.9839595457350846,
+      "common_reference_m1_over_m3_ratios": {
+        "A_-2": 1.0000000000000213,
+        "C_-1": 0.9999999999999843,
+        "C_+1": 0.9999999999993071,
+        "E_-2": 1.0000000000000002
+      },
+      "common_reference_matrix_shapes": {
+        "A_-2": {
+          "best_complex_scale": {
+            "real": 0.9999999999999901,
+            "imag": 0.0
+          },
+          "proportional_matrix_residual": 6.743660401109125e-15,
+          "frob_norm_ratio_b_over_a": 0.9999999999999902
+        },
+        "C_-1": {
+          "best_complex_scale": {
+            "real": 1.0000000000000053,
+            "imag": 0.0
+          },
+          "proportional_matrix_residual": 1.4285136363563774e-14,
+          "frob_norm_ratio_b_over_a": 1.000000000000005
+        },
+        "C_+1": {
+          "best_complex_scale": {
+            "real": 0.9999999999999885,
+            "imag": 0.0
+          },
+          "proportional_matrix_residual": 1.4772565961208906e-14,
+          "frob_norm_ratio_b_over_a": 0.9999999999999882
+        },
+        "E_-2": {
+          "best_complex_scale": {
+            "real": 0.9999999999999998,
+            "imag": 0.0
+          },
+          "proportional_matrix_residual": 4.056045961362057e-16,
+          "frob_norm_ratio_b_over_a": 1.0
+        }
+      }
+    }
+  ],
+  "C_texture_interpolations": [
+    {
+      "model": "C_+1",
+      "target_texture": "C_-1",
+      "t": 0.0,
+      "m1_ev": 0.00036548778739333825,
+      "m2_ev": 0.008268705381994887,
+      "m3_ev": 0.047786108208759295,
+      "m1_over_m3": 0.007648410826775459,
+      "m2_over_m3": 0.17303575645608268,
+      "m1_geometry_A": 0.3191973173209087,
+      "m1_coherence_C": 0.013122060004848874,
+      "group_strength_ev": 0.08725927850074673,
+      "max_group_matrix_norm_ev": 0.0443798861888142
+    },
+    {
+      "model": "C_+1",
+      "target_texture": "C_-1",
+      "t": 0.1,
+      "m1_ev": 0.006703713833265037,
+      "m2_ev": 0.008052360998974085,
+      "m3_ev": 0.03604261362164913,
+      "m1_over_m3": 0.18599410974010017,
+      "m2_over_m3": 0.22341223873224902,
+      "m1_geometry_A": 0.09902211895305774,
+      "m1_coherence_C": 1.0000000000000002,
+      "group_strength_ev": 0.0676991555436517,
+      "max_group_matrix_norm_ev": 0.03358494312882439
+    },
+    {
+      "model": "C_+1",
+      "target_texture": "C_-1",
+      "t": 0.2,
+      "m1_ev": 0.01099105890568483,
+      "m2_ev": 0.015229797165711665,
+      "m3_ev": 0.027520483213806457,
+      "m1_over_m3": 0.3993773953856611,
+      "m2_over_m3": 0.5533986103147779,
+      "m1_geometry_A": 0.1944984635943071,
+      "m1_coherence_C": 1.0000000000000002,
+      "group_strength_ev": 0.05650974667136927,
+      "max_group_matrix_norm_ev": 0.02647670999530782
+    },
+    {
+      "model": "C_+1",
+      "target_texture": "C_-1",
+      "t": 0.3,
+      "m1_ev": 0.009987391631714906,
+      "m2_ev": 0.021863338118434723,
+      "m3_ev": 0.025236724789345015,
+      "m1_over_m3": 0.3957483276883694,
+      "m2_over_m3": 0.8663302508915681,
+      "m1_geometry_A": 0.20290444861718657,
+      "m1_coherence_C": 0.9089067039262676,
+      "group_strength_ev": 0.05415532972864304,
+      "max_group_matrix_norm_ev": 0.023872781920112506
+    },
+    {
+      "model": "C_+1",
+      "target_texture": "C_-1",
+      "t": 0.4,
+      "m1_ev": 0.005915347108680222,
+      "m2_ev": 0.026624879010905888,
+      "m3_ev": 0.02833789273612057,
+      "m1_over_m3": 0.20874336577399394,
+      "m2_over_m3": 0.9395504196036705,
+      "m1_geometry_A": 0.1851126489179541,
+      "m1_coherence_C": 0.5361920220076924,
+      "group_strength_ev": 0.05959691653208379,
+      "max_group_matrix_norm_ev": 0.025336361944235684
+    },
+    {
+      "model": "C_+1",
+      "target_texture": "C_-1",
+      "t": 0.5,
+      "m1_ev": 0.0030031747327828816,
+      "m2_ev": 0.029950375687235752,
+      "m3_ev": 0.03303169350204161,
+      "m1_over_m3": 0.09091797647605511,
+      "m2_over_m3": 0.9067163233815,
+      "m1_geometry_A": 0.18018400851581046,
+      "m1_coherence_C": 0.23187476154207923,
+      "group_strength_ev": 0.07188046479197402,
+      "max_group_matrix_norm_ev": 0.02916424200713354
+    },
+    {
+      "model": "C_+1",
+      "target_texture": "C_-1",
+      "t": 0.6,
+      "m1_ev": 0.0029192910855001205,
+      "m2_ev": 0.032420975903603454,
+      "m3_ev": 0.03823085826181004,
+      "m1_over_m3": 0.07635954875792807,
+      "m2_over_m3": 0.8480316000645413,
+      "m1_geometry_A": 0.17868712420157026,
+      "m1_coherence_C": 0.1799754200808877,
+      "group_strength_ev": 0.09077597992999331,
+      "max_group_matrix_norm_ev": 0.033991431327627705
+    },
+    {
+      "model": "C_+1",
+      "target_texture": "C_-1",
+      "t": 0.7,
+      "m1_ev": 0.006325930057037571,
+      "m2_ev": 0.0344853122295723,
+      "m3_ev": 0.04372178569478353,
+      "m1_over_m3": 0.14468599478525696,
+      "m2_over_m3": 0.7887443680894023,
+      "m1_geometry_A": 0.3079748745430782,
+      "m1_coherence_C": 0.17693028929614993,
+      "group_strength_ev": 0.116093234464521,
+      "max_group_matrix_norm_ev": 0.04078089441278644
+    },
+    {
+      "model": "C_+1",
+      "target_texture": "C_-1",
+      "t": 0.8,
+      "m1_ev": 0.013360110638758018,
+      "m2_ev": 0.03626781970170875,
+      "m3_ev": 0.049491891846165745,
+      "m1_over_m3": 0.2699454423824588,
+      "m2_over_m3": 0.7328032602681465,
+      "m1_geometry_A": 0.4167676434355789,
+      "m1_coherence_C": 0.21697766016491843,
+      "group_strength_ev": 0.14774100154421899,
+      "max_group_matrix_norm_ev": 0.05197597314830813
+    },
+    {
+      "model": "C_+1",
+      "target_texture": "C_-1",
+      "t": 0.9,
+      "m1_ev": 0.02385373249041439,
+      "m2_ev": 0.03767552225446423,
+      "m3_ev": 0.05561630099065519,
+      "m1_over_m3": 0.42889821986583326,
+      "m2_over_m3": 0.6774186988953936,
+      "m1_geometry_A": 0.4994419844889308,
+      "m1_coherence_C": 0.25702783051488226,
+      "group_strength_ev": 0.18581943979880042,
+      "max_group_matrix_norm_ev": 0.07173478446466654
+    },
+    {
+      "model": "C_+1",
+      "target_texture": "C_-1",
+      "t": 1.0,
+      "m1_ev": 0.037497256789864146,
+      "m2_ev": 0.038588872804984506,
+      "m3_ev": 0.06228500486754019,
+      "m1_over_m3": 0.6020270347511176,
+      "m2_over_m3": 0.61955317956626,
+      "m1_geometry_A": 0.5691004979720028,
+      "m1_coherence_C": 0.28577815508198934,
+      "group_strength_ev": 0.2305586938412333,
+      "max_group_matrix_norm_ev": 0.09527333172869083
+    },
+    {
+      "model": "C_-1",
+      "target_texture": "C_+1",
+      "t": 0.0,
+      "m1_ev": 0.037497256789864174,
+      "m2_ev": 0.038588872804984506,
+      "m3_ev": 0.06228500486754018,
+      "m1_over_m3": 0.6020270347511182,
+      "m2_over_m3": 0.6195531795662601,
+      "m1_geometry_A": 0.5691004979720028,
+      "m1_coherence_C": 0.28577815508198967,
+      "group_strength_ev": 0.2305586938412333,
+      "max_group_matrix_norm_ev": 0.09527333172869083
+    },
+    {
+      "model": "C_-1",
+      "target_texture": "C_+1",
+      "t": 0.1,
+      "m1_ev": 0.02385373249041441,
+      "m2_ev": 0.037675522254464223,
+      "m3_ev": 0.05561630099065521,
+      "m1_over_m3": 0.42889821986583343,
+      "m2_over_m3": 0.6774186988953932,
+      "m1_geometry_A": 0.49944198448893135,
+      "m1_coherence_C": 0.25702783051488226,
+      "group_strength_ev": 0.18581943979880042,
+      "max_group_matrix_norm_ev": 0.07173478446466654
+    },
+    {
+      "model": "C_-1",
+      "target_texture": "C_+1",
+      "t": 0.2,
+      "m1_ev": 0.01336011063875803,
+      "m2_ev": 0.03626781970170875,
+      "m3_ev": 0.049491891846165745,
+      "m1_over_m3": 0.26994544238245904,
+      "m2_over_m3": 0.7328032602681465,
+      "m1_geometry_A": 0.41676764343557915,
+      "m1_coherence_C": 0.21697766016491854,
+      "group_strength_ev": 0.14774100154421899,
+      "max_group_matrix_norm_ev": 0.05197597314830814
+    },
+    {
+      "model": "C_-1",
+      "target_texture": "C_+1",
+      "t": 0.3,
+      "m1_ev": 0.006325930057037576,
+      "m2_ev": 0.03448531222957231,
+      "m3_ev": 0.043721785694783535,
+      "m1_over_m3": 0.144685994785257,
+      "m2_over_m3": 0.7887443680894023,
+      "m1_geometry_A": 0.3079748745430782,
+      "m1_coherence_C": 0.17693028929615007,
+      "group_strength_ev": 0.116093234464521,
+      "max_group_matrix_norm_ev": 0.04078089441278644
+    },
+    {
+      "model": "C_-1",
+      "target_texture": "C_+1",
+      "t": 0.4,
+      "m1_ev": 0.0029192910855001275,
+      "m2_ev": 0.03242097590360345,
+      "m3_ev": 0.03823085826181006,
+      "m1_over_m3": 0.0763595487579282,
+      "m2_over_m3": 0.8480316000645406,
+      "m1_geometry_A": 0.17868712420157032,
+      "m1_coherence_C": 0.179975420080888,
+      "group_strength_ev": 0.09077597992999331,
+      "max_group_matrix_norm_ev": 0.033991431327627705
+    },
+    {
+      "model": "C_-1",
+      "target_texture": "C_+1",
+      "t": 0.5,
+      "m1_ev": 0.003003174732782881,
+      "m2_ev": 0.029950375687235745,
+      "m3_ev": 0.03303169350204161,
+      "m1_over_m3": 0.0909179764760551,
+      "m2_over_m3": 0.9067163233814998,
+      "m1_geometry_A": 0.18018400851581065,
+      "m1_coherence_C": 0.23187476154207892,
+      "group_strength_ev": 0.07188046479197402,
+      "max_group_matrix_norm_ev": 0.02916424200713354
+    },
+    {
+      "model": "C_-1",
+      "target_texture": "C_+1",
+      "t": 0.6,
+      "m1_ev": 0.005915347108680228,
+      "m2_ev": 0.02662487901090588,
+      "m3_ev": 0.028337892736120578,
+      "m1_over_m3": 0.20874336577399408,
+      "m2_over_m3": 0.93955041960367,
+      "m1_geometry_A": 0.18511264891795423,
+      "m1_coherence_C": 0.5361920220076923,
+      "group_strength_ev": 0.0595969165320838,
+      "max_group_matrix_norm_ev": 0.025336361944235688
+    },
+    {
+      "model": "C_-1",
+      "target_texture": "C_+1",
+      "t": 0.7,
+      "m1_ev": 0.009987391631714916,
+      "m2_ev": 0.02186333811843473,
+      "m3_ev": 0.025236724789345022,
+      "m1_over_m3": 0.3957483276883697,
+      "m2_over_m3": 0.8663302508915681,
+      "m1_geometry_A": 0.2029044486171865,
+      "m1_coherence_C": 0.908906703926268,
+      "group_strength_ev": 0.05415532972864306,
+      "max_group_matrix_norm_ev": 0.023872781920112517
+    },
+    {
+      "model": "C_-1",
+      "target_texture": "C_+1",
+      "t": 0.8,
+      "m1_ev": 0.010991058905684832,
+      "m2_ev": 0.015229797165711668,
+      "m3_ev": 0.027520483213806474,
+      "m1_over_m3": 0.3993773953856609,
+      "m2_over_m3": 0.5533986103147777,
+      "m1_geometry_A": 0.19449846359430709,
+      "m1_coherence_C": 1.0000000000000002,
+      "group_strength_ev": 0.0565097466713693,
+      "max_group_matrix_norm_ev": 0.02647670999530784
+    },
+    {
+      "model": "C_-1",
+      "target_texture": "C_+1",
+      "t": 0.9,
+      "m1_ev": 0.006703713833265043,
+      "m2_ev": 0.008052360998974079,
+      "m3_ev": 0.03604261362164915,
+      "m1_over_m3": 0.18599410974010022,
+      "m2_over_m3": 0.2234122387322487,
+      "m1_geometry_A": 0.0990221189530577,
+      "m1_coherence_C": 1.0000000000000007,
+      "group_strength_ev": 0.06769915554365175,
+      "max_group_matrix_norm_ev": 0.03358494312882442
+    },
+    {
+      "model": "C_-1",
+      "target_texture": "C_+1",
+      "t": 1.0,
+      "m1_ev": 0.0003654877873933407,
+      "m2_ev": 0.008268705381994887,
+      "m3_ev": 0.04778610820875933,
+      "m1_over_m3": 0.007648410826775505,
+      "m2_over_m3": 0.17303575645608255,
+      "m1_geometry_A": 0.3191973173209085,
+      "m1_coherence_C": 0.013122060004848965,
+      "group_strength_ev": 0.08725927850074676,
+      "max_group_matrix_norm_ev": 0.04437988618881422
+    }
+  ],
+  "source_manifest_sha256": {
+    "study": "05017be5a8ee07711ef2a2f7ca11f1b2ecabadbfefc4f47563a77177b15a065e",
+    "batch03": "76a84602772f333e3e1abbdfd940ad1d6632394990d22edf6e57c8aadf88cbcc",
+    "batch04": "660e19cd89705fc3f812f8e083abf056e080a6b8e8ce95273b77e79ff5a2319c"
+  }
+}

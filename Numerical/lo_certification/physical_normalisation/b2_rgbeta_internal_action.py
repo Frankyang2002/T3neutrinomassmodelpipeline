@@ -115,9 +115,21 @@ def check_row(row: dict, family: str, coupling: str, maj: bool) -> dict:
         require(isinstance(row.get(field),str) and row[field].strip() and
                 '$Failed' not in row[field] and 'Missing[' not in row[field],
                 f'{family} {coupling}: malformed native sample {field}')
-    for field in ('sample_Coupling_inputform','sample_CouplingBar_inputform'):
-        require('Matrix[' in row[field] and coupling in row[field],
-                f'{family} {coupling}: sample has no expected symbolic coupling')
+    # RGBeta stores flavour-indexed Yukawas and masses as Matrix[...] but
+    # zero-flavour-index quartics are scalar symbols.  Check the exact native
+    # InputForm seen for each operator, rather than requiring Matrix[ for all.
+    # This checks both coupling orientation and the explicit internal factor;
+    # the ratio checks above remain independent guards.
+    if kind == 'quartic':
+        expected_coupling = f'{exp}*{coupling}'
+        expected_bar = (f'{exp}*Bar[{coupling}]' if coupling == 'lambdaT3'
+                        else expected_coupling)
+    else:
+        expected_coupling = f'{exp}*Matrix[Bar[{coupling}]][b4p,b4r]'
+        expected_bar = f'{exp}*Matrix[{coupling}][b4p,b4r]'
+    require(normalized_expr(row['sample_Coupling_inputform']) == expected_coupling and
+            normalized_expr(row['sample_CouplingBar_inputform']) == expected_bar,
+            f'{family} {coupling}: unexpected native coupling sample or conjugation')
     return {'coupling':coupling,'kind':kind,'internal_tensor_prefactor':exp,
             'sample_Coupling_inputform':row['sample_Coupling_inputform'],
             'sample_CouplingBar_inputform':row['sample_CouplingBar_inputform'],

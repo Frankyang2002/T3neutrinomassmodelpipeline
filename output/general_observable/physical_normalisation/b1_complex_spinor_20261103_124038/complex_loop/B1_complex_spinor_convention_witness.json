@@ -1,0 +1,469 @@
+{
+  "format": "t3-b1-independent-complex-uv-phase-stress-v1",
+  "status": "ComplexSourcePhaseCovarianceAndIndependentLoopCrosscheck_PendingNativeSpinorPhase",
+  "input_files_sha256": {
+    "spinor": "2794392092caf0ff796ff462c2c1e9a1046c3e78c7d799ced4bb6684cfcf04e1",
+    "A_p0": "18a4ca7130a8528fc86f64e53c2e91421b5f168877a674aabb969165086ba04a",
+    "B_m1": "0988c0be79f5e37cb09279f4616dc4f7dd90db6d5d08c986e2e552bf48f04443",
+    "C_m1": "312d0d1c5be2b00d371166ca58b3fa51b763dc45bb40f2bbc9b6e3c8f642d71e"
+  },
+  "benchmark_sha256": {
+    "A_p0": "4824f1278b9838635deec2ff11d1d9290abc5ee726cb56a8f4c2ea6fc77d812d",
+    "B_m1": "d83d7d31f9929f21dffad63c429a9e996a3f065a60535243a282a54d6f87dd5f",
+    "C_m1": "782c261c88e364b2db70791ed97d8fa067cf255449900668155b821ba636f03c"
+  },
+  "native_spinor_contract": {
+    "gammaCC_concrete_phase_measured": false,
+    "native_relative_spinor_sign_from_concrete_components_measured": false,
+    "action_operator_signs_and_HC_checked": true
+  },
+  "models": {
+    "A_p0": {
+      "native_CG": {
+        "y1": {
+          "real": 1.0,
+          "imag": 0.0
+        },
+        "y2": {
+          "real": 0.0,
+          "imag": -1.0745699318235418
+        },
+        "mix": {
+          "real": 0.0,
+          "imag": 1.0745699318235418
+        }
+      },
+      "unmodified_benchmark_identity_portal": {
+        "matrix_ev": {
+          "real": [
+            [
+              0.002634773571522814,
+              -0.0013019822314107514,
+              0.010753592992368857
+            ],
+            [
+              -0.0013019822314107514,
+              0.020722820246469157,
+              0.026439424399483075
+            ],
+            [
+              0.010753592992368857,
+              0.026439424399483075,
+              0.02135559919605076
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "method_residual": 0.0,
+        "scalar_squares_gev2": [
+          999056.0155501172,
+          1305550.826219475
+        ],
+        "native_mixing_A21_gev2": {
+          "real": 0.0,
+          "imag": -3257.2518726419366
+        },
+        "takagi_ev_descending": [
+          0.04849895401245021,
+          0.011000035911229191,
+          0.007214274912821709
+        ]
+      },
+      "complex_nondiagonal_phases_identity_portal": {
+        "matrix_ev": {
+          "real": [
+            [
+              0.0019061869066569156,
+              -0.000755624860577041,
+              0.010697988298923102
+            ],
+            [
+              -0.000755624860577041,
+              0.018097659982472463,
+              0.025180459909572975
+            ],
+            [
+              0.010697988298923102,
+              0.025180459909572975,
+              0.020719967142814467
+            ]
+          ],
+          "imag": [
+            [
+              0.004806690073948529,
+              -0.001268818321911052,
+              -0.00018653337223018684
+            ],
+            [
+              -0.001268818321911052,
+              0.010268678201135563,
+              0.00593583430073451
+            ],
+            [
+              -0.00018653337223018684,
+              0.00593583430073451,
+              0.0031010582158651676
+            ]
+          ]
+        },
+        "method_residual": 0.0,
+        "scalar_squares_gev2": [
+          999056.0155501172,
+          1305550.826219475
+        ],
+        "native_mixing_A21_gev2": {
+          "real": 931.4184207088542,
+          "imag": -3121.2416579614
+        },
+        "takagi_ev_descending": [
+          0.047746563428398524,
+          0.011549398621708704,
+          0.007577872667339463
+        ],
+        "cp_odd_matrix_invariant": -0.01171516681715239
+      },
+      "complex_phase_input": {
+        "y1_entrywise": {
+          "(0,1)": 0.37,
+          "(1,2)": -0.19
+        },
+        "y2_entrywise": {
+          "(2,0)": 0.41,
+          "(0,2)": -0.23
+        },
+        "lambdaT3_global": 0.29
+      },
+      "global_source_phase_transport": {
+        "y1": 0.21,
+        "y2": -0.17,
+        "lambdaT3": 0.43,
+        "expected_matrix_phase_radians": 0.39,
+        "relative_residual": 1.4389318216604175e-16
+      },
+      "wrong_y1_conjugation_negative_control_residual": 0.27539026790187554,
+      "native_fermion_masses": {
+        "single_symbol_MF": true,
+        "benchmark_diagonal_MF_generalisation_is_conditional": true
+      },
+      "benchmark_identity_portal_assignment_is_conditional": true,
+      "explicit_numerical_Matchete_GammaCC_phase_verified": false,
+      "physical_source_certified": false
+    },
+    "B_m1": {
+      "native_CG": {
+        "y1": {
+          "real": 1.0,
+          "imag": 0.0
+        },
+        "y2": {
+          "real": 1.0,
+          "imag": 0.0
+        },
+        "mix": {
+          "real": -1.154700538379252,
+          "imag": 0.0
+        }
+      },
+      "unmodified_benchmark_identity_portal": {
+        "matrix_ev": {
+          "real": [
+            [
+              -0.0012312406372373679,
+              -0.009878342256623898,
+              0.0009456105517940586
+            ],
+            [
+              -0.009878342256623898,
+              -0.019334391098863712,
+              0.02723687885558814
+            ],
+            [
+              0.0009456105517940586,
+              0.02723687885558814,
+              -0.024594786699307057
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "method_residual": 0.0,
+        "scalar_squares_gev2": [
+          999050.6604968358,
+          1305556.181272756
+        ],
+        "native_mixing_A21_gev2": {
+          "real": 3500.144922716952,
+          "imag": 0.0
+        },
+        "takagi_ev_descending": [
+          0.050441309361018684,
+          0.009803383428969251,
+          0.0045224925033587006
+        ]
+      },
+      "complex_nondiagonal_phases_identity_portal": {
+        "matrix_ev": {
+          "real": [
+            [
+              -0.0029814605312153187,
+              -0.01061977557654407,
+              0.001532548241155813
+            ],
+            [
+              -0.01061977557654407,
+              -0.017287122298944465,
+              0.026697648971935006
+            ],
+            [
+              0.001532548241155813,
+              0.026697648971935006,
+              -0.024479306007372574
+            ]
+          ],
+          "imag": [
+            [
+              0.012015768667652887,
+              0.0021291814745029156,
+              -0.006282965734806263
+            ],
+            [
+              0.0021291814745029156,
+              -0.008588613851149961,
+              0.0034452020379554843
+            ],
+            [
+              -0.006282965734806263,
+              0.0034452020379554843,
+              0.003664783944471429
+            ]
+          ]
+        },
+        "method_residual": 0.0,
+        "scalar_squares_gev2": [
+          999050.6604968358,
+          1305556.181272756
+        ],
+        "native_mixing_A21_gev2": {
+          "real": 3353.992435600382,
+          "imag": 1000.8742288403051
+        },
+        "takagi_ev_descending": [
+          0.0522088332138528,
+          0.012721077710787383,
+          0.0043009584644017355
+        ],
+        "cp_odd_matrix_invariant": -0.057746993703369456
+      },
+      "complex_phase_input": {
+        "y1_entrywise": {
+          "(0,1)": 0.37,
+          "(1,2)": -0.19
+        },
+        "y2_entrywise": {
+          "(2,0)": 0.41,
+          "(0,2)": -0.23
+        },
+        "lambdaT3_global": 0.29
+      },
+      "global_source_phase_transport": {
+        "y1": 0.21,
+        "y2": -0.17,
+        "lambdaT3": 0.43,
+        "expected_matrix_phase_radians": 0.39,
+        "relative_residual": 2.1586501236628123e-16
+      },
+      "wrong_y1_conjugation_negative_control_residual": 0.47281495440807236,
+      "native_fermion_masses": {
+        "single_symbol_MF": true,
+        "benchmark_diagonal_MF_generalisation_is_conditional": true
+      },
+      "benchmark_identity_portal_assignment_is_conditional": true,
+      "explicit_numerical_Matchete_GammaCC_phase_verified": false,
+      "physical_source_certified": false
+    },
+    "C_m1": {
+      "native_CG": {
+        "y1": {
+          "real": 0.7598356856515925,
+          "imag": 0.0
+        },
+        "y2": {
+          "real": -0.7598356856515925,
+          "imag": 0.0
+        },
+        "mix": {
+          "real": -1.154700538379252,
+          "imag": 0.0
+        }
+      },
+      "unmodified_benchmark_identity_portal": {
+        "matrix_ev": {
+          "real": [
+            [
+              -0.015057960962524243,
+              -0.030197701558252365,
+              0.01863995317723393
+            ],
+            [
+              -0.030197701558252365,
+              -0.015518566953563736,
+              -0.03775519071960132
+            ],
+            [
+              0.01863995317723393,
+              -0.03775519071960132,
+              -0.030616860936415264
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "method_residual": 0.0,
+        "scalar_squares_gev2": [
+          999050.6604968358,
+          1305556.181272756
+        ],
+        "native_mixing_A21_gev2": {
+          "real": 3500.144922716952,
+          "imag": 0.0
+        },
+        "takagi_ev_descending": [
+          0.06228500486755312,
+          0.03858887280504159,
+          0.03749725678999172
+        ]
+      },
+      "complex_nondiagonal_phases_identity_portal": {
+        "matrix_ev": {
+          "real": [
+            [
+              -0.019255260261306025,
+              -0.02562520856109867,
+              0.020084381991803353
+            ],
+            [
+              -0.02562520856109867,
+              -0.013935590612867246,
+              -0.03500399795962902
+            ],
+            [
+              0.020084381991803353,
+              -0.03500399795962902,
+              -0.029387464437692763
+            ]
+          ],
+          "imag": [
+            [
+              0.007923656938710433,
+              -0.014870466407436202,
+              -0.006621722817466382
+            ],
+            [
+              -0.014870466407436202,
+              -0.006744899230631104,
+              -0.020972599469696387
+            ],
+            [
+              -0.006621722817466382,
+              -0.020972599469696387,
+              -0.008179350282142344
+            ]
+          ]
+        },
+        "method_residual": 0.0,
+        "scalar_squares_gev2": [
+          999050.6604968358,
+          1305556.181272756
+        ],
+        "native_mixing_A21_gev2": {
+          "real": 3353.992435600382,
+          "imag": 1000.8742288403051
+        },
+        "takagi_ev_descending": [
+          0.06671649009694808,
+          0.04164453937608086,
+          0.03739911582125192
+        ],
+        "cp_odd_matrix_invariant": -0.006386398089163012
+      },
+      "complex_phase_input": {
+        "y1_entrywise": {
+          "(0,1)": 0.37,
+          "(1,2)": -0.19
+        },
+        "y2_entrywise": {
+          "(2,0)": 0.41,
+          "(0,2)": -0.23
+        },
+        "lambdaT3_global": 0.29
+      },
+      "global_source_phase_transport": {
+        "y1": 0.21,
+        "y2": -0.17,
+        "lambdaT3": 0.43,
+        "expected_matrix_phase_radians": 0.39,
+        "relative_residual": 2.5544153463326885e-16
+      },
+      "wrong_y1_conjugation_negative_control_residual": 0.14319114367807984,
+      "native_fermion_masses": {
+        "single_symbol_MF": true,
+        "benchmark_diagonal_MF_generalisation_is_conditional": true
+      },
+      "benchmark_identity_portal_assignment_is_conditional": true,
+      "explicit_numerical_Matchete_GammaCC_phase_verified": false,
+      "physical_source_certified": false
+    }
+  },
+  "no_provisional_amplitude_or_engine_used": true,
+  "installed_GammaCC_absolute_phase_measured": false,
+  "benchmark_portal_and_mass_mapping_conditional": true,
+  "physical_source_certified": false,
+  "physics_certified_models": 0,
+  "matching_or_running_performed": false
+}

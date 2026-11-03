@@ -1,0 +1,154 @@
+{
+	"format":"b2-rgbeta-native-symbolic-generator-orientation-v1",
+	"status":"BLOCKED_NATIVE_SYMBOLIC_GENERATOR_WITNESS",
+	"git_head_at_capture":"2ac58cc3de12c7af11e2e7e214415dadf0138f4f",
+	"git_source_blobs_at_capture":{
+		"RGE\/running\/rgbeta\/T3RGBetaModel.wl":"7af7a4ddf99a7e38210543a21b3b1cda203eaf02",
+		"Lagrangian\/interactions\/T3Topology.wl":"a45a099a8b766cbad0114a0559cb0bcb80895649",
+		"Lagrangian\/model\/SU2Invariants.wl":"dbe0cd490204dec363fcf4278f079b58c8ddcefc"
+	},
+	"git_provenance_capture_method":"Python six-source clean-filter guard",
+	"rgbeta_package_file":"\"C:\\\\Users\\\\popok\\\\AppData\\\\Roaming\\\\Wolfram\\\\Applications\\\\RGBeta\\\\Kernel\\\\init.m\"",
+	"Tscal_symbol_names":[
+		"RGBeta`PackageScope`Tscal"
+	],
+	"Tscal_downvalues_inputform":"{HoldPattern[RGBeta`PackageScope`Tscal[RGBeta`FieldsAndCouplings`PackagePrivate`$dA_, RGBeta`FieldsAndCouplings`PackagePrivate`$da_, RGBeta`FieldsAndCouplings`PackagePrivate`$db_]] :> Module[{RGBeta`FieldsAndCouplings`PackagePrivate`temp, RGBeta`FieldsAndCouplings`PackagePrivate`scal, RGBeta`FieldsAndCouplings`PackagePrivate`gRep, RGBeta`FieldsAndCouplings`PackagePrivate`group, RGBeta`FieldsAndCouplings`PackagePrivate`entries, RGBeta`FieldsAndCouplings`PackagePrivate`dim = {Length[RGBeta`PackageScope`$fieldIndexMap[\"GaugeBosons\"]], Length[RGBeta`PackageScope`$fieldIndexMap[\"Scalars\"]], Length[RGBeta`PackageScope`$fieldIndexMap[\"Scalars\"]]}}, If[MemberQ[RGBeta`FieldsAndCouplings`PackagePrivate`dim, 0], Return[0]; ]; RGBeta`FieldsAndCouplings`PackagePrivate`entries = Flatten[Table[RGBeta`FieldsAndCouplings`PackagePrivate`group = Head[If[Head[RGBeta`FieldsAndCouplings`PackagePrivate`gRep] === Bar, RGBeta`FieldsAndCouplings`PackagePrivate`gRep[[1]], RGBeta`FieldsAndCouplings`PackagePrivate`gRep]]; RGBeta`FieldsAndCouplings`PackagePrivate`temp = Product[del[RGBeta`FieldsAndCouplings`PackagePrivate`rep, RGBeta`FieldsAndCouplings`PackagePrivate`$da, RGBeta`FieldsAndCouplings`PackagePrivate`$db], {RGBeta`FieldsAndCouplings`PackagePrivate`rep, Join[DeleteCases[$scalars[RGBeta`FieldsAndCouplings`PackagePrivate`scal, GaugeRep], RGBeta`FieldsAndCouplings`PackagePrivate`gRep], $scalars[RGBeta`FieldsAndCouplings`PackagePrivate`scal, FlavorIndices]]}]; {RGBeta`PackageScope`$fieldIndexMap[\"All\"] \/@ {RGBeta`FieldsAndCouplings`PackagePrivate`group, Bar[RGBeta`FieldsAndCouplings`PackagePrivate`scal], RGBeta`FieldsAndCouplings`PackagePrivate`scal} -> RGBeta`FieldsAndCouplings`PackagePrivate`temp*(tGen[RGBeta`FieldsAndCouplings`PackagePrivate`gRep, RGBeta`FieldsAndCouplings`PackagePrivate`$dA, RGBeta`FieldsAndCouplings`PackagePrivate`$da, RGBeta`FieldsAndCouplings`PackagePrivate`$db]\/2), RGBeta`PackageScope`$fieldIndexMap[\"All\"] \/@ {RGBeta`FieldsAndCouplings`PackagePrivate`group, RGBeta`FieldsAndCouplings`PackagePrivate`scal, Bar[RGBeta`FieldsAndCouplings`PackagePrivate`scal]} -> (-RGBeta`FieldsAndCouplings`PackagePrivate`temp)*(tGen[RGBeta`FieldsAndCouplings`PackagePrivate`gRep, RGBeta`FieldsAndCouplings`PackagePrivate`$dA, RGBeta`FieldsAndCouplings`PackagePrivate`$db, RGBeta`FieldsAndCouplings`PackagePrivate`$da]\/2)}, {RGBeta`FieldsAndCouplings`PackagePrivate`scal, Keys[$scalars]}, {RGBeta`FieldsAndCouplings`PackagePrivate`gRep, $scalars[RGBeta`FieldsAndCouplings`PackagePrivate`scal, GaugeRep]}]]; RGBeta`PackageScope`TStructure[RGBeta`PackageScope`$gauge[RGBeta`FieldsAndCouplings`PackagePrivate`$dA], RGBeta`PackageScope`$scalar[RGBeta`FieldsAndCouplings`PackagePrivate`$da], RGBeta`PackageScope`$scalar[RGBeta`FieldsAndCouplings`PackagePrivate`$db]][SparseArray[RGBeta`PackageScope`GatherToList[RGBeta`FieldsAndCouplings`PackagePrivate`entries], RGBeta`FieldsAndCouplings`PackagePrivate`dim]]]}",
+	"Tscal_rule_has_conjugate_scalar_blocks":true,
+	"tGen_bar_transpose_identity_native":true,
+	"eps_sample_remains_symbolic":true,
+	"delS2_sample_remains_symbolic":true,
+	"classes":[
+		{
+			"family":"A",
+			"dimensions_alpha":[
+				1,
+				3,
+				2,
+				0
+			],
+			"registered":true,
+			"scalar_representations_match_registration":true,
+			"fermion_representations_match_registration":true,
+			"all_scalar_field_and_conjugate_indices_present":false,
+			"yukawa_field_orders_match":true,
+			"S1_gauge_reps":"{U1Y[0]}",
+			"S2_gauge_reps":"{U1Y[1], SU2L[S2]}",
+			"F_gauge_reps":"{U1Y[1\/2], SU2L[fund]}",
+			"field_index_ids":{
+				"S1":-1,
+				"Bar[S1]":-1,
+				"S2":-1,
+				"Bar[S2]":-1
+			},
+			"physical_action_certified":false,
+			"numeric_SU2_axes_certified":false
+		},
+		{
+			"family":"B",
+			"dimensions_alpha":[
+				2,
+				2,
+				1,
+				-1
+			],
+			"registered":true,
+			"scalar_representations_match_registration":true,
+			"fermion_representations_match_registration":true,
+			"all_scalar_field_and_conjugate_indices_present":false,
+			"yukawa_field_orders_match":true,
+			"S1_gauge_reps":"{U1Y[-1\/2], SU2L[fund]}",
+			"S2_gauge_reps":"{U1Y[1\/2], SU2L[fund]}",
+			"F_gauge_reps":"{U1Y[0]}",
+			"field_index_ids":{
+				"S1":-1,
+				"Bar[S1]":-1,
+				"S2":-1,
+				"Bar[S2]":-1
+			},
+			"physical_action_certified":false,
+			"numeric_SU2_axes_certified":false
+		},
+		{
+			"family":"C",
+			"dimensions_alpha":[
+				2,
+				2,
+				3,
+				-1
+			],
+			"registered":true,
+			"scalar_representations_match_registration":true,
+			"fermion_representations_match_registration":true,
+			"all_scalar_field_and_conjugate_indices_present":false,
+			"yukawa_field_orders_match":true,
+			"S1_gauge_reps":"{U1Y[-1\/2], SU2L[fund]}",
+			"S2_gauge_reps":"{U1Y[1\/2], SU2L[fund]}",
+			"F_gauge_reps":"{U1Y[0], SU2L[S2]}",
+			"field_index_ids":{
+				"S1":-1,
+				"Bar[S1]":-1,
+				"S2":-1,
+				"Bar[S2]":-1
+			},
+			"physical_action_certified":false,
+			"numeric_SU2_axes_certified":false
+		},
+		{
+			"family":"D",
+			"dimensions_alpha":[
+				3,
+				1,
+				2,
+				0
+			],
+			"registered":true,
+			"scalar_representations_match_registration":true,
+			"fermion_representations_match_registration":true,
+			"all_scalar_field_and_conjugate_indices_present":false,
+			"yukawa_field_orders_match":true,
+			"S1_gauge_reps":"{U1Y[0], SU2L[S2]}",
+			"S2_gauge_reps":"{U1Y[1]}",
+			"F_gauge_reps":"{U1Y[1\/2], SU2L[fund]}",
+			"field_index_ids":{
+				"S1":-1,
+				"Bar[S1]":-1,
+				"S2":-1,
+				"Bar[S2]":-1
+			},
+			"physical_action_certified":false,
+			"numeric_SU2_axes_certified":false
+		},
+		{
+			"family":"E",
+			"dimensions_alpha":[
+				3,
+				3,
+				2,
+				0
+			],
+			"registered":true,
+			"scalar_representations_match_registration":true,
+			"fermion_representations_match_registration":true,
+			"all_scalar_field_and_conjugate_indices_present":false,
+			"yukawa_field_orders_match":true,
+			"S1_gauge_reps":"{U1Y[0], SU2L[S2]}",
+			"S2_gauge_reps":"{U1Y[1], SU2L[S2]}",
+			"F_gauge_reps":"{U1Y[1\/2], SU2L[fund]}",
+			"field_index_ids":{
+				"S1":-1,
+				"Bar[S1]":-1,
+				"S2":-1,
+				"Bar[S2]":-1
+			},
+			"physical_action_certified":false,
+			"numeric_SU2_axes_certified":false
+		}
+	],
+	"RGBeta_numeric_eps_components_certified":false,
+	"RGBeta_numeric_delS2_components_certified":false,
+	"RGBeta_to_Matchete_basis_identified":false,
+	"physical_coupling_dictionary_certified":false,
+	"physical_source_certified_models":0,
+	"safe_to_integrate_into_production":false,
+	"EFT_performed":false
+}

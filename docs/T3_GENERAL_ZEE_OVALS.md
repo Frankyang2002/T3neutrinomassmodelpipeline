@@ -1,124 +1,100 @@
-# Section 5.3 — General T3 Zee-style sensitivity figures (Windows-safe v2)
+# T3 general-Lagrangian sensitivity: dual-view figures (v5)
 
-## Purpose and scope
+## Scope
 
-This replaces the original ellipse-grid rendering in
-`scripts/PlotT3GeneralZeeOvals.py` with a plotting style based on **Fig. 9** of
-Schmidt & Vandeleur, *Running of neutrino mass parameters in the Zee model*.
+This is a plotting-only update for the completed 16-model, 528-point
+Zee-style T1/T2/T3 general-T3 scan. It **does not** refit the Yukawas,
+rerun the UV/EFT1 RGEs, integrate out particles, or modify any scan outputs.
 
-- **All 16 T3 models** are plotted, not only B(-1) and C(-1).
-- The saved **merged-fit** UV sensitivity data are read without changing fitted
-  Yukawas or running RGEs/Matchete again.
-- Three coloured gamma trajectories T1/T2/T3 and a black star at gamma=1 are
-  drawn on each panel. Endpoints are marked.
-- Filled **marginal** NuFIT 6.1 NO ±1σ/±3σ (blue) and measured JUNO 2026 ±1σ
-  (green) bands replace the previous outline-only Gaussian ellipses.
-- These bands are **one-dimensional marginal intervals**, with vertical and
-  horizontal strips; their intersection is *not* a joint 2D confidence contour.
-- An optional `--model-oval` flag superposes the descriptive empirical response
-  oval. That oval is **not** a statistical confidence region.
-- The matching input remains the existing conditional general UV/EFT1 RGE and
-  one-scale C5 result, **not** a certified full sequential EFT Wilson match.
+Input (unchanged):
 
-The script does not need the historical restricted scalar potential results.
+`output/studies/general_scalar_extended/zee_style_general_sensitivity/zee_general_all16_merged_v1/`
 
-## Why the old plot command failed on Windows
+The fitted source uses the individually optimised merged 16-model candidate
+Yukawa fits. The underlying calculations retain **conditional one-scale**
+C5 matching, not certified complete sequential matching. The intended physical
+EFT sequence is UV -> integrate out all fermions -> integrate out all scalars
+-> SMEFT.
 
-The user's traceback ended in `PIL.Image.save` when trying to open an existing
-PNG destination under `Reports/output/thesis_general_5_3/zee_general_merged_ovals_v1`.
-The log alone does **not** establish whether an existing file lock, access
-control, or a Windows/Pillow pathname interaction caused `OSError [Errno 22]`.
+## Changes from v4
 
-This replacement:
+- **No arrows** on any T1/T2/T3 trajectory.
+- **Larger plotted point markers** (4.9 pt for detail; 4.2 pt for overview).
+- **No black centre stars**; the gamma=1 point is simply one of the saved
+  trajectory points.
+- Individual panel titles are just `A(-4)`, `B(-1)`, etc.; no
+  `zoom to trajectories` suffix. The combined close-up title is now
+  `Detail: compensated-coupling sensitivity for all 16 models`.
+- **No bottom explanatory footnote** on either combined grid.
+- **Readable close-up axis numbers:** for each model and observable, plot
+  `delta O = O(gamma) - O(gamma=1)` and divide by a labelled power of ten.
+  For example, the x label might read `delta(sin^2 theta_12) [10^-8]` and
+  the y label `delta(Delta m^2_21) [10^-11 eV^2]`. Tick labels are therefore
+  small ordinary numbers; Matplotlib's cramped `1e-7+3.088e-1` offset
+  notation is never used on the close-up grid. Scaling varies *independently*
+  by model and observable and is stated in every axis label.
+- The **overview uses the original, absolute observable values**, so the
+  experimental regions remain directly interpretable.
 
-1. Writes by default to a **new** directory, `zee_style_all16_v2`.
-2. Saves each image to a `BytesIO` buffer first; Pillow never opens the Windows
-   destination pathname directly.
-3. Writes **individual models before** the large 4×4 grid.
-4. Saves **PNG and vector PDF** for every figure.
-5. Supports `--no-grid` if only the large combined figure is problematic.
+The coordinates and covariance ellipses are subject to the *same affine
+coordinate changes*, so no slopes, relative orientation, gamma points or
+response oval shapes are altered. The descriptive model ovals can be
+extremely thin when all three sensitivity directions are nearly collinear.
+No artificial transverse variance is added.
 
-## Install paths
+## Statistical interpretation
 
-The ZIP contains complete replacements, preserving the repository structure:
+- NuFIT 6.1 (NO, IC24): independent-error 68.27% and 99.73% two-dimensional
+  Gaussian *approximations* using marginal errors, not official contours.
+- JUNO 2026 (207.2 live days): independent-error 68.27% Gaussian ellipse
+  from the measured two solar marginal errors, not the older six-year forecast.
+- Purple dashed model response ovals: 2 times the sample covariance standard
+  deviation of the 30 off-centre saved gamma perturbations, centred on the
+  gamma=1 point. **These are descriptive, not confidence regions.**
+
+## Installation (PowerShell, local repository root)
+
+The ZIP contains full replacements for:
 
 - `scripts/PlotT3GeneralZeeOvals.py`
 - `tests/test_t3_general_zee_ovals.py`
 - `docs/T3_GENERAL_ZEE_OVALS.md`
 
-No GitHub changes. No physics code or saved scan modifications.
-
-## PowerShell commands
-
-Run from `C:\thesistemp\T3neutrinomassmodelpipeline`:
-
 ```powershell
-Expand-Archive -LiteralPath "$HOME\Downloads\T3_General_Zee_Style_Windows_Fix_v2.zip" `
-  -DestinationPath . -Force
-
+Expand-Archive -LiteralPath "$HOME\Downloads\T3_General_Zee_Ovals_Clean_DualView_v5.zip" `
+    -DestinationPath . -Force
 python -X utf8 -m pytest -q tests\test_t3_general_zee_ovals.py
-
-python -X utf8 -m scripts.PlotT3GeneralZeeOvals
+python -u -X utf8 -m scripts.PlotT3GeneralZeeOvals
 ```
 
-Open the new folder:
+## Output
+
+Default destination (new, distinct from v4):
+
+`Reports/output/thesis_general_5_3/zee_ovals_all16_dualview_v5/`
+
+Two combined 4x4 panels (both PNG and vector PDF):
+
+- `model_grid_zee_zoom_out.png` — experimental ellipses + model trajectories
+  using **absolute** solar observables.
+- `model_grid_zee_zoom_in.png` — close-up of the same T1/T2/T3 trajectories
+  and descriptive ovals, using **baseline-subtracted and power-of-ten** axes.
+
+The same two views are generated individually for every model in `models/`,
+with filenames such as `B_m1_zee_zoom_in.pdf`. The diagnostic CSV files
+(`solar_sensitivity_ranking.csv`, `local_sensitivity_slopes.csv`, and
+`baseline_nufit_juno_comparison.csv`) are still generated unchanged.
+
+To open the combined PNGs in PowerShell:
 
 ```powershell
-Start-Process "Reports\output\thesis_general_5_3\zee_style_all16_v2"
+$figs = "Reports\output\thesis_general_5_3\zee_ovals_all16_dualview_v5"
+Start-Process "$figs\model_grid_zee_zoom_out.png"
+Start-Process "$figs\model_grid_zee_zoom_in.png"
 ```
 
-Output structure:
-
-```
-Reports/output/thesis_general_5_3/zee_style_all16_v2/
-    model_grid_zee_solar.png
-    model_grid_zee_solar.pdf
-    models/A_m4_zee_solar.png
-    models/A_m4_zee_solar.pdf
-    ...
-    models/E_p2_zee_solar.png
-    models/E_p2_zee_solar.pdf
-    local_sensitivity_slopes.csv
-    solar_sensitivity_ranking.csv
-    baseline_nufit_juno_comparison.csv
-    provenance.json
-```
-
-The 4×4 grid and all individual figures use the saved data at:
-
-`output/studies/general_scalar_extended/zee_style_general_sensitivity/zee_general_all16_merged_v1/`
-
-If Windows still rejects a large grid PNG (or you want only the 16 figures):
-
-```powershell
-python -X utf8 -m scripts.PlotT3GeneralZeeOvals `
-  --no-grid `
-  --output-dir "Reports\output\thesis_general_5_3\zee_style_models_only_v2"
-```
-
-If an existing output PNG is open/locked, choose another new output directory:
-
-```powershell
-python -X utf8 -m scripts.PlotT3GeneralZeeOvals `
-  --output-dir "Reports\output\thesis_general_5_3\zee_style_all16_v2_new"
-```
-
-To overlay the optional *descriptive* model covariance oval:
-
-```powershell
-python -X utf8 -m scripts.PlotT3GeneralZeeOvals `
-  --model-oval `
-  --output-dir "Reports\output\thesis_general_5_3\zee_style_with_model_ovals_v2"
-```
-
-## Scientific interpretation
-
-The coloured T1/T2/T3 traces represent full numerical response to the chosen
-UV compensated-coupling perturbation over gamma in [0.99, 1.01]. They are not
-oscillation-fit credible regions. Near-perfect fits may be almost invisible
-at the NuFIT/JUNO uncertainty scale, while B(-1)/C(-1) can have long solar
-mass-splitting excursions. Never interpret the shaded marginal bands as a
-combined NuFIT+JUNO likelihood.
-
-Data references (in the source file): `configs/nufit_6_1_ic24_no.json` and
-JUNO 207.2 live-day solar measurement, arXiv:2609.37895.
+You can select another folder using `--output-dir <directory>`. Optional
+`--no-grid`, `--no-per-model`, `--no-model-oval`, and
+`--juno-mode measured|future|both` are retained from v4. The default is
+**measured** JUNO 2026, not a forecast. Neither input scans nor existing
+figures are overwritten by default.

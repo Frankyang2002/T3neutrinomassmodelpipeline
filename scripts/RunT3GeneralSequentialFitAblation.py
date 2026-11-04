@@ -244,6 +244,12 @@ def _mixed(model: str, saved: Path, quartic_source: tuple,
     from Numerical.orchestration.RunSmallLambdaRefit import TARGET
     from Numerical.orchestration.GeneralRunningBenchmark import _state_values
     from Numerical.running.GeneralT3MixedExactFermionWilson import mixed_exact_boundary
+    from Numerical.running.GeneralT3ConditionalBCQuarticMap import (
+        apply_conditional_bc_direct_quartic_map,
+    )
+    from Numerical.running.GeneralT3ConditionalBCQuarticNormalization import (
+        apply_conditional_bc_channel_normalization,
+    )
 
     fit=load(saved/'result.json')
     source=runner.build_reference_source(model)
@@ -310,6 +316,12 @@ def _mixed(model: str, saved: Path, quartic_source: tuple,
             source_details[f'{int(uv_on)}{int(eft_on)}']=tree_diag
             snap=snapshot(model,state,saved/'fitted_config.json')
             tensor=scalar_tensors(model,tree,channels,snap,registry,geometry=geometry)
+            # Match the existing B/C one-scale conditional signed direct-quartic
+            # convention ONLY in HHSS contraction, never in the RG trajectory.
+            tensor=apply_conditional_bc_direct_quartic_map(model,tensor)
+            # Independent B/C mass-log check fixes channel magnitudes, not a
+            # fitted global scale: topology sqrt(3), signed direct channels 2.
+            tensor=apply_conditional_bc_channel_normalization(model,tensor)
             scalar=ScalarEndpoint(tensor,state)
             heavy_info=bc.heavy_flavour_at_muF(heavy)
             c5=bc.c5_at_endpoint(model,endpoint,heavy_info,compiled)

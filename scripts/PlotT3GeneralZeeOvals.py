@@ -1,20 +1,23 @@
-"""Plot SAVED general-T3 merged-fit sensitivity in Zee Figure-9 style.
+"""Plot overview and detailed OVAL figures from saved general-T3 scans.
 
-Read-only post-processing: no RGEs, fitting, Wilson matching, or GitHub writes.
-Source: output/studies/general_scalar_extended/zee_style_general_sensitivity/
-        zee_general_all16_merged_v1/{points.csv,summary.json}
+Sixteen individually fitted models, three compensated T1/T2/T3 variations,
+11 gamma points per direction. The overview plots independent-Gaussian
+APPROXIMATE joint experimental confidence ellipses (NuFIT 6.1 NO and JUNO
+2026 measured solar quantities), plus each model's descriptive response oval.
+The separate close-up grid frames the actual gamma trajectories and their
+response ovals as deviations O(gamma)-O(1) in labelled powers-of-ten units,
+without forcing full-scale experimental regions into view. No arrows or
+footnotes are drawn; all gamma points are shown with visible markers.
+There is no special star/central marker: gamma=1 is included among the plotted
+points. Straight or nearly straight model responses can produce extremely
+thin ovals; they are not artificially thickened.
 
-Plot both NuFIT 6.1 (NO, IC24) Gaussianised marginal inputs and JUNO's
-207.2-live-day solar measurement (2026-09-29). Experimental 2D ovals use a
-DIAGONAL Gaussian covariance approximation, not official joint contours.
-Zee-style figures use filled 1D marginal experimental bands (not joint
-confidence regions), a black fitted point, coloured T1/T2/T3 trajectories,
-and optional descriptive model sensitivity oval (--model-oval).
-The experimental bands are based on diagonal Gaussian marginal errors.
+No RGEs, fitting, matching, or other physics calculations are rerun. Existing
+C5 results are conditional general one-scale matching, not certified complete
+fermion-first sequential EFT matching.
 
-PowerShell:
+From the repository root:
   python -X utf8 -m scripts.PlotT3GeneralZeeOvals
-  python -X utf8 -m scripts.PlotT3GeneralZeeOvals --x sin2_theta13 --y sin2_theta23
 """
 from __future__ import annotations
 
@@ -33,7 +36,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SOURCE = (ROOT / "output/studies/general_scalar_extended/"
                   "zee_style_general_sensitivity/zee_general_all16_merged_v1")
 DEFAULT_TARGET = ROOT / "configs/nufit_6_1_ic24_no.json"
-DEFAULT_OUT = ROOT / "Reports/output/thesis_general_5_3/zee_style_all16_v2"
+DEFAULT_OUT = ROOT / "Reports/output/thesis_general_5_3/zee_ovals_all16_dualview_v5"
 MODEL_ORDER = tuple(f"{family}_{a:+d}" for family, aa in {
     "A": (-4, -2, 0), "B": (-3, -1, 1), "C": (-3, -1, 1),
     "D": (-2, 0, 2), "E": (-4, -2, 0, 2)
@@ -59,6 +62,16 @@ JUNO_2026 = {
     "source": "JUNO Collaboration, 207.2 live days, arXiv:2609.37895 (2026-09-29)",
     "url": "https://arxiv.org/abs/2609.37895",
 }
+# From the repository's 2022 JUNO six-year forecast used in previous plots.
+# This is NOT the actual September 2026 measurement. Its illustrative
+# central values are explicitly taken from JUNO_2026, not predicted.
+JUNO_FUTURE_6Y = {
+    "central_values": dict(JUNO_2026["central_values"]),
+    "one_sigma_errors": {"sin2_theta12": 0.0016, "delta_m21_sq_ev2": 0.024e-5},
+    "source": "JUNO six-year forecast, CPC 46 (2022) 123001, Table 6; centered on JUNO 2026 measured values (illustrative)",
+    "url": "https://doi.org/10.1088/1674-1137/ac8bc9",
+}
+
 # 68.27% and 99.73% coverage for a *two-dimensional* Gaussian.
 JOINT_RADII = {"68% joint": math.sqrt(-2 * math.log(1 - 0.6827)),
                "99.73% joint": math.sqrt(-2 * math.log(1 - 0.9973))}
@@ -197,103 +210,244 @@ def _exp_ellipse(ax, exp: dict, x: str, y: str, nstd: float, **kw) -> bool:
     return _cov_ellipse(ax, (cx, cy), np.diag([sx*sx, sy*sy]), nstd=nstd, **kw)
 
 
-# Same visual grammar as Fig. 9 of the Zee-model paper: a blue current-data
-# band, a distinct JUNO band and three coloured gamma trajectories.
+# NuFIT light/dark blue, JUNO orange, and three distinct response colours.
 PALETTE = {
-    "nufit_3": "#D6EAF5", "nufit_1": "#59AFE2",
-    "juno_1": "#BAD78C", "T1": "#2584BC", "T2": "#D97832",
-    "T3": "#478A32", "model_oval": "#6D626A",
+    "nufit_3": "#C8E2F4", "nufit_1": "#4D93D0",
+    "juno_1": "#F3A36D", "juno_future": "#D57638",
+    "T1": "#0077B6", "T2": "#DC653A", "T3": "#289344",
+    "model_oval": "#695088",
 }
 
 
+def juno_regions(mode: str) -> list[tuple[dict, str, float, float]]:
+    """Return only explicitly labelled measured and/or projected JUNO strips.
+
+    Forecast error bars use the 2022 six-year sensitivity study. Their
+    *central value* is the 2026 measured JUNO centre, so these are not a
+    measured future likelihood or official JUNO combined fit.
+    """
+    if mode == "measured":
+        return [(JUNO_2026, "JUNO 2026 1σ (measured)", .65, 1.)]
+    if mode == "future":
+        return [(JUNO_FUTURE_6Y, "JUNO 6-y 1σ (projection)", .72, 1.)]
+    if mode == "both":
+        return [(JUNO_2026, "JUNO 2026 1σ (measured)", .55, 1.),
+                (JUNO_FUTURE_6Y, "JUNO 6-y 1σ (projection)", .66, 1.)]
+    raise ValueError(f"Unsupported JUNO mode: {mode}")
+
+
+def _model_title(model: str) -> str:
+    family, sign_alpha = model.split("_")
+    return f"{family}({int(sign_alpha):+d})".replace("+0", "0")
+
+
+# Detail views plot differences from the gamma=1 reference rather than long,
+# crowded absolute tick labels (e.g. 0.308799999... or 1e-7 + 3.088e-1).
+# The powers of ten are selected independently per model/observable and
+# explicitly printed on each axis. The overview retains ABSOLUTE observables.
+DELTA_LABELS = {
+    "delta_m21_sq_ev2": r"\delta(\Delta m^2_{21})",
+    "delta_m3l_sq_ev2": r"\delta(\Delta m^2_{3\ell})",
+    "sin2_theta12": r"\delta(\sin^2\theta_{12})",
+    "sin2_theta13": r"\delta(\sin^2\theta_{13})",
+    "sin2_theta23": r"\delta(\sin^2\theta_{23})",
+}
+
+
+def _detail_frame(points: dict, nufit: dict, x: str, y: str,
+                  *, model_oval: bool = True) -> dict:
+    """Readable, honest close-up coordinates: (O(gamma)-O(1))/10**power.
+
+    The frame is chosen from the ACTUAL saved trajectory points and, if
+    enabled, the two-standard-deviation *descriptive* response oval. No
+    covariance or trajectory coordinates are altered: this is an affine
+    relabelling of the plotted axes only. Zero-variation directions use a
+    numerical-resolution floor so they do not acquire misleading precision.
+    """
+    c = centre(points)
+    cov = centered_covariance(points, x, y) if model_oval else None
+    units = {}
+    powers = {}
+    limits = {}
+    for axis, observable in enumerate((x,y)):
+        offset = float(c[observable])
+        differences = [float(p[observable]) - offset
+                       for direction in DIRECTIONS for p in points[direction]]
+        radius = (2.0 * math.sqrt(max(0., float(cov[axis, axis])))
+                  if cov is not None else 0.0)
+        extent = max([radius] + [abs(z) for z in differences])
+        # Do not fabricate sub-machine-precision structure for constant data.
+        roundoff = max(16 * np.finfo(float).eps * abs(offset), 1e-24)
+        meaningful_extent = max(extent, roundoff)
+        power = int(math.floor(math.log10(meaningful_extent)))
+        unit = 10.0 ** power
+        if not (math.isfinite(unit) and unit > 0):
+            raise ValueError(f"Invalid close-up power for {observable}")
+        plot_values = [v/unit for v in differences]
+        if model_oval:
+            plot_values.extend((-radius/unit, radius/unit))
+        left, right = min(plot_values), max(plot_values)
+        width = max(right-left, 1.0)
+        midpoint = .5*(left+right)
+        margin = .12 * width
+        # Keep the gamma=1 origin visible for every model.
+        limits[observable] = (min(midpoint-.5*width-margin, -0.08*width),
+                              max(midpoint+.5*width+margin, 0.08*width))
+        units[observable] = unit
+        powers[observable] = power
+    return {"origin": {x: float(c[x]), y: float(c[y])},
+            "units": units, "powers": powers, "limits": limits}
+
+
+def _detail_label(observable: str, power: int) -> str:
+    suffix = r"\,\mathrm{eV}^2" if observable.startswith("delta_m") else ""
+    return rf"${DELTA_LABELS[observable]}\ [10^{{{power}}}{suffix}]$"
+
+
+def _axis_limits(points: dict, nufit: dict, juno_mode: str, x: str, y: str,
+                 *, zoom: str, model_oval: bool = True
+                 ) -> tuple[tuple[float, float], tuple[float, float]]:
+    """Overview includes experimental ovals; detail frames model points/oval.
+
+    For an ellipse with covariance C and radius r, the projection onto each
+    displayed coordinate is r*sqrt(C_ii), regardless of its orientation.
+    """
+    c = centre(points)
+    xs = [float(p[x])*UNIT_SCALE[x] for d in DIRECTIONS for p in points[d]]
+    ys = [float(p[y])*UNIT_SCALE[y] for d in DIRECTIONS for p in points[d]]
+    if zoom == "experiment":
+        experimental = [(nufit, JOINT_RADII["99.73% joint"])]
+        if {x, y} == SOLAR:
+            experimental += [(e, JOINT_RADII["68% joint"])
+                             for e, _, _, _ in juno_regions(juno_mode)]
+        for record, radius in experimental:
+            for obs, dest in ((x, xs), (y, ys)):
+                mu = float(record["central_values"][obs])*UNIT_SCALE[obs]
+                sig = float(record["one_sigma_errors"][obs])*UNIT_SCALE[obs]
+                dest.extend((mu-radius*sig, mu+radius*sig))
+    elif zoom != "trajectory":
+        raise ValueError(f"Unknown zoom {zoom!r}")
+
+    if model_oval:
+        cov = centered_covariance(points, x, y)
+        for obs, dest, idx in ((x, xs, 0), (y, ys, 1)):
+            spread = 2.0*math.sqrt(max(float(cov[idx,idx]), 0.0))*UNIT_SCALE[obs]
+            origin = c[obs]*UNIT_SCALE[obs]
+            dest.extend((origin-spread,origin+spread))
+
+    def lim(vals: list[float], obs: str):
+        lo, hi = float(min(vals)), float(max(vals))
+        sigma = float(nufit["one_sigma_errors"][obs])*UNIT_SCALE[obs]
+        # A small but nonzero floor handles effectively insensitive benchmarks.
+        minimum = max(2.5e-5*sigma, abs(float(c[obs])*UNIT_SCALE[obs])*1e-12,
+                      1e-15)
+        width = max(hi-lo, minimum)
+        midpoint = .5*(hi+lo)
+        padding = .08 if zoom == "experiment" else .13
+        return midpoint-(.5+padding)*width, midpoint+(.5+padding)*width
+    return lim(xs,x),lim(ys,y)
+
+
 def _plot_panel(ax, model: str, points: dict, nufit: dict, x: str, y: str,
-                *, show_legend=False, title=True, show_model_oval=False):
+                *, show_legend=False, title=True, show_model_oval=True,
+                juno_mode="measured", zoom="experiment"):
     from matplotlib.lines import Line2D
     from matplotlib.patches import Patch
     ax.set_facecolor("white")
-    c = centre(points)
-    cx, cy = c[x]*UNIT_SCALE[x], c[y]*UNIT_SCALE[y]
-    solar = {x, y} == SOLAR
-    # Experimental bands are independent 1D Gaussian marginal intervals.
-    # Do NOT label these as 2D joint confidence contours.
-    regions = [
-        (nufit, 3., PALETTE["nufit_3"], 0.65),
-        (nufit, 1., PALETTE["nufit_1"], 0.38),
-    ]
-    if solar:
-        regions.append((JUNO_2026, 1., PALETTE["juno_1"], 0.60))
-    for exp, n_sigma, color, alpha in regions:
-        for observable, unit, painter in (
-            (x, UNIT_SCALE[x], ax.axvspan),
-            (y, UNIT_SCALE[y], ax.axhspan),
-        ):
-            if observable not in exp["central_values"]:
-                continue
-            mu = exp["central_values"][observable] * unit
-            sigma = exp["one_sigma_errors"][observable] * unit
-            painter(mu - n_sigma*sigma, mu + n_sigma*sigma,
-                    color=color, alpha=alpha, ec="none", zorder=0)
+    solar = {x,y} == SOLAR
+    detail = (_detail_frame(points,nufit,x,y,model_oval=show_model_oval)
+              if zoom == "trajectory" else None)
+    if detail is None:
+        xlim, ylim = _axis_limits(points,nufit,juno_mode,x,y,zoom=zoom,
+                                 model_oval=show_model_oval)
+    else:
+        xlim, ylim = detail["limits"][x], detail["limits"][y]
+    ax.set_xlim(*xlim)
+    ax.set_ylim(*ylim)
 
-    handles = [
-        Patch(facecolor=PALETTE["nufit_3"], edgecolor="none", label="NuFIT 6.1 ±3σ (marginal)"),
-        Patch(facecolor=PALETTE["nufit_1"], edgecolor="none", label="NuFIT 6.1 ±1σ (marginal)"),
-    ]
-    if solar:
-        handles.append(Patch(facecolor=PALETTE["juno_1"], edgecolor="none",
-                             label="JUNO 2026 ±1σ (marginal)"))
+    def coord(obs: str, raw: float) -> float:
+        if detail is None:
+            return float(raw) * UNIT_SCALE[obs]
+        return (float(raw) - detail["origin"][obs]) / detail["units"][obs]
+    handles = []
+    if zoom == "experiment":
+        # Diagonal-covariance Gaussian approximations: we have marginal
+        # standard deviations, NOT the official joint NuFIT/JUNO surfaces.
+        # The 2D radii give 68.27% and 99.73% probability coverage.
+        r1 = JOINT_RADII["68% joint"]
+        r3 = JOINT_RADII["99.73% joint"]
+        _exp_ellipse(ax,nufit,x,y,r3,
+                     facecolor=PALETTE["nufit_3"],edgecolor="#94B9D8",
+                     alpha=.38,lw=1.0,zorder=.20)
+        _exp_ellipse(ax,nufit,x,y,r1,
+                     facecolor=PALETTE["nufit_1"],edgecolor="#28639B",
+                     alpha=.32,lw=1.3,zorder=.30)
+        handles.extend([
+            Patch(facecolor=PALETTE["nufit_3"],edgecolor="#94B9D8",
+                  label="NuFIT 6.1 ~3σ (joint Gaussian)"),
+            Patch(facecolor=PALETTE["nufit_1"],edgecolor="#28639B",
+                  label="NuFIT 6.1 ~1σ (joint Gaussian)"),
+        ])
+        if solar:
+            for i,(record,label,opacity,_) in enumerate(juno_regions(juno_mode)):
+                color = (PALETTE["juno_future"] if record is JUNO_FUTURE_6Y
+                         else PALETTE["juno_1"])
+                _exp_ellipse(ax,record,x,y,r1,
+                             facecolor=color,edgecolor="#A14B22",
+                             alpha=min(opacity,.28),lw=1.35,zorder=.40+.03*i)
+                handles.append(Patch(facecolor=color,edgecolor="#A14B22",
+                                     label=label+" (joint Gaussian)"))
+
+    # Model response ellipse is NOT a statistical confidence interval.
+    # A nearly rank-one response is genuinely a very thin oval.
     if show_model_oval:
-        cov = centered_covariance(points, x, y)
-        scales = np.diag([UNIT_SCALE[x], UNIT_SCALE[y]])
-        _cov_ellipse(ax, (cx, cy), scales@cov@scales, nstd=2.,
-                     edgecolor=PALETTE["model_oval"], facecolor="none",
-                     linestyle=":", linewidth=1.25, zorder=2)
-        handles.append(Line2D([], [], color=PALETTE["model_oval"], ls=":",
-                              label="Descriptive model response oval"))
-    for direction in DIRECTIONS:
-        ps = points[direction]
-        vx = np.asarray([p[x]*UNIT_SCALE[x] for p in ps], dtype=float)
-        vy = np.asarray([p[y]*UNIT_SCALE[y] for p in ps], dtype=float)
-        color = PALETTE[direction]
-        ax.plot(vx, vy, lw=1.7, color=color, zorder=3,
-                marker="o", markersize=3.4, markerfacecolor=color,
-                markeredgecolor="white", markeredgewidth=.28)
-        ax.scatter([vx[0],vx[-1]], [vy[0],vy[-1]], color=color,
-                   s=19, edgecolors="white", linewidths=.35, zorder=4)
-        handles.append(Line2D([], [], color=color, lw=1.7, marker="o",
-                              markersize=3.5, label=direction))
-    ax.plot([cx], [cy], marker="*", markersize=9.2, color="#151515",
-            markeredgewidth=.5, markeredgecolor="white", zorder=6)
+        cc = centre(points)
+        centre_xy = (coord(x, cc[x]), coord(y, cc[y]))
+        sc = (np.diag([UNIT_SCALE[x], UNIT_SCALE[y]]) if detail is None else
+              np.diag([1.0/detail["units"][x], 1.0/detail["units"][y]]))
+        model_cov = sc@centered_covariance(points,x,y)@sc
+        _cov_ellipse(ax,centre_xy,model_cov,nstd=2.,
+                     edgecolor=PALETTE["model_oval"],facecolor="none",
+                     linestyle=(0,(4,2)),linewidth=1.4,zorder=4.3)
+        handles.append(Line2D([],[],color=PALETTE["model_oval"],
+                              ls=(0,(4,2)),lw=1.5,
+                              label="Model response oval (descriptive)"))
 
-    # Place the bounds around the experimental 1σ intervals AND the full
-    # gamma trajectories so the two most sensitive B/C models are not clipped.
-    xvalues = [cx]; yvalues = [cy]
     for direction in DIRECTIONS:
-        for point in points[direction]:
-            xvalues.append(point[x]*UNIT_SCALE[x]); yvalues.append(point[y]*UNIT_SCALE[y])
-    for exp in ([nufit, JUNO_2026] if solar else [nufit]):
-        for name, dest in ((x,xvalues),(y,yvalues)):
-            if name in exp["central_values"]:
-                val = exp["central_values"][name] * UNIT_SCALE[name]
-                err = exp["one_sigma_errors"][name] * UNIT_SCALE[name]
-                dest.extend([val-err,val+err])
-    def limits(values, sigma):
-        low, high = min(values), max(values)
-        span = max(high-low, 1.6*sigma, 1e-13)
-        mid = (high+low)/2
-        return (mid-0.60*span, mid+0.60*span)
-    ax.set_xlim(*limits(xvalues,nufit["one_sigma_errors"][x]*UNIT_SCALE[x]))
-    ax.set_ylim(*limits(yvalues,nufit["one_sigma_errors"][y]*UNIT_SCALE[y]))
-    ax.set_xlabel(LABELS[x], fontsize=9)
-    ax.set_ylabel(LABELS[y], fontsize=9)
-    ax.set_title(model.replace("_", "(")+ ")" if title else "", fontsize=11)
-    ax.tick_params(labelsize=8, length=3, direction="in")
-    ax.grid(color="#B5BDC4", alpha=.20, linewidth=.5, zorder=.1)
-    for edge in ax.spines.values():
-        edge.set_color("#686C70"); edge.set_linewidth(.65)
+        ps=points[direction]
+        xx=np.asarray([coord(x,r[x]) for r in ps],dtype=float)
+        yy=np.asarray([coord(y,r[y]) for r in ps],dtype=float)
+        color=PALETTE[direction]
+        markersize = 4.9 if detail is not None else 4.2
+        ax.plot(xx, yy, color=color,lw=1.6,marker="o",markersize=markersize,
+                markerfacecolor=color,markeredgecolor="white",
+                markeredgewidth=.4,zorder=3.5)
+        handles.append(Line2D([],[],color=color,lw=1.55,marker="o",
+                              markersize=4.5,label=direction))
+    # No black star, no separate centre marker; gamma=1 is already in the path.
+    ax.set_xlabel(_detail_label(x,detail["powers"][x]) if detail else LABELS[x],fontsize=9.3)
+    ax.set_ylabel(_detail_label(y,detail["powers"][y]) if detail else LABELS[y],fontsize=9.3)
+    if detail is not None:
+        # Coordinates are already in order-one, baseline-subtracted units.
+        # Disable matplotlib's scientific-offset notation entirely: it was
+        # responsible for 1e-7+3.088e-1 overlapping the tick labels.
+        from matplotlib.ticker import MaxNLocator, FuncFormatter
+        formatter = FuncFormatter(lambda val,_: f"{val:.3g}")
+        for axis in (ax.xaxis, ax.yaxis):
+            axis.set_major_locator(MaxNLocator(nbins=4,steps=[1,2,2.5,5,10]))
+            axis.set_major_formatter(formatter)
+    if title:
+        ax.set_title(_model_title(model), fontsize=11.1,pad=7)
+    ax.grid(alpha=.16,color="#5C6471",linewidth=.55,zorder=.1)
+    ax.tick_params(labelsize=8.1,direction="in",length=3)
+    for spine in ax.spines.values():
+        spine.set_linewidth(.75);spine.set_color("#666666")
     if show_legend:
-        ax.legend(handles=handles, loc="upper center", bbox_to_anchor=(.5,1.23),
-                  fontsize=8.1, ncol=3, frameon=False, handlelength=1.45,
-                  columnspacing=.9)
+        ax.legend(handles=handles,ncol=2 if zoom=="experiment" else 4,
+                  loc="lower center",bbox_to_anchor=(.5,1.09),
+                  fontsize=7.5,frameon=True,framealpha=.92,
+                  edgecolor="#D5D5D5",borderpad=.32,labelspacing=.36,
+                  handlelength=1.5,columnspacing=.8)
     return handles
 
 
@@ -319,50 +473,65 @@ def _save_figure(fig, path: Path, *, dpi: int) -> None:
 
 
 def render(plots: dict, nufit: dict, out: Path, x: str, y: str,
-           *, per_model=True, make_grid=True, model_oval=False) -> None:
+           *, per_model=True, make_grid=True, model_oval=True,
+           juno_mode="measured", make_detail=True) -> None:
+    """Produce both 16-panel views; no numerical re-evaluation."""
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
-    out.mkdir(parents=True, exist_ok=True)
-    # Do individual models FIRST: one large grid file can never prevent the
-    # requested 16 thesis figures from being produced.
+    out.mkdir(parents=True,exist_ok=True)
+    views = ("experiment", "trajectory")
+    view_names = {"experiment":"zoom_out","trajectory":"zoom_in"}
+
+    # Individually readable pages, saved before the larger two 4x4 grids.
     if per_model:
-        individual = out / "models"
-        individual.mkdir(exist_ok=True)
-        for model, data in plots.items():
-            fig, ax = plt.subplots(figsize=(7.5,5.5))
-            _plot_panel(ax, model, data, nufit, x, y,
-                        show_legend=True, show_model_oval=model_oval)
-            fig.subplots_adjust(top=.77,bottom=.14,left=.14,right=.97)
-            fig.text(.52,.98,"General T3: Zee-style compensated UV sensitivity",
-                     ha="center",va="top",fontsize=12)
-            _save_figure(fig,individual / f"{model.replace('+','p').replace('-','m')}_zee_solar.png",
-                         dpi=180)
-            plt.close(fig)
-            print(f"Saved {model} Zee-style PNG/PDF", flush=True)
+        directory = out/"models"
+        directory.mkdir(exist_ok=True)
+        for model,data in plots.items():
+            for zoom in views:
+                if zoom == "trajectory" and not make_detail:
+                    continue
+                fig,ax=plt.subplots(figsize=(7.0,5.4))
+                _plot_panel(ax,model,data,nufit,x,y,show_legend=True,
+                            show_model_oval=model_oval,juno_mode=juno_mode,
+                            zoom=zoom)
+                fig.subplots_adjust(top=.77,bottom=.16,left=.15,right=.98)
+                tag=model.replace("+","p").replace("-","m")
+                _save_figure(fig,directory/f"{tag}_zee_{view_names[zoom]}.png",dpi=175)
+                plt.close(fig)
+            print(f"Saved {model} (overview + zoom)",flush=True)
+
     if not make_grid:
         return
-    fig, axes = plt.subplots(4,4,figsize=(16.2,15.6))
-    handles=None
-    for ax, model in zip(axes.flat,plots):
-        handles=_plot_panel(ax,model,plots[model],nufit,x,y,
-                            show_legend=False,show_model_oval=model_oval)
-    for ax in list(axes.flat)[len(plots):]:
-        ax.set_axis_off()
-    fig.subplots_adjust(left=.065,right=.995,top=.865,bottom=.065,
-                        wspace=.37,hspace=.44)
-    fig.text(.5,.985,"General T3: Zee-style compensated-coupling sensitivity",
-             ha="center",va="top",fontsize=17)
-    fig.text(.5,.96,"16 individual best-fit benchmarks • T1/T2/T3 • γ = 0.99–1.01",
-             ha="center",va="top",fontsize=11)
-    if handles:
-        fig.legend(handles=handles,loc="upper center",bbox_to_anchor=(.5,.925),
-                   ncol=min(6,len(handles)),fontsize=9,frameon=False)
-    fig.text(.5,.026,"Shaded regions: one-dimensional Gaussian marginal intervals, not joint contours. "
-             "All model predictions use conditional general-Lagrangian one-scale C₅ matching.",
-             ha="center",va="bottom",fontsize=9)
-    _save_figure(fig,out / "model_grid_zee_solar.png",dpi=170)
-    plt.close(fig)
+    for zoom in views:
+        # Both grids have the SAME 16-model ordering and gamma data.
+        fig,axes=plt.subplots(4,4,figsize=(16.8,15.4))
+        handles=None
+        for ax,model in zip(axes.flat,plots):
+            handles=_plot_panel(ax,model,plots[model],nufit,x,y,
+                                show_model_oval=model_oval,juno_mode=juno_mode,
+                                zoom=zoom)
+        for ax in list(axes.flat)[len(plots):]:
+            ax.set_axis_off()
+        fig.subplots_adjust(left=.075,right=.975,top=.855,bottom=.055,
+                            wspace=.42,hspace=.45)
+        title=("Overview: experimental Gaussian ovals + T1/T2/T3 paths"
+               if zoom=="experiment" else
+               "Detail: compensated-coupling sensitivity for all 16 models")
+        fig.text(.5,.984,title,ha="center",va="top",fontsize=16)
+        example=next(iter(plots.values()))["T1"]
+        gamma=[p["gamma"] for p in example]
+        subtitle = f"16 individually optimised general-T3 fits | UV γ = {min(gamma):.3f}–{max(gamma):.3f}"
+        if zoom == "trajectory":
+            subtitle += " | δO = O(γ) − O(1); axis powers vary by model"
+        fig.text(.5,.955,subtitle,ha="center",va="top",fontsize=10)
+        if handles:
+            fig.legend(handles=handles,loc="upper center",bbox_to_anchor=(.5,.93),
+                       ncol=min(len(handles),7),fontsize=8.2,frameon=True,
+                       edgecolor="#CCCCCC",fancybox=False)
+        _save_figure(fig,out/f"model_grid_zee_{view_names[zoom]}.png",dpi=170)
+        plt.close(fig)
+
 
 def write_csv(path: Path, rows: list[dict], fields: tuple[str, ...]) -> None:
     with path.open("w", newline="", encoding="utf-8") as handle:
@@ -430,8 +599,15 @@ def main(argv: list[str] | None = None) -> int:
                    help="Only combined 4x4 figure (plus CSV diagnostics)")
     p.add_argument("--no-grid", action="store_true",
                    help="Skip the combined grid; write individual Zee-style figures")
+    p.add_argument("--no-model-oval", action="store_true",
+                   help="Hide descriptive covariance response ovals (shown by default)")
     p.add_argument("--model-oval", action="store_true",
-                   help="Also show descriptive model-response oval (not confidence region)")
+                   help="Compatibility option: ovals are enabled by default")
+    p.add_argument("--juno-mode", choices=("measured", "future", "both"),
+                   default="measured",
+                   help="JUNO 2026 observed interval, optional re-centred six-year forecast, or both")
+    p.add_argument("--no-detail", action="store_true",
+                   help="Omit zoomed individual model pages (both 16-model grids still produced)")
     args = p.parse_args(argv)
     if args.x == args.y:
         p.error("--x and --y must differ")
@@ -447,9 +623,10 @@ def main(argv: list[str] | None = None) -> int:
     analyse(rows, meta, nu, args.output_dir, args.x, args.y)
     render(rows, nu, args.output_dir, args.x, args.y,
            per_model=not args.no_per_model,
-           make_grid=not args.no_grid, model_oval=args.model_oval)
+           make_grid=not args.no_grid, model_oval=not args.no_model_oval,
+           juno_mode=args.juno_mode,make_detail=not args.no_detail)
     manifest = {
-        "format": "t3-general-zee-style-marginal-bands-v2",
+        "format": "t3-general-zee-dual-view-gaussian-ovals-v5",
         "models": list(rows), "directions": list(DIRECTIONS),
         "gamma_grid": [pt["gamma"] for pt in next(iter(rows.values()))["T1"]],
         "input_files": {str(args.source / "points.csv"):_sha256(args.source / "points.csv"),
@@ -459,20 +636,33 @@ def main(argv: list[str] | None = None) -> int:
                   "central_values": nu["central_values"],
                   "one_sigma_errors": nu["one_sigma_errors"]},
         "juno_measured_2026": JUNO_2026,
-        "experimental_band_definition":
-            "filled 1D Gaussian marginal ±1σ/±3σ for NuFIT 6.1; "
-            "filled 1D ±1σ for JUNO 2026 in the solar plane; "
-            "NOT joint two-dimensional confidence contours",
+        "juno_forecast_6y": JUNO_FUTURE_6Y,
+        "juno_plot_mode": args.juno_mode,
+        "experimental_oval_definition":
+            "2D independent-error Gaussian approximations: NuFIT 6.1 (NO) "
+            "68.27% / 99.73% (Delta chi2=2.30 / 11.83), JUNO 2026 measured "
+            "solar 68.27% ellipse or optional six-year projection. "
+            "NO covariance measurements supplied; NOT official joint contours.",
         "model_oval_definition":
-            "optional: twice the sample standard-deviation covariance about gamma=1 "
-            "of all 30 off-centre points/model; descriptive response, NOT confidence",
+            "default: 2x sample covariance standard-deviation radius about "
+            "gamma=1 for all off-centre T1/T2/T3 points; descriptive, NOT "
+            "a statistical confidence region; near-rank-one ovals not enlarged",
         "physics_scope": "saved conditional general-Lagrangian candidate UV/EFT1 + "
                          "one-scale C5, NOT certified all-fermions-first "
                          "then all-scalars sequential EFT matching",
         "plots_use_saved_points_only": True,
-        "zee_fig9_inspired_bands": True,
-        "model_response_oval_drawn": bool(args.model_oval),
+        "zee_fig9_inspired_dual_view_gaussian_ovals": True,
+        "baseline_star_drawn": False,
+        "arrows_drawn": False,
+        "grid_footer_text_drawn": False,
+        "trajectory_marker_size_pt": 4.9,
+        "detail_coordinates": "(observable(gamma)-observable(gamma=1))/10**power; "
+                              "power chosen separately for each panel and observable; "
+                              "experimental overview remains in absolute coordinates",
+        "grid_views": ["zoom_out", "zoom_in"] if not args.no_grid else [],
+        "model_response_oval_drawn": not args.no_model_oval,
         "grid_drawn": not args.no_grid,
+        "individual_close_up_drawn": not args.no_per_model and not args.no_detail,
         "per_model_figures_drawn": not args.no_per_model,
         "juno_solar_chi2_definition": "two marginal Gaussian residuals, diagonal; "
                                        "NOT official JUNO likelihood or combined global chi2",
@@ -481,8 +671,8 @@ def main(argv: list[str] | None = None) -> int:
     }
     (args.output_dir / "provenance.json").write_text(
         json.dumps(manifest, indent=2, allow_nan=False) + "\n", encoding="utf-8")
-    print(f"Saved Zee-style figures for {len(rows)}/{len(selected)} complete models: {args.output_dir}")
-    print("JUNO measured 2026, NOT the older six-year projection")
+    print(f"Saved Zee-style dual-view ovals for {len(rows)}/{len(selected)} complete models: {args.output_dir}")
+    print(f"JUNO mode: {args.juno_mode}. Measured and projected intervals are never conflated.")
     print("No RGEs or matching rerun; no saved scan files modified")
     return 0
 

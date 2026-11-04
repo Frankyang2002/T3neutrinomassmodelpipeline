@@ -90,3 +90,25 @@ numerical fit failures.
 passed locally. This does **not** establish that actual A(-4)/B(-1) UV/EFT1/
 Matchete pilot runs succeeded; those need the user's complete local checkout,
 canonical generated artifacts, and existing physics dependencies.
+
+## Summary-status correction (November 2026)
+
+The original driver wrote point-level results and the CSV, but crashed at the
+final blocked-model count because `summarize()` omitted a model-level `status`
+key. The replacement adds `Complete`, `CompleteWithUnsupported`, or `Incomplete`
+and uses a defensive blocked-model lookup. No fitting physics is changed.
+
+If a previous run printed the final benchmark result and then raised
+`KeyError: 'status'`, its per-point `result.json` and `comparison.csv` were
+already saved. Inspect those existing files **without rerunning the expensive
+fit**. Do not rerun with the same `--run-id`; existing result directories are
+intentionally protected.
+
+For example (from the repository root):
+
+```powershell
+$dir = 'output\studies\thesis_qualitative\scalar_refits\B_m1_fast_v1'
+Get-Content "$dir\summary.json"
+Import-Csv "$dir\comparison.csv" | Format-Table -AutoSize
+Get-Content "$dir\B_m1\lambda_0p5\result.json"
+```

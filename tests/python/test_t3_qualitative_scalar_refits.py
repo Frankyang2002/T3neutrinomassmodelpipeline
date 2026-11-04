@@ -114,7 +114,24 @@ class FitLogicTests(unittest.TestCase):
         ]
         out = study.summarize(rows)
         self.assertEqual(out['accepted_count'],1)
+        self.assertEqual(out['status'], 'CompleteWithUnsupported')
+        self.assertEqual(out['benchmark_status']['0.5'], 'AcceptedApproxFit')
         self.assertIsNone(out['log_log_yukawa_norm_vs_lambda_slope_from_accepted_endpoints'])
+
+    def test_summary_status_for_complete_and_failed_runs(self):
+        rows = [
+            {'model':'A_-4', 'lambdaT3':lam, 'status':'AcceptedApproxFit',
+             'yukawa_norms':{'combined_frobenius':norm}}
+            for lam, norm in zip(study.BENCHMARKS, (0.003,0.001,0.0001))
+        ]
+        complete = study.summarize(rows)
+        self.assertEqual(complete['status'], 'Complete')
+        self.assertEqual(complete['accepted_count'], 3)
+        self.assertIsNotNone(complete['log_log_yukawa_norm_vs_lambda_slope_from_accepted_endpoints'])
+        rows[1] = {'model':'A_-4', 'lambdaT3':0.005, 'status':'Failed'}
+        partial = study.summarize(rows)
+        self.assertEqual(partial['status'], 'Incomplete')
+        self.assertEqual(partial['accepted_count'], 2)
 
 
 if __name__ == '__main__':

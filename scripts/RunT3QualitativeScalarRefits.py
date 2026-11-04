@@ -372,7 +372,18 @@ def summarize(rows: list[dict]) -> dict:
         n1 = b['yukawa_norms']['combined_frobenius']
         if n0 > 0 and n1 > 0:
             slope = math.log(n1 / n0) / math.log(b['lambdaT3'] / a['lambdaT3'])
+    statuses = tuple(r['status'] for r in rows)
+    complete = all(status in ('AcceptedApproxFit', 'UnsupportedScalarBoundary')
+                   for status in statuses)
+    # A model-level status is required by main() when tallying blocked models.
+    # Explicitly unsupported B/C points are not failed numerical evaluations.
+    if complete:
+        model_status = ('CompleteWithUnsupported' if
+                        'UnsupportedScalarBoundary' in statuses else 'Complete')
+    else:
+        model_status = 'Incomplete'
     return {'model': rows[0]['model'],
+            'status': model_status,
             'benchmark_status': {format(r['lambdaT3'], '.12g'): r['status'] for r in rows},
             'accepted_count': len(accepted),
             'log_log_yukawa_norm_vs_lambda_slope_from_accepted_endpoints': slope,
@@ -494,7 +505,7 @@ def main(argv=None) -> int:
             writer.writerow({k: flat.get(k,'') for k in fields})
     accepted = sum(r['status']=='AcceptedApproxFit' for r in all_rows)
     unsupported = sum(r['status']=='UnsupportedScalarBoundary' for r in all_rows)
-    blocked = sum(r['status']=='Blocked' for r in model_summaries)
+    blocked = sum(r.get('status') == 'Blocked' for r in model_summaries)
     print(f'Accepted points {accepted}/{len(all_rows)}; explicitly unsupported {unsupported}; '
           f'blocked models {blocked}; output {dest}')
     valid = (not blocked and len(all_rows)==3*len(wanted) and

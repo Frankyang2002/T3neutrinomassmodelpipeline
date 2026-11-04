@@ -2,6 +2,8 @@
 
 Code: `scripts/RunT3GeneralFermionThresholdScan.py`.
 
+**November 2026 correction (full-file replacement):** passes all four required keyword-only tolerances to the production `_heavy_mass_basis_data` helper and reads mixed-scalar candidate fractions from the actual saved fit format. Original B(-1) records use top-level `extra_quartic_fraction` / `extra_mixed_scalar_bilinear_fraction`; the C(-1) continuation uses `matching_and_rge_provenance.quartic_fraction` / `.mu2_fraction`. The driver now checks this provenance during preflight and rejects missing/conflicting or modified scalar inputs. These are driver corrections; no physics kernels have changed. Previous outputs are retained unchanged.
+
 Commit inspected: `6ebe9937a72880c6f180bcd026261779800ac71f` (`main`).
 
 ## Study definition
@@ -22,10 +24,10 @@ The matched C5 is a **conditional one-scale** general Matchete coefficient at th
 
 ```powershell
 python -X utf8 -m pytest -q tests/python/test_general_fermion_threshold_scan.py
-python -X utf8 -m scripts.RunT3GeneralFermionThresholdScan --preflight --run-id preflight_v1 --models A_-4,B_-1
-python -X utf8 -m scripts.RunT3GeneralFermionThresholdScan --run-id pilot_v1 --models A_-4,B_-1
-python -X utf8 -m scripts.RunT3GeneralFermionThresholdScan --preflight --run-id preflight_all16_v1 --models all
-python -X utf8 -m scripts.RunT3GeneralFermionThresholdScan --run-id all16_v1 --models all
+python -X utf8 -m scripts.RunT3GeneralFermionThresholdScan --preflight --run-id preflight_fixed_v2 --models A_-4,B_-1
+python -X utf8 -m scripts.RunT3GeneralFermionThresholdScan --run-id pilot_fixed_v2 --models A_-4,B_-1
+python -X utf8 -m scripts.RunT3GeneralFermionThresholdScan --preflight --run-id preflight_all16_fixed_v2 --models all
+python -X utf8 -m scripts.RunT3GeneralFermionThresholdScan --run-id all16_fixed_v2 --models all
 ```
 
 Use a **new** `--run-id` for each invocation. The driver refuses to overwrite previous study runs.
@@ -42,4 +44,4 @@ Each run produces:
 
 ## Validation in the file-authoring environment
 
-`11 passed` for isolated study contract tests. These cover physical mass rescaling, unchanged fitted Yukawas, scale hierarchy, baseline gating, path safety, ratio/direction calculations and regression guards for the fixed-threshold evaluator. The source repository itself is **not present in the execution container**, so the full RGBeta/Matchete physics evaluations, their per-model baseline reproductions, and new `r=0.5,2` results **have not been executed** here. No numerical trend claims should be made until the above commands finish on the local clone.
+`16 passed` for isolated study contract tests. These cover physical mass rescaling, unchanged fitted Yukawas, scale hierarchy, baseline gating, path safety, ratio/direction calculations and regression guards for the fixed-threshold evaluator. The source repository itself is **not present in the execution container**, so full RGBeta/Matchete runs of the **corrected** driver have not been executed here. The user reported a successful B(-1) three-point scan with the previous driver (m3 = 0.08740539, 0.05246321, 0.03054945 eV at r = 0.5, 1, 2 respectively); these numbers were not independently rerun in this workspace. The A(-4) and remaining nonmixed models were blocked by the missing keywords, and C(-1) by the fit-format mismatch. The corrected run must be completed locally before claiming all-16 trends.

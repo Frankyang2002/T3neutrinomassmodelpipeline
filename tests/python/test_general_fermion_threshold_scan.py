@@ -199,3 +199,94 @@ def test_no_reuse_of_historical_fitted_scale_or_restricted_c5():
     nonmixed = inspect.getsource(study._nonmixed)
     assert 'GeneralT3FlavourC5' in nonmixed
     assert 'ensure_general_matching(model, generate=False' in nonmixed
+    assert 'heavy_mass_basis_at_mu_f(uv.final_state)' in nonmixed
+
+
+def test_nonmixed_heavy_basis_passes_required_production_keywords(monkeypatch):
+    """Regress the missing-four-keyword-only-arguments runtime failure."""
+    import sys
+    import types
+
+    calls = []
+    root = types.ModuleType('Numerical')
+    root.__path__ = []
+    running = types.ModuleType('Numerical.running')
+    running.__path__ = []
+    adapter = types.ModuleType('Numerical.running.FinalC5TrajectoryAdapter')
+
+    def current_helper(state, *, offdiagonal_atol, imaginary_atol,
+                       takagi_residual_rtol, takagi_residual_atol):
+        calls.append((state, offdiagonal_atol, imaginary_atol,
+                      takagi_residual_rtol, takagi_residual_atol))
+        return 'mass_basis_checked'
+
+    adapter._heavy_mass_basis_data = current_helper
+    monkeypatch.setitem(sys.modules, 'Numerical', root)
+    monkeypatch.setitem(sys.modules, 'Numerical.running', running)
+    monkeypatch.setitem(sys.modules, 'Numerical.running.FinalC5TrajectoryAdapter', adapter)
+    sentinel = object()
+    assert study.heavy_mass_basis_at_mu_f(sentinel) == 'mass_basis_checked'
+    assert calls == [(sentinel, 1e-7, 1e-9, 1e-8, 1e-7)]
+
+
+def test_original_b_minus_one_fitted_boundary_metadata():
+    source = {
+        'extra_quartic_fraction': 0.1,
+        'extra_mixed_scalar_bilinear_fraction': 0.01,
+        'details': {'trajectory': {'boundary_extra_quartic_fraction': 0.1,
+                                   'boundary_mu2_fraction': 0.01}},
+    }
+    assert study.mixed_boundary_fractions(source) == (0.1, 0.01, 'original_fit')
+
+
+def test_continued_c_minus_one_fitted_boundary_metadata():
+    """C(-1) continuation has nested provenance and no old top-level keys."""
+    source = {
+        'matching_and_rge_provenance': {
+            'method': 'mixed-scalar-conditional-one-scale',
+            'quartic_fraction': 0.1,
+            'mu2_fraction': 0.01,
+            'extra_yukawa_fraction': 0,
+            'modified_scalar_boundary': False,
+        },
+        'numerical_details': {
+            'trajectory': {'boundary_extra_quartic_fraction': 0.1,
+                           'boundary_mu2_fraction': 0.01}},
+    }
+    assert study.mixed_boundary_fractions(source) == (0.1, 0.01, 'continuation_fit')
+
+
+def test_missing_or_inconsistent_mixed_candidate_provenance_fails_closed():
+    with pytest.raises(ValueError, match='Missing B/C fitted'):
+        study.mixed_boundary_fractions({})
+    with pytest.raises(ValueError, match='Incomplete B/C'):
+        study.mixed_boundary_fractions({'extra_quartic_fraction': 0.1})
+    with pytest.raises(ValueError, match='Conflicting B/C'):
+        study.mixed_boundary_fractions({
+            'extra_quartic_fraction': 0.1,
+            'extra_mixed_scalar_bilinear_fraction': 0.01,
+            'matching_and_rge_provenance': {
+                'quartic_fraction': 0.2, 'mu2_fraction': 0.01},
+        })
+    with pytest.raises(ValueError, match='saved fitted trajectory'):
+        study.mixed_boundary_fractions({
+            'matching_and_rge_provenance': {
+                'quartic_fraction': 0.1, 'mu2_fraction': 0.01},
+            'numerical_details': {
+                'trajectory': {'boundary_mu2_fraction': 0.02}},
+        })
+
+
+def test_modified_continuation_scalar_inputs_are_not_silently_substituted():
+    with pytest.raises(ValueError, match='modified scalar boundary'):
+        study.mixed_boundary_fractions({
+            'matching_and_rge_provenance': {
+                'quartic_fraction': 0.1, 'mu2_fraction': 0.01,
+                'modified_scalar_boundary': True},
+        })
+    with pytest.raises(ValueError, match='additional Yukawa boundary'):
+        study.mixed_boundary_fractions({
+            'matching_and_rge_provenance': {
+                'quartic_fraction': 0.1, 'mu2_fraction': 0.01,
+                'extra_yukawa_fraction': 0.05},
+        })

@@ -255,6 +255,79 @@ def _physical_input_check(cfg: dict, initial_state: Any) -> None:
               f"UV {key} does not equal modified physical input")
 
 
+def heavy_mass_basis_at_mu_f(uv_state: Any) -> Any:
+    """Use the current production heavy-mass-basis API and its established tolerances.
+
+    Both Majorana/Takagi and vectorlike/SVD cases are handled by the existing
+    helper.  This study must pass its four keyword-only tolerances explicitly.
+    Values match RunT3GeneralScalarBCExploratoryFit.heavy_flavour_at_muF.
+    """
+    from Numerical.running.FinalC5TrajectoryAdapter import _heavy_mass_basis_data
+
+    return _heavy_mass_basis_data(
+        uv_state,
+        offdiagonal_atol=1e-7,
+        imaginary_atol=1e-9,
+        takagi_residual_rtol=1e-8,
+        takagi_residual_atol=1e-7,
+    )
+
+
+def mixed_boundary_fractions(result: Mapping[str, Any]) -> tuple[float, float, str]:
+    """Read the ACTUAL fitted B/C scalar scenario, not a default or guess.
+
+    Original B/C fitting stored the boundary fractions at result top level;
+    the C(-1) continuation stores them in matching_and_rge_provenance.
+    Reject missing, conflicting, modified, or unrepresented scalar inputs.
+    """
+    provenance = result.get("matching_and_rge_provenance", {})
+    check(isinstance(provenance, Mapping), "Invalid B/C matching-and-RGE provenance")
+    if "modified_scalar_boundary" in provenance:
+        check(provenance["modified_scalar_boundary"] is False,
+              "Unsupported B/C continuation with modified scalar boundary")
+    if "extra_yukawa_fraction" in provenance:
+        check(float(provenance["extra_yukawa_fraction"]) == 0.0,
+              "Unsupported B/C continuation with additional Yukawa boundary")
+
+    options = (
+        ("original_fit", result.get("extra_quartic_fraction"),
+         result.get("extra_mixed_scalar_bilinear_fraction")),
+        ("continuation_fit", provenance.get("quartic_fraction"),
+         provenance.get("mu2_fraction")),
+    )
+    found: list[tuple[str, float, float]] = []
+    for label, raw_q, raw_mu2 in options:
+        if raw_q is None and raw_mu2 is None:
+            continue
+        check(raw_q is not None and raw_mu2 is not None,
+              f"Incomplete B/C {label} boundary-fraction pair")
+        q, mu2 = float(raw_q), float(raw_mu2)
+        check(math.isfinite(q) and math.isfinite(mu2) and 0 < q <= 1.0
+              and 0 < mu2 <= 0.2,
+              f"Nonphysical or unsupported B/C {label} boundary fractions")
+        found.append((label, q, mu2))
+    check(bool(found), "Missing B/C fitted candidate boundary-fraction provenance")
+    label, quartic, mu2 = found[0]
+    for _, other_quartic, other_mu2 in found[1:]:
+        check(math.isclose(quartic, other_quartic, rel_tol=1e-12, abs_tol=0)
+              and math.isclose(mu2, other_mu2, rel_tol=1e-12, abs_tol=0),
+              "Conflicting B/C fitted candidate boundary fractions")
+
+    # Both source formats may include the actually integrated trajectory:
+    # it is stronger evidence than a bare fit-setting entry.
+    details = result.get("numerical_details", result.get("details", {}))
+    if isinstance(details, Mapping):
+        trajectory = details.get("trajectory", {})
+        if isinstance(trajectory, Mapping):
+            for key, value in (("boundary_extra_quartic_fraction", quartic),
+                               ("boundary_mu2_fraction", mu2)):
+                saved = trajectory.get(key)
+                if saved is not None:
+                    check(math.isclose(float(saved), value, rel_tol=1e-11, abs_tol=1e-14),
+                          "B/C fraction disagrees with saved fitted trajectory: " + key)
+    return quartic, mu2, label
+
+
 def _nonmixed(source: Source, cfg: dict, *, canonical_run_id: str,
               wolframscript: str, rtol: float, atol: float) -> dict:
     from Numerical.orchestration.GeneralRunningBenchmark import (
@@ -263,7 +336,6 @@ def _nonmixed(source: Source, cfg: dict, *, canonical_run_id: str,
     from Numerical.running.IntermediateScalarRunner import run_intermediate_scalar_segment
     from Numerical.running.FermionThresholdBoundary import build_intermediate_scalar_boundary
     from Numerical.running.IntermediateScalarStateVector import pack_intermediate_scalar_state
-    from Numerical.running.FinalC5TrajectoryAdapter import _heavy_mass_basis_data
     from Numerical.fitting.OscillationFit import OscillationFitTarget
     from Numerical.orchestration.RunSmallLambdaRefit import TARGET
     from scripts import RunT3GeneralAll16FromReference as general
@@ -289,7 +361,7 @@ def _nonmixed(source: Source, cfg: dict, *, canonical_run_id: str,
     uv = run_uv_segment(start, uv_betas, mu_f, rtol=rtol, atol=atol)
     check(uv.solver_success and math.isclose(uv.final_state.mu_gev, mu_f, rel_tol=1e-10),
           "UV RGE did not reach new muF")
-    heavy = _heavy_mass_basis_data(uv.final_state)
+    heavy = heavy_mass_basis_at_mu_f(uv.final_state)
     boundary = build_intermediate_scalar_boundary(uv.final_state)
     check(math.isclose(boundary.mu_gev, mu_f, rel_tol=1e-10),
           "Fermion boundary is not at new muF")
@@ -353,10 +425,8 @@ def _mixed(source: Source, cfg: dict, *, rtol: float, atol: float) -> dict:
                                   float(cfg["base_state"]["ordinary"]["lambdaT3"]["imag"]))
     record["uv_on"] = True
     registry = record["registry"]
-    model_quartic_fraction = float(source.result["extra_quartic_fraction"])
-    model_mu2_fraction = float(source.result["extra_mixed_scalar_bilinear_fraction"])
-    check(model_quartic_fraction > 0 and model_mu2_fraction > 0,
-          "Missing positive mixed-scalar fitted candidate boundary fractions")
+    model_quartic_fraction, model_mu2_fraction, boundary_source = (
+        mixed_boundary_fractions(source.result))
     # The actual used native candidate RGEs, not canonical non-mixed kernels.
     bundle = bc.beta_bundle(model, record, registry)
     mu_uv, mu_f, mu_s, _ = scales(cfg)
@@ -427,6 +497,9 @@ def _mixed(source: Source, cfg: dict, *, rtol: float, atol: float) -> dict:
         "matching_coefficient_sha256": digest(coefficient),
         "matching_scope": "native mixed-scalar conditional signed-direct-quartic one-scale; NOT certified sequential EFT1 Wilson matching",
         "conditional_sign_map": "lambda_Matchete = -lambda_RGBeta for two direct quartics; not certified",
+        "candidate_scalar_boundary_source": boundary_source,
+        "candidate_quartic_fraction": model_quartic_fraction,
+        "candidate_mu2_fraction": model_mu2_fraction,
     })
     return values
 
@@ -437,6 +510,12 @@ def preflight(source: Source, *, canonical_run_id: str, wolframscript: str) -> d
                for key, p in source.paths.items()}
     if source.model in MIXED:
         try:
+            quartic, mu2, boundary_source = mixed_boundary_fractions(source.result)
+            checked["mixed_candidate_boundary"] = {
+                "metadata_source": boundary_source,
+                "quartic_fraction": quartic,
+                "mu2_fraction": mu2,
+            }
             from scripts import RunT3BCGeneralFromReference as s
             from scripts import RunT3GeneralScalarBCExploratoryFit as mixed
             from scripts import RunT3ZeroExtraBoundaryBenchmark as b

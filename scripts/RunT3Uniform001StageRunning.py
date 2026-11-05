@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 from dataclasses import replace
 import json
 import math
@@ -73,6 +74,98 @@ def signature(ref_result:Path, ref_config:Path, paths:dict[str,Path])->dict:
     return {'reference_result_sha256':base.sha(ref_result),
             'reference_config_sha256':base.sha(ref_config),
             'accepted_source_sha256':{k:base.sha(v) for k,v in sorted(paths.items())}}
+
+
+def line_ending_sha256_variants(path:Path)->set[str]:
+    """Hashes of identical bytes with LF and CRLF encodings only.
+
+    Do not canonicalise whitespace, numerical formatting, JSON key order,
+    or any other changes. Work on bytes (Path.read_text normalises newlines).
+    """
+    data=path.read_bytes()
+    lf=data.replace(b'\r\n',b'\n')
+    crlf=lf.replace(b'\n',b'\r\n')
+    return {hashlib.sha256(value).hexdigest() for value in (data,lf,crlf)}
+
+
+def validate_portable_source_provenance(record:dict,
+          paths:dict[str,Path], manifest_path:Path)->list[str]:
+    """Permit ONLY Windows/Linux line-ending changes to original inputs.
+
+    Saved paths and the accepted manifest must remain identical in content;
+    all source files must reproduce their originally recorded SHA-256 after
+    at most LF<->CRLF conversion. Any substantive input change is rejected.
+    """
+    stored=record.get('provenance')
+    if not isinstance(stored,dict):
+        raise ValueError('Reference lacks original accepted-source provenance')
+    if set(stored)!= {'source_sha256','source_paths','accepted_manifest_sha256'}:
+        raise ValueError('Reference source provenance keys changed')
+    saved_hashes=stored['source_sha256']
+    if not isinstance(saved_hashes,dict) or set(saved_hashes)!=set(paths):
+        raise ValueError('Reference source fingerprint inventory changed')
+    expected_paths={name:path.relative_to(campaign.ROOT).as_posix()
+                    for name,path in sorted(paths.items())}
+    if stored['source_paths']!=expected_paths:
+        raise ValueError('Original accepted-source paths changed')
+    if stored['accepted_manifest_sha256'] not in line_ending_sha256_variants(manifest_path):
+        raise ValueError('Original accepted-source merged manifest content changed')
+    normalized=[];different=[]
+    for name,path in sorted(paths.items()):
+        original=str(saved_hashes[name])
+        raw_hash=hashlib.sha256(path.read_bytes()).hexdigest()
+        if raw_hash==original:
+            continue
+        if original not in line_ending_sha256_variants(path):
+            different.append(name)
+        else:
+            normalized.append(name)
+    if different:
+        raise ValueError('Original accepted-source content differs (not LF/CRLF only): '
+                         +', '.join(different))
+    return normalized
+
+
+def validated_reference_portable(folder:Path, *,model:str,
+        source_paths:dict[str,Path],manifest_path:Path,original_config:dict,
+        chi2_cutoff:float)->tuple[dict,dict]:
+    """Reuse the upstream strict validator except for proven EOL-only drift.
+
+    Keep ALL of its benchmark, Yukawa, accepted-fit and scalar checks and
+    require subsequent independent full-running C5 baseline reproduction.
+    """
+    try:
+        return campaign.validated_reference(folder,model=model,
+                     source_paths=source_paths,manifest_path=manifest_path,
+                     original_config=original_config,chi2_cutoff=chi2_cutoff)
+    except ValueError as exc:
+        if str(exc)!='Original accepted-source fingerprints changed':
+            raise
+
+    row=read(folder/'result.json')
+    cfg=read(folder/'fitted_config.json')
+    normalized=validate_portable_source_provenance(row,source_paths,manifest_path)
+    if row.get('schema')!=campaign.SCHEMA or row.get('stage')!='reference' or row.get('model')!=model:
+        raise ValueError('Wrong reference study, stage or model')
+    if row.get('status') not in campaign.REFERENCE_ACCEPTED:
+        raise ValueError(f'New reference fit is not accepted: {row.get("status")}')
+    chi2=float(row['chi2'])
+    if not (math.isfinite(chi2) and 0<=chi2<=chi2_cutoff):
+        raise ValueError('New reference fit fails requested chi2 cutoff')
+    if cfg.get('thesis_uniform_scalar_benchmark',{}).get('schema') != uniform.SCHEMA:
+        raise ValueError('Saved refit configuration lacks uniform-0.01 provenance')
+    campaign.check_uniform_reference(cfg,original_config)
+    saved=row.get('fitted_yukawas')
+    if not isinstance(saved,dict) or any(
+       cfg['base_state']['ordinary'][key]!=saved.get(key) for key in ('y1','y2')):
+        raise ValueError('Saved Yukawas disagree between reference result and fitted config')
+    if abs(float(row['lambdaT3'])-base.real_lambda(cfg))>1e-14:
+        raise ValueError('Reference fit lambdaT3 mismatch')
+    if row.get('seed_skipped_optimizer') and row['status']!='AcceptedRescaledSeed':
+        raise ValueError('Skipped-optimiser provenance inconsistent')
+    print(f'  {model}: archived SHA-256 recovered by LF/CRLF-only '
+          f'normalisation ({", ".join(normalized)})',flush=True)
+    return row,cfg
 
 
 def frozen_state(state:Any,mu:float)->Any:
@@ -266,7 +359,7 @@ def _run_model(model:str, selection:dict, target:Any, args:Any)->dict:
     ns=argparse.Namespace(fit_run_id='merged',canonical_run_id=args.canonical_run_id)
     original,oldfit,paths=zee.sources(model,ns,selection[model])
     ref_dir=args.reference_root/'reference'/tag(model)
-    reference,cfg=campaign.validated_reference(
+    reference,cfg=validated_reference_portable(
         ref_dir,model=model,source_paths=paths,manifest_path=zee.MERGED_FILE,
         original_config=original,chi2_cutoff=args.chi2_cutoff)
     x=base.fitted_vector(cfg);lam=base.real_lambda(cfg)
@@ -374,7 +467,7 @@ def main(argv=None)->int:
     for model in models:
         original,oldfit,paths=zee.sources(model,ns,selection[model])
         ref=args.reference_root/'reference'/tag(model)
-        campaign.validated_reference(ref,model=model,source_paths=paths,
+        validated_reference_portable(ref,model=model,source_paths=paths,
           manifest_path=zee.MERGED_FILE,original_config=original,
           chi2_cutoff=args.chi2_cutoff)
         print(f'{model}: accepted uniform-0.01 new reference verified',flush=True)

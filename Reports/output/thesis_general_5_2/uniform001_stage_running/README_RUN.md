@@ -1,5 +1,40 @@
 # Thesis Section 5.2 — uniform-0.01 running-stage figures
 
+## 2026-11-05 repair: line-ending portable accepted-source checks
+
+Some saved reference source fingerprints were calculated from Windows **CRLF**
+files; later checkouts may use **LF** for the exact same JSON/WL/InputForm content.
+This affected the B(-1)/C(-1) reference validator after the A and B(-3)
+reference checks had passed. We verified that all mismatched B(-1)/C(-1)
+source-file hashes on the GitHub main branch match the saved hashes after
+**only** LF-to-CRLF conversion (including UV/EFT1 beta JSON). On a user's
+local checkout the script performs the same verification independently.
+
+The stage-running driver now tries the unchanged strict campaign validator
+first. **Only** when it reports `Original accepted-source fingerprints changed`,
+it checks the original path inventory, exact accepted manifest fingerprint,
+and each saved SHA-256 using its unchanged bytes and its LF/CRLF equivalents.
+It does not normalise numerical values, whitespace, JSON formatting, or
+symbolic expressions. Any substantive file-content change still causes an
+error naming the affected source key. The existing new-benchmark scalar/Yukawa
+checks and full-running low-energy C5/observable reproduction remain mandatory.
+No source files or previously computed numerical results are rewritten.
+
+Install replacement files from the repo root and resume the same run ID:
+
+```powershell
+Expand-Archive -LiteralPath .\t3_uniform001_running_eol_fix.zip -DestinationPath . -Force
+python -X utf8 -m unittest discover -s tests/python -p 'test_t3_uniform001_stage_running.py' -v
+python -X utf8 -m scripts.RunT3Uniform001StageRunning --stage preflight --models B_-1,C_-1
+python -X utf8 -m scripts.RunT3Uniform001StageRunning --stage compute --models all --run-id uniform001_running_v1 --resume
+python -X utf8 -m scripts.RunT3Uniform001StageRunning --stage plot --run-id uniform001_running_v1
+```
+
+**Do not plot** until the compute stage reports 16/16 completed and passes
+all reference baselines. This remains conditional one-scale matching, not a
+certified all-fermions -> all-scalars -> SMEFT calculation.
+
+
 This is a **new, independent study** under the already accepted 16-model uniform-0.01 benchmark. It **does not reuse** the old `Reports/output/thesis_qualitative/representation_running/csv/frozen_stage_observable_changes.csv` rows or the old thesis heatmaps.
 
 - The benchmark is all allowed **BSM quartics other than** `lambdaT3` equal to **+0.01 at 10^7 GeV**, allowed conjugate Yukawa matrices **zero at the UV boundary**, and 18 ordinary Yukawa entries taken from each model's **new accepted fit**, without refitting.

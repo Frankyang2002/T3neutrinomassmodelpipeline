@@ -4,6 +4,9 @@ import tempfile
 import unittest
 from dataclasses import dataclass
 from pathlib import Path
+import hashlib
+import json
+from unittest.mock import patch
 import numpy as np
 from scripts import RunT3Uniform001StageRunning as r
 
@@ -110,6 +113,88 @@ class RunTests(unittest.TestCase):
                 rows=list(csv.DictReader(f))
             self.assertEqual(len(rows),240)
             self.assertEqual(len({(x['model'],x['switch'],x['observable']) for x in rows}),240)
+
+    def test_portable_provenance_accepts_only_line_ending_conversion(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            src=root/'saved'/'uv_beta.json'
+            src.parent.mkdir(parents=True)
+            original=b'{"lambdaT3":0.1,\r\n"mass":1000}\r\n'
+            src.write_bytes(original.replace(b'\r\n',b'\n'))
+            manifest=root/'merged.json'
+            manifest.write_bytes(b'{"accepted":16}\n')
+            row={'provenance':{
+                 'source_sha256':{'uv_beta':hashlib.sha256(original).hexdigest()},
+                 'source_paths':{'uv_beta':'saved/uv_beta.json'},
+                 'accepted_manifest_sha256':hashlib.sha256(manifest.read_bytes()).hexdigest(),
+                 }}
+            with patch.object(r.campaign,'ROOT',root):
+                result=r.validate_portable_source_provenance(
+                    row,{'uv_beta':src},manifest)
+                self.assertEqual(result,['uv_beta'])
+                src.write_bytes(original)
+                self.assertEqual(r.validate_portable_source_provenance(
+                    row,{'uv_beta':src},manifest),[])
+
+    def test_portable_provenance_rejects_physics_change_and_wrong_path(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            src=root/'uv.json'
+            src.write_bytes(b'{"mass":1000}\r\n')
+            manifest=root/'merged.json'
+            manifest.write_bytes(b'manifest\n')
+            row={'provenance':{
+                'source_sha256':{'uv_beta':hashlib.sha256(src.read_bytes()).hexdigest()},
+                'source_paths':{'uv_beta':'uv.json'},
+                'accepted_manifest_sha256':hashlib.sha256(manifest.read_bytes()).hexdigest()}}
+            with patch.object(r.campaign,'ROOT',root):
+                src.write_bytes(b'{"mass":1100}\n')
+                with self.assertRaisesRegex(ValueError,'content differs'):
+                    r.validate_portable_source_provenance(row,{'uv_beta':src},manifest)
+                src.write_bytes(b'{"mass":1000}\n')
+                row['provenance']['source_paths']={'uv_beta':'other.json'}
+                with self.assertRaisesRegex(ValueError,'paths changed'):
+                    r.validate_portable_source_provenance(row,{'uv_beta':src},manifest)
+                row['provenance']['source_paths']={'uv_beta':'uv.json'}
+                manifest.write_bytes(b'changed\n')
+                with self.assertRaisesRegex(ValueError,'manifest content changed'):
+                    r.validate_portable_source_provenance(row,{'uv_beta':src},manifest)
+
+    def test_portable_reference_fallback_retains_acceptance_and_yukawa_checks(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            folder=root/'B_m1';folder.mkdir()
+            src=root/'beta.json'
+            src.write_bytes(b'{"b":1}\n')
+            old_hash=hashlib.sha256(b'{"b":1}\r\n').hexdigest()
+            manifest=root/'merged.json';manifest.write_bytes(b'accepted\n')
+            matrices={'real':[[0.0]*3 for _ in range(3)],
+                      'imag':[[0.0]*3 for _ in range(3)]}
+            cfg={'base_state':{'ordinary':{'y1':matrices,'y2':matrices,
+                                          'lambdaT3':{'real':0.1,'imag':0.0}}},
+                 'thesis_uniform_scalar_benchmark':{'schema':r.uniform.SCHEMA}}
+            row={'schema':r.campaign.SCHEMA,'stage':'reference','model':'B_-1',
+                 'status':'AcceptedApproxFit','chi2':0.01,'lambdaT3':0.1,
+                 'fitted_yukawas':{'y1':matrices,'y2':matrices},
+                 'provenance':{
+                     'source_sha256':{'uv_beta':old_hash},
+                     'source_paths':{'uv_beta':'beta.json'},
+                     'accepted_manifest_sha256':hashlib.sha256(manifest.read_bytes()).hexdigest()}}
+            r.save(folder/'result.json',row)
+            r.save(folder/'fitted_config.json',cfg)
+            kwargs={'model':'B_-1','source_paths':{'uv_beta':src},
+                    'manifest_path':manifest,'original_config':{},'chi2_cutoff':5.86}
+            with patch.object(r.campaign,'ROOT',root), \
+                 patch.object(r.campaign,'validated_reference',
+                       side_effect=ValueError('Original accepted-source fingerprints changed')), \
+                 patch.object(r.campaign,'check_uniform_reference',return_value=None):
+                accepted,refcfg=r.validated_reference_portable(folder,**kwargs)
+                self.assertEqual(accepted['model'],'B_-1')
+                self.assertEqual(refcfg['base_state']['ordinary']['y1'],matrices)
+                row['status']='PoorFit'
+                r.save(folder/'result.json',row)
+                with self.assertRaisesRegex(ValueError,'not accepted'):
+                    r.validated_reference_portable(folder,**kwargs)
 
     def test_invalid_benchmark_not_rendered(self):
         with tempfile.TemporaryDirectory() as tmp:

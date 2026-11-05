@@ -1,0 +1,109 @@
+{
+  "status": "Success",
+  "model": "D_-2",
+  "source_one_generation_beta": "4*sqrt(3)*T3S2Phase*(lambdaT3*conjugate(y2) + conjugate(lambdaT3ExtraQ020101I1)*conjugate(y2Conj))*conjugate(T3S2Phase)*conjugate(y1)/(3*MF)",
+  "phase_constraint_applied": "T3S2Phase*conjugate(T3S2Phase)=1",
+  "power_counting": "16*pi^2*d(kappa_W[p,q])/dlnmu = beta16[p,q]",
+  "mass_convention": "common MF for NFlavor; nondegenerate fermion masses not implemented",
+  "lepton_flavor_indices": [
+    "p",
+    "q"
+  ],
+  "internal_fermion_flavor": "r",
+  "independent_mixed_kernels": [
+    {
+      "pair": [
+        "y1",
+        "y2"
+      ],
+      "coefficient": "4*sqrt(3)*lambdaT3/3",
+      "flavor_kernel": "Sum_r (conjugate(y1[p,r])*conjugate(y2[q,r]) + conjugate(y2[p,r])*conjugate(y1[q,r]))/2",
+      "beta_term": "(4*sqrt(3)*lambdaT3/3)/MF * K_y1_y2[p,q]"
+    },
+    {
+      "pair": [
+        "y1",
+        "y2Conj"
+      ],
+      "coefficient": "4*sqrt(3)*conjugate(lambdaT3ExtraQ020101I1)/3",
+      "flavor_kernel": "Sum_r (conjugate(y1[p,r])*conjugate(y2Conj[q,r]) + conjugate(y2Conj[p,r])*conjugate(y1[q,r]))/2",
+      "beta_term": "(4*sqrt(3)*conjugate(lambdaT3ExtraQ020101I1)/3)/MF * K_y1_y2Conj[p,q]"
+    }
+  ],
+  "full_flavor_beta_tensor": "(4*sqrt(3)*lambdaT3/3)/MF * K_y1_y2[p,q] + (4*sqrt(3)*conjugate(lambdaT3ExtraQ020101I1)/3)/MF * K_y1_y2Conj[p,q]",
+  "mu_high": "MF",
+  "mu_low": "MuScalar",
+  "log_ratio": "log(MuScalar/MF)",
+  "direct_one_loop_correction": "((4*sqrt(3)*lambdaT3/3)/MF * K_y1_y2[p,q] + (4*sqrt(3)*conjugate(lambdaT3ExtraQ020101I1)/3)/MF * K_y1_y2Conj[p,q])*(log(MuScalar/MF))/(16*pi**2)",
+  "one_generation_reduction_matches": true,
+  "symmetric_under_external_flavor_exchange": true,
+  "equal_scale_running_vanishes": true,
+  "pl_seed_audit": {
+    "status": "Success",
+    "pl_terms": 4,
+    "unique_yukawa_pairs": [
+      [
+        "y1",
+        "y2"
+      ],
+      [
+        "y1",
+        "y2Conj"
+      ]
+    ],
+    "terms": [
+      {
+        "index": 5,
+        "pair": [
+          "y1",
+          "y2Conj"
+        ],
+        "heavy_index_dummy": "d$$1",
+        "external_flavor_dummies": [
+          "d$$1",
+          "d$$2"
+        ]
+      },
+      {
+        "index": 6,
+        "pair": [
+          "y1",
+          "y2"
+        ],
+        "heavy_index_dummy": "d$$1",
+        "external_flavor_dummies": [
+          "d$$1",
+          "d$$2"
+        ]
+      },
+      {
+        "index": 7,
+        "pair": [
+          "y1",
+          "y2Conj"
+        ],
+        "heavy_index_dummy": "d$$1",
+        "external_flavor_dummies": [
+          "d$$1",
+          "d$$2"
+        ]
+      },
+      {
+        "index": 8,
+        "pair": [
+          "y1",
+          "y2"
+        ],
+        "heavy_index_dummy": "d$$1",
+        "external_flavor_dummies": [
+          "d$$1",
+          "d$$2"
+        ]
+      }
+    ],
+    "heavy_flavor_mass": "common MF (not a general mass matrix)"
+  },
+  "real_scalar_hard_threshold_performed": false,
+  "all_scalar_masses_equal_assumed": false,
+  "physical_scalar_mass_relations_imposed": false
+}

@@ -79,6 +79,58 @@ def kill_process_tree(p: subprocess.Popen[bytes]) -> None:
         p.wait()
 
 
+def read_report(path: Path) -> tuple[dict[str, Any] | None, str | None]:
+    """Never let missing, empty or malformed Wolfram JSON mask the kernel status."""
+    if not path.is_file():
+        return None, "Wolfram did not create a result JSON file"
+    try:
+        raw = path.read_text(encoding="utf-8-sig")
+    except (OSError, UnicodeError) as exc:
+        return None, f"Cannot read Wolfram result JSON: {exc}"
+    if not raw.strip():
+        return None, "Wolfram result JSON is empty"
+    try:
+        report = json.loads(raw)
+    except json.JSONDecodeError as exc:
+        prefix = raw[:200].replace("\r", "\\r").replace("\n", "\\n")
+        return None, f"Invalid Wolfram result JSON ({exc}); first 200 chars: {prefix!r}"
+    if not isinstance(report, dict):
+        return None, f"Wolfram result JSON has type {type(report).__name__}, not object"
+    return report, None
+
+
+def log_tail(path: Path, n: int = 40) -> str:
+    if not path.is_file():
+        return "(Wolfram log does not exist)"
+    try:
+        from collections import deque
+        with path.open("r", encoding="utf-8", errors="replace") as stream:
+            return "".join(deque(stream, maxlen=n)).rstrip() or "(Wolfram log is empty)"
+    except OSError as exc:
+        return f"(Wolfram log cannot be read: {exc})"
+
+
+def inspect_existing(matching_dir: Path = DEFAULT_MATCHING) -> int:
+    """Inspect previous results; do not run preflight and do not launch Wolfram."""
+    profile = matching_dir.resolve() / PROFILE_REL
+    path = profile / REPORT
+    report, error = read_report(path)
+    print(f"[C5 flavour candidate] Existing report: {path}", flush=True)
+    print(f"  JSON: {error or 'Valid'}", flush=True)
+    if report is not None:
+        print(f"  Status: {report.get('Status', '(missing)')}", flush=True)
+        print(f"  Reason: {report.get('Reason', '(missing)')}", flush=True)
+        print(f"  ExitCode: {report.get('ExitCode', '(missing)')}", flush=True)
+        for key in ("LeptonPairInventoryPath", "BadTermPositions",
+                    "BadTermLeptonLabels", "HardFlavourLabels",
+                    "InheritedFlavourLabels"):
+            if report.get(key) is not None:
+                print(f"  {key}: {report[key]}", flush=True)
+    print("[C5 flavour candidate] Existing Wolfram log (last 50 lines):", flush=True)
+    print(log_tail(profile / LOG, 50), flush=True)
+    return 0
+
+
 def run(matching_dir: Path = DEFAULT_MATCHING,
         timeout_seconds: int = 180,
         startup_allowance_seconds: int = 120,
@@ -120,8 +172,10 @@ def run(matching_dir: Path = DEFAULT_MATCHING,
             time.sleep(0.5)
         code = proc.poll()
     p = profile / REPORT
-    report = json.loads(p.read_text(encoding="utf-8-sig")) if p.is_file() else None
+    report, report_error = read_report(p)
     status = classify(code, timed_out, report)
+    if code == 0 and report_error is not None and not timed_out:
+        status = "InvalidWolframResultJSON"
     summary = {
         "status": status, "exit_code": code,
         "elapsed_seconds": round(time.monotonic() - started, 2),
@@ -130,10 +184,16 @@ def run(matching_dir: Path = DEFAULT_MATCHING,
         "result": str(p), "log": str(profile / LOG),
         "output_roots": (report or {}).get("OutputRoots"),
         "reason": (report or {}).get("Reason"),
+        "report_error": report_error,
     }
     (profile / SUMMARY).write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
     print(f"[C5 flavour candidate] {status} (exit {code})\n"
           f"  Result: {p}\n  Log: {profile / LOG}", flush=True)
+    if report_error is not None:
+        print(f"  JSON issue: {report_error}", flush=True)
+    if status != "C5FlavourCandidateExported":
+        print("[C5 flavour candidate] Wolfram log (last 50 lines):", flush=True)
+        print(log_tail(profile / LOG, 50), flush=True)
     return summary
 
 
@@ -143,7 +203,11 @@ def main() -> int:
     parser.add_argument("--timeout-seconds", type=int, default=180)
     parser.add_argument("--startup-allowance-seconds", type=int, default=120)
     parser.add_argument("--wolframscript", default="wolframscript")
+    parser.add_argument("--inspect-existing", action="store_true",
+                        help="Print existing result status and log; do not rerun Wolfram")
     args = parser.parse_args()
+    if args.inspect_existing:
+        return inspect_existing(args.matching_dir)
     try:
         summary = run(args.matching_dir, args.timeout_seconds,
                       args.startup_allowance_seconds, args.wolframscript)

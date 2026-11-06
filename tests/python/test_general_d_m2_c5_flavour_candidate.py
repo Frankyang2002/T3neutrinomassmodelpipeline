@@ -3,6 +3,9 @@ from __future__ import annotations
 
 import ast
 from pathlib import Path
+from tempfile import TemporaryDirectory
+from contextlib import redirect_stdout
+from io import StringIO
 import sys
 import types
 import unittest
@@ -32,9 +35,28 @@ class SourceTests(unittest.TestCase):
         self.assertIn("WeinbergStructureAudited", self.wl)
         self.assertIn("ComponentsAudited", self.wl)
 
-    def test_checks_each_lepton_flavour_pair(self) -> None:
+    def test_checks_each_lepton_flavour_pair_without_matching_heads(self) -> None:
         self.assertIn("D2LeptonFlavourNames /@ allHol", self.wl)
-        self.assertIn('Sort[pair] =!= {"d$$1", "d$$2"}', self.wl)
+        self.assertIn("Select[Range[Length[leptonPairs]]", self.wl)
+        self.assertIn("ListQ[leptonPairs[[#]]]", self.wl)
+        self.assertIn('Sort[leptonPairs[[#]]] === {"d$$1", "d$$2"}', self.wl)
+        self.assertNotIn("badPairs = Flatten @ Position", self.wl)
+
+    def test_exports_complete_lepton_index_census_before_failing(self) -> None:
+        self.assertIn('profile_c5_flavour_candidate_lepton_pairs.json', self.wl)
+        self.assertIn('Export[pairAuditPath, D2JSONSafe[pairRecords], "RawJSON"]', self.wl)
+        self.assertLess(self.wl.index('Export[pairAuditPath'),
+                        self.wl.index('badPairs = Select'))
+        self.assertIn('"BadTermPositions" -> badPairs', self.wl)
+        self.assertIn('"LeptonPairInventoryPath" -> pairAuditPath', self.wl)
+
+    def test_failure_json_sanitizes_wolfram_symbols(self) -> None:
+        self.assertIn("D2JSONSafe[x_List] := D2JSONSafe /@ x", self.wl)
+        self.assertIn('Export[reportPath, D2JSONSafe[failure], "RawJSON"]', self.wl)
+
+    def test_does_not_overwrite_first_threshold(self) -> None:
+        self.assertNotIn('Export[required["FirstLoop"]', self.wl)
+        self.assertNotIn('Export[required["HardHbar"]', self.wl)
 
     def test_maps_only_flavour_indices(self) -> None:
         self.assertIn('SymbolName[fl] === "Flavor"', self.wl)
@@ -48,6 +70,13 @@ class SourceTests(unittest.TestCase):
     def test_running_not_resymmetrized(self) -> None:
         self.assertIn("candidateRunning = hbar runPQ", self.wl)
         self.assertNotIn("candidateRunning = hbar (runPQ + runQP)", self.wl)
+
+    def test_running_symmetry_modulo_bound_sum_dummies(self) -> None:
+        self.assertIn("HoldPattern[Sum[body_, {r_Symbol, lo_, hi_}]]", self.wl)
+        self.assertIn("Inactive[Sum][body /. r -> D2AlphaDummy", self.wl)
+        self.assertIn("runSymmetricAlpha = TrueQ[Expand[alphaPQ - alphaQP] === 0]", self.wl)
+        self.assertIn('"RunningSymmetricModuloSummationDummies" -> runSymmetricAlpha', self.wl)
+        self.assertIn("sourceSums =!= convertedSums", self.wl)
 
     def test_hbar_gate(self) -> None:
         self.assertIn("Coefficient[candidateTotal, hbar, 1]", self.wl)
@@ -110,6 +139,65 @@ class RunnerTests(unittest.TestCase):
     def test_timeout(self) -> None:
         self.assertEqual(self._runner().classify(None, True, self._passed()),
                          "ExternalTimeout")
+
+    def test_empty_report_is_diagnosed_not_exception(self) -> None:
+        runner = self._runner()
+        with TemporaryDirectory() as d:
+            p = Path(d) / "result.json"
+            p.write_text("", encoding="utf-8")
+            report, error = runner.read_report(p)
+        self.assertIsNone(report)
+        self.assertIn("empty", error)
+
+    def test_malformed_report_is_diagnosed_not_exception(self) -> None:
+        runner = self._runner()
+        with TemporaryDirectory() as d:
+            p = Path(d) / "result.json"
+            p.write_text('0.e-7', encoding="utf-8")
+            report, error = runner.read_report(p)
+        self.assertIsNone(report)
+        self.assertIn("Invalid", error)
+
+    def test_missing_report_is_diagnosed_not_exception(self) -> None:
+        runner = self._runner()
+        with TemporaryDirectory() as d:
+            report, error = runner.read_report(Path(d) / "missing.json")
+        self.assertIsNone(report)
+        self.assertIn("did not create", error)
+
+    def test_inspect_existing_reports_a_valid_failure_json(self) -> None:
+        runner = self._runner()
+        import json
+        with TemporaryDirectory() as d:
+            profile = Path(d) / runner.PROFILE_REL
+            profile.mkdir(parents=True)
+            (profile / runner.REPORT).write_text(json.dumps({
+                "Status": "Failed", "Reason": "Unmatched labels",
+                "ExitCode": 9, "LeptonPairInventoryPath": "pairs.json",
+                "BadTermPositions": [7, 13],
+                "BadTermLeptonLabels": [["d$$1"], ["d$$2"]]
+            }), encoding="utf-8")
+            (profile / runner.LOG).write_text('Flavour audit stopped\n', encoding='utf-8')
+            stream = StringIO()
+            with redirect_stdout(stream):
+                code = runner.inspect_existing(Path(d))
+        self.assertEqual(code, 0)
+        self.assertIn('BadTermPositions: [7, 13]', stream.getvalue())
+        self.assertIn('LeptonPairInventoryPath: pairs.json', stream.getvalue())
+
+    def test_inspect_existing_does_not_run_wolfram(self) -> None:
+        runner = self._runner()
+        with TemporaryDirectory() as d:
+            profile = Path(d) / runner.PROFILE_REL
+            profile.mkdir(parents=True)
+            (profile / runner.REPORT).write_text('', encoding='utf-8')
+            (profile / runner.LOG).write_text('Kernel failure\n', encoding='utf-8')
+            stream = StringIO()
+            with redirect_stdout(stream):
+                code = runner.inspect_existing(Path(d))
+        self.assertEqual(code, 0)
+        self.assertIn('empty', stream.getvalue())
+        self.assertIn('Kernel failure', stream.getvalue())
 
 
 if __name__ == "__main__":

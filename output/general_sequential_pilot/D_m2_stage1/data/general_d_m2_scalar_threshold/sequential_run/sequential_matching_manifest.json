@@ -1,0 +1,124 @@
+{
+  "status": "SequentialC5BenchmarkReproduced_ProvisionalNormalization",
+  "model": "D_-2",
+  "generated_utc": "2026-11-07T01:21:54.881236+00:00",
+  "mode": "ResumeValidatedWarsawReference",
+  "matching_order": [
+    [
+      "NewFermion"
+    ],
+    [
+      "NewScalar1",
+      "T3S2R",
+      "T3S2I"
+    ]
+  ],
+  "hard_one_loop_input": "full saved EFT1 tree, with reversible heavy-mass EFT-order promotion",
+  "inherited_one_loop_propagation": "pure-SM EFT1 O(hbar), given no linear heavy-scalar source",
+  "direct_running_kept_out_of_match": true,
+  "physical_c5_normalization_certified": false,
+  "full_smeft_operator_basis_certified": false,
+  "nf1_simple_pole_cancellation_required": true,
+  "benchmark_finite_part_only": true,
+  "benchmark_config": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\benchmarks\\general_d_m2_rough_benchmark_finitepart.json",
+  "steps": [
+    {
+      "stage": "scalar_hard_one_loop",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 24.36,
+      "log": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_sequential_pilot\\D_m2_stage1\\data\\general_d_m2_scalar_threshold\\sequential_run\\scalar_hard_one_loop.log",
+      "reported_status": "FullEFT1OneLoopPostprocessed",
+      "reused_from_prior_attempt": true
+    },
+    {
+      "stage": "components",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 11.73,
+      "log": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_sequential_pilot\\D_m2_stage1\\data\\general_d_m2_scalar_threshold\\sequential_run\\components.log",
+      "reported_status": "ComponentsAudited",
+      "reused_from_prior_attempt": true
+    },
+    {
+      "stage": "operator_structure",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 10.52,
+      "log": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_sequential_pilot\\D_m2_stage1\\data\\general_d_m2_scalar_threshold\\sequential_run\\operator_structure.log",
+      "reported_status": "WeinbergStructureAudited",
+      "reused_from_prior_attempt": true
+    },
+    {
+      "stage": "running_symmetry",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 9.64,
+      "log": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_sequential_pilot\\D_m2_stage1\\data\\general_d_m2_scalar_threshold\\sequential_run\\running_symmetry.log",
+      "reported_status": "RunningSymmetryAudited",
+      "reused_from_prior_attempt": true
+    },
+    {
+      "stage": "candidate_assembly",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 11.11,
+      "log": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_sequential_pilot\\D_m2_stage1\\data\\general_d_m2_scalar_threshold\\sequential_run\\candidate_assembly.log",
+      "reported_status": "C5FlavourCandidateExported",
+      "reused_from_prior_attempt": true
+    },
+    {
+      "stage": "warsaw_reference",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 10.52,
+      "log": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_sequential_pilot\\D_m2_stage1\\data\\general_d_m2_scalar_threshold\\sequential_run\\warsaw_reference.log",
+      "reused_from_prior_attempt": true,
+      "reported_status": "WarsawNormalizationReferenceAudited"
+    },
+    {
+      "stage": "benchmark",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 11.73,
+      "log": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_sequential_pilot\\D_m2_stage1\\data\\general_d_m2_scalar_threshold\\sequential_run\\benchmark.log",
+      "reported_status": "ProvisionalFinitePartBenchmarkEvaluated"
+    },
+    {
+      "stage": "exact_pole",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 9.62,
+      "log": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_sequential_pilot\\D_m2_stage1\\data\\general_d_m2_scalar_threshold\\sequential_run\\exact_pole.log",
+      "reported_status": "ExactNF1PoleCancellationVerified"
+    }
+  ],
+  "resumed_from_previous_failed_run": true,
+  "previous_failed_run_utc": "2026-11-07T01:14:39.119871+00:00",
+  "scalar_matching_executed_this_run": false,
+  "eft1_boundary_sha256": {
+    "eft1_after_F_realbasis_tree.wxf": "48e94d5b90ef29a54441ee890adc76432dd48570502bf062752a742b0b00cf8a",
+    "eft1_after_F_realbasis_loop.wxf": "20cfa694f7ed011d8a3460d30913d20ff8d9ce7eeec5559f65996b88ddc547ba",
+    "eft1_after_F_realbasis_transition_tree.wxf": "7b408e9c439089811c5ca5e64351f36153407e74e6ecac42ae5fd385fba69c15",
+    "eft1_after_F_realbasis_transition_full.wxf": "d97a8218007651b63b7740518ae49297f870e08e39dcf32d6fb2a49790a14b8f"
+  },
+  "fermion_threshold_executed_this_run": false,
+  "scalar_one_loop_matched": true,
+  "fixed_order_c5_candidate_assembled": true,
+  "nf1_simple_pole_cancellation_verified": true,
+  "boundary_hashes_unchanged": true,
+  "neutrino_masses_eV": [
+    4.344626269503198e-17,
+    0.0005638390086829786,
+    0.0019375681616599096
+  ],
+  "mass_squared_differences_eV2": [
+    3.1791442771260404e-07,
+    3.7541703810781617e-06
+  ],
+  "c5_relative_symmetry_residual": 0,
+  "exact_pole_residual_terms": 0,
+  "match_result_file": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_sequential_pilot\\D_m2_stage1\\data\\general_d_m2_scalar_threshold\\profile_tree\\profile_full_scalar_one_loop_result.json",
+  "candidate_file": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_sequential_pilot\\D_m2_stage1\\data\\general_d_m2_scalar_threshold\\profile_tree\\profile_c5_flavour_candidate_total_provisional.wxf",
+  "benchmark_report": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_sequential_pilot\\D_m2_stage1\\data\\general_d_m2_scalar_threshold\\profile_tree\\profile_c5_rough_benchmark_result.json"
+}

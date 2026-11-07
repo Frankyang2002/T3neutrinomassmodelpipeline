@@ -1,0 +1,148 @@
+{
+  "format": "t3-first-batch-conditional-sequential-llss-v1",
+  "models_requested": [
+    "D_+2",
+    "A_-4",
+    "B_-1"
+  ],
+  "conditional_LLSS_completed": 3,
+  "model_count": 3,
+  "complete_sequential_models_newly_certified": 0,
+  "source_backend": "dynamic",
+  "D_minus2_verified_reference": {
+    "status": "PassedLocalDMinus2Reference",
+    "manifest": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_sequential_pilot\\D_m2_stage1\\data\\general_d_m2_scalar_threshold\\sequential_run\\sequential_matching_manifest.json",
+    "sha256": "7a25cdbe4e94f493fb10471adadbea63d89dc1b923f4bc3eed50b038696fbdc5",
+    "neutrino_masses_eV": [
+      4.344626269503198e-17,
+      0.0005638390086829786,
+      0.0019375681616599096
+    ]
+  },
+  "interpretation": "Conditional, source-backed LLSS scalar-pair O(1/16pi^2) contribution after integrating all fermions, running EFT1 and integrating both scalars. Independent hard one-loop matching, full dim-5 closure, absolute GammaCC normalization and full SMEFT C5 NOT certified. Values are eV per absolute unknown spinor convention factor.",
+  "missing_for_complete_Dplus2": [
+    "independent hard one-loop matching from physical EFT1 boundary",
+    "full operator-inventory closure and finite-part scheme alignment",
+    "Matchete/RGBeta quartic and spinor/CG normalization dictionary",
+    "exact one-loop pole-cancellation test in target model"
+  ],
+  "rows": [
+    {
+      "model": "D_+2",
+      "mass_class": "ordinary",
+      "status": "ConditionalLLSSContributionComputed",
+      "C5_LLSS_frobenius_GeV_inverse": 1.301452506817221e-15,
+      "masses_eV_per_abs_unknown_NGamma": [
+        0.019694494842272987,
+        0.021882836723092897,
+        0.026259404348116452
+      ],
+      "vev_GeV": 246.22,
+      "explicit_assumed_spinor_factor": 1.0,
+      "C5_relative_closure_residual": 2.8412757852122054e-17,
+      "C5_relative_symmetry_residual": 0.0,
+      "SU2_Weinberg_projection_residual": 3.1684210816852284e-16,
+      "matching_scale_cancellation_residual": 9.60280614537485e-17,
+      "all_heavy_fermions_integrated_before_scalars": true,
+      "both_scalar_multiplets_integrated_together_in_LLSS_bubble": true,
+      "hard_one_loop_matching_independently_computed": false,
+      "complete_C5": false,
+      "model_specific_absolute_SU2_and_spinor_normalization_certified": false,
+      "physical_neutrino_masses_certified": false,
+      "source_mode": "fresh_python_full_general_LLSS_source_matched_to_reference",
+      "source_boundary_sha256": "ffe6b8ee2c899a9e617290d8d7f54cb0b34f903675e4665a2a8491c4c766f5a7",
+      "running_state_sha256": "bf2fe3db71b9a5f852a8bb2b52ad62acbc143e20fd473db65f93065d0be19ecc",
+      "scalar_basis_certified": false,
+      "matchete_to_RGBeta_quartic_map_certified": false,
+      "general_extra_hhss_enabled": true,
+      "full_rgbeta_portal_completion_enabled": true,
+      "input_sha256": {
+        "boundary": "ffe6b8ee2c899a9e617290d8d7f54cb0b34f903675e4665a2a8491c4c766f5a7",
+        "channels": "d8f751220443d89b6aa7d863f4c94d822c42d1ce5b1e75283179bc7407d4ed4d",
+        "quartic_seed": "ade583a5ea0fc1ed253282c40d7f71718fa16f9d92f4f34fc9245284bb8293ce",
+        "running": "bf2fe3db71b9a5f852a8bb2b52ad62acbc143e20fd473db65f93065d0be19ecc",
+        "registry": "86a096410384641efa8f751b2aa98e8fee4bb6d3cccb4cfd116c559b71182eea",
+        "general_quartic_registry": "86a096410384641efa8f751b2aa98e8fee4bb6d3cccb4cfd116c559b71182eea"
+      },
+      "generated_utc": "2026-11-07T01:55:26.870878+00:00"
+    },
+    {
+      "model": "A_-4",
+      "mass_class": "ordinary",
+      "status": "ConditionalLLSSContributionComputed",
+      "C5_LLSS_frobenius_GeV_inverse": 1.2837451062999973e-15,
+      "masses_eV_per_abs_unknown_NGamma": [
+        0.019426534001343504,
+        0.021585101575418215,
+        0.025902122167091673
+      ],
+      "vev_GeV": 246.22,
+      "explicit_assumed_spinor_factor": 1.0,
+      "C5_relative_closure_residual": 3.184476153938201e-17,
+      "C5_relative_symmetry_residual": 0.0,
+      "SU2_Weinberg_projection_residual": 2.2851622955067016e-16,
+      "matching_scale_cancellation_residual": 1.5351397738672364e-16,
+      "all_heavy_fermions_integrated_before_scalars": true,
+      "both_scalar_multiplets_integrated_together_in_LLSS_bubble": true,
+      "hard_one_loop_matching_independently_computed": false,
+      "complete_C5": false,
+      "model_specific_absolute_SU2_and_spinor_normalization_certified": false,
+      "physical_neutrino_masses_certified": false,
+      "source_mode": "fresh_python_full_general_LLSS_source_matched_to_reference",
+      "source_boundary_sha256": "a51a31e437628ab8a1e6adfaf054bf1da5309b158574971999f8a2bce3bb80ed",
+      "running_state_sha256": "7f16660186a6f208a419cbc53b9e6641e9b5fd71277fc40e4a03ef6610bc4f92",
+      "scalar_basis_certified": false,
+      "matchete_to_RGBeta_quartic_map_certified": false,
+      "general_extra_hhss_enabled": true,
+      "full_rgbeta_portal_completion_enabled": true,
+      "input_sha256": {
+        "boundary": "a51a31e437628ab8a1e6adfaf054bf1da5309b158574971999f8a2bce3bb80ed",
+        "channels": "c8c866f93078d30a157c017635a5c8e61998c8a3dd3ff0c34d206765bc053cfa",
+        "quartic_seed": "2f607d804c8b250ce6e2776c7be6fe71addabad1280dc6b6b0f1448d3eda3781",
+        "running": "7f16660186a6f208a419cbc53b9e6641e9b5fd71277fc40e4a03ef6610bc4f92",
+        "registry": "86a096410384641efa8f751b2aa98e8fee4bb6d3cccb4cfd116c559b71182eea",
+        "general_quartic_registry": "86a096410384641efa8f751b2aa98e8fee4bb6d3cccb4cfd116c559b71182eea"
+      },
+      "generated_utc": "2026-11-07T01:55:27.296816+00:00"
+    },
+    {
+      "model": "B_-1",
+      "mass_class": "mixed",
+      "status": "ConditionalLLSSContributionComputed",
+      "C5_LLSS_frobenius_GeV_inverse": 8.668325913449319e-16,
+      "masses_eV_per_abs_unknown_NGamma": [
+        0.013117520512585532,
+        0.014575065920393846,
+        0.0174900792914579
+      ],
+      "vev_GeV": 246.22,
+      "explicit_assumed_spinor_factor": 1.0,
+      "C5_relative_closure_residual": 5.948455983635638e-17,
+      "C5_relative_symmetry_residual": 0.0,
+      "SU2_Weinberg_projection_residual": 4.558665619562636e-16,
+      "matching_scale_cancellation_residual": 1.0388656271294257e-16,
+      "all_heavy_fermions_integrated_before_scalars": true,
+      "both_scalar_multiplets_integrated_together_in_LLSS_bubble": true,
+      "hard_one_loop_matching_independently_computed": false,
+      "complete_C5": false,
+      "model_specific_absolute_SU2_and_spinor_normalization_certified": false,
+      "physical_neutrino_masses_certified": false,
+      "source_mode": "fresh_python_full_general_LLSS_source_matched_to_reference",
+      "source_boundary_sha256": "6a4d1531a9c52ebae69e73cf582196a29bf858027b4511d2771ad3d1eee103b4",
+      "running_state_sha256": "d0ef30b36cde052a05a715d043129f63dad0418ca749a74be02b9eb5a93fdbea",
+      "scalar_basis_certified": false,
+      "matchete_to_RGBeta_quartic_map_certified": false,
+      "general_extra_hhss_enabled": true,
+      "full_rgbeta_portal_completion_enabled": true,
+      "input_sha256": {
+        "boundary": "6a4d1531a9c52ebae69e73cf582196a29bf858027b4511d2771ad3d1eee103b4",
+        "channels": "49d4e5a93524d22a0a0e2377f2783434362c987e127af22358dc793f7a8b769e",
+        "quartic_seed": "0b45ab70e346a29752efd659810e3892c5f9a3e2a549389deaa40781ef58b6bd",
+        "running": "d0ef30b36cde052a05a715d043129f63dad0418ca749a74be02b9eb5a93fdbea",
+        "registry": "86a096410384641efa8f751b2aa98e8fee4bb6d3cccb4cfd116c559b71182eea",
+        "general_quartic_registry": "86a096410384641efa8f751b2aa98e8fee4bb6d3cccb4cfd116c559b71182eea"
+      },
+      "generated_utc": "2026-11-07T01:55:28.534685+00:00"
+    }
+  ]
+}

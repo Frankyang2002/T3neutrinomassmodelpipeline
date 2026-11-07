@@ -1,0 +1,633 @@
+{
+  "format": "t3-ordinary-native-hard-three-nondegenerate-flavour-subset-v1",
+  "model": "A_-4",
+  "status": "HardThreeFlavorAndDirectLogComputed_NotFullC5",
+  "sequence": "UV -> integrate ALL F -> EFT1(S1,S2) -> integrate ALL S -> SMEFT",
+  "source_template": {
+    "status": "VerifiedOneEigenvalueTemplate",
+    "model": "A_-4",
+    "source_expression_sha256_normalized": "b9fbc4c11e366602e912b665cf3cb08ecaf7c280aa2998b93036e7c851ec395f",
+    "source_expression_sha256_raw": "a32c82731886cad2fe9ac2707fb519b042e118b75c939b4bb56d4b06ba46962d",
+    "source_hard_report_sha256": "2a2d2d2dd5da9d789ee6c2925a32ecf25784cafe4a72c535e59ba03e87a19633",
+    "source_provenance_sha256": "d5166e53eb1482254b5a023182d58b8538cfb1084bbba50c6bf90ebddda9a046"
+  },
+  "matching_scales_gev": {
+    "muF": 100000.0,
+    "muS": 1000.0
+  },
+  "heavy_fermion_mass_eigenvalues_gev": [
+    166140.08943527873,
+    199368.10732233452,
+    221520.11924704042
+  ],
+  "scalar_evolved_at_muS": {
+    "mS1_gev": 1416.0398652312388,
+    "mS2_gev": 1836.738891958032,
+    "lambdaT3": {
+      "real": 0.01252174554413966,
+      "imag": 0.0
+    }
+  },
+  "source_formula": {
+    "hbar": "1/(16*pi^2)",
+    "template_prefactor": "-2/sqrt(3) * hbar * lambdaT3",
+    "bar_yukawa_convention": "complex-conjugate y1 and y2; lambdaT3 NOT conjugated",
+    "flavour_sum": "sum_r conj(y1_ir) conj(y2_jr) / MF_r",
+    "symmetry_projection": "(unsym_ij + unsym_ji)/2; offdiagonal physical normalization not independently certified",
+    "pole": "P/epsilon",
+    "finite_scalar_hard": "P * (1 + (m1sq*ln(muS^2/m1sq)-m2sq*ln(muS^2/m2sq))/(m1sq-m2sq))",
+    "direct_EFT1_log": "-2*P*ln(muS/muF)",
+    "log_running_provenance": "D(+2) and A(-4) source general EFT1 direct-running expressions agree in sign and coefficient; full inherited operators not included"
+  },
+  "raw_unsubtracted_hard_1_over_epsilon_residue_gev_inverse": {
+    "real": [
+      [
+        -1.0380343683753e-16,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        -8.650286310757416e-17,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        -7.785234669854884e-17
+      ]
+    ],
+    "imag": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  "hard_finite_scalar_gev_inverse": {
+    "real": [
+      [
+        1.0155195568295238e-16,
+        -0.0,
+        -0.0
+      ],
+      [
+        -0.0,
+        8.462662883212775e-17,
+        -0.0
+      ],
+      [
+        -0.0,
+        -0.0,
+        7.61637408414444e-17
+      ]
+    ],
+    "imag": [
+      [
+        -0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        -0.0
+      ]
+    ]
+  },
+  "direct_eft1_llss_log_gev_inverse": {
+    "real": [
+      [
+        -9.560649850545822e-16,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        -7.967208123712194e-16,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        -7.17046611850731e-16
+      ]
+    ],
+    "imag": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  "c5_hard_finite_plus_direct_log_subset_gev_inverse": {
+    "real": [
+      [
+        -8.545130293716298e-16,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        -7.120941835390916e-16,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        -6.408828710092866e-16
+      ]
+    ],
+    "imag": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  "frozen_scalar_parameter_subset_gev_inverse": {
+    "real": [
+      [
+        -7.865385731222186e-16,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        -6.554488039361235e-16,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        -5.899021800437521e-16
+      ]
+    ],
+    "imag": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  "per_heavy_eigenstate": [
+    {
+      "r": 1,
+      "MF_gev": 166140.08943527873,
+      "hard_pole_residue_gev_inverse": {
+        "real": [
+          [
+            -1.0380343683753e-16,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "hard_finite_gev_inverse": {
+        "real": [
+          [
+            1.0155195568295238e-16,
+            -0.0,
+            -0.0
+          ],
+          [
+            -0.0,
+            -0.0,
+            -0.0
+          ],
+          [
+            -0.0,
+            -0.0,
+            -0.0
+          ]
+        ],
+        "imag": [
+          [
+            -0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "direct_log_gev_inverse": {
+        "real": [
+          [
+            -9.560649850545822e-16,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      }
+    },
+    {
+      "r": 2,
+      "MF_gev": 199368.10732233452,
+      "hard_pole_residue_gev_inverse": {
+        "real": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            -8.650286310757416e-17,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "hard_finite_gev_inverse": {
+        "real": [
+          [
+            -0.0,
+            -0.0,
+            -0.0
+          ],
+          [
+            -0.0,
+            8.462662883212775e-17,
+            -0.0
+          ],
+          [
+            -0.0,
+            -0.0,
+            -0.0
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            -0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "direct_log_gev_inverse": {
+        "real": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            -7.967208123712194e-16,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      }
+    },
+    {
+      "r": 3,
+      "MF_gev": 221520.11924704042,
+      "hard_pole_residue_gev_inverse": {
+        "real": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -7.785234669854884e-17
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "hard_finite_gev_inverse": {
+        "real": [
+          [
+            -0.0,
+            -0.0,
+            -0.0
+          ],
+          [
+            -0.0,
+            -0.0,
+            -0.0
+          ],
+          [
+            -0.0,
+            -0.0,
+            7.61637408414444e-17
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.0
+          ]
+        ]
+      },
+      "direct_log_gev_inverse": {
+        "real": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -7.17046611850731e-16
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      }
+    }
+  ],
+  "checks": {
+    "independent_Wolfram_scalar_hard_template": true,
+    "nondegenerate_three_eigenstate_sum_performed": true,
+    "hard_finite_plus_direct_log_closure_residual": 0.0,
+    "hard_plus_direct_log_matching_scale_variation_residual": 2.059606133598477e-16,
+    "bare_hard_1_over_epsilon_pole_present": true,
+    "pole_residue_norm_gev_inverse": 1.5594514007035245e-16,
+    "rge_log_coefficient_over_hard_pole": "-2 for ln(muS/muF)",
+    "actual_inherited_one_loop_added": false,
+    "independent_MSbar_counterterm_proved": false,
+    "physical_SU2_and_spinor_normalization_certified": false,
+    "complete_sequential_C5_certified": false
+  },
+  "hard_finite_metrics": {
+    "c5_frobenius_gev_inverse": 1.525627131034505e-16,
+    "c5_symmetry_relative_residual": 0.0,
+    "conditional_takagi_masses_ev_ascending": [
+      0.002308686295197292,
+      0.002565214576319334,
+      0.0030782575244536624
+    ]
+  },
+  "hard_plus_running_subset_metrics": {
+    "c5_frobenius_gev_inverse": 1.2837451062999971e-15,
+    "c5_symmetry_relative_residual": 0.0,
+    "conditional_takagi_masses_ev_ascending": [
+      0.019426534001343497,
+      0.02158510157541821,
+      0.025902122167091677
+    ]
+  },
+  "vev_gev": 246.22,
+  "interpretation": "Independent scalar hard one-loop finite term evaluated for three nondegenerate heavy masses, plus corresponding leading EFT1 direct logarithm. Pole is separately retained. This is a conditional LLSS sector, NOT a complete or independently renormalized physical C5; it overlaps earlier archived LLSS outputs.",
+  "input_validation": {
+    "status": "Ready",
+    "model": "A_-4",
+    "native_matching_source": {
+      "status": "VerifiedOneEigenvalueTemplate",
+      "model": "A_-4",
+      "source_expression_sha256_normalized": "b9fbc4c11e366602e912b665cf3cb08ecaf7c280aa2998b93036e7c851ec395f",
+      "source_expression_sha256_raw": "a32c82731886cad2fe9ac2707fb519b042e118b75c939b4bb56d4b06ba46962d",
+      "source_hard_report_sha256": "2a2d2d2dd5da9d789ee6c2925a32ecf25784cafe4a72c535e59ba03e87a19633",
+      "source_provenance_sha256": "d5166e53eb1482254b5a023182d58b8538cfb1084bbba50c6bf90ebddda9a046"
+    },
+    "frozen_running_input_sha256": {
+      "hard_candidate": "a32c82731886cad2fe9ac2707fb519b042e118b75c939b4bb56d4b06ba46962d",
+      "hard_report": "2a2d2d2dd5da9d789ee6c2925a32ecf25784cafe4a72c535e59ba03e87a19633",
+      "hard_audit": "5eeeddb8fe73a967f838d6d9297cacc71f7d928bc98f94675a96c843f781c4e4",
+      "hard_provenance": "d5166e53eb1482254b5a023182d58b8538cfb1084bbba50c6bf90ebddda9a046",
+      "running": "7f16660186a6f208a419cbc53b9e6641e9b5fd71277fc40e4a03ef6610bc4f92"
+    },
+    "reference_present": true,
+    "archived_reference_sha256": "a0b4acfc3ae1eb4b1db73f2ed448fb483d968b215727153bc4a4b3ccd77277b9",
+    "heavy_masses_gev": [
+      166140.08943527873,
+      199368.10732233452,
+      221520.11924704042
+    ],
+    "scalar_matching_scale_gev": 1000.0,
+    "source_root_verified": false
+  },
+  "independent_archived_LLSS_crosscheck": {
+    "status": "SourceBackedLLSSKernelAgreement",
+    "reference_path": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6\\C5_per_unknown_NGamma_exploratory\\A_m4.json",
+    "reference_sha256": "a0b4acfc3ae1eb4b1db73f2ed448fb483d968b215727153bc4a4b3ccd77277b9",
+    "relative_frobenius_discrepancies": {
+      "hard_finite": 3.944801746105897e-15,
+      "eft1_direct_log": 4.342030976682823e-16,
+      "hard_plus_direct_log": 3.1670586514649845e-16
+    },
+    "warning": "Comparison only; archived LLSS must NOT be added again to this hard+log subtotal",
+    "absolute_SU2_spinor_normalization_proved": false
+  }
+}

@@ -60,6 +60,146 @@ T3B6EquivalentQ[old_,candidate_] := Module[{delta, relabeled, proof},
   TrueQ[proof]
 ];
 
+(* Exact full-residual evidence exporter adapted from the repository's
+   RunT3BCFullEFT1Residual.experimental.wl. It NEVER authorizes matching.
+   The saved/reconstructed actions remain unchanged. *)
+T3B6ExportFullResidual[saved_, reconstructed_, dest_String] := Module[
+  {prefix, delta, termList, groups, category, part, groupRecords={},
+   sumGroups, files=<||>, file, key, ix=0, termsWithGamma, write, result},
+  prefix=FileNameJoin[{dest,If[modelName==="B_-1","B_m1","C_m1"]<>
+     "_full_eft1_residual"}];
+  delta=Expand[saved-reconstructed];
+  termList=If[delta===0,{},If[Head[delta]===Plus,List@@delta,{delta}]];
+  termsWithGamma=Count[termList,t_/;!FreeQ[t,GammaCC]];
+  If[termsWithGamma=!=0,
+    Print["Batch6: Majorana-sector residual unexpectedly present."];
+    Return[$Failed]];
+  write[label_String,expr_] := Module[{path},
+    path=prefix<>"_"<>label<>".inputform.txt";
+    If[Quiet@Check[Export[path,ToString[InputForm[expr]],"Text"],$Failed]
+       ===$Failed,Return[$Failed]];
+    FileNameTake[path]];
+  files["saved_eomeft"]=write["saved_eomeft_full",saved];
+  files["reconstructed_candidate"]=write["reconstructed_candidate_full",reconstructed];
+  files["symbolic_residual"]=write["full_symbolic_residual",delta];
+  If[MemberQ[Values[files],$Failed],Return[$Failed]];
+  category[t_] := Module[{all,labels,fields,fieldCounts,fieldKey,couplingKey},
+    all=DeleteDuplicates@Cases[t,
+      HoldPattern[Coupling[s_Symbol,___]]:>SymbolName[s],{0,Infinity}];
+    labels=Sort@Select[all,StringStartsQ[#,"lambda"]&];
+    couplingKey=Which[Length[labels]===0,"NO_QUARTIC_COUPLING",
+      Length[labels]===1,First[labels],True,"MULTIPLE_QUARTIC_COUPLINGS"];
+    fields=Cases[t,HoldPattern[Field[s_Symbol,Scalar,___]]:>
+      SymbolName[s],{0,Infinity}];
+    fieldCounts=Counts[fields];
+    fieldKey=If[fieldCounts===<||>,"NO_SCALARS",StringRiffle[
+      (#+ToString[fieldCounts[#]]& /@ Sort@Keys[fieldCounts]),"_"]];
+    couplingKey<>"__"<>fieldKey];
+  groups=GroupBy[termList,category];
+  sumGroups=If[groups===<||>,0,Total[Total/@Values[groups]]];
+  If[!TrueQ[Expand[sumGroups-delta]===0],
+    Print["Batch6: residual partition does not reconstruct source."];
+    Return[$Failed]];
+  Do[
+    ix++;
+    part=Total[groups[key]];
+    file=write["residual_group_"<>IntegerString[ix,10,2],part];
+    If[file===$Failed,Return[$Failed]];
+    AppendTo[groupRecords,<|
+      "structural_sector"->key,"additive_terms"->Length[groups[key]],
+      "file"->file,
+      "native_CG_labels"->Sort@DeleteDuplicates@Cases[part,
+         HoldPattern[CG[s_Symbol,___]]:>SymbolName[s],{0,Infinity}],
+      "field_H"->StringContainsQ[ToString[InputForm[part]],"Field[H, Scalar"],
+      "field_X"->StringContainsQ[ToString[InputForm[part]],"Field[NewScalarX"],
+      "field_Y"->StringContainsQ[ToString[InputForm[part]],"Field[NewScalarY"]|>],
+    {key,Sort@Keys[groups]}];
+  If[Total[Lookup[groupRecords,"additive_terms",{}]]=!=Length[termList],
+    Return[$Failed]];
+  result=<|
+    "format"->"t3-bc-complete-eft1-reconstruction-residual-v1",
+    "status"->"CompleteSymbolicResidualExportedEquivalenceUnproven",
+    "model"->modelName,
+    "original_vs_independent_candidate"->"saved_minus_reconstruction",
+    "matching_scope"->"FullEFT",
+    "contains_majorana_residual"->False,
+    "residual_zero_in_matchete_expression_algebra"->TrueQ[delta===0],
+    "residual_additive_terms"->Length[termList],
+    "coupling_group_partition_conserved"->True,
+    "coupling_groups"->groupRecords,
+    "files"->files,
+    "CG_and_index_tensor_equivalence_proven"->False,
+    "physical_matching_certified"->False,
+    "renormalized_finite_C5_computed"->False|>;
+  If[Quiet@Check[Export[prefix<>"_full_residual_manifest.json",
+      result,"RawJSON"],$Failed]===$Failed,Return[$Failed]];
+  result
+];
+
+(* Export the two CURRENT run's native S2-cross CG component arrays.
+   Source is the exact formula in T3MEBuildNativeS2ScalarQuartics[] in
+   RunGeneralT3FermionFirstEFT1Tree.wl, using the same Matchete invariant
+   basis and epsilon. The original builder registered these names before
+   T3B6Hard is called. The Python checker independently validates all 32
+   array entries and rejects fabricated success metadata. *)
+T3B6ExportNativeCrossCG[dest_String] := Module[
+  {oldCross, oldT, eps, tensors, t1, t2, a1, b1, a2, b2,
+   rows, cross1, cross2, stem, base, flags, checks, ok, i,j,k,l,m,n,q},
+  oldCross=PhysicalSU2InvariantBasis[
+    {2,2,2,2},{True,False,True,False}];
+  If[!AssociationQ[oldCross] || oldCross["PhysicalCount"]=!=2,
+     Return[$Failed]];
+  oldT=Normal/@oldCross["Basis"];
+  eps={{0,1},{-1,0}};
+  tensors=Table[
+    Table[Sum[oldT[[q,i,j,m,n]] eps[[m,k]] eps[[n,l]],
+      {m,2},{n,2}],{i,2},{j,2},{k,2},{l,2}],{q,2}];
+  If[Dimensions[tensors]=!={2,2,2,2,2},Return[$Failed]];
+  t1=tensors[[1]];t2=tensors[[2]];
+  a1=t1[[1,1,2,2]];
+  b1=t1[[1,1,1,1]]-a1;
+  a2=t2[[1,1,2,2]];
+  b2=t2[[1,1,1,1]]-a2;
+  cross1=And@@Flatten@Table[
+    TrueQ[FullSimplify[t1[[i,j,k,l]]==
+       KroneckerDelta[i,j]*KroneckerDelta[k,l]-
+       KroneckerDelta[i,k]*KroneckerDelta[j,l]]],
+    {i,2},{j,2},{k,2},{l,2}];
+  cross2=And@@Flatten@Table[
+    TrueQ[FullSimplify[t2[[i,j,k,l]]==
+       a2*(KroneckerDelta[i,j]*KroneckerDelta[k,l]+
+            KroneckerDelta[i,k]*KroneckerDelta[j,l])]],
+    {i,2},{j,2},{k,2},{l,2}];
+  ok=TrueQ[cross1] && TrueQ[cross2] &&
+     TrueQ[FullSimplify[a1==1 && b1==-1 && a2==b2 && a2!=0]];
+  stem=If[modelName==="B_-1","B_m1","C_m1"];
+  base=FileNameJoin[{dest,stem<>"_nativeCG"}];
+  If[Quiet@Check[Export[base<>"_native_cross_cg_arrays.inputform.txt",
+      ToString[tensors,InputForm],"Text"],$Failed]===$Failed,Return[$Failed]];
+  checks=<|
+    "format"->"t3-bc-native-cross-cg-exact-component-check-v1",
+    "model"->modelName,
+    "native_cross_conditions_met"->TrueQ[ok],
+    "CrossInv1_in_singlet_span"->TrueQ[cross1],
+    "CrossInv2_in_singlet_span"->TrueQ[cross2],
+    "CrossInv1_exact_required_A_minus_B"->TrueQ[cross1],
+    "CrossInv2_required_equal_A_B_coefficients"->TrueQ[cross2],
+    "CrossInv1_nonzero"->!TrueQ[FullSimplify[a1==0 && b1==0]],
+    "CrossInv2_nonzero"->!TrueQ[FullSimplify[a2==0]],
+    "CrossInv1_coeff_A_inputform"->ToString[a1,InputForm],
+    "CrossInv1_coeff_B_inputform"->ToString[b1,InputForm],
+    "CrossInv2_coeff_A_inputform"->ToString[a2,InputForm],
+    "CrossInv2_coeff_B_inputform"->ToString[b2,InputForm],
+    "tensor_arrays_recomputed_from_current_driver_native_basis"->True,
+    "fermion_Match_recomputed"->False,
+    "scalar_Match_performed"->False|>;
+  If[Quiet@Check[Export[base<>"_native_cross_cg_check.json",
+      checks,"RawJSON"],$Failed]===$Failed,Return[$Failed]];
+  If[!TrueQ[ok],Print["Batch6 native cross CG tensor gate failed."];
+     Return[$Failed]];
+  checks
+];
+
 T3B6Validate[expr_] := Module[{ord,detail,keys},
   keys={"Hermiticity","CanonicallyNormalized","HeavyMassBasis",
         "GaugeInvariant","AllObjectsDefined"};
@@ -222,6 +362,23 @@ T3B6Hard[nativeUV_] := Module[{source, saved, sourceText, nativeParts,
        Expand[nativeRenorm-lightFree+heavyFree+Total[savedMajorana]]],$Aborted];
     equality=If[reconstructed===$Aborted,False,
       T3B6EquivalentQ[rebased,reconstructed]];
+    (* Export exact residual BEFORE the failed literal-equality decision.
+       Existing T3BCSU2ComponentEquivalence.py checks the scalar tensors
+       independently in Python. No scalar Match is called on failed checks. *)
+    T3MECheckpoint["batch6-full-component-residual-export-started"];
+    proof=If[reconstructed===$Aborted,$Failed,
+      T3B6ExportFullResidual[rebased,reconstructed,out]];
+    If[!AssociationQ[proof],
+       Return[T3B6Fail["Component residual export failed; no Match attempted"]]];
+    T3MECheckpoint["batch6-full-component-residual-exported"];
+    T3MECheckpoint["batch6-native-cross-CG-array-export-started"];
+    a=T3B6ExportNativeCrossCG[out];
+    If[!AssociationQ[a] || !TrueQ[Lookup[a,"native_cross_conditions_met",False]],
+      Return[T3B6Fail["Native cross-CG arrays fail current-source component checks"]]];
+    T3MECheckpoint["batch6-native-cross-CG-array-exported"];
+    Print["Batch6 component evidence: sectors=",
+       Length[proof["coupling_groups"]],"; additive terms=",
+       proof["residual_additive_terms"],"; no Match"];
     sourceCheck=If[TrueQ[equality],T3B6Validate[reconstructed],
        <|"ordinary"->"NotAttempted","checks"-><||>,"passed"->False|>];
     reconAudit=<|"status"->If[equality,
@@ -233,6 +390,14 @@ T3B6Hard[nativeUV_] := Module[{source, saved, sourceText, nativeParts,
        "saved_LLSS_expanded_term_count"->Length[savedMajorana],
        "native_F_free_term_count"->Length[Select[nativeParts,
            FreeQ[#,Verbatim[NewFermion],{0,Infinity}]&]],
+       "residual_manifest_file"->If[AssociationQ[proof],
+         If[modelName==="B_-1","B_m1","C_m1"]<>
+           "_full_eft1_residual_full_residual_manifest.json",""],
+       "residual_structural_sectors"->If[AssociationQ[proof],
+          Length[proof["coupling_groups"]],Null],
+       "residual_additive_terms"->If[AssociationQ[proof],
+          proof["residual_additive_terms"],Null],
+       "component_equivalence_proven"->False,
        "checks"->sourceCheck["checks"]|>;
     If[TrueQ[sourceCheck["passed"]],
        candidate=reconstructed;chosen="VerifiedEquivalentNativeReconstruction"];

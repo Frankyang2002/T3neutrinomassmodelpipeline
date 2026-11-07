@@ -1,0 +1,974 @@
+{
+  "format": "t3-bc-batch9-direct-all-heavy-triangle-comparison-v3",
+  "status": "ConditionalBCTriangleKernelBenchmarkFrozen",
+  "branch_reference": "GitHub main source read-only; local SHA256s recorded per input",
+  "comparison_scope": "native all-heavy direct 480-term one-loop reference (v22 previously related to triangle; v22 audits unavailable), exact same Batch9 inputs; leading-1/MF asymptotic log projected independently",
+  "relative_tolerance": 2e-08,
+  "normalization_factors_fitted": false,
+  "historical_v14_v15_v16_v17_audits_required": false,
+  "historical_frozen_v18_yukawas_used": false,
+  "ordinary_models_rerun": false,
+  "fermion_matching_rerun": false,
+  "scalar_matching_rerun": false,
+  "EFT_order": "UV -> all F -> EFT1(SM+X+Y) -> all X,Y -> SMEFT",
+  "physical_C5": null,
+  "physical_C5_certified": false,
+  "conditional_rough_benchmark_frozen": true,
+  "models": {
+    "B_-1": {
+      "model": "B_-1",
+      "status": "ConditionalLeadingTriangleMatrixAgreement",
+      "comparison_is_direct_matchete_all_heavy_reference": true,
+      "historical_direct_vs_triangle_v22_audit_reverified_this_run": false,
+      "independent_Feynman_rule_vertex_sign_certified": false,
+      "correct_EFT_sequence": "UV -> all F -> EFT1(SM+X+Y) -> all X,Y -> SMEFT",
+      "direct_full_mass_and_batch9_have_different_MF_power_counting": true,
+      "relative_frobenius": {
+        "batch9_vs_direct_full_mass": 0.00016033030647004536,
+        "batch9_vs_direct_leading_1_over_MF": 9.165177927460309e-15,
+        "direct_full_vs_direct_leading_power_correction": 0.00016033030647197898,
+        "independent_direct_large_MF_log_slope_vs_minus_2_F_pole": 5.070752007612603e-15,
+        "leading_1_over_MF_extrapolation_matrix_convergence": 1.518465270285009e-14,
+        "leading_1_over_MF_extrapolation_log_slope_convergence": 8.697821640237994e-15
+      },
+      "matrices_c5_gev_inverse": {
+        "batch9": {
+          "real": [
+            [
+              -3.804433358143605e-15,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              -3.3099402992369165e-15,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              -3.0515316337971814e-15
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "direct_full_mass": {
+          "real": [
+            [
+              -3.805188790573084e-15,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              -3.3103956342944384e-15,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              -3.0518712255884948e-15
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "direct_leading_1_over_MF": {
+          "real": [
+            [
+              -3.804433358143626e-15,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              -3.3099402992368696e-15,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              -3.0515316337971652e-15
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "batch9_minus_direct_full": {
+          "real": [
+            [
+              7.5543242947906e-19,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              4.553350575218275e-19,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.395917913133912e-19
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "batch9_minus_direct_leading": {
+          "real": [
+            [
+              2.129924444096732e-29,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              -4.69372238606502e-29,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              -1.6171648557030742e-29
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "direct_log_slope_per_log_MF": {
+          "real": [
+            [
+              -9.186793177375667e-16,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              -7.6556608993003055e-16,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              -6.890074421101259e-16
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "minus_two_archived_F_pole": {
+          "real": [
+            [
+              -9.1867931773757e-16,
+              -0.0,
+              -0.0
+            ],
+            [
+              -0.0,
+              -7.655660899300247e-16,
+              -0.0
+            ],
+            [
+              -0.0,
+              -0.0,
+              -6.890074421101239e-16
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        }
+      },
+      "asymptotic_rescaling_MF_factors": [
+        128.0,
+        256.0,
+        512.0,
+        1024.0,
+        2048.0
+      ],
+      "asymptotic_extraction_ansatz": "t*C5(t*MF)=a+b*ln(t)+(c+d*ln(t))/t^2+O(ln(t)/t^4)",
+      "subleading_log_over_t2_removed": true,
+      "independent_direct_source_terms": 480,
+      "independent_direct_yukawa_shape_counts": {
+        "y1_i*y1_j": 144,
+        "y1_i*y2_j": 192,
+        "y2_i*y2_j": 144
+      },
+      "independent_direct_quartic_counts": {
+        "lambdaT3ExtraQ020200I1": 144,
+        "lambdaT3": 192,
+        "lambdaT3ExtraQ020020I1": 144
+      },
+      "inputs": {
+        "all_couplings_evaluated_at": "muF",
+        "muF_gev": 100000.0,
+        "muS_gev": 1547.730588257235,
+        "MF_gev": [
+          149999.99711125903,
+          179999.9965335109,
+          199999.99614835114
+        ],
+        "MX_MY_gev": [
+          1341.2030680112669,
+          1547.730588257235
+        ],
+        "U": {
+          "real": [
+            [
+              0.9997442419766112,
+              0.022615274365157288
+            ],
+            [
+              -0.022615274365157288,
+              0.9997442419766112
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "y1": {
+          "real": [
+            [
+              0.0004127999189734885,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.00041279991676688006,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0004127993060146251
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "y2": {
+          "real": [
+            [
+              0.00041279991897348844,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.00041279991676688006,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0004127993060146251
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "native_quartics": {
+          "lambdaT3": {
+            "real": 0.01063498942132365,
+            "imag": 0.0
+          },
+          "lambdaT3ExtraQ020020I1": {
+            "real": -0.010619528943740651,
+            "imag": -0.0
+          },
+          "lambdaT3ExtraQ020200I1": {
+            "real": -0.010670835508490024,
+            "imag": -0.0
+          }
+        },
+        "quartic_map_certified": false,
+        "C5_normalization": "half-normalized symmetric C5=A5+A5^T; no fitted factor",
+        "heavy_mass_lift_native_three_MF_verified": false
+      },
+      "source_hashes": {
+        "batch9": {
+          "path": "output/general_sequential_pilot/mixed_inherited_pole_batch9/mixed_inherited_11/B_m1/result.json",
+          "sha256": "53d137131a197d7fd285af83d03a93c05e644f46152c5fa1cb004f22e22beaac"
+        },
+        "batch8": {
+          "path": "output/general_sequential_pilot/mixed_fixed_order_batch6/mixed_fixed_08/B_m1/result.json",
+          "sha256": "f717503d81e92f989ff44eb41f6e7ae97bbba7fdaee351216cf941d847562ae3"
+        },
+        "running": {
+          "path": "output/general_observable/mixed_adapter_v3/B_m1/running.json",
+          "sha256": "0c5ebc92aaf1d821ed54cf6e413ccfbcc3dc8e60dd84d2e354c92ab3c2110501"
+        },
+        "parameters": {
+          "path": "output/general_observable/mixed_f_synchronised_v1/B_m1/matchete/B_m1_final_parameters.json",
+          "sha256": "be5dabeb3603d29803046270f34667c961e34d8477a6dcd86494fa1c8c0b1dbe"
+        },
+        "scalar_hard": {
+          "path": "output/general_sequential_pilot/mixed_scalar_hard_batch6/mixed_hard_08/B_m1/hard_c5_candidate.txt",
+          "sha256": "c11ac19a097e8708cb79986e8929bf01c490cd3be845ff5fcf5311da4ff459ac"
+        },
+        "F_first_native_raw": {
+          "path": "output/general_observable/lo_certification_spinor/native_hard_e515d82d118284ba_native01/B_m1/B_m1_native_one_loop_raw_hard_llhh_sector.inputform.txt",
+          "sha256": "dceaa8c40af8eb2885715a2fc9719188c22220b020ab75c3487e641203337b0c"
+        },
+        "weinberg_definition": {
+          "path": "Lagrangian/RunMatching.wl",
+          "sha256": "2a3d7415695213b501e53023b19e8a4a7ee54275daa918ba2ce10064d0d87567"
+        },
+        "direct_480_terms": {
+          "path": "output/general_t3_mass_eigen_matchete/one_loop_probe/B_m1_final_one_loop_probe_weinberg_ordered_coefficient.inputform.txt",
+          "sha256": "12b4507253982cb58d6adb79fb83ba59363f22f86af8f9d04897d533d48e97fd"
+        },
+        "native_direct_report": {
+          "path": "output/general_t3_mass_eigen_matchete/one_loop_probe/B_m1_final_one_loop_probe.json",
+          "sha256": "6e4582917b83bb6675c30dbb44e85d0c8e58d520d0cf884fe3d4326601f60ec5"
+        },
+        "direct_parser": {
+          "path": "scripts/DirectVsSequentialOneLoop.experimental.py",
+          "sha256": "72788e35052c8001158df114627b164c2736755654e4803cece0d6746d59f19b"
+        },
+        "batch10_comparator": {
+          "path": "scripts/CompareT3BCBatch9ToTriangle.py",
+          "sha256": "9c8da2d51a09029938052eb265626aee1f3d810175a5405e5edcf1e40414b21a"
+        }
+      },
+      "conditional_batch9_singular_values_ev": [
+        0.09249846691452175,
+        0.10033138764386056,
+        0.11532053255133919
+      ],
+      "conditional_direct_leading_singular_values_ev": [
+        0.09249846691452127,
+        0.10033138764385914,
+        0.11532053255133984
+      ],
+      "passed_conditional_finite_and_pole_source_comparison": true,
+      "complete_physical_C5": null,
+      "physical_C5_certified": false,
+      "UV_EFT_finite_field_EOM_counterterm_certified": false,
+      "EFT1_running_performed": false
+    },
+    "C_-1": {
+      "model": "C_-1",
+      "status": "ConditionalLeadingTriangleMatrixAgreement",
+      "comparison_is_direct_matchete_all_heavy_reference": true,
+      "historical_direct_vs_triangle_v22_audit_reverified_this_run": false,
+      "independent_Feynman_rule_vertex_sign_certified": false,
+      "correct_EFT_sequence": "UV -> all F -> EFT1(SM+X+Y) -> all X,Y -> SMEFT",
+      "direct_full_mass_and_batch9_have_different_MF_power_counting": true,
+      "relative_frobenius": {
+        "batch9_vs_direct_full_mass": 0.00011782262566352821,
+        "batch9_vs_direct_leading_1_over_MF": 1.6037642234513935e-14,
+        "direct_full_vs_direct_leading_power_correction": 0.00011782262566900513,
+        "independent_direct_large_MF_log_slope_vs_minus_2_F_pole": 9.360675690522018e-15,
+        "leading_1_over_MF_extrapolation_matrix_convergence": 1.646607864007585e-14,
+        "leading_1_over_MF_extrapolation_log_slope_convergence": 9.912141250564805e-15
+      },
+      "matrices_c5_gev_inverse": {
+        "batch9": {
+          "real": [
+            [
+              -7.543875229575442e-16,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              -6.553237502071367e-16,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              -6.036592079757177e-16
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "direct_full_mass": {
+          "real": [
+            [
+              -7.54497537560241e-16,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              -6.553899756342753e-16,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              -6.037085646369863e-16
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "direct_leading_1_over_MF": {
+          "real": [
+            [
+              -7.543875229575291e-16,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              -6.553237502071478e-16,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              -6.036592079757187e-16
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "batch9_minus_direct_full": {
+          "real": [
+            [
+              1.1001460269672608e-19,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              6.622542713860618e-20,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              4.935666126857855e-20
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "batch9_minus_direct_leading": {
+          "real": [
+            [
+              -1.508696481235185e-29,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.1044052673094165e-29,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              9.860761315262648e-31
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "direct_log_slope_per_log_MF": {
+          "real": [
+            [
+              -1.7551948465770286e-16,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              -1.4626623565247412e-16,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              -1.3163922291706918e-16
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "minus_two_archived_F_pole": {
+          "real": [
+            [
+              -1.7551948465770089e-16,
+              -0.0,
+              -0.0
+            ],
+            [
+              -0.0,
+              -1.462662356524756e-16,
+              -0.0
+            ],
+            [
+              -0.0,
+              -0.0,
+              -1.316392229170693e-16
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        }
+      },
+      "asymptotic_rescaling_MF_factors": [
+        128.0,
+        256.0,
+        512.0,
+        1024.0,
+        2048.0
+      ],
+      "asymptotic_extraction_ansatz": "t*C5(t*MF)=a+b*ln(t)+(c+d*ln(t))/t^2+O(ln(t)/t^4)",
+      "subleading_log_over_t2_removed": true,
+      "independent_direct_source_terms": 480,
+      "independent_direct_yukawa_shape_counts": {
+        "y1_i*y1_j": 144,
+        "y1_i*y2_j": 192,
+        "y2_i*y2_j": 144
+      },
+      "independent_direct_quartic_counts": {
+        "lambdaT3ExtraQ020200I1": 144,
+        "lambdaT3": 192,
+        "lambdaT3ExtraQ020020I1": 144
+      },
+      "inputs": {
+        "all_couplings_evaluated_at": "muF",
+        "muF_gev": 100000.0,
+        "muS_gev": 1547.6185805117175,
+        "MF_gev": [
+          173539.2990594639,
+          208247.1588713567,
+          231385.73207928883
+        ],
+        "MX_MY_gev": [
+          1341.704886025236,
+          1547.6185805117175
+        ],
+        "U": {
+          "real": [
+            [
+              0.9997440519394268,
+              0.02262367370116257
+            ],
+            [
+              -0.02262367370116257,
+              0.9997440519394268
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "y1": {
+          "real": [
+            [
+              0.00044338613409111927,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.00044338613172320736,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.00044338547632482406
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "y2": {
+          "real": [
+            [
+              0.00044338613409111927,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.00044338613172320736,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.00044338547632482406
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "native_quartics": {
+          "lambdaT3": {
+            "real": 0.010574567759201407,
+            "imag": 0.0
+          },
+          "lambdaT3ExtraQ020020I1": {
+            "real": -0.010559061495994315,
+            "imag": -0.0
+          },
+          "lambdaT3ExtraQ020200I1": {
+            "real": -0.010609978405194658,
+            "imag": -0.0
+          }
+        },
+        "quartic_map_certified": false,
+        "C5_normalization": "half-normalized symmetric C5=A5+A5^T; no fitted factor",
+        "heavy_mass_lift_native_three_MF_verified": false
+      },
+      "source_hashes": {
+        "batch9": {
+          "path": "output/general_sequential_pilot/mixed_inherited_pole_batch9/mixed_inherited_11/C_m1/result.json",
+          "sha256": "66d3137e4bfabb7afbc44c190fb452443dd358c54af90460ad7a340bcf126119"
+        },
+        "batch8": {
+          "path": "output/general_sequential_pilot/mixed_fixed_order_batch6/mixed_fixed_08/C_m1/result.json",
+          "sha256": "81bc132f4324fc4323003321a9f772fd862e68d9d49729b6800f7ff32cba7fc9"
+        },
+        "running": {
+          "path": "output/general_observable/mixed_adapter_v3/C_m1/running.json",
+          "sha256": "aba7dcb312a143c7ec964a5f3826f2fcaa1b2ec6eb3d41c5081395943fcbde87"
+        },
+        "parameters": {
+          "path": "output/general_observable/mixed_f_synchronised_v1/C_m1/matchete/C_m1_final_parameters.json",
+          "sha256": "4e331b2b16e5a52f80a03815a4b6d644538281d9e950dc9b61db5a5111a2579c"
+        },
+        "scalar_hard": {
+          "path": "output/general_sequential_pilot/mixed_scalar_hard_batch6/mixed_hard_08/C_m1/hard_c5_candidate.txt",
+          "sha256": "984a16312c0fd222aad388c577d45427487c8d8577ea5607db74315bc6a3423d"
+        },
+        "F_first_native_raw": {
+          "path": "output/general_observable/lo_certification_spinor/native_hard_e515d82d118284ba_native01/C_m1/C_m1_native_one_loop_raw_hard_llhh_sector.inputform.txt",
+          "sha256": "c043dac85e99f99ec88ebc474137c6ff95eca923621c25ea6868999851f24e32"
+        },
+        "weinberg_definition": {
+          "path": "Lagrangian/RunMatching.wl",
+          "sha256": "2a3d7415695213b501e53023b19e8a4a7ee54275daa918ba2ce10064d0d87567"
+        },
+        "direct_480_terms": {
+          "path": "output/general_t3_mass_eigen_matchete/one_loop_probe/C_m1_final_one_loop_probe_weinberg_ordered_coefficient.inputform.txt",
+          "sha256": "83e587e503f4945b4af4ffad2334593d1e7fc7275ca20536c95a386084c6984d"
+        },
+        "native_direct_report": {
+          "path": "output/general_t3_mass_eigen_matchete/one_loop_probe/C_m1_final_one_loop_probe.json",
+          "sha256": "71ffc5e2939270a85ce27e948c82ac5a4877a0bb0dbd3d9d1f075ad168850c42"
+        },
+        "direct_parser": {
+          "path": "scripts/DirectVsSequentialOneLoop.experimental.py",
+          "sha256": "72788e35052c8001158df114627b164c2736755654e4803cece0d6746d59f19b"
+        },
+        "batch10_comparator": {
+          "path": "scripts/CompareT3BCBatch9ToTriangle.py",
+          "sha256": "9c8da2d51a09029938052eb265626aee1f3d810175a5405e5edcf1e40414b21a"
+        }
+      },
+      "conditional_batch9_singular_values_ev": [
+        0.018298204959817745,
+        0.01986426801396351,
+        0.022867103378569887
+      ],
+      "conditional_direct_leading_singular_values_ev": [
+        0.018298204959817776,
+        0.01986426801396384,
+        0.022867103378569432
+      ],
+      "passed_conditional_finite_and_pole_source_comparison": true,
+      "complete_physical_C5": null,
+      "physical_C5_certified": false,
+      "UV_EFT_finite_field_EOM_counterterm_certified": false,
+      "EFT1_running_performed": false
+    }
+  },
+  "errors": {}
+}

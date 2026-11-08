@@ -16,6 +16,7 @@ import argparse
 from datetime import datetime, timezone
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
 import shutil
@@ -62,21 +63,62 @@ def git_output(root: Path, *args: str) -> bytes | None:
         return None
 
 
+def is_git_checkout_root(root: Path) -> bool:
+    """Check Git's *actual* worktree root, not just whether an ancestor has .git.
+
+    Git discovery walks upwards. A synthetic temporary directory under some
+    other Git working tree is *not* a checkout of its own. In that situation
+    `git ls-files` can succeed but return zero entries, hiding every fixture.
+    """
+    raw = git_output(root, "rev-parse", "--show-toplevel")
+    if not raw:
+        return False
+    try:
+        reported = Path(raw.decode("utf-8", errors="surrogateescape").strip()).resolve()
+        expected = root.resolve()
+    except (OSError, ValueError):
+        return False
+    return os.path.normcase(str(reported)) == os.path.normcase(str(expected))
+
+
+def _git_paths(raw: bytes) -> list[str]:
+    return sorted(set(s.decode("utf-8", errors="surrogateescape").replace("\\", "/")
+                      for s in raw.split(b"\0") if s))
+
+
 def tracked_paths(root: Path) -> list[str]:
-    raw = git_output(root, "ls-files", "-z")
-    if raw is not None:
-        return sorted(set(s.decode("utf-8", errors="surrogateescape").replace("\\", "/")
-                          for s in raw.split(b"\0") if s))
-    # Synthetic/non-git checkout fallback. Ignore generated reports and .git.
+    if is_git_checkout_root(root):
+        raw = git_output(root, "ls-files", "-z")
+        if raw is None:
+            raise RuntimeError("Cannot enumerate Git-tracked files; refusing cleanup plan")
+        return _git_paths(raw)
+    if (root / ".git").exists():
+        # A real checkout whose Git metadata is unreadable must not fall back
+        # to scanning untracked files and accidentally offering them for deletion.
+        raise RuntimeError("Git metadata exists but checkout root could not be validated")
+    # Synthetic/non-git fixture. Git may detect an *ancestor* repository;
+    # only the fixture's own files are relevant in this fallback.
     return sorted(p.relative_to(root).as_posix() for p in root.rglob("*")
                   if p.is_file() and ".git" not in p.relative_to(root).parts)
 
 
+def untracked_reference_paths(root: Path) -> list[str]:
+    """Inspect new local code/docs for references, without treating them as deletable."""
+    if not is_git_checkout_root(root):
+        return []
+    raw = git_output(root, "ls-files", "--others", "--exclude-standard", "-z")
+    if raw is None:
+        raise RuntimeError("Cannot enumerate untracked reference files")
+    return _git_paths(raw)
+
+
 def modified_paths(root: Path) -> set[str]:
     """Return tracked paths with changes. Untracked files are never removed."""
+    if not is_git_checkout_root(root):
+        return set()
     raw = git_output(root, "status", "--porcelain=v1", "-z", "--untracked-files=no")
     if raw is None:
-        return set()
+        raise RuntimeError("Cannot read Git working-tree status; refusing cleanup plan")
     changed: set[str] = set()
     chunks = raw.split(b"\0")
     index = 0
@@ -214,7 +256,11 @@ def build_plan(root: Path, *, nested_notes: bool = False, presentations: bool = 
                 and (root / rel).is_file()}
     # Exclude candidates from the reference scan: links between retired records
     # do not keep the entire obsolete-document network alive.
-    sources = source_texts(root, sorted(set(tracked) | KEEP_DOCS), set(possible))
+    sources = source_texts(
+        root,
+        sorted(set(tracked) | set(untracked_reference_paths(root)) | KEEP_DOCS),
+        set(possible),
+    )
     notes = note_review(root, tracked)
     code_review = manual_code_review(tracked, sources)
     moves, held = [], []
@@ -234,7 +280,8 @@ def build_plan(root: Path, *, nested_notes: bool = False, presentations: bool = 
     return {
         "schema": "t3-extreme-cleanup-plan-v1",
         "repository": str(root),
-        "git_head": (git_output(root, "rev-parse", "HEAD") or b"").decode("ascii", "replace").strip(),
+        "git_head": ((git_output(root, "rev-parse", "HEAD") or b"")
+                     if is_git_checkout_root(root) else b"").decode("ascii", "replace").strip(),
         "options": {"include_nested_notes": nested_notes, "include_presentations": presentations},
         "archive_candidates": moves,
         "held_for_references": held,

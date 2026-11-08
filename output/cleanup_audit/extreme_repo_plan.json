@@ -1,7 +1,7 @@
 {
   "schema": "t3-extreme-cleanup-plan-v1",
   "repository": "C:\\thesistemp\\T3neutrinomassmodelpipeline",
-  "git_head": "ed572d14ee9bbe70b0a245ef544c344d2a6e3e97",
+  "git_head": "19253252a8f6579ca9129774db11dc2a77b23aad",
   "options": {
     "include_nested_notes": false,
     "include_presentations": false
@@ -12,18 +12,6 @@
       "category": "root-export-archive",
       "bytes": 8057,
       "sha256": "340fd9ec94384779ff62210b24bbf794f68a2bfaea5a700087717a478f267cf1"
-    },
-    {
-      "path": "CLEANUP_README.md",
-      "category": "root-historical-document",
-      "bytes": 2849,
-      "sha256": "8f4e2a20590442702ccc07e844976ce0652552ab2b387f6979c093af59e4739a"
-    },
-    {
-      "path": "CONSOLIDATION_README.md",
-      "category": "root-historical-document",
-      "bytes": 2142,
-      "sha256": "7e544bd8962b48713689ffa6a61d2cd06d99f3cc9ef76a052ccfa1a37cde7312"
     },
     {
       "path": "INSTALL.txt",
@@ -248,12 +236,6 @@
       "sha256": "4a0c6a52d9d8a9db322eebe9273d8d942996c3d25fbae6491bd09c397b2555e7"
     },
     {
-      "path": "REGENERATE_README.md",
-      "category": "root-historical-document",
-      "bytes": 2427,
-      "sha256": "cf5b34a8bbb1e26951cd88b368a164514216d7ea25a6ce29881a66bc6a063ec7"
-    },
-    {
       "path": "T3_Batch2_FailureLogs.zip",
       "category": "root-export-archive",
       "bytes": 5201,
@@ -264,12 +246,6 @@
       "category": "root-export-archive",
       "bytes": 8964,
       "sha256": "c500e283597cad440deaafbd96891a8a52dca12a13476c0f2cc07def6d6c0038"
-    },
-    {
-      "path": "T3_COMMAND_REFERENCE.md",
-      "category": "root-historical-document",
-      "bytes": 87252,
-      "sha256": "2ba8ee18a5b8cec69893162f60005aa7d9960b6eed01db60bbe948c97c31beb8"
     },
     {
       "path": "T3_Sequential_Source.zip",
@@ -1228,6 +1204,26 @@
   ],
   "held_for_references": [
     {
+      "path": "CLEANUP_README.md",
+      "category": "root-historical-document",
+      "bytes": 2849,
+      "sha256": "8f4e2a20590442702ccc07e844976ce0652552ab2b387f6979c093af59e4739a",
+      "reason": "named by retained source/config/document",
+      "references": [
+        "scripts/maintenance/ExtremeRepositoryCleanup.py"
+      ]
+    },
+    {
+      "path": "CONSOLIDATION_README.md",
+      "category": "root-historical-document",
+      "bytes": 2142,
+      "sha256": "7e544bd8962b48713689ffa6a61d2cd06d99f3cc9ef76a052ccfa1a37cde7312",
+      "reason": "named by retained source/config/document",
+      "references": [
+        "scripts/maintenance/ExtremeRepositoryCleanup.py"
+      ]
+    },
+    {
       "path": "README_REPLACEMENT.md",
       "category": "root-historical-document",
       "bytes": 3712,
@@ -1235,6 +1231,26 @@
       "reason": "named by retained source/config/document",
       "references": [
         "scripts/maintenance/FinishRepositoryConsolidation.py"
+      ]
+    },
+    {
+      "path": "REGENERATE_README.md",
+      "category": "root-historical-document",
+      "bytes": 2427,
+      "sha256": "cf5b34a8bbb1e26951cd88b368a164514216d7ea25a6ce29881a66bc6a063ec7",
+      "reason": "named by retained source/config/document",
+      "references": [
+        "scripts/maintenance/ExtremeRepositoryCleanup.py"
+      ]
+    },
+    {
+      "path": "T3_COMMAND_REFERENCE.md",
+      "category": "root-historical-document",
+      "bytes": 87252,
+      "sha256": "2ba8ee18a5b8cec69893162f60005aa7d9960b6eed01db60bbe948c97c31beb8",
+      "reason": "named by retained source/config/document",
+      "references": [
+        "scripts/maintenance/ExtremeRepositoryCleanup.py"
       ]
     },
     {
@@ -1626,6 +1642,7 @@
         "README.md",
         "docs/REPOSITORY_CLEANUP_POLICY.md",
         "scripts/RunBaselineTests.ps1",
+        "scripts/maintenance/ExtremeRepositoryCleanup.py",
         "tests/python/test_one_time_artifact_cleanup.py",
         "tools/AuditDocumentationRetirement.py",
         "tools/AuditOneTimeArtifacts.py"
@@ -3152,6 +3169,28 @@
         "opt_in_general": [
           375,
           376
+        ]
+      }
+    },
+    {
+      "path": "scripts/maintenance/ExtremeRepositoryCleanup.py",
+      "markers": {
+        "opt_in_general": [
+          44
+        ],
+        "restricted_route": [
+          45
+        ],
+        "uncertified_basis": [
+          46
+        ]
+      }
+    },
+    {
+      "path": "tests/python/test_extreme_repository_cleanup.py",
+      "markers": {
+        "opt_in_general": [
+          32
         ]
       }
     },
@@ -5567,6 +5606,21 @@
       "review_flags": {}
     },
     {
+      "path": "docs/MODEL_AND_PIPELINE.md",
+      "lines": 91,
+      "review_flags": {
+        "restricted_or_reduced_model": [
+          73,
+          77,
+          79,
+          83
+        ],
+        "strong_generality_claim": [
+          77
+        ]
+      }
+    },
+    {
       "path": "docs/NUMERICAL.md",
       "lines": 192,
       "review_flags": {
@@ -5620,6 +5674,16 @@
       "review_flags": {
         "old_install_instruction": [
           26
+        ]
+      }
+    },
+    {
+      "path": "docs/REPOSITORY_CLEANUP_POLICY.md",
+      "lines": 64,
+      "review_flags": {
+        "restricted_or_reduced_model": [
+          60,
+          62
         ]
       }
     },
@@ -8572,13 +8636,13 @@
     }
   ],
   "counts": {
-    "tracked_paths": 9929,
+    "tracked_paths": 9934,
     "candidate_paths": 240,
-    "archivable": 203,
-    "held": 37,
-    "archivable_bytes": 1185276,
-    "notes_reviewed": 337,
-    "notes_flagged": 297,
+    "archivable": 199,
+    "held": 41,
+    "archivable_bytes": 1090606,
+    "notes_reviewed": 339,
+    "notes_flagged": 299,
     "manual_code_candidates": 62
   },
   "warnings": [

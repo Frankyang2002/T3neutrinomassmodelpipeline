@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import importlib.util
+import shutil
+import subprocess
 from pathlib import Path
 import tempfile
 import unittest
@@ -72,6 +74,77 @@ class CleanupTests(unittest.TestCase):
             self.assertEqual((root / "README_OLD_BATCH.md").read_text(), "historical material\n")
             with self.assertRaises(FileExistsError):
                 cleanup.restore(root, archive)
+
+    def test_nested_untracked_fixture_inside_other_git_worktree(self):
+        """Regression: Git discovery must not treat an ancestor repo as fixture."""
+        if not shutil.which("git"):
+            self.skipTest("git executable unavailable")
+        with tempfile.TemporaryDirectory() as tmp:
+            parent = Path(tmp) / "outer_checkout"
+            parent.mkdir()
+            subprocess.run(["git", "init", "-q", str(parent)], check=True)
+            root = self.create_root(parent)
+            self.assertFalse(cleanup.is_git_checkout_root(root))
+            plan = cleanup.build_plan(root)
+            archivable = {item["path"] for item in plan["archive_candidates"]}
+            held = {item["path"] for item in plan["held_for_references"]}
+            self.assertIn("README_OLD_BATCH.md", archivable)
+            self.assertIn("docs/OLD_TECHNICAL_NOTE.md", archivable)
+            self.assertIn("docs/REFERENCED_VALIDATION.md", held)
+            self.assertEqual(plan["git_head"], "")
+
+    def test_git_checkout_ignores_untracked_archive_candidates(self):
+        """Only tracked documents are archive candidates in a real checkout."""
+        if not shutil.which("git"):
+            self.skipTest("git executable unavailable")
+        with tempfile.TemporaryDirectory() as tmp:
+            root = self.create_root(Path(tmp))
+            subprocess.run(["git", "init", "-q", str(root)], check=True)
+            subprocess.run(["git", "-C", str(root), "add", "README_OLD_BATCH.md"], check=True)
+            subprocess.run([
+                "git", "-C", str(root), "-c", "user.name=Test",
+                "-c", "user.email=test@example.com", "commit", "-qm", "fixture"
+            ], check=True)
+            self.assertTrue(cleanup.is_git_checkout_root(root))
+            plan = cleanup.build_plan(root)
+            archivable = {item["path"] for item in plan["archive_candidates"]}
+            self.assertIn("README_OLD_BATCH.md", archivable)
+            self.assertNotIn("docs/OLD_TECHNICAL_NOTE.md", archivable)
+            self.assertNotIn("Reports/output/figure.png", archivable)
+            # New untracked code must still block retiring referenced tracked docs.
+            (root / "scripts" / "new_check.py").write_text(
+                '"README_OLD_BATCH.md"\n', encoding="utf-8"
+            )
+            plan = cleanup.build_plan(root)
+            held = {item["path"] for item in plan["held_for_references"]}
+            self.assertIn("README_OLD_BATCH.md", held)
+
+    def test_modified_tracked_candidate_held(self):
+        if not shutil.which("git"):
+            self.skipTest("git executable unavailable")
+        with tempfile.TemporaryDirectory() as tmp:
+            root = self.create_root(Path(tmp))
+            subprocess.run(["git", "init", "-q", str(root)], check=True)
+            subprocess.run(["git", "-C", str(root), "add", "README_OLD_BATCH.md"], check=True)
+            subprocess.run([
+                "git", "-C", str(root), "-c", "user.name=Test",
+                "-c", "user.email=test@example.com", "commit", "-qm", "fixture"
+            ], check=True)
+            (root / "README_OLD_BATCH.md").write_text("locally edited\n", encoding="utf-8")
+            plan = cleanup.build_plan(root)
+            held = {item["path"]: item for item in plan["held_for_references"]}
+            self.assertIn("README_OLD_BATCH.md", held)
+            self.assertEqual(held["README_OLD_BATCH.md"]["reason"], "locally modified tracked file")
+
+    def test_unreadable_checkout_metadata_fails_closed(self):
+        """A damaged real checkout must never be mistaken for a synthetic fixture."""
+        if not shutil.which("git"):
+            self.skipTest("git executable unavailable")
+        with tempfile.TemporaryDirectory() as tmp:
+            root = self.create_root(Path(tmp))
+            (root / ".git").write_text("gitdir: missing-git-directory\n", encoding="utf-8")
+            with self.assertRaises(RuntimeError):
+                cleanup.build_plan(root)
 
     def test_presentations_are_opt_in(self):
         with tempfile.TemporaryDirectory() as tmp:

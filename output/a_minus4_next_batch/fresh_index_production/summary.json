@@ -1,0 +1,115 @@
+{
+  "format": "t3-a-minus4-permanent-source-fresh-indices-v1",
+  "model": "A_-4",
+  "status": "SOURCE_LEVEL_FRESH_INDEX_REGEN_55_PROBES_PASS_ODE_COMPUTED_NOT_PHYSICAL",
+  "source": {
+    "path": "RGE\\running\\rgbeta\\T3RGBetaModel.wl",
+    "sha256": "147b25f172ebcc3644e3ae1be8a7686fe66e1b7c1673ca17dd10e444ce0fff0d",
+    "original_sha256": "a58c79f18b2abdf9d476588552dfa52e2f131f322094e5b72d1198162aa20abc",
+    "source_fix_numerical_scope": "lambdaS2Adj and lambdaH2Adj in A(-4)",
+    "other_models_not_numerically_certified": true
+  },
+  "native_rgbeta_17_parameter_inventory": [
+    "g2",
+    "g3",
+    "gY",
+    "lambda12",
+    "lambdaH",
+    "lambdaH1",
+    "lambdaH2",
+    "lambdaH2Adj",
+    "lambdaS1",
+    "lambdaS2",
+    "lambdaS2Adj",
+    "lambdaT3",
+    "mS1Sq",
+    "mS2Sq",
+    "yd",
+    "ye",
+    "yu"
+  ],
+  "native_17_parameter_beta_integrity": true,
+  "nonquartic_betas_unchanged_at_nonzero_background": {
+    "samples": 3,
+    "channels": [
+      "g2",
+      "g3",
+      "gY",
+      "mS1Sq",
+      "mS2Sq",
+      "yd",
+      "ye",
+      "yu"
+    ],
+    "maximum_normalized_difference": 0.0,
+    "worst": null,
+    "passes": true
+  },
+  "all_nine_full_quartic_betas_match_previous_both_fresh_native": {
+    "samples": 3,
+    "channels": [
+      "lambda12",
+      "lambdaH",
+      "lambdaH1",
+      "lambdaH2",
+      "lambdaH2Adj",
+      "lambdaS1",
+      "lambdaS2",
+      "lambdaS2Adj",
+      "lambdaT3"
+    ],
+    "maximum_normalized_difference": 0.0,
+    "worst": null,
+    "passes": true
+  },
+  "independent_scalar_only_55_probe_check": {
+    "native_vs_exact_hessian_failing_probes": 0,
+    "failing_probe_names": [],
+    "independent_discrepant_monomials": [],
+    "discrepant_monomial_count": 0,
+    "max_reference_hessian_minus_fourth_derivative_abs": 1.0658141036401503e-14,
+    "max_reference_projection_closure": 3.985011241656643e-16,
+    "max_difference_from_archived_raw_global_beta": null
+  },
+  "new_beta_sha256": "a3d3d6ad05eecdbf8424efc4eab2c9e6c762a6e7d28e0d68c89a055e138c4cbf",
+  "ode_renormalisable_couplings_7_scales_computed": true,
+  "fixed_minus_previous_reference_diagnostic": {
+    "endpoint": {
+      "mu_gev": 1000.0,
+      "fixed_minus_previous_lambdaH": -1.3221768476318063e-05,
+      "fixed_minus_previous_lambdaS1": -4.712119583416552e-12,
+      "fixed_minus_previous_lambdaS2": -0.000718231681188175,
+      "fixed_minus_previous_lambdaS2Adj": 0.0014038391929523941,
+      "fixed_minus_previous_lambdaH1": 1.8876418535901385e-08,
+      "fixed_minus_previous_lambdaH2": -2.928322951888107e-05,
+      "fixed_minus_previous_lambdaH2Adj": 0.011741603891046289,
+      "fixed_minus_previous_lambda12": 1.4082209860016848e-08,
+      "fixed_minus_previous_lambdaT3.real": -8.30071448479873e-06,
+      "fixed_minus_previous_lambdaT3.imag": 0.0
+    },
+    "max_scalar_quartic_absolute_grid_difference": 0.011741603891046289
+  },
+  "fixed_minus_original_native": {
+    "endpoint": {
+      "mu_gev": 1000.0,
+      "fixed_minus_previous_lambdaH": 5.611577808772861e-05,
+      "fixed_minus_previous_lambdaS1": 2.6753307902360746e-10,
+      "fixed_minus_previous_lambdaS2": -0.0003693320869816441,
+      "fixed_minus_previous_lambdaS2Adj": 0.0020366825154488274,
+      "fixed_minus_previous_lambdaH1": 3.829153007520181e-08,
+      "fixed_minus_previous_lambdaH2": 0.00013344241612514574,
+      "fixed_minus_previous_lambdaH2Adj": 0.012083955284647972,
+      "fixed_minus_previous_lambda12": 4.1614488715223386e-07,
+      "fixed_minus_previous_lambdaT3.real": -8.64024665731683e-06,
+      "fixed_minus_previous_lambdaT3.imag": 0.0
+    },
+    "max_scalar_quartic_absolute_grid_difference": 0.012083955284647972
+  },
+  "physical_matchete_to_rgbeta_quartic_map_certified": false,
+  "matchete_GammaCC_to_weyl_factor_measured": false,
+  "physical_C_ijab_at_muF": null,
+  "physical_full_Wilson_ODE_enabled": false,
+  "complete_one_loop_F_threshold_matching_certified": false,
+  "scalar_threshold_matching_performed": false,
+  "EFT_order": "UV -> integrate out ALL fermions -> EFT1(SM+S1+S2) -> integrate out ALL scalars simultaneously -> SMEFT"
+}

@@ -1,0 +1,58 @@
+{
+	"format":"t3-a-minus4-fresh-adjoint-index-native-probe-v1",
+	"status":"NATIVE_QUARTIC_BETAS_EXPORTED_NOT_PHYSICAL_CERTIFICATION",
+	"model":"A_-4",
+	"stage":"EFT1",
+	"mode":"portal",
+	"source_model_SHA256":"a58c79f18b2abdf9d476588552dfa52e2f131f322094e5b72d1198162aa20abc",
+	"installed_rgbeta_package":"\"C:\\\\Users\\\\popok\\\\AppData\\\\Roaming\\\\Wolfram\\\\Applications\\\\RGBeta\\\\Kernel\\\\init.m\"",
+	"fresh_triplet_adjoint_dummy":false,
+	"fresh_portal_adjoint_dummy":true,
+	"all_9_native_quartic_symbols":[
+		"lambda12",
+		"lambdaH",
+		"lambdaH1",
+		"lambdaH2",
+		"lambdaH2Adj",
+		"lambdaS1",
+		"lambdaS2",
+		"lambdaS2Adj",
+		"lambdaT3"
+	],
+	"baseline_prepass_matches_native_global_runner":true,
+	"global_projector_uses_CheckAbort_not_message_sensitive_Check":true,
+	"registered_invariant_raw_two_call_witness":[
+		{
+			"name":"lambdaS2Adj",
+			"available":true,
+			"raw_first_inputform":"(tGen[SU2L[S2], A, idx1, idx2]*tGen[SU2L[S2], A, idx3, idx4])\/2",
+			"raw_second_inputform":"(tGen[SU2L[S2], A, jdx1, jdx2]*tGen[SU2L[S2], A, jdx3, jdx4])\/2",
+			"first_has_Module_generated_adj_index":false,
+			"second_has_Module_generated_adj_index":false,
+			"two_raw_internal_dummy_names_different":false
+		},
+		{
+			"name":"lambdaH2Adj",
+			"available":true,
+			"raw_first_inputform":"tGen[SU2L[fund], adj$18743, idx1, idx2]*tGen[SU2L[S2], adj$18743, idx3, idx4]",
+			"raw_second_inputform":"tGen[SU2L[fund], adj$18744, jdx1, jdx2]*tGen[SU2L[S2], adj$18744, jdx3, jdx4]",
+			"first_has_Module_generated_adj_index":true,
+			"second_has_Module_generated_adj_index":true,
+			"two_raw_internal_dummy_names_different":true
+		}
+	],
+	"report_betas":{
+		"lambdaH":"(9*g2^4)\/4 + (3*gY^4)\/4 + gY^2*((3*g2^2)\/2 - 3*lambdaH) - 9*g2^2*lambdaH + 12*lambdaH^2 + 2*lambdaH1^2 + 6*lambdaH2^2 + lambdaH2Adj^2 + 4*lambdaT3*Bar[lambdaT3] + lambdaH*(12*Tr[yd . Trans[Bar[yd]]] + 4*Tr[ye . Trans[Bar[ye]]] + 12*Tr[yu . Trans[Bar[yu]]]) - 12*Tr[yd . Trans[Bar[yd]] . yd . Trans[Bar[yd]]] - 4*Tr[ye . Trans[Bar[ye]] . ye . Trans[Bar[ye]]] - 12*Tr[yu . Trans[Bar[yu]] . yu . Trans[Bar[yu]]]",
+		"lambdaS1":"192*gY^4 + 6*lambda12^2 + 4*lambdaH1^2 - 48*gY^2*lambdaS1 + 10*lambdaS1^2",
+		"lambdaS2":"22*g2^4 + 12*gY^4 + 2*lambda12^2 + 4*lambdaH2^2 + lambdaH2Adj^2\/3 + gY^2*(8*g2^2 - 12*lambdaS2) - 24*g2^2*lambdaS2 + 14*lambdaS2^2 + 8*lambdaS2*lambdaS2Adj + 16*lambdaS2Adj^2",
+		"lambdaH1":"12*gY^4 - (9*g2^2*lambdaH1)\/2 - (51*gY^2*lambdaH1)\/2 + 6*lambdaH*lambdaH1 + 4*lambdaH1^2 + 6*lambda12*lambdaH2 + 4*lambdaH1*lambdaS1 + 12*lambdaT3*Bar[lambdaT3] + lambdaH1*(6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]])",
+		"lambdaH2":"6*g2^4 + 3*gY^4 + 2*lambda12*lambdaH1 - (33*g2^2*lambdaH2)\/2 - (15*gY^2*lambdaH2)\/2 + 6*lambdaH*lambdaH2 + 4*lambdaH2^2 + 2*lambdaH2Adj^2 + 8*lambdaH2*lambdaS2 + 4*lambdaT3*Bar[lambdaT3] + lambdaH2*(4*lambdaS2Adj + 6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]])",
+		"lambda12":"48*gY^4 - 12*g2^2*lambda12 - 30*gY^2*lambda12 + 4*lambda12^2 + 4*lambdaH1*lambdaH2 + 4*lambda12*lambdaS1 + 8*lambda12*lambdaS2 + 4*lambda12*lambdaS2Adj + 4*lambdaT3*Bar[lambdaT3]",
+		"lambdaT3":"(-21*g2^2*lambdaT3)\/2 - (33*gY^2*lambdaT3)\/2 + 2*lambda12*lambdaT3 + 2*lambdaH*lambdaT3 + 4*lambdaH1*lambdaT3 + 4*lambdaH2*lambdaT3 + lambdaT3*(4*lambdaH2Adj + 6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]])",
+		"lambdaH2Adj":"gY^2*(-12*g2^2 - (15*lambdaH2Adj)\/2) - (33*g2^2*lambdaH2Adj)\/2 + 2*lambdaH*lambdaH2Adj + 8*lambdaH2*lambdaH2Adj + 2*lambdaH2Adj*lambdaS2 + 8*lambdaT3*Bar[lambdaT3] + lambdaH2Adj*(6*lambdaS2Adj + 6*Tr[yd . Trans[Bar[yd]]] + 2*Tr[ye . Trans[Bar[ye]]] + 6*Tr[yu . Trans[Bar[yu]]])",
+		"lambdaS2Adj":"-2*g2^4 + lambdaH2Adj^2\/3 + gY^2*(8*g2^2 - 12*lambdaS2Adj) - 24*g2^2*lambdaS2Adj + 12*lambdaS2*lambdaS2Adj + 20*lambdaS2Adj^2"
+	},
+	"production_file_modified":false,
+	"matchete_to_rgbeta_coupling_map_certified":false,
+	"physical_beta_certified":false
+}

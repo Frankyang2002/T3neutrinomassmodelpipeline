@@ -1,0 +1,131 @@
+{
+  "format": "a-minus4-fresh-index-native-causal-batch-v1",
+  "model": "A_-4",
+  "EFT_order": "UV -> integrate out ALL fermions -> EFT1(SM+S1+S2) -> integrate out ALL scalars -> SMEFT",
+  "source_verification": {
+    "model_path": "RGE\\running\\rgbeta\\T3RGBetaModel.wl",
+    "model_sha256": "a58c79f18b2abdf9d476588552dfa52e2f131f322094e5b72d1198162aa20abc",
+    "original_fixed_adjoint_dummy_present": true,
+    "no_source_mutation_or_global_rule_override": true
+  },
+  "fresh_index_modes_requested": [
+    "baseline",
+    "triplet",
+    "portal",
+    "both"
+  ],
+  "exact_hessian_proof": "exact_hessian_reference.json",
+  "spinor_signed_branch_convention": {
+    "source_two_fixed_native_y1_branches_have_opposite_tensor": true,
+    "max_relative_opposite_sign_residual": 0.0,
+    "rho_plus_one_is_declared_not_measured": true,
+    "native_4x4_GammaCC_signed_factor_measured": false,
+    "linear_Wilson_running_respects_global_C_to_minus_C": true,
+    "statement_of_last_field_is_conditional_on_linearity_of_beta_C_and_C_conjugate": true,
+    "Takagi_masses_invariant_under_global_mnu_to_minus_mnu": true,
+    "does_not_certify_relative_phase_of_unmatched_hard_loop_amplitudes": true,
+    "physical_C_at_muF": null
+  },
+  "native_modes": {},
+  "native_origin_of_discrepancy_proven": false,
+  "matchete_to_RGBeta_invariant_map_certified": false,
+  "physical_Wilson_boundary_certified": false,
+  "production_source_modified": false,
+  "status": "NATIVE_CAUSAL_EXPERIMENT_BLOCKED",
+  "errors": [
+    "baseline: WolframScript exit 5; see native/baseline.log"
+  ],
+  "archived_global_beta_vs_exact_hessian": {
+    "native_vs_exact_hessian_failing_probes": 34,
+    "failing_probe_names": [
+      "lambdaS2Adj",
+      "lambdaH2Adj",
+      "lambdaT3.real",
+      "lambdaT3.imag",
+      "lambdaH+lambdaS2Adj",
+      "lambdaH+lambdaH2Adj",
+      "lambdaH+lambdaT3.real",
+      "lambdaH+lambdaT3.imag",
+      "lambdaS1+lambdaS2Adj",
+      "lambdaS1+lambdaH2Adj",
+      "lambdaS1+lambdaT3.real",
+      "lambdaS1+lambdaT3.imag",
+      "lambdaS2+lambdaS2Adj",
+      "lambdaS2+lambdaH2Adj",
+      "lambdaS2+lambdaT3.real",
+      "lambdaS2+lambdaT3.imag",
+      "lambdaS2Adj+lambdaH1",
+      "lambdaS2Adj+lambdaH2",
+      "lambdaS2Adj+lambdaH2Adj",
+      "lambdaS2Adj+lambda12",
+      "lambdaS2Adj+lambdaT3.real",
+      "lambdaS2Adj+lambdaT3.imag",
+      "lambdaH1+lambdaH2Adj",
+      "lambdaH1+lambdaT3.real",
+      "lambdaH1+lambdaT3.imag",
+      "lambdaH2+lambdaH2Adj",
+      "lambdaH2+lambdaT3.real",
+      "lambdaH2+lambdaT3.imag",
+      "lambdaH2Adj+lambda12",
+      "lambdaH2Adj+lambdaT3.real",
+      "lambdaH2Adj+lambdaT3.imag",
+      "lambda12+lambdaT3.real",
+      "lambda12+lambdaT3.imag",
+      "lambdaT3.real+lambdaT3.imag"
+    ],
+    "independent_discrepant_monomials": [
+      {
+        "couplings": [
+          "lambdaS2Adj",
+          "lambdaS2Adj"
+        ],
+        "beta_differences": {
+          "lambdaS2": 8.0,
+          "lambdaS2Adj": 14.0
+        }
+      },
+      {
+        "couplings": [
+          "lambdaH2Adj",
+          "lambdaH2Adj"
+        ],
+        "beta_differences": {
+          "lambdaH": 2.0,
+          "lambdaS2Adj": 2.0,
+          "lambdaH2": 4.0
+        }
+      },
+      {
+        "couplings": [
+          "lambdaT3.real",
+          "lambdaT3.real"
+        ],
+        "beta_differences": {
+          "lambdaH2Adj": -5.333333333333334
+        }
+      },
+      {
+        "couplings": [
+          "lambdaT3.imag",
+          "lambdaT3.imag"
+        ],
+        "beta_differences": {
+          "lambdaH2Adj": -5.333333333333334
+        }
+      },
+      {
+        "couplings": [
+          "lambdaS2Adj",
+          "lambdaH2Adj"
+        ],
+        "beta_differences": {
+          "lambdaH2Adj": 10.0
+        }
+      }
+    ],
+    "discrepant_monomial_count": 5,
+    "max_reference_hessian_minus_fourth_derivative_abs": 1.0658141036401503e-14,
+    "max_reference_projection_closure": 3.985011241656643e-16,
+    "max_difference_from_archived_raw_global_beta": null
+  }
+}

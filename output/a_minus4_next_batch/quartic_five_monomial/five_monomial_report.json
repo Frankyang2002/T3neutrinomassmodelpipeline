@@ -1,0 +1,176 @@
+{
+  "format": "t3-a-minus4-five-monomial-quartic-reference-DIAGNOSTIC-v1",
+  "model": "A_-4",
+  "status": "DIAGNOSTIC_SCALAR_ONLY_POLYNOMIAL_RECONCILED_PHYSICAL_BASIS_OPEN",
+  "input_sha256": {
+    "global_rgbeta_projection": "f8d42cbe00b6fc6bc60c25868970076b6d9796b08e555a0fe918f96d565aa7b6",
+    "archived_audit": "ded6db65b436734e5b8a8499edb886f2176c3615f984e31941857f841d17b36e",
+    "archived_running_basis": "72c83113840732d40481ccb91b904b66891850d159df21a9554e8d9145faf53f"
+  },
+  "scalar_only": {
+    "native_minus_real_scalar_reference": true,
+    "independent_unit_and_pair_probe_count": 55,
+    "failed_unit_pair_probes_before": 34,
+    "unaffected_passing_probes_before": 21,
+    "actual_independent_bad_monomial_count": 5,
+    "polynomial_terms": [
+      {
+        "couplings": [
+          "lambdaS2Adj",
+          "lambdaS2Adj"
+        ],
+        "beta_differences": {
+          "lambdaS2": {
+            "numerical": 7.999999999999998,
+            "rational_if_within_tolerance": "8"
+          },
+          "lambdaS2Adj": {
+            "numerical": 13.999999999999996,
+            "rational_if_within_tolerance": "14"
+          }
+        }
+      },
+      {
+        "couplings": [
+          "lambdaH2Adj",
+          "lambdaH2Adj"
+        ],
+        "beta_differences": {
+          "lambdaH": {
+            "numerical": 2.0,
+            "rational_if_within_tolerance": "2"
+          },
+          "lambdaS2Adj": {
+            "numerical": 1.9999999999999996,
+            "rational_if_within_tolerance": "2"
+          },
+          "lambdaH2": {
+            "numerical": 3.9999999999999996,
+            "rational_if_within_tolerance": "4"
+          }
+        }
+      },
+      {
+        "couplings": [
+          "lambdaT3.real",
+          "lambdaT3.real"
+        ],
+        "beta_differences": {
+          "lambdaH2Adj": {
+            "numerical": -5.333333333333334,
+            "rational_if_within_tolerance": "-16/3"
+          }
+        }
+      },
+      {
+        "couplings": [
+          "lambdaT3.imag",
+          "lambdaT3.imag"
+        ],
+        "beta_differences": {
+          "lambdaH2Adj": {
+            "numerical": -5.333333333333334,
+            "rational_if_within_tolerance": "-16/3"
+          }
+        }
+      },
+      {
+        "couplings": [
+          "lambdaS2Adj",
+          "lambdaH2Adj"
+        ],
+        "beta_differences": {
+          "lambdaH2Adj": {
+            "numerical": 9.999999999999998,
+            "rational_if_within_tolerance": "10"
+          }
+        }
+      }
+    ],
+    "max_observed_vs_expected_exact_coeff_error": 3.552713678800501e-15,
+    "max_55_point_reconstruction_abs": 1.2434497875801753e-14,
+    "max_five_random_points_reconstruction_abs": 2.275957200481571e-15,
+    "candidate_55_probes_against_reference": {
+      "probe_count": 55,
+      "remaining_disagreements": [],
+      "maximum_abs_scalar_beta_difference": 1.0658141036401503e-14,
+      "maximum_reference_projection_closure_relative": 3.985011241656643e-16
+    },
+    "candidate_five_random_points_vs_reference_max_abs": 2.220446049250313e-15,
+    "diagnostic_correction_inputform": {
+      "lambdaH": "2*lambdaH2Adj^2",
+      "lambdaS2": "8*lambdaS2Adj^2",
+      "lambdaS2Adj": "14*lambdaS2Adj^2 + 2*lambdaH2Adj^2",
+      "lambdaH2": "4*lambdaH2Adj^2",
+      "lambdaH2Adj": "10*lambdaS2Adj*lambdaH2Adj - (16/3)*Bar[lambdaT3]*lambdaT3"
+    },
+    "interpretation": "These discrepancies can arise from a native scalar tensor/group-index convention issue; no package bug or physical basis correspondence is asserted"
+  },
+  "fixed_background_impact": {
+    "purpose": "One-insertion fixed-background comparison only, not rerun ODE or physical threshold",
+    "scale_high_gev": 100000.0,
+    "scale_low_gev": 1000.0,
+    "samples": 7,
+    "definition": "integral of (native minus reference scalar-only beta)/(16*pi^2) dln(mu), evaluated on archived native reference trajectory with no feedback",
+    "integrated_native_minus_reference_fixed_background": {
+      "lambdaH": -7.353677730348039e-05,
+      "lambdaS1": 0.0,
+      "lambdaS2": -7.813906809815791e-05,
+      "lambdaS2Adj": -0.00021028014647525667,
+      "lambdaH1": 0.0,
+      "lambdaH2": -0.00014707355460696073,
+      "lambdaH2Adj": -0.00014554726883161698,
+      "lambda12": 0.0,
+      "lambdaT3.real": 0.0,
+      "lambdaT3.imag": 0.0
+    },
+    "boundary_delta_beta_16pi2": {
+      "lambdaH": 0.001786644476454058,
+      "lambdaS1": 0.0,
+      "lambdaS2": 0.0056931199329073,
+      "lambdaS2Adj": 0.011749604359041831,
+      "lambdaH1": 0.0,
+      "lambdaH2": 0.0035732889529081157,
+      "lambdaH2Adj": 0.007292562291214097,
+      "lambda12": 0.0,
+      "lambdaT3.real": 0.0,
+      "lambdaT3.imag": 0.0
+    },
+    "endpoint_delta_beta_16pi2": {
+      "lambdaH": 0.0033986997631303435,
+      "lambdaS1": 0.0,
+      "lambdaS2": 7.199785839441434e-05,
+      "lambdaS2Adj": 0.003524696015320568,
+      "lambdaH1": 0.0,
+      "lambdaH2": 0.006797399526260686,
+      "lambdaH2Adj": 0.0004004546906636187,
+      "lambda12": 0.0,
+      "lambdaT3.real": 0.0,
+      "lambdaT3.imag": 0.0
+    },
+    "not_certified_physics": true
+  },
+  "fermion_spinor_certification": {
+    "source_sha256": {
+      "native_action": "f70662ce903deceb5351a050268f3dfa10b94ea80cea0e255d152fa248ab8529",
+      "master_candidate": "f525589ead2ee14631b1e88141cd7909eb0b177fd46933e6f2c40a2420d4b8f0",
+      "declared": "fc1b909b1ff96a7330e8082d0dd9ecd953b69b9791c17adb57a873007a373050"
+    },
+    "provisional_master_support": 36,
+    "two_fixed_native_y1_signed_branches_are_opposites_rel_max": 0.0,
+    "opposite_sign_with_simultaneously_flipped_native_y1_is_convention_equivalent": true,
+    "native_signed_GammaCC_or_connected_amplitude_measured": false,
+    "Matchete_to_master_Weyl_normalisation_physically_certified": false,
+    "physical_C_ijab_at_MF": null,
+    "required_for_physical_sign": "Installed-Matchete signed spinor matrix/3-point rule in a fixed Weyl representation or independent connected UV four-point amplitude with the same source couplings"
+  },
+  "produced": {
+    "report": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\a_minus4_next_batch\\quartic_five_monomial\\five_monomial_report.json",
+    "baseline": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\a_minus4_next_batch\\quartic_five_monomial\\native_global_projection_compatible.json",
+    "candidate": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\a_minus4_next_batch\\quartic_five_monomial\\scalar_only_reference_DIAGNOSTIC_beta.json"
+  },
+  "physical_quartic_beta_certified": false,
+  "physical_EFT1_Wilson_boundary_certified": false,
+  "production_beta_files_modified": false,
+  "EFT_order": "UV -> integrate out ALL fermions -> EFT1(SM+S1+S2) -> integrate out ALL scalars together -> SMEFT"
+}

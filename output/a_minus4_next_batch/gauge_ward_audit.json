@@ -1,0 +1,208 @@
+{
+  "format": "a-minus4-source-backed-gauge-quartic-batch-v1",
+  "model": "A_-4",
+  "github_source_inspection_baseline": "54857efafc7261f0e4c2bd0802f23e61dc3c165a",
+  "local_git_head": "54857efafc7261f0e4c2bd0802f23e61dc3c165a",
+  "inputs_sha256": {
+    "output\\general_observable\\lo_certification_spinor\\source_e515d82d118284ba\\A_m4\\boundary.json": "ecf0b8c47a6b8ce4efa7d334c16adfe6a9e558ef0e97033ef223c7da90bacbe9",
+    "output\\general_observable\\a_minus4_boundary_batch1\\master_basis_candidate.json": "f525589ead2ee14631b1e88141cd7909eb0b177fd46933e6f2c40a2420d4b8f0"
+  },
+  "native_coordinate_count": 60,
+  "master_coordinate_count": 36,
+  "source_tensor_frobenius_norm_gev_inv": 2.241494326897872e-12,
+  "master_transport_relative_max_error": 3.3154195346150987e-16,
+  "master_transport_relative_norm_error": 1.8019085688792849e-16,
+  "triplet_unitarity_max_error": 4.440892098500626e-16,
+  "unconverted_native_using_master_generators_Ward": {
+    "U1": [
+      0.0
+    ],
+    "SU2": [
+      1.8477590650225737,
+      1.8477590650225737,
+      2.0
+    ],
+    "SU3": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "converted_master_Ward": {
+    "U1": [
+      0.0
+    ],
+    "SU2": [
+      1.6577097673075494e-16,
+      1.6577097673075494e-16,
+      0.0
+    ],
+    "SU3": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "gauge_only_six_term_checks": {
+    "U1": {
+      "gauge_beta_over_g_squared_eigenvalue": {
+        "real": -13.5,
+        "imag": 0.0
+      },
+      "eigenvector_relative_residual": 1.2521037554418196e-16,
+      "implementation_vs_independent_contraction_relative": 0.0,
+      "beta_Ward_max_relative": 0.0,
+      "channel_coefficients": {
+        "scalar_pair": 4.0,
+        "mixed_yukawa_gauge": 4.0,
+        "scalar_anomalous_dimension": -20.0,
+        "fermion_anomalous_dimension": -1.5000000000000002
+      }
+    },
+    "SU2": {
+      "gauge_beta_over_g_squared_eigenvalue": {
+        "real": -4.500000000000001,
+        "imag": 0.0
+      },
+      "eigenvector_relative_residual": 3.603817137758569e-16,
+      "implementation_vs_independent_contraction_relative": 4.4205593794867985e-16,
+      "beta_Ward_max_relative": 6.630839069230197e-16,
+      "channel_coefficients": {
+        "scalar_pair": 0.0,
+        "mixed_yukawa_gauge": 8.0,
+        "scalar_anomalous_dimension": -8.0,
+        "fermion_anomalous_dimension": -4.5
+      }
+    },
+    "SU3": {
+      "gauge_beta_over_g_squared_eigenvalue": {
+        "real": 0.0,
+        "imag": 0.0
+      },
+      "eigenvector_relative_residual": 0.0,
+      "implementation_vs_independent_contraction_relative": 0.0,
+      "beta_Ward_max_relative": 0.0,
+      "channel_coefficients": {
+        "scalar_pair": 0.0,
+        "mixed_yukawa_gauge": 0.0,
+        "scalar_anomalous_dimension": 0.0,
+        "fermion_anomalous_dimension": 0.0
+      }
+    }
+  },
+  "illustrative_fixed_gauge_leading_log": {
+    "gY": 0.36,
+    "g2": 0.65,
+    "muF_gev": 100000.0,
+    "muS_gev": 1000.0,
+    "delta_C_over_C_first_order": 0.10646820841458265,
+    "full_physical_RGE": false
+  },
+  "quartic_global_rgbeta_reference_comparison": {
+    "independently_rerun_quadratic_probes": 55,
+    "mismatched_probe_count": 34,
+    "first_failure_examples": [
+      {
+        "unit_directions": [
+          "lambdaS2Adj"
+        ],
+        "mismatched_components": [
+          "lambdaS2",
+          "lambdaS2Adj"
+        ],
+        "details": {
+          "lambdaS2": {
+            "reference_scalar_loop": 8.000000000000002,
+            "native_rgbeta_scalar_loop": 16.0,
+            "absolute_difference": 7.999999999999998,
+            "relative_difference": 0.4999999999999999
+          },
+          "lambdaS2Adj": {
+            "reference_scalar_loop": 6.0000000000000036,
+            "native_rgbeta_scalar_loop": 20.0,
+            "absolute_difference": 13.999999999999996,
+            "relative_difference": 0.6999999999999998
+          }
+        }
+      },
+      {
+        "unit_directions": [
+          "lambdaH2Adj"
+        ],
+        "mismatched_components": [
+          "lambdaH",
+          "lambdaS2Adj",
+          "lambdaH2"
+        ],
+        "details": {
+          "lambdaH": {
+            "reference_scalar_loop": 1.0,
+            "native_rgbeta_scalar_loop": 3.0,
+            "absolute_difference": 2.0,
+            "relative_difference": 0.6666666666666666
+          },
+          "lambdaS2Adj": {
+            "reference_scalar_loop": 1.0000000000000004,
+            "native_rgbeta_scalar_loop": 3.0,
+            "absolute_difference": 1.9999999999999996,
+            "relative_difference": 0.6666666666666665
+          },
+          "lambdaH2": {
+            "reference_scalar_loop": 2.0000000000000004,
+            "native_rgbeta_scalar_loop": 6.0,
+            "absolute_difference": 3.9999999999999996,
+            "relative_difference": 0.6666666666666666
+          }
+        }
+      },
+      {
+        "unit_directions": [
+          "lambdaT3.real"
+        ],
+        "mismatched_components": [
+          "lambdaH2Adj"
+        ],
+        "details": {
+          "lambdaH2Adj": {
+            "reference_scalar_loop": 8.0,
+            "native_rgbeta_scalar_loop": 2.6666666666666665,
+            "absolute_difference": 5.333333333333334,
+            "relative_difference": 0.6666666666666667
+          }
+        }
+      },
+      {
+        "unit_directions": [
+          "lambdaT3.imag"
+        ],
+        "mismatched_components": [
+          "lambdaH2Adj"
+        ],
+        "details": {
+          "lambdaH2Adj": {
+            "reference_scalar_loop": 8.0,
+            "native_rgbeta_scalar_loop": 2.6666666666666665,
+            "absolute_difference": 5.333333333333334,
+            "relative_difference": 0.6666666666666667
+          }
+        }
+      }
+    ],
+    "physical_rgbeta_quartic_basis_certified": false
+  },
+  "physical_Matchete_Weyl_normalization_verified": false,
+  "complete_gauge_one_loop_loop_derivation_verified": false,
+  "full_EFT1_coupling_trajectory_certified": false,
+  "physical_C5_calculated": false,
+  "source_files_modified": false
+}

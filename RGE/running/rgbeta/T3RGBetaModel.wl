@@ -521,10 +521,15 @@ T3RGBetaPortalAdjInvariant[2] :=
 
 
 (* Extracted generators for doublet triplet*)
+(* Localise the contracted SU(2) adjoint index at EACH invariant call.
+   The fixed symbol A corrupts global quartic projection when other
+   adjoint invariants are instantiated in the same expression. *)
 T3RGBetaPortalAdjInvariant[3] :=
     (
-        tGen[SU2L @ fund, A, #1, #2] *
-        tGen[SU2L @ S2, A, #3, #4] &
+        Module[{adj},
+            tGen[SU2L @ fund, adj, #1, #2] *
+            tGen[SU2L @ S2, adj, #3, #4]
+        ] &
     );
 
 
@@ -576,8 +581,10 @@ T3RGBetaAddRGClosedQuartics[
             lambdaS2Adj,
             {Bar @ S2, S2, Bar @ S2, S2},
             GroupInvariant -> (
-                tGen[SU2L @ S2, A, #1, #2] *
-                tGen[SU2L @ S2, A, #3, #4] / 2 &
+                Module[{adj},
+                    tGen[SU2L @ S2, adj, #1, #2] *
+                    tGen[SU2L @ S2, adj, #3, #4] / 2
+                ] &
             )
         ];
     ];

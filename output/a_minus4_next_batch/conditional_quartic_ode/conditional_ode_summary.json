@@ -1,0 +1,83 @@
+{
+  "format": "t3-a-minus4-native-vs-reference-scalar-only-CONDITIONAL-ode-v1",
+  "status": "TWO_CONDITIONAL_ODE_TRAJECTORIES_NUMERICALLY_COMPUTED_NOT_PHYSICAL",
+  "model": "A_-4",
+  "muF_gev": 100000.0,
+  "muS_gev": 1000.0,
+  "n_samples": 7,
+  "native_beta_sha256": "da8e4b3b1ef1cb80842cf11d29d3eb1505cb66d18d31f54c3e131c2934dd0325",
+  "reference_diagnostic_beta_sha256": "954b877a47ec244b307ae82ff3cee6d7ae867b0526cf2c85b00b49424f724a5d",
+  "reference_diagnostic_differs_from_native_only_in_five_scalar_betas": true,
+  "endpoint_quartic_comparison": {
+    "lambdaH": {
+      "native": 0.17411580511540325,
+      "reference_diagnostic": 0.1741851426619673,
+      "reference_minus_native": 6.933754656404667e-05
+    },
+    "lambdaS1": {
+      "native": -0.14087328155346243,
+      "reference_diagnostic": -0.14087328128121723,
+      "reference_minus_native": 2.72245198607024e-10
+    },
+    "lambdaS2": {
+      "native": -0.3809923597515812,
+      "reference_diagnostic": -0.38064346015737466,
+      "reference_minus_native": 0.00034889959420653094
+    },
+    "lambdaS2Adj": {
+      "native": 0.04083951811173969,
+      "reference_diagnostic": 0.041472361434236125,
+      "reference_minus_native": 0.0006328433224964333
+    },
+    "lambdaH1": {
+      "native": 0.013114164797693454,
+      "reference_diagnostic": 0.013114184212804993,
+      "reference_minus_native": 1.9415111539300423e-08
+    },
+    "lambdaH2": {
+      "native": -0.05397595555486115,
+      "reference_diagnostic": -0.05381322990921712,
+      "reference_minus_native": 0.0001627256456440268
+    },
+    "lambdaH2Adj": {
+      "native": 0.04093615666617292,
+      "reference_diagnostic": 0.0412785080597746,
+      "reference_minus_native": 0.00034235139360168365
+    },
+    "lambda12": {
+      "native": -0.013382630973190724,
+      "reference_diagnostic": -0.013382228910513431,
+      "reference_minus_native": 4.02062677292217e-07
+    },
+    "lambdaT3.real": {
+      "native": 0.012521745545150469,
+      "reference_diagnostic": 0.01252140601297795,
+      "reference_minus_native": -3.3953217251810053e-07
+    },
+    "lambdaT3.imag": {
+      "native": 0.0,
+      "reference_diagnostic": 0.0,
+      "reference_minus_native": 0.0
+    }
+  },
+  "max_absolute_along_saved_grid_reference_minus_native": {
+    "lambdaH": 6.933754656404667e-05,
+    "lambdaS1": 2.72245198607024e-10,
+    "lambdaS2": 0.00034889959420653094,
+    "lambdaS2Adj": 0.0006328433224964333,
+    "lambdaH1": 1.9415111539300423e-08,
+    "lambdaH2": 0.0001627256456440268,
+    "lambdaH2Adj": 0.00034235139360168365,
+    "lambda12": 4.02062677292217e-07,
+    "lambdaT3.real": 3.3953217251810053e-07,
+    "lambdaT3.imag": 0.0
+  },
+  "native_tensor_output": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\a_minus4_next_batch\\conditional_quartic_ode\\native\\A_m4_eft1_tensors.npz",
+  "reference_tensor_output": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\a_minus4_next_batch\\conditional_quartic_ode\\reference_diagnostic\\A_m4_eft1_tensors.npz",
+  "csv": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\a_minus4_next_batch\\conditional_quartic_ode\\coupling_differences.csv",
+  "physically_certified_scalar_running": false,
+  "physically_certified_Wilson_boundary": false,
+  "physical_C5_generated": false,
+  "no_source_or_production_beta_modified": true,
+  "EFT_order": "UV -> integrate out ALL fermions -> EFT1(SM+S1+S2) -> integrate out ALL scalars together -> SMEFT"
+}

@@ -1,0 +1,221 @@
+{
+  "format": "t3-all16-conditional-full-wilson-reduced-quartic-trial-v2",
+  "model": "A_-2",
+  "status": "TRIAL_FULL_WILSON_REDUCED_POTENTIAL",
+  "source_boundary_sha256": "4109d135dcb5080ccb3ae78ebf670ee4c58a596e7ff4a14d44d91a8c94abc805",
+  "source_running_sha256": "9612043de39fa73791fb878bdcfa0ee540e8bc6406358f4a1af6a2521053c618",
+  "source_scalar_background_sha256": "0963ca8b2810cf0f54d91b57bc4c6b58c7667a3e95c94aa6713f391f0ea2cbce",
+  "mu_F_gev": 100000.0,
+  "mu_S_gev": 1000.0,
+  "n_weyl": 45,
+  "n_real_scalars": 12,
+  "n_complex_symmetric_C_coordinates": 80730,
+  "source_normalization_for_master": 0.5,
+  "source_normalization_reason": "legacy joint projector has twice master Weinberg template; half C0 matches legacy finite+log at zero running",
+  "source_and_quartic_ward_audit": {
+    "source": {
+      "SU2": 2.3435936108774186e-16,
+      "U1": 0.0
+    },
+    "reduced_quartic": {
+      "SU2": 3.324803910293661e-18,
+      "U1": 0.0
+    }
+  },
+  "fixed_order_legacy_regression": {
+    "leading_log_relative_error": 1.1221850113020526e-16,
+    "finite_bubble_relative_error": 1.8918223081773854e-15,
+    "leading_log_max_abs_gev_inv": 8.787108378698954e-16,
+    "finite_bubble_max_abs_gev_inv": 8.470001156049019e-17,
+    "log_weinberg_residual": 3.1194016681236436e-16,
+    "finite_weinberg_residual": 1.679537295378877e-16
+  },
+  "legacy_fixed_order_masses_eV": [
+    0.018051074423240814,
+    0.020056808671916535,
+    0.024068170663451842
+  ],
+  "transport": {
+    "scheme": "explicit_midpoint_RK2_2_endpoint_interpolation",
+    "steps": 2,
+    "beta_rhs_evaluations": 4,
+    "mu_F_gev": 100000.0,
+    "mu_S_gev": 1000.0,
+    "delta_t_per_step": -2.3025850929940455,
+    "quartic_tensor": "HHSS at muS frozen + Higgs self lambdaH interpolated; OTHER quartics OMITTED",
+    "complete_scalar_quartic_RGE_included": false,
+    "full_complex_C_relative_change": 0.06518255090029369,
+    "exchange_symmetry_max_abs_residual": 1.232595164407831e-32
+  },
+  "endpoint": {
+    "c5_direct": {
+      "real": [
+        [
+          -8.857365412496585e-16,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -7.381137843473512e-16,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          -6.643023990750472e-16
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    "c5_bubble": {
+      "real": [
+        [
+          9.022072204672175e-17,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          7.51839334161324e-17,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          6.766513582915654e-17
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    "c5_total": {
+      "real": [
+        [
+          -7.955158192029367e-16,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -6.629298509312188e-16,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          -5.966372632458906e-16
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    "c5_max_abs_gev_inv": 7.955158192029367e-16,
+    "masses_eV": [
+      0.018085354758602797,
+      0.020094825235911606,
+      0.024113790225060546
+    ],
+    "mnu_matrix_eV": {
+      "real": [
+        [
+          0.024113790225060546,
+          -0.0,
+          -0.0
+        ],
+        [
+          -0.0,
+          0.020094825235911606,
+          -0.0
+        ],
+        [
+          -0.0,
+          -0.0,
+          0.018085354758602797
+        ]
+      ],
+      "imag": [
+        [
+          -0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          -0.0
+        ]
+      ]
+    },
+    "scalar_mass_eigenvalues_gev": [
+      1318.5386643115753,
+      1318.5386643115753,
+      1787.1692071196774,
+      1787.1692071196774,
+      1787.1692071196774,
+      1788.943808515436,
+      1788.943808515436,
+      1788.943808515436
+    ],
+    "all_scalar_eigenstate_pairs": 36,
+    "direct_weinberg_residual": 3.6497914367458576e-16,
+    "bubble_weinberg_residual": 4.269742360556749e-16,
+    "physical_neutrino_masses_certified": false
+  },
+  "reduced_potential_quartic_coverage": "Higgs self + source HHSS; no heavy-only quartics, no extra HHHH operators",
+  "background_method": "actual F and S snapshots; two-point log interpolation for SM gauge/Yukawa/lambdaH; HHSS at S held constant",
+  "matchete_signed_CC_factor_measured": false,
+  "full_model_specific_quartic_tensor_included": false,
+  "full_one_loop_matched_neutrino_mass_prediction": false
+}

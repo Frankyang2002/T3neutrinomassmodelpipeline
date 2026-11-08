@@ -2,6 +2,11 @@
 
 The documentation is organised here by **scientific purpose**, rather than by the order in which individual calculations were developed. Consult the current overview first; older study notes are retained for reproducibility and should not be interpreted as independently verified results.
 
+## Getting started and project status
+
+- [Installation and reproducibility](INSTALLATION.md) — Python dependencies, PowerShell setup, tests and external symbolic tools.
+- [Implementation status](IMPLEMENTATION_STATUS.md) — implemented code paths, reported executions, incomplete physics and certification boundaries.
+
 ## Physics and calculation
 
 - [Model and calculation contract](MODEL_AND_PIPELINE.md) — symmetries, fields, interactions, charge conventions and the target EFT sequence.

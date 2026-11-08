@@ -29,6 +29,8 @@ The fermion-first ordering is fundamental to this project's target calculation. 
 
 | Topic | Reference |
 | --- | --- |
+| **Installation, dependencies and first run** | [Installation](docs/INSTALLATION.md) |
+| **Implemented, verified and incomplete calculations** | [Implementation status](docs/IMPLEMENTATION_STATUS.md) |
 | Model fields, symmetries and EFT sequence | [Model and calculation contract](docs/MODEL_AND_PIPELINE.md) |
 | Gauge representations, interactions and conventions | [Physics](docs/PHYSICS.md) |
 | Scalar potential and controlled approximations | [Scalar sector](docs/SCALAR_SECTOR.md) |
@@ -39,9 +41,10 @@ The fermion-first ordering is fundamental to this project's target calculation. 
 
 ## Running the software
 
-Use a Python environment containing the project's required dependencies. From the repository root in PowerShell:
+Create a Python environment and install the dependencies as described in [Installation](docs/INSTALLATION.md). From the repository root in PowerShell:
 
 ```powershell
+python -m pip install -r requirements.txt
 python -X utf8 pipeline.py --help
 python -X utf8 full16_symbolic.py --help
 .\scripts\RunCoreTests.ps1
@@ -49,7 +52,7 @@ python -X utf8 full16_symbolic.py --help
 
 `pipeline.py` coordinates the study workflows. `full16_symbolic.py` is the dedicated general-interaction **symbolic** entry point; it is not a certified general-theory numerical matching pipeline. The core suite is a fast software regression check, not a physical completeness certificate.
 
-The symbolic matching and beta-function workflows require their appropriate Wolfram Language, Matchete and RGBeta environment, as well as the relevant model-dependent inputs. Saved generated data may be required for numerical examples and report regeneration. Consult [Numerical methods](docs/NUMERICAL.md) and [Repository structure](docs/REPOSITORY_STRUCTURE.md) before interpreting a completed run as a fresh computation.
+The symbolic matching and beta-function workflows require their appropriate Wolfram Language, Matchete and RGBeta environment, as well as the relevant model-dependent inputs. Saved generated data may be required for numerical examples and report regeneration. Consult [Installation](docs/INSTALLATION.md), [Implementation status](docs/IMPLEMENTATION_STATUS.md) and [Numerical methods](docs/NUMERICAL.md) before interpreting a completed run as a fresh computation.
 
 ## Mathematical conventions
 

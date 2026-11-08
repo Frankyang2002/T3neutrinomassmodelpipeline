@@ -25,6 +25,8 @@ def repository(base: Path, *, referenced: bool = False, import_ref: bool = False
     root = base / "T3"
     root.mkdir()
     git(root, "init", "-q")
+    # Make the HEAD blob independent of host OS and global Git CRLF settings.
+    git(root, "config", "core.autocrlf", "false")
     git(root, "config", "user.email", "test@example.invalid")
     git(root, "config", "user.name", "Test")
     files = {
@@ -40,7 +42,7 @@ def repository(base: Path, *, referenced: bool = False, import_ref: bool = False
     for rel, content in files.items():
         path = root / rel
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(content, encoding="utf-8")
+        path.write_bytes(content.encode("utf-8"))
     git(root, "add", ".")
     git(root, "commit", "-q", "-m", "fixture")
     return root
@@ -141,12 +143,22 @@ def test_module_import_without_py_suffix_blocks_archival():
         assert held["tests/test_t3_frozen_persistent.py"]["references"] == ["scripts/driver.py"]
 
 
+def _simulate_clean_windows_crlf(path: Path) -> None:
+    """Convert any existing newline style to CRLF exactly once.
+
+    Path.write_text() already translates newlines on Windows. Replacing bare
+    b"\n" directly would turn b"\r\n" into b"\r\r\n", an actual file change.
+    """
+    data = path.read_bytes().replace(b"\r\n", b"\n")
+    path.write_bytes(data.replace(b"\n", b"\r\n"))
+
+
 def test_windows_crlf_clean_filter_is_not_misclassified_as_dirty():
     with tempfile.TemporaryDirectory() as tmp:
         root = repository(Path(tmp))
         git(root, "config", "core.autocrlf", "true")
         path = root / "tests/test_t3_frozen_persistent.py"
-        path.write_bytes(path.read_bytes().replace(b"\n", b"\r\n"))
+        _simulate_clean_windows_crlf(path)
         plan = cleanup.build_plan(root, expected_head=None)
         assert "tests/test_t3_frozen_persistent.py" in {x["path"] for x in plan["approved"]}
 
@@ -174,7 +186,7 @@ def test_exact_lf_conversion_is_only_allowed_for_managed_text():
         rel = "tests/test_t3_frozen_persistent.py"
         git(root, "config", "core.autocrlf", "true")
         path = root / rel
-        path.write_bytes(path.read_bytes().replace(b"\n", b"\r\n"))
+        _simulate_clean_windows_crlf(path)
         head_blob = cleanup.tracked_head_entries(root)[rel][1]
         assert cleanup.same_as_head_blob(root, rel, head_blob)
         path.write_bytes(path.read_bytes() + b"# substantive change\r\n")
@@ -198,7 +210,7 @@ def test_crlf_fallback_handles_windows_hash_filter_mismatch(monkeypatch):
         rel = "tests/test_t3_frozen_persistent.py"
         git(root, "config", "core.autocrlf", "true")
         path = root / rel
-        path.write_bytes(path.read_bytes().replace(b"\n", b"\r\n"))
+        _simulate_clean_windows_crlf(path)
         head_blob = cleanup.tracked_head_entries(root)[rel][1]
         monkeypatch.setattr(cleanup, "git_clean_blob_sha1", lambda root, rel: "wrong")
         assert cleanup.same_as_head_blob(root, rel, head_blob)

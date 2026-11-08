@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import ast
 from pathlib import Path
 
 
@@ -18,9 +19,17 @@ def _source(path: Path) -> str:
 
 def test_fermion_threshold_module_describes_boundary_not_matching() -> None:
     source = _source(FERMION)
-    assert "def fermion_threshold_masses(" in source
-    assert "def build_intermediate_scalar_boundary(" in source
-    assert "Matchete/RGE matching pipeline" in source
+    tree = ast.parse(source, filename=str(FERMION))
+    definitions = {
+        node.name for node in tree.body
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef))
+    }
+    assert "fermion_threshold_masses" in definitions
+    assert "build_intermediate_scalar_boundary" in definitions
+    # Verify that the boundary projects to scalar-only state objects. This is
+    # a state projection, not proof of one-loop hard-fermion EFT matching.
+    assert "T3IntermediateScalarState(" in source
+    assert "SharedT3IntermediateScalarState(" in source
 
 
 def test_scalar_threshold_module_describes_final_sm_boundary() -> None:

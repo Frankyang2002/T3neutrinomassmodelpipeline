@@ -85,8 +85,8 @@ class TestSourceAndDriver(unittest.TestCase):
         self.assertNotIn('sympify(',source)
 
     def test_paths_in_project(self):
-        self.assertIn('output/audits',str(FINITE))
-        self.assertIn('output/audits',str(POLE))
+        self.assertIn('output/audits',str(FINITE).replace('\\','/'))
+        self.assertIn('output/audits',str(POLE).replace('\\','/'))
         self.assertTrue(FORMAT.startswith('t3-bc-'))
         self.assertIn('NoPhysical',STATUS)
 

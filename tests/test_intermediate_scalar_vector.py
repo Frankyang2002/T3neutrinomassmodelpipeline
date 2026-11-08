@@ -112,7 +112,7 @@ class IntermediateScalarVectorTests(unittest.TestCase):
         state = _state()
         payload = _synthetic_payload(state)
         payload["metadata"]["IntegratedField"] = "S1"
-        with self.assertRaisesRegex(ValueError, "does not match"):
+        with self.assertRaisesRegex(ValueError, "IntegratedField"):
             evaluate_intermediate_scalar_rgbeta_payload(payload, state)
 
 

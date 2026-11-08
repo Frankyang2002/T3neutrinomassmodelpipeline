@@ -1,48 +1,76 @@
-# T3 radiative neutrino-mass pipeline
+# T3 radiative neutrino-mass models
 
-This repository constructs gauge-invariant T3 neutrino-mass models, generates symbolic Lagrangians and matching/RGE inputs, and evaluates neutrino masses and mixing parameters. The reference theory is the **complete renormalisable interaction basis allowed by the specified gauge representations and discrete symmetry**. A selection of coupling values is a benchmark, not a different fundamental Lagrangian.
+A symbolic and numerical research pipeline for one-loop Majorana neutrino-mass generation in the T3 topology. The project constructs Standard Model extensions with heavy fermions and scalar multiplets, evaluates renormalisation-group evolution and effective-field-theory (EFT) thresholds, and studies the resulting neutrino masses and mixing.
 
-## Technical reference
+The ordinary model catalogue covers **16 representation and hypercharge assignments**. The general-interaction inventory and the restricted numerical benchmarks are distinct: the presence of a symmetry-allowed operator in the symbolic model does **not** imply that its physical matching and numerical evolution have been fully validated.
 
-- [Model, interactions and EFT sequence](docs/MODEL_AND_PIPELINE.md): fields, charge conventions, operator-basis requirements, matching sequence and implementation boundaries.
-- [Repository maintenance](docs/REPOSITORY_CLEANUP_POLICY.md): how to audit and archive historical material without breaking source generation or reproducibility.
-- `Lagrangian/model/LagrangianBuilder.wl` and `Lagrangian/interactions/`: Wolfram model construction and candidate invariants.
-- `common/PipelinePlan.py`, `common/Thresholds.py`, `pipeline.py`: model/EFT orchestration.
-- `RGE/`, `Numerical/`, `physics/`: renormalisation, numerical evolution and neutrino observables.
-- `configs/` and `tests/`: inputs and regression checks.
-
-## Physical EFT ordering
+## Calculation overview
 
 ```text
-UV: SM + all T3 fermions + all T3 scalars
-   | run full-theory parameters and match at fermion thresholds
-   v
-Intermediate EFT: SM + all T3 scalars + fermion-induced operators
-   | run intermediate-EFT Wilson coefficients and couplings
-   | match at scalar thresholds
-   v
-SMEFT: SM fields + dimension-five Weinberg operator (within the selected truncation)
-   | run C5 to the low-energy scale
-   v
-Majorana neutrino mass matrix and oscillation observables
+UV theory: Standard Model + heavy fermions + heavy scalars
+    |
+    | integrate out all heavy fermions
+    v
+Intermediate EFT: Standard Model + heavy scalars + induced operators
+    |
+    | evolve couplings and Wilson coefficients
+    | integrate out all heavy scalars
+    v
+SMEFT: Standard Model fields + Weinberg operator
+    |
+    | low-energy running
+    v
+Neutrino mass matrix, masses and mixing observables
 ```
 
-**All heavy fermions are integrated out before any heavy scalar.** Different masses within each group may require multiple ordered thresholds. A simultaneous all-heavy-field threshold is a separately supported comparison, not the same calculation as the hierarchy above.
+The fermion-first ordering is fundamental to this project's target calculation. Scalar-first matching is not a supported production route. A common-threshold calculation is a separate comparison, not equivalent to the sequential fermion-first result.
 
-## Generality and reproducibility
+## Start here
 
-There is a distinction between *constructing* an inventory of symmetry-allowed operators and *certifying* that their physical-basis normalisations, one-loop RGEs, threshold matching and numerical treatment are complete. The current repository has additional-interaction switches and separate general-symbolic/restricted-production routes. Their existence must not be interpreted as a successful general-theory numerical calculation. Consult the technical reference for explicit evidence and open checks.
+| Topic | Reference |
+| --- | --- |
+| Model fields, symmetries and EFT sequence | [Model and calculation contract](docs/MODEL_AND_PIPELINE.md) |
+| Gauge representations, interactions and conventions | [Physics](docs/PHYSICS.md) |
+| Scalar potential and controlled approximations | [Scalar sector](docs/SCALAR_SECTOR.md) |
+| Evolution, fitting and numerical methods | [Numerical methods](docs/NUMERICAL.md) |
+| Benchmarks, results and their limitations | [Results](docs/RESULTS.md) |
+| Documentation by subject | [Documentation index](docs/README.md) |
+| Source tree and software entry points | [Repository structure](docs/REPOSITORY_STRUCTURE.md) |
 
-Useful commands from the repository root (Windows PowerShell):
+## Running the software
+
+Use a Python environment containing the project's required dependencies. From the repository root in PowerShell:
 
 ```powershell
-$env:PYTHONUTF8 = '1'
 python -X utf8 pipeline.py --help
-python -X utf8 -m scripts.RunT3GeneralSymbolicStudy --self-test
-python -X utf8 -m pytest -q --tb=line
-python -X utf8 scripts/maintenance/ExtremeRepositoryCleanup.py
+python -X utf8 full16_symbolic.py --help
+.\scripts\RunCoreTests.ps1
 ```
 
-The general symbolic self-test checks the source audit utility; it is **not** a live Matchete/RGBeta or end-to-end physics validation. Model-specific symbolic runs require the installed Wolfram/Matchete/RGBeta environment and the correct physical-basis setup.
+`pipeline.py` coordinates the study workflows. `full16_symbolic.py` is the dedicated general-interaction **symbolic** entry point; it is not a certified general-theory numerical matching pipeline. The core suite is a fast software regression check, not a physical completeness certificate.
 
-Do not silently use restricted-basis output files as if they were obtained from the general Lagrangian. Inspect source manifests and the coupling/threshold content before any quantitative comparison.
+The symbolic matching and beta-function workflows require their appropriate Wolfram Language, Matchete and RGBeta environment, as well as the relevant model-dependent inputs. Saved generated data may be required for numerical examples and report regeneration. Consult [Numerical methods](docs/NUMERICAL.md) and [Repository structure](docs/REPOSITORY_STRUCTURE.md) before interpreting a completed run as a fresh computation.
+
+## Mathematical conventions
+
+Electric charge is defined by \(Q=T_3+Y\), with
+
+\[
+Y(S_1)=\frac{\alpha}{2},\qquad
+Y(S_2)=\frac{\alpha+2}{2},\qquad
+Y(F)=\frac{\alpha+1}{2}.
+\]
+
+The numerical convention for the dimension-five Weinberg coefficient is
+
+\[
+m_\nu=-\frac{v^2}{2}\,C_5.
+\]
+
+The charge, flavour, scalar mass-basis and Wilson-coefficient conventions are documented in the physics and calculation references above.
+
+## Scope and verification
+
+The repository includes operational numerical benchmarks and source-based regression tests. However, the complete symmetry-allowed T3 interaction inventory is **not yet a certified, end-to-end general-coupling calculation**: invariant normalisations, mass-basis conversions, one-loop matching and some sequential scalar thresholds still require independent validation.
+
+Results obtained with a restricted scalar boundary or a conditional matching prescription must retain those labels. They should not be presented as independent predictions of the fully general theory. The [results reference](docs/RESULTS.md) separates completed runs, fitted inputs, exploratory calculations and verified conclusions.

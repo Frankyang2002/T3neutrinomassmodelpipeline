@@ -1,0 +1,39 @@
+{
+  "format": "t3-batch34-crossed-topology-sixterm-validation-v1",
+  "gitHub_source_commit_read_only": "12128de602ac6bf109dbad50dbac8446ed629434",
+  "replaced_files": [
+    "RGE/running/intermediate/GeneralEFT1SevenTermFlow.py",
+    "scripts/RunGeneralEFT1SevenTermFlow.py",
+    "scripts/RunBatch34Full45Synthetic.py"
+  ],
+  "new_files": [
+    "RGE/running/intermediate/GeneralEFT1SixTermReferenceCandidate.py",
+    "RGE/running/intermediate/GeneralEFT1OneLoopTopologyAudit.py",
+    "scripts/CheckBatch34CrossedTopology.py",
+    "tests/test_batch34_six_term_topology.py"
+  ],
+  "test_results": {
+    "new_topology_and_six_term": {
+      "passed": 9
+    },
+    "previous_batch34_related": {
+      "passed": 32
+    },
+    "original_seven_term": {
+      "passed": 14,
+      "skipped": 2,
+      "skipped_reason": "upstream canonical source absent from this container; user prior local reported 16 passes"
+    }
+  },
+  "physical_input_used": false,
+  "physical_A_minus_4_running_certified": false,
+  "six_term_full45_synthetic": {
+    "n_weyl": 45,
+    "n_real_scalar": 12,
+    "independent_complex_coords": 80730,
+    "generated_zero_boundary_coordinates": 31,
+    "nfev": 44
+  },
+  "source_note": "Independent gaugeless Fonseca JHEP07(2026)094 Eq22 matched; published Aebischer arXiv2512.16890v1 Eq4.85 conflicts; Sept 2026 journal formula not directly read.",
+  "1pi_scope_note": "Exact chirality/topology enumeration, not an evaluation of UV loop poles, EOM reduction, or full matching."
+}

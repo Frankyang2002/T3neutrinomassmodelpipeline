@@ -1,0 +1,491 @@
+{
+  "format": "t3-a-minus4-source-anchored-master-triplet-candidate-v1",
+  "model": "A_-4",
+  "status": "SOURCE_TRIPLET_TO_MASTER_CANDIDATE_AND_FLAVOUR_PHASE_COVARIANCE_VERIFIED_PHYSICAL_CC_OPEN",
+  "source_revision": "12128de602ac6bf109dbad50dbac8446ed629434",
+  "mu_F_gev": 100000.0,
+  "model_F_only": true,
+  "source_hashes_sha256": {
+    "native": "f70662ce903deceb5351a050268f3dfa10b94ea80cea0e255d152fa248ab8529",
+    "audit": "0b339c3d43db23c33c87e79865456bbb13a3b94c821f2a03c30ae559ba0dfd62",
+    "UV_registered_CG": "8099a53b3a5fa006ad7f760706a84bd05f9f7fe1ee56a6a1e90789d916605dd6",
+    "F_only_matched_seed": "ffd6c04962d7b260a890c3306a4ce9522edd36bac0867a200e2fd3d3505e64a5",
+    "native_matchete_generator_analysis": "e8bd4a7d8de5115b9440bc142017f9f4536b2dd8a2a23fdfe588c99bafa0d87a"
+  },
+  "basis": {
+    "candidate_45_Weyl_order_matches_FermionBasis_API": true,
+    "scalar_12_real_order_matches_ScalarBasis_API": true,
+    "production_build_sm_eft_fermion_dimension": 15,
+    "production_build_sm_eft_is_three_family": false,
+    "full_tensor_shape": [
+      45,
+      45,
+      12,
+      12
+    ]
+  },
+  "native_to_master_triplet_complex_matrix": {
+    "real": [
+      [
+        -0.7071067811865475,
+        0.0,
+        0.0
+      ],
+      [
+        -0.0,
+        0.9999999999999998,
+        0.0
+      ],
+      [
+        0.7071067811865475,
+        0.0,
+        0.0
+      ]
+    ],
+    "imag": [
+      [
+        0.0,
+        0.0,
+        0.7071067811865475
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.7071067811865475
+      ]
+    ]
+  },
+  "native_to_master_triplet_real_matrix": [
+    [
+      -0.7071067811865475,
+      -0.0,
+      0.0,
+      -0.0,
+      0.0,
+      -0.7071067811865475
+    ],
+    [
+      0.0,
+      -0.7071067811865475,
+      0.0,
+      0.0,
+      0.7071067811865475,
+      0.0
+    ],
+    [
+      -0.0,
+      -0.0,
+      0.9999999999999998,
+      -0.0,
+      0.0,
+      -0.0
+    ],
+    [
+      0.0,
+      -0.0,
+      0.0,
+      0.9999999999999998,
+      0.0,
+      0.0
+    ],
+    [
+      0.7071067811865475,
+      -0.0,
+      0.0,
+      -0.0,
+      0.0,
+      -0.7071067811865475
+    ],
+    [
+      0.0,
+      0.7071067811865475,
+      0.0,
+      0.0,
+      0.7071067811865475,
+      0.0
+    ]
+  ],
+  "transform_equations": {
+    "complex_fields": "S2_master = N S2_native",
+    "real_fields": "phi_S2_master = R(N) phi_S2_native, indices 7..12",
+    "wilson_coefficients": "C_master^formal = C_native^formal with phi_native = R(N)^T phi_master",
+    "lepton_SU2": "identified with same sigma_a/2 master fundamental axes (phase alignment still conditional)",
+    "master_su2_triplet": "T_a=su2_complex_generators(3)[a]",
+    "native_su2_triplet": "derived by covariance from matching-generated symmetric LLSS CG"
+  },
+  "checks": {
+    "native_triplet_cartan_from_independent_generator_source_equal": true,
+    "native_to_master_generators_max_abs_residual": 4.440892098500626e-16,
+    "native_CG_covariance_max_abs_residual": 2.220446049250313e-16,
+    "mapped_CG_to_master_weight_basis_max_abs_residual": 2.220446049250313e-16,
+    "native_CG_norm_squared": 1.1547005383792515,
+    "complex_three_flavour_phase_covariance": {
+      "arbitrary_complex_dirac_mass_rephasing_relative_residual": 4.585860628793027e-16,
+      "positive_mass_eigenbasis_heavy_rephasing_relative_residual": 2.5670516313043936e-16,
+      "three_independent_lepton_phase_covariance_relative_residual": 6.458921222641357e-16,
+      "no_convention_dependent_yukawa_sign_selected": true,
+      "native_Matchete_to_master_rephasing_dictionary_certified": false
+    },
+    "formal_polynomial_scalar_transport": {
+      "commuting_polynomial_relative_max_residual": 7.219597932424874e-16,
+      "symmetric_full_coordinate_norm_relative_residual": 4.386786823796279e-16,
+      "native_independent_monomials": 60,
+      "master_independent_monomials": 36,
+      "source_tensor_frobenius_norm_gev_inv": 2.2414943268978715e-12,
+      "master_tensor_frobenius_norm_gev_inv": 2.241494326897872e-12,
+      "physical_spinor_operator_identity_established": false,
+      "direct_mapped_CG_versus_rotated_tensor_relative_max_residual": 2.344355635404684e-16
+    }
+  },
+  "conditional_master_weight_basis_independent_entries": [
+    {
+      "i": 1,
+      "j": 1,
+      "a": 5,
+      "b": 11,
+      "coefficient_real_if_rho_1": 3.045593319761025e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 1,
+      "j": 1,
+      "a": 5,
+      "b": 12,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": 3.045593319761025e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 1,
+      "j": 1,
+      "a": 6,
+      "b": 11,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": -3.045593319761025e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 1,
+      "j": 1,
+      "a": 6,
+      "b": 12,
+      "coefficient_real_if_rho_1": 3.045593319761025e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 1,
+      "j": 2,
+      "a": 5,
+      "b": 9,
+      "coefficient_real_if_rho_1": -2.1535596891394695e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 1,
+      "j": 2,
+      "a": 5,
+      "b": 10,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": -2.1535596891394695e-13,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 1,
+      "j": 2,
+      "a": 6,
+      "b": 9,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": 2.1535596891394695e-13,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 1,
+      "j": 2,
+      "a": 6,
+      "b": 10,
+      "coefficient_real_if_rho_1": -2.1535596891394695e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 2,
+      "j": 2,
+      "a": 5,
+      "b": 7,
+      "coefficient_real_if_rho_1": 3.045593319761025e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 2,
+      "j": 2,
+      "a": 5,
+      "b": 8,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": 3.045593319761025e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 2,
+      "j": 2,
+      "a": 6,
+      "b": 7,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": -3.045593319761025e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 2,
+      "j": 2,
+      "a": 6,
+      "b": 8,
+      "coefficient_real_if_rho_1": 3.045593319761025e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 3,
+      "j": 3,
+      "a": 5,
+      "b": 11,
+      "coefficient_real_if_rho_1": 2.5379944060328007e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 3,
+      "j": 3,
+      "a": 5,
+      "b": 12,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": 2.5379944060328007e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 3,
+      "j": 3,
+      "a": 6,
+      "b": 11,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": -2.5379944060328007e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 3,
+      "j": 3,
+      "a": 6,
+      "b": 12,
+      "coefficient_real_if_rho_1": 2.5379944060328007e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 3,
+      "j": 4,
+      "a": 5,
+      "b": 9,
+      "coefficient_real_if_rho_1": -1.7946330551193168e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 3,
+      "j": 4,
+      "a": 5,
+      "b": 10,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": -1.7946330551193168e-13,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 3,
+      "j": 4,
+      "a": 6,
+      "b": 9,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": 1.7946330551193168e-13,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 3,
+      "j": 4,
+      "a": 6,
+      "b": 10,
+      "coefficient_real_if_rho_1": -1.7946330551193168e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 4,
+      "j": 4,
+      "a": 5,
+      "b": 7,
+      "coefficient_real_if_rho_1": 2.5379944060328007e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 4,
+      "j": 4,
+      "a": 5,
+      "b": 8,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": 2.5379944060328007e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 4,
+      "j": 4,
+      "a": 6,
+      "b": 7,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": -2.5379944060328007e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 4,
+      "j": 4,
+      "a": 6,
+      "b": 8,
+      "coefficient_real_if_rho_1": 2.5379944060328007e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 5,
+      "j": 5,
+      "a": 5,
+      "b": 11,
+      "coefficient_real_if_rho_1": 2.2841882143452696e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 5,
+      "j": 5,
+      "a": 5,
+      "b": 12,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": 2.2841882143452696e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 5,
+      "j": 5,
+      "a": 6,
+      "b": 11,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": -2.2841882143452696e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 5,
+      "j": 5,
+      "a": 6,
+      "b": 12,
+      "coefficient_real_if_rho_1": 2.2841882143452696e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 5,
+      "j": 6,
+      "a": 5,
+      "b": 9,
+      "coefficient_real_if_rho_1": -1.615164975869931e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 5,
+      "j": 6,
+      "a": 5,
+      "b": 10,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": -1.615164975869931e-13,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 5,
+      "j": 6,
+      "a": 6,
+      "b": 9,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": 1.615164975869931e-13,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 5,
+      "j": 6,
+      "a": 6,
+      "b": 10,
+      "coefficient_real_if_rho_1": -1.615164975869931e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 6,
+      "j": 6,
+      "a": 5,
+      "b": 7,
+      "coefficient_real_if_rho_1": 2.2841882143452696e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 6,
+      "j": 6,
+      "a": 5,
+      "b": 8,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": 2.2841882143452696e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 6,
+      "j": 6,
+      "a": 6,
+      "b": 7,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": -2.2841882143452696e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 6,
+      "j": 6,
+      "a": 6,
+      "b": 8,
+      "coefficient_real_if_rho_1": 2.2841882143452696e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    }
+  ],
+  "conditional_master_weight_basis_zero_outside_independent_entries": true,
+  "conditional_fermion_shape": [
+    45,
+    45
+  ],
+  "conditional_real_scalar_shape": [
+    12,
+    12
+  ],
+  "tensor_symmetry": "C_ijab=C_jiab=C_ijba; independent coordinates i<=j, a<=b; no extra 1/4 in full sum",
+  "overall_matchete_GammaCC_to_master_Weyl_factor": null,
+  "physical_C_ijab_at_MF": null,
+  "physical_certification": false,
+  "remaining": [
+    "Installed Matchete GammaCC is abstract; its absolute phase relative to a fixed master Weyl spinor convention is not measured.",
+    "Native fundamental doublet and external lepton phase orientation relative to master is conditional on sigma_a/2 conventions.",
+    "Master build_sm_eft() is still one-family: the verified 45-Weyl API embedding is not installed in the production RGE.",
+    "No physical full three-family EFT1 Wilson RGE or coupling dictionary is asserted."
+  ],
+  "EFT_order": "UV -> integrate out ALL F -> EFT1(SM+S1+S2) -> integrate out BOTH scalars -> SMEFT"
+}

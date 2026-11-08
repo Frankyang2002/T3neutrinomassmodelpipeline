@@ -1,0 +1,155 @@
+{
+	"format":"a-minus4-rgbeta-operator-witness-v1",
+	"status":"NATIVE_SYMBOLIC_OPERATOR_TENSOR_CAPTURED_COMPONENT_MAP_PENDING",
+	"model":"A_-4",
+	"stage":"EFT1",
+	"dimensions_alpha":[
+		1,
+		3,
+		2,
+		-4
+	],
+	"source_model_path":"RGE\/running\/rgbeta\/T3RGBetaModel.wl",
+	"source_model_sha256":"a58c79f18b2abdf9d476588552dfa52e2f131f322094e5b72d1198162aa20abc",
+	"rgbeta_package_file":"\"C:\\\\Users\\\\popok\\\\AppData\\\\Roaming\\\\Wolfram\\\\Applications\\\\RGBeta\\\\Kernel\\\\init.m\"",
+	"native_quartic_symbols":[
+		"lambda12",
+		"lambdaH",
+		"lambdaH1",
+		"lambdaH2",
+		"lambdaH2Adj",
+		"lambdaS1",
+		"lambdaS2",
+		"lambdaS2Adj",
+		"lambdaT3"
+	],
+	"scalar_species_indices":{
+		"H":1,
+		"Bar[H]":2,
+		"S1":3,
+		"Bar[S1]":4,
+		"S2":5,
+		"Bar[S2]":6
+	},
+	"quartic_operators":[
+		{
+			"name":"lambdaH",
+			"registration_complete":true,
+			"fields":"{Bar[H], H, Bar[H], H}",
+			"invariant_inputform":"(del[SU2L[fund], opA, opB]*del[SU2L[fund], opC, opD])\/2",
+			"coupling_inputform":"6*lambdaH",
+			"coupling_bar_inputform":"6*lambdaH",
+			"self_conjugate":true,
+			"native_unique_arrangements":12
+		},
+		{
+			"name":"lambdaS1",
+			"registration_complete":true,
+			"fields":"{Bar[S1], S1, Bar[S1], S1}",
+			"invariant_inputform":"1\/2",
+			"coupling_inputform":"6*lambdaS1",
+			"coupling_bar_inputform":"6*lambdaS1",
+			"self_conjugate":true,
+			"native_unique_arrangements":6
+		},
+		{
+			"name":"lambdaS2",
+			"registration_complete":true,
+			"fields":"{Bar[S2], S2, Bar[S2], S2}",
+			"invariant_inputform":"(del[SU2L[S2], opA, opB]*del[SU2L[S2], opC, opD])\/2",
+			"coupling_inputform":"6*lambdaS2",
+			"coupling_bar_inputform":"6*lambdaS2",
+			"self_conjugate":true,
+			"native_unique_arrangements":12
+		},
+		{
+			"name":"lambdaH1",
+			"registration_complete":true,
+			"fields":"{Bar[H], H, Bar[S1], S1}",
+			"invariant_inputform":"del[SU2L[fund], opA, opB]",
+			"coupling_inputform":"6*lambdaH1",
+			"coupling_bar_inputform":"6*lambdaH1",
+			"self_conjugate":true,
+			"native_unique_arrangements":24
+		},
+		{
+			"name":"lambdaH2",
+			"registration_complete":true,
+			"fields":"{Bar[H], H, Bar[S2], S2}",
+			"invariant_inputform":"del[SU2L[fund], opA, opB]*del[SU2L[S2], opC, opD]",
+			"coupling_inputform":"6*lambdaH2",
+			"coupling_bar_inputform":"6*lambdaH2",
+			"self_conjugate":true,
+			"native_unique_arrangements":24
+		},
+		{
+			"name":"lambda12",
+			"registration_complete":true,
+			"fields":"{Bar[S1], S1, Bar[S2], S2}",
+			"invariant_inputform":"del[SU2L[S2], opC, opD]",
+			"coupling_inputform":"6*lambda12",
+			"coupling_bar_inputform":"6*lambda12",
+			"self_conjugate":true,
+			"native_unique_arrangements":24
+		},
+		{
+			"name":"lambdaT3",
+			"registration_complete":true,
+			"fields":"{H, H, S1, Bar[S2]}",
+			"invariant_inputform":"delS2[SU2L, opD, opA, opB]",
+			"coupling_inputform":"6*lambdaT3",
+			"coupling_bar_inputform":"6*Bar[lambdaT3]",
+			"self_conjugate":false,
+			"native_unique_arrangements":12
+		},
+		{
+			"name":"lambdaH2Adj",
+			"registration_complete":true,
+			"fields":"{Bar[H], H, Bar[S2], S2}",
+			"invariant_inputform":"tGen[SU2L[fund], A, opA, opB]*tGen[SU2L[S2], A, opC, opD]",
+			"coupling_inputform":"6*lambdaH2Adj",
+			"coupling_bar_inputform":"6*lambdaH2Adj",
+			"self_conjugate":true,
+			"native_unique_arrangements":24
+		},
+		{
+			"name":"lambdaS2Adj",
+			"registration_complete":true,
+			"fields":"{Bar[S2], S2, Bar[S2], S2}",
+			"invariant_inputform":"(tGen[SU2L[S2], A, opA, opB]*tGen[SU2L[S2], A, opC, opD])\/2",
+			"coupling_inputform":"6*lambdaS2Adj",
+			"coupling_bar_inputform":"6*lambdaS2Adj",
+			"self_conjugate":true,
+			"native_unique_arrangements":12
+		}
+	],
+	"native_Lam_symbol_names":[
+		"RGBeta`PackageScope`Lam"
+	],
+	"native_Lam_formal_tensor_available":true,
+	"native_Lam_visible_quartic_symbols":[
+		"lambdaH",
+		"lambdaS1",
+		"lambdaS2",
+		"lambdaH1",
+		"lambdaH2",
+		"lambda12",
+		"lambdaT3",
+		"lambdaH2Adj",
+		"lambdaS2Adj"
+	],
+	"native_Lam_formal_tensor_inputform":"RGBeta`PackageScope`TStructure[RGBeta`PackageScope`$scalar[opA], RGBeta`PackageScope`$scalar[opB], RGBeta`PackageScope`$scalar[opC], RGBeta`PackageScope`$scalar[opD]][SparseArray[Automatic, {8, 8, 8, 8}, 0, {1, {{0, 21, 42, 60, 78, 96, 114, 114, 114}, {{2, 2, 1}, {2, 1, 2}, {1, 2, 2}, {2, 4, 3}, {2, 3, 4}, {4, 2, 3}, {3, 2, 4}, {4, 3, 2}, {3, 4, 2}, {2, 6, 5}, {2, 5, 6}, {6, 2, 5}, {5, 2, 6}, {6, 5, 2}, {5, 6, 2}, {1, 3, 6}, {1, 6, 3}, {3, 1, 6}, {6, 1, 3}, {3, 6, 1}, {6, 3, 1}, {1, 2, 1}, {1, 1, 2}, {2, 1, 1}, {1, 4, 3}, {1, 3, 4}, {4, 1, 3}, {3, 1, 4}, {4, 3, 1}, {3, 4, 1}, {1, 6, 5}, {1, 5, 6}, {6, 1, 5}, {5, 1, 6}, {6, 5, 1}, {5, 6, 1}, {2, 4, 5}, {2, 5, 4}, {4, 2, 5}, {5, 2, 4}, {4, 5, 2}, {5, 4, 2}, {4, 4, 3}, {4, 3, 4}, {3, 4, 4}, {2, 1, 4}, {2, 4, 1}, {1, 2, 4}, {4, 2, 1}, {1, 4, 2}, {4, 1, 2}, {4, 6, 5}, {4, 5, 6}, {6, 4, 5}, {5, 4, 6}, {6, 5, 4}, {5, 6, 4}, {1, 1, 6}, {1, 6, 1}, {6, 1, 1}, {3, 4, 3}, {3, 3, 4}, {4, 3, 3}, {2, 1, 3}, {2, 3, 1}, {1, 2, 3}, {3, 2, 1}, {1, 3, 2}, {3, 1, 2}, {3, 6, 5}, {3, 5, 6}, {6, 3, 5}, {5, 3, 6}, {6, 5, 3}, {5, 6, 3}, {2, 2, 5}, {2, 5, 2}, {5, 2, 2}, {6, 6, 5}, {6, 5, 6}, {5, 6, 6}, {2, 1, 6}, {2, 6, 1}, {1, 2, 6}, {6, 2, 1}, {1, 6, 2}, {6, 1, 2}, {4, 3, 6}, {4, 6, 3}, {3, 4, 6}, {6, 4, 3}, {3, 6, 4}, {6, 3, 4}, {2, 2, 4}, {2, 4, 2}, {4, 2, 2}, {5, 6, 5}, {5, 5, 6}, {6, 5, 5}, {2, 1, 5}, {2, 5, 1}, {1, 2, 5}, {5, 2, 1}, {1, 5, 2}, {5, 1, 2}, {4, 3, 5}, {4, 5, 3}, {3, 4, 5}, {5, 4, 3}, {3, 5, 4}, {5, 3, 4}, {1, 1, 3}, {1, 3, 1}, {3, 1, 1}}}, {(lambdaH*del[SU2L[fund], opA, opC]*del[SU2L[fund], opB, opD])\/4 + (lambdaH*del[SU2L[fund], opA, opB]*del[SU2L[fund], opC, opD])\/4, (lambdaH*del[SU2L[fund], opA, opD]*del[SU2L[fund], opB, opC])\/4 + (lambdaH*del[SU2L[fund], opA, opB]*del[SU2L[fund], opC, opD])\/4, (lambdaH*del[SU2L[fund], opA, opD]*del[SU2L[fund], opB, opC])\/4 + (lambdaH*del[SU2L[fund], opA, opC]*del[SU2L[fund], opB, opD])\/4, (lambdaH1*del[SU2L[fund], opA, opB])\/4, (lambdaH1*del[SU2L[fund], opA, opB])\/4, (lambdaH1*del[SU2L[fund], opA, opC])\/4, (lambdaH1*del[SU2L[fund], opA, opC])\/4, (lambdaH1*del[SU2L[fund], opA, opD])\/4, (lambdaH1*del[SU2L[fund], opA, opD])\/4, (lambdaH2*del[SU2L[fund], opA, opB]*del[SU2L[S2], opC, opD])\/4 + (lambdaH2Adj*tGen[SU2L[fund], A, opB, opA]*tGen[SU2L[S2], A, opC, opD])\/4, (lambdaH2*del[SU2L[fund], opA, opB]*del[SU2L[S2], opC, opD])\/4 + (lambdaH2Adj*tGen[SU2L[fund], A, opB, opA]*tGen[SU2L[S2], A, opD, opC])\/4, (lambdaH2*del[SU2L[fund], opA, opC]*del[SU2L[S2], opB, opD])\/4 + (lambdaH2Adj*tGen[SU2L[fund], A, opC, opA]*tGen[SU2L[S2], A, opB, opD])\/4, (lambdaH2*del[SU2L[fund], opA, opC]*del[SU2L[S2], opB, opD])\/4 + (lambdaH2Adj*tGen[SU2L[fund], A, opC, opA]*tGen[SU2L[S2], A, opD, opB])\/4, (lambdaH2*del[SU2L[fund], opA, opD]*del[SU2L[S2], opB, opC])\/4 + (lambdaH2Adj*tGen[SU2L[fund], A, opD, opA]*tGen[SU2L[S2], A, opB, opC])\/4, (lambdaH2*del[SU2L[fund], opA, opD]*del[SU2L[S2], opB, opC])\/4 + (lambdaH2Adj*tGen[SU2L[fund], A, opD, opA]*tGen[SU2L[S2], A, opC, opB])\/4, (lambdaT3*delS2[SU2L, opD, opA, opB])\/2, (lambdaT3*delS2[SU2L, opC, opA, opB])\/2, (lambdaT3*delS2[SU2L, opD, opA, opC])\/2, (lambdaT3*delS2[SU2L, opB, opA, opC])\/2, (lambdaT3*delS2[SU2L, opC, opA, opD])\/2, (lambdaT3*delS2[SU2L, opB, opA, opD])\/2, (lambdaH*del[SU2L[fund], opA, opD]*del[SU2L[fund], opB, opC])\/4 + (lambdaH*del[SU2L[fund], opA, opB]*del[SU2L[fund], opC, opD])\/4, (lambdaH*del[SU2L[fund], opA, opC]*del[SU2L[fund], opB, opD])\/4 + (lambdaH*del[SU2L[fund], opA, opB]*del[SU2L[fund], opC, opD])\/4, (lambdaH*del[SU2L[fund], opA, opD]*del[SU2L[fund], opB, opC])\/4 + (lambdaH*del[SU2L[fund], opA, opC]*del[SU2L[fund], opB, opD])\/4, (lambdaH1*del[SU2L[fund], opA, opB])\/4, (lambdaH1*del[SU2L[fund], opA, opB])\/4, (lambdaH1*del[SU2L[fund], opA, opC])\/4, (lambdaH1*del[SU2L[fund], opA, opC])\/4, (lambdaH1*del[SU2L[fund], opA, opD])\/4, (lambdaH1*del[SU2L[fund], opA, opD])\/4, (lambdaH2*del[SU2L[fund], opA, opB]*del[SU2L[S2], opC, opD])\/4 + (lambdaH2Adj*tGen[SU2L[fund], A, opA, opB]*tGen[SU2L[S2], A, opC, opD])\/4, (lambdaH2*del[SU2L[fund], opA, opB]*del[SU2L[S2], opC, opD])\/4 + (lambdaH2Adj*tGen[SU2L[fund], A, opA, opB]*tGen[SU2L[S2], A, opD, opC])\/4, (lambdaH2*del[SU2L[fund], opA, opC]*del[SU2L[S2], opB, opD])\/4 + (lambdaH2Adj*tGen[SU2L[fund], A, opA, opC]*tGen[SU2L[S2], A, opB, opD])\/4, (lambdaH2*del[SU2L[fund], opA, opC]*del[SU2L[S2], opB, opD])\/4 + (lambdaH2Adj*tGen[SU2L[fund], A, opA, opC]*tGen[SU2L[S2], A, opD, opB])\/4, (lambdaH2*del[SU2L[fund], opA, opD]*del[SU2L[S2], opB, opC])\/4 + (lambdaH2Adj*tGen[SU2L[fund], A, opA, opD]*tGen[SU2L[S2], A, opB, opC])\/4, (lambdaH2*del[SU2L[fund], opA, opD]*del[SU2L[S2], opB, opC])\/4 + (lambdaH2Adj*tGen[SU2L[fund], A, opA, opD]*tGen[SU2L[S2], A, opC, opB])\/4, (Bar[lambdaT3]*delS2[SU2L, opD, opA, opB])\/2, (Bar[lambdaT3]*delS2[SU2L, opC, opA, opB])\/2, (Bar[lambdaT3]*delS2[SU2L, opD, opA, opC])\/2, (Bar[lambdaT3]*delS2[SU2L, opB, opA, opC])\/2, (Bar[lambdaT3]*delS2[SU2L, opC, opA, opD])\/2, (Bar[lambdaT3]*delS2[SU2L, opB, opA, opD])\/2, lambdaS1\/2, lambdaS1\/2, lambdaS1\/2, (lambdaH1*del[SU2L[fund], opB, opC])\/4, (lambdaH1*del[SU2L[fund], opB, opD])\/4, (lambdaH1*del[SU2L[fund], opB, opC])\/4, (lambdaH1*del[SU2L[fund], opC, opD])\/4, (lambdaH1*del[SU2L[fund], opB, opD])\/4, (lambdaH1*del[SU2L[fund], opC, opD])\/4, (lambda12*del[SU2L[S2], opC, opD])\/4, (lambda12*del[SU2L[S2], opC, opD])\/4, (lambda12*del[SU2L[S2], opB, opD])\/4, (lambda12*del[SU2L[S2], opB, opD])\/4, (lambda12*del[SU2L[S2], opB, opC])\/4, (lambda12*del[SU2L[S2], opB, opC])\/4, (lambdaT3*delS2[SU2L, opD, opB, opC])\/2, (lambdaT3*delS2[SU2L, opC, opB, opD])\/2, (lambdaT3*delS2[SU2L, opB, opC, opD])\/2, lambdaS1\/2, lambdaS1\/2, lambdaS1\/2, (lambdaH1*del[SU2L[fund], opB, opC])\/4, (lambdaH1*del[SU2L[fund], opB, opD])\/4, (lambdaH1*del[SU2L[fund], opB, opC])\/4, (lambdaH1*del[SU2L[fund], opC, opD])\/4, (lambdaH1*del[SU2L[fund], opB, opD])\/4, (lambdaH1*del[SU2L[fund], opC, opD])\/4, (lambda12*del[SU2L[S2], opC, opD])\/4, (lambda12*del[SU2L[S2], opC, opD])\/4, (lambda12*del[SU2L[S2], opB, opD])\/4, (lambda12*del[SU2L[S2], opB, opD])\/4, (lambda12*del[SU2L[S2], opB, opC])\/4, (lambda12*del[SU2L[S2], opB, opC])\/4, (Bar[lambdaT3]*delS2[SU2L, opD, opB, opC])\/2, (Bar[lambdaT3]*delS2[SU2L, opC, opB, opD])\/2, (Bar[lambdaT3]*delS2[SU2L, opB, opC, opD])\/2, (lambdaS2*del[SU2L[S2], opA, opC]*del[SU2L[S2], opB, opD])\/4 + (lambdaS2*del[SU2L[S2], opA, opB]*del[SU2L[S2], opC, opD])\/4 + (lambdaS2Adj*tGen[SU2L[S2], A, opB, opD]*tGen[SU2L[S2], A, opC, opA])\/4 + (lambdaS2Adj*tGen[SU2L[S2], A, opB, opA]*tGen[SU2L[S2], A, opC, opD])\/4, (lambdaS2*del[SU2L[S2], opA, opD]*del[SU2L[S2], opB, opC])\/4 + (lambdaS2*del[SU2L[S2], opA, opB]*del[SU2L[S2], opC, opD])\/4 + (lambdaS2Adj*tGen[SU2L[S2], A, opB, opC]*tGen[SU2L[S2], A, opD, opA])\/4 + (lambdaS2Adj*tGen[SU2L[S2], A, opB, opA]*tGen[SU2L[S2], A, opD, opC])\/4, (lambdaS2*del[SU2L[S2], opA, opD]*del[SU2L[S2], opB, opC])\/4 + (lambdaS2*del[SU2L[S2], opA, opC]*del[SU2L[S2], opB, opD])\/4 + (lambdaS2Adj*tGen[SU2L[S2], A, opC, opB]*tGen[SU2L[S2], A, opD, opA])\/4 + (lambdaS2Adj*tGen[SU2L[S2], A, opC, opA]*tGen[SU2L[S2], A, opD, opB])\/4, (lambdaH2*del[SU2L[fund], opB, opC]*del[SU2L[S2], opA, opD])\/4 + (lambdaH2Adj*tGen[SU2L[fund], A, opB, opC]*tGen[SU2L[S2], A, opD, opA])\/4, (lambdaH2*del[SU2L[fund], opB, opD]*del[SU2L[S2], opA, opC])\/4 + (lambdaH2Adj*tGen[SU2L[fund], A, opB, opD]*tGen[SU2L[S2], A, opC, opA])\/4, (lambdaH2*del[SU2L[fund], opB, opC]*del[SU2L[S2], opA, opD])\/4 + (lambdaH2Adj*tGen[SU2L[fund], A, opC, opB]*tGen[SU2L[S2], A, opD, opA])\/4, (lambdaH2*del[SU2L[fund], opC, opD]*del[SU2L[S2], opA, opB])\/4 + (lambdaH2Adj*tGen[SU2L[fund], A, opC, opD]*tGen[SU2L[S2], A, opB, opA])\/4, (lambdaH2*del[SU2L[fund], opB, opD]*del[SU2L[S2], opA, opC])\/4 + (lambdaH2Adj*tGen[SU2L[fund], A, opD, opB]*tGen[SU2L[S2], A, opC, opA])\/4, (lambdaH2*del[SU2L[fund], opC, opD]*del[SU2L[S2], opA, opB])\/4 + (lambdaH2Adj*tGen[SU2L[fund], A, opD, opC]*tGen[SU2L[S2], A, opB, opA])\/4, (lambda12*del[SU2L[S2], opA, opD])\/4, (lambda12*del[SU2L[S2], opA, opC])\/4, (lambda12*del[SU2L[S2], opA, opD])\/4, (lambda12*del[SU2L[S2], opA, opB])\/4, (lambda12*del[SU2L[S2], opA, opC])\/4, (lambda12*del[SU2L[S2], opA, opB])\/4, (Bar[lambdaT3]*delS2[SU2L, opA, opB, opC])\/2, (Bar[lambdaT3]*delS2[SU2L, opA, opB, opD])\/2, (Bar[lambdaT3]*delS2[SU2L, opA, opC, opD])\/2, (lambdaS2*del[SU2L[S2], opA, opD]*del[SU2L[S2], opB, opC])\/4 + (lambdaS2*del[SU2L[S2], opA, opB]*del[SU2L[S2], opC, opD])\/4 + (lambdaS2Adj*tGen[SU2L[S2], A, opA, opD]*tGen[SU2L[S2], A, opC, opB])\/4 + (lambdaS2Adj*tGen[SU2L[S2], A, opA, opB]*tGen[SU2L[S2], A, opC, opD])\/4, (lambdaS2*del[SU2L[S2], opA, opC]*del[SU2L[S2], opB, opD])\/4 + (lambdaS2*del[SU2L[S2], opA, opB]*del[SU2L[S2], opC, opD])\/4 + (lambdaS2Adj*tGen[SU2L[S2], A, opA, opC]*tGen[SU2L[S2], A, opD, opB])\/4 + (lambdaS2Adj*tGen[SU2L[S2], A, opA, opB]*tGen[SU2L[S2], A, opD, opC])\/4, (lambdaS2*del[SU2L[S2], opA, opD]*del[SU2L[S2], opB, opC])\/4 + (lambdaS2*del[SU2L[S2], opA, opC]*del[SU2L[S2], opB, opD])\/4 + (lambdaS2Adj*tGen[SU2L[S2], A, opA, opD]*tGen[SU2L[S2], A, opB, opC])\/4 + (lambdaS2Adj*tGen[SU2L[S2], A, opA, opC]*tGen[SU2L[S2], A, opB, opD])\/4, (lambdaH2*del[SU2L[fund], opB, opC]*del[SU2L[S2], opA, opD])\/4 + (lambdaH2Adj*tGen[SU2L[fund], A, opB, opC]*tGen[SU2L[S2], A, opA, opD])\/4, (lambdaH2*del[SU2L[fund], opB, opD]*del[SU2L[S2], opA, opC])\/4 + (lambdaH2Adj*tGen[SU2L[fund], A, opB, opD]*tGen[SU2L[S2], A, opA, opC])\/4, (lambdaH2*del[SU2L[fund], opB, opC]*del[SU2L[S2], opA, opD])\/4 + (lambdaH2Adj*tGen[SU2L[fund], A, opC, opB]*tGen[SU2L[S2], A, opA, opD])\/4, (lambdaH2*del[SU2L[fund], opC, opD]*del[SU2L[S2], opA, opB])\/4 + (lambdaH2Adj*tGen[SU2L[fund], A, opC, opD]*tGen[SU2L[S2], A, opA, opB])\/4, (lambdaH2*del[SU2L[fund], opB, opD]*del[SU2L[S2], opA, opC])\/4 + (lambdaH2Adj*tGen[SU2L[fund], A, opD, opB]*tGen[SU2L[S2], A, opA, opC])\/4, (lambdaH2*del[SU2L[fund], opC, opD]*del[SU2L[S2], opA, opB])\/4 + (lambdaH2Adj*tGen[SU2L[fund], A, opD, opC]*tGen[SU2L[S2], A, opA, opB])\/4, (lambda12*del[SU2L[S2], opA, opD])\/4, (lambda12*del[SU2L[S2], opA, opC])\/4, (lambda12*del[SU2L[S2], opA, opD])\/4, (lambda12*del[SU2L[S2], opA, opB])\/4, (lambda12*del[SU2L[S2], opA, opC])\/4, (lambda12*del[SU2L[S2], opA, opB])\/4, (lambdaT3*delS2[SU2L, opA, opB, opC])\/2, (lambdaT3*delS2[SU2L, opA, opB, opD])\/2, (lambdaT3*delS2[SU2L, opA, opC, opD])\/2}}]]",
+	"native_Lam_string_length":10284,
+	"native_Lam_truncated":false,
+	"native_fund_generator_components_numeric":false,
+	"native_triplet_generator_components_numeric":false,
+	"native_triplet_CG_components_numeric":false,
+	"native_fund_generator_components_inputform":"unavailable",
+	"native_triplet_generator_components_inputform":"unavailable",
+	"native_triplet_CG_components_inputform":"unavailable",
+	"native_operator_registry_complete":true,
+	"matchete_physical_coupling_map_certified":false,
+	"native_to_reference_component_axes_certified":false,
+	"rgbeta_quartic_betas_certified":false,
+	"production_modified":false
+}

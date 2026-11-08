@@ -1,0 +1,225 @@
+{
+	"format":"a-minus4-rgbeta-symbolic-contractions-v1",
+	"status":"NATIVE_SYMBOLIC_CONTRACTION_DIAGNOSTICS_CAPTURED",
+	"model":"A_-4",
+	"stage":"EFT1",
+	"dimensions_alpha":[
+		1,
+		3,
+		2,
+		-4
+	],
+	"source_model_path":"RGE\/running\/rgbeta\/T3RGBetaModel.wl",
+	"source_model_sha256":"a58c79f18b2abdf9d476588552dfa52e2f131f322094e5b72d1198162aa20abc",
+	"rgbeta_package_file":"\"C:\\\\Users\\\\popok\\\\AppData\\\\Roaming\\\\Wolfram\\\\Applications\\\\RGBeta\\\\Kernel\\\\init.m\"",
+	"generator_contraction_probes":[
+		{
+			"id":"fund_casimir_3_over_4",
+			"status":"EVALUATED_MATCH",
+			"source_expression_inputform":"HoldComplete[tGen[SU2L[fund], acA, aci, acj]*tGen[SU2L[fund], acA, acj, ack]]",
+			"native_evaluated_inputform":"(3*del[SU2L[fund], aci, ack])\/4",
+			"target_inputform":"(3*del[SU2L[fund], aci, ack])\/4",
+			"native_difference_inputform":"0",
+			"native_exact_target_match":true
+		},
+		{
+			"id":"triplet_casimir_2",
+			"status":"EVALUATED_MATCH",
+			"source_expression_inputform":"HoldComplete[tGen[SU2L[S2], acA, aci, acj]*tGen[SU2L[S2], acA, acj, ack]]",
+			"native_evaluated_inputform":"2*del[SU2L[S2], aci, ack]",
+			"target_inputform":"2*del[SU2L[S2], aci, ack]",
+			"native_difference_inputform":"0",
+			"native_exact_target_match":true
+		},
+		{
+			"id":"triplet_fully_contracted_generator_norm_6",
+			"status":"EVALUATED_MATCH",
+			"source_expression_inputform":"HoldComplete[tGen[SU2L[S2], acA, aci, acj]*tGen[SU2L[S2], acA, acj, aci]]",
+			"native_evaluated_inputform":"6",
+			"target_inputform":"6",
+			"native_difference_inputform":"0",
+			"native_exact_target_match":true
+		},
+		{
+			"id":"fund_fully_contracted_generator_norm_3_over_2",
+			"status":"EVALUATED_MATCH",
+			"source_expression_inputform":"HoldComplete[tGen[SU2L[fund], acA, aci, acj]*tGen[SU2L[fund], acA, acj, aci]]",
+			"native_evaluated_inputform":"3\/2",
+			"target_inputform":"3\/2",
+			"native_difference_inputform":"0",
+			"native_exact_target_match":true
+		}
+	],
+	"quartic_invariant_samples":[
+		{
+			"name":"lambdaS2",
+			"field_order_inputform":"recorded in previous witness",
+			"native_invariant_inputform":"(del[SU2L[S2], aci, acj]*del[SU2L[S2], ack, acl])\/2",
+			"captured":true
+		},
+		{
+			"name":"lambdaS2Adj",
+			"field_order_inputform":"recorded in previous witness",
+			"native_invariant_inputform":"(tGen[SU2L[S2], A, aci, acj]*tGen[SU2L[S2], A, ack, acl])\/2",
+			"captured":true
+		},
+		{
+			"name":"lambdaH2",
+			"field_order_inputform":"recorded in previous witness",
+			"native_invariant_inputform":"del[SU2L[fund], aci, acj]*del[SU2L[S2], ack, acl]",
+			"captured":true
+		},
+		{
+			"name":"lambdaH2Adj",
+			"field_order_inputform":"recorded in previous witness",
+			"native_invariant_inputform":"tGen[SU2L[fund], A, aci, acj]*tGen[SU2L[S2], A, ack, acl]",
+			"captured":true
+		},
+		{
+			"name":"lambdaT3",
+			"field_order_inputform":"recorded in previous witness",
+			"native_invariant_inputform":"delS2[SU2L, acl, aci, acj]",
+			"captured":true
+		}
+	],
+	"native_dummy_index_double_call_probes":[
+		{
+			"id":"S2Adj_times_S2Adj",
+			"first_call_inputform":"(tGen[SU2L[S2], A, aci, acj]*tGen[SU2L[S2], A, ack, acl])\/2",
+			"second_call_inputform":"(tGen[SU2L[S2], A, acp, acq]*tGen[SU2L[S2], A, acr, acs])\/2",
+			"same_literal_A_present_in_both_raw_calls":true
+		},
+		{
+			"id":"H2Adj_times_H2Adj",
+			"first_call_inputform":"tGen[SU2L[fund], A, aci, acj]*tGen[SU2L[S2], A, ack, acl]",
+			"second_call_inputform":"tGen[SU2L[fund], A, acp, acq]*tGen[SU2L[S2], A, acr, acs]",
+			"same_literal_A_present_in_both_raw_calls":true
+		},
+		{
+			"id":"S2Adj_times_H2Adj",
+			"first_call_inputform":"(tGen[SU2L[S2], A, aci, acj]*tGen[SU2L[S2], A, ack, acl])\/2",
+			"second_call_inputform":"tGen[SU2L[fund], A, acp, acq]*tGen[SU2L[S2], A, acr, acs]",
+			"same_literal_A_present_in_both_raw_calls":true
+		},
+		{
+			"id":"S2Singlet_times_S2Singlet_control",
+			"first_call_inputform":"(del[SU2L[S2], aci, acj]*del[SU2L[S2], ack, acl])\/2",
+			"second_call_inputform":"(del[SU2L[S2], acp, acq]*del[SU2L[S2], acr, acs])\/2",
+			"same_literal_A_present_in_both_raw_calls":false
+		}
+	],
+	"native_projector_related_symbol_names":[
+		"RGBeta`Betas`PackagePrivate`ProjectionToUnmixedBetas",
+		"RGBeta`Betas`PackagePrivate`qProjections",
+		"RGBeta`FieldsAndCouplings`PackagePrivate`projection",
+		"RGBeta`FieldsAndCouplings`PackagePrivate`projection$",
+		"RGBeta`FieldsAndCouplings`PackagePrivate`projector",
+		"RGBeta`FieldsAndCouplings`PackagePrivate`projector$",
+		"RGBeta`PackageScope`Projector",
+		"RGBeta`PackageScope`Quartic",
+		"RGBeta`PackageScope`QuarticTensors",
+		"RGBeta`PackageScope`UpdateProjectors",
+		"RGBeta`PackageScope`UpsilonQuarticTensors",
+		"RGBeta`PackageScope`$quarticCoefficients",
+		"RGBeta`PackageScope`$scalarContraction",
+		"RGBeta`TensorCalculations`PackagePrivate`FermionFieldProjector",
+		"RGBeta`TensorCalculations`PackagePrivate`ScalarFieldProjector"
+	],
+	"native_projector_symbol_definitions":[
+		{
+			"symbol":"RGBeta`Betas`PackagePrivate`ProjectionToUnmixedBetas",
+			"definition_prefix_inputform":"{{}, {HoldPattern[RGBeta`Betas`PackagePrivate`ProjectionToUnmixedBetas[RGBeta`Betas`PackagePrivate`type_, RGBeta`Betas`PackagePrivate`loop_, RGBeta`Betas`PackagePrivate`func_, RGBeta`Betas`PackagePrivate`opt:OptionsPattern[]]] :> Module[{RGBeta`Betas`PackagePrivate`beta, RGBeta`Betas`PackagePrivate`couplings, RGBeta`Betas`PackagePrivate`projections, RGBeta`Betas`PackagePrivate`c}, RGBeta`Betas`PackagePrivate`couplings = If[RGBeta`Betas`PackagePrivate`type === Gauge, List @@ Query[All, Key[RGBeta`PackageScope`Coupling]][$gaugeGroups], Keys[RGBeta`Betas`PackagePrivate`CouplingInfo[RGBeta`Betas`PackagePrivate`type]]]; If[Length[RGBeta`Betas`PackagePrivate`couplings] === 0, Return[{}]; ]; If[MatchQ[RGBeta`Betas`PackagePrivate`type, Yukawa | Quartic | Trilinear], RGBeta`Betas`PackagePrivate`projections = CheckProjection \/@ RGBeta`Betas`PackagePrivate`couplings \/. {Matrix[RGBeta`Betas`PackagePrivate`c_][__] -> RGBeta`Betas`PackagePrivate`c, Tensor[RGBeta`Betas`PackagePrivate`c_][__] -> RGBeta`Betas`PackagePrivate`c}; RGBeta`Betas`PackagePrivate`invMatrix = Transpose[(Simplify[D[RGBeta`Betas`PackagePrivate`projections, #1]] & ) \/@ RGBeta`Betas`PackagePrivate`couplings]; If[Simplify[Det[RGBeta`Betas`PackagePrivate`invMatrix]] === 0, Message[RGBeta`Betas`PackagePrivate`ProjectionToUnmixedBetas::singular, RGBeta`Betas`PackagePrivate`type]; Abort[]; ]; RGBeta`Betas`PackagePrivate`invMatrix = Simplify[Inverse[RGBeta`Betas`PackagePrivate`invMatrix]]; , RGBeta`Betas`PackagePrivate`invMatrix = IdentityMatrix[Length[RGBeta`Betas`PackagePrivate`couplings]]; ]; RGBeta`Betas`PackagePrivate`beta = Monitor[Table[Quiet[RGBeta`Betas`PackagePrivate`func[RGBeta`Betas`PackagePrivate`c, RGBeta`Betas`PackagePrivate`loop, RGBeta`Betas`PackagePrivate`opt]], {RGBeta`Betas`PackagePrivate`c, RGBeta`Betas`PackagePrivate`couplings}], StringForm[\"Evaluating the `` Î²-function\", RGBeta`Betas`PackagePrivate`c]]; Monitor[Association @@ Thread[RGBeta`Betas`PackagePrivate`couplings -> BetaSimplify[RGBeta`Betas`PackagePrivate`invMatrix . RGBeta`Betas`PackagePrivate`beta]], \"Simplifying the Î²-functions\"]]}, {}}",
+			"full_definition_length":2104,
+			"truncated":false
+		},
+		{
+			"symbol":"RGBeta`Betas`PackagePrivate`qProjections",
+			"definition_prefix_inputform":"{{}, {}, {}}",
+			"full_definition_length":12,
+			"truncated":false
+		},
+		{
+			"symbol":"RGBeta`FieldsAndCouplings`PackagePrivate`projection",
+			"definition_prefix_inputform":"{{}, {}, {}}",
+			"full_definition_length":12,
+			"truncated":false
+		},
+		{
+			"symbol":"RGBeta`FieldsAndCouplings`PackagePrivate`projection$",
+			"definition_prefix_inputform":"{{Temporary}, {}, {}}",
+			"full_definition_length":21,
+			"truncated":false
+		},
+		{
+			"symbol":"RGBeta`FieldsAndCouplings`PackagePrivate`projector",
+			"definition_prefix_inputform":"{{}, {}, {}}",
+			"full_definition_length":12,
+			"truncated":false
+		},
+		{
+			"symbol":"RGBeta`FieldsAndCouplings`PackagePrivate`projector$",
+			"definition_prefix_inputform":"{{Temporary}, {}, {}}",
+			"full_definition_length":21,
+			"truncated":false
+		},
+		{
+			"symbol":"RGBeta`PackageScope`Projector",
+			"definition_prefix_inputform":"{{}, {}, {}}",
+			"full_definition_length":12,
+			"truncated":false
+		},
+		{
+			"symbol":"RGBeta`PackageScope`Quartic",
+			"definition_prefix_inputform":"{{}, {}, {}}",
+			"full_definition_length":12,
+			"truncated":false
+		},
+		{
+			"symbol":"RGBeta`PackageScope`QuarticTensors",
+			"definition_prefix_inputform":"{{}, {HoldPattern[RGBeta`PackageScope`QuarticTensors[RGBeta`TensorCalculations`PackagePrivate`coupling_Symbol, RGBeta`TensorCalculations`PackagePrivate`loop_Integer]] :> Module[{RGBeta`TensorCalculations`PackagePrivate`diagrams = {1, 5, 33, 315}[[RGBeta`TensorCalculations`PackagePrivate`loop + 1]], RGBeta`TensorCalculations`PackagePrivate`n = 0}, Monitor[Sum[Bcoef[3, RGBeta`TensorCalculations`PackagePrivate`loop, RGBeta`TensorCalculations`PackagePrivate`n]*RGBeta`PackageScope`RefineGroupStructures[RGBeta`PackageScope`Ttimes[$quartics[RGBeta`TensorCalculations`PackagePrivate`coupling, RGBeta`PackageScope`Projector][$a, $b, $c, $d], RGBeta`TensorCalculations`PackagePrivate`BetaTensor[3, RGBeta`TensorCalculations`PackagePrivate`loop, RGBeta`TensorCalculations`PackagePrivate`n]]], {RGBeta`TensorCalculations`PackagePrivate`n, RGBeta`TensorCalculations`PackagePrivate`diagrams}], StringForm[\"Evaluating term `` \/ ``\", RGBeta`TensorCalculations`PackagePrivate`n, RGBeta`TensorCalculations`PackagePrivate`diagrams]]]}, {}}",
+			"full_definition_length":1026,
+			"truncated":false
+		},
+		{
+			"symbol":"RGBeta`PackageScope`UpdateProjectors",
+			"definition_prefix_inputform":"{{}, {HoldPattern[RGBeta`PackageScope`UpdateProjectors[RGBeta`FieldsAndCouplings`PackagePrivate`couplings_List]] :> Scan[RGBeta`PackageScope`UpdateProjectors, RGBeta`FieldsAndCouplings`PackagePrivate`couplings], HoldPattern[RGBeta`PackageScope`UpdateProjectors[RGBeta`FieldsAndCouplings`PackagePrivate`coupling_]] :> Module[{RGBeta`FieldsAndCouplings`PackagePrivate`couplingInfo, RGBeta`FieldsAndCouplings`PackagePrivate`dim, RGBeta`FieldsAndCouplings`PackagePrivate`group, RGBeta`FieldsAndCouplings`PackagePrivate`projector, RGBeta`FieldsAndCouplings`PackagePrivate`symmetryFactor}, Switch[$couplings[RGBeta`FieldsAndCouplings`PackagePrivate`coupling], RGBeta`FieldsAndCouplings`PackagePrivate`x_ \/; MemberQ[Keys[$gaugeGroups], RGBeta`FieldsAndCouplings`PackagePrivate`x], RGBeta`FieldsAndCouplings`PackagePrivate`dim = Length[RGBeta`PackageScope`$fieldIndexMap[\"GaugeBosons\"]]*{1, 1}; RGBeta`FieldsAndCouplings`PackagePrivate`group = $couplings[RGBeta`FieldsAndCouplings`PackagePrivate`coupling]; AppendTo[$gaugeGroups[RGBeta`FieldsAndCouplings`PackagePrivate`group], RGBeta`PackageScope`Projector -> Activate @* (Evaluate[RGBeta`PackageScope`TStructure[RGBeta`PackageScope`$gauge[#1], RGBeta`PackageScope`$gauge[#2]][Inactive[SparseArray][RGBeta`PackageScope`$fieldIndexMap[\"GaugeBosons\"] \/@ (RGBeta`FieldsAndCouplings`PackagePrivate`group*{1, 1}) -> If[Head[$gaugeGroups[RGBeta`FieldsAndCouplings`PackagePrivate`group, RGBeta`PackageScope`LieGroup]] =!= U1, del[RGBeta`FieldsAndCouplings`PackagePrivate`group[adj], #1, #2]\/Dim[RGBeta`FieldsAndCouplings`PackagePrivate`group[adj]], del[RGBeta`FieldsAndCouplings`PackagePrivate`group[adj], #1, v1]*del[RGBeta`FieldsAndCouplings`PackagePrivate`group[adj], #2, v2]], RGBeta`FieldsAndCouplings`PackagePrivate`dim]]] & )]; , Yukawa, RGBeta`FieldsAndCouplings`PackagePrivate`dim = {Length[RGBeta`PackageScope`$fieldIndexMap[\"Scalars\"]], Length[RGBeta`PackageScope`$fieldIndexMap[\"Fermions\"]], Length[RGBeta`PackageScope`$fieldIndexMap[\"Fermions\"]]}; RGBeta`FieldsAndCouplings`PackagePrivate`couplingInfo = $yukawas[RGBeta`FieldsAndCouplings`PackagePrivate`coupling]; RGBeta`FieldsAndCouplings`PackagePrivate`projector = Evaluate[DiagonalMatrix[RGBeta`PackageScope`TStructure[RGBeta`PackageScope`$scalar[#1], RGBeta`PackageScope`$fermion[#2], RGBeta`PackageScope`$fermion[#3]] \/@ Switch[RGBeta`FieldsAndCouplings`PackagePrivate`couplingInfo[Chirality], Left, {Inactive[SparseArray][RGBeta`PackageScope`$fieldIndexMap[\"All\"] \/@ MapAt[Bar, RGBeta`FieldsAndCouplings`PackagePrivate`couplingInfo[RGBeta`PackageScope`Fields], 1] -> RGBeta`FieldsAndCouplings`PackagePrivate`GroupInvBar[RGBeta`FieldsAndCouplings`PackagePrivate`couplingInfo[RGBeta`PackageScope`Invariant][#1, #2, #3]], RGBeta`FieldsAndCouplings`PackagePrivate`dim], 0}, Right, {0, Inactive[SparseArray][RGBeta`PackageScope`$fieldIndexMap[\"All\"] \/@ RGBeta`FieldsAndCouplings`PackagePrivate`couplingInfo[RGBeta`PackageScope`Fields] -> RGBeta`FieldsAndCouplings`PackagePrivate`couplingInfo[RGBeta`PackageScope`Invariant][#1, #2, #3], RGBeta`FieldsAndCouplings`PackagePrivate`dim]}]]] & ; RGBeta`FieldsAndCouplings`PackagePrivate`symmetryFactor = Simplify[(ReplaceAll[(#1 -> 0 & ) \/@ Keys[$yukawas]])[Simplify[RGBeta`PackageScope`RefineGroupStructures[Tr[Activate[RGBeta`FieldsAndCouplings`PackagePrivate`projector[$a, $i, $j]] . RGBeta`PackageScope`Yuk[$a, $i, $j]] \/. (Matrix | Tensor)[RGBeta`FieldsAndCouplings`PackagePrivate`x_][__] -> RGBeta`FieldsAndCouplings`PackagePrivate`x \/. RGBeta`FieldsAndCouplings`PackagePrivate`coupling -> 1]]]]; If[RGBeta`FieldsAndCouplings`PackagePrivate`symmetryFactor === 0, Message[RGBeta`PackageScope`UpdateProjectors::projection0, RGBeta`FieldsAndCouplings`PackagePrivate`coupling]; KeyDropFrom[$yukawas, RGBeta`FieldsAndCouplings`PackagePrivate`coupling]; Return[$Failed]]; RGBeta`FieldsAndCouplings`PackagePrivate`projector = Activate @* (Evaluate[RGBeta`FieldsAndCouplings`PackagePrivate`projector[#1, #2, #3]\/RGBeta`FieldsAndCouplings`PackagePrivate`symmetryFactor] & ); AppendTo[$yukawas[RGBeta`FieldsAndCouplings`PackagePrivate`coupling], RGBeta`PackageScope`Projector -> RGBeta`FieldsAndCouplings`PackagePrivate`projector]; , Quartic, RGBeta`FieldsAndCouplings`PackagePrivate`dim = Length[RGBeta`PackageScope`$fieldIndexMap[\"Scalars\"]]*{1, 1, 1, 1}; RGBeta`FieldsAndCouplings`PackagePrivate`couplingInfo = $quartics[RGBeta`FieldsAndCouplings`PackagePrivate`coupling]; RGBeta`FieldsAndCouplings`PackagePrivate`projector = Function[{RGBeta`FieldsAndCouplings`PackagePrivate`$da, RGBeta`FieldsAndCouplings`PackagePrivate`$db, RGBeta`FieldsAndCouplings`PackagePrivate`$dc, RGBeta`FieldsAndCouplings`PackagePrivate`$dd}, Evaluate[RGBeta`PackageScope`TStructure[RGBeta`PackageScope`$scalar[RGBeta`FieldsAndCouplings`PackagePrivate`$da], RGBeta`PackageScope`$scalar[RGBeta`FieldsAndCouplings`PackagePrivate`$db], RGBeta`PackageScope`$scalar[RGBeta`FieldsAndCouplings`PackagePrivate`$dc], RGBeta`PackageScope`$scalar[RGBeta`FieldsAndCouplings`PackagePrivate`$dd]][Inactive[SparseArray][RGBeta`PackageScope`$fieldIndexMap[\"Scalars\"] \/@ Bar \/@ RGBeta`FieldsAndCouplings`PackagePrivate`couplingInfo[RGBeta`PackageScope`Fields] -> RGBeta`FieldsAndCouplings`PackagePrivate`GroupInvBar[RGBeta`FieldsAndCouplings`PackagePrivate`couplingInfo[RGBeta`PackageScope`Invariant][RGBeta`FieldsAndCouplings`PackagePrivate`$da, RGBeta`FieldsAndCouplings`PackagePrivate`$db, RGBeta`FieldsAndCouplings`PackagePrivate`$dc, RGBeta`FieldsAndCouplings`PackagePrivate`$dd]], RGBeta`FieldsAndCouplings`PackagePrivate`dim]]]]; RGBeta`FieldsAndCouplings`PackagePrivate`symmetryFactor = Simplify[(ReplaceAll[(#1 -> 0 & ) \/@ Keys[$quartics]])[RGBeta`PackageScope`RefineGroupStructures[Activate[RGBeta`FieldsAndCouplings`PackagePrivate`projector[$a, $b, $c, $d]]*RGBeta`PackageScope`Lam[$a, $b, $c, $d] \/. (Matrix | Tensor)[RGBeta`FieldsAndCouplings`PackagePrivate`x_][__] -> RGBeta`FieldsAndCouplings`PackagePrivate`x \/. RGBeta`FieldsAndCouplings`PackagePrivate`coupling -> 1]]]; If[RGBeta`FieldsAndCouplings`PackagePrivate`symmetryFactor === 0, Message[RGBeta`PackageScope`UpdateProjectors::projection0, RGBeta`FieldsAndCouplings`PackagePrivate`coupling]; KeyDropFrom[$quartics, RGBeta`FieldsAndCouplings`PackagePrivate`coupling]; Return[$Failed]]; RGBeta`FieldsAndCouplings`PackagePrivate`projector = Activate @* (Evaluate[RGBeta`FieldsAndCouplings`PackagePrivate`projector[#1, #2, #3, #4]\/RGBeta`FieldsAndCouplings`PackagePrivate`symmetryFactor] & ); AppendTo[$quartics[RGBeta`FieldsAndCouplings`PackagePrivate`coupling], RGBeta`PackageScope`Projector -> RGBeta`FieldsAndCouplings`PackagePrivate`projector]; , FermionMass, RGBeta`FieldsAndCouplings`PackagePrivate`dim = {Length[RGBeta`PackageScope`$fieldIndexMap[\"Scalars\"]], Length[RGBeta`PackageScope`$fieldIndexMap[\"Fermions\"]], Length[RGBeta`PackageScope`$fieldIndexMap[\"Fermions\"]]}; RGBeta`FieldsAndCouplings`PackagePrivate`couplingInfo = $fermionMasses[RGBeta`FieldsAndCouplings`PackagePrivate`coupling]; RGBeta`FieldsAndCouplings`PackagePrivate`projector = Function[{RGBeta`FieldsAndCouplings`PackagePrivate`$da, RGBeta`FieldsAndCouplings`PackagePrivate`$di, RGBeta`FieldsAndCouplings`PackagePrivate`$dj}, Evaluate[DiagonalMatrix[RGBeta`PackageScope`TStructure[RGBeta`PackageScope`$scalar[RGBeta`FieldsAndCouplings`PackagePrivate`$da], RGBeta`PackageScope`$fermion[RGBeta`FieldsAndCouplings`PackagePrivate`$di], RGBeta`PackageScope`$fermion[RGBeta`FieldsAndCouplings`PackagePrivate`$dj]] \/@ Switch[RGBeta`FieldsAndCouplings`PackagePrivate`couplingInfo[Chirality], Left, {Inactive[SparseArray][RGBeta`PackageScope`$fieldIndexMap[\"All\"] \/@ Join[{$vevSelect}, RGBeta`FieldsAndCouplings`PackagePrivate`couplingInfo[RGBeta`PackageScope`Fields]] -> RGBeta`FieldsAndCouplings`PackagePrivate`GroupInvBar[RGBeta`FieldsAndCouplings`PackagePrivate`couplingInfo[RGBeta`PackageScope`Invariant][RGBeta`FieldsAndCouplings`PackagePrivate`$di, RGBeta`FieldsAndCouplings`PackagePrivate`$dj]], RGBeta`FieldsAndCouplings`PackagePrivate`dim], 0}, Right, {0, Inactive[SparseArray][RGBeta`PackageScope`$fieldIndexMap[\"All\"] \/@ Join[{$vevSelect}, RGBeta`FieldsAndCouplings`PackagePrivate`couplingInfo[RGBeta`PackageScope`Fields]] -> RGBeta`FieldsAndCouplings`PackagePrivate`couplingInfo[RGBeta`PackageScope`Invariant][RGBeta`FieldsAndCouplings`PackagePrivate`$di, RGBeta`FieldsAndCouplings`PackagePrivate`$dj], RGBeta`FieldsAndCouplings`PackagePrivate`dim]}]]]]; RGBeta`FieldsAndCouplings`PackagePrivate`symmetryFactor = Simplify[(ReplaceAll[(#1 -> 0 & ) \/@ Keys[$fermionMasses]])[RGBeta`PackageScope`RefineGroupStructures[Tr[Activate[RGBeta`FieldsAndCouplings`PackagePrivate`projector[$a, $i, $j]] . RGBeta`PackageScope`Yuk[$a, $i, $j, True] \/. (Matrix | Tensor)[RGBeta`FieldsAndCouplings`PackagePrivate`x_][__] -> RGBeta`FieldsAndCouplings`PackagePrivate`x \/. RGBeta`FieldsAndCouplings`PackagePrivate`coupling -> 1]]]]; If[RGBeta`FieldsAndCouplings`PackagePrivate`symmetryFactor === 0, Message[RGBeta`PackageScope`UpdateProjectors::projection0, RGBeta`FieldsAndCouplings`PackagePrivate`coupling]; KeyDropFrom[$fermionMasses, RGBeta`FieldsAndCouplings`PackagePrivate`coupling]; Return[$Failed]]; RGBeta`FieldsAndCouplings`PackagePrivate`projector = Activate @* (Evaluate[RGBeta`FieldsAndCouplings`PackagePrivate`projector[#1, #2, #3]\/RGBeta`FieldsAndCouplings`PackagePrivate`symmetryFactor] & ); AppendTo[$fermionMasses[RGBeta`FieldsAndCouplings`PackagePrivate`coupling], RGBeta`PackageScope`Projector -> RGBeta`FieldsAndCouplings`PackagePrivate`projector]; , Trilinear, RGBeta`FieldsAndCouplings`PackagePrivate`dim = Length[RGBeta`PackageScope`$fieldIndexMap[\"Scalars\"]]*{1, 1, 1, 1}; RGBeta`FieldsAndCouplings`PackagePrivate`couplingInfo = $trilinears[RGBeta`FieldsAndCouplings`PackagePrivate`coupling]; RGBeta`FieldsAndCouplings`PackagePrivate`projector = Function[{RGBeta`FieldsAndCouplings`PackagePrivate`$da, RGBeta`FieldsAndCouplings`PackagePrivate`$db, RGBeta`FieldsAndCouplings`PackagePrivate`$dc, RGBeta`FieldsAndCouplings`PackagePrivate`$dd}, Evaluate[RGBeta`PackageScope`TStructure[RGBeta`PackageScope`$scalar[RGBeta`FieldsAndCouplings`PackagePrivate`$da], RGBeta`PackageScope`$scalar[RGBeta`FieldsAndCouplings`PackagePrivate`$db], RGBeta`PackageScope`$scalar[RGBeta`FieldsAndCouplings`PackagePrivate`$dc], RGBeta`PackageScope`$scalar[RGBeta`FieldsAndCouplings`PackagePrivate`$dd]][Inactive[SparseArray][RGBeta`PackageScope`$fieldIndexMap[\"Scalars\"] \/@ Join[Bar \/@ RGBeta`FieldsAndCouplings`PackagePrivate`couplingInfo[RGBeta`PackageScope`Fields], {$vevSelect}] -> RGBeta`FieldsAndCouplings`PackagePrivate`GroupInvBar[RGBeta`FieldsAndCouplings`PackagePrivate`couplingInfo[RGBeta`PackageScope`Invariant][RGBeta`FieldsAndCouplings`PackagePrivate`$da, RGBeta`FieldsAndCouplings`PackagePrivate`$db, RGBeta`FieldsAndCouplings`PackagePrivate`$dc]], RGBeta`FieldsAndCouplings`PackagePrivate`dim]]]]; RGBeta`FieldsAndCouplings`PackagePrivate`symmetryFactor = Simplify[(ReplaceAll[(#1 -> 0 & ) \/@ Keys[$trilinears]])[RGBeta`PackageScope`RefineGroupStructures[Activate[RGBeta`FieldsAndCouplings`PackagePrivate`projector[$a, $b, $c, $d]]*RGBeta`PackageScope`Lam[$a, $b, $c, $d, True] \/. (Matrix | Tensor)[RGBeta`FieldsAndCouplings`PackagePrivate`x_][__] -> RGBeta`FieldsAndCouplings`PackagePrivate`x \/. RGBeta`FieldsAndCouplings`PackagePrivate`coupling -> 1]]]; If[RGBeta`FieldsAndCouplings`PackagePrivate`symmetryFactor === 0, Message[RGBeta`PackageScope`UpdateProjectors::projection0, RGBeta`FieldsAndCouplings`PackagePrivate`coupling]; KeyDropFrom[$trilinears, RGBeta`FieldsAndCouplings`PackagePrivate`coupling]; Return[$Failed]]; RGBeta`FieldsAndCouplings`PackagePrivate`projector = Activate @* (Evaluate[RGBeta`FieldsAndCouplings`PackagePrivate`projector[#1, #2, #3, #4]\/RGBeta`FieldsAndCouplings`PackagePrivate`symmetryFactor] & ); AppendTo[$trilinears[RGBeta`FieldsAndCouplings`PackagePrivate`coupling], RGBeta`PackageScope`Projector -> RGBeta`FieldsAndCouplings`PackagePrivate`projector]; , ScalarMass, RGBeta`FieldsAndCouplings`PackagePrivate`dim = Length[RGBeta`PackageScope`$fieldIndexMap[\"Scalars\"]]*{1, 1, 1, 1}; RGBeta`FieldsAndCouplings`PackagePrivate`couplingInfo = $scalarMasses[RGBeta`FieldsAndCouplings`PackagePrivate`coupling]; RGBeta`FieldsAndCouplings`PackagePrivate`projector = Function[{RGBeta`FieldsAndCouplings`PackagePrivate`$da, RGBeta`FieldsAndCouplings`PackagePrivate`$db, RGBeta`FieldsAndCouplings`PackagePrivate`$dc, RGBeta`FieldsAndCouplings`PackagePrivate`$dd}, Evaluate[RGBeta`PackageScope`TStructure[RGBeta`PackageScope`$scalar[RGBeta`FieldsAndCouplings`PackagePrivate`$da], RGBeta`PackageScope`$scalar[RGBeta`FieldsAndCouplings`PackagePrivate`$db], RGBeta`PackageScope`$scalar[RGBeta`FieldsAndCouplings`PackagePrivate`$dc], RGBeta`PackageScope`$scalar[RGBeta`FieldsAndCouplings`PackagePrivate`$dd]][Inactive[SparseArray][RGBeta`PackageScope`$fieldIndexMap[\"Scalars\"] \/@ Join[Bar \/@ RGBeta`FieldsAndCouplings`PackagePrivate`couplingInfo[RGBeta`PackageScope`Fields], {$vevSelect, $vevSelect}] -> RGBeta`FieldsAndCouplings`PackagePrivate`GroupInvBar[RGBeta`FieldsAndCouplings`PackagePrivate`couplingInfo[RGBeta`PackageScope`Invariant][RGBeta`FieldsAndCouplings`PackagePrivate`$da, RGBeta`FieldsAndCouplings`PackagePrivate`$db]], RGBeta`FieldsAndCouplings`PackagePrivate`dim]]]]; RGBeta`FieldsAndCouplings`PackagePrivate`symmetryFactor = Simplify[(ReplaceAll[(#1 -> 0 & ) \/@ Keys[$scalarMasses]])[RGBeta`PackageScope`RefineGroupStructures[Activate[RGBeta`FieldsAndCouplings`PackagePrivate`projector[$a, $b, $c, $d]]*RGBeta`PackageScope`Lam[$a, $b, $c, $d, True] \/. (Matrix | Tensor)[RGBeta`FieldsAndCouplings`PackagePrivate`x_][__] -> RGBeta`FieldsAndCouplings`PackagePrivate`x \/. RGBeta`FieldsAndCouplings`PackagePrivate`coupling -> 1]]]; If[RGBeta`FieldsAndCouplings`PackagePrivate`symmetryFactor === 0, Message[RGBeta`PackageScope`UpdateProjectors::projection0, RGBeta`FieldsAndCouplings`PackagePrivate`coupling]; KeyDropFrom[$scalarMasses, RGBeta`FieldsAndCouplings`PackagePrivate`coupling]; Return[$Failed]]; RGBeta`FieldsAndCouplings`PackagePrivate`projector = Activate @* (Evaluate[RGBeta`FieldsAndCouplings`PackagePrivate`projector[#1, #2, #3, #4]\/RGBeta`FieldsAndCouplings`PackagePrivate`symmetryFactor] & ); AppendTo[$scalarMasses[RGBeta`FieldsAndCouplings`PackagePrivate`coupling], RGBeta`PackageScope`Projector -> RGBeta`FieldsAndCouplings`PackagePrivate`projector]; ]; ]}, {}}",
+			"full_definition_length":14373,
+			"truncated":false
+		},
+		{
+			"symbol":"RGBeta`PackageScope`UpsilonQuarticTensors",
+			"definition_prefix_inputform":"{{}, {HoldPattern[RGBeta`PackageScope`UpsilonQuarticTensors[RGBeta`TensorCalculations`PackagePrivate`coupling_Symbol, RGBeta`TensorCalculations`PackagePrivate`loop_Integer]] :> Module[{RGBeta`TensorCalculations`PackagePrivate`diagrams = {0, 0, 3}[[RGBeta`TensorCalculations`PackagePrivate`loop]], RGBeta`TensorCalculations`PackagePrivate`n = 0}, Monitor[Sum[Ucoef[2, RGBeta`TensorCalculations`PackagePrivate`loop, RGBeta`TensorCalculations`PackagePrivate`n]*RGBeta`PackageScope`RefineGroupStructures[RGBeta`PackageScope`Ttimes[$quartics[RGBeta`TensorCalculations`PackagePrivate`coupling, RGBeta`PackageScope`Projector][$a, $c, $d, RGBeta`TensorCalculations`PackagePrivate`$e], RGBeta`PackageScope`TsSym4[$a, $c, $d, RGBeta`TensorCalculations`PackagePrivate`$e][Expand[RGBeta`TensorCalculations`PackagePrivate`UpsilonTensor[2, RGBeta`TensorCalculations`PackagePrivate`loop, RGBeta`TensorCalculations`PackagePrivate`n]*RGBeta`PackageScope`Lam[$b, $c, $d, RGBeta`TensorCalculations`PackagePrivate`$e]]]]], {RGBeta`TensorCalculations`PackagePrivate`n, RGBeta`TensorCalculations`PackagePrivate`diagrams}], StringForm[\"Evaluating term `` \/ ``\", RGBeta`TensorCalculations`PackagePrivate`n, RGBeta`TensorCalculations`PackagePrivate`diagrams]]]}, {}}",
+			"full_definition_length":1241,
+			"truncated":false
+		},
+		{
+			"symbol":"RGBeta`PackageScope`$quarticCoefficients",
+			"definition_prefix_inputform":"unavailable",
+			"full_definition_length":11,
+			"truncated":false
+		},
+		{
+			"symbol":"RGBeta`PackageScope`$scalarContraction",
+			"definition_prefix_inputform":"unavailable",
+			"full_definition_length":11,
+			"truncated":false
+		},
+		{
+			"symbol":"RGBeta`TensorCalculations`PackagePrivate`FermionFieldProjector",
+			"definition_prefix_inputform":"{{}, {HoldPattern[RGBeta`TensorCalculations`PackagePrivate`FermionFieldProjector[{RGBeta`TensorCalculations`PackagePrivate`psi1_, RGBeta`TensorCalculations`PackagePrivate`psi2_}, RGBeta`TensorCalculations`PackagePrivate`$di_, RGBeta`TensorCalculations`PackagePrivate`$dj_]] :> Module[{RGBeta`TensorCalculations`PackagePrivate`dim}, RGBeta`TensorCalculations`PackagePrivate`dim = Length[RGBeta`PackageScope`$fieldIndexMap[\"Fermions\"]]; DiagonalMatrix[{RGBeta`PackageScope`TStructure[RGBeta`PackageScope`$fermion[RGBeta`TensorCalculations`PackagePrivate`$di], RGBeta`PackageScope`$fermion[RGBeta`TensorCalculations`PackagePrivate`$dj]][SparseArray[RGBeta`PackageScope`$fieldIndexMap[\"Fermions\"] \/@ {RGBeta`TensorCalculations`PackagePrivate`psi1, RGBeta`TensorCalculations`PackagePrivate`psi2} -> Product[del[RGBeta`TensorCalculations`PackagePrivate`rep, RGBeta`TensorCalculations`PackagePrivate`$di, RGBeta`TensorCalculations`PackagePrivate`$dj]\/Dim[RGBeta`TensorCalculations`PackagePrivate`rep], {RGBeta`TensorCalculations`PackagePrivate`rep, $fermions[RGBeta`TensorCalculations`PackagePrivate`psi1, GaugeRep]}], RGBeta`TensorCalculations`PackagePrivate`dim]], 0}]]}, {}}",
+			"full_definition_length":1170,
+			"truncated":false
+		},
+		{
+			"symbol":"RGBeta`TensorCalculations`PackagePrivate`ScalarFieldProjector",
+			"definition_prefix_inputform":"{{}, {HoldPattern[RGBeta`TensorCalculations`PackagePrivate`ScalarFieldProjector[{RGBeta`TensorCalculations`PackagePrivate`phi1_, RGBeta`TensorCalculations`PackagePrivate`phi2_}, RGBeta`TensorCalculations`PackagePrivate`$da_, RGBeta`TensorCalculations`PackagePrivate`$db_]] :> Module[{RGBeta`TensorCalculations`PackagePrivate`dim}, RGBeta`TensorCalculations`PackagePrivate`dim = Length[RGBeta`PackageScope`$fieldIndexMap[\"Scalars\"]]; RGBeta`PackageScope`TStructure[RGBeta`PackageScope`$scalar[RGBeta`TensorCalculations`PackagePrivate`$da], RGBeta`PackageScope`$scalar[RGBeta`TensorCalculations`PackagePrivate`$db]][SparseArray[RGBeta`PackageScope`$fieldIndexMap[\"Scalars\"] \/@ {Bar[RGBeta`TensorCalculations`PackagePrivate`phi1], RGBeta`TensorCalculations`PackagePrivate`phi2} -> Product[del[RGBeta`TensorCalculations`PackagePrivate`rep, RGBeta`TensorCalculations`PackagePrivate`$da, RGBeta`TensorCalculations`PackagePrivate`$db]\/Dim[RGBeta`TensorCalculations`PackagePrivate`rep], {RGBeta`TensorCalculations`PackagePrivate`rep, $scalars[RGBeta`TensorCalculations`PackagePrivate`phi1, GaugeRep]}]\/Product[If[$scalars[RGBeta`TensorCalculations`PackagePrivate`scal, SelfConjugate], 1, Sqrt[2]], {RGBeta`TensorCalculations`PackagePrivate`scal, {RGBeta`TensorCalculations`PackagePrivate`phi1, RGBeta`TensorCalculations`PackagePrivate`phi2}}], RGBeta`TensorCalculations`PackagePrivate`dim]]]}, {}}",
+			"full_definition_length":1389,
+			"truncated":false
+		}
+	],
+	"native_group_reductions_certified":false,
+	"quartic_projection_certified":false,
+	"physical_matchete_coupling_map_certified":false,
+	"native_to_reference_axes_certified":false,
+	"source_modified":false
+}

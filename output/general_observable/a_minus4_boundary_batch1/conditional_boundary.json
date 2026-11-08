@@ -1,0 +1,1095 @@
+{
+  "format": "t3-a-minus4-fermion-first-conditional-wilson-contract-v1",
+  "model": "A_-4",
+  "required_eft_order": "UV -> integrate out ALL F -> EFT1(SM+S1+S2) -> integrate out S1 and S2 simultaneously -> SMEFT",
+  "field_representations": {
+    "F": {
+      "SU2_dimension": 2,
+      "Y": -1.5,
+      "Dirac": true,
+      "mass_eigenstates": 3
+    },
+    "S1": {
+      "SU2_dimension": 1,
+      "Y": -2.0,
+      "complex_scalar": true
+    },
+    "S2": {
+      "SU2_dimension": 3,
+      "Y": -1.0,
+      "complex_scalar": true
+    }
+  },
+  "status": "CONDITIONALLY_RECONSTRUCTED_PHYSICAL_SPINOR_NORMALIZATION_BLOCKED",
+  "physical_certification": false,
+  "git_revision": "12128de602ac6bf109dbad50dbac8446ed629434",
+  "sources": {
+    "native_seed": {
+      "relative_path": "output\\general_observable\\fermion_first_all16_v1\\A_m4\\data\\eft1_after_F_wilson_seed.json",
+      "sha256": "ffd6c04962d7b260a890c3306a4ce9522edd36bac0867a200e2fd3d3505e64a5"
+    },
+    "native_full_tree": {
+      "relative_path": "output\\general_observable\\fermion_first_all16_v1\\A_m4\\data\\eft1_after_F_tree_inputform.txt",
+      "sha256": "e258409538dc36287821993ff90861b0ac8216fbddde7b82491f063b1c1703bc"
+    },
+    "source_flavour": {
+      "relative_path": "output\\general_observable\\general_wilson_boundary_v1\\A_m4\\wilson_boundary.json",
+      "sha256": "c56fb3e5a4af61c9929ec0faf77f89d98cd9fb07edce53c62b97e45822268c44"
+    },
+    "ordered_tensor": {
+      "relative_path": "output\\general_observable\\ordered_wilson_tensor_v4\\A_m4\\ordered_tensor.json",
+      "sha256": "17e0b84a8aba16fbd53211af062f980a0ff1b3487539768f53e35d7d3d7dd15a"
+    },
+    "polynomial": {
+      "relative_path": "output\\general_observable\\general_wilson_polynomial_batch_v2\\A_m4\\polynomial_bridge.json",
+      "sha256": "451ba9fcb076b1ca8116bf167e89ab57c2d9ee4ceeb7e068b6008acb846f0245"
+    },
+    "running": {
+      "relative_path": "output\\general_observable\\all16_v1\\A_m4\\running.json",
+      "sha256": "7f16660186a6f208a419cbc53b9e6641e9b5fd71277fc40e4a03ef6610bc4f92"
+    }
+  },
+  "native_inventory_checks": {
+    "native_full_tree_GammaCC_term_count": 2,
+    "PL_term_index": 2,
+    "PR_term_index": 1,
+    "holomorphic_source": "PL: conj(y1[p,r])*conj(y2[q,r])/M[r]",
+    "conjugate_source": "PR: y1[p,r]*y2[q,r]/M[r]",
+    "source_lepton_order": "PL left l[q] transposed; right l[p]",
+    "source_scalar_order": "PL S1_bar * S2; PR S2_bar * S1",
+    "full_tree_inventory_checked": true
+  },
+  "native_CG_checks": {
+    "cg_symmetric_pair_residual": 0.0,
+    "cg_gram_residual": 3.8459253727671276e-16,
+    "native_triplet_rank": 3,
+    "native_triplet_axes_equated_to_RGE_generators": false
+  },
+  "native_PR_formal_conjugate_check": {
+    "PL_PR_scalar_CG_flavour_conjugate_components_checked": 216,
+    "PR_formal_hc_max_abs_residual_gev_inv": 0.0,
+    "PR_native_spinor_HC_phase_certified": false
+  },
+  "numeric_flavour_checks": {
+    "UV_evolved_3x3_flavour_recomputed": true,
+    "flavour_matrix_max_abs_residual_gev_inv": 0.0,
+    "heavy_flavour_mass_basis_residual": 0.0,
+    "three_mass_eigenstates_gev": [
+      166140.08943527873,
+      199368.10732233452,
+      221520.11924704042
+    ],
+    "mu_F_gev": 100000.0
+  },
+  "independent_component_checks": {
+    "native_ordered_component_count": 24,
+    "native_ordered_matrix_max_abs_residual_gev_inv": 0.0
+  },
+  "independent_polynomial_checks": {
+    "native_independent_coordinate_count": 60,
+    "polynomial_max_abs_residual_gev_inv": 0.0,
+    "polynomial_max_relative_residual": 0.0
+  },
+  "polynomial_reconstruction_max_abs_residual": 0.0,
+  "polynomial_reconstruction_relative_residual": 0.0,
+  "basis_contract": {
+    "fermions": [
+      {
+        "index": 1,
+        "field": "L",
+        "generation": 1,
+        "component": 1,
+        "hypercharge": -0.5
+      },
+      {
+        "index": 2,
+        "field": "L",
+        "generation": 1,
+        "component": 2,
+        "hypercharge": -0.5
+      },
+      {
+        "index": 3,
+        "field": "L",
+        "generation": 2,
+        "component": 1,
+        "hypercharge": -0.5
+      },
+      {
+        "index": 4,
+        "field": "L",
+        "generation": 2,
+        "component": 2,
+        "hypercharge": -0.5
+      },
+      {
+        "index": 5,
+        "field": "L",
+        "generation": 3,
+        "component": 1,
+        "hypercharge": -0.5
+      },
+      {
+        "index": 6,
+        "field": "L",
+        "generation": 3,
+        "component": 2,
+        "hypercharge": -0.5
+      },
+      {
+        "index": 7,
+        "field": "eC",
+        "generation": 1,
+        "component": 1,
+        "hypercharge": 1.0
+      },
+      {
+        "index": 8,
+        "field": "eC",
+        "generation": 2,
+        "component": 1,
+        "hypercharge": 1.0
+      },
+      {
+        "index": 9,
+        "field": "eC",
+        "generation": 3,
+        "component": 1,
+        "hypercharge": 1.0
+      },
+      {
+        "index": 10,
+        "field": "Q1",
+        "generation": 1,
+        "component": 1,
+        "hypercharge": 0.16666666666666666
+      },
+      {
+        "index": 11,
+        "field": "Q1",
+        "generation": 1,
+        "component": 2,
+        "hypercharge": 0.16666666666666666
+      },
+      {
+        "index": 12,
+        "field": "Q1",
+        "generation": 2,
+        "component": 1,
+        "hypercharge": 0.16666666666666666
+      },
+      {
+        "index": 13,
+        "field": "Q1",
+        "generation": 2,
+        "component": 2,
+        "hypercharge": 0.16666666666666666
+      },
+      {
+        "index": 14,
+        "field": "Q1",
+        "generation": 3,
+        "component": 1,
+        "hypercharge": 0.16666666666666666
+      },
+      {
+        "index": 15,
+        "field": "Q1",
+        "generation": 3,
+        "component": 2,
+        "hypercharge": 0.16666666666666666
+      },
+      {
+        "index": 16,
+        "field": "uC1",
+        "generation": 1,
+        "component": 1,
+        "hypercharge": -0.6666666666666666
+      },
+      {
+        "index": 17,
+        "field": "uC1",
+        "generation": 2,
+        "component": 1,
+        "hypercharge": -0.6666666666666666
+      },
+      {
+        "index": 18,
+        "field": "uC1",
+        "generation": 3,
+        "component": 1,
+        "hypercharge": -0.6666666666666666
+      },
+      {
+        "index": 19,
+        "field": "dC1",
+        "generation": 1,
+        "component": 1,
+        "hypercharge": 0.3333333333333333
+      },
+      {
+        "index": 20,
+        "field": "dC1",
+        "generation": 2,
+        "component": 1,
+        "hypercharge": 0.3333333333333333
+      },
+      {
+        "index": 21,
+        "field": "dC1",
+        "generation": 3,
+        "component": 1,
+        "hypercharge": 0.3333333333333333
+      },
+      {
+        "index": 22,
+        "field": "Q2",
+        "generation": 1,
+        "component": 1,
+        "hypercharge": 0.16666666666666666
+      },
+      {
+        "index": 23,
+        "field": "Q2",
+        "generation": 1,
+        "component": 2,
+        "hypercharge": 0.16666666666666666
+      },
+      {
+        "index": 24,
+        "field": "Q2",
+        "generation": 2,
+        "component": 1,
+        "hypercharge": 0.16666666666666666
+      },
+      {
+        "index": 25,
+        "field": "Q2",
+        "generation": 2,
+        "component": 2,
+        "hypercharge": 0.16666666666666666
+      },
+      {
+        "index": 26,
+        "field": "Q2",
+        "generation": 3,
+        "component": 1,
+        "hypercharge": 0.16666666666666666
+      },
+      {
+        "index": 27,
+        "field": "Q2",
+        "generation": 3,
+        "component": 2,
+        "hypercharge": 0.16666666666666666
+      },
+      {
+        "index": 28,
+        "field": "uC2",
+        "generation": 1,
+        "component": 1,
+        "hypercharge": -0.6666666666666666
+      },
+      {
+        "index": 29,
+        "field": "uC2",
+        "generation": 2,
+        "component": 1,
+        "hypercharge": -0.6666666666666666
+      },
+      {
+        "index": 30,
+        "field": "uC2",
+        "generation": 3,
+        "component": 1,
+        "hypercharge": -0.6666666666666666
+      },
+      {
+        "index": 31,
+        "field": "dC2",
+        "generation": 1,
+        "component": 1,
+        "hypercharge": 0.3333333333333333
+      },
+      {
+        "index": 32,
+        "field": "dC2",
+        "generation": 2,
+        "component": 1,
+        "hypercharge": 0.3333333333333333
+      },
+      {
+        "index": 33,
+        "field": "dC2",
+        "generation": 3,
+        "component": 1,
+        "hypercharge": 0.3333333333333333
+      },
+      {
+        "index": 34,
+        "field": "Q3",
+        "generation": 1,
+        "component": 1,
+        "hypercharge": 0.16666666666666666
+      },
+      {
+        "index": 35,
+        "field": "Q3",
+        "generation": 1,
+        "component": 2,
+        "hypercharge": 0.16666666666666666
+      },
+      {
+        "index": 36,
+        "field": "Q3",
+        "generation": 2,
+        "component": 1,
+        "hypercharge": 0.16666666666666666
+      },
+      {
+        "index": 37,
+        "field": "Q3",
+        "generation": 2,
+        "component": 2,
+        "hypercharge": 0.16666666666666666
+      },
+      {
+        "index": 38,
+        "field": "Q3",
+        "generation": 3,
+        "component": 1,
+        "hypercharge": 0.16666666666666666
+      },
+      {
+        "index": 39,
+        "field": "Q3",
+        "generation": 3,
+        "component": 2,
+        "hypercharge": 0.16666666666666666
+      },
+      {
+        "index": 40,
+        "field": "uC3",
+        "generation": 1,
+        "component": 1,
+        "hypercharge": -0.6666666666666666
+      },
+      {
+        "index": 41,
+        "field": "uC3",
+        "generation": 2,
+        "component": 1,
+        "hypercharge": -0.6666666666666666
+      },
+      {
+        "index": 42,
+        "field": "uC3",
+        "generation": 3,
+        "component": 1,
+        "hypercharge": -0.6666666666666666
+      },
+      {
+        "index": 43,
+        "field": "dC3",
+        "generation": 1,
+        "component": 1,
+        "hypercharge": 0.3333333333333333
+      },
+      {
+        "index": 44,
+        "field": "dC3",
+        "generation": 2,
+        "component": 1,
+        "hypercharge": 0.3333333333333333
+      },
+      {
+        "index": 45,
+        "field": "dC3",
+        "generation": 3,
+        "component": 1,
+        "hypercharge": 0.3333333333333333
+      }
+    ],
+    "real_scalars": [
+      {
+        "index": 1,
+        "field": "H",
+        "component": 1,
+        "part": "Re",
+        "hypercharge": 0.5
+      },
+      {
+        "index": 2,
+        "field": "H",
+        "component": 1,
+        "part": "Im",
+        "hypercharge": 0.5
+      },
+      {
+        "index": 3,
+        "field": "H",
+        "component": 2,
+        "part": "Re",
+        "hypercharge": 0.5
+      },
+      {
+        "index": 4,
+        "field": "H",
+        "component": 2,
+        "part": "Im",
+        "hypercharge": 0.5
+      },
+      {
+        "index": 5,
+        "field": "S1",
+        "component": 1,
+        "part": "Re",
+        "hypercharge": -2.0
+      },
+      {
+        "index": 6,
+        "field": "S1",
+        "component": 1,
+        "part": "Im",
+        "hypercharge": -2.0
+      },
+      {
+        "index": 7,
+        "field": "S2",
+        "component": 1,
+        "part": "Re",
+        "hypercharge": -1.0
+      },
+      {
+        "index": 8,
+        "field": "S2",
+        "component": 1,
+        "part": "Im",
+        "hypercharge": -1.0
+      },
+      {
+        "index": 9,
+        "field": "S2",
+        "component": 2,
+        "part": "Re",
+        "hypercharge": -1.0
+      },
+      {
+        "index": 10,
+        "field": "S2",
+        "component": 2,
+        "part": "Im",
+        "hypercharge": -1.0
+      },
+      {
+        "index": 11,
+        "field": "S2",
+        "component": 3,
+        "part": "Re",
+        "hypercharge": -1.0
+      },
+      {
+        "index": 12,
+        "field": "S2",
+        "component": 3,
+        "part": "Im",
+        "hypercharge": -1.0
+      }
+    ],
+    "fermion_dimension": 45,
+    "scalar_dimension": 12,
+    "full_tensor_shape": [
+      45,
+      45,
+      12,
+      12
+    ],
+    "fermion_order_status": "PROPOSED three-generation extension of source build_sm_eft one-generation species order; not production RGE basis verified",
+    "scalar_order_status": "VERIFIED from GeneralT3OrderedTensor.scalar_basis and ScalarBasis.t3",
+    "zero_boundary_outside": "i,j in L components 1..6, (a in 5..6 and b in 7..12) or scalar-swapped; all other entries zero",
+    "nonzero_entries_format": "independent i<=j,a<=b; reconstruct each distinct fermion/scalar orbit with equal coefficient"
+  },
+  "convention": {
+    "lagrangian": "L5 = sum_ijab C_ijab psi_i^alpha psi_j_alpha phi_a phi_b + h.c.; no 1/2 or 1/4 in displayed sum",
+    "Weyl_epsilon_12": "+1; psi_i psi_j = psi_j psi_i after Grassmann contraction",
+    "fermion_symmetry": "C_ijab=C_jiab (NOT Hermitian conjugation)",
+    "scalar_symmetry": "C_ijab=C_ijba",
+    "coefficient_reconstruction": "sum over all i,j,a,b; each orbit member assigned same independent coefficient; orbit 1,2,4",
+    "native_selected_sector": "PL from NCM[Transp[L_q],GammaCC PL,L_p], PR kept only for conjugate consistency",
+    "native_scalar_complex_split": "S1*=(phi5-i phi6)/sqrt(2); S2[c]=(phi[7+2(c-1)]+i phi[8+2(c-1)])/sqrt(2)",
+    "native_to_Weyl_factor": null,
+    "native_to_Weyl_factor_symbol": "rho_GammaCC (complex sign/phase/prefactor unmeasured)",
+    "physical_tensor_relation": "C_physical = rho_GammaCC * C_formal conditional on matching the RGE field/generator axes",
+    "unphysical_factor_one_assumed": false
+  },
+  "independent_conditional_tensor_entries": [
+    {
+      "i": 1,
+      "j": 1,
+      "a": 5,
+      "b": 7,
+      "coefficient_real_if_rho_1": 2.1535596891394695e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 1,
+      "j": 1,
+      "a": 5,
+      "b": 8,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": 2.1535596891394695e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 1,
+      "j": 1,
+      "a": 5,
+      "b": 11,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": 2.1535596891394695e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 1,
+      "j": 1,
+      "a": 5,
+      "b": 12,
+      "coefficient_real_if_rho_1": -2.1535596891394695e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 1,
+      "j": 1,
+      "a": 6,
+      "b": 7,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": -2.1535596891394695e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 1,
+      "j": 1,
+      "a": 6,
+      "b": 8,
+      "coefficient_real_if_rho_1": 2.1535596891394695e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 1,
+      "j": 1,
+      "a": 6,
+      "b": 11,
+      "coefficient_real_if_rho_1": 2.1535596891394695e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 1,
+      "j": 1,
+      "a": 6,
+      "b": 12,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": 2.1535596891394695e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 1,
+      "j": 2,
+      "a": 5,
+      "b": 9,
+      "coefficient_real_if_rho_1": -2.1535596891394695e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 1,
+      "j": 2,
+      "a": 5,
+      "b": 10,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": -2.1535596891394695e-13,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 1,
+      "j": 2,
+      "a": 6,
+      "b": 9,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": 2.1535596891394695e-13,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 1,
+      "j": 2,
+      "a": 6,
+      "b": 10,
+      "coefficient_real_if_rho_1": -2.1535596891394695e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 2,
+      "j": 2,
+      "a": 5,
+      "b": 7,
+      "coefficient_real_if_rho_1": -2.1535596891394695e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 2,
+      "j": 2,
+      "a": 5,
+      "b": 8,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": -2.1535596891394695e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 2,
+      "j": 2,
+      "a": 5,
+      "b": 11,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": 2.1535596891394695e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 2,
+      "j": 2,
+      "a": 5,
+      "b": 12,
+      "coefficient_real_if_rho_1": -2.1535596891394695e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 2,
+      "j": 2,
+      "a": 6,
+      "b": 7,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": 2.1535596891394695e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 2,
+      "j": 2,
+      "a": 6,
+      "b": 8,
+      "coefficient_real_if_rho_1": -2.1535596891394695e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 2,
+      "j": 2,
+      "a": 6,
+      "b": 11,
+      "coefficient_real_if_rho_1": 2.1535596891394695e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 2,
+      "j": 2,
+      "a": 6,
+      "b": 12,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": 2.1535596891394695e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 3,
+      "j": 3,
+      "a": 5,
+      "b": 7,
+      "coefficient_real_if_rho_1": 1.7946330551193168e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 3,
+      "j": 3,
+      "a": 5,
+      "b": 8,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": 1.7946330551193168e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 3,
+      "j": 3,
+      "a": 5,
+      "b": 11,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": 1.7946330551193168e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 3,
+      "j": 3,
+      "a": 5,
+      "b": 12,
+      "coefficient_real_if_rho_1": -1.7946330551193168e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 3,
+      "j": 3,
+      "a": 6,
+      "b": 7,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": -1.7946330551193168e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 3,
+      "j": 3,
+      "a": 6,
+      "b": 8,
+      "coefficient_real_if_rho_1": 1.7946330551193168e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 3,
+      "j": 3,
+      "a": 6,
+      "b": 11,
+      "coefficient_real_if_rho_1": 1.7946330551193168e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 3,
+      "j": 3,
+      "a": 6,
+      "b": 12,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": 1.7946330551193168e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 3,
+      "j": 4,
+      "a": 5,
+      "b": 9,
+      "coefficient_real_if_rho_1": -1.7946330551193168e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 3,
+      "j": 4,
+      "a": 5,
+      "b": 10,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": -1.7946330551193168e-13,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 3,
+      "j": 4,
+      "a": 6,
+      "b": 9,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": 1.7946330551193168e-13,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 3,
+      "j": 4,
+      "a": 6,
+      "b": 10,
+      "coefficient_real_if_rho_1": -1.7946330551193168e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 4,
+      "j": 4,
+      "a": 5,
+      "b": 7,
+      "coefficient_real_if_rho_1": -1.7946330551193168e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 4,
+      "j": 4,
+      "a": 5,
+      "b": 8,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": -1.7946330551193168e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 4,
+      "j": 4,
+      "a": 5,
+      "b": 11,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": 1.7946330551193168e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 4,
+      "j": 4,
+      "a": 5,
+      "b": 12,
+      "coefficient_real_if_rho_1": -1.7946330551193168e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 4,
+      "j": 4,
+      "a": 6,
+      "b": 7,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": 1.7946330551193168e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 4,
+      "j": 4,
+      "a": 6,
+      "b": 8,
+      "coefficient_real_if_rho_1": -1.7946330551193168e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 4,
+      "j": 4,
+      "a": 6,
+      "b": 11,
+      "coefficient_real_if_rho_1": 1.7946330551193168e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 4,
+      "j": 4,
+      "a": 6,
+      "b": 12,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": 1.7946330551193168e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 5,
+      "j": 5,
+      "a": 5,
+      "b": 7,
+      "coefficient_real_if_rho_1": 1.615164975869931e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 5,
+      "j": 5,
+      "a": 5,
+      "b": 8,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": 1.615164975869931e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 5,
+      "j": 5,
+      "a": 5,
+      "b": 11,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": 1.615164975869931e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 5,
+      "j": 5,
+      "a": 5,
+      "b": 12,
+      "coefficient_real_if_rho_1": -1.615164975869931e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 5,
+      "j": 5,
+      "a": 6,
+      "b": 7,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": -1.615164975869931e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 5,
+      "j": 5,
+      "a": 6,
+      "b": 8,
+      "coefficient_real_if_rho_1": 1.615164975869931e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 5,
+      "j": 5,
+      "a": 6,
+      "b": 11,
+      "coefficient_real_if_rho_1": 1.615164975869931e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 5,
+      "j": 5,
+      "a": 6,
+      "b": 12,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": 1.615164975869931e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 5,
+      "j": 6,
+      "a": 5,
+      "b": 9,
+      "coefficient_real_if_rho_1": -1.615164975869931e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 5,
+      "j": 6,
+      "a": 5,
+      "b": 10,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": -1.615164975869931e-13,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 5,
+      "j": 6,
+      "a": 6,
+      "b": 9,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": 1.615164975869931e-13,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 5,
+      "j": 6,
+      "a": 6,
+      "b": 10,
+      "coefficient_real_if_rho_1": -1.615164975869931e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 6,
+      "j": 6,
+      "a": 5,
+      "b": 7,
+      "coefficient_real_if_rho_1": -1.615164975869931e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 6,
+      "j": 6,
+      "a": 5,
+      "b": 8,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": -1.615164975869931e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 6,
+      "j": 6,
+      "a": 5,
+      "b": 11,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": 1.615164975869931e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 6,
+      "j": 6,
+      "a": 5,
+      "b": 12,
+      "coefficient_real_if_rho_1": -1.615164975869931e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 6,
+      "j": 6,
+      "a": 6,
+      "b": 7,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": 1.615164975869931e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 6,
+      "j": 6,
+      "a": 6,
+      "b": 8,
+      "coefficient_real_if_rho_1": -1.615164975869931e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 6,
+      "j": 6,
+      "a": 6,
+      "b": 11,
+      "coefficient_real_if_rho_1": 1.615164975869931e-13,
+      "coefficient_imag_if_rho_1": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 6,
+      "j": 6,
+      "a": 6,
+      "b": 12,
+      "coefficient_real_if_rho_1": 0.0,
+      "coefficient_imag_if_rho_1": 1.615164975869931e-13,
+      "distinct_orbit_size": 2
+    }
+  ],
+  "physical_C_ijab_at_MF": null,
+  "checks_passed": [
+    "native F-only tree exactly two GammaCC sectors",
+    "native PL/PR Yukawa and scalar conjugation structure",
+    "native CG support/complex phases/orthogonality",
+    "PR is the scalar/CG/flavour complex conjugate of PL (spinor phase not established)",
+    "three-flavour numeric factorization from evolved UV state",
+    "independent native-to-real scalar ordered reconstruction",
+    "formal symmetric polynomial source equality"
+  ],
+  "checks_not_passed": [
+    "installed native Matchete GammaCC PL -> declared Weyl epsilon absolute sign/phase",
+    "connected UV 4-fermion two-scalar amplitude sign and absolute coefficient",
+    "native Matchete SU2 real triplet generator axes -> master RGE generator axes",
+    "actual three-generation master fermion constructor",
+    "physical normalization of C_ijab in master RGE convention"
+  ],
+  "native_probe_required": {
+    "minimal_action": "In a fresh Matchete kernel, declare the exact A(-4) F Dirac mass and both Yukawa vertices; integrate only F at tree level; evaluate one nonzero PL component between two independent anticommuting external Weyl spinors with explicitly declared C=i gamma^2 gamma^0 and epsilon12=+1. Compare UV exchange and matched contact amplitudes, including the phase, overall sign, normalization, p/q assignment and all LSZ/identical-leg factors.",
+    "independent_cross_check": "Repeat with C inverse and with both spinor labels exchanged; verify PR is Hermitian conjugate of PL and measure native SU2 triplet-generator basis matrices.",
+    "required_numeric_output": [
+      "UV four-point coefficient (Re,Im) in fixed convention",
+      "Matchete matched coefficient (Re,Im) in same convention",
+      "GammaCC concrete 4x4 matrix",
+      "master Weyl epsilon and explicit spinor components",
+      "native and master SU2 generators in same component basis"
+    ]
+  }
+}

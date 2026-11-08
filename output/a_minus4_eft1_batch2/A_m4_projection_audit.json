@@ -1,0 +1,904 @@
+{
+  "model": "A_-4",
+  "format": "a-m4-global-rgbeta-quartic-projection-audit-v1",
+  "status": "ProjectedScalarPolynomialsStillDisagree",
+  "native_global_projection_source_sha256": {
+    "RGE/running/rgbeta/RunGeneralT3RGBeta.wl": "af0154d5d4aa0f57ae8fd367df70df4cb48f8671a74e233be12a19299d98b91d",
+    "RGE/running/rgbeta/T3RGBetaModel.wl": "a58c79f18b2abdf9d476588552dfa52e2f131f322094e5b72d1198162aa20abc",
+    "RGE/general/generated/A_-4_extra_quartics.wl": "c413f91e7ba192d59490c94e5063870954159c20104660fee8c963c12f2aabd3"
+  },
+  "old_individual_beta_export_sha256": "3a426ffacde1c821ad91b48b8c288da3b36531f60078a58e5bc186a3227740fa",
+  "new_global_beta_export_sha256": "f8d42cbe00b6fc6bc60c25868970076b6d9796b08e555a0fe918f96d565aa7b6",
+  "inventory": {
+    "quartic_symbols": [
+      "lambda12",
+      "lambdaH",
+      "lambdaH1",
+      "lambdaH2",
+      "lambdaH2Adj",
+      "lambdaS1",
+      "lambdaS2",
+      "lambdaS2Adj",
+      "lambdaT3"
+    ],
+    "nonquartic_symbols_unchanged": [
+      "g2",
+      "g3",
+      "gY",
+      "mS1Sq",
+      "mS2Sq",
+      "yd",
+      "ye",
+      "yu"
+    ],
+    "changed_quartic_expressions": [
+      "lambdaS2",
+      "lambdaS2Adj"
+    ]
+  },
+  "scalar": {
+    "test": "all 10 real-coupling squares and 45 pair cross terms",
+    "scalar_quadratic_probe_count": 55,
+    "maximum_reference_projection_closure_relative": 3.985011241656643e-16,
+    "failures": [
+      {
+        "nonzero_unit_couplings": [
+          "lambdaS2Adj"
+        ],
+        "mismatched_betas": [
+          "lambdaS2",
+          "lambdaS2Adj"
+        ],
+        "closure_relative": 2.8562035850853197e-16,
+        "components": {
+          "lambdaS2": {
+            "reference_scalar_loop": 8.000000000000002,
+            "native_rgbeta_scalar_loop": 16.0,
+            "absolute_difference": 7.999999999999998,
+            "relative_difference": 0.4999999999999999
+          },
+          "lambdaS2Adj": {
+            "reference_scalar_loop": 6.0000000000000036,
+            "native_rgbeta_scalar_loop": 20.0,
+            "absolute_difference": 13.999999999999996,
+            "relative_difference": 0.6999999999999998
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambdaH2Adj"
+        ],
+        "mismatched_betas": [
+          "lambdaH",
+          "lambdaS2Adj",
+          "lambdaH2"
+        ],
+        "closure_relative": 2.611432046573496e-16,
+        "components": {
+          "lambdaH": {
+            "reference_scalar_loop": 1.0,
+            "native_rgbeta_scalar_loop": 3.0,
+            "absolute_difference": 2.0,
+            "relative_difference": 0.6666666666666666
+          },
+          "lambdaS2Adj": {
+            "reference_scalar_loop": 1.0000000000000004,
+            "native_rgbeta_scalar_loop": 3.0,
+            "absolute_difference": 1.9999999999999996,
+            "relative_difference": 0.6666666666666665
+          },
+          "lambdaH2": {
+            "reference_scalar_loop": 2.0000000000000004,
+            "native_rgbeta_scalar_loop": 6.0,
+            "absolute_difference": 3.9999999999999996,
+            "relative_difference": 0.6666666666666666
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambdaT3.real"
+        ],
+        "mismatched_betas": [
+          "lambdaH2Adj"
+        ],
+        "closure_relative": 2.377874209075893e-16,
+        "components": {
+          "lambdaH2Adj": {
+            "reference_scalar_loop": 8.0,
+            "native_rgbeta_scalar_loop": 2.6666666666666665,
+            "absolute_difference": 5.333333333333334,
+            "relative_difference": 0.6666666666666667
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambdaT3.imag"
+        ],
+        "mismatched_betas": [
+          "lambdaH2Adj"
+        ],
+        "closure_relative": 2.377874209075893e-16,
+        "components": {
+          "lambdaH2Adj": {
+            "reference_scalar_loop": 8.0,
+            "native_rgbeta_scalar_loop": 2.6666666666666665,
+            "absolute_difference": 5.333333333333334,
+            "relative_difference": 0.6666666666666667
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambdaH",
+          "lambdaS2Adj"
+        ],
+        "mismatched_betas": [
+          "lambdaS2",
+          "lambdaS2Adj"
+        ],
+        "closure_relative": 2.5711221513277347e-16,
+        "components": {
+          "lambdaS2": {
+            "reference_scalar_loop": 8.000000000000002,
+            "native_rgbeta_scalar_loop": 16.0,
+            "absolute_difference": 7.999999999999998,
+            "relative_difference": 0.4999999999999999
+          },
+          "lambdaS2Adj": {
+            "reference_scalar_loop": 6.0000000000000036,
+            "native_rgbeta_scalar_loop": 20.0,
+            "absolute_difference": 13.999999999999996,
+            "relative_difference": 0.6999999999999998
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambdaH",
+          "lambdaH2Adj"
+        ],
+        "mismatched_betas": [
+          "lambdaH",
+          "lambdaS2Adj",
+          "lambdaH2"
+        ],
+        "closure_relative": 3.8247263017398815e-16,
+        "components": {
+          "lambdaH": {
+            "reference_scalar_loop": 12.999999999999995,
+            "native_rgbeta_scalar_loop": 15.0,
+            "absolute_difference": 2.0000000000000053,
+            "relative_difference": 0.1333333333333337
+          },
+          "lambdaS2Adj": {
+            "reference_scalar_loop": 1.0000000000000004,
+            "native_rgbeta_scalar_loop": 3.0,
+            "absolute_difference": 1.9999999999999996,
+            "relative_difference": 0.6666666666666665
+          },
+          "lambdaH2": {
+            "reference_scalar_loop": 2.0000000000000004,
+            "native_rgbeta_scalar_loop": 6.0,
+            "absolute_difference": 3.9999999999999996,
+            "relative_difference": 0.6666666666666666
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambdaH",
+          "lambdaT3.real"
+        ],
+        "mismatched_betas": [
+          "lambdaH2Adj"
+        ],
+        "closure_relative": 1.60886601221371e-16,
+        "components": {
+          "lambdaH2Adj": {
+            "reference_scalar_loop": 8.0,
+            "native_rgbeta_scalar_loop": 2.6666666666666665,
+            "absolute_difference": 5.333333333333334,
+            "relative_difference": 0.6666666666666667
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambdaH",
+          "lambdaT3.imag"
+        ],
+        "mismatched_betas": [
+          "lambdaH2Adj"
+        ],
+        "closure_relative": 1.60886601221371e-16,
+        "components": {
+          "lambdaH2Adj": {
+            "reference_scalar_loop": 8.0,
+            "native_rgbeta_scalar_loop": 2.6666666666666665,
+            "absolute_difference": 5.333333333333334,
+            "relative_difference": 0.6666666666666667
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambdaS1",
+          "lambdaS2Adj"
+        ],
+        "mismatched_betas": [
+          "lambdaS2",
+          "lambdaS2Adj"
+        ],
+        "closure_relative": 2.9266340454325795e-16,
+        "components": {
+          "lambdaS2": {
+            "reference_scalar_loop": 8.000000000000002,
+            "native_rgbeta_scalar_loop": 16.0,
+            "absolute_difference": 7.999999999999998,
+            "relative_difference": 0.4999999999999999
+          },
+          "lambdaS2Adj": {
+            "reference_scalar_loop": 6.0000000000000036,
+            "native_rgbeta_scalar_loop": 20.0,
+            "absolute_difference": 13.999999999999996,
+            "relative_difference": 0.6999999999999998
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambdaS1",
+          "lambdaH2Adj"
+        ],
+        "mismatched_betas": [
+          "lambdaH",
+          "lambdaS2Adj",
+          "lambdaH2"
+        ],
+        "closure_relative": 3.329549333986261e-16,
+        "components": {
+          "lambdaH": {
+            "reference_scalar_loop": 1.0,
+            "native_rgbeta_scalar_loop": 3.0,
+            "absolute_difference": 2.0,
+            "relative_difference": 0.6666666666666666
+          },
+          "lambdaS2Adj": {
+            "reference_scalar_loop": 1.0000000000000004,
+            "native_rgbeta_scalar_loop": 3.0,
+            "absolute_difference": 1.9999999999999996,
+            "relative_difference": 0.6666666666666665
+          },
+          "lambdaH2": {
+            "reference_scalar_loop": 2.0000000000000004,
+            "native_rgbeta_scalar_loop": 6.0,
+            "absolute_difference": 3.9999999999999996,
+            "relative_difference": 0.6666666666666666
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambdaS1",
+          "lambdaT3.real"
+        ],
+        "mismatched_betas": [
+          "lambdaH2Adj"
+        ],
+        "closure_relative": 2.560626915619498e-16,
+        "components": {
+          "lambdaH2Adj": {
+            "reference_scalar_loop": 8.0,
+            "native_rgbeta_scalar_loop": 2.6666666666666665,
+            "absolute_difference": 5.333333333333334,
+            "relative_difference": 0.6666666666666667
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambdaS1",
+          "lambdaT3.imag"
+        ],
+        "mismatched_betas": [
+          "lambdaH2Adj"
+        ],
+        "closure_relative": 2.560626915619498e-16,
+        "components": {
+          "lambdaH2Adj": {
+            "reference_scalar_loop": 8.0,
+            "native_rgbeta_scalar_loop": 2.6666666666666665,
+            "absolute_difference": 5.333333333333334,
+            "relative_difference": 0.6666666666666667
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambdaS2",
+          "lambdaS2Adj"
+        ],
+        "mismatched_betas": [
+          "lambdaS2",
+          "lambdaS2Adj"
+        ],
+        "closure_relative": 2.313419977244773e-16,
+        "components": {
+          "lambdaS2": {
+            "reference_scalar_loop": 29.99999999999999,
+            "native_rgbeta_scalar_loop": 38.0,
+            "absolute_difference": 8.00000000000001,
+            "relative_difference": 0.21052631578947398
+          },
+          "lambdaS2Adj": {
+            "reference_scalar_loop": 18.0,
+            "native_rgbeta_scalar_loop": 32.0,
+            "absolute_difference": 14.0,
+            "relative_difference": 0.4375
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambdaS2",
+          "lambdaH2Adj"
+        ],
+        "mismatched_betas": [
+          "lambdaH",
+          "lambdaS2Adj",
+          "lambdaH2"
+        ],
+        "closure_relative": 2.39478683977857e-16,
+        "components": {
+          "lambdaH": {
+            "reference_scalar_loop": 1.0,
+            "native_rgbeta_scalar_loop": 3.0,
+            "absolute_difference": 2.0,
+            "relative_difference": 0.6666666666666666
+          },
+          "lambdaS2Adj": {
+            "reference_scalar_loop": 1.0000000000000013,
+            "native_rgbeta_scalar_loop": 3.0,
+            "absolute_difference": 1.9999999999999987,
+            "relative_difference": 0.6666666666666662
+          },
+          "lambdaH2": {
+            "reference_scalar_loop": 2.0000000000000004,
+            "native_rgbeta_scalar_loop": 6.0,
+            "absolute_difference": 3.9999999999999996,
+            "relative_difference": 0.6666666666666666
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambdaS2",
+          "lambdaT3.real"
+        ],
+        "mismatched_betas": [
+          "lambdaH2Adj"
+        ],
+        "closure_relative": 2.7155399086635497e-16,
+        "components": {
+          "lambdaH2Adj": {
+            "reference_scalar_loop": 8.0,
+            "native_rgbeta_scalar_loop": 2.6666666666666665,
+            "absolute_difference": 5.333333333333334,
+            "relative_difference": 0.6666666666666667
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambdaS2",
+          "lambdaT3.imag"
+        ],
+        "mismatched_betas": [
+          "lambdaH2Adj"
+        ],
+        "closure_relative": 2.7155399086635497e-16,
+        "components": {
+          "lambdaH2Adj": {
+            "reference_scalar_loop": 8.0,
+            "native_rgbeta_scalar_loop": 2.6666666666666665,
+            "absolute_difference": 5.333333333333334,
+            "relative_difference": 0.6666666666666667
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambdaS2Adj",
+          "lambdaH1"
+        ],
+        "mismatched_betas": [
+          "lambdaS2",
+          "lambdaS2Adj"
+        ],
+        "closure_relative": 2.8217134411251503e-16,
+        "components": {
+          "lambdaS2": {
+            "reference_scalar_loop": 8.000000000000002,
+            "native_rgbeta_scalar_loop": 16.0,
+            "absolute_difference": 7.999999999999998,
+            "relative_difference": 0.4999999999999999
+          },
+          "lambdaS2Adj": {
+            "reference_scalar_loop": 6.0000000000000036,
+            "native_rgbeta_scalar_loop": 20.0,
+            "absolute_difference": 13.999999999999996,
+            "relative_difference": 0.6999999999999998
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambdaS2Adj",
+          "lambdaH2"
+        ],
+        "mismatched_betas": [
+          "lambdaS2",
+          "lambdaS2Adj"
+        ],
+        "closure_relative": 2.828324258716592e-16,
+        "components": {
+          "lambdaS2": {
+            "reference_scalar_loop": 11.999999999999998,
+            "native_rgbeta_scalar_loop": 20.0,
+            "absolute_difference": 8.000000000000002,
+            "relative_difference": 0.4000000000000001
+          },
+          "lambdaS2Adj": {
+            "reference_scalar_loop": 6.0000000000000036,
+            "native_rgbeta_scalar_loop": 20.0,
+            "absolute_difference": 13.999999999999996,
+            "relative_difference": 0.6999999999999998
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambdaS2Adj",
+          "lambdaH2Adj"
+        ],
+        "mismatched_betas": [
+          "lambdaH",
+          "lambdaS2",
+          "lambdaS2Adj",
+          "lambdaH2",
+          "lambdaH2Adj"
+        ],
+        "closure_relative": 2.5130929822976286e-16,
+        "components": {
+          "lambdaH": {
+            "reference_scalar_loop": 1.0,
+            "native_rgbeta_scalar_loop": 3.0,
+            "absolute_difference": 2.0,
+            "relative_difference": 0.6666666666666666
+          },
+          "lambdaS2": {
+            "reference_scalar_loop": 8.000000000000002,
+            "native_rgbeta_scalar_loop": 16.0,
+            "absolute_difference": 7.999999999999998,
+            "relative_difference": 0.4999999999999999
+          },
+          "lambdaS2Adj": {
+            "reference_scalar_loop": 7.0000000000000036,
+            "native_rgbeta_scalar_loop": 23.0,
+            "absolute_difference": 15.999999999999996,
+            "relative_difference": 0.6956521739130433
+          },
+          "lambdaH2": {
+            "reference_scalar_loop": 2.0,
+            "native_rgbeta_scalar_loop": 6.0,
+            "absolute_difference": 4.0,
+            "relative_difference": 0.6666666666666666
+          },
+          "lambdaH2Adj": {
+            "reference_scalar_loop": 6.000000000000002,
+            "native_rgbeta_scalar_loop": 16.0,
+            "absolute_difference": 9.999999999999998,
+            "relative_difference": 0.6249999999999999
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambdaS2Adj",
+          "lambda12"
+        ],
+        "mismatched_betas": [
+          "lambdaS2",
+          "lambdaS2Adj"
+        ],
+        "closure_relative": 2.0472562948547487e-16,
+        "components": {
+          "lambdaS2": {
+            "reference_scalar_loop": 10.000000000000002,
+            "native_rgbeta_scalar_loop": 18.0,
+            "absolute_difference": 7.999999999999998,
+            "relative_difference": 0.44444444444444436
+          },
+          "lambdaS2Adj": {
+            "reference_scalar_loop": 6.000000000000002,
+            "native_rgbeta_scalar_loop": 20.0,
+            "absolute_difference": 13.999999999999998,
+            "relative_difference": 0.7
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambdaS2Adj",
+          "lambdaT3.real"
+        ],
+        "mismatched_betas": [
+          "lambdaS2",
+          "lambdaS2Adj",
+          "lambdaH2Adj"
+        ],
+        "closure_relative": 2.673807960782834e-16,
+        "components": {
+          "lambdaS2": {
+            "reference_scalar_loop": 8.000000000000002,
+            "native_rgbeta_scalar_loop": 16.0,
+            "absolute_difference": 7.999999999999998,
+            "relative_difference": 0.4999999999999999
+          },
+          "lambdaS2Adj": {
+            "reference_scalar_loop": 6.0000000000000036,
+            "native_rgbeta_scalar_loop": 20.0,
+            "absolute_difference": 13.999999999999996,
+            "relative_difference": 0.6999999999999998
+          },
+          "lambdaH2Adj": {
+            "reference_scalar_loop": 8.0,
+            "native_rgbeta_scalar_loop": 2.6666666666666665,
+            "absolute_difference": 5.333333333333334,
+            "relative_difference": 0.6666666666666667
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambdaS2Adj",
+          "lambdaT3.imag"
+        ],
+        "mismatched_betas": [
+          "lambdaS2",
+          "lambdaS2Adj",
+          "lambdaH2Adj"
+        ],
+        "closure_relative": 2.673807960782834e-16,
+        "components": {
+          "lambdaS2": {
+            "reference_scalar_loop": 8.000000000000002,
+            "native_rgbeta_scalar_loop": 16.0,
+            "absolute_difference": 7.999999999999998,
+            "relative_difference": 0.4999999999999999
+          },
+          "lambdaS2Adj": {
+            "reference_scalar_loop": 6.0000000000000036,
+            "native_rgbeta_scalar_loop": 20.0,
+            "absolute_difference": 13.999999999999996,
+            "relative_difference": 0.6999999999999998
+          },
+          "lambdaH2Adj": {
+            "reference_scalar_loop": 8.0,
+            "native_rgbeta_scalar_loop": 2.6666666666666665,
+            "absolute_difference": 5.333333333333334,
+            "relative_difference": 0.6666666666666667
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambdaH1",
+          "lambdaH2Adj"
+        ],
+        "mismatched_betas": [
+          "lambdaH",
+          "lambdaS2Adj",
+          "lambdaH2"
+        ],
+        "closure_relative": 2.3772707520508165e-16,
+        "components": {
+          "lambdaH": {
+            "reference_scalar_loop": 2.9999999999999996,
+            "native_rgbeta_scalar_loop": 5.0,
+            "absolute_difference": 2.0000000000000004,
+            "relative_difference": 0.4000000000000001
+          },
+          "lambdaS2Adj": {
+            "reference_scalar_loop": 1.0000000000000004,
+            "native_rgbeta_scalar_loop": 3.0,
+            "absolute_difference": 1.9999999999999996,
+            "relative_difference": 0.6666666666666665
+          },
+          "lambdaH2": {
+            "reference_scalar_loop": 2.0000000000000004,
+            "native_rgbeta_scalar_loop": 6.0,
+            "absolute_difference": 3.9999999999999996,
+            "relative_difference": 0.6666666666666666
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambdaH1",
+          "lambdaT3.real"
+        ],
+        "mismatched_betas": [
+          "lambdaH2Adj"
+        ],
+        "closure_relative": 2.024889899129625e-16,
+        "components": {
+          "lambdaH2Adj": {
+            "reference_scalar_loop": 8.0,
+            "native_rgbeta_scalar_loop": 2.6666666666666665,
+            "absolute_difference": 5.333333333333334,
+            "relative_difference": 0.6666666666666667
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambdaH1",
+          "lambdaT3.imag"
+        ],
+        "mismatched_betas": [
+          "lambdaH2Adj"
+        ],
+        "closure_relative": 2.024889899129625e-16,
+        "components": {
+          "lambdaH2Adj": {
+            "reference_scalar_loop": 8.0,
+            "native_rgbeta_scalar_loop": 2.6666666666666665,
+            "absolute_difference": 5.333333333333334,
+            "relative_difference": 0.6666666666666667
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambdaH2",
+          "lambdaH2Adj"
+        ],
+        "mismatched_betas": [
+          "lambdaH",
+          "lambdaS2Adj",
+          "lambdaH2"
+        ],
+        "closure_relative": 1.9852922514770985e-16,
+        "components": {
+          "lambdaH": {
+            "reference_scalar_loop": 6.999999999999997,
+            "native_rgbeta_scalar_loop": 9.0,
+            "absolute_difference": 2.0000000000000027,
+            "relative_difference": 0.22222222222222252
+          },
+          "lambdaS2Adj": {
+            "reference_scalar_loop": 1.0000000000000002,
+            "native_rgbeta_scalar_loop": 3.0,
+            "absolute_difference": 1.9999999999999998,
+            "relative_difference": 0.6666666666666666
+          },
+          "lambdaH2": {
+            "reference_scalar_loop": 6.000000000000001,
+            "native_rgbeta_scalar_loop": 10.0,
+            "absolute_difference": 3.999999999999999,
+            "relative_difference": 0.3999999999999999
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambdaH2",
+          "lambdaT3.real"
+        ],
+        "mismatched_betas": [
+          "lambdaH2Adj"
+        ],
+        "closure_relative": 2.426797782562685e-16,
+        "components": {
+          "lambdaH2Adj": {
+            "reference_scalar_loop": 8.0,
+            "native_rgbeta_scalar_loop": 2.6666666666666665,
+            "absolute_difference": 5.333333333333334,
+            "relative_difference": 0.6666666666666667
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambdaH2",
+          "lambdaT3.imag"
+        ],
+        "mismatched_betas": [
+          "lambdaH2Adj"
+        ],
+        "closure_relative": 2.426797782562685e-16,
+        "components": {
+          "lambdaH2Adj": {
+            "reference_scalar_loop": 8.0,
+            "native_rgbeta_scalar_loop": 2.6666666666666665,
+            "absolute_difference": 5.333333333333334,
+            "relative_difference": 0.6666666666666667
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambdaH2Adj",
+          "lambda12"
+        ],
+        "mismatched_betas": [
+          "lambdaH",
+          "lambdaS2Adj",
+          "lambdaH2"
+        ],
+        "closure_relative": 2.442717179319293e-16,
+        "components": {
+          "lambdaH": {
+            "reference_scalar_loop": 1.0,
+            "native_rgbeta_scalar_loop": 3.0,
+            "absolute_difference": 2.0,
+            "relative_difference": 0.6666666666666666
+          },
+          "lambdaS2Adj": {
+            "reference_scalar_loop": 1.0000000000000002,
+            "native_rgbeta_scalar_loop": 3.0,
+            "absolute_difference": 1.9999999999999998,
+            "relative_difference": 0.6666666666666666
+          },
+          "lambdaH2": {
+            "reference_scalar_loop": 2.0000000000000004,
+            "native_rgbeta_scalar_loop": 6.0,
+            "absolute_difference": 3.9999999999999996,
+            "relative_difference": 0.6666666666666666
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambdaH2Adj",
+          "lambdaT3.real"
+        ],
+        "mismatched_betas": [
+          "lambdaH",
+          "lambdaS2Adj",
+          "lambdaH2",
+          "lambdaH2Adj"
+        ],
+        "closure_relative": 2.212256861610854e-16,
+        "components": {
+          "lambdaH": {
+            "reference_scalar_loop": 4.999999999999999,
+            "native_rgbeta_scalar_loop": 7.0,
+            "absolute_difference": 2.000000000000001,
+            "relative_difference": 0.28571428571428586
+          },
+          "lambdaS2Adj": {
+            "reference_scalar_loop": 1.0000000000000004,
+            "native_rgbeta_scalar_loop": 3.0,
+            "absolute_difference": 1.9999999999999996,
+            "relative_difference": 0.6666666666666665
+          },
+          "lambdaH2": {
+            "reference_scalar_loop": 5.999999999999999,
+            "native_rgbeta_scalar_loop": 10.0,
+            "absolute_difference": 4.000000000000001,
+            "relative_difference": 0.4000000000000001
+          },
+          "lambdaH2Adj": {
+            "reference_scalar_loop": 8.0,
+            "native_rgbeta_scalar_loop": 2.6666666666666665,
+            "absolute_difference": 5.333333333333334,
+            "relative_difference": 0.6666666666666667
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambdaH2Adj",
+          "lambdaT3.imag"
+        ],
+        "mismatched_betas": [
+          "lambdaH",
+          "lambdaS2Adj",
+          "lambdaH2",
+          "lambdaH2Adj"
+        ],
+        "closure_relative": 2.2122568616108535e-16,
+        "components": {
+          "lambdaH": {
+            "reference_scalar_loop": 4.999999999999999,
+            "native_rgbeta_scalar_loop": 7.0,
+            "absolute_difference": 2.000000000000001,
+            "relative_difference": 0.28571428571428586
+          },
+          "lambdaS2Adj": {
+            "reference_scalar_loop": 1.0000000000000004,
+            "native_rgbeta_scalar_loop": 3.0,
+            "absolute_difference": 1.9999999999999996,
+            "relative_difference": 0.6666666666666665
+          },
+          "lambdaH2": {
+            "reference_scalar_loop": 5.999999999999999,
+            "native_rgbeta_scalar_loop": 10.0,
+            "absolute_difference": 4.000000000000001,
+            "relative_difference": 0.4000000000000001
+          },
+          "lambdaH2Adj": {
+            "reference_scalar_loop": 8.0,
+            "native_rgbeta_scalar_loop": 2.6666666666666665,
+            "absolute_difference": 5.333333333333334,
+            "relative_difference": 0.6666666666666667
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambda12",
+          "lambdaT3.real"
+        ],
+        "mismatched_betas": [
+          "lambdaH2Adj"
+        ],
+        "closure_relative": 2.4579866144997137e-16,
+        "components": {
+          "lambdaH2Adj": {
+            "reference_scalar_loop": 8.0,
+            "native_rgbeta_scalar_loop": 2.6666666666666665,
+            "absolute_difference": 5.333333333333334,
+            "relative_difference": 0.6666666666666667
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambda12",
+          "lambdaT3.imag"
+        ],
+        "mismatched_betas": [
+          "lambdaH2Adj"
+        ],
+        "closure_relative": 2.4579866144997137e-16,
+        "components": {
+          "lambdaH2Adj": {
+            "reference_scalar_loop": 8.0,
+            "native_rgbeta_scalar_loop": 2.6666666666666665,
+            "absolute_difference": 5.333333333333334,
+            "relative_difference": 0.6666666666666667
+          }
+        }
+      },
+      {
+        "nonzero_unit_couplings": [
+          "lambdaT3.real",
+          "lambdaT3.imag"
+        ],
+        "mismatched_betas": [
+          "lambdaH2Adj"
+        ],
+        "closure_relative": 2.3782178348217537e-16,
+        "components": {
+          "lambdaH2Adj": {
+            "reference_scalar_loop": 16.0,
+            "native_rgbeta_scalar_loop": 5.333333333333333,
+            "absolute_difference": 10.666666666666668,
+            "relative_difference": 0.6666666666666667
+          }
+        }
+      }
+    ],
+    "native_and_reference_scalar_quadratic_polynomials_agree": false
+  },
+  "compatible_beta_file_created": false,
+  "matchete_to_rgbeta_scalar_basis_certified": false,
+  "full_seven_term_Wilson_running_certified": false,
+  "beta_export_interpretation": "No fitted factors; global RGBeta quartic projection checked against reference 12-real-scalar one-loop scalar-only polynomial, not the native Matchete invariant tensor or full gauge/Yukawa quartic beta."
+}

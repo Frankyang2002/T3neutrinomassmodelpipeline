@@ -1,0 +1,763 @@
+{
+  "format": "t3-a-minus4-declared-weyl-uv-coupling-dictionary-v1",
+  "model": "A_-4",
+  "status": "DECLARED_WEYL_UV_COUPLING_DICTIONARY_VERIFIED_PHYSICAL_NATIVE_SIGN_OPEN",
+  "source_revision": "12128de602ac6bf109dbad50dbac8446ed629434",
+  "mu_F_gev": 100000.0,
+  "declared_gamma_cc_choice": {
+    "reference": "C0 = +i gamma^2 gamma^0 in Weyl representation; epsilon_12=+1",
+    "working_rho": 1,
+    "working_rho_is_definition_not_installed_Matchete_measurement": true,
+    "rho_minus_one_equivalent_coupling_redefinition": "GammaCC -> -GammaCC together with y1_native -> -y1_native preserves the mapped UV action and its EFT contact",
+    "native_GammaCC_to_C0_measured": null
+  },
+  "uv_fields_native_in_terms_of_master": {
+    "L": "L_native[p] = exp(i alpha[p]) L_master[p], same phase for both SU2 components",
+    "F": "F_native[r] = exp(i beta[r]) F_master[r], same phase for left/right, positive diagonal MF unchanged",
+    "S1": "S1_native = exp(i sigma1) S1_master",
+    "S2": "S2_native = exp(i sigma2) N^dagger S2_master",
+    "N_native_to_master_triplet": {
+      "real": [
+        [
+          -0.7071067811865475,
+          0.0,
+          0.0
+        ],
+        [
+          -0.0,
+          0.9999999999999998,
+          0.0
+        ],
+        [
+          0.7071067811865475,
+          0.0,
+          0.0
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.7071067811865475
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.7071067811865475
+        ]
+      ]
+    },
+    "native_to_master_CG1": "G1_master[a,h]=G1_native[a,h], with rho absorbed in y1_master",
+    "native_to_master_CG2": "G2_master[b,h,k]=sum_c G2_native[b,h,c] N[k,c] for Bar[S2]",
+    "native_to_master_PL_CG": "Gmatch_master[a,b,k]=sum_c Gmatch_native[a,b,c] conj(N[k,c]) for S2",
+    "chiral_axial_F_rephasings": "excluded because they change positive diagonal MF phase",
+    "fundamental_Su2_axis_identification": "declared master reference; independent native phase not measured"
+  },
+  "uv_couplings_master_in_terms_of_native": {
+    "y1": "y1_master[p,r] = rho*y1_native[p,r]*exp(-i alpha[p]-i beta[r]+i sigma1)",
+    "y2": "y2_master[q,r] = y2_native[q,r]*exp(-i alpha[q]+i beta[r]-i sigma2)",
+    "MF": "MF_master[r]=MF_native[r]>0",
+    "PL_W": "W_master[p,q]=rho*W_native[p,q]*exp(i alpha[p]+i alpha[q]-i sigma1+i sigma2)",
+    "source_native_PL_W": "sum_r conj(y1_native[p,r])*conj(y2_native[q,r])/MF[r]",
+    "source_native_PL_external_fields": "Transp[L[q]] GammaCC PL L[p] * conj(S1) * S2"
+  },
+  "operator_normalization": {
+    "definition": "L_EFT1^(5) = sum_{i,j=1..45; a,b=1..12} C_declared[i,j,a,b] (ell_i^T epsilon ell_j) phi_a phi_b + h.c.",
+    "independent_entries": "Only i<=j and a<=b stored; full-sum coefficient = monomial/orbit_size",
+    "important": "Do not infer generic-MV 1/4, Weinberg 1/2 or physical coupling relation from this declared full sum",
+    "dimension": "GeV^-1"
+  },
+  "master_full_shape": [
+    45,
+    45,
+    12,
+    12
+  ],
+  "independent_coordinate_count": 36,
+  "declared_rho_plus_one_independent_coordinates": [
+    {
+      "i": 1,
+      "j": 1,
+      "a": 5,
+      "b": 11,
+      "value_re_gev_inv": 3.045593319761025e-13,
+      "value_im_gev_inv": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 1,
+      "j": 1,
+      "a": 5,
+      "b": 12,
+      "value_re_gev_inv": 0.0,
+      "value_im_gev_inv": 3.045593319761025e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 1,
+      "j": 1,
+      "a": 6,
+      "b": 11,
+      "value_re_gev_inv": 0.0,
+      "value_im_gev_inv": -3.045593319761025e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 1,
+      "j": 1,
+      "a": 6,
+      "b": 12,
+      "value_re_gev_inv": 3.045593319761025e-13,
+      "value_im_gev_inv": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 1,
+      "j": 2,
+      "a": 5,
+      "b": 9,
+      "value_re_gev_inv": -2.1535596891394695e-13,
+      "value_im_gev_inv": 0.0,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 1,
+      "j": 2,
+      "a": 5,
+      "b": 10,
+      "value_re_gev_inv": 0.0,
+      "value_im_gev_inv": -2.1535596891394695e-13,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 1,
+      "j": 2,
+      "a": 6,
+      "b": 9,
+      "value_re_gev_inv": 0.0,
+      "value_im_gev_inv": 2.1535596891394695e-13,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 1,
+      "j": 2,
+      "a": 6,
+      "b": 10,
+      "value_re_gev_inv": -2.1535596891394695e-13,
+      "value_im_gev_inv": 0.0,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 2,
+      "j": 2,
+      "a": 5,
+      "b": 7,
+      "value_re_gev_inv": 3.045593319761025e-13,
+      "value_im_gev_inv": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 2,
+      "j": 2,
+      "a": 5,
+      "b": 8,
+      "value_re_gev_inv": 0.0,
+      "value_im_gev_inv": 3.045593319761025e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 2,
+      "j": 2,
+      "a": 6,
+      "b": 7,
+      "value_re_gev_inv": 0.0,
+      "value_im_gev_inv": -3.045593319761025e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 2,
+      "j": 2,
+      "a": 6,
+      "b": 8,
+      "value_re_gev_inv": 3.045593319761025e-13,
+      "value_im_gev_inv": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 3,
+      "j": 3,
+      "a": 5,
+      "b": 11,
+      "value_re_gev_inv": 2.5379944060328007e-13,
+      "value_im_gev_inv": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 3,
+      "j": 3,
+      "a": 5,
+      "b": 12,
+      "value_re_gev_inv": 0.0,
+      "value_im_gev_inv": 2.5379944060328007e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 3,
+      "j": 3,
+      "a": 6,
+      "b": 11,
+      "value_re_gev_inv": 0.0,
+      "value_im_gev_inv": -2.5379944060328007e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 3,
+      "j": 3,
+      "a": 6,
+      "b": 12,
+      "value_re_gev_inv": 2.5379944060328007e-13,
+      "value_im_gev_inv": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 3,
+      "j": 4,
+      "a": 5,
+      "b": 9,
+      "value_re_gev_inv": -1.7946330551193168e-13,
+      "value_im_gev_inv": 0.0,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 3,
+      "j": 4,
+      "a": 5,
+      "b": 10,
+      "value_re_gev_inv": 0.0,
+      "value_im_gev_inv": -1.7946330551193168e-13,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 3,
+      "j": 4,
+      "a": 6,
+      "b": 9,
+      "value_re_gev_inv": 0.0,
+      "value_im_gev_inv": 1.7946330551193168e-13,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 3,
+      "j": 4,
+      "a": 6,
+      "b": 10,
+      "value_re_gev_inv": -1.7946330551193168e-13,
+      "value_im_gev_inv": 0.0,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 4,
+      "j": 4,
+      "a": 5,
+      "b": 7,
+      "value_re_gev_inv": 2.5379944060328007e-13,
+      "value_im_gev_inv": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 4,
+      "j": 4,
+      "a": 5,
+      "b": 8,
+      "value_re_gev_inv": 0.0,
+      "value_im_gev_inv": 2.5379944060328007e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 4,
+      "j": 4,
+      "a": 6,
+      "b": 7,
+      "value_re_gev_inv": 0.0,
+      "value_im_gev_inv": -2.5379944060328007e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 4,
+      "j": 4,
+      "a": 6,
+      "b": 8,
+      "value_re_gev_inv": 2.5379944060328007e-13,
+      "value_im_gev_inv": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 5,
+      "j": 5,
+      "a": 5,
+      "b": 11,
+      "value_re_gev_inv": 2.2841882143452696e-13,
+      "value_im_gev_inv": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 5,
+      "j": 5,
+      "a": 5,
+      "b": 12,
+      "value_re_gev_inv": 0.0,
+      "value_im_gev_inv": 2.2841882143452696e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 5,
+      "j": 5,
+      "a": 6,
+      "b": 11,
+      "value_re_gev_inv": 0.0,
+      "value_im_gev_inv": -2.2841882143452696e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 5,
+      "j": 5,
+      "a": 6,
+      "b": 12,
+      "value_re_gev_inv": 2.2841882143452696e-13,
+      "value_im_gev_inv": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 5,
+      "j": 6,
+      "a": 5,
+      "b": 9,
+      "value_re_gev_inv": -1.615164975869931e-13,
+      "value_im_gev_inv": 0.0,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 5,
+      "j": 6,
+      "a": 5,
+      "b": 10,
+      "value_re_gev_inv": 0.0,
+      "value_im_gev_inv": -1.615164975869931e-13,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 5,
+      "j": 6,
+      "a": 6,
+      "b": 9,
+      "value_re_gev_inv": 0.0,
+      "value_im_gev_inv": 1.615164975869931e-13,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 5,
+      "j": 6,
+      "a": 6,
+      "b": 10,
+      "value_re_gev_inv": -1.615164975869931e-13,
+      "value_im_gev_inv": 0.0,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 6,
+      "j": 6,
+      "a": 5,
+      "b": 7,
+      "value_re_gev_inv": 2.2841882143452696e-13,
+      "value_im_gev_inv": 0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 6,
+      "j": 6,
+      "a": 5,
+      "b": 8,
+      "value_re_gev_inv": 0.0,
+      "value_im_gev_inv": 2.2841882143452696e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 6,
+      "j": 6,
+      "a": 6,
+      "b": 7,
+      "value_re_gev_inv": 0.0,
+      "value_im_gev_inv": -2.2841882143452696e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 6,
+      "j": 6,
+      "a": 6,
+      "b": 8,
+      "value_re_gev_inv": 2.2841882143452696e-13,
+      "value_im_gev_inv": 0.0,
+      "distinct_orbit_size": 2
+    }
+  ],
+  "rho_minus_one_fixed_native_y1_alternative_coordinates": [
+    {
+      "i": 1,
+      "j": 1,
+      "a": 5,
+      "b": 11,
+      "value_re_gev_inv": -3.045593319761025e-13,
+      "value_im_gev_inv": -0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 1,
+      "j": 1,
+      "a": 5,
+      "b": 12,
+      "value_re_gev_inv": -0.0,
+      "value_im_gev_inv": -3.045593319761025e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 1,
+      "j": 1,
+      "a": 6,
+      "b": 11,
+      "value_re_gev_inv": -0.0,
+      "value_im_gev_inv": 3.045593319761025e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 1,
+      "j": 1,
+      "a": 6,
+      "b": 12,
+      "value_re_gev_inv": -3.045593319761025e-13,
+      "value_im_gev_inv": -0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 1,
+      "j": 2,
+      "a": 5,
+      "b": 9,
+      "value_re_gev_inv": 2.1535596891394695e-13,
+      "value_im_gev_inv": -0.0,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 1,
+      "j": 2,
+      "a": 5,
+      "b": 10,
+      "value_re_gev_inv": -0.0,
+      "value_im_gev_inv": 2.1535596891394695e-13,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 1,
+      "j": 2,
+      "a": 6,
+      "b": 9,
+      "value_re_gev_inv": -0.0,
+      "value_im_gev_inv": -2.1535596891394695e-13,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 1,
+      "j": 2,
+      "a": 6,
+      "b": 10,
+      "value_re_gev_inv": 2.1535596891394695e-13,
+      "value_im_gev_inv": -0.0,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 2,
+      "j": 2,
+      "a": 5,
+      "b": 7,
+      "value_re_gev_inv": -3.045593319761025e-13,
+      "value_im_gev_inv": -0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 2,
+      "j": 2,
+      "a": 5,
+      "b": 8,
+      "value_re_gev_inv": -0.0,
+      "value_im_gev_inv": -3.045593319761025e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 2,
+      "j": 2,
+      "a": 6,
+      "b": 7,
+      "value_re_gev_inv": -0.0,
+      "value_im_gev_inv": 3.045593319761025e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 2,
+      "j": 2,
+      "a": 6,
+      "b": 8,
+      "value_re_gev_inv": -3.045593319761025e-13,
+      "value_im_gev_inv": -0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 3,
+      "j": 3,
+      "a": 5,
+      "b": 11,
+      "value_re_gev_inv": -2.5379944060328007e-13,
+      "value_im_gev_inv": -0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 3,
+      "j": 3,
+      "a": 5,
+      "b": 12,
+      "value_re_gev_inv": -0.0,
+      "value_im_gev_inv": -2.5379944060328007e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 3,
+      "j": 3,
+      "a": 6,
+      "b": 11,
+      "value_re_gev_inv": -0.0,
+      "value_im_gev_inv": 2.5379944060328007e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 3,
+      "j": 3,
+      "a": 6,
+      "b": 12,
+      "value_re_gev_inv": -2.5379944060328007e-13,
+      "value_im_gev_inv": -0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 3,
+      "j": 4,
+      "a": 5,
+      "b": 9,
+      "value_re_gev_inv": 1.7946330551193168e-13,
+      "value_im_gev_inv": -0.0,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 3,
+      "j": 4,
+      "a": 5,
+      "b": 10,
+      "value_re_gev_inv": -0.0,
+      "value_im_gev_inv": 1.7946330551193168e-13,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 3,
+      "j": 4,
+      "a": 6,
+      "b": 9,
+      "value_re_gev_inv": -0.0,
+      "value_im_gev_inv": -1.7946330551193168e-13,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 3,
+      "j": 4,
+      "a": 6,
+      "b": 10,
+      "value_re_gev_inv": 1.7946330551193168e-13,
+      "value_im_gev_inv": -0.0,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 4,
+      "j": 4,
+      "a": 5,
+      "b": 7,
+      "value_re_gev_inv": -2.5379944060328007e-13,
+      "value_im_gev_inv": -0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 4,
+      "j": 4,
+      "a": 5,
+      "b": 8,
+      "value_re_gev_inv": -0.0,
+      "value_im_gev_inv": -2.5379944060328007e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 4,
+      "j": 4,
+      "a": 6,
+      "b": 7,
+      "value_re_gev_inv": -0.0,
+      "value_im_gev_inv": 2.5379944060328007e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 4,
+      "j": 4,
+      "a": 6,
+      "b": 8,
+      "value_re_gev_inv": -2.5379944060328007e-13,
+      "value_im_gev_inv": -0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 5,
+      "j": 5,
+      "a": 5,
+      "b": 11,
+      "value_re_gev_inv": -2.2841882143452696e-13,
+      "value_im_gev_inv": -0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 5,
+      "j": 5,
+      "a": 5,
+      "b": 12,
+      "value_re_gev_inv": -0.0,
+      "value_im_gev_inv": -2.2841882143452696e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 5,
+      "j": 5,
+      "a": 6,
+      "b": 11,
+      "value_re_gev_inv": -0.0,
+      "value_im_gev_inv": 2.2841882143452696e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 5,
+      "j": 5,
+      "a": 6,
+      "b": 12,
+      "value_re_gev_inv": -2.2841882143452696e-13,
+      "value_im_gev_inv": -0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 5,
+      "j": 6,
+      "a": 5,
+      "b": 9,
+      "value_re_gev_inv": 1.615164975869931e-13,
+      "value_im_gev_inv": -0.0,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 5,
+      "j": 6,
+      "a": 5,
+      "b": 10,
+      "value_re_gev_inv": -0.0,
+      "value_im_gev_inv": 1.615164975869931e-13,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 5,
+      "j": 6,
+      "a": 6,
+      "b": 9,
+      "value_re_gev_inv": -0.0,
+      "value_im_gev_inv": -1.615164975869931e-13,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 5,
+      "j": 6,
+      "a": 6,
+      "b": 10,
+      "value_re_gev_inv": 1.615164975869931e-13,
+      "value_im_gev_inv": -0.0,
+      "distinct_orbit_size": 4
+    },
+    {
+      "i": 6,
+      "j": 6,
+      "a": 5,
+      "b": 7,
+      "value_re_gev_inv": -2.2841882143452696e-13,
+      "value_im_gev_inv": -0.0,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 6,
+      "j": 6,
+      "a": 5,
+      "b": 8,
+      "value_re_gev_inv": -0.0,
+      "value_im_gev_inv": -2.2841882143452696e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 6,
+      "j": 6,
+      "a": 6,
+      "b": 7,
+      "value_re_gev_inv": -0.0,
+      "value_im_gev_inv": 2.2841882143452696e-13,
+      "distinct_orbit_size": 2
+    },
+    {
+      "i": 6,
+      "j": 6,
+      "a": 6,
+      "b": 8,
+      "value_re_gev_inv": -2.2841882143452696e-13,
+      "value_im_gev_inv": -0.0,
+      "distinct_orbit_size": 2
+    }
+  ],
+  "numerical_checks": {
+    "synthetic_full_three_family_UV_to_EFT_Grassmann_rephasings": {
+      "complex_three_flavour_samples": 5,
+      "max_full_grassmann_relative_residual": 4.086662874543188e-16,
+      "max_w_matrix_relative_residual": 5.351487626613241e-16,
+      "max_vectorlike_heavy_phase_relative_residual": 3.8292128364339914e-16,
+      "max_equivalent_rho_y1_branch_relative_residual": 0.0,
+      "independent_Dirac_heavy_phases_tested": 3,
+      "gamma_cc_branch_physically_discriminated": false
+    },
+    "source_evolved_W_nonzero": true,
+    "source_evolved_W_rephased_frobenius_norm_gev_inv": 1.7031673787625998e-12,
+    "native_action_inventory_checked": true,
+    "UV_conjugate_scalar_CG_vs_PL_master_CG_max_abs_residual": 0.0,
+    "prior_actual_benchmark_full_Grassmann_revalidated": true
+  },
+  "source_files_sha256": {
+    "output\\general_observable\\a_minus4_boundary_batch1\\native_spinor_action.json": "f70662ce903deceb5351a050268f3dfa10b94ea80cea0e255d152fa248ab8529",
+    "output\\general_observable\\a_minus4_boundary_batch1\\native_spinor_audit.json": "0b339c3d43db23c33c87e79865456bbb13a3b94c821f2a03c30ae559ba0dfd62",
+    "output\\general_observable\\a_minus4_boundary_batch1\\connected_amplitude_gate.json": "6cac6d9c61c064777f379a7035290d03d5588a154a66708e7562abb55e260afa",
+    "output\\general_observable\\a_minus4_boundary_batch1\\master_basis_candidate.json": "f525589ead2ee14631b1e88141cd7909eb0b177fd46933e6f2c40a2420d4b8f0",
+    "output\\general_observable\\a_minus4_boundary_batch1\\weyl_operator_dictionary.json": "f6eacac03fbdb6f2c9d4952098f2393444d9b39cd2b245726d1e5ae59fe8cd9c"
+  },
+  "native_matchete_to_declared_Weyl_factor": null,
+  "physical_C_ijab_at_MF": null,
+  "physical_certification": false,
+  "EFT_order": "UV -> integrate out ALL fermions -> EFT1(SM+S1+S2) -> integrate out ALL scalars simultaneously -> SMEFT",
+  "no_ODE_or_scalar_threshold_implemented": true,
+  "remaining_external_input": "A verified native Matchete -> chosen C0 matrix/vertex convention, or an explicit physics-level adoption of the full UV coupling dictionary; abstract native identities cannot discriminate rho."
+}

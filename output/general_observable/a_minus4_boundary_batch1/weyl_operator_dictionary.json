@@ -1,0 +1,89 @@
+{
+  "format": "t3-a-minus4-grassmann-weyl-operator-dictionary-v1",
+  "model": "A_-4",
+  "status": "SOURCE_MATCHED_FULL_GRASSMANN_OPERATOR_DICTIONARY_VERIFIED_NATIVE_CC_CHOICE_OPEN",
+  "source_revision": "12128de602ac6bf109dbad50dbac8446ed629434",
+  "mu_F_gev": 100000.0,
+  "input_master_candidate_sha256": "f525589ead2ee14631b1e88141cd7909eb0b177fd46933e6f2c40a2420d4b8f0",
+  "source_native_files_sha256": {
+    "native": "f70662ce903deceb5351a050268f3dfa10b94ea80cea0e255d152fa248ab8529",
+    "audit": "0b339c3d43db23c33c87e79865456bbb13a3b94c821f2a03c30ae559ba0dfd62",
+    "UV_registered_CG": "8099a53b3a5fa006ad7f760706a84bd05f9f7fe1ee56a6a1e90789d916605dd6",
+    "F_only_matched_seed": "ffd6c04962d7b260a890c3306a4ce9522edd36bac0867a200e2fd3d3505e64a5",
+    "native_matchete_generator_analysis": "e8bd4a7d8de5115b9440bc142017f9f4536b2dd8a2a23fdfe588c99bafa0d87a"
+  },
+  "operator_identity": {
+    "native_PL": "Sum[p,q,a,b,c] W[p,q] CG[a,b,c] conj(S1) S2_native[c] (ell_[b,q]^T epsilon ell_[a,p])",
+    "ordered_W": "W[p,q] = Sum_r conj(y1[p,r])*conj(y2[q,r])/M_r",
+    "spinor_order": "q on transposed left, p on right; exterior Weyl contraction is symmetric under exchanging whole lepton fields",
+    "flavour_antisymmetric_part": "(W-W^T)/2 cancels because matched SU2 CG and Grassmann Weyl bilinear are symmetric under simultaneous exchange of lepton legs; native W[p,q] ordering still verified independently",
+    "weyl_epsilon": "epsilon_12=+1; ell_i^T epsilon ell_j = ell_j^T epsilon ell_i for anticommuting fields",
+    "triplet_basis": "S2_master=N*S2_native; S2_native=N^dagger*S2_master",
+    "complex_scalar_fields": "conj(S1)=(phi5-i phi6)/sqrt(2); S2_master[c]=(phi_(7+2c)+i phi_(8+2c))/sqrt(2) for zero-based c",
+    "master_fullsum": "Sum_{i,j=1..45;a,b=1..12} C_sym^formal[i,j,a,b] (ell_i^T epsilon ell_j) phi_a phi_b",
+    "master_independent": "Only i<=j, a<=b entries stored; C_sym^formal=monomial_sum/distinct_orbit_size; no additional prefactor in the explicitly declared full sum",
+    "C0": "C0=i gamma^2 gamma^0; (C0 PL)_LH=epsilon; (-C0 PL)_LH=-epsilon",
+    "required_relation": "C_sym^declared(rho) = rho * C_sym^formal for rho=+1 or -1; no physical branch selected"
+  },
+  "checks": {
+    "actual_evolved_three_flavour_source_full_Grassmann": {
+      "samples": 8,
+      "full_degree_two_Grassmann_component_count": 12,
+      "max_relative_Grassmann_operator_residual": 3.2010224354132376e-16,
+      "native_source_nonzero_max_abs_gev_inv": 3.242806064962688e-12,
+      "antisymmetric_flavour_W_cancellation_relative_residual": 0.0,
+      "rho_branches": [
+        {
+          "name": "C0",
+          "rho_C0": 1,
+          "relative_residual": 1.8383379987590903e-16
+        },
+        {
+          "name": "-C0",
+          "rho_C0": -1,
+          "relative_residual": 1.8383379987590903e-16
+        }
+      ],
+      "rho_sign_discriminated": false,
+      "extra_half_factor_rejected": true,
+      "uncorrelated_opposite_CC_sign_rejected": true
+    },
+    "independent_general_complex_3x3_source_full_Grassmann": {
+      "samples": 8,
+      "full_degree_two_Grassmann_component_count": 36,
+      "max_relative_Grassmann_operator_residual": 3.975577335664825e-16,
+      "native_source_nonzero_max_abs_gev_inv": 0.008262128140583953,
+      "antisymmetric_flavour_W_cancellation_relative_residual": 2.2818428629709244e-16,
+      "rho_branches": [
+        {
+          "name": "C0",
+          "rho_C0": 1,
+          "relative_residual": 1.6795845177889611e-16
+        },
+        {
+          "name": "-C0",
+          "rho_C0": -1,
+          "relative_residual": 1.6795845177889611e-16
+        }
+      ],
+      "rho_sign_discriminated": false,
+      "extra_half_factor_rejected": true,
+      "uncorrelated_opposite_CC_sign_rejected": true
+    },
+    "matched_source_term_and_master_rebuilt": true,
+    "master_independent_coordinate_count": 36,
+    "no_missing_fermion_swap_half_factor": true,
+    "explicit_weyl_CC_candidates_both_valid": true
+  },
+  "spinor_dictionary_status": {
+    "GammaCC_symbol_in_installed_Matchete_algebra": "abstract, no concrete 4x4 matrix provided",
+    "reference_4x4_charge_conjugation": "C0=i gamma^2 gamma^0 chosen explicitly by this dictionary, not native-selected",
+    "rho_GammaCC_to_reference_Weyl": null,
+    "native_to_master_Yukawa_and_mass_phase_identification_complete": false,
+    "source_operator_identity_with_declared_rho_complete": true,
+    "full_physical_C_ijab_at_MF": null,
+    "physical_certification": false
+  },
+  "next_decision": "Absolute native GammaCC sign is a convention choice, not fixed by abstract algebra; do not run further source-only sign tests. A physical coupling dictionary requires a declared consistent convention plus independent native-to-master action alignment.",
+  "EFT_order": "UV -> integrate out ALL fermions -> EFT1(SM+S1+S2) -> integrate out ALL scalars simultaneously -> SMEFT"
+}

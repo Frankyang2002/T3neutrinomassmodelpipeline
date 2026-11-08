@@ -1,0 +1,153 @@
+{
+  "format": "t3-a-minus4-connected-component-two-cc-sign-gate-v1",
+  "model": "A_-4",
+  "status": "NATIVE_CG_AND_DECLARED_WEYL_DIRAC_EXCHANGE_VERIFIED_BOTH_CC_SIGNS_REMAIN",
+  "source_revision": "12128de602ac6bf109dbad50dbac8446ed629434",
+  "conditional_source_sha256": {
+    "native_seed": {
+      "relative_path": "output\\general_observable\\fermion_first_all16_v1\\A_m4\\data\\eft1_after_F_wilson_seed.json",
+      "sha256": "ffd6c04962d7b260a890c3306a4ce9522edd36bac0867a200e2fd3d3505e64a5"
+    },
+    "native_full_tree": {
+      "relative_path": "output\\general_observable\\fermion_first_all16_v1\\A_m4\\data\\eft1_after_F_tree_inputform.txt",
+      "sha256": "e258409538dc36287821993ff90861b0ac8216fbddde7b82491f063b1c1703bc"
+    },
+    "source_flavour": {
+      "relative_path": "output\\general_observable\\general_wilson_boundary_v1\\A_m4\\wilson_boundary.json",
+      "sha256": "c56fb3e5a4af61c9929ec0faf77f89d98cd9fb07edce53c62b97e45822268c44"
+    },
+    "ordered_tensor": {
+      "relative_path": "output\\general_observable\\ordered_wilson_tensor_v4\\A_m4\\ordered_tensor.json",
+      "sha256": "17e0b84a8aba16fbd53211af062f980a0ff1b3487539768f53e35d7d3d7dd15a"
+    },
+    "polynomial": {
+      "relative_path": "output\\general_observable\\general_wilson_polynomial_batch_v2\\A_m4\\polynomial_bridge.json",
+      "sha256": "451ba9fcb076b1ca8116bf167e89ab57c2d9ee4ceeb7e068b6008acb846f0245"
+    },
+    "running": {
+      "relative_path": "output\\general_observable\\all16_v1\\A_m4\\running.json",
+      "sha256": "7f16660186a6f208a419cbc53b9e6641e9b5fd71277fc40e4a03ef6610bc4f92"
+    }
+  },
+  "mu_F_gev": 100000.0,
+  "three_heavy_fermion_mass_eigenstates_gev": [
+    166140.08943527873,
+    199368.10732233452,
+    221520.11924704042
+  ],
+  "source_files_sha256": {
+    "native_action": "f70662ce903deceb5351a050268f3dfa10b94ea80cea0e255d152fa248ab8529",
+    "native_audit": "0b339c3d43db23c33c87e79865456bbb13a3b94c821f2a03c30ae559ba0dfd62",
+    "UV_registered_CG": "8099a53b3a5fa006ad7f760706a84bd05f9f7fe1ee56a6a1e90789d916605dd6",
+    "Matchete_F_only_seed": "ffd6c04962d7b260a890c3306a4ce9522edd36bac0867a200e2fd3d3505e64a5"
+  },
+  "source_term_contract": {
+    "UV_yukawas": [
+      "y1* S1* (L^T C PL F)",
+      "y2* S2 (Fbar PL L)"
+    ],
+    "heavy_mass": "-MF Fbar F",
+    "holomorphic_EFT1": "y1* y2* / MF S1* S2 (Lq^T GammaCC PL Lp)",
+    "native_y1_and_y2_flavour_order": "y1[p,r] then y2[q,r]",
+    "fermion_bilinear_order": "q left / p right"
+  },
+  "source_native_SU2_CG_contraction": {
+    "y1_CG_dimensions": [
+      2,
+      2
+    ],
+    "y2_CG_dimensions": [
+      2,
+      2,
+      3
+    ],
+    "matched_CG_dimensions": [
+      2,
+      2,
+      3
+    ],
+    "UV_Y1_Y2_CG_to_Matchete_F_only_max_abs_residual": 0.0,
+    "UV_registry_to_matching_registry_max_abs_residual": 0.0,
+    "native_CG1_nonzero": 2,
+    "native_CG2_nonzero": 6,
+    "matched_nonzero": 6,
+    "matched_symmetric_SU2_pair": true,
+    "native_to_master_triplet_generator_basis_certified": false
+  },
+  "declared_Weyl_exact_Grassmann_saddle": {
+    "UV_holomorphic_dirac_saddle": "-M eta.epsilon.chi + eta.epsilon.A + chi.epsilon.B",
+    "sources": "A = y2* conj(G2) S2 ell_q; B = (CC sign) y1* conj(G1) S1* ell_p",
+    "Weyl_field_convention": "epsilon_12=+1; independent anticommuting fields",
+    "phase_signs_tested": [
+      1,
+      -1
+    ],
+    "UV_EFT_saddle_equal_for_both_signs": true,
+    "fixed_action_relative_dirac_tree_coefficient": "1/M",
+    "mapping_native_Dirac_action_to_declared_Weyl_components_certified": false
+  },
+  "declared_Weyl_complex_connected_component": {
+    "flavour_matrices": "random seeded, independent full complex 3x3 (offdiagonal)",
+    "random_seed": 20261108,
+    "mass_eigenvalues_gev": [
+      113.0,
+      171.0,
+      229.0
+    ],
+    "selected_external": {
+      "lepton_p": 1,
+      "lepton_q": 2,
+      "SU2_p": 1,
+      "SU2_q": 1,
+      "triplet_component": 1
+    },
+    "spinors": "two independent complex LH spinors (declared basis)",
+    "candidate_amplitudes": [
+      {
+        "C_choice": "+",
+        "C_definition": "+i gamma^2 gamma^0",
+        "UV_zero_momentum_connected": {
+          "real": 0.0010596341602320818,
+          "imag": 0.003957523622726632
+        },
+        "EFT_Matchete_PL_contact": {
+          "real": 0.0010596341602320822,
+          "imag": 0.003957523622726632
+        },
+        "relative_amplitude_residual": 1.0585513957330691e-16,
+        "UV_over_EFT_real": 1.0,
+        "UV_over_EFT_imag": 1.0225325687013409e-16,
+        "native_GammaCC_concrete_choice_verified": false
+      },
+      {
+        "C_choice": "-",
+        "C_definition": "-i gamma^2 gamma^0",
+        "UV_zero_momentum_connected": {
+          "real": -0.0010596341602320818,
+          "imag": -0.003957523622726632
+        },
+        "EFT_Matchete_PL_contact": {
+          "real": -0.0010596341602320822,
+          "imag": -0.003957523622726632
+        },
+        "relative_amplitude_residual": 1.0585513957330691e-16,
+        "UV_over_EFT_real": 1.0,
+        "UV_over_EFT_imag": 1.0225325687013409e-16,
+        "native_GammaCC_concrete_choice_verified": false
+      }
+    ],
+    "both_signs_give_UV_over_EFT_equal_one": true,
+    "native_phase_discriminated": false,
+    "physical_master_C_tensor_certified": false
+  },
+  "meaning": "UV/EFT relative sign and tree 1/M agree in BOTH admissible C sign conventions.",
+  "native_Cconj_to_master_Weyl_factor": null,
+  "physical_C_ijab_at_MF": null,
+  "physical_certification": false,
+  "remaining_gates": [
+    "An externally fixed native GammaCC matrix/charge-conjugation convention relative to the master Weyl fields, or an explicit, justified field rephasing dictionary.",
+    "Native Matchete triplet generator axis transformation relative to master RGE scalar generators.",
+    "Current true 3-generation master Weyl ordering (the 45-Weyl extension is presently a proposal)."
+  ],
+  "no_RGE_or_scalar_threshold_changes": true
+}

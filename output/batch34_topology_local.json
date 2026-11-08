@@ -1,0 +1,134 @@
+{
+  "format": "t3-batch34-one-loop-weyl-graph-audit-v1",
+  "status": "1PI_TOPOLOGY_FAVOURS_SIX_TERM_REFERENCE_UNVERIFIED_FULL_RGE",
+  "assumptions": [
+    "massless Weyl/real scalar propagators",
+    "exactly one C/Cstar insertion and two Yukawa vertices",
+    "external psi psi phi phi",
+    "one loop, connected; self-tadpoles excluded"
+  ],
+  "sectors": {
+    "C_y_y": {
+      "species": [
+        "C",
+        "y",
+        "y"
+      ],
+      "number_of_wick_contractions": 0,
+      "number_1pi_wick_contractions": 0,
+      "patterns": []
+    },
+    "Cstar_y_y": {
+      "species": [
+        "Cstar",
+        "y",
+        "y"
+      ],
+      "number_of_wick_contractions": 52,
+      "number_1pi_wick_contractions": 8,
+      "patterns": [
+        {
+          "external": "Cstar:phi,phi|y:none|y:psi,psi",
+          "edges": "Cstar-y:fermion,Cstar-y:fermion,y-y:scalar",
+          "is_1PI": false,
+          "wick_contractions": 2
+        },
+        {
+          "external": "Cstar:phi,phi|y:psi,psi|y:none",
+          "edges": "Cstar-y:fermion,Cstar-y:fermion,y-y:scalar",
+          "is_1PI": false,
+          "wick_contractions": 2
+        },
+        {
+          "external": "Cstar:phi,phi|y:psi|y:psi",
+          "edges": "Cstar-y:fermion,Cstar-y:fermion,y-y:scalar",
+          "is_1PI": true,
+          "wick_contractions": 8
+        },
+        {
+          "external": "Cstar:phi|y:phi,psi|y:psi",
+          "edges": "Cstar-y:fermion,Cstar-y:fermion,Cstar-y:scalar",
+          "is_1PI": false,
+          "wick_contractions": 16
+        },
+        {
+          "external": "Cstar:phi|y:phi|y:psi,psi",
+          "edges": "Cstar-y:fermion,Cstar-y:fermion,Cstar-y:scalar",
+          "is_1PI": false,
+          "wick_contractions": 4
+        },
+        {
+          "external": "Cstar:phi|y:psi,psi|y:phi",
+          "edges": "Cstar-y:scalar,Cstar-y:fermion,Cstar-y:fermion",
+          "is_1PI": false,
+          "wick_contractions": 4
+        },
+        {
+          "external": "Cstar:phi|y:psi|y:phi,psi",
+          "edges": "Cstar-y:fermion,Cstar-y:scalar,Cstar-y:fermion",
+          "is_1PI": false,
+          "wick_contractions": 16
+        }
+      ]
+    },
+    "C_y_ystar": {
+      "species": [
+        "C",
+        "y",
+        "ystar"
+      ],
+      "number_of_wick_contractions": 54,
+      "number_1pi_wick_contractions": 16,
+      "patterns": [
+        {
+          "external": "C:phi,phi,psi|y:psi|ystar:none",
+          "edges": "C-ystar:fermion,y-ystar:fermion,y-ystar:scalar",
+          "is_1PI": false,
+          "wick_contractions": 8
+        },
+        {
+          "external": "C:phi,phi|y:psi,psi|ystar:none",
+          "edges": "C-ystar:fermion,C-ystar:fermion,y-ystar:scalar",
+          "is_1PI": false,
+          "wick_contractions": 2
+        },
+        {
+          "external": "C:phi,psi,psi|y:none|ystar:phi",
+          "edges": "C-y:scalar,y-ystar:fermion,y-ystar:fermion",
+          "is_1PI": false,
+          "wick_contractions": 4
+        },
+        {
+          "external": "C:phi,psi,psi|y:phi|ystar:none",
+          "edges": "C-ystar:scalar,y-ystar:fermion,y-ystar:fermion",
+          "is_1PI": false,
+          "wick_contractions": 4
+        },
+        {
+          "external": "C:phi,psi|y:phi,psi|ystar:none",
+          "edges": "C-ystar:fermion,C-ystar:scalar,y-ystar:fermion",
+          "is_1PI": false,
+          "wick_contractions": 16
+        },
+        {
+          "external": "C:phi,psi|y:psi|ystar:phi",
+          "edges": "C-y:scalar,C-ystar:fermion,y-ystar:fermion",
+          "is_1PI": true,
+          "wick_contractions": 16
+        },
+        {
+          "external": "C:phi|y:psi,psi|ystar:phi",
+          "edges": "C-y:scalar,C-ystar:fermion,C-ystar:fermion",
+          "is_1PI": false,
+          "wick_contractions": 4
+        }
+      ]
+    }
+  },
+  "crossed_external_scalar_attachment_only_1PR": true,
+  "noncrossed_Cstar_y_y_has_1PI_triangle": true,
+  "unstarred_C_y_y_chirality_forbids_diagram": true,
+  "is_complete_counterterm_derivation": false,
+  "is_physical_Aminus4_certification": false,
+  "caveat": "Topology alone cannot exclude on-shell/EOM-induced mixing or settle the September 2026 version-of-record equation."
+}

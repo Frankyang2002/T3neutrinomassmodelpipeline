@@ -1,0 +1,57 @@
+{
+  "format": "t3-batch34-crossed-candidate-diagnostic-v1",
+  "source_head": "12128de602ac6bf109dbad50dbac8446ed629434",
+  "status": "WARD_DIAGNOSTICS_PASSED_UNVERIFIED_CANDIDATE",
+  "candidate_equation": "crossed = sum_{sigma({i,j} x {a,b})} y_jla y_ikc conjugate(C_lkbc)",
+  "original_v1_contraction": "crossed = sum_{sigma({i,j} x {a,b})} y_jla y_ikc C_lkbc",
+  "anti_linear_blocks": "both crossed_yukawa and conjugate_coefficient_yukawa under candidate",
+  "reference_conflict": "Uploaded arXiv:2512.16890v1 Eq.(4.85) explicitly shows unstarred C in the crossed term; this candidate is NOT an asserted correction to the paper",
+  "original_ward_status": "BLOCKED_GAUGE_WARD_VIOLATION",
+  "candidate_status": "UNVERIFIED_WARD_COVARIANT_CROSSED_CONTRACTION",
+  "tests": [
+    {
+      "name": "SM_L_eC_H_with_Weinberg",
+      "y_ward_abs": 0.0,
+      "C_ward_abs": 0.0,
+      "lambda_ward_abs": 5.551115123125783e-17,
+      "crossed_candidate_norm": 3.2685934294986725e-18,
+      "crossed_original_norm": 0.1008414597276338,
+      "crossed_candidate_ward_abs": 1.5210285707667171e-18,
+      "beta_ward_abs": 2.7755575615628914e-17,
+      "beta_ward_relative": 1.940015680834073e-16,
+      "term_ward_abs": {
+        "yukawa_wavefunction": 0.0,
+        "scalar_pair": 5.594315114139762e-17,
+        "mixed_yukawa_gauge": 6.938893903907228e-18,
+        "crossed_yukawa": 1.5210285707667171e-18,
+        "conjugate_coefficient_yukawa": 3.095371084653332e-18,
+        "scalar_anomalous_dimension": 0.0,
+        "fermion_anomalous_dimension": 0.0
+      }
+    },
+    {
+      "name": "nonzero_U1_XX_to_XstarX",
+      "y_ward_abs": 0.0,
+      "C_ward_abs": 0.0,
+      "lambda_ward_abs": 0.0,
+      "crossed_candidate_norm": 0.07747580267412524,
+      "crossed_original_norm": 3.195479074111431e-18,
+      "crossed_candidate_ward_abs": 0.0,
+      "beta_ward_abs": 8.879705363122431e-19,
+      "beta_ward_relative": 9.26209903771952e-18,
+      "term_ward_abs": {
+        "yukawa_wavefunction": 0.0,
+        "scalar_pair": 0.0,
+        "mixed_yukawa_gauge": 0.0,
+        "crossed_yukawa": 0.0,
+        "conjugate_coefficient_yukawa": 8.879705363122431e-19,
+        "scalar_anomalous_dimension": 0.0,
+        "fermion_anomalous_dimension": 0.0
+      }
+    }
+  ],
+  "physical_A_minus4_rge_certified": false,
+  "chatA_canonical_boundary_verified": false,
+  "chatB_running_general_EFT1_couplings_verified": false,
+  "notes": "Necessary gauge-covariance checks pass, but an independent RGE derivation is still required. No physical ODE trajectory is modified here."
+}

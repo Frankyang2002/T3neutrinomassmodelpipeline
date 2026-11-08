@@ -1,0 +1,109 @@
+{
+  "format": "t3-batch34-unitary-and-ode-covariance-audit-v1",
+  "repo_main_SHA": "12128de602ac6bf109dbad50dbac8446ed629434",
+  "uploaded_master_reference": "arXiv:2512.16890v1 Eq. (4.85) printed unstarred crossed C",
+  "independent_reference": "Fonseca Olgoso Santiago arXiv:2512.15866v1 Eq. (22), not mapped to master-normalization coefficients",
+  "original_beta_mode": "source_v1_unstarred",
+  "candidate_beta_mode": "ward_covariant_candidate",
+  "physics_certified": false,
+  "verified_mathematical_requirements": {
+    "unitary_basis_covariance": true,
+    "U1_SU2_Ward_tests": true,
+    "separate_pair_symmetry": true,
+    "real_linearity": true,
+    "ode_generated_zero_modes": true
+  },
+  "unverified_physics_requirements": [
+    "loop-level crossed coefficient and conjugation against published version of Eq (4.85)",
+    "matchete-to-Weyl canonical boundary from Chat A",
+    "complete general EFT1 running couplings from Chat B",
+    "simultaneous scalar finite matching"
+  ],
+  "gauge_invariant_test_residuals": [
+    {
+      "name": "SM_L_eC_H_with_Weinberg",
+      "y_ward_abs": 0.0,
+      "C_ward_abs": 0.0,
+      "lambda_ward_abs": 5.551115123125783e-17,
+      "crossed_candidate_norm": 3.2685934294986725e-18,
+      "crossed_original_norm": 0.1008414597276338,
+      "crossed_candidate_ward_abs": 1.5210285707667171e-18,
+      "beta_ward_abs": 2.7755575615628914e-17,
+      "beta_ward_relative": 1.940015680834073e-16,
+      "term_ward_abs": {
+        "yukawa_wavefunction": 0.0,
+        "scalar_pair": 5.594315114139762e-17,
+        "mixed_yukawa_gauge": 6.938893903907228e-18,
+        "crossed_yukawa": 1.5210285707667171e-18,
+        "conjugate_coefficient_yukawa": 3.095371084653332e-18,
+        "scalar_anomalous_dimension": 0.0,
+        "fermion_anomalous_dimension": 0.0
+      }
+    },
+    {
+      "name": "nonzero_U1_XX_to_XstarX",
+      "y_ward_abs": 0.0,
+      "C_ward_abs": 0.0,
+      "lambda_ward_abs": 0.0,
+      "crossed_candidate_norm": 0.07747580267412524,
+      "crossed_original_norm": 3.195479074111431e-18,
+      "crossed_candidate_ward_abs": 0.0,
+      "beta_ward_abs": 8.879705363122431e-19,
+      "beta_ward_relative": 9.26209903771952e-18,
+      "term_ward_abs": {
+        "yukawa_wavefunction": 0.0,
+        "scalar_pair": 0.0,
+        "mixed_yukawa_gauge": 0.0,
+        "crossed_yukawa": 0.0,
+        "conjugate_coefficient_yukawa": 8.879705363122431e-19,
+        "scalar_anomalous_dimension": 0.0,
+        "fermion_anomalous_dimension": 0.0
+      }
+    }
+  ],
+  "complex_unitary_and_real_scalar_rotation_relative_residual_original_by_term": {
+    "yukawa_wavefunction": 4.316401389134405e-16,
+    "scalar_pair": 4.4177756547766923e-16,
+    "mixed_yukawa_gauge": 5.04605790327503e-16,
+    "crossed_yukawa": 1.2018222824157974,
+    "conjugate_coefficient_yukawa": 3.9256422643575203e-16,
+    "scalar_anomalous_dimension": 3.305044215057601e-16,
+    "fermion_anomalous_dimension": 0.20944086443457208
+  },
+  "complex_unitary_and_real_scalar_rotation_relative_residual_candidate_by_term": {
+    "yukawa_wavefunction": 4.316401389134405e-16,
+    "scalar_pair": 4.4177756547766923e-16,
+    "mixed_yukawa_gauge": 5.04605790327503e-16,
+    "crossed_yukawa": 4.385697721719426e-16,
+    "conjugate_coefficient_yukawa": 3.9256422643575203e-16,
+    "scalar_anomalous_dimension": 3.305044215057601e-16,
+    "fermion_anomalous_dimension": 3.62154278193286e-16
+  },
+  "synthetic_U1_ODE": {
+    "muF_gev": 100000.0,
+    "muS_gev": 1000.0,
+    "source_coordinate_norm": 0.2236067977499789,
+    "induced_initially_zero_component_norm": 0.0020031994685382848,
+    "max_Ward_relative_residual_along_trajectory": 0.0,
+    "nfev": 59,
+    "generated_zero_boundary_count": 2,
+    "beta_physics_certified": false
+  },
+  "full45_synthetic_ODE": {
+    "independent_coordinates": 80730,
+    "generated_zero_coordinates": 36,
+    "nfev": 44,
+    "source_to_destination_gev": [
+      100000.0,
+      2000.0
+    ],
+    "fixed_order_full_relative_difference": 0.0011574611488127493
+  },
+  "software": {
+    "python": "3.13.5",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0"
+  },
+  "source_v1_is_incompatible_with_generic_complex_unitary_Weyl_basis": true,
+  "status": "COVARIANCE_PASS_UNVERIFIED_LOOP_FORMULA"
+}

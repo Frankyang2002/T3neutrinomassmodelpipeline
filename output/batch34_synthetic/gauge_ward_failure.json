@@ -1,0 +1,64 @@
+{
+  "format": "t3-batch34-ward-gate-v1",
+  "status": "BLOCKED_GAUGE_WARD_VIOLATION",
+  "source_revision": "12128de602ac6bf109dbad50dbac8446ed629434",
+  "toy": "gauge-invariant SM L,eC,H Yukawa/quartic/Weinberg C, not physical A(-4)",
+  "input_max_absolute_ward_residuals": {
+    "yukawa": 0.0,
+    "quartic": 5.551115123125783e-17,
+    "wilson": 0.0
+  },
+  "variants": {
+    "repository_two_simultaneous_exchanges": {
+      "full_beta_relative_ward_residual": 0.35242290748898664,
+      "full_beta_ward_absolute": 0.0504207298638169,
+      "per_term_absolute_ward_residual": {
+        "yukawa_wavefunction": 0.0,
+        "scalar_pair": 5.594315114139762e-17,
+        "mixed_yukawa_gauge": 6.938893903907228e-18,
+        "crossed_yukawa": 0.0504207298638169,
+        "conjugate_coefficient_yukawa": 3.095371084653332e-18,
+        "scalar_anomalous_dimension": 0.0,
+        "fermion_anomalous_dimension": 0.0
+      },
+      "per_term_frobenius_norm": {
+        "yukawa_wavefunction": 0.0,
+        "scalar_pair": 0.45757216757216285,
+        "mixed_yukawa_gauge": 3.055197005505209,
+        "crossed_yukawa": 0.0504207298638169,
+        "conjugate_coefficient_yukawa": 4.190226261019411e-18,
+        "scalar_anomalous_dimension": 2.2655476994287715,
+        "fermion_anomalous_dimension": 1.7428264075109965
+      }
+    },
+    "batch34_four_independent_exchanges": {
+      "full_beta_relative_ward_residual": 0.7048458149779733,
+      "full_beta_ward_absolute": 0.1008414597276338,
+      "per_term_absolute_ward_residual": {
+        "yukawa_wavefunction": 0.0,
+        "scalar_pair": 5.594315114139762e-17,
+        "mixed_yukawa_gauge": 6.938893903907228e-18,
+        "crossed_yukawa": 0.1008414597276338,
+        "conjugate_coefficient_yukawa": 3.095371084653332e-18,
+        "scalar_anomalous_dimension": 0.0,
+        "fermion_anomalous_dimension": 0.0
+      },
+      "per_term_frobenius_norm": {
+        "yukawa_wavefunction": 0.0,
+        "scalar_pair": 0.45757216757216285,
+        "mixed_yukawa_gauge": 3.055197005505209,
+        "crossed_yukawa": 0.1008414597276338,
+        "conjugate_coefficient_yukawa": 4.190226261019411e-18,
+        "scalar_anomalous_dimension": 2.2655476994287715,
+        "fermion_anomalous_dimension": 1.7428264075109965
+      }
+    }
+  },
+  "tolerance": 2e-11,
+  "failed_variants": [
+    "repository_two_simultaneous_exchanges",
+    "batch34_four_independent_exchanges"
+  ],
+  "physical_Aminus4_certified": false,
+  "explanation": "Crossed-Yukawa term/gauge index conventions remain unresolved; do not infer a correction merely from this test."
+}

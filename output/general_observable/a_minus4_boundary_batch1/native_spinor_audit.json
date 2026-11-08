@@ -1,0 +1,107 @@
+{
+  "format": "t3-a-minus4-signed-spinor-ambiguity-audit-v1",
+  "model": "A_-4",
+  "status": "NATIVE_ACTION_AND_CONDITIONAL_WILSON_VERIFIED_ABSOLUTE_PHASE_OPEN",
+  "root": "C:\\thesistemp\\T3neutrinomassmodelpipeline",
+  "native_probe_sha256": "f70662ce903deceb5351a050268f3dfa10b94ea80cea0e255d152fa248ab8529",
+  "independent_source_file_sha256": {
+    "native_seed": {
+      "relative_path": "output\\general_observable\\fermion_first_all16_v1\\A_m4\\data\\eft1_after_F_wilson_seed.json",
+      "sha256": "ffd6c04962d7b260a890c3306a4ce9522edd36bac0867a200e2fd3d3505e64a5"
+    },
+    "native_full_tree": {
+      "relative_path": "output\\general_observable\\fermion_first_all16_v1\\A_m4\\data\\eft1_after_F_tree_inputform.txt",
+      "sha256": "e258409538dc36287821993ff90861b0ac8216fbddde7b82491f063b1c1703bc"
+    },
+    "source_flavour": {
+      "relative_path": "output\\general_observable\\general_wilson_boundary_v1\\A_m4\\wilson_boundary.json",
+      "sha256": "c56fb3e5a4af61c9929ec0faf77f89d98cd9fb07edce53c62b97e45822268c44"
+    },
+    "ordered_tensor": {
+      "relative_path": "output\\general_observable\\ordered_wilson_tensor_v4\\A_m4\\ordered_tensor.json",
+      "sha256": "17e0b84a8aba16fbd53211af062f980a0ff1b3487539768f53e35d7d3d7dd15a"
+    },
+    "polynomial": {
+      "relative_path": "output\\general_observable\\general_wilson_polynomial_batch_v2\\A_m4\\polynomial_bridge.json",
+      "sha256": "451ba9fcb076b1ca8116bf167e89ab57c2d9ee4ceeb7e068b6008acb846f0245"
+    },
+    "running": {
+      "relative_path": "output\\general_observable\\all16_v1\\A_m4\\running.json",
+      "sha256": "7f16660186a6f208a419cbc53b9e6641e9b5fd71277fc40e4a03ef6610bc4f92"
+    }
+  },
+  "mu_F_gev": 100000.0,
+  "native_action_checks": {
+    "native_validated_UV_action": true,
+    "only_F_heavy": true,
+    "three_heavy_flavours": true,
+    "both_native_topology_yukawas_present": true,
+    "y1_native_action_contains_charge_conjugation": true,
+    "heavy_free_action_has_MF": true,
+    "heavy_free_action_has_NewFermion": true
+  },
+  "native_abstract_spinor_checks": {
+    "native_CC_square_minus_one": true,
+    "native_CC_transpose_antisymmetric": true,
+    "native_charge_conjugated_bilinear": true,
+    "native_chiral_projector_flip": true
+  },
+  "spinor_convention_witness": {
+    "metric": "+---",
+    "Weyl_epsilon_12": 1,
+    "fixed_reference_C": "i gamma^2 gamma^0",
+    "fixed_reference_C_inverse": "-i gamma^2 gamma^0",
+    "reference_weyl_bilinear_q_eps_p": {
+      "real": 3.4000000000000004,
+      "imag": -3.8
+    },
+    "C_PL_to_Weyl_ratio": {
+      "real": 1.0,
+      "imag": -0.0
+    },
+    "C_inverse_PL_to_Weyl_ratio": {
+      "real": -1.0,
+      "imag": -0.0
+    },
+    "sample_source_coefficient_gev_inv": {
+      "real": 5.81274299523468e-05,
+      "imag": -0.00010335764892455476
+    },
+    "sample_C_amplitude": {
+      "real": -0.00019512580407532896,
+      "imag": -0.000572300240162404
+    },
+    "sample_C_inverse_amplitude": {
+      "real": 0.00019512580407532896,
+      "imag": 0.000572300240162404
+    },
+    "native_Matchete_sign_measured": false,
+    "why_not_measured": "Native GammaCC abstract algebra does not assign either numeric 4x4 matrix to its symbol."
+  },
+  "declared_UV_dirac_Grassmann_saddle": {
+    "declared_UV_action": "-M u.eps.v + u.eps.A + v.eps.B",
+    "result": "A.eps.B/M",
+    "mass": "13",
+    "matched_Grassmann_coefficient": "1/M",
+    "eom_equality": true,
+    "native_Aminus4_UV_vertex_identification_established": false
+  },
+  "flavour_complex_3x3_boundary_recomputed": true,
+  "conditional_tensor_independent_nonzero": 60,
+  "conditional_tensor_full_shape": [
+    45,
+    45,
+    12,
+    12
+  ],
+  "physical_C_ijab_at_MF": null,
+  "native_GammaCC_to_Weyl_factor": null,
+  "certified": false,
+  "blocking_probes": [
+    "Native installed GammaCC needs a concrete 4x4 matrix/orientation in the same external Weyl convention.",
+    "A connected UV F-exchange amplitude and the Matchete PL EFT contact amplitude must be compared with signed complex external spinors and source Yukawa vertices.",
+    "Matchete triplet SU(2) component axes must be equated to the master RGE generators.",
+    "The master three-family fermion-basis constructor must be checked before claiming a 45x45x12x12 physical contract."
+  ],
+  "scope": "Batch 1 source/action and phase only; no full Wilson ODE or coupling RGEs."
+}

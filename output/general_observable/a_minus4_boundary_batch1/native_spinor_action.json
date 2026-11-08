@@ -1,0 +1,47 @@
+{
+	"format":"t3-a-minus4-native-spinor-action-probe-v1",
+	"model":"A_-4",
+	"status":"NativeAminus4UVActionAndAbstractCCVerified_PhaseUnmeasured",
+	"checks_action":{
+		"native_validated_UV_action":true,
+		"only_F_heavy":true,
+		"three_heavy_flavours":true,
+		"both_native_topology_yukawas_present":true,
+		"y1_native_action_contains_charge_conjugation":true,
+		"heavy_free_action_has_MF":true,
+		"heavy_free_action_has_NewFermion":true
+	},
+	"checks_abstract_spinor":{
+		"native_CC_square_minus_one":true,
+		"native_CC_transpose_antisymmetric":true,
+		"native_charge_conjugated_bilinear":true,
+		"native_chiral_projector_flip":true
+	},
+	"native_heavy_fields":[
+		"F"
+	],
+	"native_light_fields":[
+		"S1",
+		"S2"
+	],
+	"native_yukawa_1_terms_inputform":[
+		"CG[T3Y1CG, {Index[d$$1, SU2L[fund]], Index[d$$1, T3BSMd2]}]*Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]*Field[NewScalar1, Scalar, {}, {}]*NCM[Bar[Field[l, Fermion, {Index[d$$1, SU2L[fund]], Index[d$$1, Flavor]}, {}]], DiracProduct[GammaCC, Proj[1]], Transp[Bar[Field[NewFermion, Fermion, {Index[d$$1, T3BSMd2], Index[d$$1, NFlavor]}, {}]]]]",
+		"Bar[Coupling[y1, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*Bar[Field[NewScalar1, Scalar, {}, {}]]*CG[Bar[T3Y1CG], {Bar[Index[d$$1, SU2L[fund]]], Bar[Index[d$$1, T3BSMd2]]}]*NCM[Transp[Field[l, Fermion, {Index[d$$1, SU2L[fund]], Index[d$$1, Flavor]}, {}]], DiracProduct[GammaCC, Proj[-1]], Field[NewFermion, Fermion, {Index[d$$1, T3BSMd2], Index[d$$1, NFlavor]}, {}]]"
+	],
+	"native_yukawa_2_terms_inputform":[
+		"Bar[Field[NewScalar2, Scalar, {Index[d$$1, T3BSMd3]}, {}]]*CG[T3Y2CG, {Index[d$$1, SU2L[fund]], Bar[Index[d$$1, T3BSMd2]], Index[d$$1, T3BSMd3]}]*Coupling[y2, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]*NCM[Bar[Field[l, Fermion, {Index[d$$1, SU2L[fund]], Index[d$$1, Flavor]}, {}]], DiracProduct[Proj[1]], Field[NewFermion, Fermion, {Index[d$$1, T3BSMd2], Index[d$$1, NFlavor]}, {}]]",
+		"Bar[Coupling[y2, {Index[d$$1, Flavor], Index[d$$1, NFlavor]}, 0]]*CG[Bar[T3Y2CG], {Bar[Index[d$$1, SU2L[fund]]], Index[d$$1, T3BSMd2], Index[d$$1, T3BSMd3]}]*Field[NewScalar2, Scalar, {Index[d$$1, T3BSMd3]}, {}]*NCM[Bar[Field[NewFermion, Fermion, {Index[d$$1, T3BSMd2], Index[d$$1, NFlavor]}, {}]], DiracProduct[Proj[-1]], Field[l, Fermion, {Index[d$$1, SU2L[fund]], Index[d$$1, Flavor]}, {}]]"
+	],
+	"native_heavy_free_inputform":"-(Coupling[MF, {Index[d$$1, NFlavor]}, 0]*NCM[Bar[Field[NewFermion, Fermion, {Index[d$$1, T3BSMd2], Index[d$$1, NFlavor]}, {}]], Field[NewFermion, Fermion, {Index[d$$1, T3BSMd2], Index[d$$1, NFlavor]}, {}]]) + I*NCM[Bar[Field[NewFermion, Fermion, {Index[d$$1, T3BSMd2], Index[d$$1, NFlavor]}, {}]], DiracProduct[GammaM[Index[d$$1, Lorentz]]], Field[NewFermion, Fermion, {Index[d$$1, T3BSMd2], Index[d$$1, NFlavor]}, {Index[d$$1, Lorentz]}]]",
+	"native_spinor_bilinear_inputform":"NCM[Bar[Field[l, Fermion, {Index[i, SU2L[fund]], Index[p, Flavor]}, {}]], DiracProduct[GammaCC, Proj[1]], Transp[Bar[Field[NewFermion, Fermion, {Index[j, T3BSMd2], Index[r, NFlavor]}, {}]]]]",
+	"native_spinor_bilinear_explicit_inputform":"NCM[Bar[Field[l, Fermion, {Index[i, SU2L[fund]], Index[p, Flavor]}, {}]], DiracProduct[GammaCC, Proj[1]], Transp[Bar[Field[NewFermion, Fermion, {Index[j, T3BSMd2], Index[r, NFlavor]}, {}]]]]",
+	"native_cc_squared_inputform":"-1",
+	"native_cc_transpose_inputform":"-GammaCC",
+	"native_concrete_4x4_cc_matrix":null,
+	"native_4x4_CC_to_Weyl_epsilon_ratio":null,
+	"native_connected_UV_amplitude_calculated":false,
+	"native_source_matched_contact_amplitude_calculated":false,
+	"full_F_matching_performed_by_this_probe":false,
+	"physical_certification":false,
+	"note":"Matchete GammaCC is an abstract Dirac-algebra symbol in this probe. C and -C obey the same identities. A signed external-amplitude comparison and master basis mapping remain required."
+}

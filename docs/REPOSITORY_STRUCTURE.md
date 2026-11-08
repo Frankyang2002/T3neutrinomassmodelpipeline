@@ -57,3 +57,16 @@ The older names `EFT1`, `stage 1` and `stage 2` can appear in existing source fi
 Do not relocate active Python/Wolfram modules or rename their imported symbols solely to improve their appearance. Likewise, generated filenames may be referenced literally by saved JSON manifests or verification scripts. Older research tools are intentionally kept separate from the principal reader-facing commands, rather than being silently reclassified as production physics.
 
 For further details, see [Model and calculation contract](MODEL_AND_PIPELINE.md), [Numerical methods](NUMERICAL.md), [Testing strategy](TEST_STRATEGY.md) and [Results](RESULTS.md).
+
+## Technical notes and research programs
+
+The current physics guides remain directly under `docs/`. Supplementary
+historical technical notes are grouped under `docs/research/` by model and
+symmetry, EFT matching, numerical studies and scientific reporting. Their
+original titles and mathematical content remain unchanged.
+
+A generated `scripts/INDEX.md` groups specialised programs by purpose without
+breaking their established import paths. Research-only programs explicitly
+marked experimental may be relocated to `scripts/research/experimental/` after
+independent reference and path-safety checks. A script's presence or group
+label is not a certificate of physical completeness.

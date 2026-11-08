@@ -19,3 +19,14 @@ Other scripts provide **model-specific studies**, symbolic export, independent v
 | Technical and physical assumptions | `../docs/` |
 
 Source identifiers referring to prior study stages are preserved where a direct rename would break imports, checkpoints, saved provenance or Mathematica commands. Consult the [repository structure](../docs/REPOSITORY_STRUCTURE.md) and [documentation index](../docs/README.md) before running a specialised script.
+
+## Finding a specialised command
+
+The generated [research command index](INDEX.md) groups the scripts by
+symbolic calculation, EFT matching, numerical analysis, reports and
+validation. The files stay in `scripts/` wherever Python imports, Wolfram
+calls or saved provenance depend on their precise paths. The index provides
+readable navigation without changing working entry points.
+
+[Experimental research programs](research/README.md) can be relocated only
+after a separate dependency review; these are not production entry points.

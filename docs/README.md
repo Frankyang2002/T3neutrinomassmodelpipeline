@@ -34,3 +34,12 @@ The subject-organised volumes retain the derivations and investigations behind t
 - [Historical research document index](RESEARCH_HISTORY_INDEX.md)
 
 These records include preliminary analyses and superseded conventions. They are evidence of research progression, **not** a replacement for the current physics and numerical contracts. File identifiers used in scripts, native exports or saved manifests are kept unchanged so that results remain traceable.
+
+## Research files by subject
+
+Supplementary model-specific notes and research records are grouped under
+[Research documentation](research/README.md), with a generated
+[document index](research/INDEX.md). The original scientific content and
+identifiers are preserved. Only files with no detected incoming references or
+location-dependent Markdown links are eligible for relocation. Documents with
+saved-data or code dependencies stay at their original paths.

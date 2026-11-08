@@ -1,9 +1,9 @@
 """Architecture regression checks for the central pipeline backbone.
 
-``pipeline.py`` is intentionally the project map: it owns ordering and data
-flow, while CLI parsing, model selection, numerical-config bookkeeping,
-detailed RGEs, low-energy physics, validation, and reports live in specialised
-modules.
+``pipeline.py`` coordinates the run, while CLI parsing, model selection,
+numerical configuration, running, low-energy physics, validation, and reports
+are delegated to specialised modules. These tests check source structure
+rather than historical comment wording.
 """
 
 from __future__ import annotations
@@ -44,9 +44,17 @@ def _called_names(node: ast.AST) -> set[str]:
 
 def test_pipeline_remains_compact_central_backbone() -> None:
     source = _pipeline_source()
+    tree = _pipeline_tree()
     assert len(source.splitlines()) < 500
-    assert "Central backbone for the T3 neutrino-mass calculation" in source
-    assert "this file owns their order" in source
+    defined = {
+        node.name for node in tree.body if isinstance(node, ast.FunctionDef)
+    }
+    assert {
+        "main",
+        "_attach_threshold_metadata",
+        "_run_intermediate_eft_stages",
+        "finish_runs",
+    } <= defined
 
 
 def test_pipeline_imports_configuration_helpers_instead_of_implementing_them() -> None:

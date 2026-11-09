@@ -1,0 +1,300 @@
+{
+  "format": "t3-source-CG-mapped-A4-run-v8",
+  "model": "A_-4",
+  "status": "SourceCGMappedA4NumericalCandidateNotCertified",
+  "classification": "SourceCGMappedA4NumericalCandidateNotCertified",
+  "not_physical_matching": true,
+  "numerical_source_cg_map_verified": true,
+  "EFT_order": "UV -> all fermions out at MF -> BOTH scalars out at MS -> SMEFT",
+  "original_source_files_not_modified": true,
+  "no_orthogonal_singlet_projection": true,
+  "source": {
+    "background.npz": "bcaec627fc5cd12c5736bcd54b912631027cf30ddc853df2a349d622878a0cfd",
+    "background.json": "473cfb6ed9600678919fcced619ed7c7ef680b4bd24444399ac318b10eacecab",
+    "boundary.npz": "c864a48b171a7119de681e570f7b569a449a75cf7551dc11856d665b5466c4f7",
+    "boundary.json": "7b8c8d6286181a3691a5de8ae3fa8141e42c03b02f70883cf4e1e2f100c42856"
+  },
+  "source_CG": {
+    "source_path": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\fermion_first_hermitian_portal_v1\\A_m4\\data\\eft1_after_F_wilson_seed.json",
+    "source_sha256": "ffd6c04962d7b260a890c3306a4ce9522edd36bac0867a200e2fd3d3505e64a5",
+    "registry": "T3MixCG",
+    "native_reps": "{Bar[SU2L[fund]], Bar[SU2L[fund]], T3BSMd3}",
+    "source_chirality_used": "PL",
+    "source_scalar_term": "LL S1_conjugate S2",
+    "map_definition": "phi_native[a]=sum_A R[a,A] phi_canonical[A]",
+    "singlet_S1_real_pair": "identity",
+    "triplet_S2_native_from_canonical_U_real": [
+      [
+        -0.7071067811865475,
+        0.0,
+        0.7071067811865477
+      ],
+      [
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ],
+    "triplet_S2_native_from_canonical_U_imag": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        -0.7071067811865477,
+        0.0,
+        -0.7071067811865475
+      ]
+    ],
+    "source_CG_to_canonical_scalar_factor": 1.8612097182041991,
+    "map_orthogonality_error": 4.522125247866167e-16,
+    "reconstruction_relative_error": 1.7077247098276815e-16,
+    "no_coefficient_projection": true,
+    "no_norm_discarded": true
+  },
+  "MF_source_boundary_map": {
+    "model": "A_-4",
+    "input_identity_ward": {
+      "SU2": 1.5086889589691435,
+      "U1": 0.0,
+      "SU3": 0.0
+    },
+    "source_cg_mapped_ward": {
+      "SU2": 2.4358300199508313e-16,
+      "U1": 0.0,
+      "SU3": 0.0
+    },
+    "source_LLSS_norm_GeV_inverse": 1.5993203344455098e-08,
+    "mapped_LLSS_norm_GeV_inverse": 1.5993203344455105e-08,
+    "LLSS_norm_relative_change": 4.137660703675423e-16,
+    "LLSS_norm_fraction_retained": 1.0000000000000004,
+    "original_stream2_boundary_reconstruction_error": 0.0,
+    "outside_LLSS_unchanged": true,
+    "no_Ward_singlet_projection": true,
+    "classification": "SourceCGMappedA4NumericalCandidateNotCertified",
+    "signed_GammaCC_to_Weyl_not_independently_certified": true
+  },
+  "MF_Yukawa_Ward": {
+    "SU2": 0.0,
+    "U1": 3.881810483669531e-19,
+    "SU3": 0.0
+  },
+  "MF_quartic_Ward": {
+    "SU2": 1.3220550491163274e-16,
+    "U1": 1.1604964685178542e-16,
+    "SU3": 0.0
+  },
+  "MF_mapped_boundary_beta_Ward": {
+    "SU2": 5.958797846958262e-16,
+    "U1": 1.2096675614822714e-18,
+    "SU3": 0.0
+  },
+  "MF_beta_backend": "existing_repository_matrix_free_engine",
+  "MS_full_Ward": {
+    "SU2": 2.826397580431428e-16,
+    "U1": 3.382078178483912e-19,
+    "SU3": 0.0
+  },
+  "C_preflight": {
+    "format": "t3-parallel-c-real-endpoint-preflight-v2",
+    "model": "A_-4",
+    "wilson_manifest": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\parallel_t3\\source_cg_mapped_a4_v8.partial\\adapted\\A_m4\\wilson.json",
+    "background_manifest": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\parallel_t3\\source_cg_mapped_a4_v8.partial\\adapted\\A_m4\\background.json",
+    "requested_mode": "rge_improved",
+    "mu_low_gev": 173.0,
+    "status": "ready_conditional",
+    "blockers": [],
+    "checks": {
+      "A_input_manifest_and_checksum": {
+        "status": "passed",
+        "details": {
+          "format": "t3-parallel-c-wilson-input-v1",
+          "model": "A_-4",
+          "npz_keys": [
+            "C5_EFT1_mf",
+            "C5_EFT1_ms",
+            "C_LLSS_mf",
+            "C_LLSS_ms",
+            "C_psi2phi2_ms",
+            "C_psi2phi2_tree_mf",
+            "beta_C5_conjugate_coefficient_yukawa_at_MF_16pi2",
+            "beta_C5_conjugate_coefficient_yukawa_at_MS_16pi2",
+            "beta_C5_crossed_yukawa_at_MF_16pi2",
+            "beta_C5_crossed_yukawa_at_MS_16pi2",
+            "beta_C5_fermion_anomalous_dimension_at_MF_16pi2",
+            "beta_C5_fermion_anomalous_dimension_at_MS_16pi2",
+            "beta_C5_mixed_yukawa_gauge_at_MF_16pi2",
+            "beta_C5_mixed_yukawa_gauge_at_MS_16pi2",
+            "beta_C5_scalar_anomalous_dimension_at_MF_16pi2",
+            "beta_C5_scalar_anomalous_dimension_at_MS_16pi2",
+            "beta_C5_scalar_pair_at_MF_16pi2",
+            "beta_C5_scalar_pair_at_MS_16pi2",
+            "beta_C5_yukawa_wavefunction_at_MF_16pi2",
+            "beta_C5_yukawa_wavefunction_at_MS_16pi2",
+            "beta_C_at_MF_16pi2",
+            "beta_C_at_MS_16pi2",
+            "trajectory_C5_norm_gev_inverse",
+            "trajectory_full_norm_gev_inverse",
+            "trajectory_mu_gev"
+          ],
+          "manifest_sha256": "cc990624c508feca51e20ed2dee7519e9ef3588ce7efd9b4343935e779ae1adf",
+          "npz_sha256": "3a85e528b953defa5da9e594b7e66a09878541a7f5be2ac81f2cd688f44eb93e"
+        }
+      },
+      "B_input_manifest_and_checksum": {
+        "status": "passed",
+        "details": {
+          "format": "t3-parallel-c-background-input-v1",
+          "model": "A_-4",
+          "npz_keys": [
+            "R_wilson_from_background",
+            "mass_squared_gev2_ms",
+            "quartic_real_full_ms",
+            "yd",
+            "ye",
+            "yu"
+          ],
+          "manifest_sha256": "dcbdb95b33b4499b00910428d444417b0cf5d29fc814e8415a6b9c16a735d199",
+          "npz_sha256": "47f5e5e05b32df651c69b595da41f2536f9b2219f9c4205d71c5fce15f77d1ac"
+        }
+      },
+      "model_seed_convention_scale_contract": {
+        "status": "passed",
+        "details": {
+          "model": "A_-4",
+          "mu_f_gev": 100000.0,
+          "mu_s_gev": 1000.0
+        }
+      },
+      "all_heavy_scalar_mass_eigenbasis": {
+        "status": "passed",
+        "details": {
+          "n_real_heavy": 8,
+          "positive_eigenvalues_gev2": [
+            4174396.129492785,
+            4174396.129492785,
+            4174396.129492785,
+            4174396.129492785,
+            4174396.129492785,
+            4174396.129492785,
+            5429395.214659604,
+            5429395.214659604
+          ],
+          "mass_basis_orthogonality_relative": 0.0,
+          "scalar_labels_present": true
+        }
+      },
+      "full_scalar_quartic_and_independent_channels": {
+        "status": "passed",
+        "details": {
+          "shape": [
+            12,
+            12,
+            12,
+            12
+          ],
+          "full_tensor_component_count": 20736,
+          "channel_count": 0,
+          "status": "unresolved_independent_invariant_decomposition"
+        }
+      },
+      "full_evolved_wilson_and_C5_projection": {
+        "status": "passed",
+        "details": {
+          "n_weyl": 45,
+          "n_real_scalars_with_higgs": 12,
+          "flavour_pair_relative_residual": 2.3313204836623827e-17,
+          "scalar_pair_relative_residual": 9.325281934649531e-17,
+          "weinberg_projection_relative_residual": 5.697810523069199e-16,
+          "C5_EFT1_norm_gev_inverse": 2.3445276819407212e-11,
+          "C5_separate_projection_relative_mismatch": 6.730068638807866e-16,
+          "order_zero_full_wilson_available": true,
+          "other_operator_classes_matching_certified": false
+        }
+      },
+      "SM_couplings_for_existing_one_loop_runner": {
+        "status": "passed",
+        "details": {
+          "gauge_and_quartic_parameters": {
+            "gY": 0.3325408570530256,
+            "g2": 0.6621192428215243,
+            "g3": 1.789879875366536,
+            "lambdaH": 0.4956453481285856
+          },
+          "yukawa_shapes": {
+            "ye": [
+              3,
+              3
+            ],
+            "yu": [
+              3,
+              3
+            ],
+            "yd": [
+              3,
+              3
+            ]
+          }
+        }
+      },
+      "optional_B_gauge_ward_test": {
+        "status": "passed",
+        "details": {
+          "status": "not_supplied_not_certified"
+        }
+      },
+      "single_MS_finite_bubble_match_candidate": {
+        "status": "passed",
+        "details": {
+          "eigenstates_integrated_out_at_single_MS": 8,
+          "unordered_eigenstate_pairs": 36,
+          "already_evolved_C5_kept_once": true,
+          "bubble_source": "evolved_full_at_MS_rge_improved",
+          "C5_EFT1_order_source": "rge_improved_resummed_endpoint",
+          "scalar_bubble_norm_gev_inverse": 4.49413994647029e-12,
+          "C5_SMEFT_at_MS_norm_gev_inverse": 1.8951136872951533e-11,
+          "scalar_bubble_weinberg_residual": 4.273174268981154e-16,
+          "complete_finite_matching_certified": false
+        }
+      }
+    },
+    "warnings": [
+      "A: full EFT1 dim-5 anomalous dimension not certified",
+      "A: operator closure not certified",
+      "A: spinor normalisation not certified",
+      "B: full allowed quartic inventory not certified",
+      "B: Matchete/RGBeta scalar tensor mapping not certified",
+      "C: independent additional MS one-loop diagrams, wavefunction/EOM matching uncomputed",
+      "Even with certified A/B inputs, result is a conditional one-loop scalar-bubble candidate"
+    ],
+    "no_synthetic_substitution": true,
+    "real_physical_prediction_certified": false,
+    "input_sha256": {
+      "A_manifest": "cc990624c508feca51e20ed2dee7519e9ef3588ce7efd9b4343935e779ae1adf",
+      "A_npz": "3a85e528b953defa5da9e594b7e66a09878541a7f5be2ac81f2cd688f44eb93e",
+      "B_manifest": "dcbdb95b33b4499b00910428d444417b0cf5d29fc814e8415a6b9c16a735d199",
+      "B_npz": "47f5e5e05b32df651c69b595da41f2536f9b2219f9c4205d71c5fce15f77d1ac"
+    },
+    "mu_f_gev": 100000.0,
+    "mu_s_gev": 1000.0,
+    "input_kind": "real_A_B_candidate"
+  },
+  "masses_eV_CONDITIONAL": [
+    140.07706670595238,
+    243.4927348911281,
+    410.819426384862
+  ],
+  "dm21_sq_eV2_CONDITIONAL": 39667.12732781736,
+  "stage": "EFT1_one_MS_scalar_matching_SMEFT_low"
+}

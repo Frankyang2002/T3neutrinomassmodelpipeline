@@ -1,0 +1,989 @@
+{
+  "format": "t3-parallel-c-wilson-input-v1",
+  "tensor_npz": "wilson_at_MS.npz",
+  "model": "A_-4",
+  "matching_context_id": "B:fbacf95c1c472ff9ace96295a43783d92c12cf9320685226c9da56c1c05cfa12:b094280af353d5a7ecd2dab5994c78864f81032cfa7588708345bc67598ca203",
+  "matched_seed_id": "ffd6c04962d7b260a890c3306a4ce9522edd36bac0867a200e2fd3d3505e64a5",
+  "lagrangian_source_id": "320dda9d07f1e581b838bfe01f241a2ba8a6881c76ca29b7aeb9c7099c4264dd",
+  "scalar_basis_id": "A_-4:canonical_interleaved",
+  "mu_f_gev": 100000.0,
+  "mu_s_gev": 1000.0,
+  "units": "GeV",
+  "scheme": "MSbar",
+  "canonical_wilson_convention": "C_ijab_full_sum_no_factorial_C5_1over2_H_R_interleaved_v1",
+  "wilson_evolved_to_ms": true,
+  "includes_eft1_weinberg": true,
+  "legacy_direct_llss_to_c5_log_added": false,
+  "lepton_indices": [
+    [
+      36,
+      37
+    ],
+    [
+      38,
+      39
+    ],
+    [
+      40,
+      41
+    ]
+  ],
+  "higgs_source_indices": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "heavy_source_indices": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "synthetic_fixture": false,
+  "wilson_adm_certified": false,
+  "wilson_dim5_closure_certified": false,
+  "signed_GammaCC_to_Weyl_certified": false,
+  "strict_1loop_endpoint_at_ms": false,
+  "output_status": "WardProjectedBoundaryDiagnosticOnly",
+  "adm_variant": "fonseca_eq22_six_term",
+  "adm_source": "RGE.running.intermediate.GeneralEFT1SixTermReferenceCandidate.six_term_beta",
+  "adm_reference": "Fonseca-Olgoso-Santiago JHEP07(2026)094 Eq.(22) candidate; full-gauge completion not independently certified",
+  "physics_equation": "16*pi^2*dC_ijab/dln(mu)=beta_C(C,C*,Y,lambda,g)",
+  "beta_input_convention": "16pi2_times_derivative",
+  "solver": {
+    "method": "DOP853",
+    "rtol": 1e-06,
+    "atol": 1e-21,
+    "diagnostic_intervals": 6,
+    "rhs_evaluations": 143,
+    "backends": [
+      "existing_repository_matrix_free_engine"
+    ]
+  },
+  "basis": {
+    "basis_id": "T3_RGBeta_reference_Weyl45_real_interleaved_v1",
+    "model": "A_-4",
+    "dims_S1_S2_F": [
+      1,
+      3,
+      2
+    ],
+    "alpha": -4,
+    "hypercharges_S1_S2_F": [
+      -2.0,
+      -1.0,
+      -1.5
+    ],
+    "fermion_labels": [
+      "Q[1,1,1]",
+      "Q[1,1,2]",
+      "Q[1,2,1]",
+      "Q[1,2,2]",
+      "Q[1,3,1]",
+      "Q[1,3,2]",
+      "Q[2,1,1]",
+      "Q[2,1,2]",
+      "Q[2,2,1]",
+      "Q[2,2,2]",
+      "Q[2,3,1]",
+      "Q[2,3,2]",
+      "Q[3,1,1]",
+      "Q[3,1,2]",
+      "Q[3,2,1]",
+      "Q[3,2,2]",
+      "Q[3,3,1]",
+      "Q[3,3,2]",
+      "uc[1,1]",
+      "uc[1,2]",
+      "uc[1,3]",
+      "uc[2,1]",
+      "uc[2,2]",
+      "uc[2,3]",
+      "uc[3,1]",
+      "uc[3,2]",
+      "uc[3,3]",
+      "dc[1,1]",
+      "dc[1,2]",
+      "dc[1,3]",
+      "dc[2,1]",
+      "dc[2,2]",
+      "dc[2,3]",
+      "dc[3,1]",
+      "dc[3,2]",
+      "dc[3,3]",
+      "L[1,1]",
+      "L[1,2]",
+      "L[2,1]",
+      "L[2,2]",
+      "L[3,1]",
+      "L[3,2]",
+      "ec[1]",
+      "ec[2]",
+      "ec[3]"
+    ],
+    "scalar_labels": [
+      "H[1,R]",
+      "H[1,I]",
+      "H[2,R]",
+      "H[2,I]",
+      "S1[1,R]",
+      "S1[1,I]",
+      "S2[1,R]",
+      "S2[1,I]",
+      "S2[2,R]",
+      "S2[2,I]",
+      "S2[3,R]",
+      "S2[3,I]"
+    ],
+    "fermion_axis": [
+      "i",
+      "j"
+    ],
+    "scalar_axis": [
+      "a",
+      "b"
+    ],
+    "wilson_axes": [
+      "weyl_i",
+      "weyl_j",
+      "real_scalar_a",
+      "real_scalar_b"
+    ],
+    "all_fermions_are_left_handed_Weyl": true,
+    "fermion_reps": {
+      "Q": [
+        3,
+        2,
+        0.16666666666666666
+      ],
+      "uc": [
+        "anti3",
+        1,
+        -0.6666666666666666
+      ],
+      "dc": [
+        "anti3",
+        1,
+        0.3333333333333333
+      ],
+      "L": [
+        1,
+        2,
+        -0.5
+      ],
+      "ec": [
+        1,
+        1,
+        1
+      ]
+    },
+    "heavy_scalars_Z2": -1,
+    "SM_fields_Z2": 1,
+    "complex_scalar_definition": "z=(R+iI)/sqrt(2)",
+    "H_index_weak1": "charged",
+    "H_index_weak2": "neutral",
+    "all_heavy_scalars_present_in_EFT1": true,
+    "Matchete_RGBeta_change_of_basis_certified": false
+  },
+  "input": {
+    "file_sha256": {
+      "background_npz": {
+        "path": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\parallel_t3\\rough_inputs\\rough_fermion_first_v1\\a\\A_m4\\background.npz",
+        "sha256": "bcaec627fc5cd12c5736bcd54b912631027cf30ddc853df2a349d622878a0cfd"
+      },
+      "background_json": {
+        "path": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\parallel_t3\\rough_inputs\\rough_fermion_first_v1\\a\\A_m4\\background.json",
+        "sha256": "473cfb6ed9600678919fcced619ed7c7ef680b4bd24444399ac318b10eacecab"
+      },
+      "boundary_npz": {
+        "path": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\parallel_t3\\rough_inputs\\rough_fermion_first_v1\\a\\A_m4\\boundary.npz",
+        "sha256": "c864a48b171a7119de681e570f7b569a449a75cf7551dc11856d665b5466c4f7"
+      },
+      "boundary_json": {
+        "path": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\parallel_t3\\rough_inputs\\rough_fermion_first_v1\\a\\A_m4\\boundary.json",
+        "sha256": "7b8c8d6286181a3691a5de8ae3fa8141e42c03b02f70883cf4e1e2f100c42856"
+      }
+    },
+    "boundary": {
+      "tensor_source_key": "C_LLSS_formal_muF",
+      "basis_map": "explicit_Stream1_heavy_real_rotation",
+      "initial_C5_source": "supplied_C5_hard",
+      "MF_C5_HH_projection_residual": 0.0,
+      "input_LLHH_residual_before_C5_injection": 0.0,
+      "C5_at_MF_frobenius": 0.0,
+      "LLSS_at_MF_frobenius": 1.5993203344455098e-08
+    },
+    "background_metadata": {
+      "schema": "t3-parallel-a-input-v1",
+      "format": "t3-parallel-a-input-v1",
+      "model": "A_-4"
+    },
+    "boundary_metadata": {
+      "schema": "t3-parallel-a-input-v1",
+      "format": "t3-parallel-a-input-v1",
+      "model": "A_-4"
+    },
+    "ward_boundary_projected_diagnostic": true,
+    "ward_boundary_projection_record": "ward_projection_summary.json"
+  },
+  "local_runtime": {
+    "local_source_sha256": {
+      "Numerical/parallel_t3/wilson/rough_stream2.py": "2333759e39b9ad1180a44a978cd982c626ad81af2bd8fb58fe705f6de17f062f",
+      "Numerical/parallel_t3/wilson/workflow.py": "f624eca93ea4f5137047d37fb786b604e2c1f18e262d9265b02d493c76526151",
+      "Numerical/parallel_t3/wilson/adm.py": "2eb4a3e685b67af479643a8e86d8e3dba27f615e0cd08b4d372187b84f2c4a80",
+      "Numerical/parallel_t3/wilson/coordinates.py": "ba7917dfba79a1585f38baa649144abd36018145695564dab8913f6f8e2e9828",
+      "Numerical/parallel_t3/wilson/interchange.py": "dbe28323d8c1be87a7a4399385e20663a862fb9c268fc506a6c93763290787ab",
+      "Numerical/parallel_t3/wilson/basis.py": "c703007abbb708df7ff1d4cbca84fcf0a0e42b0e469a0a09680d1aa73bdfb9fb",
+      "RGE/running/intermediate/GeneralEFT1SixTermReferenceCandidate.py": "ae85bcef1c57507be676c03c15eb6d4d3960a6a82e83f71400a29a475bc065dc",
+      "RGE/running/intermediate/GeneralEFT1SevenTermFlow.py": "d3658ff806fba4462a7dd8bddb4025c60ab2d0bf1efbf9c1924faaf9cb83b82e",
+      "RGE/running/intermediate/GeneralEFT1CrossedWardCandidate.py": "188b5cac9998c26cdb073f48fa141359e3cc01f98e149bba7c82e8a8b8e3a867"
+    },
+    "local_git_head": "5a6c7e64ee6535fd8410a88e28d7a7a8180f071c",
+    "inspected_public_main_at_development": "25eb5e13d09dd2f138176d4e36c4fc65edfa4bb6",
+    "local_code_identical_to_public_not_assumed": true
+  },
+  "C5_mf": {
+    "real": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ],
+    "imag": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  "C5_ms": {
+    "real": [
+      [
+        -1.904060805041905e-12,
+        -4.77291157028239e-13,
+        1.3257377460050165e-13
+      ],
+      [
+        -4.77291157028239e-13,
+        -8.349119777288435e-13,
+        -8.494140526257979e-13
+      ],
+      [
+        1.3257377460050165e-13,
+        -8.494140526257979e-13,
+        -1.6280039842579676e-12
+      ]
+    ],
+    "imag": [
+      [
+        -3.142932026653359e-12,
+        -8.993700344123107e-13,
+        -7.51648413909206e-13
+      ],
+      [
+        -8.993700344123107e-13,
+        -2.335330009956909e-12,
+        -7.553605128110917e-13
+      ],
+      [
+        -7.51648413909206e-13,
+        -7.553605128110917e-13,
+        -2.7662230999033007e-12
+      ]
+    ]
+  },
+  "C5_EFT1_mf_norm_gev_inverse": 0.0,
+  "C5_EFT1_ms_norm_gev_inverse": 5.9815798186837174e-12,
+  "LLSS_ms_norm_gev_inverse": 4.511540353505478e-09,
+  "LLSS_mf_norm_gev_inverse": 4.080222633579273e-09,
+  "non_LLSS_tree_mf_norm_gev_inverse": 0.0,
+  "C_full_mf_norm_gev_inverse": 4.0802226335792735e-09,
+  "C_full_ms_norm_gev_inverse": 4.511543327485748e-09,
+  "C5_Weinberg_projection_residual_mf": 0.0,
+  "C5_Weinberg_projection_residual_ms": 1.151282966981706e-27,
+  "scale_trajectory": [
+    {
+      "mu_gev": 100000.00000000001,
+      "C5_frobenius_gev_inverse": 0.0,
+      "C5_projection_absolute_residual": 0.0,
+      "C_full_frobenius_gev_inverse": 4.0802226335792735e-09
+    },
+    {
+      "mu_gev": 46415.888336127755,
+      "C5_frobenius_gev_inverse": 1.048206736174561e-12,
+      "C5_projection_absolute_residual": 3.417215783148743e-28,
+      "C_full_frobenius_gev_inverse": 4.148660154584378e-09
+    },
+    {
+      "mu_gev": 21544.346900318837,
+      "C5_frobenius_gev_inverse": 2.0919871471265335e-12,
+      "C5_projection_absolute_residual": 3.6406764070186195e-28,
+      "C_full_frobenius_gev_inverse": 4.218414994621291e-09
+    },
+    {
+      "mu_gev": 10000.00000000001,
+      "C5_frobenius_gev_inverse": 3.122139448209214e-12,
+      "C5_projection_absolute_residual": 5.75641483490853e-28,
+      "C_full_frobenius_gev_inverse": 4.289532221842797e-09
+    },
+    {
+      "mu_gev": 4641.588833612778,
+      "C5_frobenius_gev_inverse": 4.126402921433284e-12,
+      "C5_projection_absolute_residual": 8.402727741715202e-28,
+      "C_full_frobenius_gev_inverse": 4.362058992640786e-09
+    },
+    {
+      "mu_gev": 2154.4346900318833,
+      "C5_frobenius_gev_inverse": 5.087718974032382e-12,
+      "C5_projection_absolute_residual": 9.52588658646031e-28,
+      "C_full_frobenius_gev_inverse": 4.436045209955416e-09
+    },
+    {
+      "mu_gev": 999.9999999999998,
+      "C5_frobenius_gev_inverse": 5.9815798186837174e-12,
+      "C5_projection_absolute_residual": 1.151282966981706e-27,
+      "C_full_frobenius_gev_inverse": 4.511543327485748e-09
+    }
+  ],
+  "beta_channels_16pi2": {
+    "MF": {
+      "yukawa_wavefunction": {
+        "C5_projected_16pi2": {
+          "real": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "C5_beta_norm_16pi2": 0.0,
+        "LLSS_beta_norm_16pi2": 0.0,
+        "full_beta_norm_16pi2": 0.0
+      },
+      "scalar_pair": {
+        "C5_projected_16pi2": {
+          "real": [
+            [
+              6.863468075377441e-11,
+              1.7204663815518797e-11,
+              -4.77881155563751e-12
+            ],
+            [
+              1.7204663815518797e-11,
+              3.0095633448527996e-11,
+              3.061834523391595e-11
+            ],
+            [
+              -4.77881155563751e-12,
+              3.061834523391595e-11,
+              5.868366353904544e-11
+            ]
+          ],
+          "imag": [
+            [
+              1.132916216265307e-10,
+              3.2419119476985853e-11,
+              2.7094243138766702e-11
+            ],
+            [
+              3.2419119476985853e-11,
+              8.418041463721837e-11,
+              2.7228050435726e-11
+            ],
+            [
+              2.7094243138766702e-11,
+              2.7228050435726e-11,
+              9.971235163562499e-11
+            ]
+          ]
+        },
+        "C5_beta_norm_16pi2": 2.1561469094565782e-10,
+        "LLSS_beta_norm_16pi2": 2.010014354500716e-09,
+        "full_beta_norm_16pi2": 2.018669110209155e-09
+      },
+      "mixed_yukawa_gauge": {
+        "C5_projected_16pi2": {
+          "real": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "C5_beta_norm_16pi2": 0.0,
+        "LLSS_beta_norm_16pi2": 1.5368637814925783e-08,
+        "full_beta_norm_16pi2": 1.5368637814925786e-08
+      },
+      "crossed_yukawa": {
+        "C5_projected_16pi2": {
+          "real": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "C5_beta_norm_16pi2": 0.0,
+        "LLSS_beta_norm_16pi2": 0.0,
+        "full_beta_norm_16pi2": 0.0
+      },
+      "conjugate_coefficient_yukawa": {
+        "C5_projected_16pi2": {
+          "real": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "C5_beta_norm_16pi2": 0.0,
+        "LLSS_beta_norm_16pi2": 0.0,
+        "full_beta_norm_16pi2": 8.462751849075508e-30
+      },
+      "scalar_anomalous_dimension": {
+        "C5_projected_16pi2": {
+          "real": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "C5_beta_norm_16pi2": 0.0,
+        "LLSS_beta_norm_16pi2": 2.304156495655714e-08,
+        "full_beta_norm_16pi2": 2.3041564956557132e-08
+      },
+      "fermion_anomalous_dimension": {
+        "C5_projected_16pi2": {
+          "real": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "C5_beta_norm_16pi2": 0.0,
+        "LLSS_beta_norm_16pi2": 8.285053507242549e-09,
+        "full_beta_norm_16pi2": 8.28505350724255e-09
+      }
+    },
+    "MS": {
+      "yukawa_wavefunction": {
+        "C5_projected_16pi2": {
+          "real": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "C5_beta_norm_16pi2": 0.0,
+        "LLSS_beta_norm_16pi2": 0.0,
+        "full_beta_norm_16pi2": 0.0
+      },
+      "scalar_pair": {
+        "C5_projected_16pi2": {
+          "real": [
+            [
+              7.223503984214227e-11,
+              1.8107166168416957e-11,
+              -5.02948587437539e-12
+            ],
+            [
+              1.8107166168416957e-11,
+              3.167435490352153e-11,
+              3.2224440957776576e-11
+            ],
+            [
+              -5.02948587437539e-12,
+              3.2224440957776576e-11,
+              6.176184853888053e-11
+            ]
+          ],
+          "imag": [
+            [
+              1.1923454312066182e-10,
+              3.4119724034911206e-11,
+              2.8515481229919773e-11
+            ],
+            [
+              3.4119724034911206e-11,
+              8.85962528878624e-11,
+              2.8656306667914186e-11
+            ],
+            [
+              2.8515481229919773e-11,
+              2.8656306667914186e-11,
+              1.0494264998237696e-10
+            ]
+          ]
+        },
+        "C5_beta_norm_16pi2": 2.2692493833458944e-10,
+        "LLSS_beta_norm_16pi2": 1.9387043677408537e-09,
+        "full_beta_norm_16pi2": 1.9486394795410675e-09
+      },
+      "mixed_yukawa_gauge": {
+        "C5_projected_16pi2": {
+          "real": [
+            [
+              -7.520181104048815e-12,
+              -1.8850843995258013e-12,
+              5.23583503550959e-13
+            ],
+            [
+              -1.8850843995258013e-12,
+              -3.2975235077989358e-12,
+              -3.354651569881828e-12
+            ],
+            [
+              5.23583503550959e-13,
+              -3.354651569881828e-12,
+              -6.429310003656453e-12
+            ]
+          ],
+          "imag": [
+            [
+              -1.2413163471311951e-11,
+              -3.5521048817272872e-12,
+              -2.968539869576754e-12
+            ],
+            [
+              -3.5521048817272872e-12,
+              -9.223496445848964e-12,
+              -2.9831978267860453e-12
+            ],
+            [
+              -2.968539869576754e-12,
+              -2.9831978267860453e-12,
+              -1.0924362789029437e-11
+            ]
+          ]
+        },
+        "C5_beta_norm_16pi2": 2.3623824062903113e-11,
+        "LLSS_beta_norm_16pi2": 1.781854888026757e-08,
+        "full_beta_norm_16pi2": 1.781856062543444e-08
+      },
+      "crossed_yukawa": {
+        "C5_projected_16pi2": {
+          "real": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "C5_beta_norm_16pi2": 0.0,
+        "LLSS_beta_norm_16pi2": 0.0,
+        "full_beta_norm_16pi2": 0.0
+      },
+      "conjugate_coefficient_yukawa": {
+        "C5_projected_16pi2": {
+          "real": [
+            [
+              0.0,
+              0.0,
+              1.2446030555722283e-60
+            ],
+            [
+              0.0,
+              -1.5930919111324523e-58,
+              -2.039157646249539e-56
+            ],
+            [
+              1.2446030555722283e-60,
+              -2.039157646249539e-56,
+              0.0
+            ]
+          ],
+          "imag": [
+            [
+              0.0,
+              -6.223015277861142e-61,
+              0.0
+            ],
+            [
+              -6.223015277861142e-61,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              -1.044048714879764e-53
+            ]
+          ]
+        },
+        "C5_beta_norm_16pi2": 1.0440526977235067e-53,
+        "LLSS_beta_norm_16pi2": 1.5119498648007373e-50,
+        "full_beta_norm_16pi2": 8.466904325007267e-30
+      },
+      "scalar_anomalous_dimension": {
+        "C5_projected_16pi2": {
+          "real": [
+            [
+              -1.317875649560913e-11,
+              -3.3035205174785726e-12,
+              9.175954300079875e-13
+            ],
+            [
+              -3.3035205174785726e-12,
+              -5.778755395111294e-12,
+              -5.879129980440696e-12
+            ],
+            [
+              9.175954300079875e-13,
+              -5.879129980440696e-12,
+              -1.1268058260326958e-11
+            ]
+          ],
+          "imag": [
+            [
+              -2.175347328816232e-11,
+              -6.22489505145115e-12,
+              -5.2024554000533824e-12
+            ],
+            [
+              -6.22489505145115e-12,
+              -1.6163740914478417e-11,
+              -5.228148301974386e-12
+            ],
+            [
+              -5.2024554000533824e-12,
+              -5.228148301974386e-12,
+              -1.9146122093171456e-11
+            ]
+          ]
+        },
+        "C5_beta_norm_16pi2": 4.1400875266558314e-11,
+        "LLSS_beta_norm_16pi2": 2.5800973984591454e-08,
+        "full_beta_norm_16pi2": 2.580099889690165e-08
+      },
+      "fermion_anomalous_dimension": {
+        "C5_projected_16pi2": {
+          "real": [
+            [
+              4.072183702574043e-12,
+              1.020774709855049e-12,
+              -2.8352759063474404e-13
+            ],
+            [
+              1.020774709855049e-12,
+              1.7856120646984155e-12,
+              1.8165902674219365e-12
+            ],
+            [
+              -2.8352759063474404e-13,
+              1.8165902674219365e-12,
+              3.481642692444523e-12
+            ]
+          ],
+          "imag": [
+            [
+              6.721737321562469e-12,
+              1.923467739375371e-12,
+              1.6075051105280179e-12
+            ],
+            [
+              1.923467739375371e-12,
+              4.994531238363665e-12,
+              1.6154433260813481e-12
+            ],
+            [
+              1.6075051105280179e-12,
+              1.6154433260813481e-12,
+              5.9158335046739415e-12
+            ]
+          ]
+        },
+        "C5_beta_norm_16pi2": 1.2792527564615523e-11,
+        "LLSS_beta_norm_16pi2": 9.648622284642793e-09,
+        "full_beta_norm_16pi2": 9.648628644956578e-09
+      }
+    }
+  },
+  "C5_initial_source": "supplied_C5_hard",
+  "C5_generated_from_zero_boundary": true,
+  "C5_generated_from_LLSS_only_boundary": true,
+  "no_scalar_matching_performed": true,
+  "no_additional_LLSS_to_C5_leading_log": true,
+  "known_limitations": [
+    "candidate ADM, not independent one-loop proof",
+    "native Matchete/RGBeta and GammaCC maps are upstream Stream1 assertions",
+    "other one-loop fermion-hard operators not independently computed here",
+    "one-loop scalar threshold and SMEFT running owned by Stream3"
+  ],
+  "tensor_npz_sha256": "6a799df0c0c67a530c2ddb4bfb0c3396825832db61580e5f3cd4ac679dd4774e",
+  "ward_projected_boundary_diagnostic": true,
+  "not_physical_matching": true,
+  "original_source_boundary_sha256": {
+    "background.npz": "bcaec627fc5cd12c5736bcd54b912631027cf30ddc853df2a349d622878a0cfd",
+    "background.json": "473cfb6ed9600678919fcced619ed7c7ef680b4bd24444399ac318b10eacecab",
+    "boundary.npz": "c864a48b171a7119de681e570f7b569a449a75cf7551dc11856d665b5466c4f7",
+    "boundary.json": "7b8c8d6286181a3691a5de8ae3fa8141e42c03b02f70883cf4e1e2f100c42856"
+  },
+  "original_MF_SU2_Ward_residual": 1.5086889589691435,
+  "projected_MF_SU2_Ward_residual": 2.2180086919561196e-16,
+  "boundary_projection_frobenius_fraction_kept": 0.2551222882433931,
+  "scalar_source_real_labels": [
+    "S1[1,R]",
+    "S1[1,I]",
+    "S2[1,R]",
+    "S2[1,I]",
+    "S2[2,R]",
+    "S2[2,I]",
+    "S2[3,R]",
+    "S2[3,I]"
+  ],
+  "scalar_labels_origin": "indexed_A_full_scalar_labels"
+}

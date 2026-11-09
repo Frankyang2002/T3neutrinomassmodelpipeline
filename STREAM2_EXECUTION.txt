@@ -1,0 +1,71 @@
+T3 Stream 2 rough full Wilson stage — execution evidence
+========================================================
+GitHub repository: Frankyang2002/T3neutrinomassmodelpipeline
+Public main read via GitHub connector on 2026-11-10 (Sydney date).
+HEAD observed: 25eb5e13d09dd2f138176d4e36c4fc65edfa4bb6.
+No GitHub write was performed. Local Windows checkout was NOT available.
+
+Inspected public source:
+Numerical/parallel_t3/wilson/workflow.py
+Numerical/parallel_t3/wilson/adm.py
+Numerical/parallel_t3/wilson/coordinates.py
+Numerical/parallel_t3/wilson/interchange.py
+Numerical/parallel_t3/wilson/basis.py
+Numerical/parallel_t3/wilson/README.md
+Numerical/parallel_t3/threshold/README_C.md
+Numerical/parallel_t3/threshold/pipeline.py
+Numerical/parallel_t3/background/README.md
+RGE/running/intermediate/GeneralEFT1SevenTermFlow.py
+RGE/running/intermediate/GeneralEFT1CrossedWardCandidate.py
+Selected upstream candidate: fonseca_eq22_six_term, via adm.beta().
+
+Evidence executed IN THIS CONTAINER:
+1. python -m py_compile of delivered rough_stream2.py,
+   RunT3RoughStream2.py, and test_t3_rough_stream2_wilson.py: PASS.
+2. Isolated adapter test run:
+   python -m pytest -q tests/test_t3_rough_stream2_wilson.py
+   Result: 9 passed, 1 skipped (full45 test gated by env variable).
+3. Opt-in isolated 45-Weyl DOP853 test:
+   T3_STREAM2_RUN_FULL45=1 python -m pytest -q tests/test_t3_rough_stream2_wilson.py
+   Result: 10 passed in 20.86 s.
+4. A(-4) 45-Weyl/12-real scalar, synthetic portal/LLSS only,
+   DOP853 1e5->1e3 GeV, standalone formula mirror:
+   initial C5 norm = 0
+   initial LLSS norm = 3.1622776601683795e-10 GeV^-1
+   final projected C5 norm = 5.533210858705527e-13 GeV^-1
+   final C5[0,0] = -5.249264726245675e-13 - 1.7497549087485583e-13j GeV^-1
+   RHS evaluations: 59; wall-clock around 19.5 s.
+   IMPORTANT: this is a deliberately synthetic, NOT gauge-certified fixture.
+   The isolated harness uses a copied algebraic candidate mirror, NOT the
+   repository native six-term backend, and its scalar generators are stubs.
+   No corresponding fixture is shipped as a production output.
+5. CLI all-16 preflight smoke with NO canonical Stream1 files present:
+   python -m scripts.RunT3RoughStream2 --all --c5-boundary zero
+   Attempted: all 16 in A(-4)-first order; computed: 0; blocked: 16;
+   exit code 2, as designed (no synthetic substitutions).
+   This is NOT a genuine model numerical batch; only error handling.
+
+NOT EXECUTED:
+- No local Windows/.venv native Python execution.
+- No Matchete, Wolfram, RGBeta or real T3 F threshold rematching.
+- No genuine saved B model DOP853 Wilson evolution: the available saved
+  Workstream B outputs are native RGBeta/Matchete, not canonical Y/lambda4
+  and full Weyl Wilson geometry. They need Stream 1's explicit basis bridge.
+- No 16 real-model Wilson endpoints or completed Stream 3 scalar matching.
+
+The installed Stream2 runner implements:
+- read-only probe of saved native B JSON/NPZ for all 16 models;
+- strict Stream1 canonical input adapter with inherited context IDs;
+- existing repository full 45-Weyl DOP853 beta engine;
+- full initial/final Wilson tensor and 7 named beta-channel diagnostics;
+- atomic Workstream C t3-parallel-c-wilson-input-v1 export;
+- A(-4) first, then the other 15 with per-model blocked status if needed.
+No production result or nonzero physical C5 is fabricated when inputs fail.
+
+Local user commands are in:
+Numerical/parallel_t3/wilson/README_ROUGH_STREAM2.md
+
+Expected production input:
+output/parallel_t3/rough_inputs/rough_fermion_first_v1/a/<slug>/
+Expected production output:
+output/parallel_t3/rough_wilson/rough_fermion_first_v1/<slug>/

@@ -1,0 +1,207 @@
+{
+  "model": "C_-3",
+  "representation": {
+    "dimensions": [
+      2,
+      2,
+      3
+    ],
+    "alpha": -3,
+    "hypercharges_2y": {
+      "S1": -3,
+      "S2": -1,
+      "F": -2
+    },
+    "extra_quartics": 1,
+    "new_quartics": 1,
+    "reused_quartics": 0,
+    "extra_yukawa_expected": false,
+    "mixed_mass_basis": false,
+    "neutral_self_bilinear": false
+  },
+  "local_source_sha256": {
+    "Lagrangian/model/T3ModelCatalog.wl": "3ea4006b38617d1c603c564b209a0e0cedb324da127214fe434e18fd9953febc",
+    "Lagrangian/model/T3Fields.wl": "2f27f080ab02d1225aab7e5928aba19f238ec6d5dcdd41b72ee2d2c7298e24ab",
+    "Lagrangian/model/LagrangianBuilder.wl": "dbe102874c84c0ae8013eeceb78571e0ae3d44f35e95cf9c8d1e0ba952f32e8b",
+    "Lagrangian/interactions/T3Topology.wl": "e6e24c4a673bddff980885f8354b388ceaa19e53c8b2faa79ba3289a87de1511",
+    "Lagrangian/interactions/ScalarPotential.wl": "320dda9d07f1e581b838bfe01f241a2ba8a6881c76ca29b7aeb9c7099c4264dd",
+    "Lagrangian/interactions/GeneralScalarOperators.wl": "45d0bdf6fc1565b5601abd74b0f68649ffa78a8eeda6328e0c2f94cbcdb8b470",
+    "Lagrangian/interactions/GeneralScalarVerifiedQuartics.wl": "ca9f0a88cb29a22abcca4b7079b69923a6a6a2ab4a5d9429d9c2ccbfb78e3d3a",
+    "Lagrangian/RunT3GeneralFThreshold.wl": "6ce8e190de4b796c69044335738572ac0f430383d19ba08684f2e86853f54c96",
+    "Lagrangian/RunGeneralT3FermionFirstEFT1OneLoop.wl": "a2d4f3c3cbd67909dd036e7a9ec69e575b310506cac43b10c260c2603d7fbd29",
+    "RGE/running/rgbeta/T3RGBetaModel.wl": "147b25f172ebcc3644e3ae1be8a7686fe66e1b7c1673ca17dd10e444ce0fff0d",
+    "RGE/running/rgbeta/RunGeneralT3QuadraticRGBeta.wl": "15cb837f83850a76a3397d61a5e7ab97ee5a59901d0facc583d7e69e73ee1d57",
+    "RGE/general/generated/general_rgbeta_quartic_registry.json": "86a096410384641efa8f751b2aa98e8fee4bb6d3cccb4cfd116c559b71182eea",
+    "RGE/general/WilsonTensorRGE.py": "2b45c1c3e3749d6c74c9985f01384934f4c88018ad686b793402e90abfc4b28e",
+    "RGE/running/intermediate/GeneralEFT1SevenTermFlow.py": "d3658ff806fba4462a7dd8bddb4025c60ab2d0bf1efbf9c1924faaf9cb83b82e",
+    "Numerical/running/T3EFT1MasterSourceBridge.py": "f49631a97a2a31b5cfce5c3eeaccba28acf55ed41329bf598eebae7e500d2931"
+  },
+  "native_stage_runs": [
+    {
+      "stage": "rgbeta_uv",
+      "status": "Completed",
+      "returncode": 0,
+      "command": [
+        "wolframscript",
+        "-file",
+        "RGE/running/rgbeta/RunGeneralT3QuadraticRGBeta.wl",
+        "UV",
+        "2",
+        "2",
+        "3",
+        "m3",
+        "C_-3",
+        "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\batch1_general_contract\\batch1_native_v1\\rgbeta\\C_m3\\uv.json"
+      ],
+      "log": "output\\batch1_general_contract\\batch1_native_v1\\logs\\C_m3\\rgbeta_uv.log",
+      "repair_reason": "Missing",
+      "archived_old_log": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\batch1_general_contract\\batch1_native_v1\\logs\\C_m3\\rgbeta_uv.log.before_batch1_repair_1",
+      "archived_old_json": null
+    },
+    {
+      "stage": "rgbeta_eft1",
+      "status": "Completed",
+      "returncode": 0,
+      "command": [
+        "wolframscript",
+        "-file",
+        "RGE/running/rgbeta/RunGeneralT3QuadraticRGBeta.wl",
+        "EFT1",
+        "2",
+        "2",
+        "3",
+        "m3",
+        "C_-3",
+        "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\batch1_general_contract\\batch1_native_v1\\rgbeta\\C_m3\\eft1.json"
+      ],
+      "log": "output\\batch1_general_contract\\batch1_native_v1\\logs\\C_m3\\rgbeta_eft1.log",
+      "repair_reason": "Missing",
+      "archived_old_log": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\batch1_general_contract\\batch1_native_v1\\logs\\C_m3\\rgbeta_eft1.log.before_batch1_repair_1",
+      "archived_old_json": null
+    }
+  ],
+  "f_threshold": {
+    "source_directory": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\batch1_general_contract\\batch1_native_v1\\matchete\\C_m3",
+    "source_exists": true,
+    "native_status": "FThresholdTreeWilsonExported",
+    "requested_general": true,
+    "integrated_fields": null,
+    "data/eft1_after_F_wilson_seed.json": {
+      "sha256": "493adb79d0f724e2e9153b29dfbf7bf3b6e367d634b3fcaa3823c7c0c86f4c69",
+      "IntegratedFields": [
+        "F"
+      ],
+      "ActiveHeavyFields": [
+        "S1",
+        "S2"
+      ]
+    },
+    "data/eft1_after_F_scalar_quartic_seed.json": {
+      "sha256": "04fa6100704d318e805c8270b42d1cc453f1a485b9c9a153b2b6fd84a3e86e96",
+      "IntegratedFields": [
+        "F"
+      ],
+      "ActiveHeavyFields": [
+        "S1",
+        "S2"
+      ]
+    },
+    "fermions_out_scalars_kept": true,
+    "status": "FThresholdInventoryAvailable"
+  },
+  "rgbeta": {
+    "uv": {
+      "status": "SuccessCandidateMassBeta",
+      "sha256": "294174aa03935ca16e6c19a7c71ab4fc70f5c35d757d7f5a58cabc365a4283b0",
+      "beta_key_count": 22,
+      "fermion_keys_unexpected_in_eft1": [],
+      "model_metadata": {
+        "SharedScalar": false,
+        "dS": null,
+        "dS1": 2,
+        "dS2": 2,
+        "dF": 3,
+        "alpha": -3,
+        "YS1": "-3/2",
+        "YS2": "-1/2",
+        "YS": "Null",
+        "GeneralScalarModel": "C_-3",
+        "GeneralScalarStage": "UV",
+        "GeneralScalarBasisStatus": "CandidateNativeRGBetaUnmappedToMatchete",
+        "GeneralScalarQuarticBetaBasis": "RGBetaFullQuarticProjection",
+        "GeneralScalarNewBetaKeys": [
+          "lambdaT3GeneralQ020002I1"
+        ],
+        "GeneralScalarAdditionalQuartics": 1,
+        "GeneralScalarExistingStructuralCount": 0,
+        "GeneralScalarQuadraticMassMixing": "IncludedCandidate",
+        "QuadraticKind": "none",
+        "QuadraticMassSymbol": null,
+        "QuadraticPrefactorConvention": "V2 = mu2 * invariant + h.c.; no 1/2",
+        "PhysicalMatcheteRGBetaMassBasisCertified": false,
+        "ReportBetaConvention": "16*pi^2*dX/dln(mu); gauge BetaTerm divided by 2*g",
+        "YF": "-1",
+        "MajoranaFermion": false
+      },
+      "model_and_stage_identity_ok": true,
+      "candidate_ready": true
+    },
+    "eft1": {
+      "status": "SuccessCandidateMassBeta",
+      "sha256": "9f8321742a54bae16d235c3cd6b79ed472d2a0f222c5517bdedbf2e2455e0206",
+      "beta_key_count": 19,
+      "fermion_keys_unexpected_in_eft1": [],
+      "model_metadata": {
+        "SharedScalar": false,
+        "dS": null,
+        "dS1": 2,
+        "dS2": 2,
+        "dF": 3,
+        "alpha": -3,
+        "YS1": "-3/2",
+        "YS2": "-1/2",
+        "YS": "Null",
+        "GeneralScalarModel": "C_-3",
+        "GeneralScalarStage": "EFT1",
+        "GeneralScalarBasisStatus": "CandidateNativeRGBetaUnmappedToMatchete",
+        "GeneralScalarQuarticBetaBasis": "RGBetaFullQuarticProjection",
+        "GeneralScalarNewBetaKeys": [
+          "lambdaT3GeneralQ020002I1"
+        ],
+        "GeneralScalarAdditionalQuartics": 1,
+        "GeneralScalarExistingStructuralCount": 0,
+        "GeneralScalarQuadraticMassMixing": "IncludedCandidate",
+        "QuadraticKind": "none",
+        "QuadraticMassSymbol": null,
+        "QuadraticPrefactorConvention": "V2 = mu2 * invariant + h.c.; no 1/2",
+        "PhysicalMatcheteRGBetaMassBasisCertified": false,
+        "ReportBetaConvention": "16*pi^2*dX/dln(mu); gauge BetaTerm divided by 2*g"
+      },
+      "model_and_stage_identity_ok": true,
+      "candidate_ready": true
+    }
+  },
+  "extra_quartic_dictionary": {
+    "status": "Blocked_ExplicitNativeComponentTensorPairRequired",
+    "reason": "RGBeta native declaration metadata is not a component tensor"
+  },
+  "native_quartic_hermiticity": {
+    "status": "UnavailableWithoutNativeTensorComponents"
+  },
+  "spinor_normalization": {
+    "status": "NotDerived",
+    "factor": null
+  },
+  "dimension_five_adm": {
+    "status": "Disputed",
+    "seven_term_physical": false
+  },
+  "contract_status": "ConditionalOrBlocked",
+  "physical_C5_claim_permitted": false,
+  "blockers": [
+    "Blocked_ExplicitNativeComponentTensorPairRequired",
+    "Blocked_SignedGammaCCWeylConversionUnresolved",
+    "Blocked_DimensionFiveADMDisputed",
+    "Blocked_FOneLoopHardMatchingUncertified"
+  ]
+}

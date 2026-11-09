@@ -1,0 +1,52 @@
+{
+  "format": "t3-parallel-c-real-integration-summary-v2",
+  "mode": "rge_improved",
+  "run_requested": false,
+  "models_requested": [
+    "A_-4"
+  ],
+  "A_root": "output\\parallel_t3\\wilson\\<A_run_id>",
+  "B_root": "output\\parallel_t3\\background\\<B_run_id>",
+  "synthetic_allowed_only_for_explicit_test": false,
+  "model_results": {
+    "A_-4": {
+      "modes": {
+        "rge_improved": {
+          "preflight": {
+            "format": "t3-parallel-c-real-endpoint-preflight-v2",
+            "model": "A_-4",
+            "wilson_manifest": "output\\parallel_t3\\wilson\\<A_run_id>\\A_m4\\wilson.json",
+            "background_manifest": "output\\parallel_t3\\background\\<B_run_id>\\A_m4\\background.json",
+            "requested_mode": "rge_improved",
+            "mu_low_gev": 173.0,
+            "status": "blocked",
+            "blockers": [
+              "A_input_manifest_and_checksum: OSError: [Errno 22] Invalid argument: 'output\\\\parallel_t3\\\\wilson\\\\<A_run_id>\\\\A_m4\\\\wilson.json'",
+              "B_input_manifest_and_checksum: OSError: [Errno 22] Invalid argument: 'output\\\\parallel_t3\\\\background\\\\<B_run_id>\\\\A_m4\\\\background.json'"
+            ],
+            "checks": {
+              "A_input_manifest_and_checksum": {
+                "status": "blocked",
+                "reason": "OSError: [Errno 22] Invalid argument: 'output\\\\parallel_t3\\\\wilson\\\\<A_run_id>\\\\A_m4\\\\wilson.json'"
+              },
+              "B_input_manifest_and_checksum": {
+                "status": "blocked",
+                "reason": "OSError: [Errno 22] Invalid argument: 'output\\\\parallel_t3\\\\background\\\\<B_run_id>\\\\A_m4\\\\background.json'"
+              }
+            },
+            "warnings": [],
+            "no_synthetic_substitution": true,
+            "real_physical_prediction_certified": false
+          },
+          "preflight_status": "blocked"
+        }
+      },
+      "status": "blocked"
+    }
+  },
+  "counts": {
+    "model_count": 1,
+    "all_requested_modes_ready_or_completed": 0,
+    "blocked": 1
+  }
+}

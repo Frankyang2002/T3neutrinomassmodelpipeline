@@ -1,0 +1,1160 @@
+{
+	"format":"t3-parallel-a-native-rgbeta-portal-registrations-v5",
+	"status":"NativeSymbolicPortalRegistrations_ComponentsNotNumerical",
+	"model_count":16,
+	"portal_coupling_slots":58,
+	"source_sha256":{
+		"RGE\/running\/rgbeta\/T3RGBetaModel.wl":"147b25f172ebcc3644e3ae1be8a7686fe66e1b7c1673ca17dd10e444ce0fff0d",
+		"scripts\/RGBetaNativeAccess.wl":"17a1ebd069f34a756d60338137e4276d72ea7717129d72a49b831fe572b58a42"
+	},
+	"native_numeric_tGen_components_certified":false,
+	"physical_coupling_map_certified":false,
+	"models":{
+		"A_-4":{
+			"dimensions":[
+				1,
+				3,
+				2
+			],
+			"alpha":-4,
+			"portals":[
+				{
+					"symbol":"lambdaH1",
+					"which":1,
+					"kind":"singlet",
+					"dimensions":[
+						2,
+						2,
+						1,
+						1
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[1, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH1][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH2",
+					"which":2,
+					"kind":"singlet",
+					"dimensions":[
+						2,
+						2,
+						3,
+						3
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH2][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"which":2,
+					"kind":"adjoint",
+					"dimensions":[
+						2,
+						2,
+						3,
+						3
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[fund], adj, #1, #2]*tGen[SU2L[S2], adj, #3, #4]] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH2Adj][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				}
+			]
+		},
+		"A_-2":{
+			"dimensions":[
+				1,
+				3,
+				2
+			],
+			"alpha":-2,
+			"portals":[
+				{
+					"symbol":"lambdaH1",
+					"which":1,
+					"kind":"singlet",
+					"dimensions":[
+						2,
+						2,
+						1,
+						1
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[1, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH1][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH2",
+					"which":2,
+					"kind":"singlet",
+					"dimensions":[
+						2,
+						2,
+						3,
+						3
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH2][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"which":2,
+					"kind":"adjoint",
+					"dimensions":[
+						2,
+						2,
+						3,
+						3
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[fund], adj, #1, #2]*tGen[SU2L[S2], adj, #3, #4]] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH2Adj][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				}
+			]
+		},
+		"A_+0":{
+			"dimensions":[
+				1,
+				3,
+				2
+			],
+			"alpha":0,
+			"portals":[
+				{
+					"symbol":"lambdaH1",
+					"which":1,
+					"kind":"singlet",
+					"dimensions":[
+						2,
+						2,
+						1,
+						1
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[1, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH1][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH2",
+					"which":2,
+					"kind":"singlet",
+					"dimensions":[
+						2,
+						2,
+						3,
+						3
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH2][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"which":2,
+					"kind":"adjoint",
+					"dimensions":[
+						2,
+						2,
+						3,
+						3
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[fund], adj, #1, #2]*tGen[SU2L[S2], adj, #3, #4]] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH2Adj][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				}
+			]
+		},
+		"B_-3":{
+			"dimensions":[
+				2,
+				2,
+				1
+			],
+			"alpha":-3,
+			"portals":[
+				{
+					"symbol":"lambdaH1",
+					"which":1,
+					"kind":"singlet",
+					"dimensions":[
+						2,
+						2,
+						2,
+						2
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[2, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH1][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"which":1,
+					"kind":"adjoint",
+					"dimensions":[
+						2,
+						2,
+						2,
+						2
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_invariant_inputform":"tGen[SU2L[fund], A, #1, #2]*tGen[SU2L[fund], A, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH1Adj][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH2",
+					"which":2,
+					"kind":"singlet",
+					"dimensions":[
+						2,
+						2,
+						2,
+						2
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[2, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH2][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"which":2,
+					"kind":"adjoint",
+					"dimensions":[
+						2,
+						2,
+						2,
+						2
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_invariant_inputform":"tGen[SU2L[fund], A, #1, #2]*tGen[SU2L[fund], A, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH2Adj][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				}
+			]
+		},
+		"B_-1":{
+			"dimensions":[
+				2,
+				2,
+				1
+			],
+			"alpha":-1,
+			"portals":[
+				{
+					"symbol":"lambdaH1",
+					"which":1,
+					"kind":"singlet",
+					"dimensions":[
+						2,
+						2,
+						2,
+						2
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[2, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH1][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"which":1,
+					"kind":"adjoint",
+					"dimensions":[
+						2,
+						2,
+						2,
+						2
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_invariant_inputform":"tGen[SU2L[fund], A, #1, #2]*tGen[SU2L[fund], A, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH1Adj][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH2",
+					"which":2,
+					"kind":"singlet",
+					"dimensions":[
+						2,
+						2,
+						2,
+						2
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[2, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH2][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"which":2,
+					"kind":"adjoint",
+					"dimensions":[
+						2,
+						2,
+						2,
+						2
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_invariant_inputform":"tGen[SU2L[fund], A, #1, #2]*tGen[SU2L[fund], A, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH2Adj][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				}
+			]
+		},
+		"B_+1":{
+			"dimensions":[
+				2,
+				2,
+				1
+			],
+			"alpha":1,
+			"portals":[
+				{
+					"symbol":"lambdaH1",
+					"which":1,
+					"kind":"singlet",
+					"dimensions":[
+						2,
+						2,
+						2,
+						2
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[2, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH1][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"which":1,
+					"kind":"adjoint",
+					"dimensions":[
+						2,
+						2,
+						2,
+						2
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_invariant_inputform":"tGen[SU2L[fund], A, #1, #2]*tGen[SU2L[fund], A, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH1Adj][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH2",
+					"which":2,
+					"kind":"singlet",
+					"dimensions":[
+						2,
+						2,
+						2,
+						2
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[2, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH2][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"which":2,
+					"kind":"adjoint",
+					"dimensions":[
+						2,
+						2,
+						2,
+						2
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_invariant_inputform":"tGen[SU2L[fund], A, #1, #2]*tGen[SU2L[fund], A, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH2Adj][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				}
+			]
+		},
+		"C_-3":{
+			"dimensions":[
+				2,
+				2,
+				3
+			],
+			"alpha":-3,
+			"portals":[
+				{
+					"symbol":"lambdaH1",
+					"which":1,
+					"kind":"singlet",
+					"dimensions":[
+						2,
+						2,
+						2,
+						2
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[2, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH1][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"which":1,
+					"kind":"adjoint",
+					"dimensions":[
+						2,
+						2,
+						2,
+						2
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_invariant_inputform":"tGen[SU2L[fund], A, #1, #2]*tGen[SU2L[fund], A, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH1Adj][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH2",
+					"which":2,
+					"kind":"singlet",
+					"dimensions":[
+						2,
+						2,
+						2,
+						2
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[2, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH2][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"which":2,
+					"kind":"adjoint",
+					"dimensions":[
+						2,
+						2,
+						2,
+						2
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_invariant_inputform":"tGen[SU2L[fund], A, #1, #2]*tGen[SU2L[fund], A, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH2Adj][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				}
+			]
+		},
+		"C_-1":{
+			"dimensions":[
+				2,
+				2,
+				3
+			],
+			"alpha":-1,
+			"portals":[
+				{
+					"symbol":"lambdaH1",
+					"which":1,
+					"kind":"singlet",
+					"dimensions":[
+						2,
+						2,
+						2,
+						2
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[2, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH1][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"which":1,
+					"kind":"adjoint",
+					"dimensions":[
+						2,
+						2,
+						2,
+						2
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_invariant_inputform":"tGen[SU2L[fund], A, #1, #2]*tGen[SU2L[fund], A, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH1Adj][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH2",
+					"which":2,
+					"kind":"singlet",
+					"dimensions":[
+						2,
+						2,
+						2,
+						2
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[2, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH2][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"which":2,
+					"kind":"adjoint",
+					"dimensions":[
+						2,
+						2,
+						2,
+						2
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_invariant_inputform":"tGen[SU2L[fund], A, #1, #2]*tGen[SU2L[fund], A, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH2Adj][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				}
+			]
+		},
+		"C_+1":{
+			"dimensions":[
+				2,
+				2,
+				3
+			],
+			"alpha":1,
+			"portals":[
+				{
+					"symbol":"lambdaH1",
+					"which":1,
+					"kind":"singlet",
+					"dimensions":[
+						2,
+						2,
+						2,
+						2
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[2, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH1][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"which":1,
+					"kind":"adjoint",
+					"dimensions":[
+						2,
+						2,
+						2,
+						2
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_invariant_inputform":"tGen[SU2L[fund], A, #1, #2]*tGen[SU2L[fund], A, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH1Adj][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH2",
+					"which":2,
+					"kind":"singlet",
+					"dimensions":[
+						2,
+						2,
+						2,
+						2
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[2, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH2][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"which":2,
+					"kind":"adjoint",
+					"dimensions":[
+						2,
+						2,
+						2,
+						2
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_invariant_inputform":"tGen[SU2L[fund], A, #1, #2]*tGen[SU2L[fund], A, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH2Adj][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				}
+			]
+		},
+		"D_-2":{
+			"dimensions":[
+				3,
+				1,
+				2
+			],
+			"alpha":-2,
+			"portals":[
+				{
+					"symbol":"lambdaH1",
+					"which":1,
+					"kind":"singlet",
+					"dimensions":[
+						2,
+						2,
+						3,
+						3
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH1][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"which":1,
+					"kind":"adjoint",
+					"dimensions":[
+						2,
+						2,
+						3,
+						3
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[fund], adj, #1, #2]*tGen[SU2L[S2], adj, #3, #4]] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH1Adj][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH2",
+					"which":2,
+					"kind":"singlet",
+					"dimensions":[
+						2,
+						2,
+						1,
+						1
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[1, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH2][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				}
+			]
+		},
+		"D_+0":{
+			"dimensions":[
+				3,
+				1,
+				2
+			],
+			"alpha":0,
+			"portals":[
+				{
+					"symbol":"lambdaH1",
+					"which":1,
+					"kind":"singlet",
+					"dimensions":[
+						2,
+						2,
+						3,
+						3
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH1][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"which":1,
+					"kind":"adjoint",
+					"dimensions":[
+						2,
+						2,
+						3,
+						3
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[fund], adj, #1, #2]*tGen[SU2L[S2], adj, #3, #4]] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH1Adj][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH2",
+					"which":2,
+					"kind":"singlet",
+					"dimensions":[
+						2,
+						2,
+						1,
+						1
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[1, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH2][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				}
+			]
+		},
+		"D_+2":{
+			"dimensions":[
+				3,
+				1,
+				2
+			],
+			"alpha":2,
+			"portals":[
+				{
+					"symbol":"lambdaH1",
+					"which":1,
+					"kind":"singlet",
+					"dimensions":[
+						2,
+						2,
+						3,
+						3
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH1][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"which":1,
+					"kind":"adjoint",
+					"dimensions":[
+						2,
+						2,
+						3,
+						3
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[fund], adj, #1, #2]*tGen[SU2L[S2], adj, #3, #4]] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH1Adj][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH2",
+					"which":2,
+					"kind":"singlet",
+					"dimensions":[
+						2,
+						2,
+						1,
+						1
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[1, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH2][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				}
+			]
+		},
+		"E_-4":{
+			"dimensions":[
+				3,
+				3,
+				2
+			],
+			"alpha":-4,
+			"portals":[
+				{
+					"symbol":"lambdaH1",
+					"which":1,
+					"kind":"singlet",
+					"dimensions":[
+						2,
+						2,
+						3,
+						3
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH1][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"which":1,
+					"kind":"adjoint",
+					"dimensions":[
+						2,
+						2,
+						3,
+						3
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[fund], adj, #1, #2]*tGen[SU2L[S2], adj, #3, #4]] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH1Adj][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH2",
+					"which":2,
+					"kind":"singlet",
+					"dimensions":[
+						2,
+						2,
+						3,
+						3
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH2][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"which":2,
+					"kind":"adjoint",
+					"dimensions":[
+						2,
+						2,
+						3,
+						3
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[fund], adj, #1, #2]*tGen[SU2L[S2], adj, #3, #4]] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH2Adj][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				}
+			]
+		},
+		"E_-2":{
+			"dimensions":[
+				3,
+				3,
+				2
+			],
+			"alpha":-2,
+			"portals":[
+				{
+					"symbol":"lambdaH1",
+					"which":1,
+					"kind":"singlet",
+					"dimensions":[
+						2,
+						2,
+						3,
+						3
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH1][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"which":1,
+					"kind":"adjoint",
+					"dimensions":[
+						2,
+						2,
+						3,
+						3
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[fund], adj, #1, #2]*tGen[SU2L[S2], adj, #3, #4]] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH1Adj][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH2",
+					"which":2,
+					"kind":"singlet",
+					"dimensions":[
+						2,
+						2,
+						3,
+						3
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH2][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"which":2,
+					"kind":"adjoint",
+					"dimensions":[
+						2,
+						2,
+						3,
+						3
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[fund], adj, #1, #2]*tGen[SU2L[S2], adj, #3, #4]] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH2Adj][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				}
+			]
+		},
+		"E_+0":{
+			"dimensions":[
+				3,
+				3,
+				2
+			],
+			"alpha":0,
+			"portals":[
+				{
+					"symbol":"lambdaH1",
+					"which":1,
+					"kind":"singlet",
+					"dimensions":[
+						2,
+						2,
+						3,
+						3
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH1][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"which":1,
+					"kind":"adjoint",
+					"dimensions":[
+						2,
+						2,
+						3,
+						3
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[fund], adj, #1, #2]*tGen[SU2L[S2], adj, #3, #4]] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH1Adj][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH2",
+					"which":2,
+					"kind":"singlet",
+					"dimensions":[
+						2,
+						2,
+						3,
+						3
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH2][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"which":2,
+					"kind":"adjoint",
+					"dimensions":[
+						2,
+						2,
+						3,
+						3
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[fund], adj, #1, #2]*tGen[SU2L[S2], adj, #3, #4]] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH2Adj][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				}
+			]
+		},
+		"E_+2":{
+			"dimensions":[
+				3,
+				3,
+				2
+			],
+			"alpha":2,
+			"portals":[
+				{
+					"symbol":"lambdaH1",
+					"which":1,
+					"kind":"singlet",
+					"dimensions":[
+						2,
+						2,
+						3,
+						3
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH1][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"which":1,
+					"kind":"adjoint",
+					"dimensions":[
+						2,
+						2,
+						3,
+						3
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[fund], adj, #1, #2]*tGen[SU2L[S2], adj, #3, #4]] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH1Adj][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH2",
+					"which":2,
+					"kind":"singlet",
+					"dimensions":[
+						2,
+						2,
+						3,
+						3
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH2][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"which":2,
+					"kind":"adjoint",
+					"dimensions":[
+						2,
+						2,
+						3,
+						3
+					],
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[fund], adj, #1, #2]*tGen[SU2L[S2], adj, #3, #4]] & ",
+					"native_coupling_inputform":"6*Matrix[lambdaH2Adj][##1] & ",
+					"native_self_conjugate":true,
+					"native_permutation_count":24,
+					"native_numerical_generator_components_exported":false
+				}
+			]
+		}
+	}
+}

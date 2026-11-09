@@ -1,0 +1,210 @@
+{
+  "format": "t3-parallel-a-wilson-output-v1",
+  "status": "Candidate_Qualitative",
+  "physical_certified": false,
+  "adm_variant": "fonseca_eq22_six_term",
+  "source_v1_unstarred_known_covariance_failure": false,
+  "loop_order": "conditional_one_loop_RGE_improved_not_physical_matching",
+  "MF_gev": 100000.0,
+  "MS_gev": 1000.0,
+  "source_ODE": "16pi2*dC/dln(mu)=beta(C,C_conjugate)",
+  "solver": "RK2",
+  "steps": 1,
+  "rhs_evaluations": 2,
+  "execution_backends": [
+    "existing_repository_matrix_free_engine"
+  ],
+  "C5_at_MF_norm": 2.7239676943752466e-16,
+  "C5_at_MS_norm": 3.5663231383796554e-13,
+  "C5_boundary_projection_residual": 1.2331968706503608e-32,
+  "C5_final_projection_residual": 3.786532345256773e-29,
+  "fermion_pair_symmetry_residual": 0.0,
+  "linearized_leading_log_C5_relative_difference": 3.464432132336099e-10,
+  "C5_mutual_mixing_present": true,
+  "no_posthoc_fixed_order_leading_log": true,
+  "full_psi2phi2_operators_active": true,
+  "all_F_integrated_out_at_MF": true,
+  "both_S1_S2_remain_until_MS": true,
+  "other_dim5_classes": "symmetry_forbidden_in_T3_Z2_EFT1_under_3family_SM_Weyl_assumption",
+  "other_dim5_exclusion_basis": {
+    "phi5": "Z2 even forces even heavy fields; odd H doublet count, non-singlet SU2 center",
+    "phi_F2": "no Z2-even gauge-singlet scalar (H is a doublet)",
+    "psi2_F": "no two-SM-left-Weyl gauge-singlet bilinear without H"
+  },
+  "other_operator_closure_automated_native_certified": false,
+  "warnings": [
+    "six-vs-seven formula and gauge completion not certified",
+    "GammaCC/Weyl signed map not certified",
+    "complete Matchete/RGBeta scalar tensor map not certified",
+    "MS simultaneous scalar threshold belongs to C",
+    "one-loop hard fermion matching belongs to B"
+  ],
+  "projections": [
+    {
+      "mu_gev": 100000.00000000001,
+      "C5_frobenius_gev_inverse": 2.7239676943752466e-16,
+      "C5_projection_absolute_residual": 1.2331968706503608e-32,
+      "C_full_frobenius_gev_inverse": 3.2403703492047876e-10
+    },
+    {
+      "mu_gev": 999.9999999999998,
+      "C5_frobenius_gev_inverse": 3.5663231383796554e-13,
+      "C5_projection_absolute_residual": 3.786532345256773e-29,
+      "C_full_frobenius_gev_inverse": 3.240373293000003e-10
+    }
+  ],
+  "basis": {
+    "basis_id": "T3_RGBeta_reference_Weyl45_real_interleaved_v1",
+    "model": "E_-4",
+    "dims_S1_S2_F": [
+      3,
+      3,
+      2
+    ],
+    "alpha": -4,
+    "hypercharges_S1_S2_F": [
+      -2.0,
+      -1.0,
+      -1.5
+    ],
+    "fermion_labels": [
+      "Q[1,1,1]",
+      "Q[1,1,2]",
+      "Q[1,2,1]",
+      "Q[1,2,2]",
+      "Q[1,3,1]",
+      "Q[1,3,2]",
+      "Q[2,1,1]",
+      "Q[2,1,2]",
+      "Q[2,2,1]",
+      "Q[2,2,2]",
+      "Q[2,3,1]",
+      "Q[2,3,2]",
+      "Q[3,1,1]",
+      "Q[3,1,2]",
+      "Q[3,2,1]",
+      "Q[3,2,2]",
+      "Q[3,3,1]",
+      "Q[3,3,2]",
+      "uc[1,1]",
+      "uc[1,2]",
+      "uc[1,3]",
+      "uc[2,1]",
+      "uc[2,2]",
+      "uc[2,3]",
+      "uc[3,1]",
+      "uc[3,2]",
+      "uc[3,3]",
+      "dc[1,1]",
+      "dc[1,2]",
+      "dc[1,3]",
+      "dc[2,1]",
+      "dc[2,2]",
+      "dc[2,3]",
+      "dc[3,1]",
+      "dc[3,2]",
+      "dc[3,3]",
+      "L[1,1]",
+      "L[1,2]",
+      "L[2,1]",
+      "L[2,2]",
+      "L[3,1]",
+      "L[3,2]",
+      "ec[1]",
+      "ec[2]",
+      "ec[3]"
+    ],
+    "scalar_labels": [
+      "H[1,R]",
+      "H[1,I]",
+      "H[2,R]",
+      "H[2,I]",
+      "S1[1,R]",
+      "S1[1,I]",
+      "S1[2,R]",
+      "S1[2,I]",
+      "S1[3,R]",
+      "S1[3,I]",
+      "S2[1,R]",
+      "S2[1,I]",
+      "S2[2,R]",
+      "S2[2,I]",
+      "S2[3,R]",
+      "S2[3,I]"
+    ],
+    "fermion_axis": [
+      "i",
+      "j"
+    ],
+    "scalar_axis": [
+      "a",
+      "b"
+    ],
+    "wilson_axes": [
+      "weyl_i",
+      "weyl_j",
+      "real_scalar_a",
+      "real_scalar_b"
+    ],
+    "all_fermions_are_left_handed_Weyl": true,
+    "fermion_reps": {
+      "Q": [
+        3,
+        2,
+        0.16666666666666666
+      ],
+      "uc": [
+        "anti3",
+        1,
+        -0.6666666666666666
+      ],
+      "dc": [
+        "anti3",
+        1,
+        0.3333333333333333
+      ],
+      "L": [
+        1,
+        2,
+        -0.5
+      ],
+      "ec": [
+        1,
+        1,
+        1
+      ]
+    },
+    "heavy_scalars_Z2": -1,
+    "SM_fields_Z2": 1,
+    "complex_scalar_definition": "z=(R+iI)/sqrt(2)",
+    "H_index_weak1": "charged",
+    "H_index_weak2": "neutral",
+    "all_heavy_scalars_present_in_EFT1": true,
+    "Matchete_RGBeta_change_of_basis_certified": false
+  },
+  "provenance": {
+    "synthetic_fixture": true,
+    "synthetic_parameters": {
+      "MF_gev": 100000.0,
+      "MS_gev": 1000.0,
+      "C5_hard_nonzero": true,
+      "S1_S2_both_active": true,
+      "not_physical": true
+    },
+    "basis_not_Matchete_RGBeta_certified": true,
+    "corresponding_native_F_formal_boundary_used": false
+  },
+  "outputs": {
+    "canonical_wilson_MF.npz": "ed0b6c0ac85ac390bda2a20fe40c546f436b1b218b6cbaa7a4dae7e29c7dd1be",
+    "wilson_at_MS.npz": "fa0ec27300524eaccddbb831ec3bc1f59f54f825a14f065059a80785dd115c8a"
+  },
+  "C5_projection_definition": "C5[p,q]=4*C[L[p,1],L[q,1],H[2,R],H[2,R]]",
+  "C5_not_smeft_after_scalar_matching": true,
+  "blocked_physics": [
+    "Blocked_ADM_PhysicalNormalization",
+    "Blocked_GammaCCWeylSignedNormalization",
+    "Blocked_MatcheteRGBetaCompleteQuarticMap",
+    "Blocked_NativeOneLoopFHardMatching",
+    "Blocked_FullMassAndScalarEigenbasisForSpecialModels"
+  ]
+}

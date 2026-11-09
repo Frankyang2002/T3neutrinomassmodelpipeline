@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "T3 Workstream C A/B threshold input and output metadata contracts (v1)",
+  "description": "Shape, array type, source/basis and numerical constraints are additionally checked in pipeline.py. Tensors are stored in sibling NPZ, never in JSON.",
+  "$defs": {
+    "common": {
+      "type": "object",
+      "required": ["format", "model", "tensor_npz", "matching_context_id", "matched_seed_id", "lagrangian_source_id", "mu_f_gev", "mu_s_gev", "units", "scheme", "synthetic_fixture"],
+      "properties": {
+        "model": {"enum": ["A_-4", "A_-2", "A_+0", "B_-3", "B_-1", "B_+1", "C_-3", "C_-1", "C_+1", "D_-2", "D_+0", "D_+2", "E_-4", "E_-2", "E_+0", "E_+2"]},
+        "tensor_npz": {"type": "string", "pattern": "^[^/\\\\]+\\.npz$"},
+        "tensor_npz_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "matching_context_id": {"type": "string", "minLength": 1},
+        "matched_seed_id": {"type": "string", "minLength": 1},
+        "lagrangian_source_id": {"type": "string", "minLength": 1},
+        "mu_f_gev": {"type": "number", "exclusiveMinimum": 0},
+        "mu_s_gev": {"type": "number", "exclusiveMinimum": 0},
+        "scheme": {"const": "MSbar"},
+        "units": {"const": "GeV"},
+        "synthetic_fixture": {"type": "boolean"}
+      }
+    },
+    "wilson": {
+      "allOf": [
+        {"$ref": "#/$defs/common"},
+        {
+          "required": ["canonical_wilson_convention", "wilson_evolved_to_ms", "includes_eft1_weinberg", "legacy_direct_llss_to_c5_log_added", "scalar_basis_id", "lepton_indices", "higgs_source_indices", "heavy_source_indices"],
+          "properties": {
+            "format": {"const": "t3-parallel-c-wilson-input-v1"},
+            "canonical_wilson_convention": {"const": "C_ijab_full_sum_no_factorial_C5_1over2_H_R_interleaved_v1"},
+            "wilson_evolved_to_ms": {"const": true},
+            "includes_eft1_weinberg": {"const": true},
+            "legacy_direct_llss_to_c5_log_added": {"const": false},
+            "scalar_basis_id": {"type": "string", "minLength": 1},
+            "lepton_indices": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "integer", "minimum": 0}}},
+            "higgs_source_indices": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"type": "integer", "minimum": 0}},
+            "heavy_source_indices": {"type": "array", "items": {"type": "integer", "minimum": 0}},
+            "finite_hard_ms_kind": {"enum": ["independent_finite_only", null]}
+          }
+        }
+      ]
+    },
+    "background": {
+      "allOf": [
+        {"$ref": "#/$defs/common"},
+        {
+          "required": ["quartic_potential_convention", "quartic_inventory_status", "wilson_scalar_basis_id", "background_scalar_basis_id", "scalar_mass_origin", "single_common_scalar_threshold", "sm_couplings_at_ms"],
+          "properties": {
+            "format": {"const": "t3-parallel-c-background-input-v1"},
+            "quartic_potential_convention": {"const": "V4_lambda_real_symmetric_over_4factorial_v1"},
+            "quartic_inventory_status": {"const": "full_tensor"},
+            "wilson_scalar_basis_id": {"type": "string", "minLength": 1},
+            "background_scalar_basis_id": {"type": "string", "minLength": 1},
+            "single_common_scalar_threshold": {"const": true},
+            "scalar_mass_origin": {"enum": ["unbroken_electroweak", "EWSB_resummed", "synthetic_algebra_only"]},
+            "sm_couplings_at_ms": {"type": "object", "required": ["gY", "g2", "g3", "lambdaH"], "properties": {"gY": {"type": "number"}, "g2": {"type": "number"}, "g3": {"type": "number"}, "lambdaH": {"type": "number"}}},
+            "quartic_channel_names": {"type": "array", "uniqueItems": true, "items": {"type": "string"}}
+          }
+        }
+      ]
+    },
+    "result": {
+      "type": "object",
+      "required": ["format", "model", "status", "threshold_order", "scheme", "counting_mode", "C5_SMEFT_at_MS", "C5_SMEFT_at_low", "mass_singular_values_eV", "normalization_and_status", "input_sha256"],
+      "properties": {
+        "format": {"const": "t3-parallel-c-scalar-threshold-result-v1"},
+        "status": {"const": "NumericalCandidateNotCertified"},
+        "counting_mode": {"enum": ["strict_one_loop", "rge_improved"]},
+        "scheme": {"const": "MSbar"},
+        "mass_singular_values_eV": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"type": "number", "minimum": 0}}
+      }
+    }
+  }
+}

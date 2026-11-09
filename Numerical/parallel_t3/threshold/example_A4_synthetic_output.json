@@ -1,0 +1,86 @@
+{
+  "format": "t3-parallel-c-scalar-threshold-result-v1",
+  "model": "A_-4",
+  "status": "NumericalCandidateNotCertified",
+  "matching_context_id": "fixture:synthetic-state:A_-4:v1",
+  "mu_f_gev": 100000.0,
+  "mu_s_gev": 1000.0,
+  "mu_low_gev": 173.0,
+  "counting_mode": "strict_one_loop",
+  "scheme": "MSbar",
+  "scalar_mass_kind": "ordinary",
+  "n_real_heavy_scalars": 8,
+  "scalar_eigenstates_integrated_out": 8,
+  "all_unordered_eigenstate_pairs_included": 36,
+  "C5_SMEFT_at_MS": {
+    "real": [
+      [
+        6.668519399290064e-16,
+        3.772893026101528e-17,
+        3.4920273606180996e-17
+      ],
+      [
+        3.772893026101528e-17,
+        6.291230096679906e-16,
+        6.585649249112579e-17
+      ],
+      [
+        3.4920273606180996e-17,
+        6.585649249112579e-17,
+        5.212346266193372e-16
+      ]
+    ],
+    "imag": [
+      [
+        5.382460193359817e-17,
+        -2.1872437769889534e-17,
+        1.2968109442472391e-17
+      ],
+      [
+        -2.1872437769889534e-17,
+        1.0414350750887423e-16,
+        -5.406378111505523e-17
+      ],
+      [
+        1.2968109442472391e-17,
+        -5.406378111505523e-17,
+        -5.804783583629144e-17
+      ]
+    ]
+  },
+  "mass_singular_values_eV": [
+    0.015050253390792388,
+    0.018953358289895562,
+    0.021708594992878465
+  ],
+  "matching_residuals": {
+    "already_evolved_C5": 1.8016582237743507e-16,
+    "finite_scalar_bubble": 3.4987761875560285e-16
+  },
+  "normalization_and_status": {
+    "synthetic_fixture": true,
+    "wilson_adm_certified": false,
+    "wilson_dim5_closure_certified": false,
+    "scalar_operator_inventory_certified": false,
+    "native_matchete_rgbeta_normalization_certified": false,
+    "signed_GammaCC_to_Weyl_certified": false,
+    "complete_finite_scalar_matching_certified": false,
+    "physical_neutrino_mass_certified": false,
+    "low_scale_running_performed": false,
+    "weinberg_projection_pure": true
+  },
+  "SMEFT_running": {
+    "performed": false,
+    "backend": "Numerical.running.SMWeinbergEvolution",
+    "nfev": 0,
+    "success": null,
+    "sm_at_low": {}
+  },
+  "rge_bookkeeping": {
+    "C5_EFT1_already_evolved": true,
+    "old_LLSS_to_C5_direct_leading_log_added_again": false,
+    "bubble_LLSS_source": "tree_order0_at_MF",
+    "strict_one_loop_requires_MF_orderzero": true
+  },
+  "_example_note": "Generated from a SYNTHETIC A_-4 fixture with --match-only; low-scale C5 and masses in this file are unevolved proxies, not an EFT1/SMEFT physics prediction."
+}

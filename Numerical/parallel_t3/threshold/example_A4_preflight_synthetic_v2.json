@@ -1,0 +1,160 @@
+{
+  "format": "t3-parallel-c-real-endpoint-preflight-v2",
+  "model": "A_-4",
+  "wilson_manifest": "output/parallel_t3/threshold/fixtures/A_m4/wilson.json",
+  "background_manifest": "output/parallel_t3/threshold/fixtures/A_m4/background.json",
+  "requested_mode": "rge_improved",
+  "mu_low_gev": 173.0,
+  "status": "ready_conditional",
+  "blockers": [],
+  "checks": {
+    "A_input_manifest_and_checksum": {
+      "status": "passed",
+      "details": {
+        "format": "t3-parallel-c-wilson-input-v1",
+        "model": "A_-4",
+        "npz_keys": [
+          "C5_EFT1_ms",
+          "C_psi2phi2_ms",
+          "C_psi2phi2_ms_strict_1loop",
+          "C_psi2phi2_tree_mf"
+        ]
+      }
+    },
+    "B_input_manifest_and_checksum": {
+      "status": "passed",
+      "details": {
+        "format": "t3-parallel-c-background-input-v1",
+        "model": "A_-4",
+        "npz_keys": [
+          "R_wilson_from_background",
+          "mass_squared_gev2_ms",
+          "quartic_real_channels_ms",
+          "quartic_real_full_ms",
+          "yd",
+          "ye",
+          "yu"
+        ]
+      }
+    },
+    "model_seed_convention_scale_contract": {
+      "status": "passed",
+      "details": {
+        "model": "A_-4",
+        "mu_f_gev": 100000.0,
+        "mu_s_gev": 1000.0
+      }
+    },
+    "all_heavy_scalar_mass_eigenbasis": {
+      "status": "passed",
+      "details": {
+        "n_real_heavy": 8,
+        "positive_eigenvalues_gev2": [
+          1800000.0,
+          1800000.0,
+          2500000.0,
+          2500000.0,
+          2500000.0,
+          2500000.0,
+          2500000.0,
+          2500000.0
+        ],
+        "mass_basis_orthogonality_relative": 0.0,
+        "scalar_labels_present": true
+      }
+    },
+    "full_scalar_quartic_and_independent_channels": {
+      "status": "passed",
+      "details": {
+        "shape": [
+          12,
+          12,
+          12,
+          12
+        ],
+        "full_tensor_component_count": 20736,
+        "channel_count": 2,
+        "names": [
+          "synthetic_hhss",
+          "synthetic_other_quartics"
+        ],
+        "sum_relative_residual": 0.0,
+        "status": "numerically_consistent_supplied_components"
+      }
+    },
+    "full_evolved_wilson_and_C5_projection": {
+      "status": "passed",
+      "details": {
+        "n_weyl": 8,
+        "n_real_scalars_with_higgs": 12,
+        "flavour_pair_relative_residual": 0.0,
+        "scalar_pair_relative_residual": 0.0,
+        "weinberg_projection_relative_residual": 1.8016582237743507e-16,
+        "C5_EFT1_norm_gev_inverse": 1.701616878148545e-15,
+        "C5_separate_projection_relative_mismatch": 2.678654001124462e-16,
+        "order_zero_full_wilson_available": true,
+        "other_operator_classes_matching_certified": false
+      }
+    },
+    "SM_couplings_for_existing_one_loop_runner": {
+      "status": "passed",
+      "details": {
+        "gauge_and_quartic_parameters": {
+          "gY": 0.359,
+          "g2": 0.646,
+          "g3": 1.08,
+          "lambdaH": 0.256
+        },
+        "yukawa_shapes": {
+          "ye": [
+            3,
+            3
+          ],
+          "yu": [
+            3,
+            3
+          ],
+          "yd": [
+            3,
+            3
+          ]
+        }
+      }
+    },
+    "optional_B_gauge_ward_test": {
+      "status": "passed",
+      "details": {
+        "status": "not_supplied_not_certified"
+      }
+    },
+    "single_MS_finite_bubble_match_candidate": {
+      "status": "passed",
+      "details": {
+        "eigenstates_integrated_out_at_single_MS": 8,
+        "unordered_eigenstate_pairs": 36,
+        "already_evolved_C5_kept_once": true,
+        "bubble_source": "evolved_full_at_MS_rge_improved",
+        "C5_EFT1_order_source": "rge_improved_resummed_endpoint",
+        "scalar_bubble_norm_gev_inverse": 6.698561674217146e-16,
+        "C5_SMEFT_at_MS_norm_gev_inverse": 1.0539447956047807e-15,
+        "scalar_bubble_weinberg_residual": 2.0939860471294746e-16,
+        "complete_finite_matching_certified": false
+      }
+    }
+  },
+  "warnings": [
+    "A: full EFT1 dim-5 anomalous dimension not certified",
+    "A: operator closure not certified",
+    "A: spinor normalisation not certified",
+    "B: full allowed quartic inventory not certified",
+    "B: Matchete/RGBeta scalar tensor mapping not certified",
+    "C: independent additional MS one-loop diagrams, wavefunction/EOM matching uncomputed",
+    "Even with certified A/B inputs, result is a conditional one-loop scalar-bubble candidate"
+  ],
+  "no_synthetic_substitution": true,
+  "real_physical_prediction_certified": false,
+  "mu_f_gev": 100000.0,
+  "mu_s_gev": 1000.0,
+  "input_kind": "synthetic_contract_probe",
+  "example_only": true
+}

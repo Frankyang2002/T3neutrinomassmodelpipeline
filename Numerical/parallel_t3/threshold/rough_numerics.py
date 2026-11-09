@@ -17,6 +17,7 @@ from .pipeline import _load_pair, B_FORMAT, run_case
 from .rough_adapter import PreparedPair
 
 STATUS='RoughNumericalBenchmark'
+PROJECTED_STATUS='NonWeinbergProjectedDiagnostic'
 OMITTED=(
     'Independent finite one-loop scalar threshold diagrams beyond full-tensor two-scalar bubble',
     'Finite scalar wavefunction and field-normalisation/EOM matching',
@@ -144,8 +145,20 @@ def run_rough_case(model: str, pair:PreparedPair, output_dir:Path, *,
             raise RuntimeError('Independent sorted masses disagree with original C SVD')
         # The observable basis diagnostics are appended without altering C5.
         np.savez_compressed(stage/'C5_smeft_low.npz',**low,**matrix)
+        source_residuals=result['matching_residuals']
+        max_residual=max(float(source_residuals['already_evolved_C5']),
+                         float(source_residuals['finite_scalar_bubble']))
+        is_nonweinberg=max_residual>1e-8
+        if is_nonweinberg and not allow_projection_residual:
+            raise RuntimeError('Non-Weinberg projection prohibited: residual='+str(max_residual))
+        output_status=(PROJECTED_STATUS if is_nonweinberg
+                       else 'SyntheticFixtureSmokeTest' if bmeta['synthetic_fixture'] else STATUS)
         obs.update(format='t3-rough-stream3-observables-v1',
-                   status='SyntheticFixtureSmokeTest' if bmeta['synthetic_fixture'] else STATUS,
+                   status=output_status,
+                   nonweinberg_projection_diagnostic_only=bool(is_nonweinberg),
+                   source_Weinberg_relative_projection_residual=float(source_residuals['already_evolved_C5']),
+                   scalar_bubble_Weinberg_relative_projection_residual=float(source_residuals['finite_scalar_bubble']),
+                   not_a_gauge_invariant_SMEFT_C5_if_nonweinberg=bool(is_nonweinberg),
                    model=model,mu_low_gev=float(mu_low),vev_gev=float(vev),
                    mass_convention='m_nu=-(v^2/2)*C5_low_GeV^-1',
                    charged_lepton_rotation='Left eigenvectors of ye(MS) ye(MS)^dagger; invariant at one-loop in SM',
@@ -164,7 +177,14 @@ def run_rough_case(model: str, pair:PreparedPair, output_dir:Path, *,
             'C5_EFT1_already_evolved_and_retained':True,
             'direct_LLSS_to_LLHH_log_readded':False,
             'not_independently_certified':True,
-            'allow_nonweinberg_projection_residual':bool(allow_projection_residual)}
+            'allow_nonweinberg_projection_residual':bool(allow_projection_residual),
+            'gauge_invariant_Weinberg_purity_below_1e_minus8':not is_nonweinberg,
+            'max_relative_nonWeinberg_projection_residual':max_residual,
+            'nonweinberg_prediction_not_valid_SMEFT':bool(is_nonweinberg)}
+        if is_nonweinberg:
+            result['unresolved'].append(
+                'Large non-Weinberg tensor components were discarded by diagnostic projection;'
+                ' this is not a valid gauge-invariant SMEFT Wilson prediction')
         result['observables_file']='observables.json'
         result['scalar_matching_status']='FullTensorPairBubbleOnly'
         result['output_npz_sha256']={filename:_digest(stage/filename) for filename in

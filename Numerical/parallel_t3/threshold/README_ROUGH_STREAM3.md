@@ -1,4 +1,4 @@
-# T3 Parallel Stream 3 — rough fermion-first all-16 (2026-11-10)
+# T3 Parallel Stream 3 — rough fermion-first all-16 (2026-11-10, adapter fix v2)
 
 **Source inspected read-only:** `Frankyang2002/T3neutrinomassmodelpipeline` main
 at `25eb5e13d09dd2f138176d4e36c4fc65edfa4bb6` (GitHub). Uses the existing
@@ -6,6 +6,36 @@ at `25eb5e13d09dd2f138176d4e36c4fc65edfa4bb6` (GitHub). Uses the existing
 `threshold/models.py`, and `Numerical/running/SMWeinbergEvolution.py`. No GitHub
 writes or symbolic regeneration. The user's *uncommitted* local files could not
 be inspected; check for local conflicts before extracting.
+
+## Adapter v2 correction (Windows regression: 20 failures, 59 passes)
+
+The initial C-owned `rough_adapter.py` wrote normalized B manifests without
+`model`, and legacy A manifests also omitted `model`; both legacy A and B
+missed the declared `scheme='MSbar'` and `units='GeV'`. Consequently C's
+`_contract()` always blocked with `Unsupported model label: ` before scalar
+matching, even when the original producer inputs were internally consistent.
+**v2 preserves all four fields in both converted manifests** and the converted
+JSON/NPZ pairs remain independent C-owned copies of their original inputs.
+
+Canonical producer endpoints may legitimately omit the optional label list.
+Instead of requiring redundant label arrays in every producer, v2 reconstructs
+`scalar_source_real_labels`/`scalar_background_real_labels` **only** when the
+original manifest identifies the exact known ordered basis
+`<model>:canonical_interleaved` or `<model>:native_named`, or when explicit
+ordered full-scalar labels are present. The project-wide
+`T3_RGBeta_reference_Weyl45_real_interleaved_v1` is also supported for A
+*only after checking* the actual complete Wilson geometry and lepton index
+map against the repository basis. This is **metadata reconstruction**, not a
+native-to-canonical tensor or CG rotation. If the basis is unknown, v2 requires
+explicit labels and continues to BLOCK; it never constructs a fake coordinate
+bridge.
+
+The standalone source-only adapter tests
+`tests/test_t3_rough_adapter_manifest_contract.py` cover 16-model synthetic
+metadata roundtrips (including missing labels), unknown native basis rejection,
+and the explicit synthetic/genuine gate. The original Stream-3 tests cover
+real matching against existing C synthetic fixtures. Both sets of tests
+must run on the user's local complete repository to validate the integration.
 
 ## EFT and numerical scope
 
@@ -92,11 +122,14 @@ actually exist and pass C preflight.
 
 ```powershell
 Set-Location C:\thesistemp\T3neutrinomassmodelpipeline
-$zip = Join-Path $env:USERPROFILE 'Downloads\t3_rough_stream3_threshold.zip'
+$zip = Join-Path $env:USERPROFILE 'Downloads\t3_rough_stream3_ward_diagnostic_v3.zip'
 Expand-Archive -LiteralPath $zip -DestinationPath . -Force
 
-# Check against the real local C/SM package and all synthetic fixtures.
-.\.venv\Scripts\python.exe -m pytest -q tests\test_t3_rough_stream3.py `
+# Check adapter metadata independently, then existing full matching/RGE regression.
+.\.venv\Scripts\python.exe -m pytest -q `
+    tests\test_t3_rough_projection_diagnostic.py `
+    tests\test_t3_rough_adapter_manifest_contract.py `
+    tests\test_t3_rough_stream3.py `
     tests\test_t3_parallel_c_threshold.py `
     tests\test_t3_parallel_c_real_integration.py
 
@@ -118,10 +151,59 @@ If the new Stream 1/2 scripts are not already run, this CLI can invoke their
 commands are assumed; no Matchete, RGBeta, or archived symbolic tasks run by
 default. The command templates are executed without a shell in repository root.
 
-For an explicitly conditional projection of an EWSB-resummed mass spectrum
-onto the dimension-five Weinberg template, add `--allow-projection-residual`.
-This does not make the SU(2)-noninvariant remainder physical SMEFT matching,
-and the choice is recorded in the manifest. Default is to fail preflight.
+### v3: Workstream-2 LLHH Ward/purity blocker (10 November 2026)
+
+Local full-repository regression reported `119 passed` with the v2 adapter. The
+16 model source-based runs then blocked at the **existing C preflight**:
+`LLHH violates pure SU(2)-invariant Weinberg template`, with residuals
+`0.9479 ... 1.0000` (A_-4: `0.9743`). This is a *source-tensor* incompatibility,
+not a floating-point tolerance or a missing scalar parameter. The cause is
+**not established** by the scalar-matching pipeline: possible errors include
+source field indexing/conjugation, relative polynomial normalization, or a
+non-gauge-invariant EFT1 anomalous-dimension evolution. Do **not** fix this by
+increasing preflight tolerance or silently setting non-Weinberg entries to zero.
+
+Version 3 automatically creates
+`_diagnostics/<slug>_llhh_projection.json` **before** preflight for each
+adapted A endpoint. It reports:
+
+- The source LLHH Frobenius norm and the fraction outside the project C
+  Weinberg template (full six-index contraction, not a neutral-only slice).
+- Independent C5 from the `nu-nu-H[2,R]-H[2,R]` component and from the
+  least-squares full Weinberg tensor projection, plus optional independently
+  saved Stream-2 `C5_EFT1_ms` comparison.
+- Source SU(2)_L (three generators) and U(1)_Y Ward residuals using the
+  explicitly documented left-Weyl lepton and interleaved-real Higgs basis.
+- 12 largest incompatible original LLHH components, and ranked **hypothetical**
+  weak-index/Higgs-index/conjugation alternatives. These rankings do **not**
+  establish or apply field transformations.
+
+The original A Wilson NPZ, B background, quartic tensors, and solver physics
+are **never changed**. When preflight blocks, the diagnostic JSON and blocked
+model summary remain available. Examine A(-4) first:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\RunT3RoughAll16.py --models A_-4 --overwrite
+Get-Content output\parallel_t3\rough_results\rough_fermion_first_v1\_diagnostics\A_m4_llhh_projection.json -Raw |
+    ConvertFrom-Json | Select-Object relative_Weinberg_purity_residual, ward_SU2xU1, alternative_coordinate_hypotheses_DO_NOT_APPLY
+```
+
+For **explicitly opt-in diagnostic numbers only**, use
+`--allow-projection-residual`. Large non-Weinberg contamination is classified
+`NonWeinbergProjectedDiagnostic` (not a genuine `RoughNumericalBenchmark` and
+not counted in `successful_real`), with both original projection residuals
+and a warning in `manifest.json` and `observables.json`. Such numbers are
+**not gauge-invariant SMEFT predictions**. The existing C code can still
+reject other mismatched inputs, such as a separately supplied C5 inconsistent
+with the full tensor projection. Never strip that redundancy check.
+
+```powershell
+.\.venv\Scripts\python.exe scripts\RunT3RoughAll16.py --models A_-4 --overwrite --allow-projection-residual
+```
+
+Default remains strict and BLOCKED until the upstream field map or EFT1
+source evolves a genuine Weinberg tensor. Successful full-tensor C matching
+with projection residual <=1e-8 is the condition for normal benchmark status.
 
 A single C-only fixture smoke test (outputs **not** genuine):
 
@@ -143,13 +225,57 @@ Under `output/parallel_t3/rough_results/rough_fermion_first_v1/`:
   neutrino masses, Takagi and PMNS matrices when defined.
 - `<slug>/observables.json`: sorted masses, Δm², mixing angles, J and δ if
   numerically defined, and precise basis conventions.
-- `<slug>/manifest.json`: `RoughNumericalBenchmark` or explicitly synthetic
-  smoke status, actual input SHA256s, EFT order, scales, C-only omissions,
+- `<slug>/manifest.json`: `RoughNumericalBenchmark`, an explicitly non-gauge-invariant
+  `NonWeinbergProjectedDiagnostic`, or synthetic smoke status, actual input SHA256s, EFT order, scales, C-only omissions,
   one-loop backend diagnostics, all finite bubble pairs and quartic channels.
 - `summary.json` and `summary.csv`: all requested model results or actual
   blockages. Blocked models are recorded in `_blocked/<slug>.json` too.
+- `_diagnostics/<slug>_llhh_projection.json`: original Stream-2 LLHH
+  Weinberg purity, gauge Ward variations and component-level diagnosis.
 - `_adapted_inputs/<slug>/`: **C-owned** normalised, checksum-stamped full
   JSON/NPZ input pair for reproducibility; never modifies upstream A/B.
 
 Missing inputs produce no `C5_smeft*.npz` and no fabricated numbers. The runner
 exits nonzero if any requested model is blocked; the CSV/JSON are still saved.
+
+## v4 — distinct diagnosis versus genuine benchmark
+
+The v4 diagnostic always records the original full-tensor LS Weinberg projection,
+neutral-component `4*C[nunu,H[2,R],H[2,R]]`, the SU(2)xU(1) Ward residuals and
+suggested *diagnostic* coordinate hypotheses.  If `C_psi2phi2_tree_mf` is present
+it also records the order-zero MF purity/Ward residuals, without any new EFT1
+running.  The MF witness distinguishes an initially impure boundary from
+impurity emerging during evolution; a zero MF LLHH coefficient is explicitly
+not informative about purity.
+
+`scripts/InspectT3RoughWardSummary.py` flattens nested diagnostics into
+`_diagnostics/ward_summary_flat.csv` and prints every Ward component directly.
+**Do not infer a validated field rotation from the best template diagnostic.**
+
+By default, purity residuals exceeding 1e-8 BLOCK genuine matching as before.
+Only with `--allow-projection-residual` can the runner proceed with LS projection
+as a **NonWeinbergProjectedDiagnostic**, which is never counted as a real
+`RoughNumericalBenchmark`.  When that opt-in is used on an impure source, its
+redundant `C5_EFT1_ms` may disagree strongly with the LS projection.  A new
+C-only temporary adapted Wilson input then omits *only that redundant check*,
+records the original source value, both original hashes and the discrepancy
+at `_projection_only_inputs/<slug>/redundant_C5_diagnostic.json`.  The original
+full Wilson and upstream inputs remain unchanged.  This does **not** validate
+or replace a genuinely gauge-invariant full SMEFT match; a large residual
+cannot be reclassified as a valid theory result by opting in.
+
+PowerShell:
+
+```powershell
+Set-Location C:\thesistemp\T3neutrinomassmodelpipeline
+.\.venv\Scripts\python.exe scripts\RunT3RoughAll16.py --overwrite
+.\.venv\Scripts\python.exe scripts\InspectT3RoughWardSummary.py
+# Optional rough mass diagnostics ONLY, not genuine SMEFT coefficients:
+.\.venv\Scripts\python.exe scripts\RunT3RoughAll16.py --allow-projection-residual --overwrite
+```
+
+When `--overwrite` is supplied, C also deletes an existing per-model result
+*only if* its manifest identifies the same model and a known C-produced
+classification. This prevents old projected masses being left on disk after a
+subsequent genuine run blocks. A/B source data are not removed. Unrecognised
+output directories abort rather than being erased.

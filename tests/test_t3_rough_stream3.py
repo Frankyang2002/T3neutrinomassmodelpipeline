@@ -85,6 +85,10 @@ def test_canonical_A_B_adapter_roundtrip_and_synthetic_gate(tmp_path):
     pair=prepare_pair('A_-4',a,b,tmp_path/'adapted',allow_synthetic=True)
     pf=preflight_pair(pair.wilson,pair.background,permit_synthetic=True)
     assert pf['status']=='ready_conditional',pf['blockers']
+    wm=json.loads(pair.wilson.read_text());bm=json.loads(pair.background.read_text())
+    assert wm['model']==bm['model']=='A_-4'
+    assert wm['scheme']==bm['scheme']=='MSbar'
+    assert wm['units']==bm['units']=='GeV'
     with np.load(a.parent/'wilson_at_MS.npz',allow_pickle=False) as original, \
          np.load(pair.wilson.parent/'wilson_at_MS.npz',allow_pickle=False) as adapted:
         np.testing.assert_array_equal(original['C_psi2phi2_ms'],adapted['C_psi2phi2_ms'])
@@ -97,6 +101,7 @@ def test_legacy_A_full_C_is_adapted_by_field_labels_not_array_rename(tmp_path):
     pf=preflight_pair(pair.wilson,pair.background,permit_synthetic=True)
     assert pf['status']=='ready_conditional',pf['blockers']
     new=json.loads(pair.wilson.read_text())
+    assert new['model']=='A_-4' and new['units']=='GeV' and new['scheme']=='MSbar'
     assert new['lepton_indices']==[[0,1],[2,3],[4,5]]
     assert new['canonical_wilson_convention'].startswith('C_ijab_full_sum')
 
@@ -195,3 +200,99 @@ def test_all_16_synthetic_scalar_mass_basis_and_pair_bubble(tmp_path,model):
     matching=report['checks']['single_MS_finite_bubble_match_candidate']['details']
     assert matching['eigenstates_integrated_out_at_single_MS']==n_real(model)
     assert matching['unordered_eigenstate_pairs']==n_real(model)*(n_real(model)+1)//2
+
+
+@pytest.mark.parametrize('model', ALL_MODELS)
+def test_missing_labels_recover_only_from_declared_model_basis(tmp_path,model):
+    """Producer fields are actually in the fixture's declared canonical/native frame."""
+    a,b=make_fixture(model,tmp_path/'fixture')
+    am=json.loads(a.read_text());bm=json.loads(b.read_text())
+    expected_a=am.pop('scalar_source_real_labels')
+    expected_b=bm.pop('scalar_background_real_labels')
+    _write_json(a,am);_write_json(b,bm)
+    pair=prepare_pair(model,a,b,tmp_path/'adapted',allow_synthetic=True)
+    wa=json.loads(pair.wilson.read_text());ba=json.loads(pair.background.read_text())
+    assert wa['scalar_source_real_labels']==expected_a
+    assert ba['scalar_background_real_labels']==expected_b
+    assert wa['scalar_labels_origin']=='declared_standard_A_basis_id'
+    assert ba['scalar_labels_origin']=='declared_standard_B_basis_id'
+    assert wa['model']==ba['model']==model
+    pf=preflight_pair(pair.wilson,pair.background,permit_synthetic=True)
+    assert pf['status']=='ready_conditional',pf['blockers']
+
+
+def test_missing_A_labels_without_documented_basis_fails_closed(tmp_path):
+    a,b=make_fixture('A_-4',tmp_path/'fixture')
+    meta=json.loads(a.read_text())
+    meta.pop('scalar_source_real_labels')
+    meta['scalar_basis_id']='unmapped_native_S_field_order'
+    other=json.loads(b.read_text())
+    other['wilson_scalar_basis_id']=meta['scalar_basis_id']
+    _write_json(a,meta);_write_json(b,other)
+    with pytest.raises(AdapterBlocked,match='scalar_source_real_labels'):
+        prepare_pair('A_-4',a,b,tmp_path/'adapted',allow_synthetic=True)
+    assert not (tmp_path/'adapted'/'wilson.json').exists()
+
+
+def test_missing_B_labels_without_documented_basis_fails_closed(tmp_path):
+    a,b=make_fixture('A_-4',tmp_path/'fixture')
+    meta=json.loads(b.read_text())
+    meta.pop('scalar_background_real_labels')
+    meta['background_scalar_basis_id']='unknown_B_native_components'
+    _write_json(b,meta)
+    with pytest.raises(AdapterBlocked,match='scalar_background_real_labels'):
+        prepare_pair('A_-4',a,b,tmp_path/'adapted',allow_synthetic=True)
+
+
+def test_reference_Weyl45_requires_correct_scalar_and_lepton_axes(tmp_path):
+    a,b=make_fixture('A_-4',tmp_path/'fixture')
+    meta=json.loads(a.read_text())
+    meta.pop('scalar_source_real_labels')
+    meta['scalar_basis_id']='T3_RGBeta_reference_Weyl45_real_interleaved_v1'
+    other=json.loads(b.read_text())
+    other['wilson_scalar_basis_id']=meta['scalar_basis_id']
+    _write_json(a,meta);_write_json(b,other)
+    # Fixture has only 8 Weyl components; it may not claim the reference 45-Weyl frame.
+    with pytest.raises(AdapterBlocked,match='Weyl45 basis ID conflicts'):
+        prepare_pair('A_-4',a,b,tmp_path/'adapted',allow_synthetic=True)
+
+
+def test_B_permuted_full_quartic_is_reindexed_numerically(tmp_path):
+    a,b=make_fixture('A_-4',tmp_path/'fixture')
+    bm=json.loads(b.read_text())
+    with np.load(b.parent/'background.npz',allow_pickle=False) as z:
+        arrays={k:z[k].copy() for k in z.files}
+    original=arrays['quartic_real_full_ms'].copy()
+    n=original.shape[0]
+    perm=[4,0,5,1,2,3]+list(range(6,n))
+    for ax in range(4):
+        arrays['quartic_real_full_ms']=np.take(arrays['quartic_real_full_ms'],perm,axis=ax)
+    if 'quartic_real_channels_ms' in arrays:
+        for ax in range(1,5):
+            arrays['quartic_real_channels_ms']=np.take(arrays['quartic_real_channels_ms'],perm,axis=ax)
+    np.savez_compressed(b.parent/'background.npz',**arrays)
+    bm.pop('format')
+    bm.pop('tensor_npz_sha256')
+    bm['schema']='t3-parallel-B-background-v1'
+    bm['scalar_full_real_labels']=[(['H[1,R]','H[1,I]','H[2,R]','H[2,I]']+
+                                   bm['scalar_background_real_labels'])[i] for i in perm]
+    _write_json(b,bm)
+    pair=prepare_pair('A_-4',a,b,tmp_path/'adapted',allow_synthetic=True)
+    with np.load(pair.background.parent/'background.npz',allow_pickle=False) as z:
+        np.testing.assert_array_equal(z['quartic_real_full_ms'],original)
+    pf=preflight_pair(pair.wilson,pair.background,permit_synthetic=True)
+    assert pf['status']=='ready_conditional',pf['blockers']
+
+
+def test_reconverted_canonical_pair_preserves_provenance(tmp_path):
+    a,b=make_fixture('A_-4',tmp_path/'fixture')
+    first=prepare_pair('A_-4',a,b,tmp_path/'first',allow_synthetic=True)
+    second=prepare_pair('A_-4',first.wilson,first.background,tmp_path/'second',allow_synthetic=True)
+    for file in ('wilson.json','background.json'):
+        x=json.loads((tmp_path/'first'/file).read_text())
+        y=json.loads((tmp_path/'second'/file).read_text())
+        for key in ('model','matching_context_id','matched_seed_id',
+                    'lagrangian_source_id','mu_f_gev','mu_s_gev','scheme','units'):
+            assert x[key]==y[key]
+    pf=preflight_pair(second.wilson,second.background,permit_synthetic=True)
+    assert pf['status']=='ready_conditional',pf['blockers']

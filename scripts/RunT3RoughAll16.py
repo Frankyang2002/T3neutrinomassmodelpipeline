@@ -12,6 +12,7 @@ import json
 import os
 from pathlib import Path
 import shlex
+import shutil
 import subprocess
 import sys
 
@@ -23,6 +24,8 @@ from Numerical.parallel_t3.threshold.models import ALL_MODELS,normalize_model
 from Numerical.parallel_t3.threshold.rough_adapter import AdapterBlocked,prepare_pair
 from Numerical.parallel_t3.threshold.rough_numerics import OMITTED,run_rough_case
 from Numerical.parallel_t3.threshold.preflight import preflight_pair
+from Numerical.parallel_t3.threshold.rough_projection import diagnose_pair
+from Numerical.parallel_t3.threshold.rough_diagnostic_input import make_projection_only_pair
 
 RUN_ID='rough_fermion_first_v1'
 B_DEFAULT=Path('output/parallel_t3/rough_inputs')/RUN_ID/'c'
@@ -70,6 +73,7 @@ def _save_json(path:Path,obj:dict)->None:
 def _write_summary(root:Path,entries:list[dict],*,allow_synthetic:bool)->None:
     count=sum(e['status']=='RoughNumericalBenchmark' for e in entries)
     smoke=sum(e['status']=='SyntheticFixtureSmokeTest' for e in entries)
+    projected=sum(e['status']=='NonWeinbergProjectedDiagnostic' for e in entries)
     doc={'format':'t3-all16-rough-fermion-first-summary-v1',
          'run_id':RUN_ID,'classification':'RoughNumericalBenchmark_NotCertified',
          'threshold_sequence':['UV','ALL_fermions_integrated_at_one_MF',
@@ -84,6 +88,7 @@ def _write_summary(root:Path,entries:list[dict],*,allow_synthetic:bool)->None:
              'omitted':list(OMITTED)},
          'counts':{'requested':len(entries),'successful_real':count,
                    'successful_synthetic_smoke':smoke,
+                   'nonweinberg_projected_diagnostics':projected,
                    'blocked':sum(e['status']=='BLOCKED' for e in entries)},
          'models':entries}
     _save_json(root/'summary.json',doc)
@@ -92,6 +97,7 @@ def _write_summary(root:Path,entries:list[dict],*,allow_synthetic:bool)->None:
             'm1_eV','m2_eV','m3_eV','dm21_sq_eV2','dm31_sq_eV2','dm32_sq_eV2',
             'sin2_theta12','sin2_theta13','sin2_theta23','mixing_defined',
             'scalar_mass_kind','scalar_eigenstates_integrated_out',
+            'weinberg_purity_relative','max_gauge_ward_relative','projection_diagnostic_file',
             'source_background','source_wilson','output_manifest',
             'matching_conventions','omitted_terms','classification']
     with (root/'summary.csv').open('w',newline='',encoding='utf-8') as stream:
@@ -124,7 +130,7 @@ def parse_args(argv=None):
     p.add_argument('--mu-low',type=float,default=173.)
     p.add_argument('--vev',type=float,default=246.22)
     p.add_argument('--allow-projection-residual',action='store_true',
-                   help='Diagnostic benchmark only: project SU2-violating mass-split residual onto C5')
+                   help='Opt-in non-Weinberg projected DIAGNOSTIC; never counted as a genuine SMEFT benchmark')
     p.add_argument('--allow-synthetic-smoke-test',action='store_true',
                    help='Tests ONLY: outputs labelled SyntheticFixtureSmokeTest, never counted as genuine')
     return p.parse_args(argv)
@@ -148,6 +154,24 @@ def main(argv=None)->int:
                'stage':'inputs','blocker':None,
                'mu_s_gev':1000.0,'mu_low_gev':args.mu_low}
         rows.append(entry)
+        # A previous opt-in projected diagnostic must not remain in the
+        # per-model directory and be mistaken for the CURRENT strict run.
+        # --overwrite applies only to a verified C-owned result directory.
+        prior=out/slug(model)
+        if args.overwrite and prior.is_dir():
+            old_manifest=prior/'manifest.json'
+            if not old_manifest.is_file():
+                raise SystemExit(f'Refusing to erase unrecognised directory: {prior}')
+            try:
+                old=json.loads(old_manifest.read_text(encoding='utf-8-sig'))
+            except (OSError,ValueError) as exc:
+                raise SystemExit(f'Refusing to erase invalid prior C manifest: {old_manifest}: {exc}')
+            if old.get('model')!=model or old.get('status') not in (
+                    'RoughNumericalBenchmark','SyntheticFixtureSmokeTest',
+                    'NonWeinbergProjectedDiagnostic'):
+                raise SystemExit(f'Refusing to erase non-C result directory: {prior}')
+            shutil.rmtree(prior)
+            entry['stale_results_removed_for_overwrite']=True
         b,b_npz=inputs(b_root,model,'background')
         w,w_npz=inputs(w_root,model,'wilson')
         entry.update(source_background=str(b),source_wilson=str(w))
@@ -168,6 +192,26 @@ def main(argv=None)->int:
             entry['stage']='component_adapter'
             pair=prepare_pair(model,w,b,out/'_adapted_inputs'/slug(model),
                               allow_synthetic=args.allow_synthetic_smoke_test)
+            # Directly inspect Stream 2's evolved LLHH tensor.  Never
+            # symmetrise/replace/project its stored components in-place.
+            entry['stage']='LLHH_source_diagnostic'
+            diagnostic_file=out/'_diagnostics'/f'{slug(model)}_llhh_projection.json'
+            diag=diagnose_pair(pair.wilson,output=diagnostic_file,model=model)
+            entry['projection_diagnostic_file']=str(diagnostic_file)
+            entry['weinberg_purity_relative']=diag['relative_Weinberg_purity_residual']
+            entry['max_gauge_ward_relative']=max(v['relative_to_LLHH']
+                                                for v in diag['ward_SU2xU1'].values())
+            # Opt-in ONLY: preserve the original A data and report its
+            # duplicate C5 discrepancy.  In non-Weinberg tensors the neutral
+            # 4*C(nu,nu,H0R,H0R) and the full-tensor LS projection need not
+            # coincide.  Both cannot be used in the existing C preflight.
+            # For diagnostic projection alone, drop that *redundant check*
+            # from a separate C-owned input; never silently do so for real runs.
+            if args.allow_projection_residual:
+                pair, override = make_projection_only_pair(
+                    model, pair, out/'_projection_only_inputs'/slug(model),
+                    observed_purity_residual=diag['relative_Weinberg_purity_residual'])
+                entry['projection_C5_redundancy_override']=override
             entry['stage']='existing_C_preflight'
             pf=preflight_pair(pair.wilson,pair.background,mode='rge_improved',
                 expected_model=model,mu_low=args.mu_low,
@@ -183,6 +227,8 @@ def main(argv=None)->int:
             entry.update(info)
             entry['stage']='complete'
             entry['blocker']=None
+            stale_block=out/'_blocked'/f'{slug(model)}.json'
+            if stale_block.exists():stale_block.unlink()
             print(f'{model}: {entry["status"]} masses_eV={info["masses_eV"]}',flush=True)
         except Exception as exc:
             entry['status']='BLOCKED'

@@ -110,7 +110,8 @@ def _identity_fields(meta: dict, model: str, *, label: str) -> dict:
         raise AdapterBlocked(f'{label}: requires declared MSbar and GeV conventions')
     if type(meta.get('synthetic_fixture')) is not bool:
         raise AdapterBlocked(f'{label}: synthetic_fixture must be declared explicitly')
-    return {**ids, 'mu_f_gev':mf, 'mu_s_gev':ms,
+    return {**ids, 'model':model, 'mu_f_gev':mf, 'mu_s_gev':ms,
+            'scheme':'MSbar', 'units':'GeV',
             'synthetic_fixture':meta['synthetic_fixture']}
 
 
@@ -124,6 +125,99 @@ def _same_input(w: dict, b: dict) -> None:
         raise AdapterBlocked('Synthetic provenance cannot be relabelled as a genuine model')
 
 
+def _documented_scalar_labels(model: str, basis_id: str, *,
+                              full_wilson: np.ndarray | None = None,
+                              lepton_indices: Any = None) -> list[str] | None:
+    """Recover labels ONLY from an exact, already-declared component-frame ID.
+
+    This supplies labels for known ordered coordinates; it does not perform a
+    Matchete/RGBeta transform or infer the coordinates from array dimensions.
+    """
+    if basis_id == f'{model}:canonical_interleaved':
+        return scalar_labels(model)
+    if basis_id == f'{model}:native_named':
+        return scalar_labels(model, 'native_named')
+    if basis_id == 'T3_RGBeta_reference_Weyl45_real_interleaved_v1':
+        from Numerical.parallel_t3.wilson.basis import build_basis
+        basis = build_basis(model)
+        if full_wilson is not None:
+            if np.shape(full_wilson) != (basis.nf,basis.nf,basis.ns,basis.ns):
+                raise AdapterBlocked('A standard Weyl45 basis ID conflicts with full Wilson shape')
+            if lepton_indices != [list(x) for x in basis.leptons]:
+                raise AdapterBlocked('A standard Weyl45 basis ID conflicts with lepton index map')
+        return list(basis.scalar_labels[4:])
+    return None
+
+
+def _source_scalar_labels(meta: dict, data: dict, model: str,
+                          tensor: np.ndarray) -> tuple[list[str], str]:
+    """Attach A heavy labels via source indices, never from B dimensions.
+
+    Explicit source labels win, while the known reference ordered bases may
+    reconstruct absent labels only when every scalar index is standard.
+    """
+    n = n_real(model)
+    labels = data.get('scalar_source_real_labels')
+    basis_id = data.get('scalar_basis_id')
+    if not isinstance(basis_id, str) or not basis_id:
+        raise AdapterBlocked('A scalar_basis_id missing: cannot identify component frame')
+    if labels is not None:
+        if not isinstance(labels,list) or len(labels)!=n or len(set(labels))!=n or not all(isinstance(x,str) and x for x in labels):
+            raise AdapterBlocked('A source scalar labels malformed or incomplete')
+        return labels, 'explicit_A_manifest'
+    full_labels = meta.get('scalar_full_real_labels')
+    if full_labels is None:
+        nested = meta.get('basis')
+        if isinstance(nested,dict):full_labels = nested.get('scalar_labels')
+    heavy = data.get('heavy_source_indices')
+    if isinstance(full_labels,list):
+        if (len(full_labels)!=n+4 or len(set(full_labels))!=n+4 or
+                not isinstance(heavy,list) or len(heavy)!=n or
+                any(type(i) is not int or i<0 or i>=n+4 for i in heavy)):
+            raise AdapterBlocked('A explicit full scalar labels/indices are inconsistent')
+        h = data.get('higgs_source_indices')
+        if [full_labels[i] for i in h] != ['H[1,R]','H[1,I]','H[2,R]','H[2,I]']:
+            raise AdapterBlocked('A full scalar labels and Higgs index map disagree')
+        return [full_labels[i] for i in heavy], 'indexed_A_full_scalar_labels'
+    known = _documented_scalar_labels(model,basis_id,full_wilson=tensor,
+                       lepton_indices=data.get('lepton_indices'))
+    if known is None:
+        raise AdapterBlocked('A source scalar labels missing; unrecognised scalar_basis_id '
+                             f'{basis_id!r}; supply explicit scalar_source_real_labels')
+    if (data.get('higgs_source_indices')!=[0,1,2,3] or
+            data.get('heavy_source_indices')!=list(range(4,4+n))):
+        raise AdapterBlocked('A standard basis ID cannot reconstruct labels for permuted scalar indices')
+    return known, 'declared_standard_A_basis_id'
+
+
+def _background_scalar_labels(meta: dict, model: str) -> tuple[list[str],str]:
+    """Require explicit heavy labels or a completely specified standard basis."""
+    n = n_real(model)
+    supplied = meta.get('scalar_background_real_labels')
+    if supplied is not None:
+        if (not isinstance(supplied,list) or len(supplied)!=n or
+                len(set(supplied))!=n or not all(isinstance(x,str) and x for x in supplied)):
+            raise AdapterBlocked('B source scalar labels malformed or incomplete')
+        return supplied,'explicit_B_manifest'
+    full=meta.get('scalar_full_real_labels')
+    if isinstance(full,list) and len(full)==n+4 and len(set(full))==n+4:
+        h=['H[1,R]','H[1,I]','H[2,R]','H[2,I]']
+        if not all(x in full for x in h):
+            raise AdapterBlocked('B full scalar labels do not identify all Higgs components')
+        if meta.get('format') == B_FORMAT and full[:4] != h:
+            raise AdapterBlocked('Canonical B format contradicts non-Higgs-first full labels')
+        return [x for x in full if x not in h], 'B_full_real_scalar_labels'
+    bid=meta.get('background_scalar_basis_id')
+    known=_documented_scalar_labels(model,bid)
+    if known is None:
+        raise AdapterBlocked('B scalar_background_real_labels absent and background basis '
+                             f'{bid!r} is not an attested standard scalar basis')
+    if meta.get('format',meta.get('schema'))!='t3-parallel-c-background-input-v1' and \
+            meta.get('quartic_scalar_order')!='H_RI_interleaved_then_heavy_background_v1':
+        raise AdapterBlocked('B native array scalar ordering was not independently declared')
+    return known,'declared_standard_B_basis_id'
+
+
 def _source_wilson(meta: dict, z: dict, model: str, identity: dict) -> tuple[dict,dict]:
     n = n_real(model)
     fmt = meta.get('format')
@@ -133,7 +227,8 @@ def _source_wilson(meta: dict, z: dict, model: str, identity: dict) -> tuple[dic
         if 'C_psi2phi2_ms' not in z:
             raise AdapterBlocked('Canonical Wilson endpoint lacks full C_psi2phi2_ms')
         data = {k:np.asarray(v) for k,v in z.items()}
-        out = meta.copy()
+        out = {**meta, **identity, 'model':model, 'format':W_FORMAT,
+               'tensor_npz':'wilson_at_MS.npz'}
     elif fmt == 't3-parallel-a-wilson-output-v1':
         if (meta.get('all_F_integrated_out_at_MF') is not True or
             meta.get('both_S1_S2_remain_until_MS') is not True or
@@ -159,7 +254,7 @@ def _source_wilson(meta: dict, z: dict, model: str, identity: dict) -> tuple[dic
                              shape=(len(fermion_labels),)*2+(4+n,)*2)
         if meta.get('C5_projection_definition') != 'C5[p,q]=4*C[L[p,1],L[q,1],H[2,R],H[2,R]]':
             raise AdapterBlocked('A C5 normalization not known to agree with Workstream C')
-        out = {**identity, 'format':W_FORMAT,'tensor_npz':'wilson_at_MS.npz',
+        out = {**identity, 'model':model, 'format':W_FORMAT,'tensor_npz':'wilson_at_MS.npz',
                'canonical_wilson_convention':W_CONVENTION,
                'wilson_evolved_to_ms':True,'includes_eft1_weinberg':True,
                'legacy_direct_llss_to_c5_log_added':False,
@@ -178,6 +273,10 @@ def _source_wilson(meta: dict, z: dict, model: str, identity: dict) -> tuple[dic
     else:
         raise AdapterBlocked(f'Unrecognised A format {fmt!r}. Export a declared C-v1 endpoint')
     # The existing threshold preflight checks full Weyl pair symmetry and C5 purity.
+    full=data['C_psi2phi2_ms']
+    labels,origin=_source_scalar_labels(meta,out,model,full)
+    out['scalar_source_real_labels']=labels
+    out['scalar_labels_origin']=origin
     return out, data
 
 
@@ -241,7 +340,8 @@ def _permute_full_scalar_axes(meta:dict, n:int, z:dict) -> tuple[np.ndarray, np.
             for ax in range(1,5):channels=np.take(channels,order,axis=ax)
         # The heavy basis of the mass matrix must be in the same relative order.
         listed=[full_labels[i] for i in order[4:]]
-        if listed != meta.get('scalar_background_real_labels'):
+        declared = meta.get('scalar_background_real_labels')
+        if declared is not None and listed != declared:
             raise AdapterBlocked('B full quartic and mass/background heavy-scalar label ordering mismatch')
     elif meta.get('quartic_scalar_order') != 'H_RI_interleaved_then_heavy_background_v1':
         raise AdapterBlocked('B full real quartic lacks explicit Higgs-first axis convention')
@@ -287,9 +387,7 @@ def _source_background(meta: dict, z: dict, model: str, identity: dict) -> tuple
     R=_numerical_array(z.get('R_wilson_from_background'), 'B/Wilson-to-background rotation',shape=(n,n),real=True)
     if not np.allclose(R@R.T,np.eye(n),rtol=1e-10,atol=1e-10):
         raise AdapterBlocked('B claimed scalar rotation is not orthogonal')
-    b_labels=meta.get('scalar_background_real_labels')
-    if not isinstance(b_labels,list) or len(b_labels)!=n or len(set(b_labels))!=n:
-        raise AdapterBlocked('B requires complete ordered native heavy real-field labels')
+    b_labels,b_labels_origin=_background_scalar_labels(meta,model)
     if not isinstance(meta.get('background_scalar_basis_id'),str) or not meta['background_scalar_basis_id']:
         raise AdapterBlocked('B background mass/quartic basis identifier absent')
     if not isinstance(meta.get('wilson_scalar_basis_id'),str) or not meta['wilson_scalar_basis_id']:
@@ -304,12 +402,13 @@ def _source_background(meta: dict, z: dict, model: str, identity: dict) -> tuple
     if channels is not None:data['quartic_real_channels_ms']=channels
     if 'scalar_gauge_generators_full' in z:
         data['scalar_gauge_generators_full']=z['scalar_gauge_generators_full']
-    out={**identity,'format':B_FORMAT,'tensor_npz':'background.npz',
+    out={**identity,'model':model,'format':B_FORMAT,'tensor_npz':'background.npz',
          'quartic_potential_convention':Q_CONVENTION,
          'quartic_inventory_status':'full_tensor',
          'wilson_scalar_basis_id':meta['wilson_scalar_basis_id'],
          'background_scalar_basis_id':meta['background_scalar_basis_id'],
          'scalar_background_real_labels':b_labels,
+         'scalar_labels_origin':b_labels_origin,
          'single_common_scalar_threshold':True,
          'scalar_mass_origin':meta['scalar_mass_origin'],
          'sm_couplings_at_ms':sm,
@@ -344,8 +443,8 @@ def prepare_pair(model: str, wilson_json: Path, background_json: Path,
     bout, ba = _source_background(bm,bz,model,bi)
     if wout['scalar_basis_id'] != bout['wilson_scalar_basis_id']:
         raise AdapterBlocked('B rotation does not identify the A real scalar source basis')
-    if wout.get('scalar_source_real_labels') is None or len(wout['scalar_source_real_labels'])!=n_real(model):
-        raise AdapterBlocked('A source scalar labels missing or incomplete')
+    # Source-coordinate labels have now been either verified from the manifest
+    # or reconstructed from an explicitly named standard basis.
     for key in ('matching_context_id','matched_seed_id','lagrangian_source_id','mu_s_gev','mu_f_gev'):
         if wout.get(key) != bout.get(key):
             raise AdapterBlocked(f'Post-conversion A/B provenance mismatch {key}')

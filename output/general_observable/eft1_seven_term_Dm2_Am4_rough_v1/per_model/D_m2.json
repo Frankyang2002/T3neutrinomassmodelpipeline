@@ -1,0 +1,212 @@
+{
+  "format": "t3-two-model-seven-term-eft1-joint-scalar-rough-v1",
+  "model": "D_-2",
+  "status": "ROUGH_NUMERICAL_SEVEN_TERM_ODE_JOINT_SCALAR_MATCHING",
+  "threshold_sequence": "UV -> remove ALL fermions -> EFT1(H,S1,S2) -> jointly remove ALL scalars -> SMEFT",
+  "n_SM_Weyl": 45,
+  "n_real_scalar": 12,
+  "independent_complex_C_coordinates": 80730,
+  "master_boundary_factor": 0.5,
+  "boundary_factor_status": "declared legacy-to-master projector convention, NOT native GammaCC amplitude certification",
+  "source_sha256": "cdcb662da4bce608180c7b927e2564069b15d04bdb43876d0ffba9140fbe1af7",
+  "running_json_sha256": "912f44c3c84b8dea0342eaca594aa1c343b4f8ea2631b50c40451602662a3029",
+  "scalar_background_sha256": "8970ff239b768c7b727e21c58733ef5f540de7c6c372cd2c95a523cddf064dce",
+  "source_ward_max": 2.3436242298141625e-16,
+  "quartic_ward_max": 3.3242936828149066e-18,
+  "evolution": {
+    "beta": "Eq. (4.85)-based seven-term candidate; crossed channel pair-symmetrised",
+    "implementation": "GeneralEFT1SevenTermFlow.master_beta(corrected_crossed=True)",
+    "has_conjugate_C_channel": true,
+    "full_beta_independently_loop_certified": false,
+    "method": "full-tensor explicit midpoint RK2, ln(mu) interpolation",
+    "steps": 2,
+    "rhs_evaluations": 4,
+    "mu_F_gev": 100000.0,
+    "mu_S_gev": 1000.0,
+    "C_relative_change": 0.06514552932926826,
+    "pair_symmetry_max_relative_residual": 1.1725513367768074e-30,
+    "first_point_seven_term_beta_norms": {
+      "yukawa_wavefunction": 0.0,
+      "scalar_pair": 3.972447792704188e-14,
+      "mixed_yukawa_gauge": 6.19078442604385e-12,
+      "crossed_yukawa": 0.0,
+      "conjugate_coefficient_yukawa": 4.485018476241355e-33,
+      "scalar_anomalous_dimension": 6.190784426043849e-12,
+      "fermion_anomalous_dimension": 3.3388297633516298e-12
+    },
+    "scalar_quartic_coverage": "lambdaH(HdagH)^2/2 and complete supplied HHSS only",
+    "additional_quartics_zero_by_rough_approximation": true
+  },
+  "matching": {
+    "c5_from_eft1_ode_gev_inv": {
+      "real": [
+        [
+          -8.97524019840054e-16,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -7.479366831709461e-16,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          -6.73143007583746e-16
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    "c5_from_joint_scalar_bubble_gev_inv": {
+      "real": [
+        [
+          8.910735583703092e-17,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          7.425612826155418e-17,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          6.683011621299986e-17
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    "c5_smeft_conditional_gev_inv": {
+      "real": [
+        [
+          -8.084166640030231e-16,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -6.73680554909392e-16,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          -6.063128913707462e-16
+        ]
+      ],
+      "imag": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    "mnu_matrix_eV": {
+      "real": [
+        [
+          0.024504842492942585,
+          -0.0,
+          -0.0
+        ],
+        [
+          -0.0,
+          0.020420702125149508,
+          -0.0
+        ],
+        [
+          -0.0,
+          -0.0,
+          0.018378643793548994
+        ]
+      ],
+      "imag": [
+        [
+          -0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          -0.0
+        ]
+      ]
+    },
+    "takagi_masses_eV": [
+      0.018378643793548994,
+      0.020420702125149508,
+      0.024504842492942585
+    ],
+    "scalar_mass_eigenvalues_gev": [
+      1488.4800877347097,
+      1498.5678362149538,
+      1593.6606843119025,
+      1593.6606843119025,
+      1593.6606843119025,
+      1593.6606843119025,
+      1593.6606843119025,
+      1593.6606843119025
+    ],
+    "joint_scalar_eigenpairs": 36,
+    "direct_weinberg_projection_residual": 2.271969149390162e-12,
+    "bubble_weinberg_projection_residual": 4.634397733866128e-16,
+    "weinberg_projection_is_accurate_1e-6": true,
+    "no_separate_eft1_fixed_order_log_added": true,
+    "heavy_scalar_multiplets_integrated_jointly": true
+  },
+  "signed_GammaCC_to_Weyl_factor_independently_known": false,
+  "full_scalar_quartic_included": false,
+  "hard_one_loop_fermion_matching_included": false,
+  "physical_neutrino_mass_prediction_certified": false,
+  "full_tensors_relative_path": "D_m2.npz"
+}

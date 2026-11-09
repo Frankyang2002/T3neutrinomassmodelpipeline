@@ -1,0 +1,1198 @@
+{
+  "format": "t3-parallel-a-bc-complex-cg-mass-eigen-transport-v21",
+  "status": "BCMinus1MatcheteNativeEightComplexCGsPerModelRotated_MassEigenActionVerifiedConditional",
+  "models_checked": 2,
+  "native_Matchete_complex_CG_sources_rotated": 16,
+  "native_topology_CGs_rotated": 2,
+  "native_BC_optional_extra_CGs_rotated": 14,
+  "baseline_RGBeta_special_complex_quartic_slots_conditionally_mapped": 12,
+  "max_complex_quartic_action_transport_relative_residual": 3.0780140160896806e-15,
+  "v19_input_provenance": {
+    "source_files_sha256_rechecked": 7,
+    "legacy_windows_separator_keys_accepted": 7,
+    "provenance_hashes_unchanged": true
+  },
+  "source_sha256": {
+    "v18_topology": "e3911518374091d05ac57618a1e577f9f88e46d129bbb6e26fd349dd77bddc7a",
+    "v18_bc_extra": "c2835b245823aea2572667f2286ab8994c0c0a1eae655a3670a15e194d2e60ec",
+    "v19_complex_bridge": "3a597f76e0faace736551e902628a9d857a60df825ab85e8e1f69bcdfc099f54",
+    "v20_quartic_census": "4509ea722ad54fbeca2eb80e87b1d52898f3f9742fd3560651ebb0778511caae",
+    "B_-1_mass_basis": "ff659b7458802907001eb1fa03b1743a66fa7eaa9f91b128a73a4cf7952e1414",
+    "C_-1_mass_basis": "09bcce127e5e48549be3ad69a72b388333b88538cd01711453966f493944b101"
+  },
+  "models": {
+    "B_-1": {
+      "model": "B_-1",
+      "source_native_complex_CG_count": 8,
+      "source_topology_CGs": 1,
+      "source_optional_extra_CGs": 7,
+      "baseline_RGBeta_special_complex_slots": 6,
+      "baseline_six_from_seven_rank": 6,
+      "v19_historical_seven_source_symbol_order": [
+        "lambdaT3ExtraQ110101I1",
+        "lambdaT3ExtraQ110101I2",
+        "lambdaT3ExtraQ000112I1",
+        "lambdaT3ExtraQ000202I1",
+        "lambdaT3ExtraQ001201I1",
+        "lambdaT3ExtraQ020020I1",
+        "lambdaT3ExtraQ020200I1"
+      ],
+      "v18_native_seven_source_symbol_order": [
+        "lambdaT3ExtraQ000112I1",
+        "lambdaT3ExtraQ000202I1",
+        "lambdaT3ExtraQ001201I1",
+        "lambdaT3ExtraQ020020I1",
+        "lambdaT3ExtraQ020200I1",
+        "lambdaT3ExtraQ110101I1",
+        "lambdaT3ExtraQ110101I2"
+      ],
+      "v19_column_indices_in_native_v18_order": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        0,
+        1
+      ],
+      "source_basis_reordered_by_exact_coupling_symbol": true,
+      "optional_seventh_source_direction_action_nonzero": true,
+      "optional_seventh_source_direction_worst_holdout_residual": 6.291840672613088e-16,
+      "mass_rotation_analytic_and_tensor_checks": {
+        "quadratic_tensor_transport_max_absolute_gev2": 6.984919310109802e-10,
+        "su2_covariance_max_absolute": 4.965068306494546e-16,
+        "quadratic_masses_gev": [
+          1385.2723699746098,
+          1599.094340160689
+        ],
+        "explicit_epsilon_conjugation_tested": true
+      },
+      "rotated_mass_basis_monomials_before_dedup": 68,
+      "max_source_native_action_relative_residual": 1.1102230246251565e-15,
+      "native_CG_sectors": [
+        {
+          "source_matchete_coupling": "lambdaT3",
+          "source_fields": [
+            "H",
+            "H",
+            "S1",
+            "S2dag"
+          ],
+          "native_CG_frobenius_norm": 2.0,
+          "rotated_mass_basis_monomials": 4,
+          "mass_basis_fields": [
+            [
+              "H",
+              "H",
+              "X",
+              "X"
+            ],
+            [
+              "H",
+              "H",
+              "X",
+              "Y"
+            ],
+            [
+              "H",
+              "H",
+              "Y",
+              "X"
+            ],
+            [
+              "H",
+              "H",
+              "Y",
+              "Y"
+            ]
+          ],
+          "plus_Hc_action_relative_residual": 5.138909021919903e-16,
+          "numerical_RGBeta_component_tensor_assumed": false
+        },
+        {
+          "source_matchete_coupling": "lambdaT3ExtraQ000112I1",
+          "source_fields": [
+            "S1dag",
+            "S2",
+            "S2dag",
+            "S2dag"
+          ],
+          "native_CG_frobenius_norm": 1.7320508075688772,
+          "rotated_mass_basis_monomials": 16,
+          "mass_basis_fields": [
+            [
+              "Xdag",
+              "Xdag",
+              "X",
+              "X"
+            ],
+            [
+              "Xdag",
+              "Xdag",
+              "X",
+              "Y"
+            ],
+            [
+              "Xdag",
+              "Xdag",
+              "Y",
+              "X"
+            ],
+            [
+              "Xdag",
+              "Xdag",
+              "Y",
+              "Y"
+            ],
+            [
+              "Xdag",
+              "Ydag",
+              "X",
+              "X"
+            ],
+            [
+              "Xdag",
+              "Ydag",
+              "X",
+              "Y"
+            ],
+            [
+              "Xdag",
+              "Ydag",
+              "Y",
+              "X"
+            ],
+            [
+              "Xdag",
+              "Ydag",
+              "Y",
+              "Y"
+            ],
+            [
+              "Ydag",
+              "Xdag",
+              "X",
+              "X"
+            ],
+            [
+              "Ydag",
+              "Xdag",
+              "X",
+              "Y"
+            ],
+            [
+              "Ydag",
+              "Xdag",
+              "Y",
+              "X"
+            ],
+            [
+              "Ydag",
+              "Xdag",
+              "Y",
+              "Y"
+            ],
+            [
+              "Ydag",
+              "Ydag",
+              "X",
+              "X"
+            ],
+            [
+              "Ydag",
+              "Ydag",
+              "X",
+              "Y"
+            ],
+            [
+              "Ydag",
+              "Ydag",
+              "Y",
+              "X"
+            ],
+            [
+              "Ydag",
+              "Ydag",
+              "Y",
+              "Y"
+            ]
+          ],
+          "plus_Hc_action_relative_residual": 1.1102230246251565e-15,
+          "numerical_RGBeta_component_tensor_assumed": false
+        },
+        {
+          "source_matchete_coupling": "lambdaT3ExtraQ000202I1",
+          "source_fields": [
+            "S1dag",
+            "S1dag",
+            "S2dag",
+            "S2dag"
+          ],
+          "native_CG_frobenius_norm": 1.7320508075688772,
+          "rotated_mass_basis_monomials": 16,
+          "mass_basis_fields": [
+            [
+              "Xdag",
+              "Xdag",
+              "X",
+              "X"
+            ],
+            [
+              "Xdag",
+              "Xdag",
+              "X",
+              "Y"
+            ],
+            [
+              "Xdag",
+              "Xdag",
+              "Y",
+              "X"
+            ],
+            [
+              "Xdag",
+              "Xdag",
+              "Y",
+              "Y"
+            ],
+            [
+              "Xdag",
+              "Ydag",
+              "X",
+              "X"
+            ],
+            [
+              "Xdag",
+              "Ydag",
+              "X",
+              "Y"
+            ],
+            [
+              "Xdag",
+              "Ydag",
+              "Y",
+              "X"
+            ],
+            [
+              "Xdag",
+              "Ydag",
+              "Y",
+              "Y"
+            ],
+            [
+              "Ydag",
+              "Xdag",
+              "X",
+              "X"
+            ],
+            [
+              "Ydag",
+              "Xdag",
+              "X",
+              "Y"
+            ],
+            [
+              "Ydag",
+              "Xdag",
+              "Y",
+              "X"
+            ],
+            [
+              "Ydag",
+              "Xdag",
+              "Y",
+              "Y"
+            ],
+            [
+              "Ydag",
+              "Ydag",
+              "X",
+              "X"
+            ],
+            [
+              "Ydag",
+              "Ydag",
+              "X",
+              "Y"
+            ],
+            [
+              "Ydag",
+              "Ydag",
+              "Y",
+              "X"
+            ],
+            [
+              "Ydag",
+              "Ydag",
+              "Y",
+              "Y"
+            ]
+          ],
+          "plus_Hc_action_relative_residual": 4.503320057823866e-16,
+          "numerical_RGBeta_component_tensor_assumed": false
+        },
+        {
+          "source_matchete_coupling": "lambdaT3ExtraQ001201I1",
+          "source_fields": [
+            "S1",
+            "S1dag",
+            "S1dag",
+            "S2dag"
+          ],
+          "native_CG_frobenius_norm": 1.7320508075688772,
+          "rotated_mass_basis_monomials": 16,
+          "mass_basis_fields": [
+            [
+              "X",
+              "Xdag",
+              "Xdag",
+              "X"
+            ],
+            [
+              "X",
+              "Xdag",
+              "Xdag",
+              "Y"
+            ],
+            [
+              "X",
+              "Xdag",
+              "Ydag",
+              "X"
+            ],
+            [
+              "X",
+              "Xdag",
+              "Ydag",
+              "Y"
+            ],
+            [
+              "X",
+              "Ydag",
+              "Xdag",
+              "X"
+            ],
+            [
+              "X",
+              "Ydag",
+              "Xdag",
+              "Y"
+            ],
+            [
+              "X",
+              "Ydag",
+              "Ydag",
+              "X"
+            ],
+            [
+              "X",
+              "Ydag",
+              "Ydag",
+              "Y"
+            ],
+            [
+              "Y",
+              "Xdag",
+              "Xdag",
+              "X"
+            ],
+            [
+              "Y",
+              "Xdag",
+              "Xdag",
+              "Y"
+            ],
+            [
+              "Y",
+              "Xdag",
+              "Ydag",
+              "X"
+            ],
+            [
+              "Y",
+              "Xdag",
+              "Ydag",
+              "Y"
+            ],
+            [
+              "Y",
+              "Ydag",
+              "Xdag",
+              "X"
+            ],
+            [
+              "Y",
+              "Ydag",
+              "Xdag",
+              "Y"
+            ],
+            [
+              "Y",
+              "Ydag",
+              "Ydag",
+              "X"
+            ],
+            [
+              "Y",
+              "Ydag",
+              "Ydag",
+              "Y"
+            ]
+          ],
+          "plus_Hc_action_relative_residual": 8.51632316852175e-16,
+          "numerical_RGBeta_component_tensor_assumed": false
+        },
+        {
+          "source_matchete_coupling": "lambdaT3ExtraQ020020I1",
+          "source_fields": [
+            "Hdag",
+            "Hdag",
+            "S2",
+            "S2"
+          ],
+          "native_CG_frobenius_norm": 1.7320508075688772,
+          "rotated_mass_basis_monomials": 4,
+          "mass_basis_fields": [
+            [
+              "Hdag",
+              "Hdag",
+              "Xdag",
+              "Xdag"
+            ],
+            [
+              "Hdag",
+              "Hdag",
+              "Xdag",
+              "Ydag"
+            ],
+            [
+              "Hdag",
+              "Hdag",
+              "Ydag",
+              "Xdag"
+            ],
+            [
+              "Hdag",
+              "Hdag",
+              "Ydag",
+              "Ydag"
+            ]
+          ],
+          "plus_Hc_action_relative_residual": 2.585903823581474e-16,
+          "numerical_RGBeta_component_tensor_assumed": false
+        },
+        {
+          "source_matchete_coupling": "lambdaT3ExtraQ020200I1",
+          "source_fields": [
+            "Hdag",
+            "Hdag",
+            "S1dag",
+            "S1dag"
+          ],
+          "native_CG_frobenius_norm": 1.7320508075688772,
+          "rotated_mass_basis_monomials": 4,
+          "mass_basis_fields": [
+            [
+              "Hdag",
+              "Hdag",
+              "Xdag",
+              "Xdag"
+            ],
+            [
+              "Hdag",
+              "Hdag",
+              "Xdag",
+              "Ydag"
+            ],
+            [
+              "Hdag",
+              "Hdag",
+              "Ydag",
+              "Xdag"
+            ],
+            [
+              "Hdag",
+              "Hdag",
+              "Ydag",
+              "Ydag"
+            ]
+          ],
+          "plus_Hc_action_relative_residual": 6.443710222858706e-16,
+          "numerical_RGBeta_component_tensor_assumed": false
+        },
+        {
+          "source_matchete_coupling": "lambdaT3ExtraQ110101I1",
+          "source_fields": [
+            "H",
+            "Hdag",
+            "S1dag",
+            "S2dag"
+          ],
+          "native_CG_frobenius_norm": 2.0,
+          "rotated_mass_basis_monomials": 4,
+          "mass_basis_fields": [
+            [
+              "H",
+              "Hdag",
+              "Xdag",
+              "X"
+            ],
+            [
+              "H",
+              "Hdag",
+              "Xdag",
+              "Y"
+            ],
+            [
+              "H",
+              "Hdag",
+              "Ydag",
+              "X"
+            ],
+            [
+              "H",
+              "Hdag",
+              "Ydag",
+              "Y"
+            ]
+          ],
+          "plus_Hc_action_relative_residual": 3.506254754559576e-16,
+          "numerical_RGBeta_component_tensor_assumed": false
+        },
+        {
+          "source_matchete_coupling": "lambdaT3ExtraQ110101I2",
+          "source_fields": [
+            "H",
+            "Hdag",
+            "S1dag",
+            "S2dag"
+          ],
+          "native_CG_frobenius_norm": 2.0,
+          "rotated_mass_basis_monomials": 4,
+          "mass_basis_fields": [
+            [
+              "H",
+              "Hdag",
+              "Xdag",
+              "X"
+            ],
+            [
+              "H",
+              "Hdag",
+              "Xdag",
+              "Y"
+            ],
+            [
+              "H",
+              "Hdag",
+              "Ydag",
+              "X"
+            ],
+            [
+              "H",
+              "Hdag",
+              "Ydag",
+              "Y"
+            ]
+          ],
+          "plus_Hc_action_relative_residual": 6.349340262236921e-16,
+          "numerical_RGBeta_component_tensor_assumed": false
+        }
+      ],
+      "physical_component_coupling_map_certified": false,
+      "physical_scalar_matching_performed": false
+    },
+    "C_-1": {
+      "model": "C_-1",
+      "source_native_complex_CG_count": 8,
+      "source_topology_CGs": 1,
+      "source_optional_extra_CGs": 7,
+      "baseline_RGBeta_special_complex_slots": 6,
+      "baseline_six_from_seven_rank": 6,
+      "v19_historical_seven_source_symbol_order": [
+        "lambdaT3ExtraQ110101I1",
+        "lambdaT3ExtraQ110101I2",
+        "lambdaT3ExtraQ000112I1",
+        "lambdaT3ExtraQ000202I1",
+        "lambdaT3ExtraQ001201I1",
+        "lambdaT3ExtraQ020020I1",
+        "lambdaT3ExtraQ020200I1"
+      ],
+      "v18_native_seven_source_symbol_order": [
+        "lambdaT3ExtraQ000112I1",
+        "lambdaT3ExtraQ000202I1",
+        "lambdaT3ExtraQ001201I1",
+        "lambdaT3ExtraQ020020I1",
+        "lambdaT3ExtraQ020200I1",
+        "lambdaT3ExtraQ110101I1",
+        "lambdaT3ExtraQ110101I2"
+      ],
+      "v19_column_indices_in_native_v18_order": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        0,
+        1
+      ],
+      "source_basis_reordered_by_exact_coupling_symbol": true,
+      "optional_seventh_source_direction_action_nonzero": true,
+      "optional_seventh_source_direction_worst_holdout_residual": 9.35967879122255e-16,
+      "mass_rotation_analytic_and_tensor_checks": {
+        "quadratic_tensor_transport_max_absolute_gev2": 9.313225746203926e-10,
+        "su2_covariance_max_absolute": 5.551115123125783e-16,
+        "quadratic_masses_gev": [
+          1379.1691442077172,
+          1591.9783500010574
+        ],
+        "explicit_epsilon_conjugation_tested": true
+      },
+      "rotated_mass_basis_monomials_before_dedup": 68,
+      "max_source_native_action_relative_residual": 3.0780140160896806e-15,
+      "native_CG_sectors": [
+        {
+          "source_matchete_coupling": "lambdaT3",
+          "source_fields": [
+            "H",
+            "H",
+            "S1",
+            "S2dag"
+          ],
+          "native_CG_frobenius_norm": 2.0,
+          "rotated_mass_basis_monomials": 4,
+          "mass_basis_fields": [
+            [
+              "H",
+              "H",
+              "X",
+              "X"
+            ],
+            [
+              "H",
+              "H",
+              "X",
+              "Y"
+            ],
+            [
+              "H",
+              "H",
+              "Y",
+              "X"
+            ],
+            [
+              "H",
+              "H",
+              "Y",
+              "Y"
+            ]
+          ],
+          "plus_Hc_action_relative_residual": 1.7763568394002505e-15,
+          "numerical_RGBeta_component_tensor_assumed": false
+        },
+        {
+          "source_matchete_coupling": "lambdaT3ExtraQ000112I1",
+          "source_fields": [
+            "S1dag",
+            "S2",
+            "S2dag",
+            "S2dag"
+          ],
+          "native_CG_frobenius_norm": 1.7320508075688772,
+          "rotated_mass_basis_monomials": 16,
+          "mass_basis_fields": [
+            [
+              "Xdag",
+              "Xdag",
+              "X",
+              "X"
+            ],
+            [
+              "Xdag",
+              "Xdag",
+              "X",
+              "Y"
+            ],
+            [
+              "Xdag",
+              "Xdag",
+              "Y",
+              "X"
+            ],
+            [
+              "Xdag",
+              "Xdag",
+              "Y",
+              "Y"
+            ],
+            [
+              "Xdag",
+              "Ydag",
+              "X",
+              "X"
+            ],
+            [
+              "Xdag",
+              "Ydag",
+              "X",
+              "Y"
+            ],
+            [
+              "Xdag",
+              "Ydag",
+              "Y",
+              "X"
+            ],
+            [
+              "Xdag",
+              "Ydag",
+              "Y",
+              "Y"
+            ],
+            [
+              "Ydag",
+              "Xdag",
+              "X",
+              "X"
+            ],
+            [
+              "Ydag",
+              "Xdag",
+              "X",
+              "Y"
+            ],
+            [
+              "Ydag",
+              "Xdag",
+              "Y",
+              "X"
+            ],
+            [
+              "Ydag",
+              "Xdag",
+              "Y",
+              "Y"
+            ],
+            [
+              "Ydag",
+              "Ydag",
+              "X",
+              "X"
+            ],
+            [
+              "Ydag",
+              "Ydag",
+              "X",
+              "Y"
+            ],
+            [
+              "Ydag",
+              "Ydag",
+              "Y",
+              "X"
+            ],
+            [
+              "Ydag",
+              "Ydag",
+              "Y",
+              "Y"
+            ]
+          ],
+          "plus_Hc_action_relative_residual": 1.0738513875361165e-15,
+          "numerical_RGBeta_component_tensor_assumed": false
+        },
+        {
+          "source_matchete_coupling": "lambdaT3ExtraQ000202I1",
+          "source_fields": [
+            "S1dag",
+            "S1dag",
+            "S2dag",
+            "S2dag"
+          ],
+          "native_CG_frobenius_norm": 1.7320508075688772,
+          "rotated_mass_basis_monomials": 16,
+          "mass_basis_fields": [
+            [
+              "Xdag",
+              "Xdag",
+              "X",
+              "X"
+            ],
+            [
+              "Xdag",
+              "Xdag",
+              "X",
+              "Y"
+            ],
+            [
+              "Xdag",
+              "Xdag",
+              "Y",
+              "X"
+            ],
+            [
+              "Xdag",
+              "Xdag",
+              "Y",
+              "Y"
+            ],
+            [
+              "Xdag",
+              "Ydag",
+              "X",
+              "X"
+            ],
+            [
+              "Xdag",
+              "Ydag",
+              "X",
+              "Y"
+            ],
+            [
+              "Xdag",
+              "Ydag",
+              "Y",
+              "X"
+            ],
+            [
+              "Xdag",
+              "Ydag",
+              "Y",
+              "Y"
+            ],
+            [
+              "Ydag",
+              "Xdag",
+              "X",
+              "X"
+            ],
+            [
+              "Ydag",
+              "Xdag",
+              "X",
+              "Y"
+            ],
+            [
+              "Ydag",
+              "Xdag",
+              "Y",
+              "X"
+            ],
+            [
+              "Ydag",
+              "Xdag",
+              "Y",
+              "Y"
+            ],
+            [
+              "Ydag",
+              "Ydag",
+              "X",
+              "X"
+            ],
+            [
+              "Ydag",
+              "Ydag",
+              "X",
+              "Y"
+            ],
+            [
+              "Ydag",
+              "Ydag",
+              "Y",
+              "X"
+            ],
+            [
+              "Ydag",
+              "Ydag",
+              "Y",
+              "Y"
+            ]
+          ],
+          "plus_Hc_action_relative_residual": 2.0668848901589094e-15,
+          "numerical_RGBeta_component_tensor_assumed": false
+        },
+        {
+          "source_matchete_coupling": "lambdaT3ExtraQ001201I1",
+          "source_fields": [
+            "S1",
+            "S1dag",
+            "S1dag",
+            "S2dag"
+          ],
+          "native_CG_frobenius_norm": 1.7320508075688772,
+          "rotated_mass_basis_monomials": 16,
+          "mass_basis_fields": [
+            [
+              "X",
+              "Xdag",
+              "Xdag",
+              "X"
+            ],
+            [
+              "X",
+              "Xdag",
+              "Xdag",
+              "Y"
+            ],
+            [
+              "X",
+              "Xdag",
+              "Ydag",
+              "X"
+            ],
+            [
+              "X",
+              "Xdag",
+              "Ydag",
+              "Y"
+            ],
+            [
+              "X",
+              "Ydag",
+              "Xdag",
+              "X"
+            ],
+            [
+              "X",
+              "Ydag",
+              "Xdag",
+              "Y"
+            ],
+            [
+              "X",
+              "Ydag",
+              "Ydag",
+              "X"
+            ],
+            [
+              "X",
+              "Ydag",
+              "Ydag",
+              "Y"
+            ],
+            [
+              "Y",
+              "Xdag",
+              "Xdag",
+              "X"
+            ],
+            [
+              "Y",
+              "Xdag",
+              "Xdag",
+              "Y"
+            ],
+            [
+              "Y",
+              "Xdag",
+              "Ydag",
+              "X"
+            ],
+            [
+              "Y",
+              "Xdag",
+              "Ydag",
+              "Y"
+            ],
+            [
+              "Y",
+              "Ydag",
+              "Xdag",
+              "X"
+            ],
+            [
+              "Y",
+              "Ydag",
+              "Xdag",
+              "Y"
+            ],
+            [
+              "Y",
+              "Ydag",
+              "Ydag",
+              "X"
+            ],
+            [
+              "Y",
+              "Ydag",
+              "Ydag",
+              "Y"
+            ]
+          ],
+          "plus_Hc_action_relative_residual": 4.0098740820962205e-16,
+          "numerical_RGBeta_component_tensor_assumed": false
+        },
+        {
+          "source_matchete_coupling": "lambdaT3ExtraQ020020I1",
+          "source_fields": [
+            "Hdag",
+            "Hdag",
+            "S2",
+            "S2"
+          ],
+          "native_CG_frobenius_norm": 1.7320508075688772,
+          "rotated_mass_basis_monomials": 4,
+          "mass_basis_fields": [
+            [
+              "Hdag",
+              "Hdag",
+              "Xdag",
+              "Xdag"
+            ],
+            [
+              "Hdag",
+              "Hdag",
+              "Xdag",
+              "Ydag"
+            ],
+            [
+              "Hdag",
+              "Hdag",
+              "Ydag",
+              "Xdag"
+            ],
+            [
+              "Hdag",
+              "Hdag",
+              "Ydag",
+              "Ydag"
+            ]
+          ],
+          "plus_Hc_action_relative_residual": 9.305182798975732e-16,
+          "numerical_RGBeta_component_tensor_assumed": false
+        },
+        {
+          "source_matchete_coupling": "lambdaT3ExtraQ020200I1",
+          "source_fields": [
+            "Hdag",
+            "Hdag",
+            "S1dag",
+            "S1dag"
+          ],
+          "native_CG_frobenius_norm": 1.7320508075688772,
+          "rotated_mass_basis_monomials": 4,
+          "mass_basis_fields": [
+            [
+              "Hdag",
+              "Hdag",
+              "Xdag",
+              "Xdag"
+            ],
+            [
+              "Hdag",
+              "Hdag",
+              "Xdag",
+              "Ydag"
+            ],
+            [
+              "Hdag",
+              "Hdag",
+              "Ydag",
+              "Xdag"
+            ],
+            [
+              "Hdag",
+              "Hdag",
+              "Ydag",
+              "Ydag"
+            ]
+          ],
+          "plus_Hc_action_relative_residual": 3.0780140160896806e-15,
+          "numerical_RGBeta_component_tensor_assumed": false
+        },
+        {
+          "source_matchete_coupling": "lambdaT3ExtraQ110101I1",
+          "source_fields": [
+            "H",
+            "Hdag",
+            "S1dag",
+            "S2dag"
+          ],
+          "native_CG_frobenius_norm": 2.0,
+          "rotated_mass_basis_monomials": 4,
+          "mass_basis_fields": [
+            [
+              "H",
+              "Hdag",
+              "Xdag",
+              "X"
+            ],
+            [
+              "H",
+              "Hdag",
+              "Xdag",
+              "Y"
+            ],
+            [
+              "H",
+              "Hdag",
+              "Ydag",
+              "X"
+            ],
+            [
+              "H",
+              "Hdag",
+              "Ydag",
+              "Y"
+            ]
+          ],
+          "plus_Hc_action_relative_residual": 4.255647507052999e-16,
+          "numerical_RGBeta_component_tensor_assumed": false
+        },
+        {
+          "source_matchete_coupling": "lambdaT3ExtraQ110101I2",
+          "source_fields": [
+            "H",
+            "Hdag",
+            "S1dag",
+            "S2dag"
+          ],
+          "native_CG_frobenius_norm": 2.0,
+          "rotated_mass_basis_monomials": 4,
+          "mass_basis_fields": [
+            [
+              "H",
+              "Hdag",
+              "Xdag",
+              "X"
+            ],
+            [
+              "H",
+              "Hdag",
+              "Xdag",
+              "Y"
+            ],
+            [
+              "H",
+              "Hdag",
+              "Ydag",
+              "X"
+            ],
+            [
+              "H",
+              "Hdag",
+              "Ydag",
+              "Y"
+            ]
+          ],
+          "plus_Hc_action_relative_residual": 1.7556731339162901e-15,
+          "numerical_RGBeta_component_tensor_assumed": false
+        }
+      ],
+      "physical_component_coupling_map_certified": false,
+      "physical_scalar_matching_performed": false
+    }
+  },
+  "certification": {
+    "native_Matchete_complex_quartic_CG_source_consumed": true,
+    "experimental_BC_scalar_doublet_mass_basis_reused": true,
+    "exact_epsilon_and_complex_quartic_field_transport_checked": true,
+    "matchete_redefined_mass_eigenstate_lagrangian_certified": false,
+    "complete_physical_Matchete_RGBeta_coupling_map_certified": false,
+    "signed_GammaCCWeyl_certified": false,
+    "one_loop_Wilson_ADM_physical_certified": false,
+    "physical_Wilson_evolution_authorized": false,
+    "EFT_order": "UV -> integrate out ALL fermions -> integrate out ALL scalars -> SMEFT"
+  }
+}

@@ -1,0 +1,4454 @@
+{
+	"format":"t3-parallel-a-native-rgbeta-quartic-projectors-v14",
+	"status":"NativeRGBetaRealQuarticLamProjectorResponsesObserved_Conditional",
+	"smoke_only":false,
+	"native_Lam_evaluated":true,
+	"native_quartic_projectors_evaluated":true,
+	"registered_model_count":16,
+	"source_sha256":{
+		"RGE\/running\/rgbeta\/T3RGBetaModel.wl":"147b25f172ebcc3644e3ae1be8a7686fe66e1b7c1673ca17dd10e444ce0fff0d",
+		"scripts\/RGBetaNativeAccess.wl":"17a1ebd069f34a756d60338137e4276d72ea7717129d72a49b831fe572b58a42",
+		"scripts\/RunT3ParallelANativeQuarticProjectorsV14.wl":"64f11534e7a28ed80f7db6cae25fecd673375a49ac977b4fd41cb74f16fb601a"
+	},
+	"resolved_native_package_symbols":{
+		"Lam":[
+			"RGBeta`PackageScope`Lam"
+		],
+		"RefineGroupStructures":[
+			"RGBeta`PackageScope`RefineGroupStructures"
+		],
+		"TStructure":[
+			"RGBeta`PackageScope`TStructure"
+		]
+	},
+	"native_package_scoped_api_verified":true,
+	"installed_RGBeta_main_file":"C:\\Users\\popok\\AppData\\Roaming\\Wolfram\\Applications\\RGBeta\\Kernel\\init.m",
+	"installed_RGBeta_main_file_sha256":"e64d5d582f5a0acdaeec7eeb2c07b3dbd837391ad97bb80dfb3fec6a5f15594d",
+	"native_coupling_response_is_symbolic_not_component_Lam":true,
+	"native_numeric_S2_frame_measured":false,
+	"native_complex_projector_28_channels_certified":false,
+	"native_Matchete_scalar_CG_evaluated":false,
+	"full_scalar_potential_dictionary_certified":false,
+	"physical_Wilson_evolution_authorized":false,
+	"EFT_order":"UV -> integrate out ALL fermions -> integrate out ALL scalars -> SMEFT",
+	"models":{
+		"A_-4":{
+			"ok":true,
+			"dimensions":[
+				1,
+				3,
+				2
+			],
+			"alpha":-4,
+			"registered_quartics_count":9,
+			"registry_exact_source_inventory":true,
+			"inventory":[
+				{
+					"symbol":"lambdaH",
+					"fields_inputform":"{Bar[H], H, Bar[H], H}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaH][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*(del[SU2L[fund], #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS1",
+					"fields_inputform":"{Bar[S1], S1, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":6,
+					"native_coupling_inputform":"6*Matrix[lambdaS1][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[1, #1, #2]*(T3RGBetaPairInvariant[1, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS2",
+					"fields_inputform":"{Bar[S2], S2, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS2][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[3, #1, #2]*(T3RGBetaPairInvariant[3, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH1",
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH1][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[1, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH2",
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH2][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambda12",
+					"fields_inputform":"{Bar[S1], S1, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambda12][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[1, #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaT3",
+					"fields_inputform":"{H, H, S1, Bar[S2]}",
+					"native_self_conjugate":false,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaT3][##1] & ",
+					"native_invariant_inputform":"delS2[SU2L, #4, #1, #2] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH2Adj][##1] & ",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[fund], adj, #1, #2]*tGen[SU2L[S2], adj, #3, #4]] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS2Adj",
+					"fields_inputform":"{Bar[S2], S2, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS2Adj][##1] & ",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[S2], adj, #1, #2]*(tGen[SU2L[S2], adj, #3, #4]\/2)] & ",
+					"has_installed_RGBeta_projector":true
+				}
+			],
+			"native_real_self_projectors":[
+				{
+					"symbol":"lambdaH",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS1",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS2",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH1",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH2",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambda12",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS2Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				}
+			],
+			"native_portal_response_blocks":[
+				{
+					"which":1,
+					"dimension":1,
+					"symbols":[
+						"lambdaH1"
+					],
+					"native_response_matrix":[
+						[
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							}
+						]
+					]
+				},
+				{
+					"which":2,
+					"dimension":3,
+					"symbols":[
+						"lambdaH2",
+						"lambdaH2Adj"
+					],
+					"native_response_matrix":[
+						[
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							},
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							}
+						],
+						[
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							},
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							}
+						]
+					]
+				}
+			],
+			"native_complex_conjugate_projector_probes":[
+				{
+					"symbol":"lambdaT3",
+					"native_complex_conjugate_response":{
+						"ok":true,
+						"direct_channel":1.000000000000000,
+						"conjugate_channel":0,
+						"unit_direct_zero_conjugate":true
+					}
+				}
+			],
+			"native_complex_conjugate_projectors_all_unit":true,
+			"native_real_self_projectors_all_unit":true,
+			"native_portal_response_blocks_evaluated":true,
+			"complex_quartics_inventory_and_exploratory_channels_observed":true,
+			"native_numeric_S2_components_measured":false
+		},
+		"A_-2":{
+			"ok":true,
+			"dimensions":[
+				1,
+				3,
+				2
+			],
+			"alpha":-2,
+			"registered_quartics_count":9,
+			"registry_exact_source_inventory":true,
+			"inventory":[
+				{
+					"symbol":"lambdaH",
+					"fields_inputform":"{Bar[H], H, Bar[H], H}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaH][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*(del[SU2L[fund], #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS1",
+					"fields_inputform":"{Bar[S1], S1, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":6,
+					"native_coupling_inputform":"6*Matrix[lambdaS1][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[1, #1, #2]*(T3RGBetaPairInvariant[1, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS2",
+					"fields_inputform":"{Bar[S2], S2, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS2][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[3, #1, #2]*(T3RGBetaPairInvariant[3, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH1",
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH1][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[1, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH2",
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH2][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambda12",
+					"fields_inputform":"{Bar[S1], S1, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambda12][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[1, #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaT3",
+					"fields_inputform":"{H, H, S1, Bar[S2]}",
+					"native_self_conjugate":false,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaT3][##1] & ",
+					"native_invariant_inputform":"delS2[SU2L, #4, #1, #2] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH2Adj][##1] & ",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[fund], adj, #1, #2]*tGen[SU2L[S2], adj, #3, #4]] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS2Adj",
+					"fields_inputform":"{Bar[S2], S2, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS2Adj][##1] & ",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[S2], adj, #1, #2]*(tGen[SU2L[S2], adj, #3, #4]\/2)] & ",
+					"has_installed_RGBeta_projector":true
+				}
+			],
+			"native_real_self_projectors":[
+				{
+					"symbol":"lambdaH",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS1",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS2",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH1",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH2",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambda12",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS2Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				}
+			],
+			"native_portal_response_blocks":[
+				{
+					"which":1,
+					"dimension":1,
+					"symbols":[
+						"lambdaH1"
+					],
+					"native_response_matrix":[
+						[
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							}
+						]
+					]
+				},
+				{
+					"which":2,
+					"dimension":3,
+					"symbols":[
+						"lambdaH2",
+						"lambdaH2Adj"
+					],
+					"native_response_matrix":[
+						[
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							},
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							}
+						],
+						[
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							},
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							}
+						]
+					]
+				}
+			],
+			"native_complex_conjugate_projector_probes":[
+				{
+					"symbol":"lambdaT3",
+					"native_complex_conjugate_response":{
+						"ok":true,
+						"direct_channel":1.000000000000000,
+						"conjugate_channel":0,
+						"unit_direct_zero_conjugate":true
+					}
+				}
+			],
+			"native_complex_conjugate_projectors_all_unit":true,
+			"native_real_self_projectors_all_unit":true,
+			"native_portal_response_blocks_evaluated":true,
+			"complex_quartics_inventory_and_exploratory_channels_observed":true,
+			"native_numeric_S2_components_measured":false
+		},
+		"A_+0":{
+			"ok":true,
+			"dimensions":[
+				1,
+				3,
+				2
+			],
+			"alpha":0,
+			"registered_quartics_count":9,
+			"registry_exact_source_inventory":true,
+			"inventory":[
+				{
+					"symbol":"lambdaH",
+					"fields_inputform":"{Bar[H], H, Bar[H], H}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaH][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*(del[SU2L[fund], #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS1",
+					"fields_inputform":"{Bar[S1], S1, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":6,
+					"native_coupling_inputform":"6*Matrix[lambdaS1][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[1, #1, #2]*(T3RGBetaPairInvariant[1, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS2",
+					"fields_inputform":"{Bar[S2], S2, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS2][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[3, #1, #2]*(T3RGBetaPairInvariant[3, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH1",
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH1][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[1, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH2",
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH2][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambda12",
+					"fields_inputform":"{Bar[S1], S1, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambda12][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[1, #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaT3",
+					"fields_inputform":"{H, H, S1, Bar[S2]}",
+					"native_self_conjugate":false,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaT3][##1] & ",
+					"native_invariant_inputform":"delS2[SU2L, #4, #1, #2] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH2Adj][##1] & ",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[fund], adj, #1, #2]*tGen[SU2L[S2], adj, #3, #4]] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS2Adj",
+					"fields_inputform":"{Bar[S2], S2, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS2Adj][##1] & ",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[S2], adj, #1, #2]*(tGen[SU2L[S2], adj, #3, #4]\/2)] & ",
+					"has_installed_RGBeta_projector":true
+				}
+			],
+			"native_real_self_projectors":[
+				{
+					"symbol":"lambdaH",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS1",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS2",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH1",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH2",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambda12",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS2Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				}
+			],
+			"native_portal_response_blocks":[
+				{
+					"which":1,
+					"dimension":1,
+					"symbols":[
+						"lambdaH1"
+					],
+					"native_response_matrix":[
+						[
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							}
+						]
+					]
+				},
+				{
+					"which":2,
+					"dimension":3,
+					"symbols":[
+						"lambdaH2",
+						"lambdaH2Adj"
+					],
+					"native_response_matrix":[
+						[
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							},
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							}
+						],
+						[
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							},
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							}
+						]
+					]
+				}
+			],
+			"native_complex_conjugate_projector_probes":[
+				{
+					"symbol":"lambdaT3",
+					"native_complex_conjugate_response":{
+						"ok":true,
+						"direct_channel":1.000000000000000,
+						"conjugate_channel":0,
+						"unit_direct_zero_conjugate":true
+					}
+				}
+			],
+			"native_complex_conjugate_projectors_all_unit":true,
+			"native_real_self_projectors_all_unit":true,
+			"native_portal_response_blocks_evaluated":true,
+			"complex_quartics_inventory_and_exploratory_channels_observed":true,
+			"native_numeric_S2_components_measured":false
+		},
+		"B_-3":{
+			"ok":true,
+			"dimensions":[
+				2,
+				2,
+				1
+			],
+			"alpha":-3,
+			"registered_quartics_count":10,
+			"registry_exact_source_inventory":true,
+			"inventory":[
+				{
+					"symbol":"lambdaH",
+					"fields_inputform":"{Bar[H], H, Bar[H], H}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaH][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*(del[SU2L[fund], #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS1",
+					"fields_inputform":"{Bar[S1], S1, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS1][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[2, #1, #2]*(T3RGBetaPairInvariant[2, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS2",
+					"fields_inputform":"{Bar[S2], S2, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS2][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[2, #1, #2]*(T3RGBetaPairInvariant[2, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH1",
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH1][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[2, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH2",
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH2][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[2, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambda12",
+					"fields_inputform":"{Bar[S1], S1, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambda12][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[2, #1, #2]*T3RGBetaPairInvariant[2, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaT3",
+					"fields_inputform":"{H, H, S1, Bar[S2]}",
+					"native_self_conjugate":false,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaT3][##1] & ",
+					"native_invariant_inputform":"delS2[SU2L, a, #1, #2]*delS2[SU2L, a, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH1Adj][##1] & ",
+					"native_invariant_inputform":"tGen[SU2L[fund], A, #1, #2]*tGen[SU2L[fund], A, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH2Adj][##1] & ",
+					"native_invariant_inputform":"tGen[SU2L[fund], A, #1, #2]*tGen[SU2L[fund], A, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambda12Adj",
+					"fields_inputform":"{Bar[S1], S1, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambda12Adj][##1] & ",
+					"native_invariant_inputform":"tGen[T3RGBetaRep[2], A, #1, #2]*tGen[T3RGBetaRep[2], A, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				}
+			],
+			"native_real_self_projectors":[
+				{
+					"symbol":"lambdaH",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS1",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS2",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH1",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH2",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambda12",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambda12Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				}
+			],
+			"native_portal_response_blocks":[
+				{
+					"which":1,
+					"dimension":2,
+					"symbols":[
+						"lambdaH1",
+						"lambdaH1Adj"
+					],
+					"native_response_matrix":[
+						[
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							},
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							}
+						],
+						[
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							},
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							}
+						]
+					]
+				},
+				{
+					"which":2,
+					"dimension":2,
+					"symbols":[
+						"lambdaH2",
+						"lambdaH2Adj"
+					],
+					"native_response_matrix":[
+						[
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							},
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							}
+						],
+						[
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							},
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							}
+						]
+					]
+				}
+			],
+			"native_complex_conjugate_projector_probes":[
+				{
+					"symbol":"lambdaT3",
+					"native_complex_conjugate_response":{
+						"ok":true,
+						"direct_channel":1.000000000000000,
+						"conjugate_channel":0,
+						"unit_direct_zero_conjugate":true
+					}
+				}
+			],
+			"native_complex_conjugate_projectors_all_unit":true,
+			"native_real_self_projectors_all_unit":true,
+			"native_portal_response_blocks_evaluated":true,
+			"complex_quartics_inventory_and_exploratory_channels_observed":true,
+			"native_numeric_S2_components_measured":false
+		},
+		"B_-1":{
+			"ok":true,
+			"dimensions":[
+				2,
+				2,
+				1
+			],
+			"alpha":-1,
+			"registered_quartics_count":16,
+			"registry_exact_source_inventory":true,
+			"inventory":[
+				{
+					"symbol":"lambdaH",
+					"fields_inputform":"{Bar[H], H, Bar[H], H}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaH][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*(del[SU2L[fund], #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS1",
+					"fields_inputform":"{Bar[S1], S1, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS1][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[2, #1, #2]*(T3RGBetaPairInvariant[2, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS2",
+					"fields_inputform":"{Bar[S2], S2, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS2][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[2, #1, #2]*(T3RGBetaPairInvariant[2, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH1",
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH1][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[2, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH2",
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH2][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[2, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambda12",
+					"fields_inputform":"{Bar[S1], S1, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambda12][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[2, #1, #2]*T3RGBetaPairInvariant[2, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaT3",
+					"fields_inputform":"{H, H, S1, Bar[S2]}",
+					"native_self_conjugate":false,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaT3][##1] & ",
+					"native_invariant_inputform":"delS2[SU2L, a, #1, #2]*delS2[SU2L, a, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH1Adj][##1] & ",
+					"native_invariant_inputform":"tGen[SU2L[fund], A, #1, #2]*tGen[SU2L[fund], A, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH2Adj][##1] & ",
+					"native_invariant_inputform":"tGen[SU2L[fund], A, #1, #2]*tGen[SU2L[fund], A, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambda12Adj",
+					"fields_inputform":"{Bar[S1], S1, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambda12Adj][##1] & ",
+					"native_invariant_inputform":"tGen[T3RGBetaRep[2], A, #1, #2]*tGen[T3RGBetaRep[2], A, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaHHdagS2S2",
+					"fields_inputform":"{Bar[H], Bar[H], S2, S2}",
+					"native_self_conjugate":false,
+					"native_unique_arrangement_count":6,
+					"native_coupling_inputform":"6*Matrix[lambdaHHdagS2S2][##1] & ",
+					"native_invariant_inputform":"delS2[SU2L, a, #1, #2]*delS2[SU2L, a, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaHHdagS1barS1bar",
+					"fields_inputform":"{Bar[H], Bar[H], Bar[S1], Bar[S1]}",
+					"native_self_conjugate":false,
+					"native_unique_arrangement_count":6,
+					"native_coupling_inputform":"6*Matrix[lambdaHHdagS1barS1bar][##1] & ",
+					"native_invariant_inputform":"(eps[SU2L[fund], #1, #4]*eps[SU2L[fund], #2, #3] + eps[SU2L[fund], #1, #3]*eps[SU2L[fund], #2, #4])\/2 & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS1bar2S2bar2",
+					"fields_inputform":"{Bar[S1], Bar[S1], Bar[S2], Bar[S2]}",
+					"native_self_conjugate":false,
+					"native_unique_arrangement_count":6,
+					"native_coupling_inputform":"6*Matrix[lambdaS1bar2S2bar2][##1] & ",
+					"native_invariant_inputform":"(eps[SU2L[fund], #1, #4]*eps[SU2L[fund], #2, #3] + eps[SU2L[fund], #1, #3]*eps[SU2L[fund], #2, #4])\/2 & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS1barS2S2bar2",
+					"fields_inputform":"{Bar[S1], S2, Bar[S2], Bar[S2]}",
+					"native_self_conjugate":false,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS1barS2S2bar2][##1] & ",
+					"native_invariant_inputform":"(eps[SU2L[fund], #1, #4]*del[SU2L[fund], #2, #3] + eps[SU2L[fund], #1, #3]*del[SU2L[fund], #2, #4])\/2 & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS1S1bar2S2bar",
+					"fields_inputform":"{S1, Bar[S1], Bar[S1], Bar[S2]}",
+					"native_self_conjugate":false,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS1S1bar2S2bar][##1] & ",
+					"native_invariant_inputform":"(del[SU2L[fund], #1, #3]*eps[SU2L[fund], #2, #4] + del[SU2L[fund], #1, #2]*eps[SU2L[fund], #3, #4])\/2 & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaHHdagS1barS2barCross",
+					"fields_inputform":"{H, Bar[H], Bar[S1], Bar[S2]}",
+					"native_self_conjugate":false,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaHHdagS1barS2barCross][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #3]*eps[SU2L[fund], #2, #4] & ",
+					"has_installed_RGBeta_projector":true
+				}
+			],
+			"native_real_self_projectors":[
+				{
+					"symbol":"lambdaH",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS1",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS2",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH1",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH2",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambda12",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambda12Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				}
+			],
+			"native_portal_response_blocks":[
+				{
+					"which":1,
+					"dimension":2,
+					"symbols":[
+						"lambdaH1",
+						"lambdaH1Adj"
+					],
+					"native_response_matrix":[
+						[
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							},
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							}
+						],
+						[
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							},
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							}
+						]
+					]
+				},
+				{
+					"which":2,
+					"dimension":2,
+					"symbols":[
+						"lambdaH2",
+						"lambdaH2Adj"
+					],
+					"native_response_matrix":[
+						[
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							},
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							}
+						],
+						[
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							},
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							}
+						]
+					]
+				}
+			],
+			"native_complex_conjugate_projector_probes":[
+				{
+					"symbol":"lambdaT3",
+					"native_complex_conjugate_response":{
+						"ok":true,
+						"direct_channel":1.000000000000000,
+						"conjugate_channel":0,
+						"unit_direct_zero_conjugate":true
+					}
+				},
+				{
+					"symbol":"lambdaHHdagS2S2",
+					"native_complex_conjugate_response":{
+						"ok":true,
+						"direct_channel":1.000000000000000,
+						"conjugate_channel":0,
+						"unit_direct_zero_conjugate":true
+					}
+				},
+				{
+					"symbol":"lambdaHHdagS1barS1bar",
+					"native_complex_conjugate_response":{
+						"ok":true,
+						"direct_channel":1.000000000000000,
+						"conjugate_channel":0,
+						"unit_direct_zero_conjugate":true
+					}
+				},
+				{
+					"symbol":"lambdaS1bar2S2bar2",
+					"native_complex_conjugate_response":{
+						"ok":true,
+						"direct_channel":1.000000000000000,
+						"conjugate_channel":0,
+						"unit_direct_zero_conjugate":true
+					}
+				},
+				{
+					"symbol":"lambdaS1barS2S2bar2",
+					"native_complex_conjugate_response":{
+						"ok":true,
+						"direct_channel":1.000000000000000,
+						"conjugate_channel":0,
+						"unit_direct_zero_conjugate":true
+					}
+				},
+				{
+					"symbol":"lambdaS1S1bar2S2bar",
+					"native_complex_conjugate_response":{
+						"ok":true,
+						"direct_channel":1.000000000000000,
+						"conjugate_channel":0,
+						"unit_direct_zero_conjugate":true
+					}
+				},
+				{
+					"symbol":"lambdaHHdagS1barS2barCross",
+					"native_complex_conjugate_response":{
+						"ok":true,
+						"direct_channel":1.000000000000000,
+						"conjugate_channel":0,
+						"unit_direct_zero_conjugate":true
+					}
+				}
+			],
+			"native_complex_conjugate_projectors_all_unit":true,
+			"native_real_self_projectors_all_unit":true,
+			"native_portal_response_blocks_evaluated":true,
+			"complex_quartics_inventory_and_exploratory_channels_observed":true,
+			"native_numeric_S2_components_measured":false
+		},
+		"B_+1":{
+			"ok":true,
+			"dimensions":[
+				2,
+				2,
+				1
+			],
+			"alpha":1,
+			"registered_quartics_count":10,
+			"registry_exact_source_inventory":true,
+			"inventory":[
+				{
+					"symbol":"lambdaH",
+					"fields_inputform":"{Bar[H], H, Bar[H], H}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaH][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*(del[SU2L[fund], #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS1",
+					"fields_inputform":"{Bar[S1], S1, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS1][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[2, #1, #2]*(T3RGBetaPairInvariant[2, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS2",
+					"fields_inputform":"{Bar[S2], S2, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS2][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[2, #1, #2]*(T3RGBetaPairInvariant[2, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH1",
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH1][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[2, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH2",
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH2][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[2, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambda12",
+					"fields_inputform":"{Bar[S1], S1, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambda12][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[2, #1, #2]*T3RGBetaPairInvariant[2, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaT3",
+					"fields_inputform":"{H, H, S1, Bar[S2]}",
+					"native_self_conjugate":false,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaT3][##1] & ",
+					"native_invariant_inputform":"delS2[SU2L, a, #1, #2]*delS2[SU2L, a, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH1Adj][##1] & ",
+					"native_invariant_inputform":"tGen[SU2L[fund], A, #1, #2]*tGen[SU2L[fund], A, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH2Adj][##1] & ",
+					"native_invariant_inputform":"tGen[SU2L[fund], A, #1, #2]*tGen[SU2L[fund], A, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambda12Adj",
+					"fields_inputform":"{Bar[S1], S1, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambda12Adj][##1] & ",
+					"native_invariant_inputform":"tGen[T3RGBetaRep[2], A, #1, #2]*tGen[T3RGBetaRep[2], A, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				}
+			],
+			"native_real_self_projectors":[
+				{
+					"symbol":"lambdaH",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS1",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS2",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH1",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH2",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambda12",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambda12Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				}
+			],
+			"native_portal_response_blocks":[
+				{
+					"which":1,
+					"dimension":2,
+					"symbols":[
+						"lambdaH1",
+						"lambdaH1Adj"
+					],
+					"native_response_matrix":[
+						[
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							},
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							}
+						],
+						[
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							},
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							}
+						]
+					]
+				},
+				{
+					"which":2,
+					"dimension":2,
+					"symbols":[
+						"lambdaH2",
+						"lambdaH2Adj"
+					],
+					"native_response_matrix":[
+						[
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							},
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							}
+						],
+						[
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							},
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							}
+						]
+					]
+				}
+			],
+			"native_complex_conjugate_projector_probes":[
+				{
+					"symbol":"lambdaT3",
+					"native_complex_conjugate_response":{
+						"ok":true,
+						"direct_channel":1.000000000000000,
+						"conjugate_channel":0,
+						"unit_direct_zero_conjugate":true
+					}
+				}
+			],
+			"native_complex_conjugate_projectors_all_unit":true,
+			"native_real_self_projectors_all_unit":true,
+			"native_portal_response_blocks_evaluated":true,
+			"complex_quartics_inventory_and_exploratory_channels_observed":true,
+			"native_numeric_S2_components_measured":false
+		},
+		"C_-3":{
+			"ok":true,
+			"dimensions":[
+				2,
+				2,
+				3
+			],
+			"alpha":-3,
+			"registered_quartics_count":10,
+			"registry_exact_source_inventory":true,
+			"inventory":[
+				{
+					"symbol":"lambdaH",
+					"fields_inputform":"{Bar[H], H, Bar[H], H}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaH][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*(del[SU2L[fund], #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS1",
+					"fields_inputform":"{Bar[S1], S1, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS1][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[2, #1, #2]*(T3RGBetaPairInvariant[2, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS2",
+					"fields_inputform":"{Bar[S2], S2, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS2][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[2, #1, #2]*(T3RGBetaPairInvariant[2, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH1",
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH1][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[2, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH2",
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH2][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[2, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambda12",
+					"fields_inputform":"{Bar[S1], S1, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambda12][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[2, #1, #2]*T3RGBetaPairInvariant[2, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaT3",
+					"fields_inputform":"{H, H, S1, Bar[S2]}",
+					"native_self_conjugate":false,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaT3][##1] & ",
+					"native_invariant_inputform":"delS2[SU2L, a, #1, #2]*delS2[SU2L, a, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH1Adj][##1] & ",
+					"native_invariant_inputform":"tGen[SU2L[fund], A, #1, #2]*tGen[SU2L[fund], A, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH2Adj][##1] & ",
+					"native_invariant_inputform":"tGen[SU2L[fund], A, #1, #2]*tGen[SU2L[fund], A, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambda12Adj",
+					"fields_inputform":"{Bar[S1], S1, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambda12Adj][##1] & ",
+					"native_invariant_inputform":"tGen[T3RGBetaRep[2], A, #1, #2]*tGen[T3RGBetaRep[2], A, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				}
+			],
+			"native_real_self_projectors":[
+				{
+					"symbol":"lambdaH",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS1",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS2",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH1",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH2",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambda12",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambda12Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				}
+			],
+			"native_portal_response_blocks":[
+				{
+					"which":1,
+					"dimension":2,
+					"symbols":[
+						"lambdaH1",
+						"lambdaH1Adj"
+					],
+					"native_response_matrix":[
+						[
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							},
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							}
+						],
+						[
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							},
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							}
+						]
+					]
+				},
+				{
+					"which":2,
+					"dimension":2,
+					"symbols":[
+						"lambdaH2",
+						"lambdaH2Adj"
+					],
+					"native_response_matrix":[
+						[
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							},
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							}
+						],
+						[
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							},
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							}
+						]
+					]
+				}
+			],
+			"native_complex_conjugate_projector_probes":[
+				{
+					"symbol":"lambdaT3",
+					"native_complex_conjugate_response":{
+						"ok":true,
+						"direct_channel":1.000000000000000,
+						"conjugate_channel":0,
+						"unit_direct_zero_conjugate":true
+					}
+				}
+			],
+			"native_complex_conjugate_projectors_all_unit":true,
+			"native_real_self_projectors_all_unit":true,
+			"native_portal_response_blocks_evaluated":true,
+			"complex_quartics_inventory_and_exploratory_channels_observed":true,
+			"native_numeric_S2_components_measured":false
+		},
+		"C_-1":{
+			"ok":true,
+			"dimensions":[
+				2,
+				2,
+				3
+			],
+			"alpha":-1,
+			"registered_quartics_count":16,
+			"registry_exact_source_inventory":true,
+			"inventory":[
+				{
+					"symbol":"lambdaH",
+					"fields_inputform":"{Bar[H], H, Bar[H], H}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaH][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*(del[SU2L[fund], #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS1",
+					"fields_inputform":"{Bar[S1], S1, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS1][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[2, #1, #2]*(T3RGBetaPairInvariant[2, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS2",
+					"fields_inputform":"{Bar[S2], S2, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS2][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[2, #1, #2]*(T3RGBetaPairInvariant[2, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH1",
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH1][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[2, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH2",
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH2][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[2, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambda12",
+					"fields_inputform":"{Bar[S1], S1, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambda12][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[2, #1, #2]*T3RGBetaPairInvariant[2, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaT3",
+					"fields_inputform":"{H, H, S1, Bar[S2]}",
+					"native_self_conjugate":false,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaT3][##1] & ",
+					"native_invariant_inputform":"delS2[SU2L, a, #1, #2]*delS2[SU2L, a, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH1Adj][##1] & ",
+					"native_invariant_inputform":"tGen[SU2L[fund], A, #1, #2]*tGen[SU2L[fund], A, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH2Adj][##1] & ",
+					"native_invariant_inputform":"tGen[SU2L[fund], A, #1, #2]*tGen[SU2L[fund], A, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambda12Adj",
+					"fields_inputform":"{Bar[S1], S1, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambda12Adj][##1] & ",
+					"native_invariant_inputform":"tGen[T3RGBetaRep[2], A, #1, #2]*tGen[T3RGBetaRep[2], A, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaHHdagS2S2",
+					"fields_inputform":"{Bar[H], Bar[H], S2, S2}",
+					"native_self_conjugate":false,
+					"native_unique_arrangement_count":6,
+					"native_coupling_inputform":"6*Matrix[lambdaHHdagS2S2][##1] & ",
+					"native_invariant_inputform":"delS2[SU2L, a, #1, #2]*delS2[SU2L, a, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaHHdagS1barS1bar",
+					"fields_inputform":"{Bar[H], Bar[H], Bar[S1], Bar[S1]}",
+					"native_self_conjugate":false,
+					"native_unique_arrangement_count":6,
+					"native_coupling_inputform":"6*Matrix[lambdaHHdagS1barS1bar][##1] & ",
+					"native_invariant_inputform":"(eps[SU2L[fund], #1, #4]*eps[SU2L[fund], #2, #3] + eps[SU2L[fund], #1, #3]*eps[SU2L[fund], #2, #4])\/2 & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS1bar2S2bar2",
+					"fields_inputform":"{Bar[S1], Bar[S1], Bar[S2], Bar[S2]}",
+					"native_self_conjugate":false,
+					"native_unique_arrangement_count":6,
+					"native_coupling_inputform":"6*Matrix[lambdaS1bar2S2bar2][##1] & ",
+					"native_invariant_inputform":"(eps[SU2L[fund], #1, #4]*eps[SU2L[fund], #2, #3] + eps[SU2L[fund], #1, #3]*eps[SU2L[fund], #2, #4])\/2 & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS1barS2S2bar2",
+					"fields_inputform":"{Bar[S1], S2, Bar[S2], Bar[S2]}",
+					"native_self_conjugate":false,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS1barS2S2bar2][##1] & ",
+					"native_invariant_inputform":"(eps[SU2L[fund], #1, #4]*del[SU2L[fund], #2, #3] + eps[SU2L[fund], #1, #3]*del[SU2L[fund], #2, #4])\/2 & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS1S1bar2S2bar",
+					"fields_inputform":"{S1, Bar[S1], Bar[S1], Bar[S2]}",
+					"native_self_conjugate":false,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS1S1bar2S2bar][##1] & ",
+					"native_invariant_inputform":"(del[SU2L[fund], #1, #3]*eps[SU2L[fund], #2, #4] + del[SU2L[fund], #1, #2]*eps[SU2L[fund], #3, #4])\/2 & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaHHdagS1barS2barCross",
+					"fields_inputform":"{H, Bar[H], Bar[S1], Bar[S2]}",
+					"native_self_conjugate":false,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaHHdagS1barS2barCross][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #3]*eps[SU2L[fund], #2, #4] & ",
+					"has_installed_RGBeta_projector":true
+				}
+			],
+			"native_real_self_projectors":[
+				{
+					"symbol":"lambdaH",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS1",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS2",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH1",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH2",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambda12",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambda12Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				}
+			],
+			"native_portal_response_blocks":[
+				{
+					"which":1,
+					"dimension":2,
+					"symbols":[
+						"lambdaH1",
+						"lambdaH1Adj"
+					],
+					"native_response_matrix":[
+						[
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							},
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							}
+						],
+						[
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							},
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							}
+						]
+					]
+				},
+				{
+					"which":2,
+					"dimension":2,
+					"symbols":[
+						"lambdaH2",
+						"lambdaH2Adj"
+					],
+					"native_response_matrix":[
+						[
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							},
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							}
+						],
+						[
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							},
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							}
+						]
+					]
+				}
+			],
+			"native_complex_conjugate_projector_probes":[
+				{
+					"symbol":"lambdaT3",
+					"native_complex_conjugate_response":{
+						"ok":true,
+						"direct_channel":1.000000000000000,
+						"conjugate_channel":0,
+						"unit_direct_zero_conjugate":true
+					}
+				},
+				{
+					"symbol":"lambdaHHdagS2S2",
+					"native_complex_conjugate_response":{
+						"ok":true,
+						"direct_channel":1.000000000000000,
+						"conjugate_channel":0,
+						"unit_direct_zero_conjugate":true
+					}
+				},
+				{
+					"symbol":"lambdaHHdagS1barS1bar",
+					"native_complex_conjugate_response":{
+						"ok":true,
+						"direct_channel":1.000000000000000,
+						"conjugate_channel":0,
+						"unit_direct_zero_conjugate":true
+					}
+				},
+				{
+					"symbol":"lambdaS1bar2S2bar2",
+					"native_complex_conjugate_response":{
+						"ok":true,
+						"direct_channel":1.000000000000000,
+						"conjugate_channel":0,
+						"unit_direct_zero_conjugate":true
+					}
+				},
+				{
+					"symbol":"lambdaS1barS2S2bar2",
+					"native_complex_conjugate_response":{
+						"ok":true,
+						"direct_channel":1.000000000000000,
+						"conjugate_channel":0,
+						"unit_direct_zero_conjugate":true
+					}
+				},
+				{
+					"symbol":"lambdaS1S1bar2S2bar",
+					"native_complex_conjugate_response":{
+						"ok":true,
+						"direct_channel":1.000000000000000,
+						"conjugate_channel":0,
+						"unit_direct_zero_conjugate":true
+					}
+				},
+				{
+					"symbol":"lambdaHHdagS1barS2barCross",
+					"native_complex_conjugate_response":{
+						"ok":true,
+						"direct_channel":1.000000000000000,
+						"conjugate_channel":0,
+						"unit_direct_zero_conjugate":true
+					}
+				}
+			],
+			"native_complex_conjugate_projectors_all_unit":true,
+			"native_real_self_projectors_all_unit":true,
+			"native_portal_response_blocks_evaluated":true,
+			"complex_quartics_inventory_and_exploratory_channels_observed":true,
+			"native_numeric_S2_components_measured":false
+		},
+		"C_+1":{
+			"ok":true,
+			"dimensions":[
+				2,
+				2,
+				3
+			],
+			"alpha":1,
+			"registered_quartics_count":10,
+			"registry_exact_source_inventory":true,
+			"inventory":[
+				{
+					"symbol":"lambdaH",
+					"fields_inputform":"{Bar[H], H, Bar[H], H}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaH][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*(del[SU2L[fund], #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS1",
+					"fields_inputform":"{Bar[S1], S1, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS1][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[2, #1, #2]*(T3RGBetaPairInvariant[2, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS2",
+					"fields_inputform":"{Bar[S2], S2, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS2][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[2, #1, #2]*(T3RGBetaPairInvariant[2, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH1",
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH1][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[2, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH2",
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH2][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[2, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambda12",
+					"fields_inputform":"{Bar[S1], S1, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambda12][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[2, #1, #2]*T3RGBetaPairInvariant[2, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaT3",
+					"fields_inputform":"{H, H, S1, Bar[S2]}",
+					"native_self_conjugate":false,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaT3][##1] & ",
+					"native_invariant_inputform":"delS2[SU2L, a, #1, #2]*delS2[SU2L, a, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH1Adj][##1] & ",
+					"native_invariant_inputform":"tGen[SU2L[fund], A, #1, #2]*tGen[SU2L[fund], A, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH2Adj][##1] & ",
+					"native_invariant_inputform":"tGen[SU2L[fund], A, #1, #2]*tGen[SU2L[fund], A, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambda12Adj",
+					"fields_inputform":"{Bar[S1], S1, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambda12Adj][##1] & ",
+					"native_invariant_inputform":"tGen[T3RGBetaRep[2], A, #1, #2]*tGen[T3RGBetaRep[2], A, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				}
+			],
+			"native_real_self_projectors":[
+				{
+					"symbol":"lambdaH",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS1",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS2",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH1",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH2",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambda12",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambda12Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				}
+			],
+			"native_portal_response_blocks":[
+				{
+					"which":1,
+					"dimension":2,
+					"symbols":[
+						"lambdaH1",
+						"lambdaH1Adj"
+					],
+					"native_response_matrix":[
+						[
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							},
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							}
+						],
+						[
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							},
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							}
+						]
+					]
+				},
+				{
+					"which":2,
+					"dimension":2,
+					"symbols":[
+						"lambdaH2",
+						"lambdaH2Adj"
+					],
+					"native_response_matrix":[
+						[
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							},
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							}
+						],
+						[
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							},
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							}
+						]
+					]
+				}
+			],
+			"native_complex_conjugate_projector_probes":[
+				{
+					"symbol":"lambdaT3",
+					"native_complex_conjugate_response":{
+						"ok":true,
+						"direct_channel":1.000000000000000,
+						"conjugate_channel":0,
+						"unit_direct_zero_conjugate":true
+					}
+				}
+			],
+			"native_complex_conjugate_projectors_all_unit":true,
+			"native_real_self_projectors_all_unit":true,
+			"native_portal_response_blocks_evaluated":true,
+			"complex_quartics_inventory_and_exploratory_channels_observed":true,
+			"native_numeric_S2_components_measured":false
+		},
+		"D_-2":{
+			"ok":true,
+			"dimensions":[
+				3,
+				1,
+				2
+			],
+			"alpha":-2,
+			"registered_quartics_count":9,
+			"registry_exact_source_inventory":true,
+			"inventory":[
+				{
+					"symbol":"lambdaH",
+					"fields_inputform":"{Bar[H], H, Bar[H], H}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaH][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*(del[SU2L[fund], #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS1",
+					"fields_inputform":"{Bar[S1], S1, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS1][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[3, #1, #2]*(T3RGBetaPairInvariant[3, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS2",
+					"fields_inputform":"{Bar[S2], S2, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":6,
+					"native_coupling_inputform":"6*Matrix[lambdaS2][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[1, #1, #2]*(T3RGBetaPairInvariant[1, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH1",
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH1][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH2",
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH2][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[1, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambda12",
+					"fields_inputform":"{Bar[S1], S1, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambda12][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[3, #1, #2]*T3RGBetaPairInvariant[1, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaT3",
+					"fields_inputform":"{H, H, S1, Bar[S2]}",
+					"native_self_conjugate":false,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaT3][##1] & ",
+					"native_invariant_inputform":"delS2[SU2L, #3, #1, #2] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH1Adj][##1] & ",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[fund], adj, #1, #2]*tGen[SU2L[S2], adj, #3, #4]] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS1Adj",
+					"fields_inputform":"{Bar[S1], S1, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS1Adj][##1] & ",
+					"native_invariant_inputform":"tGen[SU2L[S2], A, #1, #2]*(tGen[SU2L[S2], A, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				}
+			],
+			"native_real_self_projectors":[
+				{
+					"symbol":"lambdaH",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS1",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS2",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH1",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH2",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambda12",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS1Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				}
+			],
+			"native_portal_response_blocks":[
+				{
+					"which":1,
+					"dimension":3,
+					"symbols":[
+						"lambdaH1",
+						"lambdaH1Adj"
+					],
+					"native_response_matrix":[
+						[
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							},
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							}
+						],
+						[
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							},
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							}
+						]
+					]
+				},
+				{
+					"which":2,
+					"dimension":1,
+					"symbols":[
+						"lambdaH2"
+					],
+					"native_response_matrix":[
+						[
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							}
+						]
+					]
+				}
+			],
+			"native_complex_conjugate_projector_probes":[
+				{
+					"symbol":"lambdaT3",
+					"native_complex_conjugate_response":{
+						"ok":true,
+						"direct_channel":1.000000000000000,
+						"conjugate_channel":0,
+						"unit_direct_zero_conjugate":true
+					}
+				}
+			],
+			"native_complex_conjugate_projectors_all_unit":true,
+			"native_real_self_projectors_all_unit":true,
+			"native_portal_response_blocks_evaluated":true,
+			"complex_quartics_inventory_and_exploratory_channels_observed":true,
+			"native_numeric_S2_components_measured":false
+		},
+		"D_+0":{
+			"ok":true,
+			"dimensions":[
+				3,
+				1,
+				2
+			],
+			"alpha":0,
+			"registered_quartics_count":9,
+			"registry_exact_source_inventory":true,
+			"inventory":[
+				{
+					"symbol":"lambdaH",
+					"fields_inputform":"{Bar[H], H, Bar[H], H}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaH][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*(del[SU2L[fund], #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS1",
+					"fields_inputform":"{Bar[S1], S1, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS1][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[3, #1, #2]*(T3RGBetaPairInvariant[3, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS2",
+					"fields_inputform":"{Bar[S2], S2, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":6,
+					"native_coupling_inputform":"6*Matrix[lambdaS2][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[1, #1, #2]*(T3RGBetaPairInvariant[1, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH1",
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH1][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH2",
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH2][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[1, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambda12",
+					"fields_inputform":"{Bar[S1], S1, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambda12][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[3, #1, #2]*T3RGBetaPairInvariant[1, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaT3",
+					"fields_inputform":"{H, H, S1, Bar[S2]}",
+					"native_self_conjugate":false,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaT3][##1] & ",
+					"native_invariant_inputform":"delS2[SU2L, #3, #1, #2] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH1Adj][##1] & ",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[fund], adj, #1, #2]*tGen[SU2L[S2], adj, #3, #4]] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS1Adj",
+					"fields_inputform":"{Bar[S1], S1, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS1Adj][##1] & ",
+					"native_invariant_inputform":"tGen[SU2L[S2], A, #1, #2]*(tGen[SU2L[S2], A, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				}
+			],
+			"native_real_self_projectors":[
+				{
+					"symbol":"lambdaH",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS1",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS2",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH1",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH2",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambda12",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS1Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				}
+			],
+			"native_portal_response_blocks":[
+				{
+					"which":1,
+					"dimension":3,
+					"symbols":[
+						"lambdaH1",
+						"lambdaH1Adj"
+					],
+					"native_response_matrix":[
+						[
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							},
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							}
+						],
+						[
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							},
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							}
+						]
+					]
+				},
+				{
+					"which":2,
+					"dimension":1,
+					"symbols":[
+						"lambdaH2"
+					],
+					"native_response_matrix":[
+						[
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							}
+						]
+					]
+				}
+			],
+			"native_complex_conjugate_projector_probes":[
+				{
+					"symbol":"lambdaT3",
+					"native_complex_conjugate_response":{
+						"ok":true,
+						"direct_channel":1.000000000000000,
+						"conjugate_channel":0,
+						"unit_direct_zero_conjugate":true
+					}
+				}
+			],
+			"native_complex_conjugate_projectors_all_unit":true,
+			"native_real_self_projectors_all_unit":true,
+			"native_portal_response_blocks_evaluated":true,
+			"complex_quartics_inventory_and_exploratory_channels_observed":true,
+			"native_numeric_S2_components_measured":false
+		},
+		"D_+2":{
+			"ok":true,
+			"dimensions":[
+				3,
+				1,
+				2
+			],
+			"alpha":2,
+			"registered_quartics_count":9,
+			"registry_exact_source_inventory":true,
+			"inventory":[
+				{
+					"symbol":"lambdaH",
+					"fields_inputform":"{Bar[H], H, Bar[H], H}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaH][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*(del[SU2L[fund], #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS1",
+					"fields_inputform":"{Bar[S1], S1, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS1][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[3, #1, #2]*(T3RGBetaPairInvariant[3, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS2",
+					"fields_inputform":"{Bar[S2], S2, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":6,
+					"native_coupling_inputform":"6*Matrix[lambdaS2][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[1, #1, #2]*(T3RGBetaPairInvariant[1, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH1",
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH1][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH2",
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH2][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[1, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambda12",
+					"fields_inputform":"{Bar[S1], S1, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambda12][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[3, #1, #2]*T3RGBetaPairInvariant[1, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaT3",
+					"fields_inputform":"{H, H, S1, Bar[S2]}",
+					"native_self_conjugate":false,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaT3][##1] & ",
+					"native_invariant_inputform":"delS2[SU2L, #3, #1, #2] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH1Adj][##1] & ",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[fund], adj, #1, #2]*tGen[SU2L[S2], adj, #3, #4]] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS1Adj",
+					"fields_inputform":"{Bar[S1], S1, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS1Adj][##1] & ",
+					"native_invariant_inputform":"tGen[SU2L[S2], A, #1, #2]*(tGen[SU2L[S2], A, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				}
+			],
+			"native_real_self_projectors":[
+				{
+					"symbol":"lambdaH",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS1",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS2",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH1",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH2",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambda12",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS1Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				}
+			],
+			"native_portal_response_blocks":[
+				{
+					"which":1,
+					"dimension":3,
+					"symbols":[
+						"lambdaH1",
+						"lambdaH1Adj"
+					],
+					"native_response_matrix":[
+						[
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							},
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							}
+						],
+						[
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							},
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							}
+						]
+					]
+				},
+				{
+					"which":2,
+					"dimension":1,
+					"symbols":[
+						"lambdaH2"
+					],
+					"native_response_matrix":[
+						[
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							}
+						]
+					]
+				}
+			],
+			"native_complex_conjugate_projector_probes":[
+				{
+					"symbol":"lambdaT3",
+					"native_complex_conjugate_response":{
+						"ok":true,
+						"direct_channel":1.000000000000000,
+						"conjugate_channel":0,
+						"unit_direct_zero_conjugate":true
+					}
+				}
+			],
+			"native_complex_conjugate_projectors_all_unit":true,
+			"native_real_self_projectors_all_unit":true,
+			"native_portal_response_blocks_evaluated":true,
+			"complex_quartics_inventory_and_exploratory_channels_observed":true,
+			"native_numeric_S2_components_measured":false
+		},
+		"E_-4":{
+			"ok":true,
+			"dimensions":[
+				3,
+				3,
+				2
+			],
+			"alpha":-4,
+			"registered_quartics_count":13,
+			"registry_exact_source_inventory":true,
+			"inventory":[
+				{
+					"symbol":"lambdaH",
+					"fields_inputform":"{Bar[H], H, Bar[H], H}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaH][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*(del[SU2L[fund], #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS1",
+					"fields_inputform":"{Bar[S1], S1, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS1][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[3, #1, #2]*(T3RGBetaPairInvariant[3, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS2",
+					"fields_inputform":"{Bar[S2], S2, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS2][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[3, #1, #2]*(T3RGBetaPairInvariant[3, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH1",
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH1][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH2",
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH2][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambda12",
+					"fields_inputform":"{Bar[S1], S1, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambda12][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[3, #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaT3",
+					"fields_inputform":"{H, H, S1, Bar[S2]}",
+					"native_self_conjugate":false,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaT3][##1] & ",
+					"native_invariant_inputform":"delS2[SU2L, a, #1, #2]*T3RGBetaS2TripleInvariant[a, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH1Adj][##1] & ",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[fund], adj, #1, #2]*tGen[SU2L[S2], adj, #3, #4]] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH2Adj][##1] & ",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[fund], adj, #1, #2]*tGen[SU2L[S2], adj, #3, #4]] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS1Adj",
+					"fields_inputform":"{Bar[S1], S1, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS1Adj][##1] & ",
+					"native_invariant_inputform":"tGen[SU2L[S2], A, #1, #2]*(tGen[SU2L[S2], A, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS2Adj",
+					"fields_inputform":"{Bar[S2], S2, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS2Adj][##1] & ",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[S2], adj, #1, #2]*(tGen[SU2L[S2], adj, #3, #4]\/2)] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambda12Adj",
+					"fields_inputform":"{Bar[S1], S1, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambda12Adj][##1] & ",
+					"native_invariant_inputform":"tGen[T3RGBetaRep[3], A, #1, #2]*tGen[T3RGBetaRep[3], A, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambda12Cross",
+					"fields_inputform":"{Bar[S1], S1, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambda12Cross][##1] & ",
+					"native_invariant_inputform":"del[SU2L[S2], #1, #3]*del[SU2L[S2], #2, #4] + del[SU2L[S2], #1, #4]*del[SU2L[S2], #2, #3] & ",
+					"has_installed_RGBeta_projector":true
+				}
+			],
+			"native_real_self_projectors":[
+				{
+					"symbol":"lambdaH",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS1",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS2",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH1",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH2",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambda12",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS1Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS2Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambda12Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambda12Cross",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				}
+			],
+			"native_portal_response_blocks":[
+				{
+					"which":1,
+					"dimension":3,
+					"symbols":[
+						"lambdaH1",
+						"lambdaH1Adj"
+					],
+					"native_response_matrix":[
+						[
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							},
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							}
+						],
+						[
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							},
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							}
+						]
+					]
+				},
+				{
+					"which":2,
+					"dimension":3,
+					"symbols":[
+						"lambdaH2",
+						"lambdaH2Adj"
+					],
+					"native_response_matrix":[
+						[
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							},
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							}
+						],
+						[
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							},
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							}
+						]
+					]
+				}
+			],
+			"native_complex_conjugate_projector_probes":[
+				{
+					"symbol":"lambdaT3",
+					"native_complex_conjugate_response":{
+						"ok":true,
+						"direct_channel":1.000000000000000,
+						"conjugate_channel":0,
+						"unit_direct_zero_conjugate":true
+					}
+				}
+			],
+			"native_complex_conjugate_projectors_all_unit":true,
+			"native_real_self_projectors_all_unit":true,
+			"native_portal_response_blocks_evaluated":true,
+			"complex_quartics_inventory_and_exploratory_channels_observed":true,
+			"native_numeric_S2_components_measured":false
+		},
+		"E_-2":{
+			"ok":true,
+			"dimensions":[
+				3,
+				3,
+				2
+			],
+			"alpha":-2,
+			"registered_quartics_count":13,
+			"registry_exact_source_inventory":true,
+			"inventory":[
+				{
+					"symbol":"lambdaH",
+					"fields_inputform":"{Bar[H], H, Bar[H], H}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaH][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*(del[SU2L[fund], #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS1",
+					"fields_inputform":"{Bar[S1], S1, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS1][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[3, #1, #2]*(T3RGBetaPairInvariant[3, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS2",
+					"fields_inputform":"{Bar[S2], S2, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS2][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[3, #1, #2]*(T3RGBetaPairInvariant[3, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH1",
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH1][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH2",
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH2][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambda12",
+					"fields_inputform":"{Bar[S1], S1, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambda12][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[3, #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaT3",
+					"fields_inputform":"{H, H, S1, Bar[S2]}",
+					"native_self_conjugate":false,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaT3][##1] & ",
+					"native_invariant_inputform":"delS2[SU2L, a, #1, #2]*T3RGBetaS2TripleInvariant[a, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH1Adj][##1] & ",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[fund], adj, #1, #2]*tGen[SU2L[S2], adj, #3, #4]] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH2Adj][##1] & ",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[fund], adj, #1, #2]*tGen[SU2L[S2], adj, #3, #4]] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS1Adj",
+					"fields_inputform":"{Bar[S1], S1, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS1Adj][##1] & ",
+					"native_invariant_inputform":"tGen[SU2L[S2], A, #1, #2]*(tGen[SU2L[S2], A, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS2Adj",
+					"fields_inputform":"{Bar[S2], S2, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS2Adj][##1] & ",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[S2], adj, #1, #2]*(tGen[SU2L[S2], adj, #3, #4]\/2)] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambda12Adj",
+					"fields_inputform":"{Bar[S1], S1, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambda12Adj][##1] & ",
+					"native_invariant_inputform":"tGen[T3RGBetaRep[3], A, #1, #2]*tGen[T3RGBetaRep[3], A, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambda12Cross",
+					"fields_inputform":"{Bar[S1], S1, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambda12Cross][##1] & ",
+					"native_invariant_inputform":"del[SU2L[S2], #1, #3]*del[SU2L[S2], #2, #4] + del[SU2L[S2], #1, #4]*del[SU2L[S2], #2, #3] & ",
+					"has_installed_RGBeta_projector":true
+				}
+			],
+			"native_real_self_projectors":[
+				{
+					"symbol":"lambdaH",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS1",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS2",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH1",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH2",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambda12",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS1Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS2Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambda12Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambda12Cross",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				}
+			],
+			"native_portal_response_blocks":[
+				{
+					"which":1,
+					"dimension":3,
+					"symbols":[
+						"lambdaH1",
+						"lambdaH1Adj"
+					],
+					"native_response_matrix":[
+						[
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							},
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							}
+						],
+						[
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							},
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							}
+						]
+					]
+				},
+				{
+					"which":2,
+					"dimension":3,
+					"symbols":[
+						"lambdaH2",
+						"lambdaH2Adj"
+					],
+					"native_response_matrix":[
+						[
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							},
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							}
+						],
+						[
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							},
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							}
+						]
+					]
+				}
+			],
+			"native_complex_conjugate_projector_probes":[
+				{
+					"symbol":"lambdaT3",
+					"native_complex_conjugate_response":{
+						"ok":true,
+						"direct_channel":1.000000000000000,
+						"conjugate_channel":0,
+						"unit_direct_zero_conjugate":true
+					}
+				}
+			],
+			"native_complex_conjugate_projectors_all_unit":true,
+			"native_real_self_projectors_all_unit":true,
+			"native_portal_response_blocks_evaluated":true,
+			"complex_quartics_inventory_and_exploratory_channels_observed":true,
+			"native_numeric_S2_components_measured":false
+		},
+		"E_+0":{
+			"ok":true,
+			"dimensions":[
+				3,
+				3,
+				2
+			],
+			"alpha":0,
+			"registered_quartics_count":13,
+			"registry_exact_source_inventory":true,
+			"inventory":[
+				{
+					"symbol":"lambdaH",
+					"fields_inputform":"{Bar[H], H, Bar[H], H}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaH][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*(del[SU2L[fund], #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS1",
+					"fields_inputform":"{Bar[S1], S1, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS1][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[3, #1, #2]*(T3RGBetaPairInvariant[3, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS2",
+					"fields_inputform":"{Bar[S2], S2, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS2][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[3, #1, #2]*(T3RGBetaPairInvariant[3, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH1",
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH1][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH2",
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH2][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambda12",
+					"fields_inputform":"{Bar[S1], S1, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambda12][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[3, #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaT3",
+					"fields_inputform":"{H, H, S1, Bar[S2]}",
+					"native_self_conjugate":false,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaT3][##1] & ",
+					"native_invariant_inputform":"delS2[SU2L, a, #1, #2]*T3RGBetaS2TripleInvariant[a, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH1Adj][##1] & ",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[fund], adj, #1, #2]*tGen[SU2L[S2], adj, #3, #4]] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH2Adj][##1] & ",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[fund], adj, #1, #2]*tGen[SU2L[S2], adj, #3, #4]] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS1Adj",
+					"fields_inputform":"{Bar[S1], S1, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS1Adj][##1] & ",
+					"native_invariant_inputform":"tGen[SU2L[S2], A, #1, #2]*(tGen[SU2L[S2], A, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS2Adj",
+					"fields_inputform":"{Bar[S2], S2, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS2Adj][##1] & ",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[S2], adj, #1, #2]*(tGen[SU2L[S2], adj, #3, #4]\/2)] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambda12Adj",
+					"fields_inputform":"{Bar[S1], S1, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambda12Adj][##1] & ",
+					"native_invariant_inputform":"tGen[T3RGBetaRep[3], A, #1, #2]*tGen[T3RGBetaRep[3], A, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambda12Cross",
+					"fields_inputform":"{Bar[S1], S1, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambda12Cross][##1] & ",
+					"native_invariant_inputform":"del[SU2L[S2], #1, #3]*del[SU2L[S2], #2, #4] + del[SU2L[S2], #1, #4]*del[SU2L[S2], #2, #3] & ",
+					"has_installed_RGBeta_projector":true
+				}
+			],
+			"native_real_self_projectors":[
+				{
+					"symbol":"lambdaH",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS1",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS2",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH1",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH2",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambda12",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS1Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS2Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambda12Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambda12Cross",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				}
+			],
+			"native_portal_response_blocks":[
+				{
+					"which":1,
+					"dimension":3,
+					"symbols":[
+						"lambdaH1",
+						"lambdaH1Adj"
+					],
+					"native_response_matrix":[
+						[
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							},
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							}
+						],
+						[
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							},
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							}
+						]
+					]
+				},
+				{
+					"which":2,
+					"dimension":3,
+					"symbols":[
+						"lambdaH2",
+						"lambdaH2Adj"
+					],
+					"native_response_matrix":[
+						[
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							},
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							}
+						],
+						[
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							},
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							}
+						]
+					]
+				}
+			],
+			"native_complex_conjugate_projector_probes":[
+				{
+					"symbol":"lambdaT3",
+					"native_complex_conjugate_response":{
+						"ok":true,
+						"direct_channel":1.000000000000000,
+						"conjugate_channel":0,
+						"unit_direct_zero_conjugate":true
+					}
+				}
+			],
+			"native_complex_conjugate_projectors_all_unit":true,
+			"native_real_self_projectors_all_unit":true,
+			"native_portal_response_blocks_evaluated":true,
+			"complex_quartics_inventory_and_exploratory_channels_observed":true,
+			"native_numeric_S2_components_measured":false
+		},
+		"E_+2":{
+			"ok":true,
+			"dimensions":[
+				3,
+				3,
+				2
+			],
+			"alpha":2,
+			"registered_quartics_count":13,
+			"registry_exact_source_inventory":true,
+			"inventory":[
+				{
+					"symbol":"lambdaH",
+					"fields_inputform":"{Bar[H], H, Bar[H], H}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaH][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*(del[SU2L[fund], #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS1",
+					"fields_inputform":"{Bar[S1], S1, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS1][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[3, #1, #2]*(T3RGBetaPairInvariant[3, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS2",
+					"fields_inputform":"{Bar[S2], S2, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS2][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[3, #1, #2]*(T3RGBetaPairInvariant[3, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH1",
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH1][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH2",
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH2][##1] & ",
+					"native_invariant_inputform":"del[SU2L[fund], #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambda12",
+					"fields_inputform":"{Bar[S1], S1, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambda12][##1] & ",
+					"native_invariant_inputform":"T3RGBetaPairInvariant[3, #1, #2]*T3RGBetaPairInvariant[3, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaT3",
+					"fields_inputform":"{H, H, S1, Bar[S2]}",
+					"native_self_conjugate":false,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaT3][##1] & ",
+					"native_invariant_inputform":"delS2[SU2L, a, #1, #2]*T3RGBetaS2TripleInvariant[a, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"fields_inputform":"{Bar[H], H, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH1Adj][##1] & ",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[fund], adj, #1, #2]*tGen[SU2L[S2], adj, #3, #4]] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"fields_inputform":"{Bar[H], H, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambdaH2Adj][##1] & ",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[fund], adj, #1, #2]*tGen[SU2L[S2], adj, #3, #4]] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS1Adj",
+					"fields_inputform":"{Bar[S1], S1, Bar[S1], S1}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS1Adj][##1] & ",
+					"native_invariant_inputform":"tGen[SU2L[S2], A, #1, #2]*(tGen[SU2L[S2], A, #3, #4]\/2) & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambdaS2Adj",
+					"fields_inputform":"{Bar[S2], S2, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":12,
+					"native_coupling_inputform":"6*Matrix[lambdaS2Adj][##1] & ",
+					"native_invariant_inputform":"Module[{adj}, tGen[SU2L[S2], adj, #1, #2]*(tGen[SU2L[S2], adj, #3, #4]\/2)] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambda12Adj",
+					"fields_inputform":"{Bar[S1], S1, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambda12Adj][##1] & ",
+					"native_invariant_inputform":"tGen[T3RGBetaRep[3], A, #1, #2]*tGen[T3RGBetaRep[3], A, #3, #4] & ",
+					"has_installed_RGBeta_projector":true
+				},
+				{
+					"symbol":"lambda12Cross",
+					"fields_inputform":"{Bar[S1], S1, Bar[S2], S2}",
+					"native_self_conjugate":true,
+					"native_unique_arrangement_count":24,
+					"native_coupling_inputform":"6*Matrix[lambda12Cross][##1] & ",
+					"native_invariant_inputform":"del[SU2L[S2], #1, #3]*del[SU2L[S2], #2, #4] + del[SU2L[S2], #1, #4]*del[SU2L[S2], #2, #3] & ",
+					"has_installed_RGBeta_projector":true
+				}
+			],
+			"native_real_self_projectors":[
+				{
+					"symbol":"lambdaH",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS1",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS2",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH1",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH2",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambda12",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH1Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaH2Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS1Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambdaS2Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambda12Adj",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				},
+				{
+					"symbol":"lambda12Cross",
+					"native_response":{
+						"ok":true,
+						"value":1.0,
+						"coefficient_inputform":"1"
+					}
+				}
+			],
+			"native_portal_response_blocks":[
+				{
+					"which":1,
+					"dimension":3,
+					"symbols":[
+						"lambdaH1",
+						"lambdaH1Adj"
+					],
+					"native_response_matrix":[
+						[
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							},
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							}
+						],
+						[
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							},
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							}
+						]
+					]
+				},
+				{
+					"which":2,
+					"dimension":3,
+					"symbols":[
+						"lambdaH2",
+						"lambdaH2Adj"
+					],
+					"native_response_matrix":[
+						[
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							},
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							}
+						],
+						[
+							{
+								"ok":true,
+								"value":0.0,
+								"coefficient_inputform":"0"
+							},
+							{
+								"ok":true,
+								"value":1.0,
+								"coefficient_inputform":"1"
+							}
+						]
+					]
+				}
+			],
+			"native_complex_conjugate_projector_probes":[
+				{
+					"symbol":"lambdaT3",
+					"native_complex_conjugate_response":{
+						"ok":true,
+						"direct_channel":1.000000000000000,
+						"conjugate_channel":0,
+						"unit_direct_zero_conjugate":true
+					}
+				}
+			],
+			"native_complex_conjugate_projectors_all_unit":true,
+			"native_real_self_projectors_all_unit":true,
+			"native_portal_response_blocks_evaluated":true,
+			"complex_quartics_inventory_and_exploratory_channels_observed":true,
+			"native_numeric_S2_components_measured":false
+		}
+	}
+}

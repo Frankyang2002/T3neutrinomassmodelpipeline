@@ -1,5 +1,6 @@
 (* Scalar-potential invariant basis and candidate construction for T3 models.
-   Extracted from LagrangianBuilder.wl; physics behaviour is unchanged. *)
+   Extracted from LagrangianBuilder.wl; physics behaviour is unchanged except
+   for Hermitian phases of anti-Hermitian Higgs-scalar portal CG tensors. *)
 
 (* All non-singlet irreps have one Matchete representation index regardless of
    their dimension. *)
@@ -47,7 +48,6 @@ SymmetrizeTensorPairs[tensor_, pairs_List] := Fold[
 (* Keep a linearly independent basis from a list of invariant tensors. *)
 IndependentTensorBasis[tensors_List] := Module[
   {selected = {}, vectors = {}, vector, newRank},
-
   Scan[
     Function[tensor,
       vector = TensorVector[tensor];
@@ -59,7 +59,6 @@ IndependentTensorBasis[tensors_List] := Module[
     ],
     tensors
   ];
-
   selected
 ];
 
@@ -77,13 +76,10 @@ PhysicalSU2InvariantBasis[
 
   If[Length[dims] =!= Length[objectConjugated], Return[$Failed]];
   If[!AllTrue[dims, IntegerQ[#] && Positive[#] &], Return[$Failed]];
-
   Scan[EnsureBSMRepresentation, DeleteDuplicates[dims]];
-
   keep = Flatten@Position[dims, _?(# > 1 &)];
   keptDims = dims[[keep]];
   keptConj = objectConjugated[[keep]];
-
   If[keptDims === {},
     Return[
       <|
@@ -113,7 +109,6 @@ PhysicalSU2InvariantBasis[
           SU2L[fund],
           BSMRepresentationName[d]
         ];
-
         If[EvenQ[d] && !TrueQ[conjugated], Bar[baseRep], baseRep]
       ]
     ],
@@ -121,13 +116,10 @@ PhysicalSU2InvariantBasis[
   ];
 
   tensors = Check[InvariantTensors[SU[2], algebraReps], $Failed];
-
   If[tensors === $Failed || !ListQ[tensors] || tensors === {},
     Return[$Failed]
   ];
-
   positionMap = AssociationThread[keep -> Range[Length[keep]]];
-
   pairsAfterDrop = Cases[
     symmetricPairs,
     {first_Integer, second_Integer} /;
@@ -135,12 +127,9 @@ PhysicalSU2InvariantBasis[
       KeyExistsQ[positionMap, second] :>
         {positionMap[first], positionMap[second]}
   ];
-
   projected = SymmetrizeTensorPairs[#, pairsAfterDrop] & /@ tensors;
   basis = IndependentTensorBasis[projected];
-
   If[basis === {}, Return[$Failed]];
-
   <|
     "Basis" -> basis,
     "CGReps" -> cgReps,
@@ -179,9 +168,7 @@ DefineSU2InvariantFamily[
     symmetricPairs,
     smPositions
   ];
-
   If[data === $Failed, Return[$Failed]];
-
   basis = data["Basis"];
   cgReps = data["CGReps"];
   keep = data["Keep"];
@@ -240,9 +227,7 @@ BuildScalarSelfInvariantCandidates[
   which_Integer,
   d_Integer?Positive] := Module[
   {family, indices, labels, cg, coupling, fieldProduct, baseName},
-
   baseName = "lambdaS" <> ToString[which];
-
   family = DefineSU2InvariantFamily[
     "T3Scalar" <> ToString[which] <> "SelfCG",
     baseName,
@@ -251,21 +236,17 @@ BuildScalarSelfInvariantCandidates[
     {{1, 3}, {2, 4}},
     {}
   ];
-
   If[family === $Failed, Return[{}]];
-
   Table[
     indices = Array[Unique["s"] &, 4];
     labels = indices[[family["Keep"]]];
     cg = family["CGs"][[invariant]];
     coupling = family["Couplings"][[invariant]];
-
     fieldProduct =
       ScalarPotentialFieldValue[which, True, d, indices[[1]]] *
       ScalarPotentialFieldValue[which, False, d, indices[[2]]] *
       ScalarPotentialFieldValue[which, True, d, indices[[3]]] *
       ScalarPotentialFieldValue[which, False, d, indices[[4]]];
-
     <|
       "Name" -> "Scalar" <> ToString[which] <> "SelfInv" <> ToString[invariant],
       "Class" -> "ScalarSelf",
@@ -276,14 +257,52 @@ BuildScalarSelfInvariantCandidates[
   ]
 ];
 
+(* Fix a real portal coupling's Hermitian phase using the actual Matchete CG.
+   For rank-4 tensors, the Hermitian-conjugate map swaps the H/Hdag and S/Sdag
+   indices: T^HC_{ijab} = Conjugate[T_{ji ba}]. For scalar singlets only the
+   Higgs pair is present. An anti-Hermitian basis tensor needs an explicit I
+   inside PlusHc; otherwise the physical operator is projected to zero.
+   Fail closed on a mixed-Hermiticity CG rather than dropping a structure. *)
+T3HiggsPortalHermitianPhase[cg_, d_Integer?Positive] := Module[
+  {tensor, hc, dims, perm, norm, herm, anti, maxAbs},
+  If[cg === None, Return[1]];
+  tensor = Quiet @ Check[
+    Matchete`CGManipulations`PackagePrivate`$CGtensors[cg], $Failed];
+  If[tensor === $Failed || Head[tensor] === Missing,
+    Print["ERROR: unavailable portal CG tensor: ", cg]; Return[$Failed]
+  ];
+  tensor = Normal[tensor];
+  dims = Dimensions[tensor];
+  If[dims =!= If[d === 1, {2, 2}, {2, 2, d, d}],
+    Print["ERROR: unexpected portal CG dimensions: ", cg, " ", dims];
+    Return[$Failed]
+  ];
+  perm = If[d === 1, {2, 1}, {2, 1, 4, 3}];
+  hc = Conjugate[Transpose[tensor, perm]];
+  maxAbs[expr_] := N[Max[Abs[Flatten[N[expr, 25]]]], 16];
+  norm = maxAbs[tensor];
+  If[!TrueQ[norm > 10^-12],
+    Print["ERROR: zero portal CG tensor: ", cg]; Return[$Failed]
+  ];
+  herm = maxAbs[tensor - hc];
+  anti = maxAbs[tensor + hc];
+  Which[
+    TrueQ[herm < 10^-10 norm], 1,
+    TrueQ[anti < 10^-10 norm], I,
+    True,
+      Print["ERROR: portal CG is neither Hermitian nor anti-Hermitian: ",
+        cg, " hermResidual=", herm, " antiResidual=", anti];
+      $Failed
+  ]
+];
+
 (* Build all independent (H^\dagger H)(S^\dagger S) contractions. *)
 BuildHiggsPortalInvariantCandidates[
   which_Integer,
   d_Integer?Positive] := Module[
-  {family, indices, labels, cg, coupling, fieldProduct, baseName},
-
+  {family, indices, labels, cg, coupling, fieldProduct, baseName, phase,
+   results = {}},
   baseName = "lambdaH" <> ToString[which];
-
   family = DefineSU2InvariantFamily[
     "T3HiggsPortal" <> ToString[which] <> "CG",
     baseName,
@@ -292,30 +311,35 @@ BuildHiggsPortalInvariantCandidates[
     {},
     {1, 2}
   ];
-
-  If[family === $Failed, Return[{}]];
-
-  Table[
+  If[family === $Failed, Return[$Failed]];
+  Do[
     indices = Array[Unique["p"] &, 4];
     labels = indices[[family["Keep"]]];
     cg = family["CGs"][[invariant]];
     coupling = family["Couplings"][[invariant]];
-
+    phase = T3HiggsPortalHermitianPhase[cg, d];
+    If[phase === $Failed, Return[$Failed]];
+    If[phase === I,
+      Print["  ", baseName, "Inv", invariant,
+        ": anti-Hermitian CG; using I inside PlusHc"]
+    ];
     fieldProduct =
       Bar[H[indices[[1]]]] H[indices[[2]]] *
       ScalarPotentialFieldValue[which, True, d, indices[[3]]] *
       ScalarPotentialFieldValue[which, False, d, indices[[4]]];
-
-    <|
-      "Name" -> "HiggsPortal" <> ToString[which] <> "Inv" <> ToString[invariant],
-      "Class" -> "Portal",
-      "Expression" ->
-        1/2 PlusHc[
-          coupling[] fieldProduct If[cg === None, 1, CG[cg, labels]]
-        ]
-    |>,
+    AppendTo[results,
+      <|
+        "Name" -> "HiggsPortal" <> ToString[which] <> "Inv" <> ToString[invariant],
+        "Class" -> "Portal",
+        "Expression" ->
+          1/2 PlusHc[
+            phase coupling[] fieldProduct If[cg === None, 1, CG[cg, labels]]
+          ]
+      |>
+    ],
     {invariant, family["Count"]}
-  ]
+  ];
+  results
 ];
 
 (* Build all independent (S1^\dagger S1)(S2^\dagger S2) contractions. *)
@@ -323,7 +347,6 @@ BuildCrossScalarInvariantCandidates[
   d1_Integer?Positive,
   d2_Integer?Positive] := Module[
   {family, indices, labels, cg, coupling, fieldProduct},
-
   family = DefineSU2InvariantFamily[
     "T3CrossScalarCG",
     "lambda12",
@@ -332,21 +355,17 @@ BuildCrossScalarInvariantCandidates[
     {},
     {}
   ];
-
   If[family === $Failed, Return[{}]];
-
   Table[
     indices = Array[Unique["c"] &, 4];
     labels = indices[[family["Keep"]]];
     cg = family["CGs"][[invariant]];
     coupling = family["Couplings"][[invariant]];
-
     fieldProduct =
       ScalarPotentialFieldValue[1, True, d1, indices[[1]]] *
       ScalarPotentialFieldValue[1, False, d1, indices[[2]]] *
       ScalarPotentialFieldValue[2, True, d2, indices[[3]]] *
       ScalarPotentialFieldValue[2, False, d2, indices[[4]]];
-
     <|
       "Name" -> "ScalarCrossPortalInv" <> ToString[invariant],
       "Class" -> "Portal",
@@ -361,7 +380,7 @@ BuildCrossScalarInvariantCandidates[
 BuildGeneralScalarPotentialCandidates[model_Association] := Module[{d1, d2},
   d1 = model["Scalar1", "SU2"];
   d2 = model["Scalar2", "SU2"];
-Join[
+  Join[
     BuildScalarSelfInvariantCandidates[1, d1],
     BuildScalarSelfInvariantCandidates[2, d2],
     BuildHiggsPortalInvariantCandidates[1, d1],

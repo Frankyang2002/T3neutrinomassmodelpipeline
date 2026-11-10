@@ -1,0 +1,35 @@
+{
+  "analytic_triangle_fallback_used": false,
+  "complete_numerical_C5_available": false,
+  "created_utc": "2026-11-10T09:13:43.037216+00:00",
+  "fitted_yukawas_available": false,
+  "format": "t3-full-general-one-batch-execution-v1",
+  "heavy_fermions_integrated_simultaneously": 3,
+  "model": "A_-4",
+  "reason": "Native two-threshold matching blocked: A(-4) CheckLagrangian still false; inspect SourceReconstruction mismatch and scalar_base_CheckLagrangian in A_source_reconstruction_audit.json",
+  "scalar_bubble_fallback_used": false,
+  "scalar_multiplets_integrated_simultaneously": [
+    "S1",
+    "S2"
+  ],
+  "source_sha256": {
+    "batch1_manifest": "edb562f6d16b9bb3865662209364a8dd915f6d2f79900b1b96651cfa7be2c736",
+    "batch1_scalar_input": "79025cc474617a2dc7a8f101811657e7e92e96f2b5b9d78a1caaf3740187f981",
+    "laurent_audit": "11f432658ee52e0be2d547e73e4528db91d3158e1bdefd12bb94c2b70b07296a",
+    "laurent_manifest": "06aaa8e6c707f5f3f341b3da733bb960c61b6e2626703ee68fd6023f817f4236",
+    "laurent_unsubtracted_regular": "e4374907447aa5a2c838dab1e9f7abcf6a8b21a18cb4487ec7f60b40e86ac59d",
+    "raw_manifest": "4c9138c005903c6f1efa903b7b2b7d38a565cacdfe8d54335d731cdbf897b546",
+    "raw_matching_ledger": "3e8ca915617805d4b2a794930d3f5f6979da6f08abfdd8527d19cbe010b205a7"
+  },
+  "status": "Blocked_CompletionBlocked",
+  "threshold_scales_GeV": {
+    "F": 100000.0,
+    "S": 1000.0
+  },
+  "traceback_tail": "Traceback (most recent call last):\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\scripts\\RunT3ThesisFinalOneBatch.py\", line 258, in execute\n    native = run_wolfram(model, out, args.wolframscript, args.timeout)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\scripts\\RunT3ThesisFinalOneBatch.py\", line 86, in run_wolfram\n    raise CompletionBlocked('Native two-threshold matching blocked: '+\nNumerical.parallel_t3.complete.full_general_completion.CompletionBlocked: Native two-threshold matching blocked: A(-4) CheckLagrangian still false; inspect SourceReconstruction mismatch and scalar_base_CheckLagrangian in A_source_reconstruction_audit.json\n",
+  "validated_prior_stages": {
+    "F_Laurent": "CompletedFormalLaurentNoSubtraction",
+    "F_all_fermion_raw_one_loop": "CompletedUnrenormalisedMatcheteFOnly",
+    "UV_general_RG": "CompletedGeneralRenormalisableRG"
+  }
+}

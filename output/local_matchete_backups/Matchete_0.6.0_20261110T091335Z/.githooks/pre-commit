@@ -1,0 +1,118 @@
+#!/bin/bash
+
+# --------USAGE--------
+#   file needs to be made executable with
+#       $ chmod ug+x .git/hooks/pre-commit
+#   point git to .githooks for hooks with
+#       $ git config core.hooksPath .githooks
+
+# Pre-commit script to collapse/expand (sub)sections in .m/.wl files
+# Bypass it with the '--no-verify' option to 'git commit'
+
+print_color() {
+    local color=$1
+    local text=$2
+    echo -e "$(tput setaf $color)$text$(tput sgr0)" >&2
+}
+
+# Detect OS
+platform="windows"
+uname_result=`uname`
+if [ "$uname_result" = "Linux" ]; then
+  platform="linux"
+elif [ "$uname_result" = "Darwin" ]; then
+  platform="mac"
+fi
+print_color 6 "Running pre-commit hook on $platform ..."
+
+# Use relative path to the hook to navigate to Matchete source directory
+script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+# two_levels_up="$(dirname "$(dirname "$script_dir")")"
+one_level_up="$(dirname "$script_dir")"
+cd "$one_level_up"
+
+# Determine the .m and .wl files that are changed
+staged_files=(`git diff --staged --name-only | sed -n "/Package\/.*.[m(wl)]/p"`)
+staged_files+=(`git diff --staged --name-only | sed -n '/Validation\/Tests\/.*.[m(wl)]/p'`)
+staged_files+=(`git diff --staged --name-only | sed -n '/Validation\/.*.[m(wl)]/p'`)
+
+modified_files=(`git diff --name-only | sed -n "/Package\/.*.[m(wl)]/p"`)
+modified_files+=(`git diff --name-only | sed -n '/Validation\/Tests\/.*.[m(wl)]/p'`)
+modified_files+=(`git diff --name-only | sed -n '/Validation\/.*.[m(wl)]/p'`)
+
+
+# Loop through staged Mathematica code files
+for file in "${staged_files[@]}"; do
+        [ -e "$file" ] || continue
+
+    # Determine if there are additional changes to the staged file
+    if [[ "$modified_files" =~ $file ]]; then
+        modified=true
+    else
+        modified=false
+    fi
+
+    # We must juggle files if they were modified after stageing
+    if "$modified" = true; then
+        # Since the file in working directory isn't always equal to the file in the index, we back it up
+        mv -f "$file" "${file}.tmpsave"
+        # Recover the staged version of the file the in working directory
+        git checkout -- "$file"
+    fi
+
+    #Collapse subsubsections, but expand subsections and higher
+    #A log file .githooks/tmp_sed_log is created with all changes to see if any changes were actually made
+    if [ "$platform" = "mac" ]; then
+        # On mac -i must be followed by '' for whatever reason
+        sed -i '' 's|\:\:Chapter\:\:Closed\:\: |\:\:Chapter\:\: |w .githooks/tmp_sed_log
+            s|\:\:Section\:\:Closed\:\: |\:\:Section\:\: |w .githooks/tmp_sed_log
+            s|\:\:Subsection\:\:Closed\:\: |\:\:Subsection\:\: |w .githooks/tmp_sed_log
+            s|\:\:Subsubsection\:\: |\:\:Subsubsection\:\:Closed\:\: |w .githooks/tmp_sed_log' "$file"
+    elif [ "$platform" = "linux" ]; then
+        sed -i 's|\:\:Chapter\:\:Closed\:\: |\:\:Chapter\:\: |w .githooks/tmp_sed_log
+            s|\:\:Section\:\:Closed\:\: |\:\:Section\:\: |w .githooks/tmp_sed_log
+            s|\:\:Subsection\:\:Closed\:\: |\:\:Subsection\:\: |w .githooks/tmp_sed_log
+            s|\:\:Subsubsection\:\: |\:\:Subsubsection\:\:Closed\:\: |w .githooks/tmp_sed_log' "$file"
+    elif [ "$platform" = "windows" ]; then
+        # On windows, `sed -i` adds ready-only attribute to file, so we use temp file instead
+        sed 's|\:\:Chapter\:\:Closed\:\: |\:\:Chapter\:\: |w .githooks/tmp_sed_log
+            s|\:\:Section\:\:Closed\:\: |\:\:Section\:\: |w .githooks/tmp_sed_log
+            s|\:\:Subsection\:\:Closed\:\: |\:\:Subsection\:\: |w .githooks/tmp_sed_log
+            s|\:\:Subsubsection\:\: |\:\:Subsubsection\:\:Closed\:\: |w .githooks/tmp_sed_log' "$file" > "${file}.wintmp"
+        mv -f "${file}.wintmp" "$file"
+    fi
+
+    # Print only if changes were made to file
+    if [ -s .githooks/tmp_sed_log ]; then
+        if "$modified" = true; then
+            print_color 3 "   Collapsed sections in the commited version of the modified file $file ..."
+        else
+            print_color 2 "   Collapsed sections in file $file ..."
+        fi
+    fi
+    # Remove sed substitution log file
+    rm .githooks/tmp_sed_log
+
+    # Recommit the changed file
+    git add "$file"
+
+    if "$modified" = true; then
+        #Recover the uncommited changes (consider also adding consistent formatting of subsection anyway)
+        mv -f "${file}.tmpsave" "$file"
+    fi
+done
+
+if [ -d ".git/rebase-merge" ] || [ -d ".git/rebase-apply" ]; then
+    echo "Rebase in progress — skipping empty commit check."
+    exit 0
+fi
+
+if [ "x`git status -s | grep '^[A|D|M]'`" = "x" ]; then
+    # If commit is empty we abort
+    print_color 1 "No changes added, aborting commit!"
+    exit 1
+fi
+
+exit 0
+
+# inspired by https://github.com/imoldman/config/blob/master/pre-commit.git.sh#L25

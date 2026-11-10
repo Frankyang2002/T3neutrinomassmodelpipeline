@@ -1,0 +1,18 @@
+trigger_website:
+  stage: deploy
+  only:
+    - master
+  trigger:
+    project: matchete/matchete.gitlab.io
+    branch: master
+
+trigger_model-database:
+  stage: deploy
+  only:
+    - master
+  trigger:
+    project: matchete/model-database
+    branch: master
+    strategy: depend
+  variables:
+    SOURCE_COMMIT_SHA: $CI_COMMIT_SHA

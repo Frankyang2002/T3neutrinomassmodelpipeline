@@ -1,0 +1,35 @@
+{
+  "trial": "fit16_93dff526e0",
+  "status": "READ_ONLY_NOT_A_REPAIR",
+  "B_source_file": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\parallel_t3\\background\\fit16_93dff526e0\\A_m4\\fermion_boundary_formal.npz",
+  "by_source_sum_relative_error": 0.0,
+  "total_SU2_ward_relative": [
+    1.154700538379252,
+    1.5086889589691432,
+    1.154700538379252
+  ],
+  "source_operators": [
+    {
+      "source_operator_index": 2,
+      "norm": 3.505348734118414e-13,
+      "relative_norm": 1.0,
+      "SU2_ward_relative": [
+        1.154700538379252,
+        1.5086889589691432,
+        1.154700538379252
+      ],
+      "overlap_with_total": 1.0000000000000004
+    }
+  ],
+  "seed_file": "output\\general_observable\\fermion_first_hermitian_portal_v1\\A_m4\\data\\eft1_after_F_wilson_seed.json",
+  "seed_sha256": "ffd6c04962d7b260a890c3306a4ce9522edd36bac0867a200e2fd3d3505e64a5",
+  "source_indices_manifest": [
+    2
+  ],
+  "producer_chain": [
+    "Numerical/parallel_t3/background/fermion.py:evaluate_formal_llss",
+    "Numerical/running/GeneralT3OrderedTensor.py:project_ordered_term",
+    "Numerical/running/GeneralT3DynamicFermionWilson.py:_dense_operator"
+  ],
+  "warning": "A large source Ward residual does not alone establish which original Matchete operator or CG convention is incorrect."
+}

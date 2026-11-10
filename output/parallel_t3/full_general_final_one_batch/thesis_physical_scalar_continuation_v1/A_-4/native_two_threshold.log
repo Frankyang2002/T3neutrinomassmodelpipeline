@@ -1,0 +1,49 @@
+command: wolframscript -file C:\thesistemp\T3neutrinomassmodelpipeline\Lagrangian\RunT3FullGeneralTwoThresholdNative.wl C:\thesistemp\T3neutrinomassmodelpipeline\output\parallel_t3\full_general_final_one_batch\thesis_physical_scalar_continuation_v1\A_-4 A_-4 C:\thesistemp\T3neutrinomassmodelpipeline\output\parallel_t3\full_general_final_one_batch\thesis_final_one_batch_v1\A_-4\debug\fresh_kernel_stage_2
+exit: 5
+stdout:
+by Javier Fuentes-Marti'n, Matthias Ko"nig, Julie Page`s, Anders Eller Thomsen, and Felix Wilsch 
+Contributors:   Lukas Born, Luis Hourtz, Tamilarasan Ketheeswaran, Javier Lo'pez Miras, Adria'n Moreno-Sa'nchez, and Philip Weber 
+Reference:      Hyperlink[arXiv:2212.04510, https://arxiv.org/abs/2212.04510]
+Documentation:  Hyperlink[open, paclet:Matchete/guide/Matchete]
+Website:        Hyperlink[https://matchete.gitlab.io, https://matchete.gitlab.io]
+Model database: Hyperlink[https://gitlab.com/matchete/model-database, https://gitlab.com/matchete/model-database]
+Repository:     Hyperlink[https://gitlab.com/matchete/matchete, https://gitlab.com/matchete/matchete]
+  Exporting canonical transition EFTs without expanding effective couplings.
+  Exported fresh-kernel CG registry: 0 definition(s).
+
+  Launching fresh Wolfram kernel for threshold stage 2 (S1, S2)...
+  Fresh-kernel CLI payload count (after -file script): 14
+[fresh kernel] Threshold mode: results
+[fresh kernel] Loading Matchete...
+[fresh kernel] Active T3 fields: {S1, S2}; Heavy now: {S1, S2}
+[fresh kernel] Restored contracted EFT1 Wilson tensor flavour indices.
+[fresh kernel] Reconstructing scalar-potential invariant registry...
+[fresh kernel] Scalar-potential registry reconstructed: 7 invariant candidate(s).
+[fresh kernel] Restoring serialized intermediate-EFT CG registry...
+[fresh kernel] Restored 0 previously missing CG definition(s).
+[fresh kernel] Reconstructing inherited effective-coupling metadata...
+[fresh kernel] Effective scalar couplings restored for: {S1, S2}
+[fresh kernel] Rehydrating canonical transition EFTs under fresh registry...
+[fresh kernel] Transition rehydration complete. Tree bytes: 42656; full O(hbar) bytes: 42656
+[fresh kernel] Diagnosing transition kinetic sectors...
+[fresh kernel] O(hbar) gauge-kinetic differences: InputForm[<|U1Y(BB) -> False, SU2L(WW) -> False, SU3c(GG) -> False|>]
+[fresh kernel] O(hbar) S1 two-derivative differences: InputForm[{False}]
+[fresh kernel] O(hbar) S2 two-derivative differences: InputForm[{False}]
+[fresh kernel] Gauge-coupling threshold shift present: False
+[fresh kernel] Absorbing O(hbar) gauge-kinetic threshold correction into low-energy gauge couplings before [C].
+[fresh kernel] [A] Tree matching L^(0)...
+Running Matchete matching...
+EFT order: 5; loop order: 0
+Running Match...
+  [fresh kernel] Matchete error: CheckLagrangian::Hermiticity
+  Match result head: Times
+Matching pipeline completed successfully.
+[fresh kernel] [B] One-loop matching L^(0)...
+EFT order: 5; loop order: 1
+[fresh kernel] Direct Weinberg definition available: False
+ERROR: could not extract authoritative Weinberg coefficient from resumed threshold-2 EFT.
+  [fresh kernel] Suppressed 53 verbose line(s); full child output is saved to stdout.log.
+ERROR: fresh-kernel threshold stage 2 failed. See C:\thesistemp\T3neutrinomassmodelpipeline\output\parallel_t3\full_general_final_one_batch\thesis_physical_scalar_continuation_v1\A_-4\debug\fresh_kernel_stage_2\stdout.log
+A_-4 Blocked_NativeStage at A-joint-scalar-soft-one-loop: Joint scalar-soft Matchete matching failed; inspect debug/fresh_kernel_stage_2/stdout.log
+
+stderr:

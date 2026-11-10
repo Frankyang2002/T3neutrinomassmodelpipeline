@@ -65,18 +65,40 @@ class SpuriousWilsonProtectionTests(unittest.TestCase):
         with self.assertRaises(SourceAuditError):
             matrix_spurion_diagnostics(d, 'A_-4')
 
-    def _report(self, path: Path):
-        path.write_bytes(b'mock wxf bytes')
+    def _report(self, path: Path, *, tree_terms: int = 4):
+        directory = path.parent
+        files = {}
+        for name in ('raw_hbar1_coefficient.wxf',
+                     'unreconciled_hbar0_mass_remainder.wxf',
+                     'evaluated_full_hbar1_coefficient.wxf',
+                     'explicit_pole_residue_unsubtracted.wxf',
+                     'epsilon_zero_regular_unsubtracted.wxf'):
+            dst = directory / name
+            dst.write_bytes(('mock WXF: ' + name).encode('utf-8'))
+            files[name] = sha(dst)
+        hbar1 = 131 if tree_terms == 4 else 1194
         return {
             'format': REPORT_FORMAT,
-            'status': 'LoopFunctionsEvaluated_ExplicitLaurentSeparated_AuditOnly',
+            'status': 'LoopFunctionsEvaluated_ExplicitLaurentSeparated_TreeRemainderPreserved_AuditOnly',
             'source_sha256': 'native-source-hash',
-            'one_loop_hbar_linearity_exact': True,
+            'one_loop_hbar_linearity_exact': tree_terms == 0,
+            'hbar_higher_order_absent': True,
+            'hbar1_nonzero': True,
+            'full_expression_hbar_decomposition_exact': True,
+            'unreconciled_hbar0_mass_remainder_present': tree_terms > 0,
+            'unreconciled_hbar0_mass_term_count': tree_terms,
+            'hbar0_only_recognised_quadratic_mass_terms': True,
+            'raw_hbar1_term_count': hbar1,
+            'original_source_term_count': hbar1 + tree_terms,
+            'unreconciled_tree_mass_coordinate_identity_verified': False,
+            'tree_mass_remainder_dropped_from_source': False,
+            'tree_mass_remainder_included_in_one_loop_coefficient': False,
+            'explicit_laurent_reconstruction_exact': True,
             'all_operators_preserved': True,
             'native_fermions_absent': True,
             'renormalised_MSbar_Wilson_boundary_computed': False,
             'source_scale_substitution_performed': False,
-            'output_sha256': {'raw_hbar1_coefficient.wxf': sha(path)},
+            'output_sha256': files,
         }
 
     def test_successful_audit_is_still_not_physical_matching(self):
@@ -86,6 +108,9 @@ class SpuriousWilsonProtectionTests(unittest.TestCase):
             rec = check_audit_report(report, 'native-source-hash', Path(tmp))
             self.assertFalse(rec['numerical_finite_Wilson_matching_complete'])
             self.assertTrue(rec['pole_expression_formal_only'])
+            self.assertFalse(rec['original_expression_hbar_linear'])
+            self.assertEqual(rec['unreconciled_hbar0_mass_term_count'], 4)
+            self.assertEqual(rec['raw_hbar1_term_count'], 131)
 
     def test_audit_source_checksum_mismatch_rejected(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -107,6 +132,63 @@ class SpuriousWilsonProtectionTests(unittest.TestCase):
             p = Path(tmp)/'raw_hbar1_coefficient.wxf'
             report = self._report(p)
             report['status'] = 'Blocked_UnresolvedLoopFunctions'
+            with self.assertRaises(SourceAuditError):
+                check_audit_report(report, 'native-source-hash', Path(tmp))
+
+    def test_d2_1200_terms_preserved_separately(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            p = Path(tmp)/'raw_hbar1_coefficient.wxf'
+            report = self._report(p, tree_terms=6)
+            rec = check_audit_report(report, 'native-source-hash', Path(tmp))
+            self.assertEqual(rec['unreconciled_hbar0_mass_term_count'], 6)
+            self.assertEqual(rec['raw_hbar1_term_count'], 1194)
+            self.assertFalse(rec['numerical_finite_Wilson_matching_complete'])
+
+    def test_unreconciled_tree_wxf_cannot_be_omitted(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            p = Path(tmp)/'raw_hbar1_coefficient.wxf'
+            report = self._report(p)
+            report['output_sha256'].pop('unreconciled_hbar0_mass_remainder.wxf')
+            with self.assertRaises(SourceAuditError):
+                check_audit_report(report, 'native-source-hash', Path(tmp))
+
+    def test_tree_mass_identity_not_assumed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            p = Path(tmp)/'raw_hbar1_coefficient.wxf'
+            report = self._report(p)
+            report['unreconciled_tree_mass_coordinate_identity_verified'] = True
+            with self.assertRaises(SourceAuditError):
+                check_audit_report(report, 'native-source-hash', Path(tmp))
+
+    def test_tree_mass_inventory_required(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            p = Path(tmp)/'raw_hbar1_coefficient.wxf'
+            report = self._report(p)
+            report['hbar0_only_recognised_quadratic_mass_terms'] = False
+            with self.assertRaises(SourceAuditError):
+                check_audit_report(report, 'native-source-hash', Path(tmp))
+
+    def test_hbar2_contamination_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            p = Path(tmp)/'raw_hbar1_coefficient.wxf'
+            report = self._report(p)
+            report['hbar_higher_order_absent'] = False
+            with self.assertRaises(SourceAuditError):
+                check_audit_report(report, 'native-source-hash', Path(tmp))
+
+    def test_source_terms_must_be_accounted(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            p = Path(tmp)/'raw_hbar1_coefficient.wxf'
+            report = self._report(p)
+            report['original_source_term_count'] -= 1
+            with self.assertRaises(SourceAuditError):
+                check_audit_report(report, 'native-source-hash', Path(tmp))
+
+    def test_laurent_pole_wxf_must_be_present(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            p = Path(tmp)/'raw_hbar1_coefficient.wxf'
+            report = self._report(p)
+            report['output_sha256'].pop('explicit_pole_residue_unsubtracted.wxf')
             with self.assertRaises(SourceAuditError):
                 check_audit_report(report, 'native-source-hash', Path(tmp))
 

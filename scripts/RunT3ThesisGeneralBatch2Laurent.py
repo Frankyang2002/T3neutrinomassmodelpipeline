@@ -144,16 +144,29 @@ def run(args: argparse.Namespace) -> list[dict]:
         source = args.raw_root / model / 'native_matching/data/eft1_after_F_one_loop_inputform.txt'
         try:
             launch_wolfram(source, dest, args, dest / 'wolfram_laurent.log')
-            result = check_audit_report(read_json(dest / 'laurent_audit.json'),
-                                        record['raw_one_loop_source_sha256'], dest)
-            record.update({'status': 'FullOneLoopFormalLaurentAudited_NotFiniteWilsons',
+            audit = read_json(dest / 'laurent_audit.json')
+            result = check_audit_report(audit, record['raw_one_loop_source_sha256'], dest)
+            record.update({'status': 'FullOneLoopFormalLaurentAudited_TreeMassRemainderPreserved_NotFiniteWilsons',
                            'symbolic_result': result,
-                           'matchete_formal_loop_functions_evaluated': True,
+                           'matchete_formal_loop_functions_evaluated':
+                               audit.get('matchete_loop_function_evaluator_called') is True,
                            'physical_matching_completed': False})
         except Exception as exc:
-            record.update({'status': 'Blocked_' + type(exc).__name__,
-                           'reason': str(exc),
-                           'traceback_tail': traceback.format_exc(limit=4)})
+            audit_file = dest / 'laurent_audit.json'
+            try:
+                audit = read_json(audit_file) if audit_file.is_file() else {}
+            except (ValueError, OSError):
+                audit = {}
+            native_status = audit.get('status')
+            record.update({
+                'status': (native_status if isinstance(native_status, str)
+                           and native_status.startswith('Blocked_')
+                           else 'Blocked_' + type(exc).__name__),
+                'reason': str(exc),
+                'native_audit_reason': audit.get('reason'),
+                'native_audit_status': native_status,
+                'traceback_tail': traceback.format_exc(limit=4),
+            })
         save_json(dest / 'manifest.json', record)
         print(f'{model}: {record["status"]}', flush=True)
         rows.append(record)

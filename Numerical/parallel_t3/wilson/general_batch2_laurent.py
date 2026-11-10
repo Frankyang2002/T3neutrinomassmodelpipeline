@@ -15,7 +15,7 @@ import numpy as np
 
 from Numerical.parallel_t3.background.general_batch1_api import decode_native, encode_native
 
-REPORT_FORMAT = 't3-batch2-laurent-operator-audit-v1'
+REPORT_FORMAT = 't3-batch2-laurent-operator-audit-v2'
 PIPELINE_FORMAT = 't3-thesis-full-general-batch2-loop-audit-v1'
 RAW_FORMAT = 't3-thesis-full-general-batch2-raw-fermion-v1'
 RAW_SUCCESS = 'RawFullGeneralOneLoopFThresholdSourceExported_NotFiniteWilsons'
@@ -198,23 +198,49 @@ def check_audit_report(report: Mapping[str, Any], expected_hash: str,
                        output_folder: Path) -> dict:
     require(report.get('format') == REPORT_FORMAT, 'wrong Laurent audit report format')
     require(report.get('status') in {
-        'LoopFunctionsEvaluated_ExplicitLaurentSeparated_AuditOnly',
-        'LoopFunctionsEvaluated_NoExplicitRegulator_AuditOnly',
+        'LoopFunctionsEvaluated_ExplicitLaurentSeparated_TreeRemainderPreserved_AuditOnly',
+        'LoopFunctionsEvaluated_NoExplicitRegulator_TreeRemainderPreserved_AuditOnly',
     }, 'Wolfram loop-function/Laurent audit did not finish: '
             + str(report.get('reason', report.get('status'))))
     require(report.get('source_sha256') == expected_hash,
             'Wolfram read different one-loop source bytes')
-    require(report.get('one_loop_hbar_linearity_exact') is True and
+    require(report.get('full_expression_hbar_decomposition_exact') is True and
+            report.get('hbar_higher_order_absent') is True and
+            report.get('hbar1_nonzero') is True and
             report.get('all_operators_preserved') is True,
-            'loop-function input was not the exact full hbar-linear EFT1 correction')
+            'exact hbar^0 + hbar^1 decomposition or full source preservation failed')
+    require(report.get('hbar0_only_recognised_quadratic_mass_terms') is True,
+            'hbar^0 remainder has not been checked against the known mass inventory')
+    require(report.get('unreconciled_tree_mass_coordinate_identity_verified') is False
+            and report.get('tree_mass_remainder_dropped_from_source') is False
+            and report.get('tree_mass_remainder_included_in_one_loop_coefficient') is False,
+            'unverified tree mass coordinate relation must not be imposed')
+    tree_count = report.get('unreconciled_hbar0_mass_term_count')
+    loop_count = report.get('raw_hbar1_term_count')
+    source_count = report.get('original_source_term_count')
+    require(all(type(n) is int and n >= 0 for n in (tree_count,loop_count,source_count))
+            and tree_count in (0,4,6) and loop_count > 0
+            and source_count == tree_count + loop_count,
+            'unexpected hbar^0 inventory or source operator accounting')
+    require(report.get('unreconciled_hbar0_mass_remainder_present') is (tree_count > 0)
+            and report.get('one_loop_hbar_linearity_exact') is (tree_count == 0),
+            'incorrect original hbar-linearity classification')
     require(report.get('native_fermions_absent') is True,
             'heavy fermion left in matched EFT1')
     require(report.get('renormalised_MSbar_Wilson_boundary_computed') is False and
             report.get('source_scale_substitution_performed') is False,
             'raw audit incorrectly claims physical numerical Wilsons')
     files = report.get('output_sha256', {})
-    require(isinstance(files, dict) and len(files) >= 1,
-            'audit did not export the source-derived expression')
+    required = {'raw_hbar1_coefficient.wxf',
+                'unreconciled_hbar0_mass_remainder.wxf',
+                'evaluated_full_hbar1_coefficient.wxf'}
+    if 'ExplicitLaurentSeparated' in report['status']:
+        required |= {'explicit_pole_residue_unsubtracted.wxf',
+                     'epsilon_zero_regular_unsubtracted.wxf'}
+        require(report.get('explicit_laurent_reconstruction_exact') is True,
+                'the explicit Laurent decomposition is not exact')
+    require(isinstance(files, dict) and required <= set(files),
+            'audit omitted full Wilson one-loop/zero-order/Laurent WXF expressions')
     for filename, digest in files.items():
         require(isinstance(filename, str) and '/' not in filename and '\\' not in filename
                 and filename.endswith('.wxf'), 'invalid Wolfram export name')
@@ -226,5 +252,9 @@ def check_audit_report(report: Mapping[str, Any], expected_hash: str,
         'wolfram_output_sha256': files,
         'regulator_symbol_inputform': report.get('regulator_symbol_inputform'),
         'pole_expression_formal_only': True,
+        'unreconciled_hbar0_mass_term_count': tree_count,
+        'raw_hbar1_term_count': loop_count,
+        'original_expression_hbar_linear': tree_count == 0,
+        'full_expression_hbar_decomposition_exact': True,
         'numerical_finite_Wilson_matching_complete': False,
     }

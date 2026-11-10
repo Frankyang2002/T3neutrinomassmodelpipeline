@@ -1,0 +1,35 @@
+{
+  "analytic_triangle_fallback_used": false,
+  "complete_numerical_C5_available": false,
+  "created_utc": "2026-11-10T07:33:00.494110+00:00",
+  "fitted_yukawas_available": false,
+  "format": "t3-full-general-one-batch-execution-v1",
+  "heavy_fermions_integrated_simultaneously": 3,
+  "model": "D_-2",
+  "reason": "Native two-threshold matching blocked: Three-flavour physical scalar threshold matched; F hard, EFT1 Wilson RG and finite renormalisation are absent. NOT physical C5.",
+  "scalar_bubble_fallback_used": false,
+  "scalar_multiplets_integrated_simultaneously": [
+    "S1",
+    "S2"
+  ],
+  "source_sha256": {
+    "batch1_manifest": "8bf146eafdbda8efee0ada107cb6543091326869e4ec8439e59abb3e46ce1ca9",
+    "batch1_scalar_input": "c84616ce7c6d7cc187ce639d2430415e4d3979ae93cd1e87b614d0e2d8eff4c7",
+    "laurent_audit": "897493759a7fc052a8c5c2ac0ed61881413cb457afe875b71d4bbb8702e86913",
+    "laurent_manifest": "567f9fe099c00f5cdceaa6475ded30ead9a74dec1b175c8ace4d68e9bce379cf",
+    "laurent_unsubtracted_regular": "d0122efd7edadd564566afbdad8179ff97e0f3a3ed2f776dab850b63c906a3e8",
+    "raw_manifest": "b9857d17a674ae9c575cfe875331c895dce03ea0b71a560dcf66ac01b93a5b44",
+    "raw_matching_ledger": "d80fc34403d0d85927cc12268b49d5dfe23daab71b965d1f354ce278f716958d"
+  },
+  "status": "Blocked_CompletionBlocked",
+  "threshold_scales_GeV": {
+    "F": 100000.0,
+    "S": 1000.0
+  },
+  "traceback_tail": "Traceback (most recent call last):\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\scripts\\RunT3ThesisFinalOneBatch.py\", line 258, in execute\n    native = run_wolfram(model, out, args.wolframscript, args.timeout)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\scripts\\RunT3ThesisFinalOneBatch.py\", line 86, in run_wolfram\n    raise CompletionBlocked('Native two-threshold matching blocked: '+\nNumerical.parallel_t3.complete.full_general_completion.CompletionBlocked: Native two-threshold matching blocked: Three-flavour physical scalar threshold matched; F hard, EFT1 Wilson RG and finite renormalisation are absent. NOT physical C5.\n",
+  "validated_prior_stages": {
+    "F_Laurent": "CompletedFormalLaurentNoSubtraction",
+    "F_all_fermion_raw_one_loop": "CompletedUnrenormalisedMatcheteFOnly",
+    "UV_general_RG": "CompletedGeneralRenormalisableRG"
+  }
+}

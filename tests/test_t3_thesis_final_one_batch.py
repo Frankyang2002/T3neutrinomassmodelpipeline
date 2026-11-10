@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts/RunT3ThesisFinalOneBatch.py"
 NATIVE = ROOT / "Lagrangian/RunT3FullGeneralTwoThresholdNative.wl"
 PHYSICAL_D = ROOT / "Lagrangian/RunT3DMinus2FullGeneralPhysicalScalar.wl"
+PHYSICAL_A = ROOT / "Lagrangian/RunT3AMinus4FullGeneralPhysicalScalar.wl"
 C5 = ROOT / "Lagrangian/RunT3FullGeneralNativeC5Numerics.wl"
 FIT = ROOT / "Numerical/parallel_t3/complete/final_one_batch_fit.py"
 
@@ -26,10 +27,9 @@ class TestOneBatch(unittest.TestCase):
         src = NATIVE.read_text(encoding="utf-8")
         self.assertIn('T3ModelFromClass["A", -4, 3]', src)
         self.assertIn('RunSequentialT3Matching[', src)
-        self.assertIn('RunT3EFT1WilsonFreshThresholdStage[', src)
-        self.assertIn('{"S1", "S2"}, {"S1", "S2"}', src)
+        self.assertIn('RunT3AMinus4FullGeneralPhysicalScalar.wl', src)
         self.assertIn('A_full_F_hard_one_loop_preserved.wxf', src)
-        self.assertIn('ScalarSoftOnly_HardInheritanceAndWilsonRGPending', src)
+        self.assertIn('A_EFT1_tree_contracted.wxf', src)
 
     def test_a_parent_does_not_prematurely_register_wilson_couplings(self):
         src = NATIVE.read_text(encoding="utf-8")
@@ -40,6 +40,20 @@ class TestOneBatch(unittest.TestCase):
         # the parent whose registry has not been initialised for EFT1.
         self.assertNotIn('DefineCoupling[T3EFT1W12', src)
         self.assertIn('Coupling[T3EFT1W12', src)
+
+    def test_a_restores_both_scalar_masses_and_matches_together(self):
+        src = PHYSICAL_A.read_text(encoding="utf-8")
+        self.assertIn('ReclassifyT3Fields[t3model, {"S1", "S2"}, {"S1", "S2"}]', src)
+        self.assertIn('Coupling[MS1, {}, 1]] :> Coupling[MS1, {}, 0]', src)
+        self.assertIn('Coupling[MS2, {}, 1]] :> Coupling[MS2, {}, 0]', src)
+        self.assertIn('t3ADemoted === t3ATree', src)
+        self.assertIn('CheckLagrangian[t3AMatchInput]', src)
+        self.assertIn('Match[t3AMatchInput, EFTOrder -> 5, LoopOrder -> 1]', src)
+        self.assertIn('ExtractWeinbergCoefficient[t3AOneLoop]', src)
+        self.assertIn('A_PhysicalScalarSoftOnly_HardInheritanceAndWilsonRGPending', src)
+        self.assertIn('A_full_F_hard_one_loop_preserved.wxf', src)
+        self.assertNotIn('RunSequentialT3Matching[', src)
+        self.assertNotIn('NF=1', src)
 
     def test_d_routes_to_split_physical_scalar_continuation(self):
         src = NATIVE.read_text(encoding="utf-8")
@@ -78,7 +92,7 @@ class TestOneBatch(unittest.TestCase):
         self.assertIn('Sum[y1[p,r]*y2Conj[q,r]/MF[r],{r,1,3}]', d)
 
     def test_no_false_physical_completion(self):
-        for source in (NATIVE, PHYSICAL_D):
+        for source in (NATIVE, PHYSICAL_A, PHYSICAL_D):
             s = source.read_text(encoding="utf-8")
             self.assertIn('NOT', s)
         self.assertIn('"full_general_numerical_c5_verified" -> False',

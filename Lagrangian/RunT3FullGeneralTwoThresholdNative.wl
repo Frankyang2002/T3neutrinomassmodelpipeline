@@ -1,7 +1,8 @@
 (* Consolidated full-general T3 threshold continuation, local-only.
    One common F threshold followed by one common scalar threshold.
-   A(-4) reuses the three-flavour F boundary and reparameterises tree LLSS
-   flavour contractions before passing them to a fresh scalar kernel.
+   A(-4) reuses the three-flavour F boundary, reparameterises LLSS
+   flavour contractions and promotes both scalar masses in a dedicated
+   heavy-scalar Matchete continuation.
    D(-2) dispatches to the physical split-real-scalar continuation.
    This source does NOT claim finite renormalised C5 or EFT1 Wilson running.
    CLI: wolframscript -file SCRIPT OUT_DIR A_-4|D_-2 [A_REUSE_F_DIR]
@@ -68,7 +69,6 @@ If[CheckAbort[UsingFrontEnd[Needs["Matchete`"]; True], $Aborted] =!= True,
 Get[FileNameJoin[{t3root, "model", "T3ModelCatalog.wl"}]];
 Get[FileNameJoin[{t3root, "model", "LagrangianBuilder.wl"}]];
 Get[FileNameJoin[{t3root, "RunMatching.wl"}]];
-Get[FileNameJoin[{t3root, "RunT3EFT1WilsonStageLauncher.wl"}]];
 t3model = T3ModelFromClass["A", -4, 3];
 If[!AssociationQ[t3model], t3Stop["Three-flavour A(-4) catalog failed"]];
 If[SetT3HeavyFields[{"F"}] === $Failed,
@@ -167,30 +167,13 @@ t3Save["A_EFT1_Wilson_definitions.json", <|
    "one_loop_hard_reparameterised" -> False,
    "renormalised_Wilson_boundary_verified" -> False|>, "RawJSON"];
 
-(* The entire UV hard hbar sector is preserved, but not inserted into a
-   stage-2 one-loop Match. This is an O(hbar) scalar-soft calculation only. *)
-t3stage = "A-joint-scalar-soft-one-loop";
-t3scalar = CheckAbort[RunT3EFT1WilsonFreshThresholdStage[
-    t3treeW, 0, t3treeW, t3treeW, t3model,
-    {"S1", "S2"}, {"S1", "S2"}, 2, 5, 1, t3out], $Aborted];
-If[!AssociationQ[t3scalar] || Lookup[t3scalar, "Status", ""] =!= "Success",
-  t3Stop["Joint scalar-soft Matchete matching failed; inspect " <>
-    "debug/fresh_kernel_stage_2/stdout.log",
-    <|"F_tree_flavour_Wilsons_contracted" -> True,
-      "first_threshold_reused" -> t3reused,
-      "scalar_result_head" -> ToString[Head[t3scalar], InputForm]|>]];
-t3soft = Lookup[t3scalar, "AuthoritativeThresholdC5", $Failed];
-If[t3soft === $Failed,
-  t3Stop["Joint scalar match returned no Weinberg coefficient"]];
-t3Save["A_scalar_soft_only_unrenormalized.wxf", t3soft];
-t3Save["A_scalar_soft_only_unrenormalized.txt",
-  ToString[t3soft, InputForm], "Text"];
-t3stage = "A-soft-success-hard-inheritance-pending";
-t3Write["ScalarSoftOnly_HardInheritanceAndWilsonRGPending",
-  "Both scalars matched, but F hard operators and EFT1 Wilson RG are not included; NOT a finite physical C5.",
-  <|"first_threshold_reused" -> t3reused,
-    "A_scalar_threshold_native_matched" -> True,
-    "three_flavour_Wilson_definitions_preserved" -> True,
-    "A_hard_source_WXF" -> "A_full_F_hard_one_loop_preserved.wxf",
-    "A_soft_source_WXF" -> "A_scalar_soft_only_unrenormalized.wxf"|>];
-Exit[5];
+(* The dedicated physical A scalar-threshold continuation is analogous to
+   the verified D(-2) direct-Match strategy.  It rebuilds the Matchete
+   registry and promotes BOTH scalar mass power-counting labels from 1 to 0
+   before calling Match with both scalars heavy in one threshold.
+   The original F hard source stays untouched and separate. *)
+t3AFile = FileNameJoin[{t3root, "RunT3AMinus4FullGeneralPhysicalScalar.wl"}];
+If[!FileExistsQ[t3AFile],
+  t3Stop["Missing A(-4) physical scalar continuation " <> t3AFile]];
+Get[t3AFile];
+t3Stop["A(-4) physical scalar continuation returned without a status"];

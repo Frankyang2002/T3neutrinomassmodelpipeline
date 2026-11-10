@@ -1,0 +1,773 @@
+{
+  "all_heavy_fermions_one_threshold": true,
+  "batch1_run_id": "thesis_full_general_batch1_v1",
+  "both_scalar_multiplets_light": true,
+  "eft1_all_operator_one_loop_ADM_implemented": false,
+  "format": "t3-thesis-full-general-batch2-raw-fermion-v1",
+  "full_symmetry_allowed_source_interactions_requested": true,
+  "input_sha256": {
+    "batch1_fermion_matching_input": "ba4207c8e57d652f00b6eb252efe5272b364aa3be70595c0066663dd73678ff0",
+    "batch1_manifest": "8bf146eafdbda8efee0ada107cb6543091326869e4ec8439e59abb3e46ce1ca9",
+    "batch1_scalar_matching_input": "c84616ce7c6d7cc187ce639d2430415e4d3979ae93cd1e87b614d0e2d8eff4c7",
+    "batch1_trajectory": "4058f7f3b379f3b98de39e7be1f9f672138c200eacb06da76f792b352c6897ab"
+  },
+  "match_outputs_directory": "native_matching",
+  "matched_scope": "all heavy fermions simultaneously, all other fields light, through one loop",
+  "matcher_source_sha256": {
+    "Lagrangian/RunMatching.wl": "2a3d7415695213b501e53023b19e8a4a7ee54275daa918ba2ce10064d0d87567",
+    "Lagrangian/RunT3Batch2OneLoopLedger.wl": "ded6ca301d5c8b86344ef7e3c5af9a2fc180ed5efd9d54d0748c075a7a462b79",
+    "Lagrangian/RunT3GeneralFThreshold.wl": "6ce8e190de4b796c69044335738572ac0f430383d19ba08684f2e86853f54c96",
+    "Lagrangian/interactions/GeneralScalarOperators.wl": "45d0bdf6fc1565b5601abd74b0f68649ffa78a8eeda6328e0c2f94cbcdb8b470",
+    "Lagrangian/interactions/ScalarPotential.wl": "320dda9d07f1e581b838bfe01f241a2ba8a6881c76ca29b7aeb9c7099c4264dd",
+    "Lagrangian/model/LagrangianBuilder.wl": "dbe102874c84c0ae8013eeceb78571e0ae3d44f35e95cf9c8d1e0ba952f32e8b",
+    "Lagrangian/model/T3Fields.wl": "2f27f080ab02d1225aab7e5928aba19f238ec6d5dcdd41b72ee2d2c7298e24ab",
+    "Numerical/parallel_t3/wilson/general_batch2_source.py": "1614584aaac366b8aab6366e1c7baeb7690bb85382493cec7a705b3f39a4058e",
+    "RGE/general/generated/general_rgbeta_quartic_registry.json": "86a096410384641efa8f751b2aa98e8fee4bb6d3cccb4cfd116c559b71182eea",
+    "scripts/RunT3GeneralFThresholdBatch.py": "80dd249140f4f1da658a8b458509731a4d8e37ec74a99c3353097dcc702cbb3d"
+  },
+  "matching_function": "RunSequentialT3Matching",
+  "matching_scale_GeV": 100000.0,
+  "matching_source": "Lagrangian/RunT3GeneralFThreshold.wl",
+  "matching_source_validated": true,
+  "missing_physics": [
+    "Source-normalised RGBeta to Matchete coupling/CG and heavy-flavour-mass dictionary",
+    "Complete one-loop EFT1 operator projection, including all generated operators",
+    "MSbar UV-hard minus EFT1-soft subtraction/counterterm with pole cancellation",
+    "Full EFT1 one-loop Wilson anomalous dimensions and operator mixing",
+    "Full scalar-mass-eigenfield tensor mapping for subsequent scalar threshold"
+  ],
+  "model": "D_-2",
+  "native_fermion_threshold_values": {
+    "all_f_fermion_modes_still_present": true,
+    "candidate_scalar_quadratic_mass_eigenvalues_GeV2": [
+      988025.6729745889,
+      1005378.9314305038,
+      1522393.982068232,
+      1522393.982068232,
+      1522393.982068232,
+      1522393.982068232,
+      1522393.982068232,
+      1522393.982068232
+    ],
+    "fermion_left_svd_matrix": [
+      [
+        {
+          "imag": 2.3054662821344353e-20,
+          "real": 1.9733505810282977e-09
+        },
+        {
+          "imag": 1.8882909909104348e-21,
+          "real": 2.9073771170612597e-09
+        },
+        {
+          "imag": -1.599532574861184e-29,
+          "real": -1.0
+        }
+      ],
+      [
+        {
+          "imag": 3.093487687976857e-18,
+          "real": -5.094123788892367e-09
+        },
+        {
+          "imag": -3.672484791049625e-11,
+          "real": 0.9999999999999997
+        },
+        {
+          "imag": -1.0866126721146323e-19,
+          "real": 2.9073771070087678e-09
+        }
+      ],
+      [
+        {
+          "imag": -4.774186435336103e-11,
+          "real": -0.9999999999999999
+        },
+        {
+          "imag": -3.1496097358649384e-18,
+          "real": -5.094123790529394e-09
+        },
+        {
+          "imag": -7.11567820872189e-20,
+          "real": -1.9733505958388375e-09
+        }
+      ]
+    ],
+    "fermion_right_svd_matrix": [
+      [
+        {
+          "imag": -0.0,
+          "real": 1.937079885974197e-09
+        },
+        {
+          "imag": -0.0,
+          "real": 2.8840277024990335e-09
+        },
+        {
+          "imag": -0.0,
+          "real": -1.0
+        }
+      ],
+      [
+        {
+          "imag": 3.109866150428307e-18,
+          "real": -5.095785127195995e-09
+        },
+        {
+          "imag": -3.6724847910496263e-11,
+          "real": 0.9999999999999999
+        },
+        {
+          "imag": -1.0591547271987579e-19,
+          "real": 2.8840276926280896e-09
+        }
+      ],
+      [
+        {
+          "imag": -4.7741864353361035e-11,
+          "real": -1.0
+        },
+        {
+          "imag": -3.166006497586499e-18,
+          "real": -5.095785127195995e-09
+        },
+        {
+          "imag": -9.247981428865463e-20,
+          "real": -1.9370799006705826e-09
+        }
+      ]
+    ],
+    "heavy_fermion_singular_masses_GeV": [
+      105426.09202989779,
+      115968.70124482184,
+      126511.3104770823
+    ],
+    "heavy_svd_is_only_a_diagnostic_not_Matchete_rotation": true,
+    "matchete_to_rgbeta_dictionary_applied": false,
+    "model": "D_-2",
+    "native_parameter_names": [
+      "MF",
+      "g2",
+      "g3",
+      "gY",
+      "lambda12",
+      "lambdaH",
+      "lambdaH1",
+      "lambdaH1Adj",
+      "lambdaH2",
+      "lambdaS1",
+      "lambdaS1Adj",
+      "lambdaS2",
+      "lambdaT3",
+      "lambdaT3GeneralQ000004I1",
+      "lambdaT3GeneralQ000013I1",
+      "lambdaT3GeneralQ001102I1",
+      "lambdaT3GeneralQ020101I1",
+      "lambdaT3GeneralQ110002I1",
+      "mS1Sq",
+      "mS2Sq",
+      "muT3GeneralS2Sq",
+      "y1",
+      "y2",
+      "y2Conj",
+      "yd",
+      "ye",
+      "yu"
+    ],
+    "native_parameter_values": {
+      "MF": [
+        [
+          {
+            "imag": 7.967710374869974e-24,
+            "real": 105426.09202989779
+          },
+          {
+            "imag": 1.4350515900845456e-15,
+            "real": 3.311297808255721e-05
+          },
+          {
+            "imag": -7.476477518276213e-16,
+            "real": -4.543240587735879e-05
+          }
+        ],
+        [
+          {
+            "imag": -8.271469964387611e-16,
+            "real": 2.7943539315397273e-05
+          },
+          {
+            "imag": 1.2308951362887477e-23,
+            "real": 115968.70124482184
+          },
+          {
+            "imag": -3.326883979822237e-14,
+            "real": 5.3512705731836955e-05
+          }
+        ],
+        [
+          {
+            "imag": -4.197960939709375e-15,
+            "real": -3.701987505299908e-05
+          },
+          {
+            "imag": 3.72595213392955e-14,
+            "real": 5.391553670583447e-05
+          },
+          {
+            "imag": -1.9060153042781617e-23,
+            "real": 126511.31047708231
+          }
+        ]
+      ],
+      "g2": {
+        "imag": 0.0,
+        "real": 0.5980243655833344
+      },
+      "g3": {
+        "imag": 0.0,
+        "real": 0.8767494625157461
+      },
+      "gY": {
+        "imag": 0.0,
+        "real": 0.36752906692553833
+      },
+      "lambda12": {
+        "imag": 0.0,
+        "real": 0.010280295645034555
+      },
+      "lambdaH": {
+        "imag": 0.0,
+        "real": 0.333537159451213
+      },
+      "lambdaH1": {
+        "imag": 0.0,
+        "real": -0.015189499053179482
+      },
+      "lambdaH1Adj": {
+        "imag": 0.0,
+        "real": 0.03119480776392569
+      },
+      "lambdaH2": {
+        "imag": 0.0,
+        "real": 0.005475380822567872
+      },
+      "lambdaS1": {
+        "imag": 0.0,
+        "real": -0.10410836270995885
+      },
+      "lambdaS1Adj": {
+        "imag": 0.0,
+        "real": 0.008538878188065655
+      },
+      "lambdaS2": {
+        "imag": 0.0,
+        "real": 0.008749578364839639
+      },
+      "lambdaT3": {
+        "imag": -1.1778262572114775e-24,
+        "real": 0.09914932768898838
+      },
+      "lambdaT3GeneralQ000004I1": {
+        "imag": 5.249839586620892e-29,
+        "real": 0.009926815785563278
+      },
+      "lambdaT3GeneralQ000013I1": {
+        "imag": 4.3170307085654124e-29,
+        "real": 0.009717985801867638
+      },
+      "lambdaT3GeneralQ001102I1": {
+        "imag": 1.4310426161549316e-27,
+        "real": 0.011459731565857256
+      },
+      "lambdaT3GeneralQ020101I1": {
+        "imag": -1.1657046301347867e-25,
+        "real": 0.009580750899064478
+      },
+      "lambdaT3GeneralQ110002I1": {
+        "imag": -9.985295042986278e-26,
+        "real": 0.008478941469573842
+      },
+      "mS1Sq": {
+        "imag": 0.0,
+        "real": 1522393.982068232
+      },
+      "mS2Sq": {
+        "imag": 0.0,
+        "real": 996702.3022025464
+      },
+      "muT3GeneralS2Sq": {
+        "imag": -1.6075168076134802e-22,
+        "real": -4338.314613978704
+      },
+      "y1": [
+        [
+          {
+            "imag": 1.1926935406248082e-15,
+            "real": -1.416735117745369e-05
+          },
+          {
+            "imag": -7.391162635214636e-16,
+            "real": 3.536123854674623e-05
+          },
+          {
+            "imag": 8.516265475532758e-16,
+            "real": 4.444367209741391e-05
+          }
+        ],
+        [
+          {
+            "imag": -9.01041389265911e-14,
+            "real": -0.00015123823436297647
+          },
+          {
+            "imag": 4.517700489279103e-14,
+            "real": 9.353597723210827e-05
+          },
+          {
+            "imag": -2.9836200221219044e-14,
+            "real": -0.00010740407535872602
+          }
+        ],
+        [
+          {
+            "imag": 1.5577766002264527e-13,
+            "real": -8.736987126244211e-05
+          },
+          {
+            "imag": -9.634721764933002e-14,
+            "real": 4.3587488234807314e-05
+          },
+          {
+            "imag": 1.1062012756554222e-13,
+            "real": -2.931088854578582e-05
+          }
+        ]
+      ],
+      "y2": [
+        [
+          {
+            "imag": 6.083045476083894e-17,
+            "real": 0.0001436021917681312
+          },
+          {
+            "imag": 4.301669671971881e-17,
+            "real": 0.0001227415762925268
+          },
+          {
+            "imag": -1.0844213797413086e-15,
+            "real": -3.302757699045755e-05
+          }
+        ],
+        [
+          {
+            "imag": 6.05561057821762e-14,
+            "real": -6.613509679981902e-06
+          },
+          {
+            "imag": -1.7632150443700434e-13,
+            "real": -8.446239911936875e-06
+          },
+          {
+            "imag": 7.259191570006071e-14,
+            "real": 0.00013735477752921447
+          }
+        ],
+        [
+          {
+            "imag": 6.7916713653894195e-15,
+            "real": 5.7681299640199384e-05
+          },
+          {
+            "imag": 8.682330540777491e-15,
+            "real": -0.00017213485284791453
+          },
+          {
+            "imag": -1.4147101664971495e-13,
+            "real": 7.073284791311048e-05
+          }
+        ]
+      ],
+      "y2Conj": [
+        [
+          {
+            "imag": 0.0,
+            "real": 0.0
+          },
+          {
+            "imag": 0.0,
+            "real": 0.0
+          },
+          {
+            "imag": 0.0,
+            "real": 0.0
+          }
+        ],
+        [
+          {
+            "imag": 0.0,
+            "real": 0.0
+          },
+          {
+            "imag": 0.0,
+            "real": 0.0
+          },
+          {
+            "imag": 0.0,
+            "real": 0.0
+          }
+        ],
+        [
+          {
+            "imag": 0.0,
+            "real": 0.0
+          },
+          {
+            "imag": 0.0,
+            "real": 0.0
+          },
+          {
+            "imag": 0.0,
+            "real": 0.0
+          }
+        ]
+      ],
+      "yd": [
+        [
+          {
+            "imag": -3.2223170734754068e-18,
+            "real": 2.708913683864449e-05
+          },
+          {
+            "imag": 8.126750215908457e-07,
+            "real": 2.539609442451366e-06
+          },
+          {
+            "imag": -3.7968403246629215e-12,
+            "real": 2.294622749141831e-11
+          }
+        ],
+        [
+          {
+            "imag": -3.0247017326880077e-10,
+            "real": 4.496724521797955e-09
+          },
+          {
+            "imag": -3.2017230389883764e-20,
+            "real": 0.0005079220353711348
+          },
+          {
+            "imag": -1.7584616769871903e-05,
+            "real": 7.3269236541133e-05
+          }
+        ],
+        [
+          {
+            "imag": 8.303836526755848e-06,
+            "real": 4.884609721620004e-05
+          },
+          {
+            "imag": 1.1109352224477505e-08,
+            "real": 4.628896495725119e-08
+          },
+          {
+            "imag": -5.684649426366493e-23,
+            "real": 0.024423055448963758
+          }
+        ]
+      ],
+      "ye": [
+        [
+          {
+            "imag": 5.972144711915033e-16,
+            "real": 2.839091656079036e-06
+          },
+          {
+            "imag": 9.2417326897605e-07,
+            "real": 2.888041509571181e-06
+          },
+          {
+            "imag": 3.4300002522354915e-15,
+            "real": 1.7320202743893316e-12
+          }
+        ],
+        [
+          {
+            "imag": 1.5805349684269333e-14,
+            "real": -2.736019671108382e-13
+          },
+          {
+            "imag": 7.043366468687628e-17,
+            "real": 0.000577608292752774
+          },
+          {
+            "imag": -7.048748914774956e-06,
+            "real": 2.9369781530358583e-05
+          }
+        ],
+        [
+          {
+            "imag": 3.3285759276137874e-06,
+            "real": 1.9579858398237545e-05
+          },
+          {
+            "imag": -1.7846479953000849e-12,
+            "real": -7.767455880419613e-12
+          },
+          {
+            "imag": 4.042466691660351e-15,
+            "real": 0.009789929198450852
+          }
+        ]
+      ],
+      "yu": [
+        [
+          {
+            "imag": 3.533830781177234e-16,
+            "real": 1.4733567170255585e-05
+          },
+          {
+            "imag": 8.704129316223277e-06,
+            "real": 2.7200404113787884e-05
+          },
+          {
+            "imag": 1.3919384185306547e-10,
+            "real": -8.41218543444363e-10
+          }
+        ],
+        [
+          {
+            "imag": 1.108675673839005e-08,
+            "real": -1.648439218176143e-07
+          },
+          {
+            "imag": 9.444853229538927e-19,
+            "real": 0.005440079295874341
+          },
+          {
+            "imag": -0.000625643573527338,
+            "real": 0.0026068482230305664
+          }
+        ],
+        [
+          {
+            "imag": 0.0002954431756781092,
+            "real": 0.0017379010334006588
+          },
+          {
+            "imag": -1.1547843083021043e-07,
+            "real": -4.811601009683043e-07
+          },
+          {
+            "imag": 5.686228923496765e-21,
+            "real": 0.8689502654501358
+          }
+        ]
+      ]
+    },
+    "neutral_scalar_self_bilinear_GeV2": {
+      "imag": -1.6075168076134802e-22,
+      "real": -4338.314613978704
+    },
+    "scalar_multiplets_light_at_f": [
+      "S1",
+      "S2"
+    ],
+    "scale_GeV": 100000.0,
+    "source_exact_one_loop_wilson_numbers_produced": false
+  },
+  "native_running_values_inserted_into_Matchete_Lagrangian": false,
+  "native_wolfram": {
+    "cg_registry_entries": 1,
+    "complex_self_bilinear_phase_supported": false,
+    "eft1_wilson_running_performed": false,
+    "fermion_first_matching_scheme_certified": false,
+    "mass_basis": "real-self-bilinear-split-light-scalar",
+    "native_rge_export": {
+      "ActiveHeavyFields": [
+        "S1",
+        "S2"
+      ],
+      "CompactDiagnostics": {
+        "ByteCount": 2977408,
+        "Couplings": [
+          "\u03bc2",
+          "\u03bb",
+          "CNewScalar12",
+          "y1",
+          "Ye",
+          "lambdaH1Inv1",
+          "lambdaH1Inv2",
+          "lambdaS1Inv1",
+          "lambdaS1Inv2",
+          "lambdaT3",
+          "lambdaT3ExtraQ020101I1",
+          "y2",
+          "y2Conj",
+          "CT3Scalar2Minus2",
+          "lambdaT3ExtraQ110002I1",
+          "lambdaH2Inv1",
+          "lambdaT3ExtraQ001102I1",
+          "lambda12Inv1",
+          "lambdaT3ExtraQ000004I1",
+          "lambdaT3ExtraQ000013I1",
+          "lambdaS2Inv1",
+          "CT3Scalar2MinusT3Scalar2Plus",
+          "CT3Scalar2Plus2",
+          "gY",
+          "gs",
+          "gL",
+          "MF",
+          "Yd",
+          "Yu"
+        ],
+        "Fields": [
+          "H",
+          "NewScalar1",
+          "T3Scalar2Minus",
+          "T3Scalar2Plus",
+          "d",
+          "q",
+          "e",
+          "l",
+          "u"
+        ],
+        "Head": "Plus",
+        "LeafCount": 103339,
+        "TermCount": 1274
+      },
+      "CompactFile": "eft1_after_F_compact_inputform.txt",
+      "IntegratedFields": [
+        "F"
+      ],
+      "Level": 1,
+      "OneLoopDiagnostics": {
+        "ByteCount": 2877768,
+        "Couplings": [
+          "CNewScalar12",
+          "MS1",
+          "y1",
+          "Ye",
+          "lambdaH1Inv1",
+          "lambdaH1Inv2",
+          "lambdaS1Inv1",
+          "lambdaS1Inv2",
+          "lambdaT3",
+          "lambdaT3ExtraQ020101I1",
+          "y2",
+          "y2Conj",
+          "CT3Scalar2Minus2",
+          "T32MinusMass",
+          "lambdaT3ExtraQ110002I1",
+          "lambdaH2Inv1",
+          "lambdaT3ExtraQ001102I1",
+          "lambda12Inv1",
+          "lambdaT3ExtraQ000004I1",
+          "lambdaT3ExtraQ000013I1",
+          "lambdaS2Inv1",
+          "CT3Scalar2MinusT3Scalar2Plus",
+          "CT3Scalar2Plus2",
+          "T32PlusMass",
+          "MF"
+        ],
+        "Fields": [
+          "NewScalar1",
+          "H",
+          "T3Scalar2Minus",
+          "T3Scalar2Plus",
+          "e",
+          "l"
+        ],
+        "Head": "Plus",
+        "LeafCount": 100029,
+        "TermCount": 1200
+      },
+      "OneLoopFile": "eft1_after_F_one_loop_inputform.txt",
+      "ScalarQuarticSeedFile": "eft1_after_F_scalar_quartic_seed.json",
+      "TreeDiagnostics": {
+        "ByteCount": 103472,
+        "Couplings": [
+          "\u03bc2",
+          "\u03bb",
+          "MS1",
+          "lambdaH1Inv1",
+          "lambdaH1Inv2",
+          "lambdaS1Inv1",
+          "lambdaS1Inv2",
+          "lambdaT3",
+          "lambdaT3ExtraQ020101I1",
+          "T32MinusMass",
+          "lambdaT3ExtraQ110002I1",
+          "lambdaH2Inv1",
+          "lambdaT3ExtraQ001102I1",
+          "lambda12Inv1",
+          "lambdaT3ExtraQ000004I1",
+          "lambdaT3ExtraQ000013I1",
+          "lambdaS2Inv1",
+          "T32PlusMass",
+          "gY",
+          "gs",
+          "gL",
+          "Yd",
+          "Ye",
+          "MF",
+          "y1",
+          "y2",
+          "y2Conj",
+          "Yu"
+        ],
+        "Fields": [
+          "H",
+          "NewScalar1",
+          "T3Scalar2Minus",
+          "T3Scalar2Plus",
+          "d",
+          "q",
+          "e",
+          "l",
+          "u"
+        ],
+        "Head": "Plus",
+        "LeafCount": 3428,
+        "TermCount": 80
+      },
+      "TreeFile": "eft1_after_F_tree_inputform.txt",
+      "WilsonSeedFile": "eft1_after_F_wilson_seed.json"
+    },
+    "native_source_files_sha256": {
+      "compact": "e84d5b4a56440f853381855c69e693198ca4ebb015ceceb3def6b8c7da35c198",
+      "one_loop": "0b26f829bf10b27e5692b0e1be043c6de00d89e7ea75d7780c7c3e4da9e2ed67",
+      "rge_export": "c6e05e1f07709a7571e5a67e6c2e4c240361a204226ad186501a4685d03da19a",
+      "tree": "01f10b133984838338a51ef9d8018bf5fdaecf88df85ed40aa8e6d24b717f29e",
+      "tree_wilson_seed": "6c303e9f4dc544a8f322e329f97baba35ce14e0a2d4841d4797de878a0b983f4"
+    },
+    "raw_matchete_loop_different_from_zero": true,
+    "raw_one_loop_F_matching_included": true,
+    "scalar_threshold_matching_performed": false,
+    "status": "FermionThresholdTreeWilsonExported",
+    "tree_wilson_term_count": 8,
+    "wilson_seed": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\parallel_t3\\full_general_batch2\\thesis_full_general_batch2_raw_v1\\D_-2\\native_matching\\data\\eft1_after_F_wilson_seed.json"
+  },
+  "numerical_complete_Wilson_projection_implemented": false,
+  "numerical_fermion_boundary_file": "numerical_fermion_boundary.json",
+  "operator_ledger": {
+    "finite_msbar_wilson_coefficients_computed": false,
+    "one_loop_input_sha256": "0b26f829bf10b27e5692b0e1be043c6de00d89e7ea75d7780c7c3e4da9e2ed67",
+    "operator_ledger_classification_complete": true,
+    "raw_one_loop_operator_sector_counts": {
+      "CandidateLeptonNumberViolatingLLHH": 12,
+      "CandidateLeptonNumberViolatingLLScalarScalar": 352,
+      "OtherEFT1Operator": 836
+    },
+    "term_count": 1200
+  },
+  "output_files_sha256": {
+    "native_status": "89bad8a9c159e7ce9df8d26c492a7a676c4f6c564fdf9f8e9cb1667046d94ed5",
+    "operator_ledger": "d80fc34403d0d85927cc12268b49d5dfe23daab71b965d1f354ce278f716958d"
+  },
+  "physical_matching_succeeded": false,
+  "restricted_analytic_triangle_used": false,
+  "source_interactions": "general symmetry-allowed Matchete native UV",
+  "status": "RawFullGeneralOneLoopFThresholdSourceExported_NotFiniteWilsons",
+  "subtraction_scheme_implemented": false,
+  "subtraction_scheme_target": "MSbar: UV one-loop hard - EFT1 soft + counterterms"
+}

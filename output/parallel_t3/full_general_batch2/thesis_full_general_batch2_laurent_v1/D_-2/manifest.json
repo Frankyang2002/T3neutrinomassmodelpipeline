@@ -1,0 +1,36 @@
+{
+  "EFT1_Wilson_RGE_executed": false,
+  "audit_source_sha256": "c151afb3f514d9bafb972cad53441a109570c63c0b38db025c6068d96edd5f83",
+  "batch1_manifest_sha256": "8bf146eafdbda8efee0ada107cb6543091326869e4ec8439e59abb3e46ce1ca9",
+  "created_utc": "2026-11-10T05:14:19.206000+00:00",
+  "format": "t3-thesis-full-general-batch2-loop-audit-v1",
+  "full_one_loop_matching_completed": false,
+  "matching_scale_GeV": 100000.0,
+  "model": "D_-2",
+  "native_fermion_flavour_diagnostics_file": "native_flavour_diagnostics.json",
+  "native_matching_status_sha256": "89bad8a9c159e7ce9df8d26c492a7a676c4f6c564fdf9f8e9cb1667046d94ed5",
+  "native_to_Matchete_physical_dictionary_verified": false,
+  "numerical_Wilson_initial_conditions_produced": false,
+  "operator_sector_counts_unfiltered": {
+    "CandidateLeptonNumberViolatingLLHH": 12,
+    "CandidateLeptonNumberViolatingLLScalarScalar": 352,
+    "OtherEFT1Operator": 836
+  },
+  "physical_blockers": [
+    "Matchete-to-RGBeta scalar and fermion coupling/CG normalization dictionary",
+    "Explicit UV-hard minus EFT1-soft subtraction with counterterm/pole cancellation",
+    "Numerical flavour/operator projection of all required finite EFT1 coefficients",
+    "Complete EFT1 Wilson mixing with all active scalars and running parameters"
+  ],
+  "raw_input_run_id": "thesis_full_general_batch2_raw_v1",
+  "raw_ledger_sha256": "d80fc34403d0d85927cc12268b49d5dfe23daab71b965d1f354ce278f716958d",
+  "raw_manifest_sha256": "b9857d17a674ae9c575cfe875331c895dce03ea0b71a560dcf66ac01b93a5b44",
+  "raw_one_loop_operator_count": 1200,
+  "raw_one_loop_source_sha256": "0b26f829bf10b27e5692b0e1be043c6de00d89e7ea75d7780c7c3e4da9e2ed67",
+  "reason": "Wolfram loop audit failed: Correction is not exactly hbar-linear and nonzero; see C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\parallel_t3\\full_general_batch2\\thesis_full_general_batch2_laurent_v1\\D_-2\\wolfram_laurent.log",
+  "scalar_threshold_scale_GeV": 1000.0,
+  "scope": "full raw F one-loop Matchete, no operator-selection or analytic-triangle projection",
+  "source_path_relative_to_project": "output/parallel_t3/full_general_batch2/thesis_full_general_batch2_raw_v1/D_-2/native_matching/data/eft1_after_F_one_loop_inputform.txt",
+  "status": "Blocked_RuntimeError",
+  "traceback_tail": "Traceback (most recent call last):\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\scripts\\RunT3ThesisGeneralBatch2Laurent.py\", line 146, in run\n    launch_wolfram(source, dest, args, dest / 'wolfram_laurent.log')\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\scripts\\RunT3ThesisGeneralBatch2Laurent.py\", line 117, in launch_wolfram\n    raise RuntimeError('Wolfram loop audit failed: ' + str(detail.get('reason', 'unknown'))\nRuntimeError: Wolfram loop audit failed: Correction is not exactly hbar-linear and nonzero; see C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\parallel_t3\\full_general_batch2\\thesis_full_general_batch2_laurent_v1\\D_-2\\wolfram_laurent.log\n"
+}

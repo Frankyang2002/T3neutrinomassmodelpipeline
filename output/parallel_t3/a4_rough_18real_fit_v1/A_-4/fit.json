@@ -1,0 +1,298 @@
+{
+  "format": "t3-a4-rough-18-real-yukawa-fit-v1",
+  "status": "Approximate18RealYukawaFit_NotFullPhysicalMatching",
+  "model": "A_-4",
+  "parameters": 18,
+  "integrated_heavy_fields_in_order": [
+    [
+      "F"
+    ],
+    [
+      "S1",
+      "S2"
+    ]
+  ],
+  "mu_UV_GeV": 10000000.0,
+  "mu_F_GeV": 100000.0,
+  "mu_S_GeV": 1000.0,
+  "mu_low_GeV": 100.0,
+  "fit_parameter_definition": "18 real UV values, reported as y_UV times 1e4",
+  "UV_to_F_map": "elementwise ratios from saved Batch1 benchmark; fixed-background approximation, NOT re-integrated UV RG",
+  "renormalizable_EFT1_trajectory_recomputed": false,
+  "fermion_hard_soft": "original direct-channel finite pole-paired estimate only",
+  "operator_factor_assumed": 1.0,
+  "SMEFT_transport": "six source-basis one-loop SMEFT solutions; exact complex-linear transport for fixed SM running",
+  "SMEFT_transport_basis_solver_runs": 6,
+  "SMEFT_final_direct_solver_runs": 1,
+  "optimizer": "scipy.optimize.least_squares/trf",
+  "optimizer_success": true,
+  "optimizer_message": "`ftol` termination condition is satisfied.",
+  "optimizer_nfev": 14,
+  "total_prediction_evaluations": 251,
+  "regularisation_coefficient": 0.02,
+  "regularisation_anchor": "uniform initial scale matched to atmospheric Delta m31 squared",
+  "initial_uniform_scale_each_Yukawa": 0.747051878461382,
+  "baseline_observables": {
+    "mass_order": "ascending_Takagi_not_physical_ordering_assignment",
+    "masses_eV": [
+      0.002590247526765116,
+      0.01577106710610075,
+      0.08982608496542341
+    ],
+    "dm21_sq_eV2": 0.00024201717541522024,
+    "dm31_sq_eV2": 0.008062016157965552,
+    "dm32_sq_eV2": 0.007819998982550333,
+    "sum_masses_eV": 0.10818739959828927,
+    "m_beta_beta_eV": null,
+    "m_beta_beta_note": "Only flavour m_ee if charged leptons are already diagonal; otherwise unreported",
+    "mixing_defined": true,
+    "mixing_blocker": null,
+    "sin2_theta12": 0.3053883057504307,
+    "sin2_theta13": 0.021476766148320493,
+    "sin2_theta23": 0.46753995112947144,
+    "theta12_deg": 33.54690750191727,
+    "theta13_deg": 8.427019627432172,
+    "theta23_deg": 43.13886730483992,
+    "J_CP": 0.0002580955887653766,
+    "delta_CP_deg": 0.4487473989213164,
+    "Takagi_relative_residual": 1.3364652539926884e-15,
+    "PMNS_ordering": "columns_in_sorted_Takagi_mass_order"
+  },
+  "uniform_scale_start_observables": {
+    "mass_order": "ascending_Takagi_not_physical_ordering_assignment",
+    "masses_eV": [
+      0.0014455821999500996,
+      0.008801619786225588,
+      0.05013072618561211
+    ],
+    "dm21_sq_eV2": 7.53788029644652e-05,
+    "dm31_sq_eV2": 0.0025110000000000032,
+    "dm32_sq_eV2": 0.0024356211970355383,
+    "sum_masses_eV": 0.0603779281717878,
+    "m_beta_beta_eV": null,
+    "m_beta_beta_note": "Only flavour m_ee if charged leptons are already diagonal; otherwise unreported",
+    "mixing_defined": true,
+    "mixing_blocker": null,
+    "sin2_theta12": 0.3053883057504235,
+    "sin2_theta13": 0.02147676614832045,
+    "sin2_theta23": 0.4675399511294713,
+    "theta12_deg": 33.54690750191682,
+    "theta13_deg": 8.427019627432164,
+    "theta23_deg": 43.13886730483991,
+    "J_CP": 0.00025809558876536964,
+    "delta_CP_deg": 0.4487473989213102,
+    "Takagi_relative_residual": 8.711110401982419e-16,
+    "PMNS_ordering": "columns_in_sorted_Takagi_mass_order"
+  },
+  "uniform_scale_start_chi2": 3.386287860222709,
+  "final_fit_observables": {
+    "mass_order": "ascending_Takagi_not_physical_ordering_assignment",
+    "masses_eV": [
+      0.001443442417430444,
+      0.008800768489846098,
+      0.050130664528039014
+    ],
+    "dm21_sq_eV2": 7.536999999943053e-05,
+    "dm31_sq_eV2": 0.0025110000000103513,
+    "dm32_sq_eV2": 0.0024356300000109208,
+    "sum_masses_eV": 0.060374875435315556,
+    "m_beta_beta_eV": null,
+    "m_beta_beta_note": "Only flavour m_ee if charged leptons are already diagonal; otherwise unreported",
+    "mixing_defined": true,
+    "mixing_blocker": null,
+    "sin2_theta12": 0.3087999999886861,
+    "sin2_theta13": 0.022479999996006923,
+    "sin2_theta23": 0.4699999994445708,
+    "theta12_deg": 33.75878818341747,
+    "theta13_deg": 8.623062289264404,
+    "theta23_deg": 43.28009358436122,
+    "J_CP": 0.0002603306548656162,
+    "delta_CP_deg": 0.44136821973091384,
+    "Takagi_relative_residual": 4.884589484117527e-16,
+    "PMNS_ordering": "columns_in_sorted_Takagi_mass_order"
+  },
+  "final_fit_chi2": 1.3366552605688442e-15,
+  "fast_surrogate_final_chi2": 1.3362379816400623e-15,
+  "fitted_y1_UV_times_1e4": [
+    [
+      -0.199283350583321,
+      0.4884324942270925,
+      0.1713578713834846
+    ],
+    [
+      -0.8931718658777787,
+      0.7063333197436383,
+      -1.3977952110252219
+    ],
+    [
+      -0.3294446704673839,
+      0.6708872385751861,
+      0.3129359912116169
+    ]
+  ],
+  "fitted_y2_UV_times_1e4": [
+    [
+      0.5254347372261157,
+      0.32121283556732383,
+      -0.17504722330097341
+    ],
+    [
+      0.3853632097069648,
+      -0.04085579115561807,
+      0.18150974794585842
+    ],
+    [
+      0.03276104161022837,
+      -1.2205409336088902,
+      0.5018820667518401
+    ]
+  ],
+  "fitted_y1_muF": [
+    [
+      {
+        "real": -2.1490964965388095e-05,
+        "imag": 7.627850811429234e-16
+      },
+      {
+        "real": 5.2673169126906025e-05,
+        "imag": -6.009629608061269e-16
+      },
+      {
+        "real": 1.8479446532559664e-05,
+        "imag": 1.1953324933986224e-15
+      }
+    ],
+    [
+      {
+        "real": -9.632076681577379e-05,
+        "imag": -3.6682842861489985e-14
+      },
+      {
+        "real": 7.617186500822854e-05,
+        "imag": 7.511879286103085e-14
+      },
+      {
+        "real": -0.00015073997748249045,
+        "imag": 3.4721379719297415e-14
+      }
+    ],
+    [
+      {
+        "real": -3.5527672754087e-05,
+        "imag": 9.93031089662602e-14
+      },
+      {
+        "real": 7.234921242877755e-05,
+        "imag": -7.816829285089801e-14
+      },
+      {
+        "real": 3.374735987298696e-05,
+        "imag": 1.5589086119254474e-13
+      }
+    ]
+  ],
+  "fitted_y2_muF": [
+    [
+      {
+        "real": 5.666353735021816e-05,
+        "imag": -3.3072849992090434e-16
+      },
+      {
+        "real": 3.463999275453411e-05,
+        "imag": 1.5353081760335335e-17
+      },
+      {
+        "real": -1.8877310861279662e-05,
+        "imag": -1.4578780315898913e-16
+      }
+    ],
+    [
+      {
+        "real": 4.155804887740853e-05,
+        "imag": 4.180969782602484e-15
+      },
+      {
+        "real": -4.40593884286446e-06,
+        "imag": -1.3943136954279428e-13
+      },
+      {
+        "real": 1.9574237236562388e-05,
+        "imag": 5.606104663721635e-14
+      }
+    ],
+    [
+      {
+        "real": 3.5329863620860757e-06,
+        "imag": -4.1709687796418425e-14
+      },
+      {
+        "real": -0.0001316244681169963,
+        "imag": 4.392731672490067e-15
+      },
+      {
+        "real": 5.412351046651741e-05,
+        "imag": -1.996489644501277e-14
+      }
+    ]
+  ],
+  "original_y1_UV_times_1e4": [
+    [
+      -0.26606112,
+      0.64976171,
+      0.23128356
+    ],
+    [
+      -1.19378534,
+      0.94701765,
+      -1.8715121000000001
+    ],
+    [
+      -0.43963521,
+      0.9023003199999999,
+      0.41701673
+    ]
+  ],
+  "original_y2_UV_times_1e4": [
+    [
+      0.70032657,
+      0.43330801999999996,
+      -0.23624222
+    ],
+    [
+      0.51415893,
+      -0.05305699999999999,
+      0.24104334
+    ],
+    [
+      0.04483658,
+      -1.63458575,
+      0.6725193600000001
+    ]
+  ],
+  "five_Gaussian_target_values": {
+    "delta_m21_sq_ev2": 7.537e-05,
+    "delta_m3l_sq_ev2": 0.002511,
+    "sin2_theta12": 0.3088,
+    "sin2_theta13": 0.02248,
+    "sin2_theta23": 0.47
+  },
+  "five_Gaussian_target_1sigma": {
+    "delta_m21_sq_ev2": 9.7e-07,
+    "delta_m3l_sq_ev2": 2.05e-05,
+    "sin2_theta12": 0.00665,
+    "sin2_theta13": 0.00057,
+    "sin2_theta23": 0.0155
+  },
+  "full_physical_C5_verified": false,
+  "full_Matchete_finite_counterterms_included": false,
+  "full_EFT1_Wilson_RGE_included": false,
+  "joint_scalar_matching_other_operators_included": false,
+  "all_18_UV_Yukawa_couplings_actually_RG_reintegrated": false,
+  "not_an_independent_full_physics_fit": true,
+  "input_files": {
+    "fermion_matching_input": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\parallel_t3\\full_general_batch1\\thesis_full_general_batch1_v1\\A_-4\\fermion_matching_input.json",
+    "scalar_matching_input": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\parallel_t3\\full_general_batch1\\thesis_full_general_batch1_v1\\A_-4\\scalar_matching_input.json",
+    "configuration": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\configs\\thesis_numerics\\t3_thesis_A4_Dm2_pilot.json",
+    "target": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\configs\\nufit_6_1_ic24_no.json"
+  }
+}

@@ -1,65 +1,66 @@
-# Implementation status and scientific scope
+# Implementation status — current code audit (10 November 2026)
 
-This page separates **source implementations**, **previously reported executions**, **conditional calculations** and **unresolved physics**. It is based on read-only inspection of Git commit `806cdf08608dbe3f5e0dcd8af785cfad16f26af6` (8 November 2026). No new Wolfram calculation, full numerical rerun or independent matching certification was performed to prepare this status page.
+**Current operational status:** The repository implements substantial general T3 Lagrangian, one-loop renormalisable RGE, Matchete matching, Wilson-evolution, two-scalar threshold, and Yukawa fitting machinery. **It does not currently provide one executable, fully general-Lagrangian, complete one-loop, fermion-first -> scalar-second numerical prediction-and-fit pipeline for A(-4) and D(-2).** This is an **implementation/connectivity** finding, not a demand for experimental or independent physics verification.
 
-## Target EFT calculation
+**Source provenance:** Read-only GitHub `main`, commit `480262541959ff2c8ed2f3392bebfaf9c971ff64`, inspected 10 November 2026. The separately supplied local pilot v3 ZIP (`scripts/RunT3ThesisTwoModelPilot.py`) was also inspected. The user's uncommitted Windows checkout and generated Wolfram outputs were not accessible for this audit. No full Wolfram matching, EFT rerun or Yukawa optimisation was executed for these notes. Older study results and test counts below remain historical, not new runs.
+
+## Target and conventions
 
 ```text
-UV: SM + all heavy T3 fermions + all heavy T3 scalars
-  -> integrate out ALL heavy fermions
-Intermediate EFT: SM + heavy scalars + induced effective operators
-  -> run the supported couplings/Wilson structures
-  -> integrate out ALL heavy scalars
-SMEFT: SM fields + dimension-five Weinberg operator (selected truncation)
-  -> low-energy RGE -> Majorana mass matrix -> neutrino observables
+UV (SM + F1,F2,F3 + S1,S2; general permitted interactions)
+   -> integrate out ALL heavy fermions at MF = 1e5 GeV
+EFT1 (SM + BOTH scalar multiplets + induced Wilson operators)
+   -> run renormalisable couplings and appropriate EFT1 Wilson coefficients
+   -> integrate out BOTH scalar multiplets together at MS = 1e3 GeV
+SMEFT (SM + Weinberg operator)
+   -> run to mu_low = 100 GeV
+   -> C5, m_nu = -v^2 C5/2, Takagi masses, PMNS mixing
 ```
 
-For multiple masses within a group, their threshold ordering and mass-basis treatment require explicit matching. The ordinary production plan in `common/PipelinePlan.py` permits a common threshold or the supported **fermion-first, grouped-scalar** hierarchy; arbitrary scalar-first paths and fully general mixed-scalar sequential decoupling are not established as production calculations.
+For the thesis pilot, `muUV=1e7 GeV`, `lambdaT3(UV)=0.1`, ordinary source scalar-coupling benchmark `0.01`, and the thesis Appendix B real Yukawas are initial inputs. The old class-E factor `1/2` is **historical to certain frozen-scalar study inputs**; it is not to be applied to the new thesis benchmark. All scales and starting inputs must be read from the individual run's config/manifest; older completed Batch 8 data use a different benchmark and (by default) `mu_low=173 GeV`.
 
-The conventions include `Q = T3 + Y`, the one-loop beta numerator `16*pi^2 dX/dln(mu)`, and `m_nu = -v^2 C5/2` in the stated Weinberg convention. See [physics](PHYSICS.md) and [numerical methods](NUMERICAL.md).
+## Actual implementations and what they do
 
-## Source-verified software inventory
+| Source | Implemented operation | Boundary / caveat |
+|---|---|---|
+| `Lagrangian/model/LagrangianBuilder.wl`, `Lagrangian/interactions/GeneralScalarOperators.wl`, `Lagrangian/RunFullGeneralScalarBuild.wl` | Opt-in construction and source validation of symmetry-allowed general fermion/scalar interactions | A symbolic Lagrangian is not itself matching, running, or a numerical C5 |
+| `RGE/running/rgbeta/T3RGBetaModel.wl`, `RGE/running/rgbeta/RunGeneralT3QuadraticRGBeta.wl`, `scripts/RunT3CompleteGeneralScalarSymbolic.py` | One-loop UV/EFT1 renormalisable beta exports, including extra scalar quartics and applicable quadratic masses | Extended beta export is experimental; does not establish a Matchete/RGBeta mass-basis dictionary or Wilson evolution |
+| `scripts/RunT3FullScalarContinuous.py` | Candidate continuous UV -> fermion-threshold -> EFT1 running of general scalar quartics and quadratics | Its output sets `fermion_threshold_wilson_matching_performed=False`, `scalar_threshold_wilson_matching_performed=False` and `full_sequential_neutrino_mass_prediction=False` |
+| `Lagrangian/RunMatching.wl`, `Lagrangian/RunGeneralPhysicalMatching.wl`, `scripts/RunT3GeneralMatcheteMatching.py` | Matchete matching at `LoopOrder -> 1`; general one-scale branches and selected self-bilinear mass bases | This does NOT hand off a full general fermion-first, run-EFT1, scalar-second numerical Wilson trajectory |
+| `Lagrangian/RunGeneralT3FermionFirstEFT1OneLoop.wl`, `scripts/RunGeneralT3FermionFirstEFT1OneLoop.py` | Genuine F-only tree and one-loop Matchete matched-EFT-difference export with both scalars light | The Python driver restricts this experiment to B(-1)/C(-1); raw LLHH is unrenormalised and not a physical C5 |
+| `Numerical/parallel_t3/background/runner.py` | Existing one-loop candidate UV/EFT1 RGBeta numerical running, with Matchete-sourced F-tree LLSS | Benchmark override is normally development-specific; the thesis pilot injects new values at runtime |
+| `Numerical/parallel_t3/wilson/fermion_hard_triangle_batch1.py`, `scripts/RunT3FHardTriangleBatch1.py` | Source-resolved, all-heavy-fermion analytic one-loop triangle contribution | Only an included hard topology; Stage 1 calls `builder.Options(..., reduced_potential=True)` |
+| `Numerical/parallel_t3/rough_inputs/builder.py` | Native scalar-coupling to canonical quartic-tensor conversion | In reduced mode, unmapped nonzero scalar quartics are omitted; this is not the full general potential |
+| `Numerical/parallel_t3/wilson/strict_one_loop_batch2.py`, `scripts/RunT3StrictOneLoopBatch2.py` | First-order EFT1 full `psi2phi2` Wilson tensor using a candidate seven-channel ADM | Candidate ADM; full one-loop UV Wilson boundary and all operators are not established |
+| `Numerical/parallel_t3/threshold/matching.py`, `Numerical/parallel_t3/threshold/pipeline.py` | One common threshold for both scalars, computed LLSS-quartic bubble, then SM+Weinberg running and observables | Does not include all possible one-loop threshold topologies, renormalisation/EOM terms and general-coupling mass-basis effects |
+| `scripts/RunT3PoleClosureBatch7.py`, `Numerical/parallel_t3/wilson/native_pole_closure_batch7.py`, `Numerical/parallel_t3/wilson/final_repro_batch8.py` | Source-preserving pole/counterterm diagnostic and consolidated three-prescription numerical output across 16 models | Explicit source flags reject complete physical matching; scenarios are conditional |
+| `scripts/RunT3ReducedScalarSobolComparison.py` | Historical 18-real-dimensional Sobol + bounded SciPy least-squares fitting | Uses historical restricted matching/evaluator, not the new full-general EFT |
+| `scripts/RunT3ThesisTwoModelPilot.py` (local v3) | Sobol 18D initial sampling, limited-parameter least-squares, re-evaluates Workstream B -> analytic hard triangle -> strict EFT1 -> scalar bubble -> SMEFT for A(-4)/D(-2) | **Restricted conditional numerical evaluator**; not a full general one-loop match |
 
-| Component | What is implemented in the checked source | What the implementation does **not** establish |
-| --- | --- | --- |
-| Model catalogue and field selection | `common/T3Model.py`, `common/T3Fields.py`, `model/T3Study.py` and Wolfram catalogues describe the ordinary 16-model representation/hypercharge set | Physical completeness of every independent interaction coefficient |
-| General UV interaction construction | `Lagrangian/` and `scripts/RunT3GeneralSymbolicStudy.py` construct/check symmetry-allowed additional interactions and export source-fingerprinted symbolic results | A certified Matchete-to-RGBeta action-level coupling dictionary |
-| UV and scalar-only renormalisable running | `RGE/running/rgbeta/`, `Numerical/running/UVRunner.py` and `IntermediateScalarRunner.py` provide exporters/evaluators and SciPy ODE evolution | Complete *general* EFT Wilson-coefficient RGEs or all mixed scalar mass-basis mappings |
-| Threshold planning | `common/PipelinePlan.py`, `common/Thresholds.py` and `pipeline.py` represent physical heavy-field removal and reject unsupported configurations | A physics-certified calculation merely because a threshold plan can be represented |
-| Restricted numerical Weinberg coefficient | `Numerical/running/FinalC5TrajectoryAdapter.py` supplies source-derived matching inputs to the existing final-C5 evaluator | A new independent C5 formula or all-general-coupling sequential matching |
-| Low-energy neutrino calculation | `physics/NeutrinoMass.py`, `physics/NeutrinoObservables.py`, and `Numerical/running/SMWeinbergEvolution.py` handle numerical `C5`, mass matrices, running and mixing | Prediction of fitted oscillation targets independent of fitted Yukawa inputs |
-| Fitting and diagnostics | `Numerical/fitting/ScanCLI.py`, `ParameterScan.py` and plotting/report scripts provide benchmark scans and presentation | A unique best-fit solution or automatic experimental exclusion of other models |
-| Experimental B/C fermion-first probes | `scripts/RunGeneralT3FermionFirstEFT1Tree.py` and `...OneLoop.py` define live tree and raw one-loop fermion-threshold checks with scalar eigenstates retained | A renormalised, certified physical C5 or complete two-threshold general-EFT result |
+## A(-4) versus D(-2) general interaction content
 
-The general-interaction audit inventories **50 additional quartic model-slots, 8 additional scalar-bilinear model-slots and 6 extra Yukawa interaction types across 16 models**, as encoded in `scripts/AuditFull16GeneralSymbolicPhysics.py` and the saved inventory documentation. These are totals *across different models*, not simultaneous couplings in every model. Inventory agreement and beta-key coverage alone do not prove physical matching normalisation.
+From `RGE/general/generated/general_rgbeta_quartic_registry.json` at the audited commit:
 
-## Execution evidence (previously reported, not rerun here)
+| Model | Additional scalar quartic slots | Additional scalar quadratic/bilinear slots | Extra general Yukawa interaction |
+|---|---:|---:|---|
+| `A_-4` | **0** | **0** | None from the opt-in `y1Conj/y2Conj` criterion |
+| `D_-2` | **5** | **1** (neutral S2 self-bilinear) | `y2Conj` is allowed in the opt-in general Yukawa sector |
 
-| Evidence | Reported result | Appropriate interpretation |
-| --- | --- | --- |
-| Core regression suite, 8 November 2026 | **189 passed** in the user's Windows checkout | Selected software/physics interface regressions, not end-to-end general-theory certification |
-| One-point operational numerical smoke test | `PASS_END_TO_END_OPERATIONAL` for ordinary T3-B(-1), using existing exported inputs | Demonstrates a numerical execution path for that benchmark, not clean source regeneration |
-| Reduced-potential frozen-boundary study | **32/32 individually refitted cases accepted** in two input scenarios, per saved `docs/RESULTS.md` | Calibration of selected neutrino observables within a restricted and nonuniform fixed-order matching setup |
-| General-scalar exploratory comparisons | Saved conditional statuses summarised in `docs/RESULTS.md` | Preliminary numerical studies; not validated general-theory neutrino predictions |
-| Last reported extended pytest run | **4,453 passed, 73 failed, 51 skipped, 1 error** before subsequent targeted infrastructure corrections | Evidence of unresolved integration/data/test issues; this result is not replaced by the green core suite |
+Thus A(-4)'s renormalisable **additional-scalar** inventory is simpler, but that alone does not complete its one-loop F threshold. D(-2)'s full general calculation must transport the extra scalar couplings and potentially nonzero bilinear, and handle the mass-basis/tensor mapping at the scalar threshold. Setting a permitted coupling to zero is a legitimate **benchmark boundary choice**, not evidence it has been included in matching for general nonzero values.
 
-The last extended-suite result is historical. The current source's full suite was **not** rerun for this page. Some failures are absent native certificates or stale interfaces, while others are genuine numerical/source-convention discrepancies that must be investigated separately; see [test triage](TEST_FAILURE_TRIAGE_2026_11_08.md).
+## Execution evidence: do not conflate completed runs with complete physics
 
-## Explicitly incomplete or conditional physics
+- Earlier reduced-potential frozen benchmark results: the documented **32/32** individually fitted cases are completed **historical restricted** calculations; they are not general one-loop fits. The class-E half applies only to their saved input convention.
+- Workstreams Batches 1–8 have previously reported **16/16** completion and conditional low-energy results with three distinct prescriptions. `analytic_triangle`, `native_formal`, and `native_as_UV_minus_soft_hypothesis` are **not** equivalent physical MSbar determinations. Batch 8 is consolidation/audit of saved sources, not source regeneration of the full general Lagrangian.
+- The locally reported D(-2) thesis baseline produced conditional masses approximately `[0.00080619, 0.01508806, 0.08696690] eV` and an approximate five-observable `chi2=85161.4`. It **did not** use the full-general matching pipeline and is not an optimised result. A(-4)'s successful current baseline/fit has not been evidenced in this audit.
+- Source-level code audit is **not** a fresh numerical execution. Do not claim a general numerical run has succeeded without its matching/trajectory/output files and model-specific manifests.
 
-1. **General native coupling dictionary:** quartic tensor bases, action prefactors, signs, Hermitian conjugation and fermionic conventions must agree between Matchete and RGBeta in the physical mass basis. A symbolic inventory is not that certificate.
-2. **General sequential matching:** integrating out all fermions and subsequently all scalars, including physically mixed B/C scalar eigenstates, is not yet a complete independently certified one-loop general-theory Wilson calculation. The checked B/C fermion-first scripts explicitly mark their tree/raw one-loop outputs as **not physical C5**.
-3. **EFT Wilson evolution:** a general renormalisable UV/EFT1 beta inventory does not demonstrate full Wilson-basis anomalous dimensions, finite threshold pieces or pole cancellations at the requested perturbative order.
-4. **Source-dependent numerical reference values:** discrepancies between saved numerical results and current evaluator outputs must be understood before relabelling them verified. Test failures must not be removed or output certificates fabricated to assert completeness.
-5. **Restricted potential:** setting additional symmetry-allowed quartics/bilinears to zero at a named boundary is a benchmark choice, not a symmetry prohibition or statement about arbitrary nonzero couplings.
+## Feasibility for the current two-model request
 
-## Reading and verification order
+The user wants fitted Yukawas for `A_-4` and `D_-2` **from the full symmetry-allowed Lagrangian, all relevant one-loop F and S matching, candidate one-loop RG evolution across EFT1 and SMEFT, and final mass/mixing observables**. Independent verification is not a prerequisite for preliminary results, but the computational chain itself must execute the requested terms.
 
-- [Install and run the software](INSTALLATION.md).
-- [Model and calculation contract](MODEL_AND_PIPELINE.md): physical fields, invariants and EFT ordering.
-- [General symbolic physics audit](GENERAL_SYMBOLIC_PHYSICS_AUDIT.md): what the 16-model inventory checks actually cover.
-- [Scalar sector](SCALAR_SECTOR.md): operator and boundary assumptions.
-- [Results](RESULTS.md): fit statuses, figures, numerical conventions and saved-data provenance.
-- [Testing strategy](TEST_STRATEGY.md): core versus extended tests and live symbolic evidence.
+**Decision (10 November 2026): NOT READY AS A SINGLE FULL-GENERAL END-TO-END PIPELINE.** Existing full-general beta/RGE sources and Matchete matching experiments do not feed the same full-general two-threshold numerical Wilson solver. Running the present v3 Sobol fit will optimise the restricted analytic-triangle approximation only. Calling it a full one-loop general result would be incorrect, regardless of chi-square.
 
-**Project interpretation:** the current repository provides substantial symbolic machinery, restricted numerical T3 benchmark studies and targeted general-theory research probes. It should **not** be advertised as a fully validated, general-coupling, two-threshold neutrino-mass prediction code until the matching and validation requirements above are satisfied.
+The shortest physics-development route is: (1) establish the general first-threshold matched Wilson source including its finite/pole treatment for A(-4), then D(-2), (2) hand off to the existing Wilson RGE without discarding relevant general scalar couplings, (3) account for D(-2) extra Yukawa and scalar bilinear mass basis as applicable, (4) implement/assemble the required second-threshold one-loop terms, and (5) wire that evaluator to the existing Sobol/least-squares fitter. Reusing the existing solvers is desirable; the missing matching/handoff is **not** resolved by rerunning tests or increasing optimisation iterations.
+
+See [two-model code-only feasibility audit](T3_A4_D2_GENERAL_PIPELINE_FEASIBILITY_2026_11_10.md) for the precise go/no-go decision. Older [numerical methods](NUMERICAL.md), [results](RESULTS.md), and report READMEs document **their dated historical studies**, and should not be interpreted as describing a working full-general version of the new two-model pilot.

@@ -1,0 +1,33 @@
+{
+  "schema": "t3-thesis-benchmark-two-model-pilot-v1",
+  "source": "T3_Honours_Thesis (30).pdf, Table 4.1 and Appendix B, equations B.3-B.7",
+  "description": "Thesis fixed benchmark at the UV boundary, two original real-Yukawa fitted seeds. New conditional EFT physics is evaluated separately.",
+  "scales_GeV": {"UV": 10000000.0, "F": 100000.0, "S": 1000.0, "low": 100.0},
+  "vev_GeV": 246.22,
+  "gauge_UV": {"gY": 0.38265, "g2": 0.59493, "g3": 0.76490},
+  "heavy_fermion_masses_UV_GeV": [100000.0, 110000.0, 120000.0],
+  "scalar_masses_squared_UV_GeV2": {"mS1Sq": 1300000.0, "mS2Sq": 1000000.0},
+  "lambdaT3_UV": 0.1,
+  "lambda_other_UV": 0.01,
+  "lambdaH_UV": 0.25,
+  "class_E_extra_half_factor": false,
+  "extra_bilinears_UV": "zero_when_not_specified_by_thesis",
+  "conjugate_BSM_Yukawas_UV": "zero_when_present",
+  "SM_Yukawas_UV": "current_Workstream_B_defaults_not_tabulated_in_thesis_Table_4_1",
+  "fitting": {
+    "target": "configs/nufit_6_1_ic24_no.json",
+    "fit_parameters": "18 real entries of y1 and y2",
+    "input_Yukawa_scale": 0.0001,
+    "pilot_acceptance_chi2": 5.86
+  },
+  "models": {
+    "A_-4": {
+      "y1_UV_times_1e4": [[-0.26606112, 0.64976171, 0.23128356], [-1.19378534, 0.94701765, -1.87151210], [-0.43963521, 0.90230032, 0.41701673]],
+      "y2_UV_times_1e4": [[0.70032657, 0.43330802, -0.23624222], [0.51415893, -0.05305700, 0.24104334], [0.04483658, -1.63458575, 0.67251936]]
+    },
+    "D_-2": {
+      "y1_UV_times_1e4": [[-0.13438183, 0.33541259, 0.42156236], [-1.43454275, 0.88721849, -1.01876181], [-0.82873220, 0.41344178, -0.27802350]],
+      "y2_UV_times_1e4": [[1.36211245, 1.16424288, -0.31327707], [-0.06273124, -0.08011528, 1.30285375], [0.54712625, -1.63275615, 0.67092452]]
+    }
+  }
+}

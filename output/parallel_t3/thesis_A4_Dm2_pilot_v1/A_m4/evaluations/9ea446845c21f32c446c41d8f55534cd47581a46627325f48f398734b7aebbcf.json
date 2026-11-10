@@ -1,0 +1,30 @@
+{
+  "candidate": [
+    -2.6606112e-05,
+    6.4976171e-05,
+    2.3128356e-05,
+    -0.000119378534,
+    9.4701765e-05,
+    -0.00018715121,
+    -4.3963521000000004e-05,
+    9.0230032e-05,
+    4.1701673e-05,
+    7.0032657e-05,
+    4.3330802e-05,
+    -2.3624222e-05,
+    5.1415893000000004e-05,
+    -5.3057e-06,
+    2.4104334000000002e-05,
+    4.483658e-06,
+    -0.000163458575,
+    6.725193600000001e-05
+  ],
+  "candidate_digest": "9ea446845c21f32c446c41d8f55534cd47581a46627325f48f398734b7aebbcf",
+  "classification": "CONDITIONAL_NOT_PHYSICAL_MSbar",
+  "config_digest": "4fdcffb9a0c5f2cc84cf8473175acf2a16f89c1cd8911657ecbd4e6290a0aba7",
+  "error": "ValueError: Thesis pilot: Thesis benchmark not aligned with source UV beta-key inventory",
+  "model": "A_-4",
+  "mu_low_GeV": 100.0,
+  "status": "BLOCKED",
+  "traceback_tail": "Traceback (most recent call last):\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\scripts\\RunT3ThesisTwoModelPilot.py\", line 293, in evaluate\n    values = _run_full_chain(self.root, self.config, self.model, x, digest,\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\scripts\\RunT3ThesisTwoModelPilot.py\", line 224, in _run_full_chain\n    br = b.run_one(options, model)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\Numerical\\parallel_t3\\background\\runner.py\", line 214, in run_one\n    overrides = _bench_overrides(model, names_uv, opts)\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\scripts\\RunT3ThesisTwoModelPilot.py\", line 203, in candidate_overrides\n    return overrides_for(cfg, model, keys, vec, base)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\scripts\\RunT3ThesisTwoModelPilot.py\", line 134, in overrides_for\n    fail(\"Thesis benchmark not aligned with source UV beta-key inventory\")\nValueError: Thesis pilot: Thesis benchmark not aligned with source UV beta-key inventory\n"
+}

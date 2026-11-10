@@ -201,7 +201,8 @@ def gauge_sectors(couplings: Mapping[str,Any], model: str,
 
 
 def scalar_quartic_from_matchete(seed: Mapping[str,Any], couplings: Mapping[str,Any],
-                                 model: str, heavy_rotation: np.ndarray
+                                 model: str, heavy_rotation: np.ndarray,
+                                 native_source_from_reference: np.ndarray | None = None
                                  ) -> tuple[np.ndarray,dict]:
     """CG-exact native topology quartic, supplemented by all baseline RGBeta columns.
 
@@ -287,17 +288,32 @@ def scalar_quartic_from_matchete(seed: Mapping[str,Any], couplings: Mapping[str,
         require(abs(z.imag)<1e-10*max(1.,abs(z.real)),
                 'Real RG-closed scalar coupling contains imaginary phase: '+name)
         source_baseline+=z.real*base
-    source_total=source_baseline+source_mix
-    transform=np.eye(12)
-    transform[4:,4:]=heavy_rotation
-    result=np.einsum('abcd,aA,bB,cC,dD->ABCD',source_total,transform,
-                     transform,transform,transform,optimize=True)
+    # Native Matchete T3MixCG is in a Cartesian-like triplet basis, while
+    # baseline RGBeta columns above are ALREADY in spherical spin-1 basis.
+    # Transform ONLY the native source terms into that reference basis;
+    # applying the triplet rotation to the RGBeta reference terms again would
+    # silently mix two incompatible coordinate conventions.
+    native_R=(np.eye(8) if native_source_from_reference is None
+              else np.asarray(native_source_from_reference,float))
+    mass_R=np.asarray(heavy_rotation,float)
+    require(native_R.shape==mass_R.shape==(8,8) and
+            np.allclose(native_R.T@native_R,np.eye(8),atol=1e-10) and
+            np.allclose(mass_R.T@mass_R,np.eye(8),atol=1e-10),
+            'Native/reference or D mass-basis rotation not orthogonal')
+    nrot=np.eye(12);nrot[4:,4:]=mass_R@native_R
+    rrot=np.eye(12);rrot[4:,4:]=mass_R
+    native_contribution=np.einsum('abcd,aA,bB,cC,dD->ABCD',
+                                source_mix,nrot,nrot,nrot,nrot,optimize=True)
+    reference_contribution=np.einsum('abcd,aA,bB,cC,dD->ABCD',
+                                   source_baseline,rrot,rrot,rrot,rrot,optimize=True)
+    result=native_contribution+reference_contribution
     require(np.isfinite(result).all(),'Nonfinite rotated scalar quartic tensor')
     return result,{
        'source_native_to_RGBeta_candidate_alias_inventory':names,
        'baseline_RG_closed_RGBeta_columns':sorted(columns),
        'missing_archived_portal_and_self_columns_completed_from_RGBeta':True,
        'native_topology_cg_tensor_contribution_included':True,
+       'source_Cartesian_to_spherical_rotation_applied_only_to_native_quartics':native_source_from_reference is not None,
        'matchete_RGBeta_native_normalization_certified':False,
        'source_scalar_seed_quartic_count':len(seed['ScalarQuarticTerms'])}
 
@@ -435,14 +451,29 @@ def run_one(root: Path, model: str, *, master_to_native:float=1.,
         ch=build_source_channels(snap.quartic_seed,model)
         spec=build_special_basis(model,snap.running,source)
         R=np.asarray(spec['R_original_from_boundary'],float)
+    from Numerical.parallel_t3.complete.native_triplet_basis_batch15 import (
+        heavy_source_from_reference,triplet_cg_from_seed,generators_from_cg,
+        relative_operator_ward)
+    seed=json.loads(snap.quartic_seed.read_text(encoding='utf-8-sig'))
+    source_seed=json.loads(source.seed_path.read_text(encoding='utf-8-sig'))
+    native_R,basis_info=heavy_source_from_reference(model,source_seed)
+    qcg=generators_from_cg(triplet_cg_from_seed(seed))
+    wcg=generators_from_cg(triplet_cg_from_seed(source_seed))
+    require(max(np.linalg.norm(a-b) for a,b in zip(qcg,wcg))<1e-10,
+            'Native quartic and Wilson tree use different triplet CG bases')
+    # The saved Batch 9 original source-to-boundary map is identity for
+    # A and the already split D source. The additional native-source triplet
+    # map converts these to the SAME spherical basis as the RGBeta columns.
+    require(np.allclose(bg.U,np.eye(8),rtol=1e-10,atol=1e-10),
+            'Unexpected saved scalar source-to-boundary basis map')
     full_fermions=tuple(F_LABELS)
-    c0=source_to_master(source.raw,full_fermions,bg.U,model)
+    c0=source_to_master(source.raw,full_fermions,R@native_R,model)
     fstate=snap.trajectory.at_fermion_threshold()
     # The fixed-order one-loop beta is frozen at muF, not the muS state.
     yukawa=sm_yukawa_tensor(fstate,full_fermions)
     sectors=gauge_sectors(fstate,model,R)
-    seed=json.loads(snap.quartic_seed.read_text(encoding='utf-8-sig'))
-    quartic,quartic_info=scalar_quartic_from_matchete(seed,fstate,model,R)
+    quartic,quartic_info=scalar_quartic_from_matchete(seed,fstate,model,R,
+                                                    native_source_from_reference=native_R)
     d2_info={}
     if model=='D_-2':
         d2_info=add_d2_extra_hhss(quartic,root,fstate,R)
@@ -450,11 +481,26 @@ def run_one(root: Path, model: str, *, master_to_native:float=1.,
     assert quartic.shape==(12,)*4
     require(all(np.allclose(quartic,quartic.swapaxes(0,i),atol=1e-10)
                 for i in (1,2,3)), 'Scalar quartic lacks S4 exchange symmetry')
+    tree_ward=max(relative_operator_ward(c0,tf,ts)
+                  for _,gens in sectors for tf,ts in gens)
+    require(tree_ward<1e-8,
+            f'CG-aligned source LLSS still violates SU2/U1/SU3 Ward identity: {tree_ward:.5g}')
     channels,backend=beta(c0,yukawa,quartic,sectors,variant=beta_mode)
     require(set(channels)==set(SYMMETRIC_TERMS),'Candidate seven-channel ADM lost one term')
     dt=math.log(1e3/1e5)
     delta={name:LOOP*dt*term for name,term in channels.items()}
     delta_full=sum(delta.values(),np.zeros_like(c0))
+    delta_ward=max(relative_operator_ward(delta_full,tf,ts)
+                   for _,gens in sectors for tf,ts in gens)
+    quartic_ward=0.0
+    for _,gens in sectors:
+        for _,ts in gens:
+            v=(np.einsum('ea,ebcd->abcd',ts,quartic,optimize=True)
+              +np.einsum('eb,aecd->abcd',ts,quartic,optimize=True)
+              +np.einsum('ec,abed->abcd',ts,quartic,optimize=True)
+              +np.einsum('ed,abce->abcd',ts,quartic,optimize=True))
+            quartic_ward=max(quartic_ward,
+                float(np.max(abs(v))/max(np.max(abs(quartic)),1e-100)))
     c_s=c0+delta_full
     b5={name:projection(term,full_fermions) for name,term in delta.items()}
     candidate_log=projection(delta_full,full_fermions)
@@ -478,6 +524,10 @@ def run_one(root: Path, model: str, *, master_to_native:float=1.,
       'candidate_ADM':beta_mode,'candidate_ADM_backend':backend,
       'candidate_channel_C5_delta_GeVinv':{k:encode_complex(v) for k,v in b5.items()},
       'source_tree_F_basis_info':source_info,
+      'source_CG_derived_triplet_basis':basis_info,
+      'SU2_U1_SU3_Ward':{'tree_max':tree_ward,'candidate_ADM_delta_max':delta_ward,
+                        'scalar_potential_max':quartic_ward,
+                        'all_three_independently_pass':max(delta_ward,quartic_ward,tree_ward)<1e-8},
       'matchete_source_scalar_quartic':quartic_info,
       'D2_extra_reference':d2_info,
       'input_sha256':{'batch9':digest(b9),'batch11':digest(b11),

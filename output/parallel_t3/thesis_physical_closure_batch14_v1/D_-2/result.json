@@ -1,0 +1,159 @@
+{
+  "B11_B12_B13_outputs_modified": false,
+  "additional_yukawa_fit_performed": false,
+  "all_three_physics_gates_certified": false,
+  "finite_matching_gate": {
+    "F_LNV_LLSS_one_loop_operator_count_not_dropped_from_ledger": 352,
+    "evanescent_and_FieldRedefinition_scheme_complete": false,
+    "finite_MSbar_subtractions_for_all_relevant_operators_certified": false,
+    "full_F_one_loop_operator_count": 1200,
+    "full_F_sector_counts": {
+      "CandidateLeptonNumberViolatingLLHH": 12,
+      "CandidateLeptonNumberViolatingLLScalarScalar": 352,
+      "OtherEFT1Operator": 836
+    },
+    "gate_passed": false,
+    "native_simultaneous_scalar_soft_terms": 68,
+    "other_F_operators_matched_into_complete_EFT1_counterterm_basis": false,
+    "reason": "Hard/soft LLHH source-sector closure passes, but the full one-loop renormalized Wilson boundary including counterterms and all operator mixings is not independently established.",
+    "source_channel_hard_soft_pole_residual_relative": 1.8605455585924902e-16,
+    "source_native_one_loop_log_identity_relative": 1.0669655942658411e-14,
+    "source_scale_partition_invariance_relative": 4.2572723859867826e-16,
+    "source_sector_finite_reconstruction_passed": true
+  },
+  "format": "t3-a4-d2-physical-three-gate-closure-audit-batch14-v1",
+  "gauge_Wilson_gate": {
+    "SM_Weinberg_independent_limit": {
+      "SM_limit_numerically_consistent": true,
+      "candidate_backend": "existing_repository_matrix_free_engine",
+      "candidate_vs_independent_SM_Weinberg_beta_relative": 1.673694938183694e-16,
+      "full_general_ADM_certified_by_SM_limit": false,
+      "reference": "RGE.running.weinberg.WeinbergRGE.sm_weinberg_beta",
+      "tested_operator": "Full 3-generation LLHH embedded with Higgs potential only"
+    },
+    "all_generators": {},
+    "candidate_ADM_variant": "fonseca_eq22_six_term",
+    "full_operator_ADM_certified": false,
+    "full_tensor_candidate_invariance_passed": false,
+    "gate_passed": false,
+    "independent_gauge_complete_ADM_derivation_or_general_representation_proof": false,
+    "max_relative_Ward_residuals": {
+      "SM_Yukawa": 2.8232564788072767e-18,
+      "candidate_ADM_delta": 2.0,
+      "scalar_potential": 0.15058231694566074,
+      "tree_Weinberg_parent": 2.0
+    },
+    "reason": "Gauge covariance at one benchmark is a necessary, not a sufficient, condition for the correct seven-term anomalous dimensions.",
+    "source": "saved complete Batch13 C(muF), seven delta channels; fresh source-based full SM gauge generators and quartic/Yukawa tensors",
+    "tree_and_beta_separately_gauge_invariant_at_this_point": false
+  },
+  "hierarchy": [
+    [
+      "UV",
+      "F_all_3_flavours"
+    ],
+    [
+      "EFT1",
+      "S1_and_S2_together"
+    ],
+    [
+      "SMEFT_100GeV"
+    ]
+  ],
+  "input_sha256": {
+    "B11_native_matching": "06bf64d1df6ffbe7ae701ce4e3c543fd74a91d32618e195b32d41583e45f7aa1",
+    "B13_full_tensor": "04bc330fc9cfc174bc1fbdc13e30a8adaa4b0388568402a33c79a08a0da40f6d",
+    "B13_master_wilson": "2057a821b36cc1c027614884c810674b51812dd126256a1347e8812fb0a88c1a",
+    "full_F_operator_ledger": "d80fc34403d0d85927cc12268b49d5dfe23daab71b965d1f354ce278f716958d",
+    "native_quartic_seed": "ade583a5ea0fc1ed253282c40d7f71718fa16f9d92f4f34fc9245284bb8293ce",
+    "native_scalar_soft_expression": "17b37af9746051ba04125e8e073a0dd096e2880ffc29f7e3e039766326cdf838",
+    "native_scalar_status": "05ee5c899161749df0c3d9db22de3dd1555a4e426890ba70d996be5c9e64a3e3"
+  },
+  "model": "D_-2",
+  "native_RGBeta_scalar_map_gate": {
+    "D2_missing_extra_HHSS_reference_basis_certified": false,
+    "all_complex_coupling_phases_and_orientations_verified": false,
+    "archived_native_channel_comparison": {
+      "lambda12Inv1": {
+        "candidate_alias": "lambda12",
+        "coordinate_normalization_certified": false,
+        "native_over_reference_scale": -1.0,
+        "one_real_unit_coupling_only": true,
+        "relative_direction_residual": 0.0,
+        "status": "NativeVersusRGBetaPotentialDirectionMeasured"
+      },
+      "lambdaH1Inv2": {
+        "candidate_alias": "lambdaH1Adj",
+        "coordinate_normalization_certified": false,
+        "native_over_reference_scale": 0.0,
+        "one_real_unit_coupling_only": true,
+        "relative_direction_residual": 1.0,
+        "status": "NativeVersusRGBetaPotentialDirectionMeasured"
+      },
+      "lambdaH2Inv1": {
+        "candidate_alias": "lambdaH2",
+        "coordinate_normalization_certified": false,
+        "native_over_reference_scale": -1.0,
+        "one_real_unit_coupling_only": true,
+        "relative_direction_residual": 0.0,
+        "status": "NativeVersusRGBetaPotentialDirectionMeasured"
+      },
+      "lambdaS1Inv1": {
+        "candidate_alias": "lambdaS1",
+        "coordinate_normalization_certified": false,
+        "native_over_reference_scale": -0.5,
+        "one_real_unit_coupling_only": true,
+        "relative_direction_residual": 0.9128709291752769,
+        "status": "NativeVersusRGBetaPotentialDirectionMeasured"
+      },
+      "lambdaS1Inv2": {
+        "candidate_alias": "lambdaS1Adj",
+        "coordinate_normalization_certified": false,
+        "native_over_reference_scale": -0.2321035412742638,
+        "one_real_unit_coupling_only": true,
+        "relative_direction_residual": 0.9567360740266436,
+        "status": "NativeVersusRGBetaPotentialDirectionMeasured"
+      },
+      "lambdaT3": {
+        "candidate_alias": "lambdaT3",
+        "status": "RGBetaReferenceTopologyNotIndependent"
+      },
+      "\u03bb": {
+        "candidate_alias": "lambdaH",
+        "coordinate_normalization_certified": false,
+        "native_over_reference_scale": 1.0,
+        "one_real_unit_coupling_only": true,
+        "relative_direction_residual": 0.0,
+        "status": "NativeVersusRGBetaPotentialDirectionMeasured"
+      }
+    },
+    "gate_passed": false,
+    "matchete_to_RGBeta_complete_coordinate_map_certified": false
+  },
+  "normalization_gate": {
+    "absolute_native_GammaCC_to_physical_Weyl_operator_anchored": false,
+    "gate_passed": false,
+    "independent_explicit_spinor_amplitude_available": false,
+    "independent_source_operator_sign_and_symmetry_factor_fixed": false,
+    "native_GammaCC_operator_chiralities": {
+      "PL": 6,
+      "PR": 6
+    },
+    "reason": "Relative logs and pole residues are invariant under a COMMON operator rescaling. An independent normalized on-shell spinor amplitude or a verified Matchete basis-operator mapping is required.",
+    "relative_native_master_log_coefficient": {
+      "absolute_gamma_CC_to_Weyl_factor_certified": false,
+      "factor": 0.9999999992225307,
+      "imaginary_projection_ratio": -1.487766229077355e-19,
+      "residual": 3.0076132675375216e-10,
+      "status": "EmpiricalRelativeLogFactorOnly_NotGammaCCCertificate"
+    }
+  },
+  "physical_C5_certified": false,
+  "remaining_unresolved_physics_gates": {
+    "GammaCC_to_Weyl_absolute_normalization": true,
+    "complete_finite_MSbar_matching": true,
+    "complete_gauge_ADM_and_scalar_map": true
+  },
+  "source_conclusion": "Existing input files do not independently fix the absolute GammaCC/Weyl sign and normalisation or guarantee complete one-loop MSbar matching. A successful native/master log and gauge-Ward check is necessary but does not fix either normalization or completeness.",
+  "status": "ThreePhysicsClosureGatesInvestigated_StillConditionalNotPhysicalC5"
+}

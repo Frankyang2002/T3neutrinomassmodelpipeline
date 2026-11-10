@@ -1,0 +1,50 @@
+{
+  "active_schedule_requested": [
+    5,
+    9,
+    18
+  ],
+  "calculation_is_conditional_not_physical": true,
+  "format": "t3-all16-sobol-sensitivity-rough-fit-target-chi2-v2",
+  "input_benchmark_file": "configs\\thesis_numerics\\t3_thesis_A4_Dm2_pilot.json",
+  "mass_bilinears_policy": "zero",
+  "model": "A_-4",
+  "optimizer_message": "Both benchmark seeds blocked in the live EFT pipeline",
+  "optimizer_search_method": "Sobol+sensitivity+bounded_TRF",
+  "physical_C5_certified": false,
+  "reduced_potential": true,
+  "requested_target_chi2": 0.01,
+  "seed_comparisons": [
+    {
+      "chi2": null,
+      "reason": "PipelineBlocked: A_-4 trial 1, stage source/basis and Weinberg purity preflight: PipelineBlocked: Preflight blocked: full_evolved_wilson_and_C5_projection: ValueError: Independent C5 projection mismatch: 0.706547",
+      "seed": "A_-4",
+      "status": "BLOCKED"
+    },
+    {
+      "chi2": null,
+      "reason": "PipelineBlocked: A_-4 trial 2, stage source/basis and Weinberg purity preflight: PipelineBlocked: Preflight blocked: full_evolved_wilson_and_C5_projection: ValueError: Independent C5 projection mismatch: 0.706547",
+      "seed": "D_-2",
+      "status": "BLOCKED"
+    }
+  ],
+  "sobol_points_requested": 0,
+  "status": "BLOCKED_NO_VALID_SEED",
+  "target_met": false,
+  "trials": [
+    {
+      "eval": 1,
+      "phase": "initial_seed_A_-4",
+      "reason": "PipelineBlocked: A_-4 trial 1, stage source/basis and Weinberg purity preflight: PipelineBlocked: Preflight blocked: full_evolved_wilson_and_C5_projection: ValueError: Independent C5 projection mismatch: 0.706547",
+      "status": "BLOCKED"
+    },
+    {
+      "eval": 2,
+      "phase": "initial_seed_D_-2",
+      "reason": "PipelineBlocked: A_-4 trial 2, stage source/basis and Weinberg purity preflight: PipelineBlocked: Preflight blocked: full_evolved_wilson_and_C5_projection: ValueError: Independent C5 projection mismatch: 0.706547",
+      "status": "BLOCKED"
+    }
+  ],
+  "unique_physics_evaluations": 2,
+  "wilson_solver": "RK2"
+}

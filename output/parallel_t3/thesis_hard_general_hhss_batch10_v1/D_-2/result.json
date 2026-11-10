@@ -1,0 +1,8 @@
+{
+  "format": "t3-thesis-hard-general-hhss-batch10-v1",
+  "model": "D_-2",
+  "physical_full_MSbar_C5_computed": false,
+  "reason": "ValueError: Joint-scalar fermion bridge: kernel complex matrix must have real/imag fields",
+  "status": "Blocked_SourceOrConventionGap",
+  "traceback_tail": "Traceback (most recent call last):\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\scripts\\RunT3HardGeneralBatch10.py\", line 89, in main\n    result = run_one(root, model, output/model,\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\Numerical\\parallel_t3\\complete\\two_model_hard_general_batch10.py\", line 359, in run_one\n    h_regular = symmetric(matrix(hard['baseline_ordered_holomorphic_regular_GeVinv'],\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\Numerical\\parallel_t3\\complete\\two_model_hard_general_batch10.py\", line 55, in matrix\n    a = parse_matrix(value)\n        ^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\Numerical\\joint_scalar_matching\\large_batch.py\", line 36, in parse_matrix\n    require(isinstance(obj,dict) and set(('real','imag')).issubset(obj),\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\Numerical\\joint_scalar_matching\\fermion_boundary_bridge.py\", line 35, in require\n    raise ValueError(\"Joint-scalar fermion bridge: \" + reason)\nValueError: Joint-scalar fermion bridge: kernel complex matrix must have real/imag fields\n"
+}

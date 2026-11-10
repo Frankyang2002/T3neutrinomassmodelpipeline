@@ -1,8 +1,15 @@
 # Numerical pipeline, fitting, diagnostics and reproducibility
 
-**Scope:** ordinary T3 neutrino-mass studies, with emphasis on the completed reduced-scalar frozen-boundary campaign. This is the operational explanation; see [PHYSICS.md](PHYSICS.md) for the T3 EFT structure, [SCALAR_SECTOR.md](SCALAR_SECTOR.md) for the controlled scalar restriction and [RESULTS.md](RESULTS.md) for the numerical findings. Historical study instructions remain provenance, not competing current specifications.
+<!-- T3_CURRENT_SCOPE_BEGIN: 2026-11-10 -->
 
-**Source status (29 October 2026):** verified against the read-only repository commit `f21d15d2d38f4f313a0f2214bc52f90e1469dce2`, including `scripts/RunT3ReducedScalarSobolComparison.py`, `scripts/BuildT3ReducedScalarFinalResults.py`, `scripts/BuildReducedScalarExistingInteractiveReports.py`, the established plotting modules and saved final reporting artifacts. The installed local `README.md` and new `docs/SCALAR_SECTOR.md` are uncommitted documentation changes and are **not** replaced here. The project user's Windows checkout is authoritative if its file contents differ from the inspected commit.
+**Document scope:** Historical reduced/frozen numerical methods; not the new full-general evaluator.
+
+**Current implementation status (10 November 2026):** The requested A(-4)/D(-2) **full-general, complete-one-loop, fermion-first -> joint-scalar -> SMEFT Yukawa fit is not yet an executable end-to-end numerical workflow**. The repository already implements general Matchete/RGBeta components and an actual symbolic `RunSequentialT3Matching` stage engine, but its general Wilson matching outputs are not fully connected to the two-model numerical fit. The current thesis Sobol pilot is **restricted/conditional** (analytic fermion triangle and selected scalar bubble), even if it reaches a low chi-square. See [implementation status](IMPLEMENTATION_STATUS.md), [A(-4)/D(-2) feasibility](T3_A4_D2_GENERAL_PIPELINE_FEASIBILITY_2026_11_10.md) and [implementation batches](T3_A4_D2_FULL_GENERAL_IMPLEMENTATION_BATCHES.md). Earlier numerical results and verification claims below refer to their **dated, historical configurations** unless an individual run manifest establishes otherwise.
+
+<!-- T3_CURRENT_SCOPE_END -->
+**Historical scope:** ordinary T3 neutrino-mass studies, with emphasis on the completed reduced-scalar frozen-boundary campaign. This is the operational explanation; see [PHYSICS.md](PHYSICS.md) for the T3 EFT structure, [SCALAR_SECTOR.md](SCALAR_SECTOR.md) for the controlled scalar restriction and [RESULTS.md](RESULTS.md) for the numerical findings. Historical study instructions remain provenance, not competing current specifications.
+
+**Historical source status (29 October 2026):** verified against the read-only repository commit `f21d15d2d38f4f313a0f2214bc52f90e1469dce2`, including `scripts/RunT3ReducedScalarSobolComparison.py`, `scripts/BuildT3ReducedScalarFinalResults.py`, `scripts/BuildReducedScalarExistingInteractiveReports.py`, the established plotting modules and saved final reporting artifacts. The installed local `README.md` and new `docs/SCALAR_SECTOR.md` are uncommitted documentation changes and are **not** replaced here. The project user's Windows checkout is authoritative if its file contents differ from the inspected commit.
 
 ## 1. Responsibility boundaries
 

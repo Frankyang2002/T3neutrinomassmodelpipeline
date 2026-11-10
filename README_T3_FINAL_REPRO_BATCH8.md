@@ -1,5 +1,12 @@
 # T3 final all-16 numerical reproducibility package — Batch 8
 
+<!-- T3_CURRENT_SCOPE_BEGIN: 2026-11-10 -->
+
+**Document scope:** Batch 8 is a historical conditional report, not current full-general output.
+
+**Current implementation status (10 November 2026):** The requested A(-4)/D(-2) **full-general, complete-one-loop, fermion-first -> joint-scalar -> SMEFT Yukawa fit is not yet an executable end-to-end numerical workflow**. The repository already implements general Matchete/RGBeta components and an actual symbolic `RunSequentialT3Matching` stage engine, but its general Wilson matching outputs are not fully connected to the two-model numerical fit. The current thesis Sobol pilot is **restricted/conditional** (analytic fermion triangle and selected scalar bubble), even if it reaches a low chi-square. See [implementation status](docs/IMPLEMENTATION_STATUS.md), [A(-4)/D(-2) feasibility](docs/T3_A4_D2_GENERAL_PIPELINE_FEASIBILITY_2026_11_10.md) and [implementation batches](docs/T3_A4_D2_FULL_GENERAL_IMPLEMENTATION_BATCHES.md). Earlier numerical results and verification claims below refer to their **dated, historical configurations** unless an individual run manifest establishes otherwise.
+
+<!-- T3_CURRENT_SCOPE_END -->
 **Scope:** One command to resume the existing all-16 Batch-7 numerical pipeline from the saved Batches 1/2/4/5, validate that its result is reproducible, and consolidate *every* numerical branch into a stable final export. **No changes** to the existing UV/EFT1/scalar/SMEFT physics. **No changes to GitHub.**
 
 Prepared using the locally available **Batch 7 v2 resume hotfix** and the public code at GitHub commit `4fdae67ce2ee5f22d64284a2c83ebc4ffb3400f0`, inspected 10 November 2026. Source hashes are taken from the installed local files, not assumed equal to the public commit.

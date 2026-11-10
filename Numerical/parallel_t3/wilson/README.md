@@ -1,5 +1,12 @@
 # Workstream A — Wilson physics / normalization (conditional implementation)
 
+<!-- T3_CURRENT_SCOPE_BEGIN: 2026-11-10 -->
+
+**Document scope:** Current pilot uses the candidate Wilson ADM; no complete general one-loop matching input is connected.
+
+**Current implementation status (10 November 2026):** The requested A(-4)/D(-2) **full-general, complete-one-loop, fermion-first -> joint-scalar -> SMEFT Yukawa fit is not yet an executable end-to-end numerical workflow**. The repository already implements general Matchete/RGBeta components and an actual symbolic `RunSequentialT3Matching` stage engine, but its general Wilson matching outputs are not fully connected to the two-model numerical fit. The current thesis Sobol pilot is **restricted/conditional** (analytic fermion triangle and selected scalar bubble), even if it reaches a low chi-square. See [implementation status](../../../docs/IMPLEMENTATION_STATUS.md), [A(-4)/D(-2) feasibility](../../../docs/T3_A4_D2_GENERAL_PIPELINE_FEASIBILITY_2026_11_10.md) and [implementation batches](../../../docs/T3_A4_D2_FULL_GENERAL_IMPLEMENTATION_BATCHES.md). Earlier numerical results and verification claims below refer to their **dated, historical configurations** unless an individual run manifest establishes otherwise.
+
+<!-- T3_CURRENT_SCOPE_END -->
 **Implementation target:** `Numerical/parallel_t3/wilson/` in `C:\thesistemp\T3neutrinomassmodelpipeline`. No GitHub modifications. Public `main` inspected before this batch: `a944e0030b8ef24b23342d99e0d8f33cef3cffd5` (2026-11-09). Local uncommitted files are not known. The B and C interfaces in the uploaded handovers are *proposed*, not yet established implementation interfaces. The B->A input schema here is explicit and fail-closed.
 
 ## Tensor convention

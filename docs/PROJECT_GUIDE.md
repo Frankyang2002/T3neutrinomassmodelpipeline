@@ -1,10 +1,17 @@
 # T3 neutrino mass project — architecture and research history
 
+<!-- T3_CURRENT_SCOPE_BEGIN: 2026-11-10 -->
+
+**Document scope:** The cited production smoke test is historical and does not demonstrate full-general one-loop matching.
+
+**Current implementation status (10 November 2026):** The requested A(-4)/D(-2) **full-general, complete-one-loop, fermion-first -> joint-scalar -> SMEFT Yukawa fit is not yet an executable end-to-end numerical workflow**. The repository already implements general Matchete/RGBeta components and an actual symbolic `RunSequentialT3Matching` stage engine, but its general Wilson matching outputs are not fully connected to the two-model numerical fit. The current thesis Sobol pilot is **restricted/conditional** (analytic fermion triangle and selected scalar bubble), even if it reaches a low chi-square. See [implementation status](IMPLEMENTATION_STATUS.md), [A(-4)/D(-2) feasibility](T3_A4_D2_GENERAL_PIPELINE_FEASIBILITY_2026_11_10.md) and [implementation batches](T3_A4_D2_FULL_GENERAL_IMPLEMENTATION_BATCHES.md). Earlier numerical results and verification claims below refer to their **dated, historical configurations** unless an individual run manifest establishes otherwise.
+
+<!-- T3_CURRENT_SCOPE_END -->
 This guide consolidates the historical stage notes into a navigable record.
 The original documents are preserved in the external cleanup archive.
 This is an inventory and workflow guide, **not** a new physics certification.
 
-## Verified production workflow (one-point smoke test, 2026-11-01)
+## Historical operational smoke test (one point, 2026-11-01)
 
 The ordinary T3-B, alpha=-1 benchmark completed the current production numerical path:
 

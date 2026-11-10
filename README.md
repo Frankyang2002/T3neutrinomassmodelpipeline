@@ -1,5 +1,12 @@
 # T3 radiative neutrino-mass models
 
+<!-- T3_CURRENT_SCOPE_BEGIN: 2026-11-10 -->
+
+**Document scope:** Project overview; current A(-4)/D(-2) task is not finished.
+
+**Current implementation status (10 November 2026):** The requested A(-4)/D(-2) **full-general, complete-one-loop, fermion-first -> joint-scalar -> SMEFT Yukawa fit is not yet an executable end-to-end numerical workflow**. The repository already implements general Matchete/RGBeta components and an actual symbolic `RunSequentialT3Matching` stage engine, but its general Wilson matching outputs are not fully connected to the two-model numerical fit. The current thesis Sobol pilot is **restricted/conditional** (analytic fermion triangle and selected scalar bubble), even if it reaches a low chi-square. See [implementation status](docs/IMPLEMENTATION_STATUS.md), [A(-4)/D(-2) feasibility](docs/T3_A4_D2_GENERAL_PIPELINE_FEASIBILITY_2026_11_10.md) and [implementation batches](docs/T3_A4_D2_FULL_GENERAL_IMPLEMENTATION_BATCHES.md). Earlier numerical results and verification claims below refer to their **dated, historical configurations** unless an individual run manifest establishes otherwise.
+
+<!-- T3_CURRENT_SCOPE_END -->
 A symbolic and numerical research pipeline for one-loop Majorana neutrino-mass generation in the T3 topology. The project constructs Standard Model extensions with heavy fermions and scalar multiplets, evaluates renormalisation-group evolution and effective-field-theory (EFT) thresholds, and studies the resulting neutrino masses and mixing.
 
 The ordinary model catalogue covers **16 representation and hypercharge assignments**. The general-interaction inventory and the restricted numerical benchmarks are distinct: the presence of a symmetry-allowed operator in the symbolic model does **not** imply that its physical matching and numerical evolution have been fully validated.

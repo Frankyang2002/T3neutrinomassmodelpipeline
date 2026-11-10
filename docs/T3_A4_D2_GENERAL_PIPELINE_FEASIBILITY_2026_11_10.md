@@ -1,6 +1,6 @@
 # A(-4) / D(-2) general-Lagrangian one-loop pipeline: code audit
 
-**Audit date:** 10 November 2026. **Repository:** `Frankyang2002/T3neutrinomassmodelpipeline`, GitHub `main` commit `480262541959ff2c8ed2f3392bebfaf9c971ff64`; additionally inspected the locally supplied v3 thesis-pilot script. **No Wolfram executable, locally generated Matchete artifact, or complete user Windows checkout was available to rerun; claims below describe source implementation and the user's reported D(-2) baseline only.** No GitHub modifications.
+**Audit date:** 10 November 2026. **Repository:** `Frankyang2002/T3neutrinomassmodelpipeline`, GitHub `main` commit `478c658c70a397cff7f04d397e6f7dd448179d01` (current `main` at follow-up audit); additionally inspected the locally supplied v3 thesis-pilot script. **No Wolfram executable, locally generated Matchete artifact, or complete user Windows checkout was available to rerun; claims below describe source implementation and the user's reported D(-2) baseline only.** No GitHub modifications.
 
 ## Requested deliverables and present feasibility
 
@@ -28,6 +28,8 @@ Lagrangian/RunGeneralT3FermionFirstEFT1OneLoop.wl
   -> Python caller currently B_-1/C_-1 ONLY
   -> NO numerical full-general A_-4 / D_-2 bridge
 ```
+
+**Important existing implementation:** `Lagrangian/RunMatching.wl` already defines `RunSequentialT3Matching`, with separate tree and one-loop stage matching, inherited one-loop terms propagated through tree matching at the next stage, and fresh-kernel threshold handling. Therefore symbolic two-stage matching need not be reinvented. The gap is full-general A(-4)/D(-2) invocation, running-scale insertion, operator coefficient extraction, general mass/tensor mapping, and numerical handoff.
 
 **No source entry point was found that connects these general-Lagrangian branches to full general fermion-first matching, general EFT1 coefficient evolution, general two-scalar threshold, and the two-model optimizer in one numerical evaluation.** This is a claim about inspected code paths, not proof no unshared local work exists.
 
@@ -57,7 +59,7 @@ Do not infer new A(-4) fitted Yukawas, fitted D(-2) Yukawas, chi2, PMNS angles, 
 
 ## Minimum next implementation checkpoint
 
-First choose **A(-4)** because its additional scalar-interaction inventory is empty. Build a *single-point, source-derived* full-general two-threshold `C5` evaluator that consumes the general matching/RGE outputs and visibly includes the required first- and second-threshold contributions. It need not be externally verified for this numerical pilot, but its operator inventory, input definitions, and pole/finite prescriptions must be explicit rather than assuming away missing terms.
+For implementation scope, see [four large batches](T3_A4_D2_FULL_GENERAL_IMPLEMENTATION_BATCHES.md). First choose **A(-4)** because its additional scalar-interaction inventory is empty. Build a *single-point, source-derived* full-general two-threshold `C5` evaluator that consumes the general matching/RGE outputs and visibly includes the required first- and second-threshold contributions. It need not be externally verified for this numerical pilot, but its operator inventory, input definitions, and pole/finite prescriptions must be explicit rather than assuming away missing terms.
 
 Only after that single point runs through F matching -> EFT1 coefficient evolution -> joint scalar matching -> SMEFT should the existing 18-real-Yukawa Sobol/least-squares search be attached. Extend the same contract to D(-2), including its extra scalar interactions and `y2Conj`. This is an actual implementation step, not a documentation toggle, and likely requires new matching/adapter code.
 

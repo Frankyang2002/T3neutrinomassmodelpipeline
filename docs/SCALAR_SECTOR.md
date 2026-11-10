@@ -1,6 +1,13 @@
 # T3 scalar sector: operator basis, controlled reduction and numerical scope
 
-**Authoritative scalar-sector explanation for the honours thesis.** This document consolidates the physics argument previously distributed across the scalar-relevance Batch 1–8 notes, the reduced-potential conclusion and the scalar-study separation notes. It describes the **ordinary split-scalar T3 models** in the project's 16-model catalogue. It does not assert that a fully general physical scalar-sector calculation has been implemented.
+<!-- T3_CURRENT_SCOPE_BEGIN: 2026-11-10 -->
+
+**Document scope:** Detailed reduced-potential analysis, not a statement that all general couplings are numerically matched.
+
+**Current implementation status (10 November 2026):** The requested A(-4)/D(-2) **full-general, complete-one-loop, fermion-first -> joint-scalar -> SMEFT Yukawa fit is not yet an executable end-to-end numerical workflow**. The repository already implements general Matchete/RGBeta components and an actual symbolic `RunSequentialT3Matching` stage engine, but its general Wilson matching outputs are not fully connected to the two-model numerical fit. The current thesis Sobol pilot is **restricted/conditional** (analytic fermion triangle and selected scalar bubble), even if it reaches a low chi-square. See [implementation status](IMPLEMENTATION_STATUS.md), [A(-4)/D(-2) feasibility](T3_A4_D2_GENERAL_PIPELINE_FEASIBILITY_2026_11_10.md) and [implementation batches](T3_A4_D2_FULL_GENERAL_IMPLEMENTATION_BATCHES.md). Earlier numerical results and verification claims below refer to their **dated, historical configurations** unless an individual run manifest establishes otherwise.
+
+<!-- T3_CURRENT_SCOPE_END -->
+**Historical scalar-sector analysis of the reduced-potential approximation.** This document consolidates the physics argument previously distributed across the scalar-relevance Batch 1–8 notes, the reduced-potential conclusion and the scalar-study separation notes. It describes the **ordinary split-scalar T3 models** in the project's 16-model catalogue. It does not assert that a fully general physical scalar-sector calculation has been implemented.
 
 **Verification basis:** read-only inspection of repository commit `aa4dd2b7b6d2c31494e45290a88004822a8c43c5` (29 October 2026), including the scalar-audit scripts and existing documentation. Saved scientific artifacts are identified below. This documentation consolidation makes **no** change to the Lagrangian, beta functions, matching, numerical inputs or fitted results. A later local checkout may differ and must be checked before archiving old documents.
 
@@ -223,7 +230,7 @@ The earlier `scripts/RunT3ZeroExtraBoundaryBenchmark.py` study examined **B(-1) 
 
 Relevant outputs: `output/scalar_relevance/zero_boundary_benchmark/` and `output/scalar_relevance/zero_boundary_low_energy/`.
 
-### 6.2 Final reduced-potential frozen-UV fits (primary thesis results)
+### 6.2 Historical reduced-potential frozen-UV fits
 
 The completed reduced study uses **16 models x 2 UV-frozen scenarios** with `lambdaT3=5e-9` and `0.5` at `muF=10^5 GeV` for A–D (Class E uses half these inputs), diagonal scalar benchmark masses in the **0.5–5 TeV** window and the retained heavy-fermion hierarchy screen `rhoF <= 0.5`.
 

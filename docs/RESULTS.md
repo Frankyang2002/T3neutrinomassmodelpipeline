@@ -1,6 +1,13 @@
-# T3 numerical results: accepted benchmarks, comparisons and limits
+# Historical T3 results: reduced and exploratory benchmarks
 
-**Authoritative results-level summary for the honours project.** Read with [PHYSICS.md](PHYSICS.md), [SCALAR_SECTOR.md](SCALAR_SECTOR.md) and [NUMERICAL.md](NUMERICAL.md). This document separates **completed numerical evaluations**, **calibrated neutrino fits**, **conditional exploratory scalar models**, and **physical conclusions not yet established**.
+<!-- T3_CURRENT_SCOPE_BEGIN: 2026-11-10 -->
+
+**Document scope:** Historical reduced/conditional results, not newly fitted general-model values.
+
+**Current implementation status (10 November 2026):** The requested A(-4)/D(-2) **full-general, complete-one-loop, fermion-first -> joint-scalar -> SMEFT Yukawa fit is not yet an executable end-to-end numerical workflow**. The repository already implements general Matchete/RGBeta components and an actual symbolic `RunSequentialT3Matching` stage engine, but its general Wilson matching outputs are not fully connected to the two-model numerical fit. The current thesis Sobol pilot is **restricted/conditional** (analytic fermion triangle and selected scalar bubble), even if it reaches a low chi-square. See [implementation status](IMPLEMENTATION_STATUS.md), [A(-4)/D(-2) feasibility](T3_A4_D2_GENERAL_PIPELINE_FEASIBILITY_2026_11_10.md) and [implementation batches](T3_A4_D2_FULL_GENERAL_IMPLEMENTATION_BATCHES.md). Earlier numerical results and verification claims below refer to their **dated, historical configurations** unless an individual run manifest establishes otherwise.
+
+<!-- T3_CURRENT_SCOPE_END -->
+**Historical results-level summary for the reduced-scalar and exploratory campaigns.** Read with [PHYSICS.md](PHYSICS.md), [SCALAR_SECTOR.md](SCALAR_SECTOR.md) and [NUMERICAL.md](NUMERICAL.md). This document separates **completed numerical evaluations**, **calibrated neutrino fits**, **conditional exploratory scalar models**, and **physical conclusions not yet established**.
 
 **Evidence inspected:** read-only repository commit `f21d15d2d38f4f313a0f2214bc52f90e1469dce2`, particularly `output/studies/reduced_scalar_final_reports/final_reduced_v2/{summary.md,manifest.json}`, the frozen Sobol source summary, original `docs/RESULTS.md`, the reduced reporting docs, and the frozen general-scalar 48-case CSV/report provenance. Figures and row-wise numerical results should always be cited against their **saved data and source hashes**, not this narrative alone. This documentation update does not recompute, modify or certify any physics output.
 
@@ -15,7 +22,7 @@
 | General-scalar 16 × 3 frozen 48-case atlas | Frozen campaign statuses **20 conditional accepted / 6 constrained poor-fit / 22 no mass-safe fit**; **two** accepted running-UV B/C cases used a relaxed topology boundary | Exploratory general-quartic numerics under incomplete physical matching, **not** 20 experimentally viable complete models |
 | Original `smallY_smallL` staged-running scan | **12 models × 5 factors = 60 successful points**; four models had `MissingArtifacts` | Conditional running sensitivity within the available saved source coverage |
 
-The primary honours result is the **restricted leading-one-loop, zero-additional-scalar-boundary comparison**. Neither the older general-scalar 48 cases nor the nominal 64-grid completions should be silently aggregated into its 32 individual acceptances.
+The historical reduced-scalar study result is the **restricted leading-one-loop, zero-additional-scalar-boundary comparison**. Neither the older general-scalar 48 cases nor the nominal 64-grid completions should be silently aggregated into its 32 individual acceptances.
 
 ## 2. Benchmark inputs and classification
 
@@ -49,7 +56,7 @@ The file `configs/nufit_6_1_ic24_no.json` supplies the normal-ordering NuFIT 6.1
 
 The saved objective uses the sum of five squared individually normalised residuals and accepts `chi2_approx <= 5.86`. **That is a project screening cut, not an official NuFIT likelihood or confidence level.** The fit has 18 real Yukawa search parameters for five observables, so neither a tiny chi-square nor a successful optimization implies a unique physical solution, a prediction of those fitted observables, or a phenomenological exclusion of other cases.
 
-## 3. Final reduced-scalar frozen comparison — primary thesis result
+## 3. Historical reduced-scalar frozen comparison
 
 **Source files:**
 

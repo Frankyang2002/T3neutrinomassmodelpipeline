@@ -1,0 +1,8 @@
+{
+  "model": "A_-4",
+  "physical_C5_certified": false,
+  "reason": "TypeError: must be real number, not dict",
+  "status": "BLOCKED_SourceOrNumericalEvaluation",
+  "target_met": false,
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\scripts\\RunT3AllModelConditionalOptimize.py\", line 183, in main\n    engine=LatestTwoModelEvaluator(ROOT,model,signed_factor=args.signed_factor)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\Numerical\\parallel_t3\\complete\\all_model_conditional_optimizer.py\", line 184, in __init__\n    self.baseline_relative = self._check_baseline(max_baseline_relative)\n                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\Numerical\\parallel_t3\\complete\\all_model_conditional_optimizer.py\", line 306, in _check_baseline\n    test=self._evaluate_states(f,s,{},detail=False)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\Numerical\\parallel_t3\\complete\\all_model_conditional_optimizer.py\", line 290, in _evaluate_states\n    result=finish_smeft(rg_state,\n           ^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\Numerical\\parallel_t3\\complete\\full_general_completion.py\", line 255, in finish_smeft\n    ye=np.asarray(s['ye'],complex),yu=np.asarray(s['yu'],complex),\n       ^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: must be real number, not dict\n"
+}

@@ -1,0 +1,85 @@
+T3 all-16 ROUGH Yukawa optimiser v2
+===================================
+
+Source basis: public GitHub main 61422855d36c9b2a964dbcfc158b7766d3e3b44e
+(10/11 November 2026). Existing repository workstreams are called at runtime;
+no GitHub write operations are performed.
+
+INSTALL THE COMPLETE REPLACEMENT FILES into the local project root:
+
+  Numerical/parallel_t3/complete/all16_rough_yukawa_fit.py
+  scripts/RunT3All16RoughYukawaFit.py
+  tests/test_t3_all16_rough_yukawa_fit.py
+  INSTALL_AND_RUN.txt
+
+The three .py files replace the same relative paths from the previous v1 ZIP.
+No old numerical outputs are overwritten. Choose a fresh --output directory.
+
+WHAT IT DOES
+------------
+One independent optimisation per model, each with 18 real UV Yukawa entries.
+Two fixed A(-4)/D(-2) benchmark points are first evaluated, to choose an
+initial centre. Then scrambled Sobol candidates (18D), finite-difference
+sensitivity screening, and several bounded least_squares starts are used.
+Local optimisation first releases 5, then 9, then 18 variables by default.
+Stop on a freshly computed chi2 STRICTLY BELOW 0.01; recheck the winner by
+rerunning the complete existing rough pipeline before marking TARGET_REACHED.
+All trial evaluations recompute B's UV/EFT1 RG + F boundary; Stream1's
+conditional tensors; Stream2's coupled Wilson RG; Stream3's simultaneous
+scalar matching and SMEFT observables. Invalid source/basis/purity points
+remain BLOCKED, never returned as valid small chi2.
+
+IMPORTANT PHYSICS LIMITATIONS
+----------------------------
+All-16 pipeline is APPROXIMATE / CONDITIONAL: assumed GammaCC/Weyl sign,
+zero finite fermion-hard C5, optional reduced quartic projection, candidate
+EFT1 Wilson anomalous dimensions and incomplete physical operator matching.
+Some models can be blocked by current source mapping, Ward or Weinberg purity
+checks. All 16 are attempted, but this does NOT guarantee 16 fitted Yukawas.
+Chi2<0.01 in this approximation does NOT mean physical MSbar fit completed.
+Only 18 real UV Yukawas are varied; additional complex/conjugate Yukawas are
+held at the shared UV benchmark zero policy.
+
+POWERSHELL: from C:\thesistemp\T3neutrinomassmodelpipeline, .venv active
+
+1. Tests (standalone numerical search tests, NOT full Matchete/RGBeta):
+    python -X utf8 -m pytest -q tests/test_t3_all16_rough_yukawa_fit.py
+
+2. Source-file inventory:
+    python -X utf8 -m scripts.RunT3All16RoughYukawaFit --preflight
+
+3. Quick 1-model PILOT (few complete EFT evaluations):
+    python -X utf8 -m scripts.RunT3All16RoughYukawaFit `
+      --run --models A_-4 `
+      --sobol-points 4 --screen-points 3 `
+      --active-schedule 3 --starts 1 --max-nfev 2 --max-trials 20 `
+      --target-chi2 0.01 `
+      --output output/parallel_t3/all16_sobol_pilot01 --debug
+
+4. All 16 models (NOT a quick command computationally):
+    python -X utf8 -m scripts.RunT3All16RoughYukawaFit `
+      --run `
+      --target-chi2 0.01 `
+      --sobol-points 16 --screen-points 18 `
+      --active-schedule 5 9 18 --starts 2 `
+      --max-nfev 12 --max-trials 250 `
+      --output output/parallel_t3/all16_sobol_fit01 --debug
+
+A completed/blocked model writes:
+    output/parallel_t3/all16_sobol_fit01/<MODEL>/result.json
+
+A best-so-far trial writes:
+    output/parallel_t3/all16_sobol_fit01/<MODEL>/checkpoint.json
+
+The batch writes:
+    output/parallel_t3/all16_sobol_fit01/summary.json
+
+The unique-trial cap includes both benchmarks, Sobol, screening, objective and
+Jacobian probes. A separate end-to-end verification evaluation does not count
+against the search budget. Final statuses include TARGET_REACHED_CONDITIONAL,
+CONDITIONAL_OPTIMIZATION_INCOMPLETE, BLOCKED_NO_VALID_SEED, and
+BLOCKED_SOURCE_OR_NUMERICAL. All are conditional, not physical predictions.
+
+Use --plan to print the selected models/search schedule without computing.
+The source preflight checks file presence only, not feasibility of the actual
+source mapping or gauge-invariant matching.

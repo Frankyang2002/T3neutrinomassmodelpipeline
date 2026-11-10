@@ -1,0 +1,1811 @@
+{
+  "EFT_order": "UV -> ALL F out -> EFT1 BOTH S -> BOTH S out -> SMEFT",
+  "all_file_paths_relative_to_project_root": true,
+  "blocked_models": 0,
+  "completed_models": 16,
+  "conditional_results_not_physical_mass_predictions": true,
+  "existing_batch_outputs_unchanged": true,
+  "integration_scales_GeV": {
+    "MF": 100000.0,
+    "MS": 1000.0,
+    "mu_low": 173.0
+  },
+  "model_order": [
+    "A_-4",
+    "A_-2",
+    "A_+0",
+    "B_-3",
+    "B_-1",
+    "B_+1",
+    "C_-3",
+    "C_-1",
+    "C_+1",
+    "D_-2",
+    "D_+0",
+    "D_+2",
+    "E_-4",
+    "E_-2",
+    "E_+0",
+    "E_+2"
+  ],
+  "native_pole_fitted_as_counterterm": false,
+  "nominal_scenario_rows": 48,
+  "numpy_version": "2.5.3",
+  "physical_MSbar_matching_claimed": false,
+  "primary_nominal_rows": 16,
+  "python_version": "3.12.10",
+  "report_file_SHA256": {
+    "PROCESS.md": "5b603346ddf9b086b8e21ec06641330d414ee4a2fe71d5746a9c0e184e1449fe",
+    "all16_nominal.csv": "3a7c3e05e197c5c259a400c55e05f029932fee5f446aaba4a2408443342bd294",
+    "all16_overview.csv": "df39d2ed313561959f15c3eb4d9cef8c5694a90f28e6360ccf77bf512c55b37b",
+    "all16_scenarios.csv": "14d9fbc3d9d9bf7fd8ba7da75e3a1f5560801a6239b1743e8290ac7caa650251",
+    "all16_wilson_matrices.npz": "da0d2a4a864d2d0b94925cf899e26dda367ef17ca8eaf54d5fb67f80cd9fde76"
+  },
+  "saved_inputs_and_batch7_outputs": {
+    "batch7_summary": {
+      "blocked_count": 0,
+      "completed_count": 16,
+      "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/summary.json",
+      "schema": "t3-native-source-pole-closure-batch7-v1",
+      "sha256": "cc34cc458ae6a7a341a0fb1b0433220408e0dac5b40fa42a3f09a101bb112dda"
+    },
+    "mu_low_GeV": 173.0,
+    "provenance": {
+      "A_+0": {
+        "batch7_data_files": {
+          "conditional_mass_and_mixing_scan.csv": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/A_p0/conditional_mass_and_mixing_scan.csv",
+            "sha256": "129fe729d93cf66f38a0497b9f016b23a5687de3f3d76ea33ca93e7261de58f3"
+          },
+          "matching_scale_scenario_matrices.npz": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/A_p0/matching_scale_scenario_matrices.npz",
+            "sha256": "f3243fac609599e717484db3f13d59157589f53ffda8030b5a6a5ef5dbb99d51"
+          },
+          "source_pole_and_matching_ledger.json": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/A_p0/source_pole_and_matching_ledger.json",
+            "sha256": "0c2b21c396019274279b349951c76f4c55631da5887d132b2a93a19e1b530fe5"
+          },
+          "source_poles_and_counterterms.npz": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/A_p0/source_poles_and_counterterms.npz",
+            "sha256": "3561b020974871e674eb31ccb596ce39463764e1d9aac1f4e6787e931c0c3ad2"
+          }
+        },
+        "batch7_summary_row": {
+          "EFT1_scalar_CT_vs_ADM_scalar_pair_relative": 2.2067009096129986e-16,
+          "EFT1_scalar_CT_vs_B0_relative": 2.650001135325288e-15,
+          "EFT1_source_antisymmetric_cancellation_fraction": 0.0,
+          "EFT1_source_quartic_count": 9,
+          "batch6_compare": {
+            "batch6_CT_B0_relative": 2.650001135325288e-15,
+            "batch6_comparison_passed": true,
+            "batch6_native_CT_relative": 0.36670735817209493,
+            "batch6_output_present": true
+          },
+          "low_energy_running_computed": true,
+          "model": "A_+0",
+          "mu_low_gev": 173.0,
+          "native_PL_kernel_count": 2,
+          "native_source_quartic_count": 2,
+          "native_vs_candidate_seven_channel_ADM_relative": 0.3667073581720949,
+          "native_vs_explicit_scalar_CT_relative": 0.36670735817209493,
+          "nominal_analytic_masses_eV": [
+            136.1355216781856,
+            235.60989532019775,
+            396.9857020899628
+          ],
+          "output_path": "output\\parallel_t3\\native_pole_closure_all16_batch7_v1\\A_p0\\source_pole_and_matching_ledger.json",
+          "output_sha256": "0c2b21c396019274279b349951c76f4c55631da5887d132b2a93a19e1b530fe5",
+          "stage": "complete",
+          "status": "NUMERICAL_SOURCE_RESOLVED_COUNTERTERM_AND_POLE_AUDIT_CONDITIONAL",
+          "vev_gev": 246.22
+        },
+        "native_pole_diagnostic_only": true,
+        "source_files": {
+          "B1_MF_quartic": {
+            "path": "output/parallel_t3/rough_inputs/fhard_triangle_all16_batch1_v1/a/A_p0/background.npz",
+            "sha256": "8f61528ff7380ad6802f8eb48633a174016c1fee1a27ca3e38c445f6c88f7611"
+          },
+          "B1_hard": {
+            "path": "output/parallel_t3/fhard_triangle_all16_batch1_v1/hard_fermion/A_p0/fermion_hard_triangle.npz",
+            "sha256": "204075e9fc3e8ce3b12de3e9ec3161f1aeddef110fa5175e1bf0114d5b2488a9"
+          },
+          "B1_hard_json": {
+            "path": "output/parallel_t3/fhard_triangle_all16_batch1_v1/hard_fermion/A_p0/fermion_hard_triangle.json",
+            "sha256": "48c79b384f1014ce1022a59d06cf6edfb33278f5924eb1ade71329dc520c067a"
+          },
+          "B2_MS_C5": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/results/A_p0/C5_smeft_at_MS.npz",
+            "sha256": "1c4664e180e4d2692feab068f1431c1aa3365a04f0a4a0651f90bfdbfdcc3b59"
+          },
+          "B2_strict": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/inputs/A_p0/strict_wilson_channels.npz",
+            "sha256": "497a3e7f3079233344da984250435537524bfa43065c1b522664c8c1638c1a84"
+          },
+          "B2_strict_json": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/inputs/A_p0/strict_wilson_channels.json",
+            "sha256": "1c61fc59d46a0852341a15674072ea0a5670808833b920320db7110bf58ec1da"
+          },
+          "B4_MS_C5": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/results/A_p0/C5_smeft_at_MS.npz",
+            "sha256": "2bc6f2c0297695913dac58170506ca58668df393fbc640027ad0df70f862aae5"
+          },
+          "B4_native": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/inputs/A_p0/native_MF_LLHH_finite_source_candidate.npz",
+            "sha256": "17f7e17392440823379a1d7ce1abf2e59af192b198a7c6e0c412b9cdd28d5dd3"
+          },
+          "B4_native_json": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/inputs/A_p0/native_MF_LLHH_finite_source_candidate.json",
+            "sha256": "0efef67eee95ab2df83a956c927bd51b584ca2cfbaba94b2376ffd5a9b441770"
+          },
+          "B5_MS_C5": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/results/A_p0/C5_smeft_at_MS.npz",
+            "sha256": "9b0b01f7ccb7807e7a8b33ab9ef5cabc3a390a85eef065ca0e762c42377edbed"
+          },
+          "B5_background": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/A_p0/background.npz",
+            "sha256": "cfdc1cc5a0a15fd44d39b6d9bc7bb4cef6159915270bcd9b93c90f0646c262c3"
+          },
+          "B5_background_json": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/A_p0/background.json",
+            "sha256": "5c1950e99065692897802b43c1ac53f6fbfce17871c779ef6de26f7b946d674c"
+          },
+          "B5_pole": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/A_p0/hard_soft_and_native_Laurent.npz",
+            "sha256": "f8deb26b2e2c0ec2605b137599adb68d62fe73865a0c3eeea700d189509a226f"
+          },
+          "B5_pole_json": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/A_p0/hard_soft_and_native_Laurent.json",
+            "sha256": "9b667420efd68cd082c6ea97295a91b288aa4984c7f4ceeee4dc78db79f591c8"
+          }
+        }
+      },
+      "A_-2": {
+        "batch7_data_files": {
+          "conditional_mass_and_mixing_scan.csv": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/A_m2/conditional_mass_and_mixing_scan.csv",
+            "sha256": "bfc2511a3d36990ead1bb61a70dddc465da7882627948a523b70e350106a11f4"
+          },
+          "matching_scale_scenario_matrices.npz": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/A_m2/matching_scale_scenario_matrices.npz",
+            "sha256": "8f5b07af1e2429cf9b01bcfc3bec48fa9878b51694a255d46e37ebd2869e43dd"
+          },
+          "source_pole_and_matching_ledger.json": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/A_m2/source_pole_and_matching_ledger.json",
+            "sha256": "cf5a5198317592ba6fcbfab54c26e88f6e379ec5711be3c6e581e53705882384"
+          },
+          "source_poles_and_counterterms.npz": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/A_m2/source_poles_and_counterterms.npz",
+            "sha256": "9257f044f61fec4cc3698a493c259d368fa767a5771d1af21cc8063a919ea21c"
+          }
+        },
+        "batch7_summary_row": {
+          "EFT1_scalar_CT_vs_ADM_scalar_pair_relative": 2.140645082429888e-16,
+          "EFT1_scalar_CT_vs_B0_relative": 1.0963891143480998e-15,
+          "EFT1_source_antisymmetric_cancellation_fraction": 0.0,
+          "EFT1_source_quartic_count": 9,
+          "batch6_compare": {
+            "batch6_CT_B0_relative": 1.0963891143480998e-15,
+            "batch6_comparison_passed": true,
+            "batch6_native_CT_relative": 0.3330463272087953,
+            "batch6_output_present": true
+          },
+          "low_energy_running_computed": true,
+          "model": "A_-2",
+          "mu_low_gev": 173.0,
+          "native_PL_kernel_count": 2,
+          "native_source_quartic_count": 2,
+          "native_vs_candidate_seven_channel_ADM_relative": 0.3330463272087953,
+          "native_vs_explicit_scalar_CT_relative": 0.3330463272087953,
+          "nominal_analytic_masses_eV": [
+            135.16280277143238,
+            233.91865395445024,
+            394.13573346348016
+          ],
+          "output_path": "output\\parallel_t3\\native_pole_closure_all16_batch7_v1\\A_m2\\source_pole_and_matching_ledger.json",
+          "output_sha256": "cf5a5198317592ba6fcbfab54c26e88f6e379ec5711be3c6e581e53705882384",
+          "stage": "complete",
+          "status": "NUMERICAL_SOURCE_RESOLVED_COUNTERTERM_AND_POLE_AUDIT_CONDITIONAL",
+          "vev_gev": 246.22
+        },
+        "native_pole_diagnostic_only": true,
+        "source_files": {
+          "B1_MF_quartic": {
+            "path": "output/parallel_t3/rough_inputs/fhard_triangle_all16_batch1_v1/a/A_m2/background.npz",
+            "sha256": "0de6f8a5e6caa19d062b349196028c9f493d023e490789d323b0cb6f80bd91e7"
+          },
+          "B1_hard": {
+            "path": "output/parallel_t3/fhard_triangle_all16_batch1_v1/hard_fermion/A_m2/fermion_hard_triangle.npz",
+            "sha256": "bd7aaa350ad995768be41c7337e0271cc3b6b04f40bfc0933fcadb8322197646"
+          },
+          "B1_hard_json": {
+            "path": "output/parallel_t3/fhard_triangle_all16_batch1_v1/hard_fermion/A_m2/fermion_hard_triangle.json",
+            "sha256": "6e4882f5a45b793faef47dd9f9b7d011f5b9d908b4cc0c75bf380cbea858ee73"
+          },
+          "B2_MS_C5": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/results/A_m2/C5_smeft_at_MS.npz",
+            "sha256": "28efb6d2d76887dd78ade25549b42892d0d27dc22c78c81a5570bb5d0bd5c6a3"
+          },
+          "B2_strict": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/inputs/A_m2/strict_wilson_channels.npz",
+            "sha256": "ad5aaf4fa873f10717368e463e5301d8ab5fddbbf1d1a0d49ded6757cf0f4da5"
+          },
+          "B2_strict_json": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/inputs/A_m2/strict_wilson_channels.json",
+            "sha256": "a03a641cdb5141387436327faa499b4bdf16d5c6bf058def648d2896ed9037d7"
+          },
+          "B4_MS_C5": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/results/A_m2/C5_smeft_at_MS.npz",
+            "sha256": "744a5f31e3805bc7392f967f27cbb9b9817d20403cc2c74b2a613442f1f34184"
+          },
+          "B4_native": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/inputs/A_m2/native_MF_LLHH_finite_source_candidate.npz",
+            "sha256": "254fda006141e1f5e907a328a53a0660c2620a71e315bf6d5c6b0d0503127295"
+          },
+          "B4_native_json": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/inputs/A_m2/native_MF_LLHH_finite_source_candidate.json",
+            "sha256": "9a022c16a0eece5650c1eee802c887d1442c4a48d83a69dd791370ee4e02e885"
+          },
+          "B5_MS_C5": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/results/A_m2/C5_smeft_at_MS.npz",
+            "sha256": "5573949d449f3768086a33441419c887485d363c7939a307db235f7bb21d7333"
+          },
+          "B5_background": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/A_m2/background.npz",
+            "sha256": "6b3c8883dcfbfc425fdd577d97d6b0e59536e9e422a0bdbec52617552186ec31"
+          },
+          "B5_background_json": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/A_m2/background.json",
+            "sha256": "2803b857793bcdcf75eab96af55abe26ca7f63598baace3f7a8ad56ff2a08870"
+          },
+          "B5_pole": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/A_m2/hard_soft_and_native_Laurent.npz",
+            "sha256": "ec09078316d6f4cbdc6f3d7133e89ac3487e5d4ad9588462def9e9db47a98769"
+          },
+          "B5_pole_json": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/A_m2/hard_soft_and_native_Laurent.json",
+            "sha256": "94e31e475c7c6375750e836d1732db2f71296438092caf55023987b7d70406e8"
+          }
+        }
+      },
+      "A_-4": {
+        "batch7_data_files": {
+          "conditional_mass_and_mixing_scan.csv": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/A_m4/conditional_mass_and_mixing_scan.csv",
+            "sha256": "6f2c4323ad3e6d46f1b51ee795b2606471ddc375a256e469ba65f4a6fec5ac4a"
+          },
+          "matching_scale_scenario_matrices.npz": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/A_m4/matching_scale_scenario_matrices.npz",
+            "sha256": "12505bb3595e9ab14461305af8c080bfecfe3c8f011d27c8348cb47a863e0da8"
+          },
+          "source_pole_and_matching_ledger.json": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/A_m4/source_pole_and_matching_ledger.json",
+            "sha256": "f54d857271ee544b621b95201c000f897e3804a78743271a8dc25c00f8ca498d"
+          },
+          "source_poles_and_counterterms.npz": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/A_m4/source_poles_and_counterterms.npz",
+            "sha256": "35b0479efed4edb75b6a2b5ca6224843f5b6e727c7852671166534d778c5c465"
+          }
+        },
+        "batch7_summary_row": {
+          "EFT1_scalar_CT_vs_ADM_scalar_pair_relative": 2.8537136910709514e-16,
+          "EFT1_scalar_CT_vs_B0_relative": 1.2171059772892606e-15,
+          "EFT1_source_antisymmetric_cancellation_fraction": 0.0,
+          "EFT1_source_quartic_count": 9,
+          "batch6_compare": {
+            "batch6_CT_B0_relative": 1.2171059772892606e-15,
+            "batch6_comparison_passed": true,
+            "batch6_native_CT_relative": 0.4627150340882287,
+            "batch6_output_present": true
+          },
+          "low_energy_running_computed": true,
+          "model": "A_-4",
+          "mu_low_gev": 173.0,
+          "native_PL_kernel_count": 1,
+          "native_source_quartic_count": 1,
+          "native_vs_candidate_seven_channel_ADM_relative": 0.4627150340882287,
+          "native_vs_explicit_scalar_CT_relative": 0.4627150340882287,
+          "nominal_analytic_masses_eV": [
+            134.70475440199755,
+            233.0978143698186,
+            392.7624578930232
+          ],
+          "output_path": "output\\parallel_t3\\native_pole_closure_all16_batch7_v1\\A_m4\\source_pole_and_matching_ledger.json",
+          "output_sha256": "f54d857271ee544b621b95201c000f897e3804a78743271a8dc25c00f8ca498d",
+          "stage": "complete",
+          "status": "NUMERICAL_SOURCE_RESOLVED_COUNTERTERM_AND_POLE_AUDIT_CONDITIONAL",
+          "vev_gev": 246.22
+        },
+        "native_pole_diagnostic_only": true,
+        "source_files": {
+          "B1_MF_quartic": {
+            "path": "output/parallel_t3/rough_inputs/fhard_triangle_all16_batch1_v1/a/A_m4/background.npz",
+            "sha256": "bcaec627fc5cd12c5736bcd54b912631027cf30ddc853df2a349d622878a0cfd"
+          },
+          "B1_hard": {
+            "path": "output/parallel_t3/fhard_triangle_all16_batch1_v1/hard_fermion/A_m4/fermion_hard_triangle.npz",
+            "sha256": "09fcd3e54be6b6c150777eaba2b0f59ae77ab62a3f1a565921681c5ff6db2bed"
+          },
+          "B1_hard_json": {
+            "path": "output/parallel_t3/fhard_triangle_all16_batch1_v1/hard_fermion/A_m4/fermion_hard_triangle.json",
+            "sha256": "6d584bb21c4d0ccf4f55e2727db4e7b794e15bfc644edcaf028c2c75475b88d1"
+          },
+          "B2_MS_C5": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/results/A_m4/C5_smeft_at_MS.npz",
+            "sha256": "d53e0602ccc3924ea299e7ce14b041fa9f60a79834a5ac9db9916680a82279dc"
+          },
+          "B2_strict": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/inputs/A_m4/strict_wilson_channels.npz",
+            "sha256": "f5faf33a9b47a6ef8883e5f49c0264f36e565ea632586b01788fca7dac39b13f"
+          },
+          "B2_strict_json": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/inputs/A_m4/strict_wilson_channels.json",
+            "sha256": "2bfa900d07ea181a0bf3fe4c3161d7978c57eacfe4b386b76554310ba736c5ef"
+          },
+          "B4_MS_C5": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/results/A_m4/C5_smeft_at_MS.npz",
+            "sha256": "6c91d80ca810c27f2cf82b2a2c8d967f2ef185cbe37b3066f60aa767019bd696"
+          },
+          "B4_native": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/inputs/A_m4/native_MF_LLHH_finite_source_candidate.npz",
+            "sha256": "232c39552383ae0fc54baf585b7fb80bda8edf6a7da6b29f08a7455f378db9fc"
+          },
+          "B4_native_json": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/inputs/A_m4/native_MF_LLHH_finite_source_candidate.json",
+            "sha256": "7c61d900e89b3bd2e4fb2d7718ef50a2ee5d4b5f5282685bcb22180f97ac5ee1"
+          },
+          "B5_MS_C5": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/results/A_m4/C5_smeft_at_MS.npz",
+            "sha256": "20ac6ea7a5d6c33eada1085f348e935a60d8e1e0a3a611ad08f7a98f7a13c4b5"
+          },
+          "B5_background": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/A_m4/background.npz",
+            "sha256": "7733ac43b339e2cbe978ad06114ed2d6fc374ce088fc275f77c3921890d49e83"
+          },
+          "B5_background_json": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/A_m4/background.json",
+            "sha256": "0991c49fc0f6b2a40939c6056cb9c86325f319b39bdef56e786e7f6b1e0cd0d1"
+          },
+          "B5_pole": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/A_m4/hard_soft_and_native_Laurent.npz",
+            "sha256": "3299384154677c672ca222b993ede02876bc9f7d04d3a319a69cb33f4c8cb8a9"
+          },
+          "B5_pole_json": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/A_m4/hard_soft_and_native_Laurent.json",
+            "sha256": "5687869ee4ceb4018cb90c0035d087b257dc3bb8249fef25eb9c8847ac713919"
+          }
+        }
+      },
+      "B_+1": {
+        "batch7_data_files": {
+          "conditional_mass_and_mixing_scan.csv": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/B_p1/conditional_mass_and_mixing_scan.csv",
+            "sha256": "8983f968bbde9975f88b9f51b6ac339bcd9cde2d863a1a55ac8581a4655c444f"
+          },
+          "matching_scale_scenario_matrices.npz": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/B_p1/matching_scale_scenario_matrices.npz",
+            "sha256": "ab1054657776ce4607179fe1def01f0fa411692ce5e1413da56c072f85e03000"
+          },
+          "source_pole_and_matching_ledger.json": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/B_p1/source_pole_and_matching_ledger.json",
+            "sha256": "56e9fb102b544478209d570544ec59df3178fcffde8d313c27083c4f4bff2481"
+          },
+          "source_poles_and_counterterms.npz": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/B_p1/source_poles_and_counterterms.npz",
+            "sha256": "e0edd937879e8f8c099b6b2aa8a6d5d5bb675d5e0640055e698794b07aaa368f"
+          }
+        },
+        "batch7_summary_row": {
+          "EFT1_scalar_CT_vs_ADM_scalar_pair_relative": 3.044823708049892e-16,
+          "EFT1_scalar_CT_vs_B0_relative": 6.304883081202244e-15,
+          "EFT1_source_antisymmetric_cancellation_fraction": 0.0,
+          "EFT1_source_quartic_count": 10,
+          "batch6_compare": {
+            "batch6_CT_B0_relative": 6.304883081202244e-15,
+            "batch6_comparison_passed": true,
+            "batch6_native_CT_relative": 1.5773502691896264,
+            "batch6_output_present": true
+          },
+          "low_energy_running_computed": true,
+          "model": "B_+1",
+          "mu_low_gev": 173.0,
+          "native_PL_kernel_count": 1,
+          "native_source_quartic_count": 1,
+          "native_vs_candidate_seven_channel_ADM_relative": 1.5773502691896264,
+          "native_vs_explicit_scalar_CT_relative": 1.5773502691896264,
+          "nominal_analytic_masses_eV": [
+            127.34010788885426,
+            220.39333813062274,
+            371.34989788678274
+          ],
+          "output_path": "output\\parallel_t3\\native_pole_closure_all16_batch7_v1\\B_p1\\source_pole_and_matching_ledger.json",
+          "output_sha256": "56e9fb102b544478209d570544ec59df3178fcffde8d313c27083c4f4bff2481",
+          "stage": "complete",
+          "status": "NUMERICAL_SOURCE_RESOLVED_COUNTERTERM_AND_POLE_AUDIT_CONDITIONAL",
+          "vev_gev": 246.22
+        },
+        "native_pole_diagnostic_only": true,
+        "source_files": {
+          "B1_MF_quartic": {
+            "path": "output/parallel_t3/rough_inputs/fhard_triangle_all16_batch1_v1/a/B_p1/background.npz",
+            "sha256": "b09d23569627878cf77a55f39570b9ac0c78fd907abad3e871ca9f1361dc335f"
+          },
+          "B1_hard": {
+            "path": "output/parallel_t3/fhard_triangle_all16_batch1_v1/hard_fermion/B_p1/fermion_hard_triangle.npz",
+            "sha256": "23ab8143f20cfa29f936de7caea206ef55105d9dc57047e10e525e7c2393f327"
+          },
+          "B1_hard_json": {
+            "path": "output/parallel_t3/fhard_triangle_all16_batch1_v1/hard_fermion/B_p1/fermion_hard_triangle.json",
+            "sha256": "99a661d93cdabd0e4d9ec70e52d135bb34b13b3309a2e43aa60cb385ca666eb6"
+          },
+          "B2_MS_C5": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/results/B_p1/C5_smeft_at_MS.npz",
+            "sha256": "2cc3deece856d9610157eaeb92959e54f2b69c5377d95ac7ce7c447210f570bf"
+          },
+          "B2_strict": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/inputs/B_p1/strict_wilson_channels.npz",
+            "sha256": "b60fe93fd90b2caa24ee4c0e42fccd9c1d6d3c917974de4a0f10df1f404dc35c"
+          },
+          "B2_strict_json": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/inputs/B_p1/strict_wilson_channels.json",
+            "sha256": "d5c586fbd46eacb033cef7470c6f565e8afb890cad0349a3026eb4915e0dcaff"
+          },
+          "B4_MS_C5": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/results/B_p1/C5_smeft_at_MS.npz",
+            "sha256": "f1c9c0e5ff72cecadda9b35950d7d0529058b8054445b5de6a37cc86bc1cc865"
+          },
+          "B4_native": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/inputs/B_p1/native_MF_LLHH_finite_source_candidate.npz",
+            "sha256": "290465e3f16a5c6fb1f6cd70047c42daa5eadc4b0660b12c4cfe6ae95339ae17"
+          },
+          "B4_native_json": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/inputs/B_p1/native_MF_LLHH_finite_source_candidate.json",
+            "sha256": "6c2af230cb811cbf87879fa73845736ac02507cabb716d9dbf41b8825862b369"
+          },
+          "B5_MS_C5": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/results/B_p1/C5_smeft_at_MS.npz",
+            "sha256": "68d9d6dcfb9e461bcf54f3cdb90b2d719ac2eb18670b0107ed50a68c030c58a5"
+          },
+          "B5_background": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/B_p1/background.npz",
+            "sha256": "ef129debb137a822562ce6de5c357653a82957301ebe3969b6fcd73693500700"
+          },
+          "B5_background_json": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/B_p1/background.json",
+            "sha256": "5f40aaa92a73d3402573219305d9bf3f265ad71d990fcd1f4692619b2a02cb94"
+          },
+          "B5_pole": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/B_p1/hard_soft_and_native_Laurent.npz",
+            "sha256": "f684dd78239d1d3384fe7f0017c8a948e7e5227b2a191b7b189098a5148e8b46"
+          },
+          "B5_pole_json": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/B_p1/hard_soft_and_native_Laurent.json",
+            "sha256": "db21ead12938e4cb4fa135c610b62c76e98a5b3e6d3f822be428d8af2d8c42d5"
+          }
+        }
+      },
+      "B_-1": {
+        "batch7_data_files": {
+          "conditional_mass_and_mixing_scan.csv": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/B_m1/conditional_mass_and_mixing_scan.csv",
+            "sha256": "8488de6f7df7b0b89f4427116a59126b5a39bc7785e921417c82eae7acca929d"
+          },
+          "matching_scale_scenario_matrices.npz": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/B_m1/matching_scale_scenario_matrices.npz",
+            "sha256": "6a5deb19d79e0cd7ed79862ac4619cd26f83123005c14266a5552b8271505d83"
+          },
+          "source_pole_and_matching_ledger.json": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/B_m1/source_pole_and_matching_ledger.json",
+            "sha256": "20d18babaeb44c7df1d27443acc99bb6e50491cbe5512764fd370d058e376f7d"
+          },
+          "source_poles_and_counterterms.npz": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/B_m1/source_poles_and_counterterms.npz",
+            "sha256": "c81e381c7aefda24b105f882952ae0cf6fb2a13ece3be90177859b966e6b1184"
+          }
+        },
+        "batch7_summary_row": {
+          "EFT1_scalar_CT_vs_ADM_scalar_pair_relative": 4.3725789368260773e-16,
+          "EFT1_scalar_CT_vs_B0_relative": 6.920179179656093e-16,
+          "EFT1_source_antisymmetric_cancellation_fraction": 0.0,
+          "EFT1_source_quartic_count": 10,
+          "batch6_compare": {
+            "batch6_comparison_passed": null,
+            "batch6_output_present": false
+          },
+          "low_energy_running_computed": true,
+          "model": "B_-1",
+          "mu_low_gev": 173.0,
+          "native_PL_kernel_count": 34,
+          "native_source_quartic_count": 3,
+          "native_vs_candidate_seven_channel_ADM_relative": 0.9844802666717799,
+          "native_vs_explicit_scalar_CT_relative": 0.9844802666717799,
+          "nominal_analytic_masses_eV": [
+            114.38117585697377,
+            197.8652890876049,
+            333.4101149509319
+          ],
+          "output_path": "output\\parallel_t3\\native_pole_closure_all16_batch7_v1\\B_m1\\source_pole_and_matching_ledger.json",
+          "output_sha256": "20d18babaeb44c7df1d27443acc99bb6e50491cbe5512764fd370d058e376f7d",
+          "stage": "complete",
+          "status": "NUMERICAL_SOURCE_RESOLVED_COUNTERTERM_AND_POLE_AUDIT_CONDITIONAL",
+          "vev_gev": 246.22
+        },
+        "native_pole_diagnostic_only": true,
+        "source_files": {
+          "B1_MF_quartic": {
+            "path": "output/parallel_t3/rough_inputs/fhard_triangle_all16_batch1_v1/a/B_m1/background.npz",
+            "sha256": "555a769334375428caa142989bfcea025aebc023696cc4e0dc57e925bd91efd8"
+          },
+          "B1_hard": {
+            "path": "output/parallel_t3/fhard_triangle_all16_batch1_v1/hard_fermion/B_m1/fermion_hard_triangle.npz",
+            "sha256": "f9988e95f7453172779b4da22a305e2f2b5eecfa819a55e88f85b98bce6fade9"
+          },
+          "B1_hard_json": {
+            "path": "output/parallel_t3/fhard_triangle_all16_batch1_v1/hard_fermion/B_m1/fermion_hard_triangle.json",
+            "sha256": "51c55e27e021ea6060fc0df9808298265e4ac66a910c4679ac69c51564f9b3ba"
+          },
+          "B2_MS_C5": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/results/B_m1/C5_smeft_at_MS.npz",
+            "sha256": "178cc62373ff76c1104543f886730026bf24e419dd8c95355886cd83e6e3bdb2"
+          },
+          "B2_strict": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/inputs/B_m1/strict_wilson_channels.npz",
+            "sha256": "910fae542757b6f638364415f9a9b87b000e26cacae0beceec93361e2800fcac"
+          },
+          "B2_strict_json": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/inputs/B_m1/strict_wilson_channels.json",
+            "sha256": "e4b5ce9fa0aa65bf70e4c06e9c7bcef4de6511186d8acd0656fe446810b06d12"
+          },
+          "B4_MS_C5": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/results/B_m1/C5_smeft_at_MS.npz",
+            "sha256": "006a0c8fd5ef4c0720eaf1f208b3a08849fcdaa58ebf7776d2d58c51209e9ea0"
+          },
+          "B4_native": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/inputs/B_m1/native_MF_LLHH_finite_source_candidate.npz",
+            "sha256": "ef85345226b5396fd923bf2254265d33854f8eef845db6a023d5139f9fc78fe1"
+          },
+          "B4_native_json": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/inputs/B_m1/native_MF_LLHH_finite_source_candidate.json",
+            "sha256": "62e10b5222e0d0f47daf8f31daffe5a57b7151b6cc91c2be33efe9e02a4cf118"
+          },
+          "B5_MS_C5": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/results/B_m1/C5_smeft_at_MS.npz",
+            "sha256": "986546ceeeef1abe9f403b064a9db1342e5c95810693174ee78b068e125cbe20"
+          },
+          "B5_background": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/B_m1/background.npz",
+            "sha256": "bc921feb2d5fec577d16dbd306b4f78b1882f96fe68b60e93d7801c34a38e1fb"
+          },
+          "B5_background_json": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/B_m1/background.json",
+            "sha256": "d0aaecdf6697c69926f9472b8bb34b1e8ebd831fd0835132ba66f4774646f6ae"
+          },
+          "B5_pole": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/B_m1/hard_soft_and_native_Laurent.npz",
+            "sha256": "57e0eb3d27c0fe433e6cdb4fcd39d23e4b5f530422f2b28d315451000c789326"
+          },
+          "B5_pole_json": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/B_m1/hard_soft_and_native_Laurent.json",
+            "sha256": "414b5114e452bb75b3a6aed09542cc684a1cee64236fa51968a0d2a68de38297"
+          }
+        }
+      },
+      "B_-3": {
+        "batch7_data_files": {
+          "conditional_mass_and_mixing_scan.csv": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/B_m3/conditional_mass_and_mixing_scan.csv",
+            "sha256": "3f04cc372154f0738dec7810e33233598d3c8cfb91a77e0034e548424559a1d3"
+          },
+          "matching_scale_scenario_matrices.npz": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/B_m3/matching_scale_scenario_matrices.npz",
+            "sha256": "c52fdedd6989992d7f3e17d44e2496d9d27002d0d015e37261c957347eb33e05"
+          },
+          "source_pole_and_matching_ledger.json": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/B_m3/source_pole_and_matching_ledger.json",
+            "sha256": "df1d22f343d6d668654a0065a100a040ac4bfa7d76f68f02c88a053db46d54a8"
+          },
+          "source_poles_and_counterterms.npz": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/B_m3/source_poles_and_counterterms.npz",
+            "sha256": "f30e476f7739a9ec2c075dc97e0fb84954d443ca4184486240cbbff293cc93ec"
+          }
+        },
+        "batch7_summary_row": {
+          "EFT1_scalar_CT_vs_ADM_scalar_pair_relative": 3.2523985512608306e-16,
+          "EFT1_scalar_CT_vs_B0_relative": 2.364168274688311e-15,
+          "EFT1_source_antisymmetric_cancellation_fraction": 0.0,
+          "EFT1_source_quartic_count": 10,
+          "batch6_compare": {
+            "batch6_CT_B0_relative": 2.364168274688311e-15,
+            "batch6_comparison_passed": true,
+            "batch6_native_CT_relative": 1.5773502691896262,
+            "batch6_output_present": true
+          },
+          "low_energy_running_computed": true,
+          "model": "B_-3",
+          "mu_low_gev": 173.0,
+          "native_PL_kernel_count": 1,
+          "native_source_quartic_count": 1,
+          "native_vs_candidate_seven_channel_ADM_relative": 1.5773502691896262,
+          "native_vs_explicit_scalar_CT_relative": 1.5773502691896262,
+          "nominal_analytic_masses_eV": [
+            127.36297304655352,
+            220.43349207002356,
+            371.41747274504445
+          ],
+          "output_path": "output\\parallel_t3\\native_pole_closure_all16_batch7_v1\\B_m3\\source_pole_and_matching_ledger.json",
+          "output_sha256": "df1d22f343d6d668654a0065a100a040ac4bfa7d76f68f02c88a053db46d54a8",
+          "stage": "complete",
+          "status": "NUMERICAL_SOURCE_RESOLVED_COUNTERTERM_AND_POLE_AUDIT_CONDITIONAL",
+          "vev_gev": 246.22
+        },
+        "native_pole_diagnostic_only": true,
+        "source_files": {
+          "B1_MF_quartic": {
+            "path": "output/parallel_t3/rough_inputs/fhard_triangle_all16_batch1_v1/a/B_m3/background.npz",
+            "sha256": "6b4dafc174b0197c4ab12b8b09052fa746b3b3e02a1bdc6bd8f69d17030d67f9"
+          },
+          "B1_hard": {
+            "path": "output/parallel_t3/fhard_triangle_all16_batch1_v1/hard_fermion/B_m3/fermion_hard_triangle.npz",
+            "sha256": "dd24e5e9de3ae732931b7763fc59c11e27c1ec8b8273f795640094601d95a898"
+          },
+          "B1_hard_json": {
+            "path": "output/parallel_t3/fhard_triangle_all16_batch1_v1/hard_fermion/B_m3/fermion_hard_triangle.json",
+            "sha256": "6e657adbfc9969564299c7ce298e708f5320d925dc0c0e6cccdde7aecec1a435"
+          },
+          "B2_MS_C5": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/results/B_m3/C5_smeft_at_MS.npz",
+            "sha256": "fa40ae5e756ab8a6ed5fc528faae2816b9f8b6d58fda7c88af6bab7450b3f92e"
+          },
+          "B2_strict": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/inputs/B_m3/strict_wilson_channels.npz",
+            "sha256": "ea35a8652b3d9a1f279f012cd0c17d757dcb45579f2272c41a0ac46f3921014c"
+          },
+          "B2_strict_json": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/inputs/B_m3/strict_wilson_channels.json",
+            "sha256": "efd454aecf4062859acb6c4bb97ec4172698f9cb09bcc9fa8d0c8f2fca4e91ab"
+          },
+          "B4_MS_C5": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/results/B_m3/C5_smeft_at_MS.npz",
+            "sha256": "494d56c66ae0e3ae4eed55a5bfa21c8db09423f61cded2c49b6480501bfe722d"
+          },
+          "B4_native": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/inputs/B_m3/native_MF_LLHH_finite_source_candidate.npz",
+            "sha256": "c421043b0e3a6c17e29da40c5515511bed58c9544c8f83331c213619920e699d"
+          },
+          "B4_native_json": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/inputs/B_m3/native_MF_LLHH_finite_source_candidate.json",
+            "sha256": "363e073072f6ee336668ecb73d8f21663a61787de3706a5144fabd88e14888c3"
+          },
+          "B5_MS_C5": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/results/B_m3/C5_smeft_at_MS.npz",
+            "sha256": "56a29a59a2e891792cf4870151296b03603f57062951040195d65a5a30de27d4"
+          },
+          "B5_background": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/B_m3/background.npz",
+            "sha256": "3189a861b07ec29a4f0c0889857840a2b1a25b153848553c8754128d4db3f126"
+          },
+          "B5_background_json": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/B_m3/background.json",
+            "sha256": "193abda0ab6fc34e426ffe4b86a5f18a030689a070f101e091ef15cd7e13225d"
+          },
+          "B5_pole": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/B_m3/hard_soft_and_native_Laurent.npz",
+            "sha256": "c10bf080b1faa926f8eeec2c6a7142f3e4206628d864a2e8afd471eaf4c44a72"
+          },
+          "B5_pole_json": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/B_m3/hard_soft_and_native_Laurent.json",
+            "sha256": "e16b2e1f25536423313f43d7e1dda3fc65efd8153c9eb5c61e22857b78ede1a1"
+          }
+        }
+      },
+      "C_+1": {
+        "batch7_data_files": {
+          "conditional_mass_and_mixing_scan.csv": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/C_p1/conditional_mass_and_mixing_scan.csv",
+            "sha256": "69a89b3d88935f9961df7d9c7b8132eb146691cd433dae9cd4c11dc471ce1a61"
+          },
+          "matching_scale_scenario_matrices.npz": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/C_p1/matching_scale_scenario_matrices.npz",
+            "sha256": "a5fbdf30576681a5a6abab070e5d55edbfb8e12faeee11809d551aa2c03ac5b7"
+          },
+          "source_pole_and_matching_ledger.json": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/C_p1/source_pole_and_matching_ledger.json",
+            "sha256": "c684883c7c45d6b0ff4103b9baaa6927cb5408acc3020eeac8a9565908e715dd"
+          },
+          "source_poles_and_counterterms.npz": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/C_p1/source_poles_and_counterterms.npz",
+            "sha256": "cca02cb4d5c6adc53d1f56f668d6f92c6fa4bae5d4b353a8b70454966f27b552"
+          }
+        },
+        "batch7_summary_row": {
+          "EFT1_scalar_CT_vs_ADM_scalar_pair_relative": 1.8865760834003562e-16,
+          "EFT1_scalar_CT_vs_B0_relative": 6.989880924777441e-14,
+          "EFT1_source_antisymmetric_cancellation_fraction": 1.0,
+          "EFT1_source_quartic_count": 10,
+          "batch6_compare": {
+            "batch6_CT_B0_relative": 6.989880924777441e-14,
+            "batch6_comparison_passed": true,
+            "batch6_native_CT_relative": 1.577350269189626,
+            "batch6_output_present": true
+          },
+          "low_energy_running_computed": true,
+          "model": "C_+1",
+          "mu_low_gev": 173.0,
+          "native_PL_kernel_count": 1,
+          "native_source_quartic_count": 1,
+          "native_vs_candidate_seven_channel_ADM_relative": 1.577350269189626,
+          "native_vs_explicit_scalar_CT_relative": 1.577350269189626,
+          "nominal_analytic_masses_eV": [
+            72.67631952244335,
+            125.77952628643015,
+            211.93070144233155
+          ],
+          "output_path": "output\\parallel_t3\\native_pole_closure_all16_batch7_v1\\C_p1\\source_pole_and_matching_ledger.json",
+          "output_sha256": "c684883c7c45d6b0ff4103b9baaa6927cb5408acc3020eeac8a9565908e715dd",
+          "stage": "complete",
+          "status": "NUMERICAL_SOURCE_RESOLVED_COUNTERTERM_AND_POLE_AUDIT_CONDITIONAL",
+          "vev_gev": 246.22
+        },
+        "native_pole_diagnostic_only": true,
+        "source_files": {
+          "B1_MF_quartic": {
+            "path": "output/parallel_t3/rough_inputs/fhard_triangle_all16_batch1_v1/a/C_p1/background.npz",
+            "sha256": "0748b0ddaa90ce1a1c16162dac1d4be9df5fce4a12ff355d5c97cad4a649c080"
+          },
+          "B1_hard": {
+            "path": "output/parallel_t3/fhard_triangle_all16_batch1_v1/hard_fermion/C_p1/fermion_hard_triangle.npz",
+            "sha256": "3ed47912cdfc98e9631dee93a93cc330469d97dac2ae3fe6397947dd26f7e619"
+          },
+          "B1_hard_json": {
+            "path": "output/parallel_t3/fhard_triangle_all16_batch1_v1/hard_fermion/C_p1/fermion_hard_triangle.json",
+            "sha256": "6b4cce5c511b525f38550c980e6fe6f260b77110cead63ea9edbe4016bc2ec45"
+          },
+          "B2_MS_C5": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/results/C_p1/C5_smeft_at_MS.npz",
+            "sha256": "6e5a45665bf40a2712d6c6969b861c241f0f5f971f6f4cc7f89250cb48a48afe"
+          },
+          "B2_strict": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/inputs/C_p1/strict_wilson_channels.npz",
+            "sha256": "a88164a6ee31d2edc1f8e84c9cbfea9fc1f8b973584fcf8581da91e174316003"
+          },
+          "B2_strict_json": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/inputs/C_p1/strict_wilson_channels.json",
+            "sha256": "b93f1577c3a63b62bae17da76a215bd8bfb0ea72198ab88250556834fe2ee833"
+          },
+          "B4_MS_C5": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/results/C_p1/C5_smeft_at_MS.npz",
+            "sha256": "1f8e8065e9870ef6b495f252d7ca434da1ebd5306a228eeab1b92ce17c1244bd"
+          },
+          "B4_native": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/inputs/C_p1/native_MF_LLHH_finite_source_candidate.npz",
+            "sha256": "219e89b11a97b9cd0b638639b4b50541bf30a42efe20795361fa659c8681f097"
+          },
+          "B4_native_json": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/inputs/C_p1/native_MF_LLHH_finite_source_candidate.json",
+            "sha256": "103e8a3aaeea2d2e68ef8709445aec46e511f5add15c6dfc46268f51c7f8d1b4"
+          },
+          "B5_MS_C5": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/results/C_p1/C5_smeft_at_MS.npz",
+            "sha256": "b854ccf475318202f96220fd95f7d1874eb659076379e3ae09c0f612a8760fa7"
+          },
+          "B5_background": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/C_p1/background.npz",
+            "sha256": "a27cc1384508ea6b81a130d1348d32b4c533cc74edcac535b3a776382af0a9ff"
+          },
+          "B5_background_json": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/C_p1/background.json",
+            "sha256": "c0805770dfbaa268f105e98d67f4c3d93b7701553a8948a2efd3c92181c32aee"
+          },
+          "B5_pole": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/C_p1/hard_soft_and_native_Laurent.npz",
+            "sha256": "d2dd82d11fd79d360207e4c353bda5c0c80d7a50045397cd7817f2fdddcb1ed0"
+          },
+          "B5_pole_json": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/C_p1/hard_soft_and_native_Laurent.json",
+            "sha256": "8b0598b866b1e82620ae938c612fededc5b7b19da34c15922b806e3b82932ad4"
+          }
+        }
+      },
+      "C_-1": {
+        "batch7_data_files": {
+          "conditional_mass_and_mixing_scan.csv": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/C_m1/conditional_mass_and_mixing_scan.csv",
+            "sha256": "f815e6d7966f1ae9b888de036818823bc026c5e7a77069cc2671d5748bec0140"
+          },
+          "matching_scale_scenario_matrices.npz": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/C_m1/matching_scale_scenario_matrices.npz",
+            "sha256": "ed6b8ebfd91b875aa92601c8575e1581fe4ebba18ed1b252eace531ccbebd03a"
+          },
+          "source_pole_and_matching_ledger.json": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/C_m1/source_pole_and_matching_ledger.json",
+            "sha256": "10f31bef439131ef18508d43a12b962261ecc8f5f0ee91914c9bb5b2766f0e7a"
+          },
+          "source_poles_and_counterterms.npz": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/C_m1/source_poles_and_counterterms.npz",
+            "sha256": "294b4e5772a7844343d4a0db558e54684293cc89fc009b4c330aec0f965c4d67"
+          }
+        },
+        "batch7_summary_row": {
+          "EFT1_scalar_CT_vs_ADM_scalar_pair_relative": 1.6364521771743396e-16,
+          "EFT1_scalar_CT_vs_B0_relative": 1.4579903749344902e-15,
+          "EFT1_source_antisymmetric_cancellation_fraction": 0.0,
+          "EFT1_source_quartic_count": 10,
+          "batch6_compare": {
+            "batch6_CT_B0_relative": 1.4579903749344902e-15,
+            "batch6_comparison_passed": true,
+            "batch6_native_CT_relative": 2.0967620127897004,
+            "batch6_output_present": true
+          },
+          "low_energy_running_computed": true,
+          "model": "C_-1",
+          "mu_low_gev": 173.0,
+          "native_PL_kernel_count": 34,
+          "native_source_quartic_count": 3,
+          "native_vs_candidate_seven_channel_ADM_relative": 2.0967620127897004,
+          "native_vs_explicit_scalar_CT_relative": 2.0967620127897004,
+          "nominal_analytic_masses_eV": [
+            63.785494792186114,
+            110.32068325564305,
+            185.89930838254008
+          ],
+          "output_path": "output\\parallel_t3\\native_pole_closure_all16_batch7_v1\\C_m1\\source_pole_and_matching_ledger.json",
+          "output_sha256": "10f31bef439131ef18508d43a12b962261ecc8f5f0ee91914c9bb5b2766f0e7a",
+          "stage": "complete",
+          "status": "NUMERICAL_SOURCE_RESOLVED_COUNTERTERM_AND_POLE_AUDIT_CONDITIONAL",
+          "vev_gev": 246.22
+        },
+        "native_pole_diagnostic_only": true,
+        "source_files": {
+          "B1_MF_quartic": {
+            "path": "output/parallel_t3/rough_inputs/fhard_triangle_all16_batch1_v1/a/C_m1/background.npz",
+            "sha256": "a350f8af13407e94f42b1c5204740747fca1ec676be03cf26aea1e3e7af63728"
+          },
+          "B1_hard": {
+            "path": "output/parallel_t3/fhard_triangle_all16_batch1_v1/hard_fermion/C_m1/fermion_hard_triangle.npz",
+            "sha256": "aad40543a964b72bbdffc7d8a77f588df5e1e17002258fcf1553fd7d682a891f"
+          },
+          "B1_hard_json": {
+            "path": "output/parallel_t3/fhard_triangle_all16_batch1_v1/hard_fermion/C_m1/fermion_hard_triangle.json",
+            "sha256": "502f53a9d5c7db223d0da4ac7e4626c5fc9c41527f9165da6fdec58d570110ed"
+          },
+          "B2_MS_C5": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/results/C_m1/C5_smeft_at_MS.npz",
+            "sha256": "fdab896849dbb56b97bb6f242006e8dd154b9339ed0baed08a006358c8c0a9f9"
+          },
+          "B2_strict": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/inputs/C_m1/strict_wilson_channels.npz",
+            "sha256": "819957a4e7f4bb7083f46cfdf0a2a55632e138ff61c767ac2cc006e1941dfdb8"
+          },
+          "B2_strict_json": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/inputs/C_m1/strict_wilson_channels.json",
+            "sha256": "0e8095bf0bf0b10854e39be6d31c7e0f0bd8233074b6f41ef108fc5e7d419065"
+          },
+          "B4_MS_C5": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/results/C_m1/C5_smeft_at_MS.npz",
+            "sha256": "31a07ce6b48b0a835a4b245842bda757511a6b8fd0aa24304049c7556f7db673"
+          },
+          "B4_native": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/inputs/C_m1/native_MF_LLHH_finite_source_candidate.npz",
+            "sha256": "b22513c93261dc48ec2f3e8ab80bd3290d37fc170b4085d501bd9aad566aa98b"
+          },
+          "B4_native_json": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/inputs/C_m1/native_MF_LLHH_finite_source_candidate.json",
+            "sha256": "924bac19d72b8b747100c93255cb0f533ec9b3f9815b5a6355de80552448b0ed"
+          },
+          "B5_MS_C5": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/results/C_m1/C5_smeft_at_MS.npz",
+            "sha256": "25c6e7b45b008844209cbc5f325b69b93e5006478bf8fa5ed0a3928a204c6561"
+          },
+          "B5_background": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/C_m1/background.npz",
+            "sha256": "0aec45668399964dbb30d9ecdec2f5c2859d0e5e09e79f2bf9aa9114a58a5e59"
+          },
+          "B5_background_json": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/C_m1/background.json",
+            "sha256": "44f9db23ddcb8508314554070ded028f04de72f28c93254f348c8c17b0f62633"
+          },
+          "B5_pole": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/C_m1/hard_soft_and_native_Laurent.npz",
+            "sha256": "ce4d3b9d7fac37e2667950ad3cef613e493636429be297f8f91c74ff36274b3e"
+          },
+          "B5_pole_json": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/C_m1/hard_soft_and_native_Laurent.json",
+            "sha256": "c468d9dd2e636935159bb6d7ae31b8fd61fd64d139dd025a957829b5d9a73025"
+          }
+        }
+      },
+      "C_-3": {
+        "batch7_data_files": {
+          "conditional_mass_and_mixing_scan.csv": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/C_m3/conditional_mass_and_mixing_scan.csv",
+            "sha256": "96e01afdb416508c7b14d2cfb6901d2977199d5ba11da74a71597f5b8e5d51c5"
+          },
+          "matching_scale_scenario_matrices.npz": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/C_m3/matching_scale_scenario_matrices.npz",
+            "sha256": "8945986f576db281a3bfa6c9d501d56e6e2d68392d8cbed5336062f7ec95e386"
+          },
+          "source_pole_and_matching_ledger.json": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/C_m3/source_pole_and_matching_ledger.json",
+            "sha256": "b60e991b75e16c63904da5eba47c9e107c278fd5d743b4864cd1998dad8b1a39"
+          },
+          "source_poles_and_counterterms.npz": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/C_m3/source_poles_and_counterterms.npz",
+            "sha256": "47657ab7e2ab8e652ff31660e009e0b69df0e34a0f590483de50753d95a724dc"
+          }
+        },
+        "batch7_summary_row": {
+          "EFT1_scalar_CT_vs_ADM_scalar_pair_relative": 2.56689978090314e-16,
+          "EFT1_scalar_CT_vs_B0_relative": 5.32473724182577e-15,
+          "EFT1_source_antisymmetric_cancellation_fraction": 0.0,
+          "EFT1_source_quartic_count": 10,
+          "batch6_compare": {
+            "batch6_CT_B0_relative": 5.32473724182577e-15,
+            "batch6_comparison_passed": true,
+            "batch6_native_CT_relative": 1.5773502691896262,
+            "batch6_output_present": true
+          },
+          "low_energy_running_computed": true,
+          "model": "C_-3",
+          "mu_low_gev": 173.0,
+          "native_PL_kernel_count": 1,
+          "native_source_quartic_count": 1,
+          "native_vs_candidate_seven_channel_ADM_relative": 1.5773502691896264,
+          "native_vs_explicit_scalar_CT_relative": 1.5773502691896262,
+          "nominal_analytic_masses_eV": [
+            72.6772378489039,
+            125.78133644423573,
+            211.9337181938779
+          ],
+          "output_path": "output\\parallel_t3\\native_pole_closure_all16_batch7_v1\\C_m3\\source_pole_and_matching_ledger.json",
+          "output_sha256": "b60e991b75e16c63904da5eba47c9e107c278fd5d743b4864cd1998dad8b1a39",
+          "stage": "complete",
+          "status": "NUMERICAL_SOURCE_RESOLVED_COUNTERTERM_AND_POLE_AUDIT_CONDITIONAL",
+          "vev_gev": 246.22
+        },
+        "native_pole_diagnostic_only": true,
+        "source_files": {
+          "B1_MF_quartic": {
+            "path": "output/parallel_t3/rough_inputs/fhard_triangle_all16_batch1_v1/a/C_m3/background.npz",
+            "sha256": "b0a270a3f7924f850d9ad3e00271b747bb98a8dd0cab362931bd428ba6eefa48"
+          },
+          "B1_hard": {
+            "path": "output/parallel_t3/fhard_triangle_all16_batch1_v1/hard_fermion/C_m3/fermion_hard_triangle.npz",
+            "sha256": "19b5cc010ab59e37d6b25a666f0642e83300930bc461a5905cb6662115692eda"
+          },
+          "B1_hard_json": {
+            "path": "output/parallel_t3/fhard_triangle_all16_batch1_v1/hard_fermion/C_m3/fermion_hard_triangle.json",
+            "sha256": "d681ad41de10eeffd3fb5f77a34ef11f4545a8a5f6855c5c06063cd2790f6859"
+          },
+          "B2_MS_C5": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/results/C_m3/C5_smeft_at_MS.npz",
+            "sha256": "09601f69531e8e1631dcd4e71a090d10617812b255ca6902c32789e3cd554a14"
+          },
+          "B2_strict": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/inputs/C_m3/strict_wilson_channels.npz",
+            "sha256": "b1039533bf140bb9339b62531f63b13576dd2891d0ceaaaadd850e6f95ad8dfd"
+          },
+          "B2_strict_json": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/inputs/C_m3/strict_wilson_channels.json",
+            "sha256": "296198091addca9091b14c04e8d4ff1079dee1f38f94cd1cbd26c0de6b20ba95"
+          },
+          "B4_MS_C5": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/results/C_m3/C5_smeft_at_MS.npz",
+            "sha256": "afaf9d1e62759b5a2b599ed2cfed84c5c29b0a48ee00fb15effda95c8a39f2b4"
+          },
+          "B4_native": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/inputs/C_m3/native_MF_LLHH_finite_source_candidate.npz",
+            "sha256": "4b9a7b09f05daf611121c833386fcd339e2b24ad64e5f4ef6f2dbf2792099af1"
+          },
+          "B4_native_json": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/inputs/C_m3/native_MF_LLHH_finite_source_candidate.json",
+            "sha256": "c123235eeeebeaa410c9532a7ccd078532f08af2f8ba55e499e3a934e27ac87f"
+          },
+          "B5_MS_C5": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/results/C_m3/C5_smeft_at_MS.npz",
+            "sha256": "bd634f668e61c1f7ad17dbc04fbc483eecea4d4331cd36299117ff25d1cff58d"
+          },
+          "B5_background": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/C_m3/background.npz",
+            "sha256": "660c50852146917a87596724e428866b75e808c6125886a77ca4fe4fe15c8fcd"
+          },
+          "B5_background_json": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/C_m3/background.json",
+            "sha256": "972e25cd5c0511566cf01df7b1dafdcb09e1dd21b100be211da087f57e5252af"
+          },
+          "B5_pole": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/C_m3/hard_soft_and_native_Laurent.npz",
+            "sha256": "340ea6a24db0ceb459796c3f4f3c29f00c1dce1563aa1de4837fe93a279aa71b"
+          },
+          "B5_pole_json": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/C_m3/hard_soft_and_native_Laurent.json",
+            "sha256": "b0ba82b8e822f04f190b59800a5bf80c6f1eb45fd0686ec7438b43436da8e617"
+          }
+        }
+      },
+      "D_+0": {
+        "batch7_data_files": {
+          "conditional_mass_and_mixing_scan.csv": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/D_p0/conditional_mass_and_mixing_scan.csv",
+            "sha256": "a21e1aa78a958cc0ce82ce6dc1a322ba9e477f0affd76b07c837286353f8979a"
+          },
+          "matching_scale_scenario_matrices.npz": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/D_p0/matching_scale_scenario_matrices.npz",
+            "sha256": "b9d0534fddc1865afc863c783b28bc88a188e2b6375373fa8fcd60065f293ad8"
+          },
+          "source_pole_and_matching_ledger.json": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/D_p0/source_pole_and_matching_ledger.json",
+            "sha256": "6fcf7482f926827620323d138533776654d50d5aa017b509461d4d43c88d23cd"
+          },
+          "source_poles_and_counterterms.npz": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/D_p0/source_poles_and_counterterms.npz",
+            "sha256": "18083de3dbd6c4a0067376dc95d50d01c565b3958522b2db0c9926f6498d55fc"
+          }
+        },
+        "batch7_summary_row": {
+          "EFT1_scalar_CT_vs_ADM_scalar_pair_relative": 2.267711189386918e-16,
+          "EFT1_scalar_CT_vs_B0_relative": 1.1974909144339894e-15,
+          "EFT1_source_antisymmetric_cancellation_fraction": 1.0,
+          "EFT1_source_quartic_count": 9,
+          "batch6_compare": {
+            "batch6_CT_B0_relative": 1.1974909144339894e-15,
+            "batch6_comparison_passed": true,
+            "batch6_native_CT_relative": 1.639961533339099,
+            "batch6_output_present": true
+          },
+          "low_energy_running_computed": true,
+          "model": "D_+0",
+          "mu_low_gev": 173.0,
+          "native_PL_kernel_count": 2,
+          "native_source_quartic_count": 2,
+          "native_vs_candidate_seven_channel_ADM_relative": 1.639961533339099,
+          "native_vs_explicit_scalar_CT_relative": 1.639961533339099,
+          "nominal_analytic_masses_eV": [
+            136.3173038715441,
+            235.9233211911378,
+            397.51364872433174
+          ],
+          "output_path": "output\\parallel_t3\\native_pole_closure_all16_batch7_v1\\D_p0\\source_pole_and_matching_ledger.json",
+          "output_sha256": "6fcf7482f926827620323d138533776654d50d5aa017b509461d4d43c88d23cd",
+          "stage": "complete",
+          "status": "NUMERICAL_SOURCE_RESOLVED_COUNTERTERM_AND_POLE_AUDIT_CONDITIONAL",
+          "vev_gev": 246.22
+        },
+        "native_pole_diagnostic_only": true,
+        "source_files": {
+          "B1_MF_quartic": {
+            "path": "output/parallel_t3/rough_inputs/fhard_triangle_all16_batch1_v1/a/D_p0/background.npz",
+            "sha256": "d14bb916cd89e3684319d99adb0528b027126a16fb04190c79ec8445ccd19821"
+          },
+          "B1_hard": {
+            "path": "output/parallel_t3/fhard_triangle_all16_batch1_v1/hard_fermion/D_p0/fermion_hard_triangle.npz",
+            "sha256": "425e437d7e84324cf3c46acb6125859bf0f396e7107aa10402a19416a6e9b82c"
+          },
+          "B1_hard_json": {
+            "path": "output/parallel_t3/fhard_triangle_all16_batch1_v1/hard_fermion/D_p0/fermion_hard_triangle.json",
+            "sha256": "44fdbfff1dca5188c4971805d2c8b0d3bb645d9b2f9ac8a87a7bb3395c9e563a"
+          },
+          "B2_MS_C5": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/results/D_p0/C5_smeft_at_MS.npz",
+            "sha256": "e1b29b8a4908449b1707c0ee151f0fabd7aed160f608192ab831fa8bf64cd361"
+          },
+          "B2_strict": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/inputs/D_p0/strict_wilson_channels.npz",
+            "sha256": "e03ce01d38cc80d86bda398792abff423c0ec3c72ff186b4ddd56e6ad3ec97ed"
+          },
+          "B2_strict_json": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/inputs/D_p0/strict_wilson_channels.json",
+            "sha256": "dc48e3f4c09c25d8ad377742ce62451cc164eae66fdf2c04a4a39436794750cb"
+          },
+          "B4_MS_C5": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/results/D_p0/C5_smeft_at_MS.npz",
+            "sha256": "88b19f52cbb111ca8a724fb52d030ae93c949bfff27ade9ff12e1f65fc38759e"
+          },
+          "B4_native": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/inputs/D_p0/native_MF_LLHH_finite_source_candidate.npz",
+            "sha256": "7ca50a251ceea69f5db79d842b845ca13c76485949e5f0d127d3ab077627d835"
+          },
+          "B4_native_json": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/inputs/D_p0/native_MF_LLHH_finite_source_candidate.json",
+            "sha256": "b871acfbe6ca58f2283a12f8da32b3eb8f32aebe3e318c824cc7be2127d65a31"
+          },
+          "B5_MS_C5": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/results/D_p0/C5_smeft_at_MS.npz",
+            "sha256": "62af0a43cf03c45041535c78e9c1ae871581aee94faedc015be62849d92bdfab"
+          },
+          "B5_background": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/D_p0/background.npz",
+            "sha256": "ab190831501852e49856a045a2e29804bdf6c08fce04523a33ed77d3617d0965"
+          },
+          "B5_background_json": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/D_p0/background.json",
+            "sha256": "b6af26a5fa35a5c0e8e3ec0d59a96f0389c0604866930ef14a03a9bc17819fe4"
+          },
+          "B5_pole": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/D_p0/hard_soft_and_native_Laurent.npz",
+            "sha256": "30464c384f00acad5ba4af2027c94f2b0cb8f68e95b93eaea4e38712eff3d043"
+          },
+          "B5_pole_json": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/D_p0/hard_soft_and_native_Laurent.json",
+            "sha256": "959754a66812f1e7962c4794fbc1a0857d7f1c96bca1c9658ddc4e37b5efafb1"
+          }
+        }
+      },
+      "D_+2": {
+        "batch7_data_files": {
+          "conditional_mass_and_mixing_scan.csv": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/D_p2/conditional_mass_and_mixing_scan.csv",
+            "sha256": "f1e5ff4c315f3757293030333f4eb1f07a5740dd46849df0a774ced9f751f1dc"
+          },
+          "matching_scale_scenario_matrices.npz": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/D_p2/matching_scale_scenario_matrices.npz",
+            "sha256": "e0fb524936af6bfe66b0e9b286ac47d9476585248acef45654bd62b9850237d1"
+          },
+          "source_pole_and_matching_ledger.json": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/D_p2/source_pole_and_matching_ledger.json",
+            "sha256": "5694df9919377d28c83759b6a46bca73f5f58859124a3ef0b2486f06c9d2a9f6"
+          },
+          "source_poles_and_counterterms.npz": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/D_p2/source_poles_and_counterterms.npz",
+            "sha256": "fdc75a7c208eca0164dd193af6a3dce9c09794eca70d21ed3bdf079d63af1ce0"
+          }
+        },
+        "batch7_summary_row": {
+          "EFT1_scalar_CT_vs_ADM_scalar_pair_relative": 2.1262889539608003e-16,
+          "EFT1_scalar_CT_vs_B0_relative": 3.9442174397304065e-15,
+          "EFT1_source_antisymmetric_cancellation_fraction": 0.0,
+          "EFT1_source_quartic_count": 9,
+          "batch6_compare": {
+            "batch6_CT_B0_relative": 3.9442174397304065e-15,
+            "batch6_comparison_passed": true,
+            "batch6_native_CT_relative": 1.5372849659117716,
+            "batch6_output_present": true
+          },
+          "low_energy_running_computed": true,
+          "model": "D_+2",
+          "mu_low_gev": 173.0,
+          "native_PL_kernel_count": 1,
+          "native_source_quartic_count": 1,
+          "native_vs_candidate_seven_channel_ADM_relative": 1.5372849659117716,
+          "native_vs_explicit_scalar_CT_relative": 1.5372849659117716,
+          "nominal_analytic_masses_eV": [
+            135.9948619374888,
+            235.33862350598247,
+            396.53605230451626
+          ],
+          "output_path": "output\\parallel_t3\\native_pole_closure_all16_batch7_v1\\D_p2\\source_pole_and_matching_ledger.json",
+          "output_sha256": "5694df9919377d28c83759b6a46bca73f5f58859124a3ef0b2486f06c9d2a9f6",
+          "stage": "complete",
+          "status": "NUMERICAL_SOURCE_RESOLVED_COUNTERTERM_AND_POLE_AUDIT_CONDITIONAL",
+          "vev_gev": 246.22
+        },
+        "native_pole_diagnostic_only": true,
+        "source_files": {
+          "B1_MF_quartic": {
+            "path": "output/parallel_t3/rough_inputs/fhard_triangle_all16_batch1_v1/a/D_p2/background.npz",
+            "sha256": "fd86061a31cbd6db1e254d206201ea8bd48d3a8208f9d86abe26ad0dac48f10c"
+          },
+          "B1_hard": {
+            "path": "output/parallel_t3/fhard_triangle_all16_batch1_v1/hard_fermion/D_p2/fermion_hard_triangle.npz",
+            "sha256": "a5debe6171b99a9fd124e41bfbc8d2c9b4e3845a3e22d396d0284109d792b699"
+          },
+          "B1_hard_json": {
+            "path": "output/parallel_t3/fhard_triangle_all16_batch1_v1/hard_fermion/D_p2/fermion_hard_triangle.json",
+            "sha256": "fefd1adde190e7fc5a37a9944b5d379c1744739b5f02bf402a58b8c478b4b9ca"
+          },
+          "B2_MS_C5": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/results/D_p2/C5_smeft_at_MS.npz",
+            "sha256": "d0c413dd6cf103296b1fb460e165fb05e225b209e45797efbc3a1782096fb6b2"
+          },
+          "B2_strict": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/inputs/D_p2/strict_wilson_channels.npz",
+            "sha256": "bcec7edbd9aa07c8a77ceb0a5d41c461dcc3a5463673a9313fbca0d86d7539a8"
+          },
+          "B2_strict_json": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/inputs/D_p2/strict_wilson_channels.json",
+            "sha256": "08999cb3a0216768265fb2e198e4f73fe77f3f8cdc2f261b9b86f270da734552"
+          },
+          "B4_MS_C5": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/results/D_p2/C5_smeft_at_MS.npz",
+            "sha256": "025ba670092847ad1eb02642adc60ed808facff2d8dee22855e1c6370ac6ccfd"
+          },
+          "B4_native": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/inputs/D_p2/native_MF_LLHH_finite_source_candidate.npz",
+            "sha256": "01679020a25ac195545ebea63b4ee8b54e581d7fdab6352368bd4e3c75ee97a2"
+          },
+          "B4_native_json": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/inputs/D_p2/native_MF_LLHH_finite_source_candidate.json",
+            "sha256": "02e61f35126d98810a5d6ab4518aeb2414f94933a4b3e7a176e37e619e26edb2"
+          },
+          "B5_MS_C5": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/results/D_p2/C5_smeft_at_MS.npz",
+            "sha256": "b7d385bca22b8f5cdd326e17508be54c1c86df20c4e8f32807bba69707c2f8ff"
+          },
+          "B5_background": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/D_p2/background.npz",
+            "sha256": "0c003615da03cc5e36fce52033c776450d01a37f7a8a4fe10c57ed252351e1cc"
+          },
+          "B5_background_json": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/D_p2/background.json",
+            "sha256": "80eecdc59cc913b1150c9f54bf8f2a1a587b2fb80765e790e87f00bca5e161b4"
+          },
+          "B5_pole": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/D_p2/hard_soft_and_native_Laurent.npz",
+            "sha256": "505db407ab85448a6138dbc980f143d5d34a869b3d6e3516daba15782499d8d5"
+          },
+          "B5_pole_json": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/D_p2/hard_soft_and_native_Laurent.json",
+            "sha256": "06b757c849c512edfd4fc107a09d826befda236a9ca82d7a7b753b888587524e"
+          }
+        }
+      },
+      "D_-2": {
+        "batch7_data_files": {
+          "conditional_mass_and_mixing_scan.csv": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/D_m2/conditional_mass_and_mixing_scan.csv",
+            "sha256": "99874efae8bb4fb081025a2fba80f9e571ad2e1f8cc5a02c6f05b9f469f6bcc0"
+          },
+          "matching_scale_scenario_matrices.npz": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/D_m2/matching_scale_scenario_matrices.npz",
+            "sha256": "ccd174ee40d873f11ddfd0e14f00eb77e9cb705592fd8c777f60a7aef238fd3c"
+          },
+          "source_pole_and_matching_ledger.json": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/D_m2/source_pole_and_matching_ledger.json",
+            "sha256": "94fe71341726fce8da88c645a9e282c3f769e681743c186e36c8560923df131e"
+          },
+          "source_poles_and_counterterms.npz": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/D_m2/source_poles_and_counterterms.npz",
+            "sha256": "608a81445b3827b7d1994e880d78653b6d189a1b95ae3af72aa007d0b26bf8a3"
+          }
+        },
+        "batch7_summary_row": {
+          "EFT1_scalar_CT_vs_ADM_scalar_pair_relative": 2.9990145978472887e-16,
+          "EFT1_scalar_CT_vs_B0_relative": 1.032750719834799e-15,
+          "EFT1_source_antisymmetric_cancellation_fraction": 0.0,
+          "EFT1_source_quartic_count": 9,
+          "batch6_compare": {
+            "batch6_CT_B0_relative": 1.032750719834799e-15,
+            "batch6_comparison_passed": true,
+            "batch6_native_CT_relative": 1.6811447305960512,
+            "batch6_output_present": true
+          },
+          "low_energy_running_computed": true,
+          "model": "D_-2",
+          "mu_low_gev": 173.0,
+          "native_PL_kernel_count": 2,
+          "native_source_quartic_count": 2,
+          "native_vs_candidate_seven_channel_ADM_relative": 1.6811447305960516,
+          "native_vs_explicit_scalar_CT_relative": 1.6811447305960512,
+          "nominal_analytic_masses_eV": [
+            137.77273301895545,
+            238.45460992709874,
+            401.774997557001
+          ],
+          "output_path": "output\\parallel_t3\\native_pole_closure_all16_batch7_v1\\D_m2\\source_pole_and_matching_ledger.json",
+          "output_sha256": "94fe71341726fce8da88c645a9e282c3f769e681743c186e36c8560923df131e",
+          "stage": "complete",
+          "status": "NUMERICAL_SOURCE_RESOLVED_COUNTERTERM_AND_POLE_AUDIT_CONDITIONAL",
+          "vev_gev": 246.22
+        },
+        "native_pole_diagnostic_only": true,
+        "source_files": {
+          "B1_MF_quartic": {
+            "path": "output/parallel_t3/rough_inputs/fhard_triangle_all16_batch1_v1/a/D_m2/background.npz",
+            "sha256": "a09e0964098f2f1fd0f3d2667bfd7ae6169787fa47f2d90cbabbae6c2b9dbe43"
+          },
+          "B1_hard": {
+            "path": "output/parallel_t3/fhard_triangle_all16_batch1_v1/hard_fermion/D_m2/fermion_hard_triangle.npz",
+            "sha256": "81c1ade06df79cdae34d6658721609a23c0deddf3ebe742ea8fde8b4454f13bd"
+          },
+          "B1_hard_json": {
+            "path": "output/parallel_t3/fhard_triangle_all16_batch1_v1/hard_fermion/D_m2/fermion_hard_triangle.json",
+            "sha256": "6fc29ed8121ddc5baac06592a6c0789777d7377caab5dd89eb32187475f6975d"
+          },
+          "B2_MS_C5": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/results/D_m2/C5_smeft_at_MS.npz",
+            "sha256": "a3b4483a6f071dc80b2947e7537b3cacfd0ea358bdba10dc5f8851b742492210"
+          },
+          "B2_strict": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/inputs/D_m2/strict_wilson_channels.npz",
+            "sha256": "822559c1507d20786ec210b28b9cd84e5b936aeabc1e941da1c578413edb8778"
+          },
+          "B2_strict_json": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/inputs/D_m2/strict_wilson_channels.json",
+            "sha256": "be8e234d15fe52bf796321fd19caa7adbda83277c89df1c98a288563e95fbe45"
+          },
+          "B4_MS_C5": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/results/D_m2/C5_smeft_at_MS.npz",
+            "sha256": "a1a1cfed9f47bd5ec54bece6ebe1508e0c999eb72825cdf969a7ea7b62ef5785"
+          },
+          "B4_native": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/inputs/D_m2/native_MF_LLHH_finite_source_candidate.npz",
+            "sha256": "1f6531fdb36290688544dad1f8529716ac49bc95f8712476e41b1d0349cb0409"
+          },
+          "B4_native_json": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/inputs/D_m2/native_MF_LLHH_finite_source_candidate.json",
+            "sha256": "2ec3b4691f716a91f5346e088ac009565a7d3ae95c70bf895aa7290bb6ca223a"
+          },
+          "B5_MS_C5": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/results/D_m2/C5_smeft_at_MS.npz",
+            "sha256": "9a4701195e1b85885b8b72373d194406e863f38a56f5dc9170e380737f0ee751"
+          },
+          "B5_background": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/D_m2/background.npz",
+            "sha256": "601d97f397e243ccf93a960fe054f51600e25b8bf7f90c593133c1bbdaebf528"
+          },
+          "B5_background_json": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/D_m2/background.json",
+            "sha256": "ecc409b14e8f818cd301bfd54b79b7475a6176033ff3292cd001c76ea017cc44"
+          },
+          "B5_pole": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/D_m2/hard_soft_and_native_Laurent.npz",
+            "sha256": "e6973d129835c2e13e6b82130155960835ed83a79b252683f2e121e763b8b58c"
+          },
+          "B5_pole_json": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/D_m2/hard_soft_and_native_Laurent.json",
+            "sha256": "f509eb9dd95f72878f16ae166f4295ffb9ebdccd020923a571ded7b43103b974"
+          }
+        }
+      },
+      "E_+0": {
+        "batch7_data_files": {
+          "conditional_mass_and_mixing_scan.csv": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/E_p0/conditional_mass_and_mixing_scan.csv",
+            "sha256": "d3f05a9f5a114914692bc47183e285765744b9289bad224a434adcc2a22b8f9d"
+          },
+          "matching_scale_scenario_matrices.npz": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/E_p0/matching_scale_scenario_matrices.npz",
+            "sha256": "9c839ff3812a567fb5696678161db3e84848aba3c5b40be8e3340d3ba0ec900f"
+          },
+          "source_pole_and_matching_ledger.json": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/E_p0/source_pole_and_matching_ledger.json",
+            "sha256": "3fe455bc6373fdf4edc1177866c0d7553febfe94be8bfb203e9be6658421c435"
+          },
+          "source_poles_and_counterterms.npz": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/E_p0/source_poles_and_counterterms.npz",
+            "sha256": "1ffbce2613cd22aa13eb152858afc3e97c4b1b1669aad2ef50473fc7163ec4dd"
+          }
+        },
+        "batch7_summary_row": {
+          "EFT1_scalar_CT_vs_ADM_scalar_pair_relative": 2.798149191111955e-16,
+          "EFT1_scalar_CT_vs_B0_relative": 2.6999755653897416e-15,
+          "EFT1_source_antisymmetric_cancellation_fraction": 0.0,
+          "EFT1_source_quartic_count": 13,
+          "batch6_compare": {
+            "batch6_CT_B0_relative": 2.6999755653897416e-15,
+            "batch6_comparison_passed": true,
+            "batch6_native_CT_relative": 1.8099658696659433,
+            "batch6_output_present": true
+          },
+          "low_energy_running_computed": true,
+          "model": "E_+0",
+          "mu_low_gev": 173.0,
+          "native_PL_kernel_count": 2,
+          "native_source_quartic_count": 2,
+          "native_vs_candidate_seven_channel_ADM_relative": 1.8099658696659433,
+          "native_vs_explicit_scalar_CT_relative": 1.8099658696659433,
+          "nominal_analytic_masses_eV": [
+            149.93236844096276,
+            259.4688354676113,
+            437.18771527853664
+          ],
+          "output_path": "output\\parallel_t3\\native_pole_closure_all16_batch7_v1\\E_p0\\source_pole_and_matching_ledger.json",
+          "output_sha256": "3fe455bc6373fdf4edc1177866c0d7553febfe94be8bfb203e9be6658421c435",
+          "stage": "complete",
+          "status": "NUMERICAL_SOURCE_RESOLVED_COUNTERTERM_AND_POLE_AUDIT_CONDITIONAL",
+          "vev_gev": 246.22
+        },
+        "native_pole_diagnostic_only": true,
+        "source_files": {
+          "B1_MF_quartic": {
+            "path": "output/parallel_t3/rough_inputs/fhard_triangle_all16_batch1_v1/a/E_p0/background.npz",
+            "sha256": "e45cfca021d23d18507fbfd4b544dafac0925de491e8001e03d98fba7c8826f7"
+          },
+          "B1_hard": {
+            "path": "output/parallel_t3/fhard_triangle_all16_batch1_v1/hard_fermion/E_p0/fermion_hard_triangle.npz",
+            "sha256": "f1d90c40635bf1957bb1ec80b79d2f0a9c94d8ba8a26f6cef0e94574a8fa4132"
+          },
+          "B1_hard_json": {
+            "path": "output/parallel_t3/fhard_triangle_all16_batch1_v1/hard_fermion/E_p0/fermion_hard_triangle.json",
+            "sha256": "f83dc7d6c9e6fb61abc47b5e8cde30c75aac33b8aa96b1f7e74467d35bd972c1"
+          },
+          "B2_MS_C5": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/results/E_p0/C5_smeft_at_MS.npz",
+            "sha256": "0011e52cce07e62051fc41bc4a8921db0d98fa6212db1a5305b9dd908ee316f3"
+          },
+          "B2_strict": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/inputs/E_p0/strict_wilson_channels.npz",
+            "sha256": "c000f7115ac7799ba27b0e667509542945213d0356568e296edec1e13e2de9d0"
+          },
+          "B2_strict_json": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/inputs/E_p0/strict_wilson_channels.json",
+            "sha256": "807ca915368a0c0e3c81226a4fd9e4ae2bf7d67633d44a121d298b9cb9985c5d"
+          },
+          "B4_MS_C5": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/results/E_p0/C5_smeft_at_MS.npz",
+            "sha256": "ed4b075ab777d6026aaaf8096ec9539145fb8509a31d3392612a2b871fbb6c26"
+          },
+          "B4_native": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/inputs/E_p0/native_MF_LLHH_finite_source_candidate.npz",
+            "sha256": "48417ef0dffd614239b67880cc1f4a21b49df7eb2cdcfe94eddd08685d9d7ed0"
+          },
+          "B4_native_json": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/inputs/E_p0/native_MF_LLHH_finite_source_candidate.json",
+            "sha256": "af2aeafdb662c780e07cf58f30435b2e9b966e95f911115f587a1eba6f9d12e2"
+          },
+          "B5_MS_C5": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/results/E_p0/C5_smeft_at_MS.npz",
+            "sha256": "592d534efcda1797350e44e5f142324f806979ae2dbe9370fdb6f106da3786c9"
+          },
+          "B5_background": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/E_p0/background.npz",
+            "sha256": "1c15a9bf9b141eadfdf23fa315c3c82b1c54aeb1ef2f39b6c76d925acdf2d45c"
+          },
+          "B5_background_json": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/E_p0/background.json",
+            "sha256": "27aef81691decaea3e84a7329e6599ff9c710e5707dd180b5c325682199a93e3"
+          },
+          "B5_pole": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/E_p0/hard_soft_and_native_Laurent.npz",
+            "sha256": "c80238d7348347edd6f03dc76857c6b8092762220ad799e46132e7b414847056"
+          },
+          "B5_pole_json": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/E_p0/hard_soft_and_native_Laurent.json",
+            "sha256": "1b252171e5f2f5893c17129e37feedc0a891c229cd45a250ec45dc9c75ba0017"
+          }
+        }
+      },
+      "E_+2": {
+        "batch7_data_files": {
+          "conditional_mass_and_mixing_scan.csv": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/E_p2/conditional_mass_and_mixing_scan.csv",
+            "sha256": "15266332e588de3df34dcdf4cb4183a80b508d4add3f0839d1b831e164eef42f"
+          },
+          "matching_scale_scenario_matrices.npz": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/E_p2/matching_scale_scenario_matrices.npz",
+            "sha256": "bc057194e2933b158ef24ed5de660a5339e1d1aeb6a766121c4d148cdb44c98f"
+          },
+          "source_pole_and_matching_ledger.json": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/E_p2/source_pole_and_matching_ledger.json",
+            "sha256": "822b8d1d2327e483c1d5057e0d1d196c17c5119e249031717fcabff19eec3e79"
+          },
+          "source_poles_and_counterterms.npz": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/E_p2/source_poles_and_counterterms.npz",
+            "sha256": "4ba9c621cf3c9c7d8ca7feb2b83e003ff783d21ecafb48f2efe6cb48e48ba08a"
+          }
+        },
+        "batch7_summary_row": {
+          "EFT1_scalar_CT_vs_ADM_scalar_pair_relative": 3.8797735132650953e-16,
+          "EFT1_scalar_CT_vs_B0_relative": 1.0106657318069e-15,
+          "EFT1_source_antisymmetric_cancellation_fraction": 0.0,
+          "EFT1_source_quartic_count": 13,
+          "batch6_compare": {
+            "batch6_CT_B0_relative": 1.0106657318069e-15,
+            "batch6_comparison_passed": true,
+            "batch6_native_CT_relative": 1.707106781186548,
+            "batch6_output_present": true
+          },
+          "low_energy_running_computed": true,
+          "model": "E_+2",
+          "mu_low_gev": 173.0,
+          "native_PL_kernel_count": 1,
+          "native_source_quartic_count": 1,
+          "native_vs_candidate_seven_channel_ADM_relative": 1.707106781186548,
+          "native_vs_explicit_scalar_CT_relative": 1.707106781186548,
+          "nominal_analytic_masses_eV": [
+            148.78368048056922,
+            257.4445712479171,
+            433.78703946937406
+          ],
+          "output_path": "output\\parallel_t3\\native_pole_closure_all16_batch7_v1\\E_p2\\source_pole_and_matching_ledger.json",
+          "output_sha256": "822b8d1d2327e483c1d5057e0d1d196c17c5119e249031717fcabff19eec3e79",
+          "stage": "complete",
+          "status": "NUMERICAL_SOURCE_RESOLVED_COUNTERTERM_AND_POLE_AUDIT_CONDITIONAL",
+          "vev_gev": 246.22
+        },
+        "native_pole_diagnostic_only": true,
+        "source_files": {
+          "B1_MF_quartic": {
+            "path": "output/parallel_t3/rough_inputs/fhard_triangle_all16_batch1_v1/a/E_p2/background.npz",
+            "sha256": "94dd8be3ad77cc71bd24b490dbbe0fed091aa589d7b4500ca72160e3613ffdcf"
+          },
+          "B1_hard": {
+            "path": "output/parallel_t3/fhard_triangle_all16_batch1_v1/hard_fermion/E_p2/fermion_hard_triangle.npz",
+            "sha256": "ee69d6e51d20f41d5b16d29634c4767f4a7a5f68997ffe3508289f90960f6ff3"
+          },
+          "B1_hard_json": {
+            "path": "output/parallel_t3/fhard_triangle_all16_batch1_v1/hard_fermion/E_p2/fermion_hard_triangle.json",
+            "sha256": "611f3680a57da92c9c9911fa9ac0a64b125f3f9feed4a10005ee4a389ea00963"
+          },
+          "B2_MS_C5": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/results/E_p2/C5_smeft_at_MS.npz",
+            "sha256": "f49255dc44d9f541bda7cd8ae0c8dc582f4c92d36848a83cc966fa46a5e41273"
+          },
+          "B2_strict": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/inputs/E_p2/strict_wilson_channels.npz",
+            "sha256": "6f8d188149b972952f2f799ac4abe32da88a88759e71b78a1f5ec0c98b8759b7"
+          },
+          "B2_strict_json": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/inputs/E_p2/strict_wilson_channels.json",
+            "sha256": "7780acd57e1624e36b6f0a1a2fce17f70e7f54d49d4d6e05cd038faecd254525"
+          },
+          "B4_MS_C5": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/results/E_p2/C5_smeft_at_MS.npz",
+            "sha256": "57eacdeac5d3939b0be51b69a62a935502123b8f1ff6bb4bfbf1255060f5d54e"
+          },
+          "B4_native": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/inputs/E_p2/native_MF_LLHH_finite_source_candidate.npz",
+            "sha256": "df9e5b72e6c3d5a3e6a844d5a35bbf4b759cb70cc8a6746847bbe16a67ca708a"
+          },
+          "B4_native_json": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/inputs/E_p2/native_MF_LLHH_finite_source_candidate.json",
+            "sha256": "0a5420d0e3dedece740ff04e29d8275d0e52e26b74a59d2a57b6d0a18c73be14"
+          },
+          "B5_MS_C5": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/results/E_p2/C5_smeft_at_MS.npz",
+            "sha256": "381cc2beb3f410e5736400d6949e41eeba136442fdc390a6887c25cb6a8df3c1"
+          },
+          "B5_background": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/E_p2/background.npz",
+            "sha256": "d1c2a6e11beb426475c811b01846ac783d671d6301bf6a758f9066f5adb99698"
+          },
+          "B5_background_json": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/E_p2/background.json",
+            "sha256": "960a3a5460b23fc39a6ad81af683b544674f2bd8dee7fb8497af5696fe0c8ba8"
+          },
+          "B5_pole": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/E_p2/hard_soft_and_native_Laurent.npz",
+            "sha256": "92e264ba40fe22aaa8746f27f48d7c3910c337d338a9a741cfe0963a429e895e"
+          },
+          "B5_pole_json": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/E_p2/hard_soft_and_native_Laurent.json",
+            "sha256": "da91a3ad5f8744810f30235a23a70cc2f3afe26a353a43054e8dfab29c8ae44c"
+          }
+        }
+      },
+      "E_-2": {
+        "batch7_data_files": {
+          "conditional_mass_and_mixing_scan.csv": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/E_m2/conditional_mass_and_mixing_scan.csv",
+            "sha256": "e768eb26cf9bd08f585c9882383e50fb665a6d6c8c30fcfe9b3024b284839e08"
+          },
+          "matching_scale_scenario_matrices.npz": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/E_m2/matching_scale_scenario_matrices.npz",
+            "sha256": "cdb9713c03e5ef067da4ed29e0eee93812439e7c40cdc2addc2c1ff1c37fc1d4"
+          },
+          "source_pole_and_matching_ledger.json": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/E_m2/source_pole_and_matching_ledger.json",
+            "sha256": "1c8f49e270ce3df9a8e84d091b9757920a95fb6ee0d6da693b3de56dd56e6a64"
+          },
+          "source_poles_and_counterterms.npz": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/E_m2/source_poles_and_counterterms.npz",
+            "sha256": "31160c47ae6e260684019054b400ceab0e4e59abf587362ff2857279f2af6f57"
+          }
+        },
+        "batch7_summary_row": {
+          "EFT1_scalar_CT_vs_ADM_scalar_pair_relative": 2.0372797970506757e-16,
+          "EFT1_scalar_CT_vs_B0_relative": 1.860663180142904e-15,
+          "EFT1_source_antisymmetric_cancellation_fraction": 1.0,
+          "EFT1_source_quartic_count": 13,
+          "batch6_compare": {
+            "batch6_CT_B0_relative": 1.860663180142904e-15,
+            "batch6_comparison_passed": true,
+            "batch6_native_CT_relative": 1.8508834934559695,
+            "batch6_output_present": true
+          },
+          "low_energy_running_computed": true,
+          "model": "E_-2",
+          "mu_low_gev": 173.0,
+          "native_PL_kernel_count": 2,
+          "native_source_quartic_count": 2,
+          "native_vs_candidate_seven_channel_ADM_relative": 1.8508834934559697,
+          "native_vs_explicit_scalar_CT_relative": 1.8508834934559695,
+          "nominal_analytic_masses_eV": [
+            150.09017903088258,
+            259.74360709314675,
+            437.6481134269263
+          ],
+          "output_path": "output\\parallel_t3\\native_pole_closure_all16_batch7_v1\\E_m2\\source_pole_and_matching_ledger.json",
+          "output_sha256": "1c8f49e270ce3df9a8e84d091b9757920a95fb6ee0d6da693b3de56dd56e6a64",
+          "stage": "complete",
+          "status": "NUMERICAL_SOURCE_RESOLVED_COUNTERTERM_AND_POLE_AUDIT_CONDITIONAL",
+          "vev_gev": 246.22
+        },
+        "native_pole_diagnostic_only": true,
+        "source_files": {
+          "B1_MF_quartic": {
+            "path": "output/parallel_t3/rough_inputs/fhard_triangle_all16_batch1_v1/a/E_m2/background.npz",
+            "sha256": "6489138f886f9eb00b4402a716b4ed19a411eafcb70166d4ee701412ca11f1de"
+          },
+          "B1_hard": {
+            "path": "output/parallel_t3/fhard_triangle_all16_batch1_v1/hard_fermion/E_m2/fermion_hard_triangle.npz",
+            "sha256": "2c6ba87ad0f84641df916b753576957c700bbab279e5307a3b0aed3f08e4ff90"
+          },
+          "B1_hard_json": {
+            "path": "output/parallel_t3/fhard_triangle_all16_batch1_v1/hard_fermion/E_m2/fermion_hard_triangle.json",
+            "sha256": "16a14abc71a79a1e04068b0c99520b1ba4055936991bd8dd02cd1cd1dd4b59dc"
+          },
+          "B2_MS_C5": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/results/E_m2/C5_smeft_at_MS.npz",
+            "sha256": "5232d1e20a9fb903fae162dec346bdb8c16a14ec7d68b8f45b20bfb5dc5bb7a5"
+          },
+          "B2_strict": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/inputs/E_m2/strict_wilson_channels.npz",
+            "sha256": "26357bb60f7f7664ef52ae3a7f6db3eada5dc4637ef89ad09a24b1a5abe46708"
+          },
+          "B2_strict_json": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/inputs/E_m2/strict_wilson_channels.json",
+            "sha256": "02996ecdb0c036170018c362a2b766f86016707be313163fb64f529f3156b74b"
+          },
+          "B4_MS_C5": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/results/E_m2/C5_smeft_at_MS.npz",
+            "sha256": "6eca1493362f271420fb8e3f18b7f94eb69ddfe181ebcc557546c2bdb092e34c"
+          },
+          "B4_native": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/inputs/E_m2/native_MF_LLHH_finite_source_candidate.npz",
+            "sha256": "d7d8c710fa564a3b1b4ac67ba20288d84c6d8378ca86a6576daeed5754b65a01"
+          },
+          "B4_native_json": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/inputs/E_m2/native_MF_LLHH_finite_source_candidate.json",
+            "sha256": "9c80972cd56306fdec072fff7366962f34b00de82693f1d3963377c8279b4342"
+          },
+          "B5_MS_C5": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/results/E_m2/C5_smeft_at_MS.npz",
+            "sha256": "8e1124797ce3bbb8d155d6c68373d97c01bf69f0f9d2fb18675404e2b1ec5bb0"
+          },
+          "B5_background": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/E_m2/background.npz",
+            "sha256": "e51fc5d6b75ee9dbcbf989a9c2a653d43344043acb585629b5276029bc343e5f"
+          },
+          "B5_background_json": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/E_m2/background.json",
+            "sha256": "58c0394b1873554ba56cf7a96d64b2ca998250be4ee6c700930501efc401d77b"
+          },
+          "B5_pole": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/E_m2/hard_soft_and_native_Laurent.npz",
+            "sha256": "3707b064f875f033254d8af5fc2c607f237a339a6442f8b955151cfaa23876e1"
+          },
+          "B5_pole_json": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/E_m2/hard_soft_and_native_Laurent.json",
+            "sha256": "e473eeec3f1141396b0339088003c7fc5cefe557113c18962bdbf6e73033cb94"
+          }
+        }
+      },
+      "E_-4": {
+        "batch7_data_files": {
+          "conditional_mass_and_mixing_scan.csv": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/E_m4/conditional_mass_and_mixing_scan.csv",
+            "sha256": "03d92e997c8cb8d6b49e68f55010101ad2347b49a329d41ba645c09b0269e187"
+          },
+          "matching_scale_scenario_matrices.npz": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/E_m4/matching_scale_scenario_matrices.npz",
+            "sha256": "fde8579cf64c41a005c3df69d063bf9d3e5c862ea802831b44a57067ac29c79c"
+          },
+          "source_pole_and_matching_ledger.json": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/E_m4/source_pole_and_matching_ledger.json",
+            "sha256": "6f94f2f78697ff863faf604f27c263e31b6ea05fae5f83f50d409f77107842a5"
+          },
+          "source_poles_and_counterterms.npz": {
+            "path": "output/parallel_t3/native_pole_closure_all16_batch7_v1/E_m4/source_poles_and_counterterms.npz",
+            "sha256": "ad772a6c4ab325d0ab396730e8fa4023a734ae5ee3c42f0ee1c65ff67956b474"
+          }
+        },
+        "batch7_summary_row": {
+          "EFT1_scalar_CT_vs_ADM_scalar_pair_relative": 2.9946094531769506e-16,
+          "EFT1_scalar_CT_vs_B0_relative": 2.3354236076766474e-15,
+          "EFT1_source_antisymmetric_cancellation_fraction": 1.0,
+          "EFT1_source_quartic_count": 13,
+          "batch6_compare": {
+            "batch6_CT_B0_relative": 2.3354236076766474e-15,
+            "batch6_comparison_passed": true,
+            "batch6_native_CT_relative": 1.7071067811865477,
+            "batch6_output_present": true
+          },
+          "low_energy_running_computed": true,
+          "model": "E_-4",
+          "mu_low_gev": 173.0,
+          "native_PL_kernel_count": 1,
+          "native_source_quartic_count": 1,
+          "native_vs_candidate_seven_channel_ADM_relative": 1.7071067811865475,
+          "native_vs_explicit_scalar_CT_relative": 1.7071067811865477,
+          "nominal_analytic_masses_eV": [
+            148.71121954476078,
+            257.31763497193293,
+            433.5734652318787
+          ],
+          "output_path": "output\\parallel_t3\\native_pole_closure_all16_batch7_v1\\E_m4\\source_pole_and_matching_ledger.json",
+          "output_sha256": "6f94f2f78697ff863faf604f27c263e31b6ea05fae5f83f50d409f77107842a5",
+          "stage": "complete",
+          "status": "NUMERICAL_SOURCE_RESOLVED_COUNTERTERM_AND_POLE_AUDIT_CONDITIONAL",
+          "vev_gev": 246.22
+        },
+        "native_pole_diagnostic_only": true,
+        "source_files": {
+          "B1_MF_quartic": {
+            "path": "output/parallel_t3/rough_inputs/fhard_triangle_all16_batch1_v1/a/E_m4/background.npz",
+            "sha256": "adbefe10f6040542a520bf389ea652131b77636934156ea544e696238b9f53c6"
+          },
+          "B1_hard": {
+            "path": "output/parallel_t3/fhard_triangle_all16_batch1_v1/hard_fermion/E_m4/fermion_hard_triangle.npz",
+            "sha256": "af46b46666a8b34f13ed8964bdc16c82c64295b86f7a0b5e473619462269770d"
+          },
+          "B1_hard_json": {
+            "path": "output/parallel_t3/fhard_triangle_all16_batch1_v1/hard_fermion/E_m4/fermion_hard_triangle.json",
+            "sha256": "05a5506a08369c6a2bc9b3d9437c160f35499ac476685a4953448893d5fe5d4b"
+          },
+          "B2_MS_C5": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/results/E_m4/C5_smeft_at_MS.npz",
+            "sha256": "9a481c9d5a9dcdc97386fc21e4ca567356002cb318066470156f8f1a7faaab1a"
+          },
+          "B2_strict": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/inputs/E_m4/strict_wilson_channels.npz",
+            "sha256": "b1ff808b80deb62de5c44f4459fd8b4fd8ed88886f9525d7fe57acc529535b72"
+          },
+          "B2_strict_json": {
+            "path": "output/parallel_t3/strict_one_loop_all16_batch2_v1/inputs/E_m4/strict_wilson_channels.json",
+            "sha256": "68968df22a9709cc1017436f61e7a838c9eae12df140a0017aae614b2c9f2eaa"
+          },
+          "B4_MS_C5": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/results/E_m4/C5_smeft_at_MS.npz",
+            "sha256": "dabc8ac58777694ea4e880fbf10440dbc2179671ac022d6368565593b7d30259"
+          },
+          "B4_native": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/inputs/E_m4/native_MF_LLHH_finite_source_candidate.npz",
+            "sha256": "173b14426d2a1d198c27b0febbabe90fe2f2bb157ffa08e3e9cd84258ac91e6c"
+          },
+          "B4_native_json": {
+            "path": "output/parallel_t3/native_finite_scenario_all16_batch4_v1/inputs/E_m4/native_MF_LLHH_finite_source_candidate.json",
+            "sha256": "be57f58838662f435d971018afaff0f1c2c247179ff987e6e619da8be23e7ba3"
+          },
+          "B5_MS_C5": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/results/E_m4/C5_smeft_at_MS.npz",
+            "sha256": "d014a9438a411d1d5a826c0c4f102d11526b57396b83471526e83309174f58cc"
+          },
+          "B5_background": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/E_m4/background.npz",
+            "sha256": "ec180c6cd6d21e9aba34073ba97c58202febc0819958a9c16b57ba9573e27b22"
+          },
+          "B5_background_json": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/E_m4/background.json",
+            "sha256": "20e729d814e2e02f356dcea6bb79ca9adc9f98cddfffc8ac531c128007a9e466"
+          },
+          "B5_pole": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/E_m4/hard_soft_and_native_Laurent.npz",
+            "sha256": "a51fc9a3a207d7c167bc45d43c66c3759f3ee282b2d70132a12276f6019c5e26"
+          },
+          "B5_pole_json": {
+            "path": "output/parallel_t3/hard_soft_matching_all16_batch5_v1/inputs/E_m4/hard_soft_and_native_Laurent.json",
+            "sha256": "34fc055addf3d45c72eb3b50816446796f9d9e2cb1d747a428fa52763b5041e3"
+          }
+        }
+      }
+    },
+    "vev_GeV": 246.22
+  },
+  "scenario_order": [
+    "analytic_triangle",
+    "native_formal",
+    "native_as_UV_minus_soft_hypothesis"
+  ],
+  "schema": "t3-final-conditional-reproducibility-all16-batch8-v1",
+  "source_code_SHA256": {
+    "Numerical/parallel_t3/background/contracts.py": "5393cd544e4f7c51d4eedcdacb1b1340fb4cd31a7f892554250a3557886260a8",
+    "Numerical/parallel_t3/threshold/matching.py": "ed72a0b7bacf63b1dea0925f5cfcd819338e19f5a7d1f3395a6e94e6dc2904c8",
+    "Numerical/parallel_t3/threshold/pipeline.py": "27211ba2f02c48a95821fcaa4ca0587f2cc5706d015b2f3df7180c3dbe6aeead",
+    "Numerical/parallel_t3/threshold/rough_numerics.py": "f1594f0f251d7ab8ac5605585a36698a1383eeead7cb5db1c7fef54427545c24",
+    "Numerical/parallel_t3/wilson/final_repro_batch8.py": "3451878345f96b5c40fcb8ca2ae23231a7a35672ec350bcd87c74fce39fb2f22",
+    "Numerical/parallel_t3/wilson/matching_soft_subtraction_batch5.py": "114cc91152bab884c046bf3d7c5c3c4a917467a9d4dadda7543760191ecf74c6",
+    "Numerical/parallel_t3/wilson/msbar_counterterm_batch6.py": "8bb5696eeec5e12e684397beb1f2cf88c016455278bf53d8739430d9dc219205",
+    "Numerical/parallel_t3/wilson/native_pole_closure_batch7.py": "458ca06f7330f850814cddefe5a6b153f9bfd76f1d11fb6a9789dac957fbc4d2",
+    "Numerical/parallel_t3/wilson/quartic_channels_batch2.py": "a3228107a0772f441ecbc5240210aa5b281f7c22f4c5d4ceaaf9d450dd9d6df6",
+    "scripts/RunT3CountertermBatch6.py": "f123d83c0c2931bb85c22cb3c6b04f4636d3ef142faf69c4a5c938d632e30f20",
+    "scripts/RunT3FinalRepro.py": "3d8983481dd4dc8521f4577d1787c7e9749fed9c105a8f4273f1c2967b48a683",
+    "scripts/RunT3PoleClosureBatch7.py": "ba1eae10ed80c9495e72e883ebb6d765e64ede0915ae4fb15144d4fe5243f5f7"
+  },
+  "status": "COMPLETE_REPRODUCIBLE_CONDITIONAL_NUMERICAL_BENCHMARK",
+  "subtraction_scale_factors": [
+    0.5,
+    1.0,
+    2.0
+  ],
+  "total_scenario_rows": 144,
+  "vev_GeV": 246.22
+}

@@ -1,0 +1,20 @@
+{
+  "active_BSM_fields_below_MF": [
+    "S1",
+    "S2"
+  ],
+  "all_three_heavy_fermions_decoupled_at_single_MF": true,
+  "blocker": "No nonzero real-component Wilson terms",
+  "complete_one_loop_matching": false,
+  "fermion_matching_source_basis": "Matchete GammaCC source, not canonical Weyl",
+  "formal_LLsS_tree_available": false,
+  "gammaCC_to_weyl_signed_conversion_certified": false,
+  "hard_C5_is_physically_zero": null,
+  "hard_C5_status": "hard_C5_unavailable",
+  "model": "B_-1",
+  "mu_F_gev": 100000.0,
+  "same_run_uv_state_sha256": "20e325cd319e8fb43e0ce218b523d6db60caf0355baa31d50ba925e61b422332",
+  "schema": "t3-parallel-B-fermion-boundary-v1",
+  "status": "Blocked_ValueError",
+  "traceback_tail": "Traceback (most recent call last):\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\Numerical\\parallel_t3\\background\\runner.py\", line 310, in run_one\n    b_arrays, detail = evaluate_mixed_native_candidate(\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\Numerical\\parallel_t3\\background\\fermion.py\", line 156, in evaluate_mixed_native_candidate\n    source, audit = mixed_exact_boundary(model, uv_at_mf,\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\Numerical\\running\\GeneralT3MixedExactFermionWilson.py\", line 244, in mixed_exact_boundary\n    by,indices,terms,audit=project_source(model,src,pl,cg,masses,ys,U)\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\Numerical\\running\\GeneralT3MixedExactFermionWilson.py\", line 208, in project_source\n    operator=project_ordered_term(row,cg['CGRegistry'],model)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: No nonzero real-component Wilson terms\n"
+}

@@ -136,14 +136,25 @@ def _k_epsilon(current: np.ndarray, reference: np.ndarray) -> tuple[complex,floa
     return complex(k), float(np.linalg.norm(current-k*reference)/norm)
 
 
-def _s(v, ndigits=9):
+def _s(v):
+    """Four significant figures, with scientific notation for small/large numbers.
+
+    Examples: 0.02248 -> 2.248e-02; 0.3088 -> 0.3088;
+              21042.95 -> 2.104e+04; 0 -> 0.
+    LaTeX table cells contain plain e-notation, not rounded input data.
+    """
     if v is None:
         return '--'
     try:
-        if not math.isfinite(float(v)):
+        x = float(v)
+        if not math.isfinite(x):
             return '--'
-        return f'{float(v):.{ndigits}g}'
-    except (TypeError,ValueError):
+        if x == 0:
+            return '0'
+        if abs(x) < 0.1 or abs(x) >= 1e4:
+            return f'{x:.3e}'
+        return f'{x:.4g}'
+    except (TypeError, ValueError):
         return '--'
 
 
@@ -231,9 +242,11 @@ def _div(x,y):
 
 def main(argv=None):
     ap=argparse.ArgumentParser(description=__doc__)
-    ap.add_argument('--reference-results',type=Path,nargs='+',required=True,
+    ap.add_argument('--reformat-existing',type=Path,default=None,
+       help='Regenerate LaTeX tables from existing results.json without any EFT reruns')
+    ap.add_argument('--reference-results',type=Path,nargs='+',
        help='One or more EXISTING result-root directories, each with A_-4/result.json and/or D_-2/result.json')
-    ap.add_argument('--output',type=Path,required=True)
+    ap.add_argument('--output',type=Path,default=None)
     ap.add_argument('--batch1',default='output/batch1_general_contract/batch1_native_v1')
     ap.add_argument('--mu-low',type=float,default=100.)
     ap.add_argument('--wilson-solver',choices=['RK2','DOP853'],default='RK2')
@@ -243,7 +256,22 @@ def main(argv=None):
     ap.add_argument('--keep-trial-files',action='store_true')
     ap.add_argument('--debug',action='store_true')
     args=ap.parse_args(argv)
-    root=ROOT.resolve()
+    root = ROOT.resolve()
+    if args.reformat_existing is not None:
+        out = (root/args.reformat_existing).resolve()
+        if not (out/'results.json').is_file() or not (out/'provenance.json').is_file():
+            ap.error('--reformat-existing requires existing results.json and provenance.json')
+        if args.output is not None:
+            ap.error('Do not combine --output and --reformat-existing')
+        existing = read_json(out/'results.json')
+        provenance = read_json(out/'provenance.json')
+        if not all(k in existing for k in ('D_-2','A_-4')):
+            ap.error('Existing results must contain both donor benchmarks')
+        _export_tables(out,existing,mu_low=float(provenance['mu_low_gev']))
+        print('Reformatted Table_B1.tex through Table_B4.tex with 4 significant figures:',out)
+        return 0
+    if args.output is None or not args.reference_results:
+        ap.error('Fresh numerical run requires --output and --reference-results')
     output=(root/args.output).resolve()
     allowed=(root/'output/parallel_t3').resolve()
     if allowed not in output.parents or output.exists():

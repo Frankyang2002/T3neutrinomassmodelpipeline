@@ -1,0 +1,49 @@
+{
+  "source_run": "corrected_llss16_v4",
+  "summary_sha256": "b003aa12c17a0c48402a37930f39bb4f76cd5a2f500e25cc63dbc712a3ede4fd",
+  "models": [
+    "A_-4",
+    "A_-2",
+    "A_+0",
+    "B_-3",
+    "B_-1",
+    "B_+1",
+    "C_-3",
+    "C_-1",
+    "C_+1",
+    "D_-2",
+    "D_+0",
+    "D_+2",
+    "E_-4",
+    "E_-2",
+    "E_+0",
+    "E_+2"
+  ],
+  "missing_models": [],
+  "full_case": "1111",
+  "stage_off_cases": {
+    "UV off": "0111",
+    "EFT1 off": "1001",
+    "SMEFT off": "1110"
+  },
+  "display_labels": [
+    "UV off",
+    "EFT1 off",
+    "SMEFT off"
+  ],
+  "normal_mass": "100*(full-off)/abs(off), signed percentage",
+  "normal_mixing": "full-off, absolute difference in sin^2 theta (not percentage)",
+  "column_sigma": "z=(raw difference-column mean)/sample std (ddof=1), per stage/observable column across available models",
+  "column_zero_meaning": "average across models, not no running effect",
+  "constant_column_policy": "z=0 if sample standard deviation is identically zero",
+  "EFT1_off_definition": "case 1001: both renormalisable EFT1 parameter evolution and LLSS logarithm disabled; existing LLSS approximation, not complete EFT1 operator freeze",
+  "SMEFT_off_definition": "case 1110: SM+Weinberg evolution disabled",
+  "general_seven_term_trial_included": false,
+  "physics_recomputed": false,
+  "figures": [
+    "mass_percentage_heatmap.png",
+    "mass_column_sigma_heatmap.png",
+    "mixing_changes_heatmap.png",
+    "mixing_column_sigma_heatmap.png"
+  ]
+}

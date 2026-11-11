@@ -1,0 +1,44 @@
+{
+  "source_run": "corrected_llss16_v4",
+  "source_format": "t3-independent-llss-U_E_W_S-ablation-v1",
+  "target": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\configs\\nufit_6_1_ic24_no.json",
+  "target_sha256": "27bd4d4297fddb3ef71b5b804afd8e31d44d302b569f7cf8c34d37d54005e15e",
+  "target_description": "NuFIT 6.1 (2025), IC24 with SK-atm, Normal Ordering; Gaussianized 1sigma approximation",
+  "sigma_values": {
+    "delta_m21_sq_ev2": 9.7e-07,
+    "delta_m3l_sq_ev2": 2.05e-05,
+    "sin2_theta12": 0.00665,
+    "sin2_theta13": 0.00057,
+    "sin2_theta23": 0.0155
+  },
+  "models": [
+    "A_-4",
+    "A_-2",
+    "A_+0",
+    "B_-3",
+    "B_-1",
+    "B_+1",
+    "C_-3",
+    "C_-1",
+    "C_+1",
+    "D_-2",
+    "D_+0",
+    "D_+2",
+    "E_-4",
+    "E_-2",
+    "E_+0",
+    "E_+2"
+  ],
+  "missing_models": [],
+  "full_case": "1111",
+  "stage_off_cases": {
+    "UV OFF": "0111",
+    "EFT1 OFF (E+W)": "1001",
+    "SMEFT OFF": "1110"
+  },
+  "quantity": "z=(O_full-O_frozen)/sigma_observable",
+  "grouped_quantity": "RMS(z) across computed models; not a statistical error bar",
+  "eft1_scope": "E+W off: renormalisable freeze plus remove LLSS log, not complete EFT1 Wilson evolution",
+  "not_a_correlated_delta_chi_square": true,
+  "physics_recomputed": false
+}

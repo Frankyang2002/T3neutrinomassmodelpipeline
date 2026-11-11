@@ -1,0 +1,35 @@
+{
+  "source_run": "corrected_llss16_v4",
+  "summary_sha256": "b003aa12c17a0c48402a37930f39bb4f76cd5a2f500e25cc63dbc712a3ede4fd",
+  "models": [
+    "A_-4",
+    "A_-2",
+    "A_+0",
+    "B_-3",
+    "B_-1",
+    "B_+1",
+    "C_-3",
+    "C_-1",
+    "C_+1",
+    "D_-2",
+    "D_+0",
+    "D_+2",
+    "E_-4",
+    "E_-2",
+    "E_+0",
+    "E_+2"
+  ],
+  "missing_models": [],
+  "full_case": "1111",
+  "stage_off_cases": {
+    "UV OFF": "0111",
+    "EFT1 OFF (E+W)": "1001",
+    "SMEFT OFF": "1110"
+  },
+  "raw_difference": "O_full - O_stage_off (NOT percent)",
+  "standardisation": "For EACH (stage,observable) column separately across available models: z=(difference-mean_column)/sample_std_column; ddof=1",
+  "zero_variance_policy": "Set available z-scores to 0; flag column in CSV",
+  "scope": "EFT1 E+W OFF is LLSS approximation, not complete EFT1 freeze",
+  "physics_recomputed": false,
+  "note": "A z-score of zero means the column average, NOT zero running effect. This is a between-model standardisation, NOT NuFIT significance."
+}

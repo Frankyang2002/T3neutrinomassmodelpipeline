@@ -1,53 +1,46 @@
-T3 GENERAL SCALAR THRESHOLD HANDOFF (conditional)
+T3 Coupled EFT1 Yukawa least-squares refinement
+===============================================
 
-Copy both files into the project repository's scripts/ directory:
-  scripts/RunT3GeneralScalarThreshold.py
-  scripts/RunT3GeneralSMEFTBridge.py
+NEW FILE (no replacement of existing production files):
+ scripts/RunT3CoupledYukawaLeastSquares.py
 
-This connects:
-  saved general scalar UV/EFT1 numerical endpoint
-  + separately available FULL canonical EFT1 Wilson tensor at MS
-  + separately available FULL canonical quartic tensor at MS
-  -> existing scalar-bubble matcher -> existing SMEFT runner -> PMNS.
+Requires scripts/RunT3CoupledYukawaOvernight.py, specifically the
+FingerprintCompat edition installed earlier, which has the
+symbolic_export_compatibility and setup_physics functions.
 
-The tensor inputs MUST be in identical canonical real-interleaved
-Weyl45/real scalar coordinates. A native Matchete tensor, RGBeta
-coefficient list, or source-basis tensor cannot be passed as-is.
-This script does not convert a noncanonical source frame.
+PowerShell, from project root with activated .venv:
 
-The scalar mass matrix is rebuilt from the general trajectory's
-mS1Sq, mS2Sq, complex extra mu2, using the existing general
-quadratic implementation, then permuted from grouped (all R, all I)
-to canonical interleaved (R1,I1,R2,I2,...).
-U(1)_Y and SU(2) Ward residuals are checked against the actual
-canonical representation generators. Do not use the opt-out flags
-for physical/theoretical claims.
+  python -X utf8 -m scripts.RunT3CoupledYukawaLeastSquares --run-id ls_smoke_v1 --models D_+0 --from-run yukawa_overnight_compat_v2 --check-only
 
-PowerShell, from project root:
-  python -X utf8 -m scripts.RunT3GeneralScalarThreshold --help
+Small real numerical smoke test (~8 EFT evaluations):
 
-Example with REAL, COMPATIBLE PRODUCER ARTIFACTS (replace paths):
-  python -X utf8 -m scripts.RunT3GeneralScalarThreshold `
-    --trajectory "output/studies/general_scalar_extended/continuous_full_scalar/RUN/A_m4/continuous_trajectory.json" `
-    --wilson "PATH/TO/full_wilson_at_MS.npz" `
-    --quartic "PATH/TO/full_quartic_at_MS.npz" `
-    --assume-same-canonical-frame `
-    --output "output/studies/general_scalar_extended/connected/A_m4"
+  python -X utf8 -m scripts.RunT3CoupledYukawaLeastSquares --run-id ls_smoke_v1 --models D_+0 --from-run yukawa_overnight_compat_v2 --allow-stale-symbolic-source --active-counts 2 --max-evals 8 --stage-nfev 2
 
-The "same canonical" flag is an explicit assumption; it does not
-automatically establish tensor provenance. The Wilson must already
-have been evolved after integrating out all fermions; the quartic
-must be an actual full component tensor, NOT reconstructed by
-incorrectly treating raw RG beta coordinates as tensor components.
-If the matching tensor sources are not yet generated, this command
-must fail rather than invent them.
+Preferred first campaign, starting from the already improved Yukawas:
 
-Outputs:
-  output/manifest.json
-  output/general_scalar_threshold_c5.npz
-  output/smeft/summary.json
-  output/smeft/smeft_low.npz
+  python -X utf8 -m scripts.RunT3CoupledYukawaLeastSquares --run-id ls_refine_four_v1 --models D_+0,C_+1,A_+0,D_-2 --from-run yukawa_overnight_compat_v2 --allow-stale-symbolic-source --max-evals 120 --max-hours 10
 
-Limitations: first threshold and EFT1 Wilson-running inputs are external;
-scalar threshold is conditional bubble only; extra finite contributions
-are not supplied; exact native coefficient mapping is not assumed.
+Then the remaining models (fresh run-id; default source paths remain unchanged):
+
+  python -X utf8 -m scripts.RunT3CoupledYukawaLeastSquares --run-id ls_refine_remaining_v1 --models A_-4,A_-2,B_-3,B_-1,B_+1,C_-3,C_-1,D_+2,E_-4,E_-2,E_+0,E_+2 --from-run yukawa_overnight_compat_v2 --allow-stale-symbolic-source --max-evals 120 --max-hours 10
+
+Output (new only):
+ output/studies/general_scalar_extended/coupled_yukawa_least_squares/<run-id>/<model-tag>/
+    settings.json, best.json, best_fitted_config.json,
+    best_general_uv_overrides.json (nonmixed only), evaluations.jsonl,
+    summary.json, symbolic_export_compatibility.json
+
+The target is the whitened five-dimensional fit residual from
+Numerical/fitting/OscillationFit.py evaluated by case 1111 of the existing
+coupled pipeline. The script checks sum(residual**2) against the existing
+coupled chi2 before accepting an improvement. It never uses the older
+one-scale optimiser. Other Yukawa directions remain fixed during each
+5/8/12-active-coordinate least-squares stage.
+
+All source and overnight files are read-only. No remote GitHub changes.
+The cached symbolic export override reuses historical RGEs, so numerical
+results should not be attributed to newer edited symbolic source.
+
+Static Python syntax checks passed. Full numerical execution requires the
+user's local cached symbolic exports and numerical inputs and has not been
+performed in this delivery environment.

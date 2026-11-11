@@ -1,0 +1,24 @@
+{
+  "format": "t3-a-m4-seven-term-full-master-dim5-ode-v1",
+  "source_run": "thesis16_merged_v1",
+  "requested_models": [
+    "A_-4"
+  ],
+  "computed": 0,
+  "spinor_factor_assumed": 1.0,
+  "basis_assumed": true,
+  "one_scale_C5_used_as_W_on_reference": true,
+  "hard_matching_residual_independently_calculated": false,
+  "no_double_counting_by_construction": true,
+  "model_rows": [
+    {
+      "model": "A_-4",
+      "status": "Blocked",
+      "error": "TypeError: must be real number, not dict",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\scripts\\RunT3GeneralSequentialFitAblation.py\", line 489, in main\n    cases,provenance=_nonmixed(model,saved,canonical_run_id,\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\scripts\\RunT3GeneralSequentialFitAblation.py\", line 188, in _nonmixed\n    block=_final_cases(model,c5,tree,scalar,target,\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\scripts\\RunT3CoupledEFT1SevenTerm.py\", line 393, in final_cases\n    ctx,quark_gamma=initial_context(state,quartic,c0,mu_f,mu_s)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\scripts\\RunT3CoupledEFT1SevenTerm.py\", line 288, in initial_context\n    full_y=yukawa_context(state)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\scripts\\RunT3CoupledEFT1SevenTerm.py\", line 158, in yukawa_context\n    ye=_finite_complex_matrix(state['ye'],'ye')\n       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\scripts\\RunT3CoupledEFT1SevenTerm.py\", line 63, in _finite_complex_matrix\n    arr = decode(value)\n          ^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\Numerical\\running\\GeneralT3SequentialLeadingLog.py\", line 74, in decode\n    v = np.asarray(raw, complex)\n        ^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: must be real number, not dict\n"
+    }
+  ],
+  "seven_master_terms": true,
+  "running_background": "frozen_muS_EFT1_endpoint",
+  "complete_physical_C5": false
+}

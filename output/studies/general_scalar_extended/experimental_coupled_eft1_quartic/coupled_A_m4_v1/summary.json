@@ -1,0 +1,89 @@
+{
+  "format": "t3-coupled-quartic-only-llss-llhh-ablation-v1",
+  "source_run": "thesis16_merged_v1",
+  "requested_models": [
+    "A_-4"
+  ],
+  "computed": 1,
+  "spinor_factor_assumed": 1.0,
+  "basis_assumed": true,
+  "one_scale_C5_used_as_W_on_reference": true,
+  "hard_matching_residual_independently_calculated": false,
+  "no_double_counting_by_construction": true,
+  "model_rows": [
+    {
+      "model": "A_-4",
+      "status": "Computed",
+      "provenance": {
+        "fermion_tree": {
+          "0": {
+            "matched_source": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\fermion_first_all16_v1\\A_m4\\data\\eft1_after_F_wilson_seed.json",
+            "f_tree_operator_count": 1,
+            "Yukawa_types": [
+              "y1",
+              "y2"
+            ],
+            "heavy_mass_eigenvalues_gev": [
+              100000.0,
+              110000.0,
+              120000.0
+            ],
+            "heavy_basis_diagnostics": "{'heavy_basis_residual': 0.0, 'extra_yukawa_rotation': 'not-applicable', 'vectorlike_right_rotation_identity_fast_path': False}",
+            "sources": [
+              {
+                "source_index": 2,
+                "raw_ordered_components": 216,
+                "symmetric_orbits": 132,
+                "flavour_permutation": [
+                  1,
+                  0
+                ]
+              }
+            ],
+            "heavy_real_scalar_count": 8,
+            "operator_symmetrisation": "exact commuting-spinor polynomial orbit average",
+            "absolute_matchete_to_weyl_normalization_certified": false
+          },
+          "1": {
+            "matched_source": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\fermion_first_all16_v1\\A_m4\\data\\eft1_after_F_wilson_seed.json",
+            "f_tree_operator_count": 1,
+            "Yukawa_types": [
+              "y1",
+              "y2"
+            ],
+            "heavy_mass_eigenvalues_gev": [
+              110354.78119470595,
+              121390.25924534307,
+              132425.7373970585
+            ],
+            "heavy_basis_diagnostics": "{'heavy_basis_residual': 7.28994658146565e-11, 'extra_yukawa_rotation': 'not-applicable', 'vectorlike_right_rotation_identity_fast_path': False}",
+            "sources": [
+              {
+                "source_index": 2,
+                "raw_ordered_components": 216,
+                "symmetric_orbits": 132,
+                "flavour_permutation": [
+                  1,
+                  0
+                ]
+              }
+            ],
+            "heavy_real_scalar_count": 8,
+            "operator_symmetrisation": "exact commuting-spinor polynomial orbit average",
+            "absolute_matchete_to_weyl_normalization_certified": false
+          }
+        },
+        "matching_kind": "full-general-matchete-one-scale-channels",
+        "full_general_C5_matchete_path": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_matchete_matching\\A_m4\\c5_coefficient.txt",
+        "full_general_C5_sha256": "7f192897409fe14b6111fc1fa1e263ee4d99be378fc7497180698d9816c50cc5",
+        "fitted_uv_sha256": "6673020c239827e1c90365560afa8f22cf9afc5dcad51fd4d845ef85291447ff"
+      },
+      "general_Lagrangian": true,
+      "C5_hard_matching_is_independent": false,
+      "full_sequential_general_C5_certified": false
+    }
+  ],
+  "matching_scope": "coupled_HHSS_quartic_only_in_LLSS_LLHH_subspace",
+  "complete_eft1_dim5_operator_basis": false,
+  "hard_fermion_matching_included": false
+}

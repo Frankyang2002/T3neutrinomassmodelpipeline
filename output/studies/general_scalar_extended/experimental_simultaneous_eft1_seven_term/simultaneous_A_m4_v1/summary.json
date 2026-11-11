@@ -1,0 +1,24 @@
+{
+  "format": "t3-a-m4-simultaneous-rgbeta-seven-term-wilson-v1",
+  "source_run": "thesis16_merged_v1",
+  "requested_models": [
+    "A_-4"
+  ],
+  "computed": 0,
+  "spinor_factor_assumed": 1.0,
+  "basis_assumed": true,
+  "one_scale_C5_used_as_W_on_reference": false,
+  "hard_matching_residual_independently_calculated": false,
+  "no_double_counting_by_construction": true,
+  "model_rows": [
+    {
+      "model": "A_-4",
+      "status": "Blocked",
+      "error": "ValueError: lambdaT3: expected number or real/imag object",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\scripts\\RunT3GeneralSequentialFitAblation.py\", line 489, in main\n    cases,provenance=_nonmixed(model,saved,canonical_run_id,\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\scripts\\RunT3SimultaneousEFT1A4.py\", line 374, in _nonmixed_A4\n    q_basis=HHSSLinearBasis(model,tree,channels,registry,geometry,\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\scripts\\RunT3SimultaneousEFT1A4.py\", line 83, in __init__\n    self.offset = self._direct(base)\n                  ^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\scripts\\RunT3SimultaneousEFT1A4.py\", line 98, in _direct\n    bundle = scalar_tensors(self.model, self.tree, self.channels, snap,\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\Numerical\\running\\GeneralT3SequentialLeadingLog.py\", line 214, in scalar_tensors\n    native_tensors, native_names = evaluate_channels(ch, values)\n                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\Numerical\\joint_scalar_matching\\source_quartic_v4.py\", line 179, in evaluate_channels\n    vals={name:_complex_number(couplings[name],name) for name in names}\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\Numerical\\joint_scalar_matching\\source_quartic_v4.py\", line 165, in _complex_number\n    raise ValueError(f'{name}: expected number or real/imag object')\nValueError: lambdaT3: expected number or real/imag object\n"
+    }
+  ],
+  "running_background": "simultaneous_RGBeta_and_7term_master",
+  "complete_physical_C5": false,
+  "model_scope": "A_-4"
+}

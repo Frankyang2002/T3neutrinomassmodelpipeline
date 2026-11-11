@@ -1,0 +1,114 @@
+{
+  "format": "t3-joint-scalar-conditional-background-v1",
+  "model": "A_+0",
+  "source_boundary_sha256": "8b6cf6714a1193e4d44e865152d87e576428421ab9207da29aee9369022bdc89",
+  "source_scalar_real_labels": [
+    "T3Scalar1Minus",
+    "T3Scalar1Plus",
+    "NewScalar2",
+    "NewScalar2",
+    "NewScalar2",
+    "NewScalar2",
+    "NewScalar2",
+    "NewScalar2"
+  ],
+  "renormalization_scheme": "MSbar",
+  "tensor_convention": "T3_REAL_LLSS_HHSS_WEINBERG_v1",
+  "mu_f_gev": 100000.0,
+  "mu_s_gev": 1000.0,
+  "reference_scale_gev": 1000.0,
+  "scalar_mass_origin": "unbroken_electroweak",
+  "same_muS_quartic_and_mass": true,
+  "no_separate_scalar_threshold": true,
+  "tensor_npz": "A_p0.npz",
+  "quartic_channel_names": [
+    "native:lambdaT3",
+    "portal:lambdaH1Inv1",
+    "portal:lambdaH2Inv2",
+    "portal:WS2_RGBeta_complement_S2_lambdaH2Adj",
+    "general:lambdaT3GeneralQ021010I1",
+    "general:lambdaT3GeneralQ110200I1"
+  ],
+  "provenance": {
+    "source": "Batch14 evolving muS couplings; source-hash-checked Matchete HHSS + RGBeta portal/general geometry",
+    "quartic_potential_normalization": "V=lambda_abcd*phi_a*phi_b*phi_c*phi_d/4!",
+    "batch14_sha256": "61e43c111ef0f410b972f35348dc4540b6a5c5c5e3636d1d9662a0ec5976dae3",
+    "batch15_sha256": "573c3a72b2e2b1563efe9b14dd1aab38341292ecbd991222ac03d52373547ba3",
+    "batch16_sha256": "e982d5af2103115bb8b6b6295d18f18a98553bd5e135982b96cc77925b9f74be",
+    "matchete_source_sha256": "8b6cf6714a1193e4d44e865152d87e576428421ab9207da29aee9369022bdc89",
+    "matchete_scalar_seed_sha256": "2f607d804c8b250ce6e2776c7be6fe71addabad1280dc6b6b0f1448d3eda3781",
+    "matchete_quartic_cache_sha256": "10e6b812a967c0c03b110ac8531dd67324234bc5e72b48e3ac439b8afb39fbe5",
+    "general_registry_sha256": "86a096410384641efa8f751b2aa98e8fee4bb6d3cccb4cfd116c559b71182eea",
+    "candidate_special_scalar_basis": true,
+    "scalar_field_map_certified": false,
+    "rgbeta_matchete_coupling_normalisation_certified": false,
+    "source_fermion_flavour_boundary_rederived_from_Batch13": false,
+    "quartic_tensor_provenance": {
+      "model": "A_+0",
+      "assumed_native_coupling_aliases": {
+        "lambdaH1Inv1": "lambdaH1",
+        "lambdaH2Inv2": "lambdaH2Adj",
+        "lambdaT3": "lambdaT3"
+      },
+      "quartic_channels": [
+        {
+          "name": "lambdaT3",
+          "rgbeta": "lambdaT3",
+          "origin": "native Matchete source CG"
+        },
+        {
+          "name": "lambdaH1Inv1",
+          "origin": "exact RGBeta portal completion"
+        },
+        {
+          "name": "lambdaH2Inv2",
+          "origin": "exact RGBeta portal completion"
+        },
+        {
+          "name": "WS2_RGBeta_complement_S2_lambdaH2Adj",
+          "origin": "exact RGBeta portal completion"
+        },
+        {
+          "name": "lambdaT3GeneralQ021010I1",
+          "real": 0.0,
+          "imag": 0.0,
+          "reference_invariant": "reference_invariant_1",
+          "field_counts": [
+            0,
+            2,
+            1,
+            0,
+            1,
+            0
+          ],
+          "assumption": "sector_order_candidate_RGBeta_to_SU2_reference_basis"
+        },
+        {
+          "name": "lambdaT3GeneralQ110200I1",
+          "real": 0.0,
+          "imag": 0.0,
+          "reference_invariant": "reference_invariant_1",
+          "field_counts": [
+            1,
+            1,
+            0,
+            2,
+            0,
+            0
+          ],
+          "assumption": "sector_order_candidate_RGBeta_to_SU2_reference_basis"
+        }
+      ],
+      "source_basis": "Native Matchete fixed component map: S[k]=(Minus[k]+i Plus[k])/sqrt(2), same SU2 index k, no spherical W; muS quadratic Hessian includes complex mu mixing; muF/muS running coupling map remains exploratory",
+      "general_extra_registry_count": 5,
+      "full_general_HHSS_reference_invariant_basis_used": true,
+      "all_renormalisable_scalar_extra_quartics_are_in_intermediate_RGEs": null,
+      "matchete_rgbeta_map_certified": false,
+      "spinor_normalization_certified": false
+    }
+  },
+  "physical_C5_certified": false,
+  "full_one_loop_certified": false,
+  "GammaCC_to_Weyl_normalization": null,
+  "all_seven_wilson_terms_simultaneously_run": false
+}

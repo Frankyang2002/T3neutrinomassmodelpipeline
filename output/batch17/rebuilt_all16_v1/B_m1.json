@@ -1,0 +1,153 @@
+{
+  "format": "t3-joint-scalar-conditional-background-v1",
+  "model": "B_-1",
+  "source_boundary_sha256": "6a4d1531a9c52ebae69e73cf582196a29bf858027b4511d2771ad3d1eee103b4",
+  "source_scalar_real_labels": [
+    "NewScalarX",
+    "NewScalarX",
+    "NewScalarX",
+    "NewScalarX",
+    "NewScalarY",
+    "NewScalarY",
+    "NewScalarY",
+    "NewScalarY"
+  ],
+  "renormalization_scheme": "MSbar",
+  "tensor_convention": "T3_REAL_LLSS_HHSS_WEINBERG_v1",
+  "mu_f_gev": 100000.0,
+  "mu_s_gev": 1000.0,
+  "reference_scale_gev": 1000.0,
+  "scalar_mass_origin": "unbroken_electroweak",
+  "same_muS_quartic_and_mass": true,
+  "no_separate_scalar_threshold": true,
+  "tensor_npz": "B_m1.npz",
+  "quartic_channel_names": [
+    "native:lambdaT3",
+    "portal:lambdaH1Inv1",
+    "portal:lambdaH1Inv2",
+    "portal:lambdaH2Inv1",
+    "portal:lambdaH2Inv2",
+    "general:lambdaHHdagS2S2",
+    "general:lambdaHHdagS1barS1bar",
+    "general:lambdaT3GeneralQ110101I1",
+    "general:lambdaHHdagS1barS2barCross"
+  ],
+  "provenance": {
+    "source": "Batch14 evolving muS couplings; source-hash-checked Matchete HHSS + RGBeta portal/general geometry",
+    "quartic_potential_normalization": "V=lambda_abcd*phi_a*phi_b*phi_c*phi_d/4!",
+    "batch14_sha256": "e479a4ded2d5a07005431b474ab936f20ffe887e4cd48af246d2806c681f7be9",
+    "batch15_sha256": "f4c661a4494d14094b6c830385e07eed70f8d02083fa561df8155bc7dfca4c82",
+    "batch16_sha256": "cf2b4ee916ae97ac4d7dbdee3232ac35f17b09e2c3ff1391eae1cd80f99e87cf",
+    "matchete_source_sha256": "6a4d1531a9c52ebae69e73cf582196a29bf858027b4511d2771ad3d1eee103b4",
+    "matchete_scalar_seed_sha256": "0b45ab70e346a29752efd659810e3892c5f9a3e2a549389deaa40781ef58b6bd",
+    "matchete_quartic_cache_sha256": "49d4e5a93524d22a0a0e2377f2783434362c987e127af22358dc793f7a8b769e",
+    "general_registry_sha256": "86a096410384641efa8f751b2aa98e8fee4bb6d3cccb4cfd116c559b71182eea",
+    "candidate_special_scalar_basis": true,
+    "scalar_field_map_certified": false,
+    "rgbeta_matchete_coupling_normalisation_certified": false,
+    "source_fermion_flavour_boundary_rederived_from_Batch13": false,
+    "quartic_tensor_provenance": {
+      "model": "B_-1",
+      "assumed_native_coupling_aliases": {
+        "lambdaH1Inv1": "lambdaH1",
+        "lambdaH1Inv2": "lambdaH1Adj",
+        "lambdaH2Inv1": "lambdaH2",
+        "lambdaH2Inv2": "lambdaH2Adj",
+        "lambdaT3": "lambdaT3"
+      },
+      "quartic_channels": [
+        {
+          "name": "lambdaT3",
+          "rgbeta": "lambdaT3",
+          "origin": "native Matchete source CG"
+        },
+        {
+          "name": "lambdaH1Inv1",
+          "origin": "exact RGBeta portal completion"
+        },
+        {
+          "name": "lambdaH1Inv2",
+          "origin": "exact RGBeta portal completion"
+        },
+        {
+          "name": "lambdaH2Inv1",
+          "origin": "exact RGBeta portal completion"
+        },
+        {
+          "name": "lambdaH2Inv2",
+          "origin": "exact RGBeta portal completion"
+        },
+        {
+          "name": "lambdaHHdagS2S2",
+          "real": 0.008446133272565399,
+          "imag": 0.0,
+          "reference_invariant": "reference_invariant_1",
+          "field_counts": [
+            0,
+            2,
+            0,
+            0,
+            2,
+            0
+          ],
+          "assumption": "sector_order_candidate_RGBeta_to_SU2_reference_basis"
+        },
+        {
+          "name": "lambdaHHdagS1barS1bar",
+          "real": 0.00848339416981231,
+          "imag": 0.0,
+          "reference_invariant": "reference_invariant_1",
+          "field_counts": [
+            0,
+            2,
+            0,
+            2,
+            0,
+            0
+          ],
+          "assumption": "sector_order_candidate_RGBeta_to_SU2_reference_basis"
+        },
+        {
+          "name": "lambdaT3GeneralQ110101I1",
+          "real": 0.0005235337969453083,
+          "imag": 0.0,
+          "reference_invariant": "reference_invariant_1",
+          "field_counts": [
+            1,
+            1,
+            0,
+            1,
+            0,
+            1
+          ],
+          "assumption": "sector_order_candidate_RGBeta_to_SU2_reference_basis"
+        },
+        {
+          "name": "lambdaHHdagS1barS2barCross",
+          "real": 0.007959607903272038,
+          "imag": 0.0,
+          "reference_invariant": "reference_invariant_2",
+          "field_counts": [
+            1,
+            1,
+            0,
+            1,
+            0,
+            1
+          ],
+          "assumption": "sector_order_candidate_RGBeta_to_SU2_reference_basis"
+        }
+      ],
+      "source_basis": "(S1,epsilon*conjugate(S2))=U@(X,Y), epsilon12=+1; muS U reused as muF boundary field definition (exploratory)",
+      "general_extra_registry_count": 7,
+      "full_general_HHSS_reference_invariant_basis_used": true,
+      "all_renormalisable_scalar_extra_quartics_are_in_intermediate_RGEs": null,
+      "matchete_rgbeta_map_certified": false,
+      "spinor_normalization_certified": false
+    }
+  },
+  "physical_C5_certified": false,
+  "full_one_loop_certified": false,
+  "GammaCC_to_Weyl_normalization": null,
+  "all_seven_wilson_terms_simultaneously_run": false
+}

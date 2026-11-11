@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "C:\thesistemp\T3neutrinomassmodelpipeline\scripts\RunBatch17ConditionalC5All16.py", line 71, in main
+    report=run_conditional(model,handoff_path=handoff,mass_path=mass,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\thesistemp\T3neutrinomassmodelpipeline\Numerical\experimental\Batch17ConditionalWilson.py", line 166, in run_conditional
+    mass_check=mass_parity(mass,background.mass2)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\thesistemp\T3neutrinomassmodelpipeline\Numerical\experimental\Batch17ConditionalWilson.py", line 129, in mass_parity
+    raise ValueError(f'Old scalar matching background is inconsistent with Batch16 muS '
+ValueError: Old scalar matching background is inconsistent with Batch16 muS endpoint (relative mass-spectrum mismatch=0.8491). Regenerate the joint-scalar HHSS background from the NEW EFT1 endpoint.

@@ -1,0 +1,81 @@
+{
+  "format": "t3-joint-scalar-conditional-background-v1",
+  "model": "A_-4",
+  "source_boundary_sha256": "a51a31e437628ab8a1e6adfaf054bf1da5309b158574971999f8a2bce3bb80ed",
+  "source_scalar_real_labels": [
+    "NewScalar1",
+    "NewScalar1",
+    "NewScalar2",
+    "NewScalar2",
+    "NewScalar2",
+    "NewScalar2",
+    "NewScalar2",
+    "NewScalar2"
+  ],
+  "renormalization_scheme": "MSbar",
+  "tensor_convention": "T3_REAL_LLSS_HHSS_WEINBERG_v1",
+  "mu_f_gev": 100000.0,
+  "mu_s_gev": 1000.0,
+  "reference_scale_gev": 1000.0,
+  "scalar_mass_origin": "unbroken_electroweak",
+  "same_muS_quartic_and_mass": true,
+  "no_separate_scalar_threshold": true,
+  "tensor_npz": "A_m4.npz",
+  "quartic_channel_names": [
+    "native:lambdaT3",
+    "portal:lambdaH1Inv1",
+    "portal:lambdaH2Inv2",
+    "portal:WS2_RGBeta_complement_S2_lambdaH2Adj"
+  ],
+  "provenance": {
+    "source": "Batch14 actual muS RG endpoint + source-hash-checked native Matchete HHSS cache and RGBeta portal/general candidate geometry",
+    "quartic_potential_normalization": "V=lambda_abcd*phi_a*phi_b*phi_c*phi_d/4!",
+    "endpoint_sha256": "90a941238ade6f329e949f2b7058267b01f8d3a2982b1aaeaf27d25c6f6fff16",
+    "batch15_sha256": "a6adbf2ea966ad9ecc32b1858465edfb138252a10dfd4b4fab68bba4fd65bf83",
+    "batch16_sha256": "6febeb280fa8c161a1d058b9a7898a3a93e49822951bc3031d75fe3313a69f1f",
+    "matchete_source_sha256": "a51a31e437628ab8a1e6adfaf054bf1da5309b158574971999f8a2bce3bb80ed",
+    "matchete_scalar_seed_sha256": "2f607d804c8b250ce6e2776c7be6fe71addabad1280dc6b6b0f1448d3eda3781",
+    "matchete_scalar_cache_sha256": "c8c866f93078d30a157c017635a5c8e61998c8a3dd3ff0c34d206765bc053cfa",
+    "general_registry_sha256": "86a096410384641efa8f751b2aa98e8fee4bb6d3cccb4cfd116c559b71182eea",
+    "matchete_rgbeta_coupling_normalisation_certified": false,
+    "historical_fermion_boundary_matches_new_uv_flavour_benchmark_certified": false,
+    "tensor_basis_assumption": "A_-4 native identical scalar real component basis; RGBeta/Matchete quartic crosswalk still conditional",
+    "tensor_provenance": {
+      "model": "A_-4",
+      "assumed_native_coupling_aliases": {
+        "lambdaH1Inv1": "lambdaH1",
+        "lambdaH2Inv2": "lambdaH2Adj",
+        "lambdaT3": "lambdaT3"
+      },
+      "quartic_channels": [
+        {
+          "name": "lambdaT3",
+          "rgbeta": "lambdaT3",
+          "origin": "native Matchete source CG"
+        },
+        {
+          "name": "lambdaH1Inv1",
+          "origin": "exact RGBeta portal completion"
+        },
+        {
+          "name": "lambdaH2Inv2",
+          "origin": "exact RGBeta portal completion"
+        },
+        {
+          "name": "WS2_RGBeta_complement_S2_lambdaH2Adj",
+          "origin": "exact RGBeta portal completion"
+        }
+      ],
+      "source_basis": "original field components equal F-boundary components",
+      "general_extra_registry_count": 0,
+      "full_general_HHSS_reference_invariant_basis_used": true,
+      "all_renormalisable_scalar_extra_quartics_are_in_intermediate_RGEs": null,
+      "matchete_rgbeta_map_certified": false,
+      "spinor_normalization_certified": false
+    }
+  },
+  "physical_C5_certified": false,
+  "full_one_loop_certified": false,
+  "GammaCC_to_Weyl_normalization": null,
+  "sm_eft1_wilson_master_complete": false
+}

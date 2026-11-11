@@ -1,0 +1,91 @@
+{
+  "format": "t3-joint-scalar-conditional-background-v1",
+  "model": "E_-4",
+  "source_boundary_sha256": "438c456af08cee4dd23438ec5e28c8f11cc3f0cebadc266f3d9a15bfdf19660f",
+  "source_scalar_real_labels": [
+    "NewScalar1",
+    "NewScalar1",
+    "NewScalar1",
+    "NewScalar1",
+    "NewScalar1",
+    "NewScalar1",
+    "NewScalar2",
+    "NewScalar2",
+    "NewScalar2",
+    "NewScalar2",
+    "NewScalar2",
+    "NewScalar2"
+  ],
+  "renormalization_scheme": "MSbar",
+  "tensor_convention": "T3_REAL_LLSS_HHSS_WEINBERG_v1",
+  "mu_f_gev": 100000.0,
+  "mu_s_gev": 1000.0,
+  "reference_scale_gev": 1000.0,
+  "scalar_mass_origin": "unbroken_electroweak",
+  "same_muS_quartic_and_mass": true,
+  "no_separate_scalar_threshold": true,
+  "tensor_npz": "E_m4.npz",
+  "quartic_channel_names": [
+    "native:lambdaT3",
+    "portal:lambdaH1Inv2",
+    "portal:WS2_RGBeta_complement_S1_lambdaH1Adj",
+    "portal:lambdaH2Inv2",
+    "portal:WS2_RGBeta_complement_S2_lambdaH2Adj"
+  ],
+  "provenance": {
+    "source": "Batch14 evolving muS couplings; source-hash-checked Matchete HHSS + RGBeta portal/general geometry",
+    "quartic_potential_normalization": "V=lambda_abcd*phi_a*phi_b*phi_c*phi_d/4!",
+    "batch14_sha256": "ebca6aa2289ae6e729759226ab9f911b0e061c2aab3b7dcd5ed6437417d09a78",
+    "batch15_sha256": "b8dff59714cc7ee45bf881a6e446950ca8b726e4e7008028ea36e30e32dedc6e",
+    "batch16_sha256": "372df2911e5151b7bd9f85f946c865f45f912349fc487bbdb9c2e94f97f67f8e",
+    "matchete_source_sha256": "438c456af08cee4dd23438ec5e28c8f11cc3f0cebadc266f3d9a15bfdf19660f",
+    "matchete_scalar_seed_sha256": "37b73acbae75710b579333739ceb8c764c4c5894c440e708505cc491262988db",
+    "matchete_quartic_cache_sha256": "6055622530e89af2e2bc2b3fb207af09048552d8dfdd85d43dc3873c7567e3bb",
+    "general_registry_sha256": "86a096410384641efa8f751b2aa98e8fee4bb6d3cccb4cfd116c559b71182eea",
+    "candidate_special_scalar_basis": false,
+    "scalar_field_map_certified": false,
+    "rgbeta_matchete_coupling_normalisation_certified": false,
+    "source_fermion_flavour_boundary_rederived_from_Batch13": false,
+    "quartic_tensor_provenance": {
+      "model": "E_-4",
+      "assumed_native_coupling_aliases": {
+        "lambdaH1Inv2": "lambdaH1Adj",
+        "lambdaH2Inv2": "lambdaH2Adj",
+        "lambdaT3": "lambdaT3"
+      },
+      "quartic_channels": [
+        {
+          "name": "lambdaT3",
+          "rgbeta": "lambdaT3",
+          "origin": "native Matchete source CG"
+        },
+        {
+          "name": "lambdaH1Inv2",
+          "origin": "exact RGBeta portal completion"
+        },
+        {
+          "name": "WS2_RGBeta_complement_S1_lambdaH1Adj",
+          "origin": "exact RGBeta portal completion"
+        },
+        {
+          "name": "lambdaH2Inv2",
+          "origin": "exact RGBeta portal completion"
+        },
+        {
+          "name": "WS2_RGBeta_complement_S2_lambdaH2Adj",
+          "origin": "exact RGBeta portal completion"
+        }
+      ],
+      "source_basis": "original field components equal F-boundary components",
+      "general_extra_registry_count": 0,
+      "full_general_HHSS_reference_invariant_basis_used": true,
+      "all_renormalisable_scalar_extra_quartics_are_in_intermediate_RGEs": null,
+      "matchete_rgbeta_map_certified": false,
+      "spinor_normalization_certified": false
+    }
+  },
+  "physical_C5_certified": false,
+  "full_one_loop_certified": false,
+  "GammaCC_to_Weyl_normalization": null,
+  "all_seven_wilson_terms_simultaneously_run": false
+}

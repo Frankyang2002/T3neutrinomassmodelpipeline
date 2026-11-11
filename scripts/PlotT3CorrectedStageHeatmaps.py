@@ -1,13 +1,14 @@
-"""Plot corrected LLSS U/E/W/S stage ablations without mixing old datasets.
+"""Plot three corrected LLSS stage comparisons (UV, combined EFT1, SMEFT).
 
 Project path: scripts/PlotT3CorrectedStageHeatmaps.py
 
 Requires a completed or partial run made by RunT3CorrectedEFT1Freeze.py.
 It never recomputes physics, rewrites saved results, fills missing models with
-zero, or interprets the exploratory W ablation as complete Wilson running.
+zero, or interprets the combined EFT1-off comparison as certified full Wilson
+transport. The EFT1 column compares 1111 with 1001 (E=0 and W=0).
 
 Example (PowerShell, from project root):
-  python -X utf8 -m scripts.PlotT3CorrectedStageHeatmaps --run-id corrected_llss16_v2
+  python -X utf8 -m scripts.PlotT3CorrectedStageHeatmaps --run-id corrected_llss16_v4
   python -X utf8 -m scripts.PlotT3CorrectedStageHeatmaps --run-id corrected_llss_A4_diagnostic_v1 --allow-partial
 """
 from __future__ import annotations
@@ -22,15 +23,14 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 INPUT_BASE = ROOT / 'output/studies/general_scalar_extended/corrected_llss_eft1_freeze'
-OUTPUT_BASE = ROOT / 'Reports/output/thesis_qualitative/corrected_stage_heatmaps'
+OUTPUT_BASE = ROOT / 'Reports/output/thesis_qualitative/corrected_three_stage_heatmaps'
 MODELS = tuple(f'{family}_{a:+d}' for family, values in {
     'A': (-4, -2, 0), 'B': (-3, -1, 1), 'C': (-3, -1, 1),
     'D': (-2, 0, 2), 'E': (-4, -2, 0, 2),
 }.items() for a in values)
 STAGES = (
     ('UV', '0111'),
-    ('EFT1', '1011'),
-    ('LLSS log (W)', '1101'),
+    ('EFT1 (E+W off)', '1001'),
     ('SMEFT', '1110'),
 )
 OBSERVABLES = (
@@ -132,7 +132,6 @@ def main(argv=None) -> int:
     if summary.get('one_scale_C5_used_as_W_on_reference') is not False:
         raise ValueError('Source metadata does not certify the corrected W construction')
     out = args.output_dir if args.output_dir else OUTPUT_BASE / args.run_id
-    out.mkdir(parents=True, exist_ok=True)
     matrices = {name: np.full((len(MODELS), len(STAGES)), np.nan, dtype=float)
                 for name, _, _ in OBSERVABLES}
     rows = []
@@ -175,6 +174,7 @@ def main(argv=None) -> int:
                          'to produce a visibly incomplete figure.')
     if len(absent) == len(MODELS):
         raise ValueError('No computed models found')
+    out.mkdir(parents=True, exist_ok=True)
     with (out / 'heatmap_values.csv').open('w', newline='', encoding='utf-8') as handle:
         writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
         writer.writeheader()
@@ -192,12 +192,12 @@ def main(argv=None) -> int:
                      fontsize=13, fontweight='bold')
         fig.savefig(out / f'{name}.png', bbox_inches='tight')
         plt.close(fig)
-    fig, axs = plt.subplots(1, 5, figsize=(29, 10), constrained_layout=True)
+    fig, axs = plt.subplots(1, 5, figsize=(25, 10), constrained_layout=True)
     for ax, (name, label, kind) in zip(axs, OBSERVABLES):
         unit = '% versus frozen' if kind == 'mass' else 'absolute Δsin²θ'
         draw_matrix(ax, matrices[name], MODELS, label, unit, kind)
-    fig.suptitle('Corrected LLSS: full 1111 minus each frozen-stage case\n'
-                 'Missing models are N/A, not zero', fontsize=15, fontweight='bold')
+    fig.suptitle('Corrected LLSS: UV off (0111), combined EFT1 off (1001), SMEFT off (1110)\n'
+                 'All compared with full (1111); missing models are N/A', fontsize=14, fontweight='bold')
     fig.savefig(out / 'combined_5observable_heatmaps.png', bbox_inches='tight')
     plt.close(fig)
     manifest = {
@@ -211,7 +211,9 @@ def main(argv=None) -> int:
         'missing_models': absent,
         'computed_models': len(MODELS) - len(absent),
         'interpretation': 'Exploratory LLSS+scalar-bubble, not full physical one-loop matching',
-        'W_scope': 'LLSS leading logarithm only, not complete EFT1 Wilson transport',
+        'EFT1_off_scope': 'E=0 freezes renormalisable EFT1 state; W=0 omits conditional LLSS-induced leading log; finite scalar threshold bubble retained',
+        'EFT1_off_caveat': 'Combined 1001 is an exploratory proxy, not independent freezing of every EFT1 Wilson coefficient or complete physical matching',
+        'W_scope': 'W is not a separate plotted stage; it is set to zero together with E in the EFT1-off column',
         'heatmap_values_csv': str(out / 'heatmap_values.csv'),
     }
     (out / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
@@ -223,8 +225,8 @@ def main(argv=None) -> int:
         if model in absent:
             continue
         idx = MODELS.index(model)
-        jj = [k for k, (stage, _) in enumerate(STAGES) if stage == 'EFT1'][0]
-        print('A_-4 EFT1 mixing-angle shifts:',
+        jj = [k for k, (stage, _) in enumerate(STAGES) if stage.startswith('EFT1')][0]
+        print('A_-4 combined EFT1-off (1111 - 1001) mixing-angle shifts:',
               {name: float(matrices[name][idx, jj]) for name, _, kind in OBSERVABLES
                if kind == 'mixing'})
     return 0

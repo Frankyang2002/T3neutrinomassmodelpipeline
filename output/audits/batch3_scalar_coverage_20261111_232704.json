@@ -1,0 +1,160 @@
+{
+  "evidence": {
+    "a4_downstream_seed_quartic_terms": 1,
+    "a4_downstream_seed_sha256": "d51820df55013bc2c6ab86bbcd1bc9f50d748509ba44c94f42f97b1c35641d86",
+    "active_heavy_fields": [],
+    "archive_sha256": "6beeb14108302d06023fca1ec187f8b0d84072e6fd5e415a679b6cbcb162ed43",
+    "integrated_fields": [
+      "F",
+      "S1",
+      "S2"
+    ],
+    "not_usable_as_EFT1_complete_scalar_potential": true,
+    "status": "DOWNSTREAM_SMEFT_SEED_ONLY_NOT_EFT1_POTENTIAL"
+  },
+  "existing_solver_modified": false,
+  "format": "t3-scalar-source-coverage-a4-d2-v1",
+  "models": {
+    "A_-4": {
+      "HHSS_directions": [],
+      "additional_quartic_count": 0,
+      "all_additional_quartic_maps_certified": true,
+      "complete_mass_hessian_certified": false,
+      "full_running_lambda_abcd_certified": false,
+      "joint_scalar_one_loop_threshold_complete": false,
+      "other_directions": [],
+      "quadratics_not_implemented": 0,
+      "quartics": [],
+      "scalar_only_directions": [],
+      "status": "REGISTRY_COVERAGE_VERIFIED_PHYSICAL_SCALAR_MATCHING_OPEN"
+    },
+    "D_-2": {
+      "HHSS_directions": [
+        "lambdaT3GeneralQ020101I1",
+        "lambdaT3GeneralQ110002I1"
+      ],
+      "additional_quartic_count": 5,
+      "all_additional_quartic_maps_certified": false,
+      "complete_mass_hessian_certified": false,
+      "full_running_lambda_abcd_certified": false,
+      "joint_scalar_one_loop_threshold_complete": false,
+      "other_directions": [],
+      "quadratics_not_implemented": 1,
+      "quartics": [
+        {
+          "counts": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            4
+          ],
+          "mapping_status": "NotNormalised",
+          "matchete_basis_name": "lambdaT3ExtraQ000004I#",
+          "name": "lambdaT3GeneralQ000004I1",
+          "native_to_rgbeta_normalisation_certified": false,
+          "sector": "scalar_only"
+        },
+        {
+          "counts": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            3
+          ],
+          "mapping_status": "NotNormalised",
+          "matchete_basis_name": "lambdaT3ExtraQ000013I#",
+          "name": "lambdaT3GeneralQ000013I1",
+          "native_to_rgbeta_normalisation_certified": false,
+          "sector": "scalar_only"
+        },
+        {
+          "counts": [
+            0,
+            0,
+            1,
+            1,
+            0,
+            2
+          ],
+          "mapping_status": "NotNormalised",
+          "matchete_basis_name": "lambdaT3ExtraQ001102I#",
+          "name": "lambdaT3GeneralQ001102I1",
+          "native_to_rgbeta_normalisation_certified": false,
+          "sector": "scalar_only"
+        },
+        {
+          "counts": [
+            0,
+            2,
+            0,
+            1,
+            0,
+            1
+          ],
+          "mapping_status": "NotNormalised",
+          "matchete_basis_name": "lambdaT3ExtraQ020101I#",
+          "name": "lambdaT3GeneralQ020101I1",
+          "native_to_rgbeta_normalisation_certified": false,
+          "sector": "HHSS"
+        },
+        {
+          "counts": [
+            1,
+            1,
+            0,
+            0,
+            0,
+            2
+          ],
+          "mapping_status": "NotNormalised",
+          "matchete_basis_name": "lambdaT3ExtraQ110002I#",
+          "name": "lambdaT3GeneralQ110002I1",
+          "native_to_rgbeta_normalisation_certified": false,
+          "sector": "HHSS"
+        }
+      ],
+      "scalar_only_directions": [
+        "lambdaT3GeneralQ000004I1",
+        "lambdaT3GeneralQ000013I1",
+        "lambdaT3GeneralQ001102I1"
+      ],
+      "status": "REGISTRY_COVERAGE_VERIFIED_PHYSICAL_SCALAR_MATCHING_OPEN"
+    }
+  },
+  "next_required_checks": [
+    "Independent full invariant potential versus running RGBeta coordinate dictionary",
+    "Polynomial reconstruction of symmetric real lambda_abcd for every active coupling",
+    "Gauge-generator Ward test and real/imaginary phase orientation",
+    "Running mass Hessian, including D(-2) missing quadratic direction",
+    "Full joint two-scalar one-loop EFT1-to-SMEFT threshold"
+  ],
+  "physical_scalar_sector_certified": false,
+  "registry_sha256": "86a096410384641efa8f751b2aa98e8fee4bb6d3cccb4cfd116c559b71182eea",
+  "registry_status": "GeneratedCandidateBasisNotWolframVerified",
+  "source_files": {
+    "Numerical/parallel_t3/complete/two_model_scalar_coordinate_batch16.py": {
+      "bytes": 22266,
+      "provisional_marker": true,
+      "sha256": "906e9e4cf58e0e9e221c6088522f396ed89cd8a621da76cd3ff9616369a707f1"
+    },
+    "Numerical/running/GeneralT3SequentialLeadingLog.py": {
+      "bytes": 18547,
+      "provisional_marker": false,
+      "sha256": "e8f53c16c33277978ded32fd4c31671a33ca1b82dbb347a28fd7549996374765"
+    },
+    "scripts/RunT3SimultaneousEFT1A4.py": {
+      "bytes": 26447,
+      "provisional_marker": true,
+      "sha256": "f22bf02cdd134c4073e54d99d77703a7d51d7bf16a24ce8144e4a94c799bee96"
+    },
+    "scripts/RunT3SimultaneousEFT1All16.py": {
+      "bytes": 31019,
+      "provisional_marker": true,
+      "sha256": "7a9be5e04fdefa880f7abc260fd27378a7964322e67c09549e44f00b2170faa4"
+    }
+  }
+}

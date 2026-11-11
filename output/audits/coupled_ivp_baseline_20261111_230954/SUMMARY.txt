@@ -1,0 +1,42 @@
+Expected 16 model files; observed groups: {'A4': 1, 'nonmixed13': 13, 'mixedBC': 2}
+All files found: True
+All required-case and static checks pass: True
+
+Model findings:
+- A_-4: static checks passed
+- A_-2: static checks passed
+- A_+0: static checks passed
+- B_-3: static checks passed
+- B_+1: static checks passed
+- C_-3: static checks passed
+- C_+1: static checks passed
+- D_-2: static checks passed
+- D_+0: static checks passed
+- D_+2: static checks passed
+- E_-2: static checks passed
+- E_-4: static checks passed
+- E_+0: static checks passed
+- E_+2: static checks passed
+- B_-1: static checks passed
+- C_-1: static checks passed
+
+A(-4) local fermion-boundary static indicators:
+{
+  "status": "static source-text indicators only; no physical matching validation",
+  "checks": {
+    "boundary_created_by_nonmixed_boundary": true,
+    "boundary_raw_passed_to_coupled_ivp": true,
+    "fermion_threshold_eft_state": true,
+    "matchete_source_path_returned": true,
+    "matchete_source_hash_returned": true,
+    "hard_one_loop_marked_absent": true,
+    "new_matching_residual_not_calculated": true
+  },
+  "unresolved": [
+    "GammaCC-to-Weyl sign/symmetry factor",
+    "renormalised UV-hard minus EFT1-soft finite matching",
+    "one-loop source operator completeness"
+  ]
+}
+
+NOTE: static validation is not proof of one-loop matching or Wilson normalisation.

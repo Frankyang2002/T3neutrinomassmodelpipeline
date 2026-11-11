@@ -1,0 +1,154 @@
+{
+  "format": "t3-worker-c-eft1-smeft-batch-v2",
+  "mode": "source_resolved_16_model_conditional_survey",
+  "status": "ConditionalSurveyCompleted",
+  "required_mu_f_gev": 100000.0,
+  "required_mu_s_gev": 1000.0,
+  "requested_model_count": 16,
+  "models_processed": 16,
+  "conditionally_evaluated": 16,
+  "blocked": 0,
+  "no_conjugate_yukawa_assumption_made": true,
+  "absolute_physical_C5_available": false,
+  "evolved_EFT1_C5_available_from_these_inputs": false,
+  "full_scalar_one_loop_matching_completed": false,
+  "source_directory": "output\\general_observable\\lo_fermion_boundary\\releases\\source_021dcc1e8fe8ba0f",
+  "background_directory": "output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6_native_fix\\numeric_backgrounds",
+  "archive_directory": "output\\general_observable\\lo_joint_scalar_matching\\exploratory_all16_v6_native_fix\\C5_per_unknown_NGamma_exploratory",
+  "rows": [
+    {
+      "model": "A_-4",
+      "status": "PASS_CONDITIONAL",
+      "report": "A_m4.json",
+      "bubble_norm_per_unit_N": 1.5256271310344989e-16
+    },
+    {
+      "model": "A_-2",
+      "status": "PASS_CONDITIONAL",
+      "report": "A_m2.json",
+      "bubble_norm_per_unit_N": 1.2724583658900172e-16
+    },
+    {
+      "model": "A_+0",
+      "status": "PASS_CONDITIONAL",
+      "report": "A_p0.json",
+      "bubble_norm_per_unit_N": 1.2980297169106484e-16
+    },
+    {
+      "model": "B_-3",
+      "status": "PASS_CONDITIONAL",
+      "report": "B_m3.json",
+      "bubble_norm_per_unit_N": 1.233988039276459e-16
+    },
+    {
+      "model": "B_-1",
+      "status": "PASS_CONDITIONAL",
+      "report": "B_m1.json",
+      "bubble_norm_per_unit_N": 1.1274798845241544e-16
+    },
+    {
+      "model": "B_+1",
+      "status": "PASS_CONDITIONAL",
+      "report": "B_p1.json",
+      "bubble_norm_per_unit_N": 1.255869243626635e-16
+    },
+    {
+      "model": "C_-3",
+      "status": "PASS_CONDITIONAL",
+      "report": "C_m3.json",
+      "bubble_norm_per_unit_N": 6.673268557024482e-17
+    },
+    {
+      "model": "C_-1",
+      "status": "PASS_CONDITIONAL",
+      "report": "C_m1.json",
+      "bubble_norm_per_unit_N": 6.283883250173294e-17
+    },
+    {
+      "model": "C_+1",
+      "status": "PASS_CONDITIONAL",
+      "report": "C_p1.json",
+      "bubble_norm_per_unit_N": 6.783330627473309e-17
+    },
+    {
+      "model": "D_-2",
+      "status": "PASS_CONDITIONAL",
+      "report": "D_m2.json",
+      "bubble_norm_per_unit_N": 1.2567994326295638e-16
+    },
+    {
+      "model": "D_+0",
+      "status": "PASS_CONDITIONAL",
+      "report": "D_p0.json",
+      "bubble_norm_per_unit_N": 1.2415511762761654e-16
+    },
+    {
+      "model": "D_+2",
+      "status": "PASS_CONDITIONAL",
+      "report": "D_p2.json",
+      "bubble_norm_per_unit_N": 1.507503364199146e-16
+    },
+    {
+      "model": "E_-4",
+      "status": "PASS_CONDITIONAL",
+      "report": "E_m4.json",
+      "bubble_norm_per_unit_N": 3.1623013150493375e-16
+    },
+    {
+      "model": "E_-2",
+      "status": "PASS_CONDITIONAL",
+      "report": "E_m2.json",
+      "bubble_norm_per_unit_N": 2.589295795186143e-16
+    },
+    {
+      "model": "E_+0",
+      "status": "PASS_CONDITIONAL",
+      "report": "E_p0.json",
+      "bubble_norm_per_unit_N": 2.599343912499856e-16
+    },
+    {
+      "model": "E_+2",
+      "status": "PASS_CONDITIONAL",
+      "report": "E_p2.json",
+      "bubble_norm_per_unit_N": 3.20293244017737e-16
+    }
+  ],
+  "remaining_for_full_numerical_pipeline": [
+    {
+      "owner": "Worker A",
+      "item": "Finite renormalized UV -> EFT1 hard fermion matching in restricted Y1/Y2",
+      "status": "NOT_ESTABLISHED_IN_THIS_PACKAGE"
+    },
+    {
+      "owner": "Worker B",
+      "item": "All-16 canonical running scalar mass/quartic tensors including special bilinears",
+      "status": "REQUIRES_LOCAL_WORKER_B_HANDOFF_AND_PROVENANCE"
+    },
+    {
+      "owner": "Worker D",
+      "item": "Actual evolved C_LLSS(muS) and inherited C5_EFT1(muS), including 7-term running, exported in canonical endpoint NPZ",
+      "status": "REQUIRES_LOCAL_EFT1_ENDPOINT_EXPORT"
+    },
+    {
+      "owner": "Worker A/D",
+      "item": "Uniform explicit Y1,Y2-only source in all 16 models with y2Conj absent",
+      "status": "REQUIRES_SOURCE_REGENERATION_OR_VERIFIED_RESTRICTION"
+    },
+    {
+      "owner": "Worker C",
+      "item": "Additional independent finite scalar topologies/counterterms and UV-minus-EFT1 soft subtraction",
+      "status": "NOT_COMPUTED; DO_NOT_ADD_UNSUBTRACTED_MATchete_FINITE_PART"
+    },
+    {
+      "owner": "Workers A/B/C",
+      "item": "Signed GammaCC/Weyl operator and CG normalization alignment",
+      "status": "CONDITIONAL_IN_EXISTING_REFERENCE_SOURCE"
+    },
+    {
+      "owner": "Worker D",
+      "item": "Run 16 model numerical benchmarks and all 256 stage freezes with new certified handoffs",
+      "status": "AFTER_ENDPOINTS_AVAILABLE; PRODUCTION_SOLVER_UNTOUCHED"
+    }
+  ],
+  "historical_results_modified": false
+}

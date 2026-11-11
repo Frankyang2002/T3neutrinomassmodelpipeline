@@ -1,0 +1,6 @@
+{
+  "model": "D_+0",
+  "status": "Blocked",
+  "error": "ValueError: General T3 EFT1 quartic check: D_+0: incomplete projected EFT1 betas: missing=['muT3GeneralS1Sq'], excess=[]",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\scripts\\RunT3GeneralSequentialFitAblation.py\", line 489, in main\n    cases,provenance=_nonmixed(model,saved,canonical_run_id,\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\scripts\\RunT3ExploratoryNonmixedWithQuartics.py\", line 165, in _nonmixed_full\n    beta,_=full_beta.checked_payload(model,eft_ext,registry,beta_path)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\scripts\\RunGeneralT3EFT1Quartics.py\", line 122, in checked_payload\n    fail(f'{model}: incomplete projected EFT1 betas: missing={sorted(missing)}, '\n  File \"C:\\thesistemp\\T3neutrinomassmodelpipeline\\scripts\\RunGeneralT3EFT1Quartics.py\", line 45, in fail\n    raise ValueError('General T3 EFT1 quartic check: ' + message)\nValueError: General T3 EFT1 quartic check: D_+0: incomplete projected EFT1 betas: missing=['muT3GeneralS1Sq'], excess=[]\n"
+}

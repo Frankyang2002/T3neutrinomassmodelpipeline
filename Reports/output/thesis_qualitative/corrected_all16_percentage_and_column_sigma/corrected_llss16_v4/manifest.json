@@ -32,6 +32,9 @@
     "SMEFT off"
   ],
   "normal_mass": "100*(full-off)/abs(off), signed percentage",
+  "mass_colour_normalization": "SymLogNorm(base=10, linthresh=1 percentage point, linscale=1) if maximum abs exceeds 1%; otherwise linear",
+  "mixing_colour_normalization": "linear diverging colour map",
+  "column_sigma_colour_normalization": "linear diverging colour map",
   "normal_mixing": "full-off, absolute difference in sin^2 theta (not percentage)",
   "column_sigma": "z=(raw difference-column mean)/sample std (ddof=1), per stage/observable column across available models",
   "column_zero_meaning": "average across models, not no running effect",
@@ -45,5 +48,13 @@
     "mass_column_sigma_heatmap.png",
     "mixing_changes_heatmap.png",
     "mixing_column_sigma_heatmap.png"
-  ]
+  ],
+  "thesis_presentation": {
+    "figure_width_in": 9.6,
+    "includegraphics_width_in": 8.0,
+    "target_body_font_pt": 11.0,
+    "internal_titles_omitted": "Thesis caption supplies the figure title",
+    "mixing_figure_unit": "Raw delta(sin^2 theta), no multiplier",
+    "cell_labels": "Compact annotations; full precision in CSV"
+  }
 }

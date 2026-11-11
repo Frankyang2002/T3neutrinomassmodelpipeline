@@ -3,7 +3,7 @@
 Project path: scripts/PlotT3CorrectedAll16CombinedHeatmaps.py
 
 Read-only physics: load saved U/E/W/S cases; no fits or RGEs are rerun.
-Figures: mass signed percentage changes, mixing absolute sin^2 changes,
+Figures: mass signed percentage changes (symmetric-log colour scale), mixing absolute sin^2 changes,
          mass columnwise z-scores, mixing columnwise z-scores.
 Each column z-score uses RAW full-minus-off differences across available models.
 EFT1 off on plots means E=0,W=0 (case 1001) in the LLSS approximation;
@@ -21,7 +21,7 @@ from pathlib import Path
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from matplotlib.colors import TwoSlopeNorm
+from matplotlib.colors import TwoSlopeNorm, SymLogNorm
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -72,54 +72,126 @@ def column_standardize(raw: np.ndarray) -> tuple[np.ndarray, list[dict]]:
     return z, stats
 
 
+def compact_value(v: float, mode: str) -> str:
+    """Short annotations that remain legible at thesis text width.
+
+    Full precision is retained in heatmap_values.csv.
+    """
+    if mode == 'z':
+        return f'{v:+.1f}'
+    if mode == 'milli':
+        if abs(v) < 0.005: return '0'
+        return f'{v:+.1f}' if abs(v) < 100 else f'{v:+.0f}'
+    av = abs(v)
+    if av < 5e-12:
+        return '0'
+    if mode == 'percent':
+        if av >= 1000 or av < 0.01:
+            return f'{v:+.1e}'
+        if av >= 100:
+            return f'{v:+.0f}'
+        if av >= 10:
+            return f'{v:+.1f}'
+        return f'{v:+.2f}'
+    if mode == 'absolute':
+        if av >= 0.1: return f'{v:+.2f}'
+        if av >= 0.01: return f'{v:+.3f}'
+        if av >= 0.001: return f'{v:+.3f}'
+        return f'{v:+.1e}'
+    if av >= 0.01:
+        return f'{v:+.3f}'
+    return f'{v:+.1e}'
+
+
 def render(a: np.ndarray, observables: tuple, *, title: str, subtitle: str,
-           color_label: str, mode: str, dest: Path) -> None:
+           color_label: str, mode: str, dest: Path,
+           figure_width_in: float = 9.6, thesis_width_in: float = 6.3,
+           thesis_body_pt: float = 11.0) -> None:
+    """Produce graphics whose fonts match thesis body text AFTER LaTeX scaling.
+
+    Example: a 9.6-inch source graphic included at 6.3 inches is resized by
+    6.3/9.6; a source font of 16.8 pt becomes 11 pt in the PDF.
+    """
+    if thesis_width_in <= 0 or figure_width_in <= 0 or thesis_body_pt <= 0:
+        raise ValueError('Plot width and thesis font size must be positive')
+    scale = thesis_width_in / figure_width_in
+    font = thesis_body_pt / scale
     nobs = len(observables)
-    labels = [f'{stage}\n{label}' for stage, _ in STAGES for _, label in observables]
+    # Preserve the actual sin^2(theta) observable labels for all three stages.
+    labels = [label for _stage, _ in STAGES for _, label in observables]
     finite = np.abs(a[np.isfinite(a)])
     limit = max(float(finite.max()) if finite.size else 0.0, 1e-13)
     if mode == 'z':
         limit = max(limit, 2.5)
-    fig, ax = plt.subplots(figsize=(max(10.5, a.shape[1]*1.28+3.2), 9.0))
+    norm = (SymLogNorm(linthresh=1.0, linscale=1.0, vmin=-limit,
+                       vmax=limit, base=10)
+            if mode == 'percent' and limit > 1.0
+            else TwoSlopeNorm(vmin=-limit, vcenter=0.0, vmax=limit))
+
+    # Keep the entire diagram compact: LaTeX scales image AND text together.
+    # Thesis figure captions already explain the physics; duplicating a long
+    # title/subtitle inside the image would reduce the useful plot area.
+    fig, ax = plt.subplots(figsize=(figure_width_in, 9.2))
+    fig.subplots_adjust(left=.105, right=.79, top=.91, bottom=.10)
     cmap = plt.get_cmap('RdBu_r').copy()
     cmap.set_bad('#dddddd')
     im = ax.imshow(np.ma.masked_invalid(a), aspect='auto', interpolation='nearest',
-                   cmap=cmap, norm=TwoSlopeNorm(vmin=-limit, vcenter=0, vmax=limit))
-    ax.set_title(title+'\n'+subtitle, fontsize=11, pad=16)
-    ax.set_xticks(np.arange(a.shape[1]), labels, fontsize=9)
-    ax.set_yticks(np.arange(len(MODELS)), MODELS, fontsize=9)
-    ax.set_ylabel('T3 model')
-    ax.set_xlabel('Stage with running disabled / observable')
+                   cmap=cmap, norm=norm)
+    ax.set_xticks(np.arange(a.shape[1]), labels, fontsize=font*.74 if nobs == 3 else font*.90)
+    # Show each stage ONCE, centered over its observable columns.
+    for stage_idx, (stage, _code) in enumerate(STAGES):
+        xpos = (stage_idx*nobs + (nobs-1)/2) / (a.shape[1]-1)
+        # imshow extends from -0.5 to ncols-0.5; thus use an axes fraction.
+        xpos = (stage_idx+.5)/len(STAGES)
+        ax.text(xpos, 1.023, stage, transform=ax.transAxes, ha='center',
+                va='bottom', fontsize=font, fontweight='bold', clip_on=False)
+    ax.set_yticks(np.arange(len(MODELS)), MODELS, fontsize=font)
+    ax.tick_params(axis='both', which='major', length=0, pad=6)
     ax.set_xticks(np.arange(-.5, a.shape[1], 1), minor=True)
     ax.set_yticks(np.arange(-.5, len(MODELS), 1), minor=True)
-    ax.grid(which='minor', color='white', linewidth=.8)
+    ax.grid(which='minor', color='white', linewidth=.9)
     ax.tick_params(which='minor', bottom=False, left=False)
     for y in (3, 6, 9, 12):
-        ax.axhline(y-.5, color='black', linewidth=1.25)
+        ax.axhline(y-.5, color='black', linewidth=1.4)
     for x in (nobs, nobs*2):
-        ax.axvline(x-.5, color='black', linewidth=1.5)
+        ax.axvline(x-.5, color='black', linewidth=1.8)
     for i in range(a.shape[0]):
         for j in range(a.shape[1]):
             v = a[i, j]
             if not math.isfinite(v):
                 continue
-            if mode == 'z':
-                s = f'{v:+.2f}'
-            elif mode == 'percent':
-                s = f'{v:+.2f}' if abs(v)>=0.01 else f'{v:+.1e}'
-            else:
-                s = f'{v:+.4f}' if abs(v)>=1e-4 else f'{v:+.1e}'
-            ax.text(j, i, s, ha='center', va='center', fontsize=7.25,
-                    color='white' if abs(v) >= .70*limit else 'black')
-    fig.colorbar(im, ax=ax, fraction=.029, pad=.022).set_label(color_label)
-    fig.tight_layout()
-    fig.savefig(dest, dpi=250, bbox_inches='tight')
+            label = compact_value(v, mode)
+            rgba = cmap(norm(v))
+            luminance = .2126*rgba[0] + .7152*rgba[1] + .0722*rgba[2]
+            ax.text(j, i, label, ha='center', va='center', fontsize=font*.91,
+                    fontweight='medium',
+                    color='white' if luminance < .48 else 'black')
+
+    # Put the colourbar into an explicitly reserved margin, avoiding tight_layout
+    # changing the effective font scale. Its label is a short unit string.
+    cax = fig.add_axes([.815, .20, .026, .65])
+    cbar = fig.colorbar(im, cax=cax)
+    cbar.set_label(color_label, fontsize=font*.90, labelpad=9)
+    cbar.ax.tick_params(labelsize=font*.76)
+    # Avoid Mathematplotlib auto-generating very long tick labels for huge values.
+    if mode == 'percent':
+        from matplotlib.ticker import FuncFormatter
+        cbar.ax.yaxis.set_major_formatter(FuncFormatter(
+            lambda x, pos: ('0' if abs(x)<1e-12 else f'{x:.0e}'
+                            if abs(x)>=1000 or abs(x)<.01 else f'{x:g}')))
+    fig.savefig(dest, dpi=280, facecolor='white')
     plt.close(fig)
 
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--run-id', default='corrected_llss16_v4')
+    ap.add_argument('--figure-width-in', type=float, default=9.6,
+                    help='Unscaled source figure width in inches')
+    ap.add_argument('--thesis-width-in', type=float, default=6.3,
+                    help='Width of includegraphics in thesis, in inches')
+    ap.add_argument('--thesis-body-pt', type=float, default=11.0,
+                    help='Body text font size to match after thesis resizing')
     ap.add_argument('--allow-partial', action='store_true',
                     help='Leave genuinely missing model rows blank instead of failing')
     args = ap.parse_args()
@@ -198,21 +270,26 @@ def main() -> int:
         if kind == 'mass':
             normal_name, z_name = 'mass_percentage_heatmap.png','mass_column_sigma_heatmap.png'
             title='Mass-squared differences — all 16 T3 models'
-            subtitle='Signed percentage changes: 100 (full - stage off) / |stage off|'
+            subtitle='Signed percentage changes: 100 (full - stage off) / |stage off|; symmetric-log colours (linear within ±1%)'
             color_label='Signed change (%)'
             normal_mode='percent'
         else:
             normal_name, z_name = 'mixing_changes_heatmap.png','mixing_column_sigma_heatmap.png'
             title='Mixing observables — all 16 T3 models'
             subtitle=r'Absolute shift: $\sin^2\theta_{\rm full}-\sin^2\theta_{\rm stage\ off}$'
-            color_label=r'Absolute $\Delta\sin^2\theta$'
+            color_label=r'$\Delta\sin^2\theta$'
             normal_mode='absolute'
-        render(normal[kind], defs, title=title, subtitle=subtitle,
-               color_label=color_label, mode=normal_mode, dest=out/normal_name)
+        # Display raw differences in sin^2(theta); no 10^-3 unit conversion.
+        plot_normal = normal[kind]
+        render(plot_normal, defs, title=title, subtitle=subtitle,
+               color_label=color_label, mode=normal_mode, dest=out/normal_name,
+               figure_width_in=args.figure_width_in, thesis_width_in=args.thesis_width_in,
+               thesis_body_pt=args.thesis_body_pt)
         render(z, defs, title=title+' (column-standardised)',
                subtitle=r'$z=(\Delta O-\overline{\Delta O}_{\rm column})/s_{\rm column}$',
                color_label='Within-column z-score (sample SD units)', mode='z',
-               dest=out/z_name)
+               dest=out/z_name, figure_width_in=args.figure_width_in,
+               thesis_width_in=args.thesis_width_in, thesis_body_pt=args.thesis_body_pt)
         filenames.extend((normal_name,z_name))
 
     with (out/'heatmap_values.csv').open('w',newline='',encoding='utf-8') as f:
@@ -228,6 +305,9 @@ def main() -> int:
         'full_case':'1111','stage_off_cases':dict(STAGES),
         'display_labels': [s for s,_ in STAGES],
         'normal_mass':'100*(full-off)/abs(off), signed percentage',
+        'mass_colour_normalization':'SymLogNorm(base=10, linthresh=1 percentage point, linscale=1) if maximum abs exceeds 1%; otherwise linear',
+        'mixing_colour_normalization':'linear diverging colour map',
+        'column_sigma_colour_normalization':'linear diverging colour map',
         'normal_mixing':'full-off, absolute difference in sin^2 theta (not percentage)',
         'column_sigma':'z=(raw difference-column mean)/sample std (ddof=1), per stage/observable column across available models',
         'column_zero_meaning':'average across models, not no running effect',
@@ -236,6 +316,12 @@ def main() -> int:
         'SMEFT_off_definition':'case 1110: SM+Weinberg evolution disabled',
         'general_seven_term_trial_included':False,
         'physics_recomputed':False,'figures':filenames,
+        'thesis_presentation':{'figure_width_in':args.figure_width_in,
+             'includegraphics_width_in':args.thesis_width_in,
+             'target_body_font_pt':args.thesis_body_pt,
+             'internal_titles_omitted':'Thesis caption supplies the figure title',
+             'mixing_figure_unit':'Raw delta(sin^2 theta), no multiplier',
+             'cell_labels':'Compact annotations; full precision in CSV'},
     },indent=2)+'\n',encoding='utf-8')
     print(f'Models: {16-len(absent)}/16; missing: {absent}')
     print(f'Output: {out}')

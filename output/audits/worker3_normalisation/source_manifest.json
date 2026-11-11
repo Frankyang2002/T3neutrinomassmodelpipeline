@@ -1,0 +1,60 @@
+{
+  "format": "worker3-normalisation-audit-v1",
+  "source_status": {
+    "master": {
+      "path": "RGE/running/intermediate/GeneralEFT1C5Mixing.py",
+      "github_blob_sha": "2ceafa9afd09375a96b2a54a3eec30468ebe93a5",
+      "local_exists": true,
+      "local_sha256": "56cc10e574c6810e92f40129751507ec4e009f230ddfb2e687be0425792c784a"
+    },
+    "general": {
+      "path": "RGE/general/WilsonTensorRGE.py",
+      "github_blob_sha": "bc02723d4ffd6176f4c8ac1b1132ae4376f55a0c",
+      "local_exists": true,
+      "local_sha256": "2b45c1c3e3749d6c74c9985f01384934f4c88018ad686b793402e90abfc4b28e"
+    },
+    "polynomial": {
+      "path": "Numerical/running/GeneralT3WilsonNormalizationAudit.py",
+      "github_blob_sha": "3099ad2c321d049c6a757247ae7bb03e53cc4493",
+      "local_exists": true,
+      "local_sha256": "035060809eb04e5a07c88bc4c12c640070a125767868a8d19de180f39c9fc097"
+    },
+    "b1": {
+      "path": "Numerical/lo_certification/physical_normalisation/B1_MATCHETE_WEYL_DERIVATION.md",
+      "github_blob_sha": "187c310f26f81f465cb62da040159a54f2d1a69c",
+      "local_exists": true,
+      "local_sha256": "801c5523577d32a4beced0fb1381c452b78988d8fd6379cdfaac45f592dac493"
+    },
+    "b1py": {
+      "path": "Numerical/lo_certification/physical_normalisation/b1_matchete_weyl.py",
+      "github_blob_sha": "93c3f8cd833dcb8141b71e8fac7f9bbe0ef2850a",
+      "local_exists": true,
+      "local_sha256": "097db248fb702fddf4061cc5999cde94d5693b6efd36f8de1f464dad8ab474a4"
+    },
+    "tree": {
+      "path": "Lagrangian/RunGeneralT3FermionFirstEFT1Tree.wl",
+      "github_blob_sha": "76064f0ee1639402f252ee28583b9a7ce4ef3e44",
+      "local_exists": true,
+      "local_sha256": "84b24b4012c2aca94b3e50c2a92721d79b80ac81b53fae77a6ad3e684833f0b8"
+    },
+    "hierarchy": {
+      "path": "Lagrangian/RunT3EFT1WilsonHierarchyNative.wl",
+      "github_blob_sha": "9f736cc288cd7336efdfb19a4ce150592f17488f",
+      "local_exists": true,
+      "local_sha256": "3ab58c683aed95f9bec022af2e787c151cac749f2092a379a87d28ade9db75c5"
+    },
+    "coupled": {
+      "path": "Numerical/orchestration/T3BIntegratedCoupledPipeline.py",
+      "github_blob_sha": "ee7525cf482e8bdea0cc4ee2eb6a28ef8db3313a",
+      "local_exists": true,
+      "local_sha256": "d39dfa0d8d15a0b3b70f13a7c980298a5efe75f11dcf50b3d7f28cb6942b6c30"
+    }
+  },
+  "cases_passed": 32,
+  "fixture_path": null,
+  "physical_matchete_to_weyl_conversion_certified": false,
+  "source_to_master_wilson_conversion_common_factor_certified": false,
+  "tests_do_not_claim_full_coupled_ivp_replay": true,
+  "complex_rescaling_in_beta_generally_invalid": true,
+  "notes": "Synthetic matrix tests verify scaling identities, not a source-to-Weyl coefficient."
+}

@@ -1,0 +1,472 @@
+{
+  "format": "worker5-joint-scalar-source-audit-v1",
+  "timestamp_utc": "2026-11-11T19:39:39.046510+00:00",
+  "repo_root": "C:\\thesistemp\\T3neutrinomassmodelpipeline",
+  "physics_chain": "UV -> all heavy fermions -> EFT1(SM+S1+S2) -> both scalars jointly at 1000 GeV -> SMEFT",
+  "implemented": "C5_SMEFT(muS) = C5_EFT1(muS) + finite LLSS*HHSS zero-momentum joint bubble",
+  "production_modified": false,
+  "potential_missing": "Other EFT1 D5 insertions, scalar wavefunction/counterterm terms and other scalar topologies: unverified, NOT assumed nonzero or independent",
+  "flavour_note": "Hard vs total alignment tests are NOT bubble-subtracted candidate-vs-bubble tests; a new tensor can align with inherited C5 even if diagrams differ.",
+  "status": "NO_CERTIFIED_INDEPENDENT_FINITE_REMAINDER",
+  "archive_overlap": [
+    {
+      "file": "output\\audits\\worker_c_numeric_overlap_D_m2_20261112_060116_207b6032\\result.json",
+      "status": "UNREADABLE",
+      "reason": "'hard'"
+    },
+    {
+      "file": "output\\audits\\worker_c_numeric_overlap_D_m2_20261112_060348_ba3b1b1d\\result.json",
+      "status": "UNREADABLE",
+      "reason": "'hard'"
+    },
+    {
+      "file": "output\\audits\\worker_c_numeric_overlap_D_m2_20261112_060707_96a2df24\\result.json",
+      "sha256": "cc4f082cd72f86d0ea143bcc80d7b1e4d9fe1dfd7781f6c9314ede931545ca97",
+      "status": "RestrictedHardAndTotalFinitePartsEvaluatedDiagnosticOnly",
+      "model": "D_-2",
+      "nf": 1,
+      "benchmark_mu_s_gev": 3000.0,
+      "production_joint_mu_s_gev": 1000.0,
+      "same_scale_as_production": false,
+      "benchmarks_source_sha256": "c78b6358ee9540508d66f789c19a09c8f402f23d443b294c922c8e2afce28037",
+      "hard_total_flavour_alignment_ONLY": {
+        "norm_a_gev_inverse": 9.359924597942799e-16,
+        "norm_b_gev_inverse": 4.52810332477528e-18,
+        "norm_ratio_b_over_a": 0.004837756199201118,
+        "absolute_cosine": 1.0,
+        "least_squares_complex_line_residual": 1.8553431139158164e-12,
+        "a_flavour_symmetry_residual": 0.0,
+        "b_flavour_symmetry_residual": 0.0,
+        "inner_product_phase_real": 0.9999999999999999,
+        "inner_product_phase_imag": 0.0
+      },
+      "hard_pole_residue_max_abs": 4.021724619722921e-15,
+      "total_pole_residue_max_abs": 4.733165431326071e-30,
+      "normalization_certified": false,
+      "nonbubble_remainder_certified": false,
+      "source_overlap_status": "NotAttemptedNoCanonicalTensorInput",
+      "valid_additional_physical_coefficient": false,
+      "interpretation": "Finite-part hard and total source expressions: total includes inherited/running; NOT hard minus bubble."
+    }
+  ],
+  "restricted_source": [
+    {
+      "path": "output\\audits\\worker_c_restricted_D_m2_20261112_052721_aaa5ec32\\result.json",
+      "sha256": "f7444ad82abafaf0f9cc4739bdbd50bc71d63fa44c96ebd3e363a36cca2352b3",
+      "status": "RestrictedNF1PoleFreeCandidateExported",
+      "nf": 1,
+      "restricted_y2conj_zeroed": true,
+      "total_pole_cancelled_nf1": true,
+      "finite_renormalization_certified": false,
+      "operator_normalization_certified": false,
+      "physical_mass_relations_imposed": false,
+      "nonbubble_remainder_certified": false,
+      "safe_to_add": false
+    }
+  ],
+  "source_profiles": [],
+  "source_file_inventory": [
+    {
+      "path": "Numerical/joint_scalar_matching/core.py",
+      "exists": true,
+      "sha256": "ebcbce7d4c53aad94bce96d86116b9daf45cdb1345a4a44d688aaec42e8cd55e",
+      "line_count": 230,
+      "matching_lines": [
+        {
+          "line": 208,
+          "text": "def match_c5(C: np.ndarray, quartic: np.ndarray, mass_squared: np.ndarray,"
+        },
+        {
+          "line": 227,
+          "text": "            \"c5_total\":total,\"pair_c5\":pair_c5,"
+        }
+      ]
+    },
+    {
+      "path": "Numerical/joint_scalar_matching/worker_c_joint.py",
+      "exists": true,
+      "sha256": "1debbcd90a3f86448661e85839e3bd6934df2d672a690e438be975f76571932f",
+      "line_count": 155,
+      "matching_lines": [
+        {
+          "line": 47,
+          "text": "def match_joint_scalars(eft1_wilsons: Mapping, scalar_background: Mapping,"
+        },
+        {
+          "line": 107,
+          "text": "    result = match_c5(C, q, mass2, mu, c5_eft1=c5,"
+        },
+        {
+          "line": 111,
+          "text": "            part = match_c5(C, ch, mass2, mu, c5_eft1=np.zeros((3, 3), complex),"
+        },
+        {
+          "line": 113,
+          "text": "            channel_breakdown[name] = {\"c5_finite_scalar\": part[\"c5_scalar_bubble\"],"
+        },
+        {
+          "line": 115,
+          "text": "        summed = sum((d[\"c5_finite_scalar\"] for d in channel_breakdown.values()),"
+        },
+        {
+          "line": 121,
+          "text": "        \"c5_inherited\": c5.copy(),"
+        },
+        {
+          "line": 122,
+          "text": "        \"c5_finite_scalar\": result[\"c5_scalar_bubble\"],"
+        },
+        {
+          "line": 123,
+          "text": "        \"c5_total\": result[\"c5_total\"],"
+        }
+      ]
+    },
+    {
+      "path": "Numerical/joint_scalar_matching/worker_c_matchete_audit.py",
+      "exists": true,
+      "sha256": "b2f1c10222afac1421e6a3e7ebb918d889327b94262a47561e39251749d62c58",
+      "line_count": 184,
+      "matching_lines": [
+        {
+          "line": 31,
+          "text": "TOKEN_Y2CONJ = re.compile(r\"(?<![A-Za-z0-9_])y2Conj(?![A-Za-z0-9_])\")"
+        },
+        {
+          "line": 49,
+          "text": "def audit_matchete_scalar_profile(profile_dir: str | Path, *, model: str = \"D_-2\") -> dict:"
+        },
+        {
+          "line": 85,
+          "text": "    hard_has_y2conj = bool(TOKEN_Y2CONJ.search(candidate))"
+        },
+        {
+          "line": 87,
+          "text": "    source_y2conj_terms = mass.get(\"Y1Y2ConjWilsonTermCount\")"
+        },
+        {
+          "line": 104,
+          "text": "        \"no_independent_conjugate_scalar_yukawa_in_source\": source_y2conj_terms == 0"
+        },
+        {
+          "line": 105,
+          "text": "            and not hard_has_y2conj and fixed.get(\"HardC5HasY2Conj\") is False,"
+        },
+        {
+          "line": 108,
+          "text": "        \"full_flavour_hard_c5_verified\": match.get(\"FullFlavorHardC5Verified\") is True"
+        },
+        {
+          "line": 115,
+          "text": "            \"FiniteHardMinusBubbleRemainderCertified\") is True,"
+        },
+        {
+          "line": 150,
+          "text": "            \"y1_y2conj_tree_wilson_terms\": source_y2conj_terms,"
+        },
+        {
+          "line": 152,
+          "text": "            \"raw_hard_has_y2conj\": hard_has_y2conj,"
+        },
+        {
+          "line": 170,
+          "text": "            \"restriction\": \"Only Y1,Y2; independent y2Conj sector forbidden\","
+        },
+        {
+          "line": 171,
+          "text": "            \"rule\": \"Do not add the Matchete candidate or its poles to c5_finite_scalar\","
+        }
+      ]
+    },
+    {
+      "path": "Numerical/joint_scalar_matching/worker_c_stream_v2.py",
+      "exists": true,
+      "sha256": "eec8137968bdb98fce5a3a61643182caa8f4639e6246fb5180cfa1142612bacb",
+      "line_count": 404,
+      "matching_lines": [
+        {
+          "line": 22,
+          "text": "    'C_-3','C_-1','C_+1', 'D_-2','D_+0','D_+2',"
+        },
+        {
+          "line": 126,
+          "text": "            'Restricted Yukawa source must be explicitly documented; no y2Conj assumption')"
+        },
+        {
+          "line": 183,
+          "text": "    matched = match_joint_scalars(wilsons,background,MU_S)"
+        },
+        {
+          "line": 184,
+          "text": "    inherited = np.asarray(matched['c5_inherited'],complex)"
+        },
+        {
+          "line": 185,
+          "text": "    bubble = np.asarray(matched['c5_finite_scalar'],complex)"
+        },
+        {
+          "line": 186,
+          "text": "    total = np.asarray(matched['c5_total'],complex)"
+        },
+        {
+          "line": 198,
+          "text": "        'c5_inherited_gev_inv':_encode(inherited),"
+        },
+        {
+          "line": 199,
+          "text": "        'c5_finite_scalar_LLSS_HHSS_gev_inv':_encode(bubble),"
+        },
+        {
+          "line": 200,
+          "text": "        'c5_total_one_bubble_only_gev_inv':_encode(total),"
+        },
+        {
+          "line": 205,
+          "text": "        'quartic_channel_contributions_gev_inv':{k:_encode(v['c5_finite_scalar']) for k,v in channels.items()},"
+        },
+        {
+          "line": 365,
+          "text": "        {'owner':'Worker A/D','item':'Uniform explicit Y1,Y2-only source in all 16 models with y2Conj absent',"
+        }
+      ]
+    },
+    {
+      "path": "Lagrangian/RunGeneralDMinus2C5PoleCancellationAudit.wl",
+      "exists": true,
+      "sha256": "e3ec71935510591842afa71671d68f5e3fada961f39bc92c7406ebe4a3f02cb5",
+      "line_count": 188,
+      "matching_lines": []
+    },
+    {
+      "path": "Lagrangian/RunGeneralDMinus2C5FlavourStructureAudit.wl",
+      "exists": true,
+      "sha256": "df2aafb3bc8b0aac06167708319adc1c557b4184beed2879e9af6516ccff441f",
+      "line_count": 187,
+      "matching_lines": [
+        {
+          "line": 170,
+          "text": "  \"HardC5HasY2Conj\" -> StringContainsQ[D2Text[hardC5], \"y2Conj,\"],"
+        }
+      ]
+    },
+    {
+      "path": "Lagrangian/RunGeneralDMinus2C5NormalizationReference.wl",
+      "exists": true,
+      "sha256": "6ae7689936006df0402a1edf4dfd9c67a9c766ab9e777accb662d32d3e6510ba",
+      "line_count": 204,
+      "matching_lines": []
+    }
+  ],
+  "canonical_endpoints": [
+    {
+      "path": "output\\batch17\\all16_smoke_A_m4\\A_m4.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Restricted Yukawa source must be explicitly documented; no y2Conj assumption"
+    },
+    {
+      "path": "output\\batch17\\rebuilt_all16_v1\\A_m2.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Restricted Yukawa source must be explicitly documented; no y2Conj assumption"
+    },
+    {
+      "path": "output\\batch17\\rebuilt_all16_v1\\A_m4.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Restricted Yukawa source must be explicitly documented; no y2Conj assumption"
+    },
+    {
+      "path": "output\\batch17\\rebuilt_all16_v1\\A_p0.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Restricted Yukawa source must be explicitly documented; no y2Conj assumption"
+    },
+    {
+      "path": "output\\batch17\\rebuilt_all16_v1\\B_m1.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Restricted Yukawa source must be explicitly documented; no y2Conj assumption"
+    },
+    {
+      "path": "output\\batch17\\rebuilt_all16_v1\\B_m3.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Restricted Yukawa source must be explicitly documented; no y2Conj assumption"
+    },
+    {
+      "path": "output\\batch17\\rebuilt_all16_v1\\B_p1.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Restricted Yukawa source must be explicitly documented; no y2Conj assumption"
+    },
+    {
+      "path": "output\\batch17\\rebuilt_all16_v1\\C_m1.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Restricted Yukawa source must be explicitly documented; no y2Conj assumption"
+    },
+    {
+      "path": "output\\batch17\\rebuilt_all16_v1\\C_m3.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Restricted Yukawa source must be explicitly documented; no y2Conj assumption"
+    },
+    {
+      "path": "output\\batch17\\rebuilt_all16_v1\\C_p1.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Restricted Yukawa source must be explicitly documented; no y2Conj assumption"
+    },
+    {
+      "path": "output\\batch17\\rebuilt_all16_v1\\D_m2.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Restricted Yukawa source must be explicitly documented; no y2Conj assumption"
+    },
+    {
+      "path": "output\\batch17\\rebuilt_all16_v1\\D_p0.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Restricted Yukawa source must be explicitly documented; no y2Conj assumption"
+    },
+    {
+      "path": "output\\batch17\\rebuilt_all16_v1\\D_p2.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Restricted Yukawa source must be explicitly documented; no y2Conj assumption"
+    },
+    {
+      "path": "output\\batch17\\rebuilt_all16_v1\\E_m2.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Restricted Yukawa source must be explicitly documented; no y2Conj assumption"
+    },
+    {
+      "path": "output\\batch17\\rebuilt_all16_v1\\E_m4.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Restricted Yukawa source must be explicitly documented; no y2Conj assumption"
+    },
+    {
+      "path": "output\\batch17\\rebuilt_all16_v1\\E_p0.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Restricted Yukawa source must be explicitly documented; no y2Conj assumption"
+    },
+    {
+      "path": "output\\batch17\\rebuilt_all16_v1\\E_p2.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Restricted Yukawa source must be explicitly documented; no y2Conj assumption"
+    },
+    {
+      "path": "output\\batch17\\rebuilt_A_m4\\A_m4.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Restricted Yukawa source must be explicitly documented; no y2Conj assumption"
+    },
+    {
+      "path": "output\\batch17\\rebuilt_A_m4_previous\\A_m4.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Restricted Yukawa source must be explicitly documented; no y2Conj assumption"
+    },
+    {
+      "path": "output\\general_observable\\lo_certification_benchmark\\batch4_common_input_source01\\numeric_backgrounds\\A_m4.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Restricted Yukawa source must be explicitly documented; no y2Conj assumption"
+    },
+    {
+      "path": "output\\general_observable\\lo_certification_completeness\\scalar_hard_01\\conditional_inputs\\A_m2.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Requires MSbar"
+    },
+    {
+      "path": "output\\general_observable\\lo_certification_completeness\\scalar_hard_01\\conditional_inputs\\A_m4.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Requires MSbar"
+    },
+    {
+      "path": "output\\general_observable\\lo_certification_completeness\\scalar_hard_01\\conditional_inputs\\A_p0.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Requires MSbar"
+    },
+    {
+      "path": "output\\general_observable\\lo_certification_completeness\\scalar_hard_01\\conditional_inputs\\B_m1.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Requires MSbar"
+    },
+    {
+      "path": "output\\general_observable\\lo_certification_completeness\\scalar_hard_01\\conditional_inputs\\B_m3.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Requires MSbar"
+    },
+    {
+      "path": "output\\general_observable\\lo_certification_completeness\\scalar_hard_01\\conditional_inputs\\B_p1.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Requires MSbar"
+    },
+    {
+      "path": "output\\general_observable\\lo_certification_completeness\\scalar_hard_01\\conditional_inputs\\C_m1.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Requires MSbar"
+    },
+    {
+      "path": "output\\general_observable\\lo_certification_completeness\\scalar_hard_01\\conditional_inputs\\C_m3.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Requires MSbar"
+    },
+    {
+      "path": "output\\general_observable\\lo_certification_completeness\\scalar_hard_01\\conditional_inputs\\C_p1.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Requires MSbar"
+    },
+    {
+      "path": "output\\general_observable\\lo_certification_completeness\\scalar_hard_01\\conditional_inputs\\D_m2.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Requires MSbar"
+    },
+    {
+      "path": "output\\general_observable\\lo_certification_completeness\\scalar_hard_01\\conditional_inputs\\D_p0.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Requires MSbar"
+    },
+    {
+      "path": "output\\general_observable\\lo_certification_completeness\\scalar_hard_01\\conditional_inputs\\D_p2.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Requires MSbar"
+    },
+    {
+      "path": "output\\general_observable\\lo_certification_completeness\\scalar_hard_01\\conditional_inputs\\E_m2.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Requires MSbar"
+    },
+    {
+      "path": "output\\general_observable\\lo_certification_completeness\\scalar_hard_01\\conditional_inputs\\E_m4.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Requires MSbar"
+    },
+    {
+      "path": "output\\general_observable\\lo_certification_completeness\\scalar_hard_01\\conditional_inputs\\E_p0.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Requires MSbar"
+    },
+    {
+      "path": "output\\general_observable\\lo_certification_completeness\\scalar_hard_01\\conditional_inputs\\E_p2.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Requires MSbar"
+    },
+    {
+      "path": "output\\general_observable\\lo_certification_completeness\\scalar_hard_01\\scalar_backgrounds\\A_m2.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Restricted Yukawa source must be explicitly documented; no y2Conj assumption"
+    },
+    {
+      "path": "output\\general_observable\\lo_certification_completeness\\scalar_hard_01\\scalar_backgrounds\\A_m4.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Restricted Yukawa source must be explicitly documented; no y2Conj assumption"
+    },
+    {
+      "path": "output\\general_observable\\lo_certification_completeness\\scalar_hard_01\\scalar_backgrounds\\A_p0.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Restricted Yukawa source must be explicitly documented; no y2Conj assumption"
+    },
+    {
+      "path": "output\\general_observable\\lo_certification_completeness\\scalar_hard_01\\scalar_backgrounds\\B_m1.json",
+      "status": "ENDPOINT_REJECTED",
+      "reason": "Restricted Yukawa source must be explicitly documented; no y2Conj assumption"
+    }
+  ],
+  "gates_for_physical_comparison": [
+    "restricted Y1/Y2 theory (no independent y2Conj) and exact scalar mass relations",
+    "renormalized and pole-subtracted UV/EFT1 minus SMEFT amplitude at common muS=1000 GeV",
+    "consistent Lorentz, Weyl, CG, Weinberg-operator and finite-scheme normalization",
+    "explicit subtraction of inherited EFT1 and already implemented LLSS*HHSS bubble",
+    "same-coupling canonical evolved C5 and scalar background at muS",
+    "complex-symmetric non-overlapping finite C5 matrix with independently checked flavour tensor"
+  ],
+  "no_raw_laurent_promoted": true,
+  "no_physical_missing_matrix_invented": true
+}

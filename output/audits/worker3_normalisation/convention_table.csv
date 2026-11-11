@@ -1,0 +1,14 @@
+channel,source_convention,derived_factor_or_warning,status,reference
+tree LLSS,Matchete tree EFT1,"LLSS in fermion-first intermediate EFT, not C5",verified source semantics; physical conversion open,"tree:4-6,1330-1392"
+direct LLHH,Matchete one-loop/direct matching,separate operator and matching channel; cannot reuse LLSS factor,conversion unresolved,master:1-21; hierarchy:4-6
+Matchete PL,native GammaCC Proj[-1],holomorphic PL; Proj[1] is barred conjugate channel,"source verified, physical gamma phase open","polynomial:identify_chirality,verify_native_convention"
+Matchete four-spinor to Weyl,"GammaCC, CConj, PlusHc",chosen C=i gamma2 gamma0 proves conditional identities; installed Matchete C not measured,unresolved physical factor/sign,"b1:sections 1-3,7"
+Majorana free mass,-(1/2) MF bar F F,canonical Weyl -(1/2) MF chi chi + h.c.; no extra factor two,chosen convention analytic; installed basis conditional,b1:section 2
+fermion-pair exchange,"C_ijab symmetric in i,j",independent 2! combinatoric; not automatic Matchete multiplier,master internally verified,master:_read_wilson
+scalar-pair exchange,"C_ijab symmetric in a,b","independent 2! combinatoric, real components",master internally verified,master:_read_wilson
+scalar potential,V=lambda_abcd phi_a phi_b phi_c phi_d / 4!,fully symmetric quartic; source portal CG normalization separate,master internally verified; physical CG open,"master:1-12,_read_quartic"
+charged and neutral Higgs,H+=(h+R+i h+I)/sqrt2; H0=(h0R+i h0I)/sqrt2,complex-to-real 1/sqrt2 per scalar insertion,master internally verified,master:_weinberg_template
+Weinberg,L5=(1/2)C5_pq(Lp.H)(Lq.H)+h.c.,"C[nu_p,nu_q,h0R,h0R]=C5_pq/4; mnu=-v^2 C5/2",certified conditional on declared basis,"master:417-454,558"
+triplet weight basis,G=U.T@U,opposite T3 weight pairs and same CG phase in vertex,chosen basis analytic; native U unresolved,b1:section 4
+all-operator source factor,unknown map per operator a,"must not equate LLSS, LLHH, and conjugate channels without derivation",unresolved,master:CERTIFICATES
+complex Wilson scaling,beta=A(C)+B(conj(C)),real scalar r commutes; complex z generally fails unless B=0 or z real,analytic,master:conjugate_coefficient_yukawa

@@ -1,0 +1,357 @@
+{
+  "schema": "worker1_scalar_robustness_v1",
+  "scope": "read-only; neither solver nor historical files changed",
+  "audit_sha256": {
+    "discrepancy": "a5717bd9dc02702526c403d2ed8c69e47c645348c92b57ca9a2b8b7e80a635d9",
+    "directions": "b227347910f0cdd1ae93997a3b38b64dddd6f5f3f8b239e8a085eb65b3bdb116",
+    "basis": "12b0be968f1c005690769af56ca19145c458eb840cd8240a6c6307f0f1e2f489",
+    "reconcile": "cba7689f2ba652554e25c711e1de9ead091f57e0bb37287c7ed282321c47cb99",
+    "source": "55c995bf9b877d7efc4da3eda99c7e408b91242344b6a7d1b904c2c5496759b5"
+  },
+  "missing_local_files": [],
+  "results": {
+    "A_-4": {
+      "model": "A_-4",
+      "status": "saved_audit_available",
+      "overall": {
+        "candidate_norm": 0.3163813838438282,
+        "source_norm": 0.31638138384382813,
+        "relative_to_source": 1.9604369711180984,
+        "cosine": -0.9216565588633521,
+        "least_squares_candidate_over_source": -0.9216565588633524,
+        "residual_after_best_real_scale_relative_to_source": 0.38800668487045953,
+        "residual_if_candidate_sign_flipped_relative_to_source": 0.3958369389954602,
+        "status": "Compared"
+      },
+      "species_blocks": {
+        "S1S1": {
+          "candidate_norm": 0.03709245942671024,
+          "source_norm": 0.03709245942671024,
+          "relative_to_source": 2.0,
+          "cosine": -1.0,
+          "least_squares_candidate_over_source": -1.0,
+          "residual_after_best_real_scale_relative_to_source": 0.0,
+          "residual_if_candidate_sign_flipped_relative_to_source": 0.0,
+          "status": "Compared"
+        },
+        "S1S2": {
+          "candidate_norm": 0.06591817562978355,
+          "source_norm": 0.06591817562978348,
+          "relative_to_source": 1.4816417063094698,
+          "cosine": -0.09763107293781732,
+          "least_squares_candidate_over_source": -0.09763107293781742,
+          "residual_after_best_real_scale_relative_to_source": 0.9952226753832595,
+          "residual_if_candidate_sign_flipped_relative_to_source": 1.3434053201191245,
+          "status": "Compared"
+        },
+        "S2S1": {
+          "candidate_norm": 0.06591817562978355,
+          "source_norm": 0.06591817562978348,
+          "relative_to_source": 1.4816417063094698,
+          "cosine": -0.09763107293781732,
+          "least_squares_candidate_over_source": -0.09763107293781742,
+          "residual_after_best_real_scale_relative_to_source": 0.9952226753832595,
+          "residual_if_candidate_sign_flipped_relative_to_source": 1.3434053201191243,
+          "status": "Compared"
+        },
+        "S2S2": {
+          "candidate_norm": 0.300051525141759,
+          "source_norm": 0.3000515251417589,
+          "relative_to_source": 2.0000000000000004,
+          "cosine": -1.0,
+          "least_squares_candidate_over_source": -1.0000000000000002,
+          "residual_after_best_real_scale_relative_to_source": 0.0,
+          "residual_if_candidate_sign_flipped_relative_to_source": 9.250269800333737e-17,
+          "status": "Compared"
+        }
+      },
+      "direction_results": [
+        {
+          "coupling": "lambdaH2",
+          "axis": "real",
+          "scale": -1.0000000000000002,
+          "residual": 2.220446049250313e-16
+        },
+        {
+          "coupling": "lambdaH2Adj",
+          "axis": "real",
+          "scale": -1.0000000000000002,
+          "residual": 1.2819751242557095e-16
+        },
+        {
+          "coupling": "lambdaT3",
+          "axis": "real",
+          "scale": -0.09763107293781739,
+          "residual": 0.9952226753832581
+        },
+        {
+          "coupling": "lambdaH1",
+          "axis": "real",
+          "scale": -0.9999999999999998,
+          "residual": 2.220446049250313e-16
+        },
+        {
+          "coupling": "lambdaT3",
+          "axis": "imag",
+          "scale": -0.0976310729378175,
+          "residual": 0.9952226753832584
+        }
+      ],
+      "basis_best": {
+        "rotation": {
+          "S1_permutation": [
+            0
+          ],
+          "S2_permutation": [
+            2,
+            1,
+            0
+          ],
+          "S1_phase_i_power": 0,
+          "S2_phase_i_power": 2,
+          "S1_conjugate": false,
+          "S2_conjugate": false
+        },
+        "identity_relative_to_candidate": 0.9284012131305635,
+        "signflip_relative_to_candidate": 1.7714601851178307,
+        "best_global_scale": 0.5690355937288487,
+        "after_global_scale_relative_to_candidate": 0.8223128924379429,
+        "after_2x2_coupling_mix_relative_to_candidate": 0.7878089473432633,
+        "coupling_mix_source_to_candidate": [
+          [
+            0.5690355937288488,
+            -0.23570226039551576
+          ],
+          [
+            0.23570226039551576,
+            0.5690355937288488
+          ]
+        ],
+        "candidate_norm": 10.528592103619939,
+        "source_norm": 10.528592103619943
+      },
+      "basis_span_residual": 0.7163619871634299,
+      "source_only_directions": [],
+      "physical_normalization_certified": false,
+      "npz_keys": [
+        "source_hhss",
+        "source_direction_columns",
+        "candidate_hhss",
+        "hybrid_full_tensor"
+      ],
+      "independent_npz_fit": {
+        "alpha": -0.9216565588633523,
+        "residual": 0.38800668487045975,
+        "raw_relative": 1.9604369711180984
+      },
+      "independent_npz_blocks": {
+        "S1S1": {
+          "alpha": -1.0,
+          "residual": 0.0,
+          "raw_relative": 2.0
+        },
+        "S1S2": {
+          "alpha": -0.09763107293781742,
+          "residual": 0.9952226753832595,
+          "raw_relative": 1.4816417063094698
+        },
+        "S2S1": {
+          "alpha": -0.09763107293781742,
+          "residual": 0.9952226753832595,
+          "raw_relative": 1.4816417063094698
+        },
+        "S2S2": {
+          "alpha": -1.0000000000000002,
+          "residual": 1.9622785510863347e-16,
+          "raw_relative": 2.0000000000000004
+        }
+      },
+      "reconciliation_npz_sha256": "5e5d319b6e5b46f8744bbc0e5445daa52a9d8024582f06c840563ac7ca2130b4"
+    },
+    "D_-2": {
+      "model": "D_-2",
+      "status": "saved_audit_available",
+      "overall": {
+        "candidate_norm": 0.33622750035015736,
+        "source_norm": 0.3362275003501573,
+        "relative_to_source": 1.8848955969735197,
+        "cosine": -0.7764157057450805,
+        "least_squares_candidate_over_source": -0.7764157057450806,
+        "residual_after_best_real_scale_relative_to_source": 0.6302211134771419,
+        "residual_if_candidate_sign_flipped_relative_to_source": 0.6687066535558316,
+        "status": "Compared"
+      },
+      "species_blocks": {
+        "S1S1": {
+          "candidate_norm": 0.3057715695603661,
+          "source_norm": 0.3057715695603661,
+          "relative_to_source": 2.0,
+          "cosine": -0.9999999999999999,
+          "least_squares_candidate_over_source": -1.0,
+          "residual_after_best_real_scale_relative_to_source": 0.0,
+          "residual_if_candidate_sign_flipped_relative_to_source": 1.5722216172258685e-16,
+          "status": "Compared"
+        },
+        "S1S2": {
+          "candidate_norm": 0.08383675083984057,
+          "source_norm": 0.08383675083984049,
+          "relative_to_source": 1.0846370076315768,
+          "cosine": 0.41178128083801,
+          "least_squares_candidate_over_source": 0.41178128083801047,
+          "residual_after_best_real_scale_relative_to_source": 0.9112827095646059,
+          "residual_if_candidate_sign_flipped_relative_to_source": 1.6803459648762882,
+          "status": "Compared"
+        },
+        "S2S1": {
+          "candidate_norm": 0.08383675083984057,
+          "source_norm": 0.08383675083984049,
+          "relative_to_source": 1.0846370076315768,
+          "cosine": 0.41178128083801013,
+          "least_squares_candidate_over_source": 0.4117812808380106,
+          "residual_after_best_real_scale_relative_to_source": 0.9112827095646059,
+          "residual_if_candidate_sign_flipped_relative_to_source": 1.6803459648762877,
+          "status": "Compared"
+        },
+        "S2S2": {
+          "candidate_norm": 0.07413148897426955,
+          "source_norm": 0.07413148897426955,
+          "relative_to_source": 1.4225789253468941,
+          "cosine": -0.011865399420561749,
+          "least_squares_candidate_over_source": -0.011865399420561747,
+          "residual_after_best_real_scale_relative_to_source": 0.9999296036704738,
+          "residual_if_candidate_sign_flipped_relative_to_source": 1.4057984212392887,
+          "status": "Compared"
+        }
+      },
+      "direction_results": [
+        {
+          "coupling": "lambdaH1",
+          "axis": "real",
+          "scale": -1.0000000000000002,
+          "residual": 2.220446049250313e-16
+        },
+        {
+          "coupling": "lambdaH1Adj",
+          "axis": "real",
+          "scale": -1.0000000000000004,
+          "residual": 2.398355846665908e-16
+        },
+        {
+          "coupling": "lambdaT3",
+          "axis": "real",
+          "scale": -0.09763107293781748,
+          "residual": 0.9952226753832583
+        },
+        {
+          "coupling": "lambdaT3GeneralQ020101I1",
+          "axis": "real",
+          "scale": 1.0000000000000002,
+          "residual": 9.06493303673679e-17
+        },
+        {
+          "coupling": "lambdaH2",
+          "axis": "real",
+          "scale": -0.9999999999999998,
+          "residual": 2.830524433501838e-16
+        },
+        {
+          "coupling": "lambdaT3GeneralQ110002I1",
+          "axis": "real",
+          "scale": 0.9999999999999998,
+          "residual": 2.220446049250313e-16
+        },
+        {
+          "coupling": "lambdaT3",
+          "axis": "imag",
+          "scale": -0.0976310729378175,
+          "residual": 0.9952226753832584
+        },
+        {
+          "coupling": "lambdaT3GeneralQ020101I1",
+          "axis": "imag",
+          "scale": 1.0000000000000002,
+          "residual": 2.0269806481627062e-16
+        },
+        {
+          "coupling": "lambdaT3GeneralQ110002I1",
+          "axis": "imag",
+          "scale": 0.9999999999999998,
+          "residual": 2.220446049250313e-16
+        }
+      ],
+      "basis_best": {
+        "rotation": {
+          "S1_permutation": [
+            2,
+            1,
+            0
+          ],
+          "S2_permutation": [
+            0
+          ],
+          "S1_phase_i_power": 0,
+          "S2_phase_i_power": 2,
+          "S1_conjugate": false,
+          "S2_conjugate": false
+        },
+        "identity_relative_to_candidate": 0.9284012131305636,
+        "signflip_relative_to_candidate": 1.7714601851178309,
+        "best_global_scale": 0.5690355937288489,
+        "after_global_scale_relative_to_candidate": 0.822312892437943,
+        "after_2x2_coupling_mix_relative_to_candidate": 0.7878089473432635,
+        "coupling_mix_source_to_candidate": [
+          [
+            0.5690355937288488,
+            0.2357022603955158
+          ],
+          [
+            -0.23570226039551578,
+            0.569035593728849
+          ]
+        ],
+        "candidate_norm": 10.528592103619937,
+        "source_norm": 10.52859210361994
+      },
+      "basis_span_residual": 0.7234768436283664,
+      "source_only_directions": [],
+      "physical_normalization_certified": false,
+      "npz_keys": [
+        "source_hhss",
+        "source_direction_columns",
+        "candidate_hhss",
+        "hybrid_full_tensor"
+      ],
+      "independent_npz_fit": {
+        "alpha": -0.7764157057450806,
+        "residual": 0.6302211134771419,
+        "raw_relative": 1.8848955969735197
+      },
+      "independent_npz_blocks": {
+        "S1S1": {
+          "alpha": -0.9999999999999999,
+          "residual": 2.7607304303069874e-16,
+          "raw_relative": 2.0
+        },
+        "S1S2": {
+          "alpha": 0.41178128083801047,
+          "residual": 0.9112827095646057,
+          "raw_relative": 1.0846370076315768
+        },
+        "S2S1": {
+          "alpha": 0.4117812808380105,
+          "residual": 0.9112827095646059,
+          "raw_relative": 1.0846370076315768
+        },
+        "S2S2": {
+          "alpha": -0.011865399420561749,
+          "residual": 0.9999296036704736,
+          "raw_relative": 1.4225789253468941
+        }
+      },
+      "reconciliation_npz_sha256": "802cef0e5753d77a8bef9c37c03e3daac6621a35d3624f540a12ea4c6b178d0b"
+    }
+  },
+  "physical_alternative_available": false,
+  "controlled_ivp_comparison": null,
+  "conclusion": "Tensor structures are not globally proportional. Physical impact on flavour remains unmeasured without a certified alternative and paired coupled-IVP runs."
+}

@@ -50,6 +50,22 @@ def _complex_number(x):
     return complex(x)
 
 
+def _source_scalar_snapshot(values):
+    """Encode the complex T3 coupling in the source-quartic input format.
+
+    The HHSS linear-basis probes use 0j/1j, whereas source_quartic_v4
+    accepts real numbers or {'real': ..., 'imag': ...}, not Python complex.
+    Keep other EFT1 couplings and the caller's dictionary unchanged.
+    """
+    out = dict(values)
+    if 'lambdaT3' in out and out['lambdaT3'] is not None:
+        z = _complex_number(out['lambdaT3'])
+        if not (math.isfinite(z.real) and math.isfinite(z.imag)):
+            raise ValueError('lambdaT3: nonfinite source coupling')
+        out['lambdaT3'] = {'real': float(z.real), 'imag': float(z.imag)}
+    return out
+
+
 class HHSSLinearBasis:
     """Compute HHSS dependence on running A(-4) portal and T3 couplings once."""
 
@@ -94,7 +110,8 @@ class HHSSLinearBasis:
     def _direct(self, values):
         from Numerical.running.GeneralT3SequentialLeadingLog import scalar_tensors
         from scripts import RunT3GeneralSequentialFitAblation as original
-        snap = original.snapshot(self.model, values, self.source_path)
+        snap = original.snapshot(self.model, _source_scalar_snapshot(values),
+                                 self.source_path)
         bundle = scalar_tensors(self.model, self.tree, self.channels, snap,
                                 self.registry, geometry=self.geometry)
         q = np.asarray(bundle.quartic, dtype=float)
@@ -437,6 +454,17 @@ def _nonmixed_A4(model, saved, canonical_run_id, quartic_source, registry,
 
 
 def self_test():
+    # Check the source-quartic format used by HHSSLinearBasis offset/probes.
+    for value, expected in ((0j, (0., 0.)), (1j, (0., 1.)),
+                            (2.-3.j, (2., -3.)),
+                            ({'real': 2., 'imag': -3.}, (2., -3.))):
+        original = {'lambdaT3': value, 'lambdaH1': 0.125}
+        encoded = _source_scalar_snapshot(original)
+        if (encoded['lambdaT3'] != {'real': expected[0], 'imag': expected[1]}
+                or encoded['lambdaH1'] != 0.125
+                or original['lambdaT3'] != value):
+            raise AssertionError('HHSS source scalar encoding roundtrip failed')
+    print('PASS: lambdaT3 source snapshot scalar encoding')
     # Prior 7-term tensor engine's mathematical and complex-data checks.
     seven.self_test()
     rng=np.random.default_rng(9)

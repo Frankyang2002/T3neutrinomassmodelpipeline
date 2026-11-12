@@ -105,3 +105,31 @@ class OriginalLLSSIsolationTest(unittest.TestCase):
 
 
 if __name__=='__main__':unittest.main()
+
+
+class SplitRenderTest(unittest.TestCase):
+    def test_split_tables_and_plots_created(self):
+        import tempfile
+        from pathlib import Path
+        from types import SimpleNamespace
+        from scripts.RunT3OriginalSimultaneousLLSSHeatmap import _render, OBS
+        rows=[]
+        for model in ['A_-4','A_-2','A_+0','B_-3','B_-1','B_+1','C_-3','C_-1','C_+1','D_-2','D_+0','D_+2','E_-4','E_-2','E_+0','E_+2']:
+            row={'model':model,'status':'VALID_EXPLORATORY'}
+            for k in OBS:
+                row[k+'_pct_running']=123.4
+                row[k+'_pct_mixing_off']=56.7
+            rows.append(row)
+        args=SimpleNamespace(figure_width=10,row_height=.2,y_tick_fontsize=6,bottom_tick_fontsize=6,axis_label_fontsize=6,top_tick_fontsize=7,cell_fontsize=5,colorbar_fontsize=6,dpi=80)
+        with tempfile.TemporaryDirectory() as td:
+            out=Path(td)
+            _render(rows,out,args)
+            for rel in [
+                'plots/all16_heatmap_percent.png',
+                'plots/all16_masssq_heatmap_percent.png',
+                'plots/all16_mixing_heatmap_percent.png',
+                'csv/all16_heatmap_table.csv',
+                'csv/all16_masssq_heatmap_table.csv',
+                'csv/all16_mixing_heatmap_table.csv',
+            ]:
+                self.assertTrue((out/rel).is_file(), rel)

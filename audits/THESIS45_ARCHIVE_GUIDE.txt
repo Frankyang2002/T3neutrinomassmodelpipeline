@@ -1,0 +1,80 @@
+T3 honours thesis (45) / LOCAL repository archival audit
+======================================================
+Audited upstream: Frankyang2002/T3neutrinomassmodelpipeline
+Public main commit (read-only): b502c5ed9c2ad6e8ade6629f7d6a39eedb76a863
+Date: 2026-11-12
+Thesis reviewed: T3_Honours_Thesis (45).pdf
+
+This bundle DOES NOT contain or modify the GitHub repository. It contains
+an exact list of output directories found on the public main tree, and a
+complete conservative local-only scanner/archive script. No source files
+are candidates for archival.
+
+Candidate inventory:
+ - 23 "archive_if_unreferenced" output directories: 250 tracked files, 14.10 MB.
+ - 17 "manual_review" output directories: 825 tracked files, 49.53 MB.
+ - 40 directories total: 1,075 files, 63.63 MB.
+The manual-review class is NEVER moved by the included script.
+
+Read these safeguards before applying:
+ 1. The script refuses all source paths and thesis-protected datasets.
+ 2. It checks each directory's local file count and bytes against the exact
+    upstream inventory; changed directories are kept.
+ 3. It scans active code, tests, configuration, and output provenance for
+    candidate-name references. Anything referenced is kept.
+ 4. It checks local git status for changed/untracked candidate outputs.
+ 5. It rejects symlinks, does not overwrite archives, and verifies each ZIP
+    member against SHA-256 before any moves.
+ 6. It writes both archive and quarantine OUTSIDE the git working tree in
+    the sibling directory T3_thesis45_local_archives.
+ 7. It does NOT call git push, GitHub APIs, or mutate a remote repository.
+
+No program can establish "not used anywhere" solely from a literal string
+scan when dynamically constructed paths, manual plotting, or external programs
+may be involved. A positive result means only "no obvious textual references
+and same file inventory". Retain the manual-review class until figures and
+local execution histories have been inspected.
+
+The authoritative thesis data and producing software are deliberately EXCLUDED:
+ - scripts/RefreshOptimisedYukawaThesisTables.py
+ - scripts/RunT3SimultaneousEFT1All16.py
+ - scripts/RunT3SimultaneousEFT1MixedBC.py
+ - scripts/RunT3OriginalSimultaneousLLSSHeatmap.py
+ - scripts/RunT3EFT1LLSSThesisHeatmap.py
+ - Lagrangian/, RGE/, Numerical/, physics/, configs/, tests/
+ - output/studies/general_scalar_extended/thesis_general_all16/
+ - output/studies/general_scalar_extended/optimal_yukawa_thesis_refresh/
+ - output/parallel_t3/thesis_two_benchmarks_all16_stagefreeze_v2/
+ - output/parallel_t3/eft1_llss_thesis_consistent_v1 and v2/
+ - output/parallel_t3/thesis_generalised_tables_v1/
+ - output/general_observable/, output/full16_symbolic/
+ - Reports/output/thesis_general_5_1/, thesis_general_5_2/, thesis_general_5_3/
+ - Reports/output/thesis_qualitative/
+ - other runtime-coupling and source export directories.
+
+An earlier output/cleanup_audit/curated_archive_plan.json listed 43 root
+README/backup artifacts. All 43 are absent from current main; DO NOT reuse
+that list as if it identifies current files.
+
+PowerShell (run from your LOCAL repository root):
+
+  Expand-Archive "C:\path\to\T3_thesis45_archive_toolkit.zip" -DestinationPath . -Force
+
+  # First inspect the checked list. Does not move original files:
+  python .\scripts\maintenance\ArchiveThesis45UnusedOutputs.py
+
+  # Review the generated audits\thesis45_archive_preflight.csv
+
+  # Copy eligible directories into a verified ZIP; keep originals:
+  python .\scripts\maintenance\ArchiveThesis45UnusedOutputs.py --archive-copy
+
+  # After checking the audit, create a ZIP AND move eligible output
+  # directories to quarantine outside your project (original paths vanish):
+  python .\scripts\maintenance\ArchiveThesis45UnusedOutputs.py --apply
+
+  # Restore archived files from a selected ZIP if needed:
+  python .\scripts\maintenance\ArchiveThesis45UnusedOutputs.py --restore-zip "C:\path\to\t3_thesis45_archive_YYYYMMDDTHHMMSSZ.zip"
+
+After --apply: review `git status` and test the thesis figures. Nothing is
+committed or pushed for you. Do not delete the ZIP or its quarantine directory
+until you are satisfied that no project function depends on the archived files.

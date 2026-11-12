@@ -251,74 +251,185 @@ def _run_original_group(models, output, name, *, original_source, isolator):
     return output_folder
 
 
-def _render(rows, out, args):
-    import matplotlib
-    matplotlib.use('Agg')
-    import matplotlib.pyplot as plt
-    from matplotlib.colors import SymLogNorm
-    from matplotlib.ticker import FixedLocator, FuncFormatter
+def _format_models():
+    return [m.replace('_','(')+')' for m in MODELS]
 
-    n = len(MODELS)
-    z = np.full((n, 10), np.nan)
+
+def _annotation(v):
+    mag=abs(v)
+    return (f'{v:+.1e}' if mag>=1e4 or mag<.01 else
+            f'{v:+.1f}' if mag>=10 else f'{v:+.2f}' if mag>=1 else f'{v:+.3f}')
+
+
+def _tick_values(limit):
+    max_dec=max(0,math.floor(math.log10(limit)))
+    return sorted(set([0]+[sign*10.**p for sign in (-1,1)
+                          for p in range(max_dec+1) if 10.**p<=limit]))
+
+
+def _heatmap_matrix(rows, observables):
+    z = np.full((len(MODELS), 2*len(observables)), np.nan)
     by_model = {r['model']:r for r in rows}
     for i, model in enumerate(MODELS):
         row=by_model.get(model)
         if not row or row.get('status') != 'VALID_EXPLORATORY':
             continue
-        for j, obs in enumerate(OBS):
+        for j, obs in enumerate(observables):
             z[i, 2*j] = row[obs+'_pct_running']
             z[i, 2*j+1] = row[obs+'_pct_mixing_off']
+    return z
+
+
+def _write_heatmap_tables(rows, out):
+    csv_dir = out / 'csv'
+    csv_dir.mkdir(parents=True, exist_ok=True)
+    def write_table(filename, observables):
+        matrix = _heatmap_matrix(rows, observables)
+        headers=[]
+        for obs in observables:
+            headers.extend([obs + '_running', obs + '_mixing_off'])
+        with (csv_dir / filename).open('w', newline='', encoding='utf-8') as f:
+            w=csv.writer(f)
+            w.writerow(['model', *headers])
+            for i, model in enumerate(MODELS):
+                row=[model]
+                for value in matrix[i]:
+                    row.append('' if not np.isfinite(value) else f'{float(value):.17g}')
+                w.writerow(row)
+    write_table('all16_heatmap_table.csv', OBS)
+    write_table('all16_masssq_heatmap_table.csv', OBS[:2])
+    write_table('all16_mixing_heatmap_table.csv', OBS[2:])
+
+
+def _render_panel(rows, out, args, observables, display, filename):
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    from matplotlib.colors import SymLogNorm
+    from matplotlib.ticker import FixedLocator, FuncFormatter
+    from matplotlib.transforms import blended_transform_factory
+
+    z = _heatmap_matrix(rows, observables)
     if not np.isfinite(z).any():
         raise ValueError('No finite numerical data for heatmap')
-    plt.rcdefaults()  # Matplotlib default font; no custom family imposed.
+    plt.rcdefaults()
+    n = len(MODELS)
+    ncols = z.shape[1]
     fig, ax = plt.subplots(figsize=(args.figure_width, args.row_height*n+2.0))
     limit = max(float(np.nanmax(np.abs(z))), 1.)
     norm = SymLogNorm(linthresh=1, vmin=-limit, vmax=limit, base=10)
     cmap=plt.get_cmap('RdBu_r').copy()
     cmap.set_bad('white')
     im=ax.imshow(np.ma.masked_invalid(z), cmap=cmap, norm=norm, aspect='auto')
-    ax.set_yticks(np.arange(n), [m.replace('_','(')+')' for m in MODELS],fontsize=args.y_tick_fontsize)
-    ax.set_xticks(np.arange(10), ['Running','Mixing off']*5,fontsize=args.bottom_tick_fontsize)
-    ax.set_ylabel('T3 model',fontsize=args.axis_label_fontsize)
-    ax.tick_params(axis='both',length=0)
-    # Observable names are top headings, not additional minor tick labels.
-    from matplotlib.transforms import blended_transform_factory
+
+    ax.set_yticks(np.arange(n), _format_models(), fontsize=args.y_tick_fontsize)
+    ax.set_xticks(np.arange(ncols), ['Running','Mixing off']*len(observables), fontsize=args.bottom_tick_fontsize)
+    ax.set_ylabel('T3 model', fontsize=args.axis_label_fontsize)
+    ax.tick_params(axis='both', length=0)
+
     top = blended_transform_factory(ax.transData, ax.transAxes)
-    for j,title in enumerate(DISPLAY):
-        ax.text(2*j+.5,1.025,title,transform=top,ha='center',va='bottom',
+    for j, title in enumerate(display):
+        ax.text(2*j+.5, 1.025, title, transform=top, ha='center', va='bottom',
                 fontsize=args.top_tick_fontsize)
-    ax.set_xticks(np.arange(-.5,10,1),minor=True)
-    ax.set_yticks(np.arange(-.5,n,1),minor=True)
-    ax.grid(which='minor',color='white',linewidth=.7)
-    ax.tick_params(which='minor',bottom=False,left=False)
-    for i in (2,4,6,8):ax.axvline(i-.5,color='black',linewidth=1.2)
-    for i, model in enumerate(MODELS):
-        if i in (3,6,9,12):ax.axhline(i-.5,color='black',linewidth=1.2)
-        for j in range(10):
-            v=z[i,j]
-            if not np.isfinite(v):continue
-            mag=abs(v)
-            label=(f'{v:+.1e}' if mag>=1e4 or mag<.01 else
-                   f'{v:+.1f}' if mag>=10 else f'{v:+.2f}' if mag>=1 else f'{v:+.3f}')
-            r,g,b,_=cmap(norm(v))
-            lum=.2126*r+.7152*g+.0722*b
-            ax.text(j,i,label,ha='center',va='center',fontsize=args.cell_fontsize,
-                    color='white' if lum<.48 else 'black')
-    max_dec=max(0,math.floor(math.log10(limit)))
-    ticks=sorted(set([0]+[sign*10.**p for sign in (-1,1)
-                           for p in range(max_dec+1) if 10.**p<=limit]))
-    bar=fig.colorbar(im,ax=ax,fraction=.035,pad=.025)
-    bar.locator=FixedLocator(ticks)
+
+    ax.set_xticks(np.arange(-.5, ncols, 1), minor=True)
+    ax.set_yticks(np.arange(-.5, n, 1), minor=True)
+    ax.grid(which='minor', color='white', linewidth=.7)
+    ax.tick_params(which='minor', bottom=False, left=False)
+    for i in range(2, ncols, 2):
+        ax.axvline(i-.5, color='black', linewidth=1.2)
+    for i in (3, 6, 9, 12):
+        ax.axhline(i-.5, color='black', linewidth=1.2)
+
+    for i in range(n):
+        for j in range(ncols):
+            v = z[i, j]
+            if not np.isfinite(v):
+                continue
+            r, g, b, _ = cmap(norm(v))
+            lum = .2126*r + .7152*g + .0722*b
+            ax.text(j, i, _annotation(v), ha='center', va='center', fontsize=args.cell_fontsize,
+                    color='white' if lum < .48 else 'black')
+
+    bar=fig.colorbar(im, ax=ax, fraction=.035, pad=.025)
+    bar.locator=FixedLocator(_tick_values(limit))
     bar.formatter=FuncFormatter(lambda v,pos:'0' if v==0 else
                                 (f'{v:.0e}' if abs(v)>=1e4 else f'{v:g}'))
     bar.update_ticks()
     bar.ax.tick_params(labelsize=args.colorbar_fontsize)
-    bar.set_label('Signed change (%) — symmetric log colours',fontsize=args.colorbar_fontsize)
-    fig.subplots_adjust(left=.12,right=.90,bottom=.07,top=.94)
-    plots=out/'plots';plots.mkdir(parents=True,exist_ok=True)
+    bar.set_label('Signed change (%) — symmetric log colours', fontsize=args.colorbar_fontsize)
+
+    fig.subplots_adjust(left=.12, right=.90, bottom=.07, top=.94)
+    plots=out/'plots'; plots.mkdir(parents=True, exist_ok=True)
     for ext in ('png','pdf'):
-        fig.savefig(plots/f'all16_heatmap_percent.{ext}',dpi=args.dpi,bbox_inches='tight')
+        fig.savefig(plots/f'{filename}.{ext}', dpi=args.dpi, bbox_inches='tight')
     plt.close(fig)
+
+
+def _render(rows, out, args):
+    _write_heatmap_tables(rows, out)
+    _render_panel(rows, out, args, OBS, DISPLAY, 'all16_heatmap_percent')
+    _render_panel(rows, out, args, OBS[:2], DISPLAY[:2], 'all16_masssq_heatmap_percent')
+    _render_panel(rows, out, args, OBS[2:], DISPLAY[2:], 'all16_mixing_heatmap_percent')
+
+
+def _use_original_stagefreeze_running(rows, stage_csv, out):
+    """Replace display Running cells using the exact original EFT1 stage CSV.
+
+    This is a presentation-only reconciliation, NOT proof that the LLSS-off
+    counterfactual shares the original stage-freeze denominator.
+    """
+    from scripts import PlotT3OscillationHeatmaps as original_plotter
+    original_rows = original_plotter.read_rows(stage_csv)
+    lookup = {}
+    for r in original_rows:
+        if r['switch'] == 'EFT1':
+            key = (r['model'], r['observable'])
+            if key in lookup:
+                raise ValueError(f'Duplicate original EFT1 stage result: {key}')
+            lookup[key] = float(r['relative_change_percent'])
+    audit = []
+    for row in rows:
+        if row.get('status') != 'VALID_EXPLORATORY':
+            continue
+        for obs in OBS:
+            key = (row['model'], obs)
+            if key not in lookup or not math.isfinite(lookup[key]):
+                raise ValueError(f'Missing original EFT1 stage result: {key}')
+            old = float(row[obs+'_pct_running'])
+            new = lookup[key]
+            audit.append({'model': row['model'], 'observable': obs,
+                          'llss_csv_running_pct': old,
+                          'original_stagefreeze_running_pct': new,
+                          'difference_percentage_points': new-old,
+                          'relative_disagreement': abs(new-old)/max(abs(new),abs(old),1e-300)})
+            row[obs+'_pct_running'] = new
+    out.mkdir(parents=True, exist_ok=True)
+    with (out/'running_source_audit.csv').open('w', newline='', encoding='utf-8') as f:
+        fields = ['model','observable','llss_csv_running_pct',
+                  'original_stagefreeze_running_pct','difference_percentage_points',
+                  'relative_disagreement']
+        writer=csv.DictWriter(f,fieldnames=fields)
+        writer.writeheader(); writer.writerows(audit)
+    mismatches=[r for r in audit if r['relative_disagreement'] > 1e-8]
+    provenance={'running_source':str(stage_csv),
+                'mixing_off_source':'LLSS comparison CSV supplied to --plot-only',
+                'source_agreement_tolerance_relative':1e-8,
+                'number_of_mismatched_cells':len(mismatches),
+                'number_of_compared_cells':len(audit),
+                'physically_consistent_shared_1001_baseline_verified':not bool(mismatches),
+                'warning':('MISMATCHED INPUTS: Running cells copied from original EFT1 stage-freeze CSV; '
+                           'Mixing-off cells remain from LLSS comparison CSV. Their common 1001 '
+                           'denominator is NOT established where Running differs. '
+                           'Do not interpret them as a single consistent benchmark.'
+                           if mismatches else 'Running percentages agree; raw denominator identity not independently verified.')}
+    (out/'running_source_audit.json').write_text(json.dumps(provenance,indent=2)+'\n',encoding='utf-8')
+    if mismatches:
+        print(f'WARNING: {len(mismatches)}/{len(audit)} Running cells DISAGREE with LLSS CSV. '
+              'Combined plot is for visual comparison only; baseline consistency NOT verified. '
+              'See running_source_audit.csv.',flush=True)
+    else:
+        print('Original EFT1 Running percentages match LLSS CSV.',flush=True)
 
 
 def build_parser():
@@ -331,6 +442,7 @@ def build_parser():
     p.add_argument('--models',default=','.join(MODELS),
                    help='Comma-separated original-model list; use one model for smoke test')
     p.add_argument('--plot-only',type=Path,help='Replot existing combined CSV only')
+    p.add_argument('--stagefreeze-csv',type=Path,help='Original three-stage frozen_stage_observable_changes.csv; use its EFT1 values for Running, with disagreement audit')
     p.add_argument('--font-size',type=float,default=14.)
     for k in ('top-tick','bottom-tick','y-tick','cell','axis-label','colorbar'):
         p.add_argument('--'+k+'-fontsize',type=float,default=None)
@@ -361,8 +473,14 @@ def main(argv=None):
                     for part in ('pct_running','pct_mixing_off'):
                         row[key+'_'+part]=float(row[key+'_'+part])
         args.output.mkdir(parents=True)
+        if args.stagefreeze_csv:
+            stage_csv=(ROOT/args.stagefreeze_csv).resolve()
+            if not stage_csv.is_file():p.error(f'Missing original stagefreeze CSV: {stage_csv}')
+            _use_original_stagefreeze_running(rows,stage_csv,args.output)
         _render(rows,args.output,args)
         return 0
+    if args.stagefreeze_csv:
+        p.error('--stagefreeze-csv requires --plot-only; do not alter numerical run')
     selected=tuple(x.strip() for x in args.models.split(',') if x.strip())
     if not selected or len(set(selected))!=len(selected) or not set(selected)<=set(MODELS):
         p.error('Invalid model selection')

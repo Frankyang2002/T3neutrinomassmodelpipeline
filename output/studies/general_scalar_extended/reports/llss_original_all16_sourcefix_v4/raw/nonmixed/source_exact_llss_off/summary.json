@@ -16,7 +16,7 @@
     "E_+0",
     "E_+2"
   ],
-  "computed": 12,
+  "computed": 13,
   "spinor_factor_assumed": 1.0,
   "basis_assumed": true,
   "one_scale_C5_used_as_W_on_reference": true,
@@ -2579,6 +2579,180 @@
           "11": {
             "hhss_basis_parity_rel": 0.0,
             "renormalisable_endpoint_max_block_rel": 3.49189990123661e-10,
+            "combined_nfev": 38,
+            "separate_nfev": 38
+          }
+        },
+        "simultaneous_rhs": true
+      },
+      "general_Lagrangian": true,
+      "C5_hard_matching_is_independent": false,
+      "full_sequential_general_C5_certified": false
+    },
+    {
+      "model": "E_+2",
+      "status": "Computed",
+      "provenance": {
+        "fermion_tree": {
+          "0": {
+            "matched_source": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\fermion_first_all16_v1\\E_p2\\data\\eft1_after_F_wilson_seed.json",
+            "f_tree_operator_count": 2,
+            "Yukawa_types": [
+              "y1",
+              "y2"
+            ],
+            "heavy_mass_eigenvalues_gev": [
+              100000.0,
+              110000.0,
+              120000.0
+            ],
+            "heavy_basis_diagnostics": "{'heavy_basis_residual': 0.0, 'extra_yukawa_rotation': 'not-applicable', 'vectorlike_right_rotation_identity_fast_path': False}",
+            "sources": [
+              {
+                "source_index": 3,
+                "raw_ordered_components": 216,
+                "symmetric_orbits": 72,
+                "flavour_permutation": [
+                  1,
+                  0
+                ]
+              },
+              {
+                "source_index": 4,
+                "raw_ordered_components": 432,
+                "symmetric_orbits": 264,
+                "flavour_permutation": [
+                  1,
+                  0
+                ]
+              }
+            ],
+            "heavy_real_scalar_count": 12,
+            "operator_symmetrisation": "exact commuting-spinor polynomial orbit average",
+            "absolute_matchete_to_weyl_normalization_certified": false
+          },
+          "1": {
+            "matched_source": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_observable\\fermion_first_all16_v1\\E_p2\\data\\eft1_after_F_wilson_seed.json",
+            "f_tree_operator_count": 2,
+            "Yukawa_types": [
+              "y1",
+              "y2"
+            ],
+            "heavy_mass_eigenvalues_gev": [
+              110265.34683880088,
+              121291.8816758053,
+              132318.4164514455
+            ],
+            "heavy_basis_diagnostics": "{'heavy_basis_residual': 7.134710144736874e-11, 'extra_yukawa_rotation': 'not-applicable', 'vectorlike_right_rotation_identity_fast_path': False}",
+            "sources": [
+              {
+                "source_index": 3,
+                "raw_ordered_components": 216,
+                "symmetric_orbits": 72,
+                "flavour_permutation": [
+                  1,
+                  0
+                ]
+              },
+              {
+                "source_index": 4,
+                "raw_ordered_components": 432,
+                "symmetric_orbits": 264,
+                "flavour_permutation": [
+                  1,
+                  0
+                ]
+              }
+            ],
+            "heavy_real_scalar_count": 12,
+            "operator_symmetrisation": "exact commuting-spinor polynomial orbit average",
+            "absolute_matchete_to_weyl_normalization_certified": false
+          }
+        },
+        "matching_kind": "full-general-matchete-one-scale-channels",
+        "full_general_C5_matchete_path": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\general_matchete_matching\\E_p2\\c5_coefficient.txt",
+        "full_general_C5_sha256": "0667629bc94e9a26ae8cd13f1060847417c11e410be7f585daaef6f332ad8b66",
+        "fitted_uv_sha256": "ce404aae75d0f6307019f028ec2b96b027c8055fec2600ab1a8ae087b4d2ac45",
+        "hhss_linear_basis_directions": [
+          [
+            "lambda12",
+            "real"
+          ],
+          [
+            "lambda12Adj",
+            "real"
+          ],
+          [
+            "lambda12Cross",
+            "real"
+          ],
+          [
+            "lambdaH",
+            "real"
+          ],
+          [
+            "lambdaH1",
+            "real"
+          ],
+          [
+            "lambdaH1Adj",
+            "real"
+          ],
+          [
+            "lambdaH2",
+            "real"
+          ],
+          [
+            "lambdaH2Adj",
+            "real"
+          ],
+          [
+            "lambdaS1",
+            "real"
+          ],
+          [
+            "lambdaS1Adj",
+            "real"
+          ],
+          [
+            "lambdaS2",
+            "real"
+          ],
+          [
+            "lambdaS2Adj",
+            "real"
+          ],
+          [
+            "lambdaT3",
+            "real"
+          ],
+          [
+            "lambdaT3",
+            "imag"
+          ]
+        ],
+        "endpoint_comparisons": {
+          "00": {
+            "hhss_basis_parity_rel": 1.846273426469423e-16,
+            "renormalisable_endpoint_max_block_rel": 0.0,
+            "combined_nfev": 38,
+            "separate_nfev": 0
+          },
+          "01": {
+            "hhss_basis_parity_rel": 0.0,
+            "renormalisable_endpoint_max_block_rel": 6.758270568810875e-09,
+            "combined_nfev": 38,
+            "separate_nfev": 38
+          },
+          "10": {
+            "hhss_basis_parity_rel": 1.6714096877931132e-16,
+            "renormalisable_endpoint_max_block_rel": 0.0,
+            "combined_nfev": 38,
+            "separate_nfev": 0
+          },
+          "11": {
+            "hhss_basis_parity_rel": 1.3661782158447265e-16,
+            "renormalisable_endpoint_max_block_rel": 6.28051677744043e-09,
             "combined_nfev": 38,
             "separate_nfev": 38
           }

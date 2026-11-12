@@ -1,0 +1,25 @@
+{
+  "source_run": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\studies\\general_scalar_extended\\optimal_yukawa_thesis_refresh\\optimal_yukawa_thesis_heatmaps_3stage_v1",
+  "source_manifest_sha256": "0f09055df37dccdb6febe6398c0732de85230747180ad7f1d1c10bec3c9bbbc0",
+  "source_results_sha256": "4428e11fbfa612f90b270a216ce053c5eb5602e9bc7fe854e6f309fa8f248221",
+  "counterfactual_run": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\studies\\general_scalar_extended\\optimal_yukawa_thesis_refresh\\llss_off_optimised_both_v2",
+  "donor_input_hashes": {
+    "A_-4": {
+      "best.json": "c692dc0a000109c9036f9fb310a56510622715f9f563bdb7f4f757846eb7c0b6",
+      "best_fitted_config.json": "a14d33f3832bb6e4dcd7763be40c7867c9f140f09ee9f01dff0a956c84ad4cc2",
+      "best_general_uv_overrides.json": "6b6c2669c1bb5b5b1868a80560ee71ce4494cdceffb251405285c7a545bb48c4"
+    },
+    "D_-2": {
+      "best.json": "b5e3a36a9fa88d29d134dfc40a30b2c7533b44a8024f422b775ac7bb846e437c",
+      "best_fitted_config.json": "86d76ba205926d6b44d30dfdb38a5f04670b4d6b522aeb4b3c4d807bb3c8144f",
+      "best_general_uv_overrides.json": "f250b563d9efeaafea9e8a466f720893330ae49d71a66a64116f9bf45367629f"
+    }
+  },
+  "extra_yukawas_policy": "target-model-saved",
+  "comparison_baseline": "same benchmark 1001 from saved source",
+  "running": "100*(saved_1111-saved_1001)/saved_1001",
+  "mixing_off": "100*(counterfactual_1111-saved_1001)/saved_1001",
+  "ablation": "only HHSS x LLSS contribution to scalar_pair LLHH beta",
+  "physics_status": "conditional exploratory, not certified hard one-loop matching",
+  "donor_validation_in_counterfactual": "not applicable; source fit hashes validated"
+}

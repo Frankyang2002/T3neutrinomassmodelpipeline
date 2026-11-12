@@ -1,30 +1,9 @@
-# Batch 12 — consolidate completed exploratory all-16 benchmark
+# LLSS-off initial parity-check correction
 
-This is the final **data aggregation** step. It reads (does not rerun or modify) the previously completed output directories. It verifies `Computed` for 16 models and each model's 16 U/E/W/S cases. It produces a compact CSV, manifest and Markdown overview.
+Replace `scripts/RunT3OptimisedYukawaLLSSOff.py` with the complete file included here.
 
-## Installed paths
+The simultaneous integrators perform their mu_F scalar-pair source parity check after entering the integration wrapper but before the first RHS evaluation. The previous wrapper subtracted the LLSS source during that check, causing a relative parity mismatch of 1.0. This version preserves the first beta evaluation, then subtracts the source on subsequent ODE evaluations. It does not change saved donor inputs, benchmark definitions, or GitHub.
 
-- `scripts/ConsolidateT3Exploratory16.py` — new
-- `scripts/TestT3Exploratory16Consolidation.py` — new
+Because the previous attempt saved Blocked entries, use a fresh counterfactual run ID. See the accompanying chat response for PowerShell commands.
 
-## PowerShell
-
-```powershell
-cd C:\thesistemp\T3neutrinomassmodelpipeline
-Expand-Archive -Path "$HOME\Downloads\T3ExploratoryAll16ConsolidationBatch12.zip" -DestinationPath . -Force
-python -X utf8 -m scripts.TestT3Exploratory16Consolidation
-python -X utf8 -m scripts.ConsolidateT3Exploratory16
-```
-
-Output directory: `output/studies/general_scalar_extended/exploratory_full_quartic_all16_consolidated_v1/` with `all16_cases.csv`, `all16_manifest.json`, `all16_overview.md`.
-
-If an output directory exists, supply a fresh `--out` path; files are not overwritten.
-
-## Physics caveats
-
-- Matchete-to-RGBeta quartic mapping is provisional by invariant order.
-- The six recovered ordinary models use frozen unsupported complex quadratic couplings.
-- Nonmixed new extra quartics were set to zero at the F threshold rather than evolved from the UV.
-- Simultaneous EFT1 Wilson running and matching therefore remain an **exploratory approximation**, not a complete UV scalar RGE treatment or normalized physical prediction.
-
-The EFT sequence remains UV → integrate out all fermions → EFT1 → integrate out both scalars → SMEFT.
+Syntax check passed; full end-to-end physics run not verified in this environment.

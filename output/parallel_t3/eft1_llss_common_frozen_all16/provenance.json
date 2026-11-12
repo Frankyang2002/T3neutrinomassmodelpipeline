@@ -1,0 +1,90 @@
+{
+  "LLSS_OFF": "subtract lambda_HHSS C_LLSS source from scalar_pair beta LLHH block at every RHS call",
+  "W_FROZEN": "freeze all seven EFT1 Wilson beta terms only",
+  "W_FULL": "unmodified full Wilson beta",
+  "all_heavy_fermions_out_before_EFT1": true,
+  "all_scalars_out_together_after_EFT1": true,
+  "all_three_keep_UV_F_matching_scalar_matching_SMEFT_running": true,
+  "all_three_keep_renormalisable_EFT1_running": true,
+  "benchmark_scales_GeV": {
+    "F": 100000.0,
+    "S": 1000.0
+  },
+  "conditional_approximations": [
+    "source-to-Weyl normalization uncertified",
+    "full scalar tensor and candidate ADM not independently certified",
+    "fermion hard one-loop C5 assumed zero",
+    "reduced scalar potential"
+  ],
+  "heatmap_columns": [
+    {
+      "comparisons": [
+        "running vs frozen",
+        "mixing off vs frozen"
+      ],
+      "observable": "dm21_sq_eV2"
+    },
+    {
+      "comparisons": [
+        "running vs frozen",
+        "mixing off vs frozen"
+      ],
+      "observable": "dm31_sq_eV2"
+    },
+    {
+      "comparisons": [
+        "running vs frozen",
+        "mixing off vs frozen"
+      ],
+      "observable": "sin2_theta12"
+    },
+    {
+      "comparisons": [
+        "running vs frozen",
+        "mixing off vs frozen"
+      ],
+      "observable": "sin2_theta13"
+    },
+    {
+      "comparisons": [
+        "running vs frozen",
+        "mixing off vs frozen"
+      ],
+      "observable": "sin2_theta23"
+    }
+  ],
+  "heatmap_definition_mixing_off_vs_frozen": "100*(LLSS_OFF - W_FROZEN)/W_FROZEN",
+  "heatmap_definition_vs_frozen": "100*(W_FULL - W_FROZEN)/W_FROZEN",
+  "models_requested": [
+    "A_-4",
+    "A_-2",
+    "A_+0",
+    "B_-3",
+    "B_-1",
+    "B_+1",
+    "C_-3",
+    "C_-1",
+    "C_+1",
+    "D_-2",
+    "D_+0",
+    "D_+2",
+    "E_-4",
+    "E_-2",
+    "E_+0",
+    "E_+2"
+  ],
+  "modes": [
+    "W_FROZEN",
+    "LLSS_OFF",
+    "W_FULL"
+  ],
+  "no_posthoc_leading_log_added": true,
+  "not_same_as_original_EFT1_off_heatmap": true,
+  "reference": "A_-4",
+  "reference_donor": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\parallel_t3\\A4_Dm2_targeted_fit01\\A_-4\\result.json",
+  "scope": "one-loop candidate 45-Weyl seven-slot tensor Wilson beta",
+  "source_tables": "C:\\thesistemp\\T3neutrinomassmodelpipeline\\output\\parallel_t3\\thesis_generalised_tables_v1",
+  "status": "CONDITIONAL_NOT_PHYSICAL_MSbar",
+  "wilson_solver": "RK2",
+  "wilson_steps": 2
+}

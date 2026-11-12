@@ -2,10 +2,10 @@
   "kind": "t3_pipeline_numerical_results_v1",
   "_comment": "Default ordinary-T3 numerical template. New low-scale benchmark: UV=1e7 GeV, MF threshold=100 TeV, scalar threshold=1 TeV, low scale=100 GeV. SM gauge and Yukawa reference values at 1e7 GeV from Antusch, Hinze and Saad (2026), arXiv:2510.01312, Table II; gY=sqrt(3/5)*g1. SM-only running reference, not T3 threshold-matched.",
   "representation": {
-    "d_s1": 2,
-    "d_s2": 2,
-    "d_f": 3,
-    "alpha": -1,
+    "d_s1": 3,
+    "d_s2": 1,
+    "d_f": 2,
+    "alpha": 2,
     "shared_scalar": false
   },
   "ordering": "NO",
@@ -140,19 +140,19 @@
       "y1": {
         "real": [
           [
-            -9.571359146985241e-05,
-            -2.612032067885885e-05,
-            0.00020883749532138267
+            -1.981622553066133e-05,
+            2.547334336433566e-05,
+            3.4829064911354295e-05
           ],
           [
-            -0.00013962430809173656,
-            0.00031496901254091184,
-            -9.402811411620962e-05
+            -6.29157011643351e-05,
+            4.856817154885579e-05,
+            -0.00011997108181451105
           ],
           [
-            -1.5540897781352824e-05,
-            8.180598155407917e-05,
-            -0.00014455578951665373
+            -1.8350067918504505e-05,
+            5.3715216582169134e-05,
+            2.8928102624756222e-05
           ]
         ],
         "imag": [
@@ -176,19 +176,19 @@
       "y2": {
         "real": [
           [
-            0.00023442891662475753,
-            1.8808340547595637e-05,
-            0.00019405395270388743
+            8.353894189531519e-05,
+            0.0001829547188800917,
+            -5.361446533547219e-05
           ],
           [
-            -9.944592052690349e-05,
-            -3.4522158470310095e-05,
-            4.0994245566091686e-05
+            0.00010638671040482418,
+            1.4345558955241004e-05,
+            2.4443497488406342e-05
           ],
           [
-            -0.00012014021156618395,
-            -9.9503391589939e-05,
-            4.046846152527497e-05
+            1.1548743575182286e-05,
+            -0.0002662893245689185,
+            0.00011458819912491729
           ]
         ],
         "imag": [
@@ -257,32 +257,7 @@
         "imag": 0.0
       },
       "lambdaH1Adj": 0.0,
-      "lambdaH2Adj": 0.0,
-      "lambda12Adj": 0.0,
-      "lambdaHHdagS2S2": {
-        "real": 0.0,
-        "imag": 0.0
-      },
-      "lambdaHHdagS1barS1bar": {
-        "real": 0.0,
-        "imag": 0.0
-      },
-      "lambdaS1bar2S2bar2": {
-        "real": 0.0,
-        "imag": 0.0
-      },
-      "lambdaS1barS2S2bar2": {
-        "real": 0.0,
-        "imag": 0.0
-      },
-      "lambdaS1S1bar2S2bar": {
-        "real": 0.0,
-        "imag": 0.0
-      },
-      "lambdaHHdagS1barS2barCross": {
-        "real": 0.0,
-        "imag": 0.0
-      }
+      "lambdaS1Adj": 0.0
     }
   },
   "benchmark_search": {
@@ -297,7 +272,7 @@
     "lambdaT3_effective": 0.1,
     "normalisation_factor": 1.0,
     "normalisation_basis": "charge-channel multiplicity only: lambdaT3_ref/N_equiv; N_equiv=1 (A-D), 2 (E); equal loop functions assumed in the unbroken-SU(2) multiplet-mass benchmark; representation CGs retained",
-    "model_class": "C",
+    "model_class": "D",
     "representation_specific_extra_quartics": "required optional quartics fixed to 0",
     "texture": "fixed real non-diagonal y1/y2 textures scaled by common Y; Im(y1)=Im(y2)=0; Im(lambdaT3)=0",
     "y1_texture": [
@@ -337,8 +312,8 @@
   },
   "general_fit_continuation": {
     "source_campaign": "thesis16_general_c5_full_v1",
-    "source_model": "C_-1",
-    "chi2": 1.79419851843013e-12,
+    "source_model": "D_+2",
+    "chi2": 1.3026658280341277,
     "fit_screen": 5.86,
     "full_18_yukawas_allowed": true,
     "conditional_one_scale_c5": true,

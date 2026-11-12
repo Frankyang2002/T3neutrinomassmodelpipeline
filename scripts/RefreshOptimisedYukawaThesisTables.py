@@ -12,13 +12,21 @@ From repo root:
  python -X utf8 -m scripts.RefreshOptimisedYukawaThesisTables --run-id optimal_yukawa_thesis_refresh_v1 --render-only
 
 By default evaluates only case 1111, sufficient for masses/mixing tables.
---full-cases evaluates all 16 U/E/W/S switches for stage-freeze heatmaps.
-Each model retains its own fitted scalar/SM and extra-Yukawa coordinates;
-ONLY the real 3x3 y1 and y2 matrices are transferred from the donor.
+--full-cases evaluates all 16 U/E/W/S switches for downstream plotting with the repository original
+RunT3SimultaneousEFT1StageFreezeHeatmaps report creator.
+UV off=0111, EFT1=1001, SMEFT off=1110.
+Each model retains its own fitted scalar/SM coordinates; ONLY the real
+3x3 y1 and y2 matrices are transferred from the donor.
+--zero-extra-yukawas additionally imposes y1Conj=y2Conj=0 at the UV
+boundary and freezes their UV derivatives. The native beta derivative is
+measured to determine if this is a consistent RGE-invariant restriction.
+The saved donor D(-2) fit includes y2Conj, so zeroing it changes its baseline
+and the old optimized chi2 is NOT expected to remain valid.
 """
 from __future__ import annotations
 
 import argparse
+from contextlib import contextmanager
 import csv
 import hashlib
 import json
@@ -136,6 +144,83 @@ def donor_inputs():
     return result
 
 
+# For the models with a gauge-allowed additional conjugate-scalar Yukawa,
+# the restricted benchmark enforces an exact zero value in both UV inputs
+# and the UV RGEs. It does not change the symbolic Lagrangian/beta exports.
+EXTRA_CONJUGATE = {
+    'A_-2':'y2Conj', 'D_-2':'y2Conj', 'E_-2':'y2Conj',
+    'A_+0':'y1Conj', 'D_+0':'y1Conj', 'E_+0':'y1Conj',
+}
+
+
+def zero_extra_inputs(model, config, overrides):
+    """Return independent temporary inputs, never edit saved donor files."""
+    from copy import deepcopy
+    cfg = deepcopy(config)
+    ov = deepcopy(overrides)
+    key = EXTRA_CONJUGATE.get(model)
+    if key is None:
+        if ov is not None and any(k in ov for k in ('y1Conj','y2Conj')):
+            raise ValueError(f'{model}: conjugate Yukawa unexpectedly in overrides')
+        return cfg, ov, None
+    if ov is None or key not in ov:
+        raise ValueError(f'{model}: expected UV {key} override is missing')
+    zero = [[{'real':0.0,'imag':0.0} for _ in range(3)] for _ in range(3)]
+    ov[key] = zero
+    ordinary = cfg.get('base_state',{}).get('ordinary',{})
+    if key in ordinary:
+        ordinary[key] = {'real':[[0.0]*3 for _ in range(3)],
+                         'imag':[[0.0]*3 for _ in range(3)]}
+    return cfg, ov, key
+
+
+@contextmanager
+def freeze_uv_extra_yukawa(model, enabled):
+    """Temporarily project one UV RGE coordinate to zero in this local process.
+
+    This changes only the derivative of the named yConj block. All other RGBeta
+    beta functions are evaluated normally at yConj=0. Measure the native beta
+    source and report it, because the zero surface need not be RG invariant.
+    """
+    from Numerical.running import UVRunner
+    key = EXTRA_CONJUGATE.get(model) if enabled else None
+    diagnostic = {'mode':'zero_boundary_and_projected_uv_rhs' if key else 'unchanged',
+                  'coupling':key, 'native_beta_max_abs_per_log':0.0,
+                  'rhs_evaluations':0, 'initial_and_rhs_yconj_exact_zero':True}
+    if not key:
+        yield diagnostic
+        return
+    original_factory = UVRunner._rhs_factory
+
+    def factory(payload, layout):
+        if key not in layout.names:
+            raise ValueError(f'{model}: {key} absent from UV state layout')
+        block = layout.block(key)
+        if block.kind != 'complex_matrix' or block.shape != (3,3):
+            raise ValueError(f'{model}: unexpected UV {key} vector block')
+        native_rhs = original_factory(payload, layout)
+        def projected_rhs(t, vector):
+            values = np.asarray(vector[block.start:block.stop], float)
+            if not np.array_equal(values, np.zeros_like(values)):
+                diagnostic['initial_and_rhs_yconj_exact_zero'] = False
+                raise ValueError(f'{model}: nonzero {key} in restricted UV IVP')
+            result = native_rhs(t, vector)
+            native = result[block.start:block.stop]
+            diagnostic['native_beta_max_abs_per_log'] = max(
+                diagnostic['native_beta_max_abs_per_log'],
+                float(np.max(np.abs(native))))
+            diagnostic['rhs_evaluations'] += 1
+            result[block.start:block.stop] = 0.0
+            return result
+        return projected_rhs
+
+    UVRunner._rhs_factory = factory
+    try:
+        yield diagnostic
+    finally:
+        UVRunner._rhs_factory = original_factory
+
+
 def extract_row(case,ref,model):
     pred=case['prediction']
     if any(key not in pred for key in OBS):
@@ -169,6 +254,14 @@ def validate_donor(row,donor,*,chi2_rtol=0.03):
 
 def recompute_epsilon(rows):
     indexed={(r['reference'],r['model']):r for r in rows if r.get('status')=='Computed'}
+    # For an intentionally partial run a reference model may be absent.
+    # Leave the proportionality diagnostics unavailable rather than using
+    # an unrelated normalisation or throwing during LaTeX rendering.
+    for row in rows:
+        if row.get('status') == 'Computed':
+            row.pop('k_re', None)
+            row.pop('k_im', None)
+            row.pop('epsilon_C5', None)
     for ref in DONOR_DIR:
         donor=indexed.get((ref,ref))
         if donor is None:
@@ -222,6 +315,9 @@ def render(rows,out):
                r'$\sin^2\theta_{23}$',r'$\theta_{12}$',r'$\theta_{13}$',
                r'$\theta_{23}$',r'$\chi^2$'],
               ['','','','',r'$(^\circ)$',r'$(^\circ)$',r'$(^\circ)$',''],mix)
+    # The redundant combined proportionality-factor table was removed from
+    # the thesis. Keep its diagnostics in observables.csv where available.
+    (report/'dual_amplitude.tex').unlink(missing_ok=True)
     csv_path=out/'observables.csv'
     columns=('reference','model','status','m1_ev','m2_ev','m3_ev',*OBS,'chi2','epsilon_C5','k_re','k_im','error')
     with csv_path.open('w',encoding='utf-8',newline='') as f:
@@ -230,44 +326,42 @@ def render(rows,out):
     print('Tables:',report,flush=True)
 
 
-def plot_heatmaps(results,out,target):
-    import matplotlib
-    matplotlib.use('Agg')
-    import matplotlib.pyplot as plt
-    sigmas=np.sqrt(np.diag(np.asarray(target.covariance,dtype=float)))
-    if len(sigmas)!=5 or np.any(sigmas<=0):
-        raise ValueError('Invalid fitting target covariance')
-    cols=('0111','1011','1101','1110')
-    names=('UV off','EFT1 off','Wilson off','SMEFT off')
-    folder=out/'heatmaps';folder.mkdir(parents=True,exist_ok=True)
-    for ref in ('D_-2','A_-4'):
-        for k,name in enumerate(OBS):
-            arr=np.full((len(ORDER),4),np.nan)
-            for i,model in enumerate(ORDER):
-                case=results.get(ref,{}).get(model,{})
-                if case.get('status')!='Computed':continue
-                records=case['cases']
-                if not all(c in records for c in (*cols,'1111')):continue
-                on=float(records['1111']['prediction'][name])
-                for j,c in enumerate(cols):
-                    arr[i,j]=(float(records[c]['prediction'][name])-on)/sigmas[k]
-            fig,ax=plt.subplots(figsize=(7.7,8.2))
-            # Robust symmetric visual scale; NaNs remain visibly masked.
-            finite=np.abs(arr[np.isfinite(arr)])
-            lim=float(np.percentile(finite,95)) if finite.size else 1.0
-            lim=max(lim,1e-8)
-            image=ax.imshow(np.ma.masked_invalid(arr),aspect='auto',cmap='coolwarm',
-                            vmin=-lim,vmax=lim)
-            ax.set_xticks(range(4),names)
-            ax.set_yticks(range(len(ORDER)),[label(x) for x in ORDER])
-            ax.set_title(f'{label(ref)} fixed Yukawas: {name}\n'
-                         '$(O_{\\mathrm{off}}-O_{1111})/\\sigma_O$')
-            fig.colorbar(image,ax=ax,label='Signed change / target 1σ')
-            fig.tight_layout()
-            image_path=folder/f'{"Dm2" if ref=="D_-2" else "Am4"}_{name}.png'
-            fig.savefig(image_path,dpi=200)
-            plt.close(fig)
-    print('Heatmaps:',folder,flush=True)
+
+def save_run_summary(out, rows, results, refs, zero_extra_yukawas):
+    complete = sum(r.get('status') == 'Computed' for r in rows)
+    write(out/'summary.json', {
+        'format': SCHEMA,
+        'completed': complete,
+        'requested': len(rows),
+        'conditional_not_certified': True,
+        'extra_yukawas_restricted_to_zero': zero_extra_yukawas,
+        'reference_rows_present': {
+            ref: results.get(ref, {}).get(ref, {}).get('status') == 'Computed'
+            for ref in refs
+        },
+        'missing_reference_normalisation': [
+            ref for ref in refs
+            if results.get(ref, {}).get(ref, {}).get('status') != 'Computed'
+        ],
+        'old_fit_baseline_reproduction_applicable': {
+            ref: (not zero_extra_yukawas or ref not in EXTRA_CONJUGATE)
+            for ref in refs
+        },
+        'donor_diagnostics': {
+            ref: results.get(ref, {}).get(ref, {}).get('donor_comparison')
+            for ref in refs
+        },
+        'uv_native_beta_source_max_by_reference_model': {
+            ref: {
+                m: v.get('extra_yukawa_freeze', {}).get('native_beta_max_abs_per_log')
+                for m, v in results.get(ref, {}).items()
+                if v.get('status') == 'Computed'
+            }
+            for ref in refs
+        },
+        'errors': [r for r in rows if r.get('status') != 'Computed'],
+    })
+    return complete
 
 
 def args_parser():
@@ -284,7 +378,9 @@ def args_parser():
     p.add_argument('--allow-stale-symbolic-source',action='store_true')
     p.add_argument('--run-only',choices=('all','A_-4','D_-2'),default='all')
     p.add_argument('--models',default='all',help='all or comma-separated models for pilots')
-    p.add_argument('--full-cases',action='store_true',help='Compute 16 running combinations per model for heatmaps')
+    p.add_argument('--full-cases',action='store_true',help='Save all 16 running cases for the original report generator')
+    p.add_argument('--zero-extra-yukawas',action='store_true',
+                   help='Restrict y1Conj/y2Conj to exact zero at the UV boundary and in the UV RHS')
     p.add_argument('--check-only',action='store_true')
     p.add_argument('--render-only',action='store_true')
     p.add_argument('--resume',action='store_true',help='Reuse model outputs with matching manifest')
@@ -319,11 +415,12 @@ def main(argv=None):
          'donor_hashes':{m:v['hashes'] for m,v in inputs.items()},
          'target_sha256':sha(TARGET),
          'cached_quartic_context':str(args.response_root.resolve()),
-         'extra_yukawas':'target-model-saved',
+         'extra_yukawas':'zero_and_uv_rhs_frozen' if args.zero_extra_yukawas else 'target-model-saved',
          'conditional_eft1':True}
     manifest=out/'manifest.json'
     if args.check_only:
-        print('Input donors validated against best.json:',list(inputs))
+        print('Input donors validated against saved best.json:',list(inputs))
+        print('Conjugate Yukawa restriction:', 'exact-zero UV RHS' if args.zero_extra_yukawas else 'saved general couplings')
         missing=[]
         for model in selected:
             folder=src_root/general.tag(model)
@@ -341,7 +438,7 @@ def main(argv=None):
         data=read(out/'results.json')
         rows=[v['row'] for r in refs for m,v in data[r].items() if 'row' in v]
         recompute_epsilon(rows);render(rows,out)
-        if args.full_cases:plot_heatmaps(data,out,target)
+        save_run_summary(out, rows, data, refs, args.zero_extra_yukawas)
         return 0
     if manifest.exists():
         if read(manifest)!=sig:raise ValueError('Existing output manifest differs; choose a new --run-id')
@@ -372,6 +469,10 @@ def main(argv=None):
                 config=general.config_with_yukawas(config,values)
                 if overrides is not None:overrides=general.override_yukawas(overrides,values)
             try:
+                if args.zero_extra_yukawas:
+                    config,overrides,restricted_key=zero_extra_inputs(model,config,overrides)
+                else:
+                    restricted_key=None
                 with tempfile.TemporaryDirectory(prefix='t3_refresh_') as temp:
                     temp=Path(temp)
                     write(temp/'fitted_config.json',config)
@@ -382,26 +483,49 @@ def main(argv=None):
                     channels=original._load_channels(model,static,v4=args.v4_channel_dir,seeds=args.quartic_seed_dir)
                     runner,restore,_=baseline.setup_physics(model,args.response_root)
                     try:
-                        with baseline.symbolic_export_compatibility(
-                            model,canonical,args.allow_stale_symbolic_source) as compat:
-                            if args.full_cases:
-                                fn=(mixed._mixed_simultaneous if model in baseline.MIXED
-                                    else simultaneous._nonmixed_general)
-                            else:fn=runner
-                            if model in baseline.MIXED:
-                                cases,provenance=fn(model,temp,(static,channels),
-                                    args.reference_running,registry,spinor_factor=1.,vev=246.22)
-                            else:
-                                cases,provenance=fn(model,temp,canonical,(static,channels),registry,
-                                    spinor_factor=1.,wolframscript='wolframscript',vev=246.22)
+                        with freeze_uv_extra_yukawa(model,args.zero_extra_yukawas) as freeze_diag:
+                            with baseline.symbolic_export_compatibility(
+                                model,canonical,args.allow_stale_symbolic_source) as compat:
+                                if args.full_cases:
+                                    fn=(mixed._mixed_simultaneous if model in baseline.MIXED
+                                        else simultaneous._nonmixed_general)
+                                else:fn=runner
+                                if model in baseline.MIXED:
+                                    cases,provenance=fn(model,temp,(static,channels),
+                                        args.reference_running,registry,spinor_factor=1.,vev=246.22)
+                                else:
+                                    cases,provenance=fn(model,temp,canonical,(static,channels),registry,
+                                        spinor_factor=1.,wolframscript='wolframscript',vev=246.22)
                     finally:restore()
                     expected={f'{u}{e}{w}{s}' for u in '01' for e in '01' for w in '01' for s in '01'} if args.full_cases else {'1111'}
                     if set(cases)!=expected:raise ValueError('Wrong set of running switches')
                     row=extract_row(cases['1111'],ref,model)
-                    if model==ref:validate_donor(row,inputs[ref])
+                    # D(-2)'s stored least-squares fit used nonzero y2Conj.
+                    # The restricted baseline is a NEW prediction, not the old fit.
+                    donor_comparison = None
+                    if model==ref:
+                        if restricted_key is None:
+                            validate_donor(row,inputs[ref])
+                            donor_comparison = {'status':'reproduced_saved_optimised_fit'}
+                        else:
+                            saved_pred=inputs[ref]['best']['prediction_1111']
+                            donor_comparison = {
+                                'status':'changed_by_zero_conjugate_restriction_not_refitted',
+                                'old_saved_chi2':float(inputs[ref]['best']['chi2']),
+                                'new_restricted_chi2':float(row['chi2']),
+                                'observable_shifts':{key:float(row[key])-float(saved_pred[key]) for key in OBS},
+                            }
+                            print('RESTRICTED DONOR CHANGED',ref,
+                                  'old chi2',donor_comparison['old_saved_chi2'],
+                                  'new chi2',donor_comparison['new_restricted_chi2'],flush=True)
+                    if restricted_key:
+                        print('FROZEN UV COUPLING',model,restricted_key,
+                              'max native |dy/dlnmu|',freeze_diag['native_beta_max_abs_per_log'],flush=True)
                     result={'status':'Computed','row':row,'cases':cases,
                             'provenance':provenance,'symbolic_export_compatibility':compat,
-                            'target_model_inputs':str(folder),'donor':inputs[ref]['paths']}
+                            'target_model_inputs':str(folder),'donor':inputs[ref]['paths'],
+                            'extra_yukawa_freeze':freeze_diag,
+                            'donor_comparison':donor_comparison}
             except (KeyboardInterrupt,SystemExit):raise
             except Exception as exc:
                 result={'status':'Blocked','error':f'{type(exc).__name__}: {exc}',
@@ -419,13 +543,10 @@ def main(argv=None):
                               'error':entry.get('error','not evaluated')})
     recompute_epsilon(rows)
     render(rows,out)
-    if args.full_cases:plot_heatmaps(results,out,target)
-    complete=sum(r['status']=='Computed' for r in rows)
-    write(out/'summary.json',{'format':SCHEMA,'completed':complete,'requested':len(rows),
-                              'conditional_not_certified':True,
-                              'donor_baselines_verified':{ref:results[ref].get(ref,{}).get('status')=='Computed' for ref in refs},
-                              'errors':[r for r in rows if r['status']!='Computed']})
-    return 0 if complete==len(rows) and all(results[ref].get(ref,{}).get('status')=='Computed' for ref in refs) else 2
+    complete = save_run_summary(out, rows, results, refs, args.zero_extra_yukawas)
+    # Selected-model diagnostic runs need not include both donor rows.
+    # The full 16-model run includes them and retains the corresponding checks.
+    return 0 if complete == len(rows) else 2
 
 if __name__=='__main__':
     raise SystemExit(main())

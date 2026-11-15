@@ -1,61 +1,72 @@
-# Software architecture and calculation flow
+# Calculation guide
 
-The project separates field-theory construction, effective-theory evolution, numerical evaluation and reporting. A single software entry point is not evidence that all interaction bases and matching prescriptions have been combined into a complete physical calculation.
+The purpose of the code is to connect the electroweak quantum numbers and interactions of a T3 radiative mass model to neutrino masses and mixing parameters. This guide describes that scientific calculation; it does not assert that every possible interaction has already been connected to a complete numerical result.
 
-## Physical calculation
+## Choose the model
 
-Let \(F\) denote all heavy T3 fermions and \(S\) the complete heavy scalar sector. The required hierarchy is
+The ordinary T3 catalogue contains 16 electroweak assignments from five families:
 
-\[
-\mathcal L_{\mathrm{UV}}(\mathrm{SM},F,S)
-\xrightarrow{\text{integrate out all }F}
-\mathcal L_{\mathrm{scalar\ EFT}}(\mathrm{SM},S)
-\xrightarrow{\text{integrate out all }S}
-\mathcal L_{\mathrm{SMEFT}}.
-\]
-
-Running is performed inside each effective theory, with matching at the relevant thresholds. Below the scalar threshold, the Weinberg coefficient is evolved and converted into the light-neutrino mass matrix using the repository's convention
-
-\[
-m_\nu=-\frac{v^2}{2}\,C_5.
-\]
-
-Masses are extracted by Takagi factorisation, and mixing observables require a consistent charged-lepton flavour basis.
-
-## Modules and data flow
-
-| Responsibility | Principal locations | Inputs and outputs |
+| Family | \((d_{S_1},d_{S_2},d_F)\) | \(\alpha\) values |
 | --- | --- | --- |
-| Models and field representations | `common/T3Model.py`, `common/T3Fields.py`, `model/` | Representation and hypercharge choices; field inventories |
-| UV Lagrangian and contractions | `Lagrangian/model/`, `Lagrangian/interactions/` | Allowed interactions, Clebsch–Gordan factors and conventions |
-| Native symbolic matching | `Lagrangian/RunMatching.wl`, `Lagrangian/` | Matchete expressions and effective operators |
-| Group factors and RGEs | `RGE/group_factors/`, `RGE/running/` | Representation-dependent beta functions and Wilson evolution |
-| Numerical running | `Numerical/core/`, `Numerical/running/` | Scale-dependent coupling states and effective coefficients |
-| Parameter optimisation | `Numerical/fitting/` | Candidate Yukawas, fit residuals and diagnostics |
-| Neutrino observables | `physics/` | \(m_\nu\), masses, mass splittings and mixing observables |
-| Reporting | `Reports/`, `Numerical/analysis/` | Tables, figures and derived comparisons |
-| Tests | `tests/`, `validation/` | Explicit numerical and algebraic checks |
+| A | (1, 3, 2) | −4, −2, 0 |
+| B | (2, 2, 1) | −3, −1, +1 |
+| C | (2, 2, 3) | −3, −1, +1 |
+| D | (3, 1, 2) | −2, 0, +2 |
+| E | (3, 3, 2) | −4, −2, 0, +2 |
 
-The code includes specialised source exporters, experimental calculations and saved-data processing utilities. These should be used according to their documented input requirements, not as interchangeable substitutes for the standard entry points.
+The project's hypercharge convention is \(Q=T_3+Y\), with
+\[
+Y(S_1)=\frac{\alpha}{2},\qquad
+Y(S_2)=\frac{\alpha+2}{2},\qquad
+Y(F)=\frac{\alpha+1}{2}.
+\]
 
-## Entry points
+The new T3 fields are odd under the imposed \(\mathbb Z_2\) symmetry. The complete renormalisable theory must include every independent Lorentz-, gauge- and \(\mathbb Z_2\)-invariant term for the selected representations. A chosen benchmark may set allowed couplings to zero, but that choice must be reported.
 
-Use `python -X utf8 pipeline.py --help` to inspect the combined pipeline options; `python -X utf8 full16_symbolic.py --help` for the symbolic 16-model study. Numerical scans with existing symbolic exports use `python -X utf8 -m Numerical.fitting.ScanCLI <existing-config.json> --dry-run`. The fast regression suite is `./scripts/RunCoreTests.ps1` in PowerShell.
+## Connect high-energy physics to neutrino observables
 
-These commands are **interface checks**, not proofs that the general one-loop matching and numerical fits are complete for every model.
+**UV theory.** Construct the model's Lagrangian and evolve its couplings from their specified input scale. The heavy fermion and scalar mass matrices, Yukawa matrices and scalar couplings determine the boundary data.
 
-## Result provenance
+**Fermion decoupling.** Integrate out *all heavy fermions*, matching onto an effective theory that still contains the heavy scalars. If there are distinct fermion masses, apply the required matching at the corresponding scales.
 
-A reported numerical observable must be linked to:
+**Scalar effective theory.** Evolve its renormalisable interactions and induced operator coefficients. This running must use the operator basis and conventions appropriate to the selected model and perturbative accuracy.
 
-1. The model representation and complete set of active UV interactions, including assumptions setting allowed couplings to zero.
-2. The input configuration, fermion/scalar masses, initial scale, matching scales, coupling conventions and fitted Yukawa entries.
-3. The symbolic exports used for UV RGEs, fermion matching, scalar EFT running and scalar matching, with their source fingerprints where available.
-4. The perturbative order, any omitted Wilson operators and any restricted or candidate matching prescriptions.
-5. Solver settings, run status, numerical checks and figure/table generation command.
+**Scalar decoupling.** Integrate out *all heavy scalars*, including effects of scalar mixing where allowed. The remaining low-energy theory is SMEFT, with the Weinberg coefficient and any other operators retained at the specified order.
 
-A completed numerical scan is evidence for the stated approximation only. In particular, the general symbolic operator catalogue is not by itself a fully connected general-EFT numerical computation. See [capabilities](IMPLEMENTATION_STATUS.md), [verification](TEST_STRATEGY.md), and [reproducibility](REPRODUCIBILITY.md).
+**Low-energy observables.** Evolve the Weinberg coefficient and form the symmetric Majorana mass matrix using the documented convention
+\[
+m_\nu=-\frac{v^2}{2}C_5.
+\]
+The neutrino masses follow from Takagi factorisation. PMNS parameters also require the consistent charged-lepton flavour basis.
 
-## Stable scientific interfaces
+## Inputs and outputs
 
-Keep the existing import paths of Python and Wolfram modules, the identity of saved source exports and the structure of run manifests stable unless a change has been dependency-audited. File names used by internal programs may reflect prior research terminology, but the public model is defined by its **field content, operators and thresholds**, not those names.
+A reproducible calculation identifies the model and hypercharge, all relevant coupling choices, fermion and scalar masses, input and matching scales, RGE and matching source files, solver tolerances and numerical conventions. Numerical studies can produce neutrino masses, \(\Delta m^2_{21}\), \(\Delta m^2_{31}\), PMNS mixing parameters and comparisons under controlled changes of model inputs.
+
+An optimised Yukawa matrix is a fitted input. Agreement with oscillation data under that fit is not an independent prediction of the fitted observables.
+
+## How to use the available programs
+
+From the repository root:
+
+```powershell
+# Available combined calculation options.
+python -X utf8 pipeline.py --help
+
+# Model-catalogue symbolic calculation options.
+python -X utf8 full16_symbolic.py --help
+
+# Inspect an existing numerical scan configuration without performing a scan.
+python -X utf8 -m Numerical.fitting.ScanCLI path\to\existing_scan.json --dry-run
+
+# Core regression checks.
+.\scripts\RunCoreTests.ps1
+```
+
+New symbolic calculations require Wolfram Language, Matchete and RGBeta; consult [Installation](INSTALLATION.md). Symbolic expressions, saved-source numerical calculations and complete physical matching must not be treated as interchangeable guarantees of accuracy.
+
+## Evidence and limitations
+
+The repository has useful working components for model construction, running, matching and fitting. The available source does **not** verify one fully general, complete-one-loop, fermion-first-to-SMEFT numerical fit for all 16 models. Additional interactions and flavour structures are particularly relevant to B(−1) and C(−1). Evaluate a result against the actual model configuration and source files, not solely its final fit residual or an output folder's name.
+
+For detailed scientific conventions see [T3 models and EFT prescription](MODEL_AND_PIPELINE.md); for the precise boundary of supported calculations see [Capabilities and limitations](IMPLEMENTATION_STATUS.md). For saved studies see [Results overview](RESULTS_OVERVIEW.md) and [Reproducibility](REPRODUCIBILITY.md).

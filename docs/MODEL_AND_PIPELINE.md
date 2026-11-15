@@ -1,98 +1,85 @@
-# T3 model and calculation contract
+# T3 models and effective field theory
 
-<!-- T3_CURRENT_SCOPE_BEGIN: 2026-11-10 -->
+This page defines the model conventions and physical calculation used throughout the project. It distinguishes the **required theoretical description** from the calculations currently demonstrated by the available software.
 
-**Document scope:** The required EFT sequence is a physics contract; its full-general implementation remains in progress.
+## Field content and electroweak conventions
 
-**Current implementation status (10 November 2026):** The requested A(-4)/D(-2) **full-general, complete-one-loop, fermion-first -> joint-scalar -> SMEFT Yukawa fit is not yet an executable end-to-end numerical workflow**. The repository already implements general Matchete/RGBeta components and an actual symbolic `RunSequentialT3Matching` stage engine, but its general Wilson matching outputs are not fully connected to the two-model numerical fit. The current thesis Sobol pilot is **restricted/conditional** (analytic fermion triangle and selected scalar bubble), even if it reaches a low chi-square. See [implementation status](IMPLEMENTATION_STATUS.md), [A(-4)/D(-2) feasibility](T3_A4_D2_GENERAL_PIPELINE_FEASIBILITY_2026_11_10.md) and [implementation batches](T3_A4_D2_FULL_GENERAL_IMPLEMENTATION_BATCHES.md). Earlier numerical results and verification claims below refer to their **dated, historical configurations** unless an individual run manifest establishes otherwise.
-
-<!-- T3_CURRENT_SCOPE_END -->
-## Symmetries and field content
-
-The ordinary T3 model extends the Standard Model by heavy fermion multiplets `F` and two scalar multiplets `S1` and `S2`, odd under the imposed Z2. Standard Model fields are even. The package's hypercharge convention is
+The ordinary T3 radiative model extends the Standard Model (SM) by heavy fermions \(F\) and heavy scalars \(S_1,S_2\), with a \(\mathbb Z_2\) symmetry under which the new fields are odd and the SM fields are even. The project uses
 
 \[
-Q=T_3+Y,\qquad Y(S_1)=\alpha/2,\quad Y(S_2)=(\alpha+2)/2,\quad Y(F)=(\alpha+1)/2.
+Q=T_3+Y,\qquad
+Y(S_1)=\frac{\alpha}{2},\quad
+Y(S_2)=\frac{\alpha+2}{2},\quad
+Y(F)=\frac{\alpha+1}{2}.
 \]
 
-Some source literature uses `Y_literature=2Y`. The `alpha` parameter and all charge checks must use **one** convention within a calculation. The ordinary SU(2) representation classes in `common/T3Model.py`/`Lagrangian/model/T3ModelCatalog.wl` are:
+Some references instead define \(Y_{\mathrm{lit}}=2Y\). This difference must be handled explicitly when comparing charge assignments. The five ordinary electroweak representation families are
 
-| Class | `(dim S1, dim S2, dim F)` |
-|---|---|
-| A | `(1,3,2)` |
-| B | `(2,2,1)` |
-| C | `(2,2,3)` |
-| D | `(3,1,2)` |
-| E | `(3,3,2)` |
+| Family | \((d_{S_1},d_{S_2},d_F)\) | Allowed \(\alpha\) |
+| --- | --- | --- |
+| A | (1,3,2) | −4, −2, 0 |
+| B | (2,2,1) | −3, −1, +1 |
+| C | (2,2,3) | −3, −1, +1 |
+| D | (3,1,2) | −2, 0, +2 |
+| E | (3,3,2) | −4, −2, 0, +2 |
 
-Across allowed hypercharges, the project uses a 16-model ordinary catalogue. A shared-scalar/scotogenic model has one **physical** scalar: introducing two formal topology roles must not produce two independent physical scalar multiplets.
+These assignments define the ordinary 16-model catalogue. A shared-scalar/scotogenic construction has one physical scalar even when the diagram uses two formal scalar roles; it must not be counted as two independent scalar multiplets.
 
-## Definition of the general Lagrangian
+## General renormalisable interactions
 
-Start from all Lorentz-, gauge- and Z2-invariant renormalisable operators for the chosen field representations. Schematically,
+The starting theory is schematically
 
 \[
-\mathcal L_{\mathrm{UV}}=\mathcal L_{\mathrm{SM}}+\mathcal L_{\mathrm{kin,mass}}^{\mathrm{BSM}}
-+\mathcal L_{\mathrm{Yukawa}}^{\mathrm{allowed}}-V_{\mathrm{scalar}}^{\mathrm{allowed}}.
+\mathcal L_{\rm UV}=\mathcal L_{\rm SM}
++\mathcal L_{\rm kin,mass}^{\rm heavy}
++\mathcal L_{\rm Yukawa}^{\rm allowed}
+-V_{\rm scalar}^{\rm allowed}.
 \]
 
-This equation specifies the **inclusion rule**, not an explicit sum over Clebsch-Gordan tensors. In code, the representation-dependent CGs, conjugations, independent contractions, flavour indices, and Hermitian conjugates are generated rather than replaced by a schematic topology vertex.
+The word *allowed* means every independent interaction compatible with Lorentz symmetry, electroweak gauge invariance and the imposed \(\mathbb Z_2\). It is not enough to include only the vertices visible in the T3 neutrino-mass diagram.
 
-The operator basis must include, wherever symmetry allows:
+Relevant interactions can include both ordinary T3 Yukawa couplings and independent conjugate-scalar Yukawas, general allowed heavy-fermion mass terms, independent scalar quartic contractions, Higgs–scalar mixing interactions and additional complex scalar bilinears. The precise set depends on the representation and hypercharge. In particular, B(−1) and C(−1) permit additional scalar structures and a hypercharge-neutral Majorana fermion; separate flavour contributions to the Weinberg coefficient can occur.
 
-- The two ordinary T3 Yukawa topology vertices **and** independent conjugate-scalar Yukawas. The latter are present for a hypercharge-zero scalar, subject to the model's field and flavour content.
-- General permitted heavy-fermion mass structures, with correct Dirac/Majorana representation constraints and flavour indices.
-- Higgs, scalar self and portal quartics, with *every independent* SU(2) invariant tensor (not merely one product of norms).
-- The T3 Higgs-scalar mixing quartic and additional holomorphic/non-Hermitian quartics, with independent complex coefficients as appropriate.
-- Every additional symmetry-allowed scalar bilinear, including the off-diagonal B(-1)/C(-1) scalar mixing when permitted.
+A numerical benchmark may choose zero values for some allowed couplings. Such a choice is a **boundary condition**, not a statement that the interaction is forbidden. Any reported calculation should specify these restrictions.
 
-The existing saved 16-model **structural** inventory records 50 additional complex-quartic model-slots, eight additional complex-bilinear model-slots, and six additional Yukawa model-slots (sums over different models, **not** interactions in one model). Their count is an operator-inventory cross-check, not a certification of all physical normalisations and flavour structures. Sources for the stored inventory: `docs/general_scalar_trial_operator_manifest.json`, `RGE/general/generated/general_rgbeta_quartic_registry.json`, `scripts/AuditFull16GeneralSymbolicPhysics.py` and the actual model-builder files.
+## Required effective-theory sequence
 
-A benchmark may set some allowed parameters to zero, but their operators remain part of the UV definition. Such boundary values should be listed alongside the matching scale, and RG evolution must use the relevant general-theory beta functions. In particular, zero extra bilinears do **not** follow from Z2 symmetry alone.
-
-## Matching and running
-
-The required hierarchy is
+The physical matching order is
 
 \[
-\mathcal L_{\rm UV}\ \xrightarrow{\;\text{integrate out all }F\;}
-\mathcal L_{\rm EFT,scalars}\ \xrightarrow{\;\text{integrate out all }S\;}
-\mathcal L_{\rm SMEFT}.
+\underbrace{\mathcal L_{\rm UV}(\mathrm{SM},F,S_1,S_2)}_{\text{all heavy fields}}
+\xrightarrow{\text{integrate out all }F}
+\underbrace{\mathcal L_{\rm scalar\ EFT}(\mathrm{SM},S_1,S_2)}_{\text{heavy scalars retained}}
+\xrightarrow{\text{integrate out all }S}
+\underbrace{\mathcal L_{\rm SMEFT}}_{\text{SM fields}}.
 \]
 
-1. Run the complete UV couplings while all heavy fields are dynamical. Integrate out all heavy fermions before any scalar. Flavour-dependent fermion masses may produce multiple fermion thresholds.
-2. Retain the scalar degrees of freedom and every operator needed at the chosen EFT dimension and loop order. Use matching conditions obtained from the same general Lagrangian and compatible field/mass bases.
-3. Run the scalar EFT between fermionic and scalar thresholds. Integrate out the complete scalar sector, respecting mass mixing, operator inheritance, hard contributions and RG-induced terms without double counting.
-4. Below the last scalar threshold, run SMEFT Wilson coefficients and form the light neutrino mass matrix. In the repository's documented Weinberg-operator convention, `m_nu = -(v^2/2) C5`; the Wilson coefficient must first be symmetrised and expressed in the consistent charged-lepton flavour basis.
+**Above the fermion thresholds:** Evolve all relevant UV couplings and masses. Fermion flavour eigenvalues need not be degenerate; matching must reflect the prescribed physical masses and field basis.
 
-The one-loop running convention is `16 pi^2 dX/d(ln mu) = beta_X^(1)` when the exporter supplies the one-loop numerator. The `16 pi^2` factor must be applied exactly once.
+**After fermion decoupling:** The scalar EFT contains the remaining heavy scalar sector and the induced higher-dimensional operators. Evolve all relevant coefficients using the correct field content and perturbative order. A single Weinberg coefficient need not capture all effects in this theory.
 
-A complete RG/EFT prediction requires the renormalisable and nonrenormalisable operators relevant at the specified order, not just the terms appearing explicitly in a single neutrino-mass diagram. B(-1) and C(-1) can have additional independent flavour contributions to C5. A mass-mixing term can change the **leading** one-loop answer through scalar eigenstates and is not automatically higher-loop suppressed.
+**At scalar decoupling:** Match the remaining scalars onto SMEFT, including allowed scalar mixing, inherited operators and the loop contributions needed for the requested precision. Avoid double counting contributions that are already contained in effective operators.
 
-## Source ownership and what is established
+**Below the scalar thresholds:** Evolve the SMEFT coefficients, including the Weinberg operator. In the documented convention,
 
-| Area | Source location | Verified source-level observation |
-|---|---|---|
-| Model definitions | `common/T3Model.py`, `Lagrangian/model/` | Ordinary classes and representation tests |
-| General UV interaction candidates | `Lagrangian/interactions/`, `Lagrangian/model/LagrangianBuilder.wl` | General scalar/extra Yukawa candidates exist, but some are opt-in |
-| Matching | `Lagrangian/RunMatching.wl`, general matching runners | Distinct matching routes and basis checks exist |
-| EFT ordering | `common/Thresholds.py`, `common/PipelinePlan.py` | Plan structures support multiple orders; execution support is narrower |
-| RGEs | `RGE/general/`, `RGE/running/` | General templates/exports coexist with restricted paths |
-| Numerics | `Numerical/core/`, `Numerical/running/`, `Numerical/fitting/` | Extra couplings are conditionally included in numerical states |
-| Observables | `physics/` | Low-energy mass and mixing extraction |
+\[
+m_\nu=-\frac{v^2}{2}C_5.
+\]
 
-In the inspected source, `Lagrangian/interactions/T3Topology.wl` uses the environment variables `T3_EXPERIMENTAL_GENERAL_QUARTICS`, `T3_EXPERIMENTAL_GENERAL_QUADRATICS` and `T3_EXPERIMENTAL_GENERAL_FERMIONS`. `Lagrangian/model/LagrangianBuilder.wl` itself returns `FullSymmetryCompletenessCertified -> False` and `FermionFlavorMassGeneralityCertified -> False`. `pipeline.py` also retains `--restricted-production` alongside general-symbolic operation. These are **actual source conditions**, not evidence that a fully general end-to-end computation has been demonstrated.
+The resulting coefficient is symmetric in flavour indices and must be expressed in a consistent charged-lepton basis. Takagi factorisation gives non-negative Majorana neutrino masses; the PMNS mixing parameters follow after accounting for the charged-lepton diagonalisation.
 
-Before treating an output as a result of the general Lagrangian, verify all of the following against the generated files: the model's full allowed-interaction list; fermion flavour and scalar mass bases; coefficient normalisation between Matchete, RGBeta and numerical adapters; the fermion-first threshold plan; one-loop EFT Wilson mixing and matching; and independent numerical cross-checks. If any condition fails, the result must report the missing component rather than silently substitute restricted output.
+The documented one-loop RGE convention is
 
-## Numerical result interpretation
+\[
+16\pi^2\frac{\mathrm dX}{\mathrm d\ln\mu}=\beta_X^{(1)}.
+\]
 
-An optimizer fit to oscillation data is not a parameter-free prediction. Keep model inputs, fitted Yukawas, source hash/manifests, solver accuracy, accepted/failed cases and numerical output separate. Reports with a name suggesting completion or validation do not independently certify the general UV physics. Saved restricted-potential results may be retained in an **external historical archive** for reproducibility but should not be described as outputs of this general theory.
+Apply the loop factor exactly once, in agreement with the convention of each stored or newly generated RGE expression.
 
-## References
+## Scope of the available computations
 
-- `T3_Honours_Thesis` (user-supplied November 2026 thesis draft): ordinary model catalogue, one-loop T3 analysis and B(-1)/C(-1) additional contributions. The thesis describes calculations and should not override present source limitations.
-- Restrepo, Zapata and Yaguna, arXiv:1308.3655v2: radiative T3 model classifications (note their hypercharge convention).
-- Ma, arXiv:hep-ph/0601225: scotogenic example.
-- Merle and Platscher, arXiv:1507.06314v3: scotogenic running and matching issues.
-- Aebischer, Bresciani and Selimović, arXiv:2512.16890v1: general EFT anomalous-dimension framework, requiring specialization and convention matching before use.
+The codebase includes model construction, group factors, symbolic expressions, candidate matching calculations, numerical running and parameter fitting. It **does not establish one verified, fully general, complete-one-loop numerical calculation through both thresholds for every model**. Some available numerical results use restricted interactions or conditional effective-operator prescriptions. General symbolic expressions alone do not certify a complete general numerical computation.
+
+A correct assessment of an individual study needs its interaction inventory, fermion and scalar mass bases, Wilson coefficient normalisations, RGE sources, matching assumptions, input parameters, fit definition and numerical checks. A small fit residual is evidence only within that configuration.
+
+For the current source-level boundary, see [Capabilities and limitations](IMPLEMENTATION_STATUS.md). For numerical inputs and results, see [Results overview](RESULTS_OVERVIEW.md) and [Reproducibility](REPRODUCIBILITY.md).

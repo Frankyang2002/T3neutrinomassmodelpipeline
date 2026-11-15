@@ -1,40 +1,25 @@
-# Repository structure
+# Finding source and data
 
-The software is organised by the scientific responsibility of each module. Existing source paths are retained for compatibility with Python imports, Wolfram evaluations, exported coefficients and saved run manifests.
+The repository groups calculations by scientific responsibility. Most readers should begin with the [main README](../README.md), [calculation guide](PROJECT_GUIDE.md) and [results overview](RESULTS_OVERVIEW.md), rather than navigating directly through implementation files.
 
-| Path | Responsibility |
+| Location | What it contains |
 | --- | --- |
-| `pipeline.py` | Overall pipeline command-line entry point |
-| `full16_symbolic.py` | General symbolic study of the ordinary 16-model catalogue |
-| `common/`, `model/` | Field definitions, model catalogue and threshold planning |
-| `Lagrangian/` | Symmetry-allowed interactions, Wolfram model construction and matching |
-| `RGE/group_factors/` | Electroweak group tensors, invariants and checks |
-| `RGE/running/` | RGEs for the UV and intermediate effective theory |
-| `RGE/matching/` | Matching interfaces and Weinberg coefficients |
-| `Numerical/core/` | Numerical states and beta-function evaluation |
-| `Numerical/running/` | Differential equation integration and threshold handoffs |
-| `Numerical/fitting/` | Parameter optimisation and scans |
-| `Numerical/orchestration/` | Coordination of numerical calculations |
-| `physics/` | Neutrino mass matrices, diagonalisation and oscillation observables |
-| `configs/`, `input/` | Configurations and input coefficients |
-| `Reports/`, `display/` | Report generators and presentation material |
-| `tests/`, `validation/` | Software, symbolic and physics validation |
-| `scripts/` | Reproducible run drivers and specialised calculations |
-| `tools/` | Auditing, figure rebuilds and repository utilities |
-| `docs/` | Scientific method, interfaces, limitations and results |
-| `output/`, `Reports/output/` | Calculated artifacts, stored coefficients and output manifests |
+| `common/`, `model/` | T3 field representations, model definitions and threshold conventions |
+| `Lagrangian/` | Symmetry-allowed interactions, model construction and symbolic matching |
+| `RGE/` | Group-theory factors, renormalisation-group equations and effective-operator evolution |
+| `Numerical/` | Numerical evolution, parameter optimisation and analysis |
+| `physics/` | Neutrino mass matrices and oscillation observables |
+| `configs/`, `input/` | Benchmark and calculation inputs |
+| `Reports/`, `display/` | Numerical tables, figures and presentation material |
+| `output/`, `Reports/output/` | Saved coefficients, computed results and reproducibility information |
+| `tests/`, `validation/` | Software and scientific checks |
+| `docs/` | Model description, methods, assumptions, results and reproducibility |
+| `scripts/`, `tools/` | Supporting commands and specialist calculations |
 
-## Working with generated outputs
+The principal commands are `pipeline.py` for available combined calculations, `full16_symbolic.py` for the 16-model symbolic study, and `Numerical/fitting/ScanCLI.py` for configured numerical scans. Use the documented command-line help to determine which operations and source inputs are supported.
 
-Many saved results are used as **inputs** by subsequent calculations. Do not move or delete `output/` or `Reports/output/` merely to reduce the apparent size of the repository. Reproduction requires a specific benchmark and its matching source files, not simply a copied figure.
+## What should be preserved
 
-## Scientific terminology
+Saved outputs can be inputs to subsequent studies. In particular, files holding matched coefficients, generated RGEs, fitted Yukawa values, numerical configurations or figure provenance should not be discarded or renamed simply to simplify the directory listing. Their original paths may be required by import statements or archived run manifests.
 
-- **UV theory:** Standard Model plus the heavy T3 scalar and fermion fields.
-- **Scalar EFT:** the theory remaining after integrating out all heavy fermions; heavy scalars and generated effective operators remain.
-- **SMEFT:** the theory after integrating out all heavy scalar multiplets.
-- **Weinberg running:** scale evolution of the lepton-number-violating dimension-five coefficient, used to construct the low-energy Majorana mass matrix.
-
-These names describe actual **field content**. Internal filenames or manifest keys should not be used to infer physical validity or completeness.
-
-See [Software architecture](PROJECT_GUIDE.md), [EFT contract](MODEL_AND_PIPELINE.md) and [Capabilities](IMPLEMENTATION_STATUS.md).
+Technical filenames do not establish the physics or accuracy of a result. For the scientific definition of the effective theories, see [the T3 convention guide](MODEL_AND_PIPELINE.md), and for the evidence supporting each calculation, see [Capabilities and limitations](IMPLEMENTATION_STATUS.md).

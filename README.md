@@ -73,6 +73,18 @@ Replace the example path with an existing configuration; do not treat it as a bu
 
 Read the [documentation index](docs/README.md) for the physics, code architecture, numerical methods and results.
 
+## Connection to the Honours thesis
+
+This codebase supports the November 2026 Honours thesis *Calculating Quantum Corrections in Generalised Scotogenic Radiative Neutrino Mass Models*. The reader-facing scope is the **16-model T3 catalogue**, the fermion-first/scalar-second EFT prescription, model-dependent mass and mixing, stage-running comparisons, and compensated coupling-sensitivity studies. Start with [Thesis scientific scope](docs/THESIS_SCOPE.md) and the [thesis figure/data map](docs/THESIS_ARTIFACT_MAP.md).
+
+An **external-archive-first** local curation utility is supplied for removing historical development notes and LaTeX build byproducts without touching scientific code or thesis data:
+
+```powershell
+python -X utf8 scripts/maintenance/CurateThesisRepository.py plan
+```
+
+Its plan identifies protected science, review-only artifacts and safe historical-document candidates. It does not automatically remove numerical exports or source code.
+
 ## Interpretation and limitations
 
 The repository contains **working components** for general T3 model construction, symbolic matching and numerical RG studies, alongside restricted or conditional benchmark pathways. The available source does **not** demonstrate a single verified, complete-one-loop, fully general-interaction, fermion-first-to-SMEFT numerical fitting workflow for all 16 models. A small fit residual or a passing software test does not establish that every matching contribution is included.

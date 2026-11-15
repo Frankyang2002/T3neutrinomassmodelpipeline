@@ -2,6 +2,11 @@
 
 This documentation describes the **scientific model**, the **software that evaluates it**, and the **evidence needed to interpret a numerical result**. The principal interfaces are `pipeline.py` for the combined calculation and `full16_symbolic.py` for the 16-model symbolic comparison.
 
+## Thesis scope and figure provenance
+
+- [Thesis scope](THESIS_SCOPE.md): chapters, sixteen models, benchmark assumptions and EFT conventions.
+- [Thesis artifact map](THESIS_ARTIFACT_MAP.md): preserved figure/table sources, fitted Yukawas and known provenance ambiguities.
+
 ## Scientific model and calculation
 
 - [Physics and T3 representations](PHYSICS.md): one-loop mass generation, group structure and electroweak representations.
@@ -17,6 +22,7 @@ This documentation describes the **scientific model**, the **software that evalu
 - [Capabilities and limitations](IMPLEMENTATION_STATUS.md): implemented components and their validity boundaries.
 - [Verification](TEST_STRATEGY.md): what each test type establishes.
 - [Reproducibility](REPRODUCIBILITY.md): configuration, saved-source and manifest requirements.
+- [Thesis-first repository curation](THESIS_CLEANUP.md): reversible removal of nonessential historical material with safeguards for scientific inputs.
 
 ## Results and reports
 

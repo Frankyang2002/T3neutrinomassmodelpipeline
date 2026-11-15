@@ -1,57 +1,26 @@
 # Documentation
 
-<!-- T3_CURRENT_SCOPE_BEGIN: 2026-11-10 -->
+This documentation describes the **scientific model**, the **software that evaluates it**, and the **evidence needed to interpret a numerical result**. The principal interfaces are `pipeline.py` for the combined calculation and `full16_symbolic.py` for the 16-model symbolic comparison.
 
-**Document scope:** Read the current implementation-status and batch plan before old studies.
+## Scientific model and calculation
 
-**Current implementation status (10 November 2026):** The requested A(-4)/D(-2) **full-general, complete-one-loop, fermion-first -> joint-scalar -> SMEFT Yukawa fit is not yet an executable end-to-end numerical workflow**. The repository already implements general Matchete/RGBeta components and an actual symbolic `RunSequentialT3Matching` stage engine, but its general Wilson matching outputs are not fully connected to the two-model numerical fit. The current thesis Sobol pilot is **restricted/conditional** (analytic fermion triangle and selected scalar bubble), even if it reaches a low chi-square. See [implementation status](IMPLEMENTATION_STATUS.md), [A(-4)/D(-2) feasibility](T3_A4_D2_GENERAL_PIPELINE_FEASIBILITY_2026_11_10.md) and [implementation batches](T3_A4_D2_FULL_GENERAL_IMPLEMENTATION_BATCHES.md). Earlier numerical results and verification claims below refer to their **dated, historical configurations** unless an individual run manifest establishes otherwise.
+- [Physics and T3 representations](PHYSICS.md): one-loop mass generation, group structure and electroweak representations.
+- [Model and EFT contract](MODEL_AND_PIPELINE.md): symmetry-allowed interactions, conventions and the required **UV → scalar EFT → SMEFT** matching sequence.
+- [Scalar sector](SCALAR_SECTOR.md): scalar operators, allowed mixing and mass bases.
+- [Numerical method](NUMERICAL.md): running, matching interfaces, fitting and observable extraction.
 
-<!-- T3_CURRENT_SCOPE_END -->
-The documentation is organised here by **scientific purpose**, rather than by the order in which individual calculations were developed. Consult the current overview first; older study notes are retained for reproducibility and should not be interpreted as independently verified results.
+## Using the software
 
-## Getting started and project status
+- [Installation](INSTALLATION.md): Python and external Wolfram/Matchete/RGBeta requirements.
+- [Software architecture](PROJECT_GUIDE.md): entry points, module responsibilities and data flow.
+- [Directory reference](REPOSITORY_STRUCTURE.md): locations of source code and inputs.
+- [Capabilities and limitations](IMPLEMENTATION_STATUS.md): implemented components and their validity boundaries.
+- [Verification](TEST_STRATEGY.md): what each test type establishes.
+- [Reproducibility](REPRODUCIBILITY.md): configuration, saved-source and manifest requirements.
 
-- [Installation and reproducibility](INSTALLATION.md) — Python dependencies, PowerShell setup, tests and external symbolic tools.
-- [Implementation status](IMPLEMENTATION_STATUS.md) — implemented code paths, reported executions, incomplete physics and certification boundaries.
+## Results and reports
 
-## Physics and calculation
+- [Numerical results](RESULTS.md): numerical studies and their stated assumptions.
+- [Regenerating reports](REGENERATE_CURRENT_REPORTS.md): regenerating presentation from existing saved results.
 
-- [Model and calculation contract](MODEL_AND_PIPELINE.md) — symmetries, fields, interactions, charge conventions and the target EFT sequence.
-- [Physics](PHYSICS.md) — the T3 topology, SU(2) representations, matching conventions and physical scope.
-- [Scalar sector](SCALAR_SECTOR.md) — the general operator inventory, mass mixing and controlled restricted-potential benchmarks.
-- [General symbolic physics audit](GENERAL_SYMBOLIC_PHYSICS_AUDIT.md) — what has and has not been established for the additional interactions.
-
-## Numerical analysis and results
-
-- [Numerical methods](NUMERICAL.md) — state vectors, RG evolution, threshold interfaces, fits and numerical conventions.
-- [Results](RESULTS.md) — existing comparison data, benchmark interpretations and limitations.
-- [Regenerating current reports](REGENERATE_CURRENT_REPORTS.md) — rebuilding reports from their saved inputs, distinct from regenerating all matching expressions.
-
-## Software reference
-
-- [Repository structure](REPOSITORY_STRUCTURE.md) — directories, principal entry points and where calculations are implemented.
-- [Testing strategy](TEST_STRATEGY.md) — core and extended tests; the difference between unit, synthetic, generated-artifact and live symbolic checks.
-- [Project guide](PROJECT_GUIDE.md) — system architecture and a technical record of prior work.
-
-## Historical research record
-
-The subject-organised volumes retain the derivations and investigations behind the current implementation:
-
-- [General tensors and scalar quartics](RESEARCH_GENERAL_T3_TENSORS_AND_QUARTICS.md)
-- [General running and matching](RESEARCH_GENERAL_T3_RUNNING_AND_MATCHING.md)
-- [Matchete conventions and scalar mass eigenstates](RESEARCH_MATCHETE_AND_MASS_EIGEN.md)
-- [Fermion and scalar thresholds, Wilson coefficients](RESEARCH_EFT1_THRESHOLDS_AND_WEINBERG.md)
-- [Numerical scans and benchmarks](RESEARCH_NUMERICAL_FITS_AND_BENCHMARKS.md)
-- [General scalar exploratory studies](RESEARCH_GENERAL_SCALAR_AND_PILOTS.md)
-- [Historical research document index](RESEARCH_HISTORY_INDEX.md)
-
-These records include preliminary analyses and superseded conventions. They are evidence of research progression, **not** a replacement for the current physics and numerical contracts. File identifiers used in scripts, native exports or saved manifests are kept unchanged so that results remain traceable.
-
-## Research files by subject
-
-Supplementary model-specific notes and research records are grouped under
-[Research documentation](research/README.md), with a generated
-[document index](research/INDEX.md). The original scientific content and
-identifiers are preserved. Only files with no detected incoming references or
-location-dependent Markdown links are eligible for relocation. Documents with
-saved-data or code dependencies stay at their original paths.
+The default reading path is **model → calculation → numerical implementation → limitations → results**. Individual research utilities, experimental derivations and saved studies do not define additional public-facing versions of the pipeline. Their names may still appear in internal code and provenance records for reproducibility.

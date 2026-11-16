@@ -1,0 +1,106 @@
+{
+  "format": "t3-general-zee-dual-view-gaussian-ovals-v5",
+  "models": [
+    "A_-4",
+    "A_-2",
+    "A_+0",
+    "B_-3",
+    "B_-1",
+    "B_+1",
+    "C_-3",
+    "C_-1",
+    "C_+1",
+    "D_-2",
+    "D_+0",
+    "D_+2",
+    "E_-4",
+    "E_-2",
+    "E_+0",
+    "E_+2"
+  ],
+  "directions": [
+    "T1",
+    "T2",
+    "T3"
+  ],
+  "gamma_grid": [
+    0.99,
+    0.992,
+    0.994,
+    0.996,
+    0.998,
+    1.0,
+    1.002,
+    1.004,
+    1.006,
+    1.008,
+    1.01
+  ],
+  "input_files": {
+    "output\\studies\\general_scalar_extended\\zee_style_general_sensitivity\\zee_general_all16_merged_v1\\points.csv": "9ca8c79441d8ae095d7a75013d83b1924f0d2de42694fca08746c2d191c066cb",
+    "output\\studies\\general_scalar_extended\\zee_style_general_sensitivity\\zee_general_all16_merged_v1\\summary.json": "b6a2d3cb9a03f746e51582a56b5628f9ced3e183da64905979be70dd220872d3",
+    "C:\\thesistemp\\T3neutrinomassmodelpipeline\\configs\\nufit_6_1_ic24_no.json": "27bd4d4297fddb3ef71b5b804afd8e31d44d302b569f7cf8c34d37d54005e15e"
+  },
+  "nufit": {
+    "source": "NuFIT 6.1 (2025), IC24 with Super-Kamiokande atmospheric data",
+    "central_values": {
+      "delta_m21_sq_ev2": 7.537e-05,
+      "delta_m3l_sq_ev2": 0.002511,
+      "sin2_theta12": 0.3088,
+      "sin2_theta13": 0.02248,
+      "sin2_theta23": 0.47
+    },
+    "one_sigma_errors": {
+      "delta_m21_sq_ev2": 9.7e-07,
+      "delta_m3l_sq_ev2": 2.05e-05,
+      "sin2_theta12": 0.00665,
+      "sin2_theta13": 0.00057,
+      "sin2_theta23": 0.0155
+    }
+  },
+  "juno_measured_2026": {
+    "central_values": {
+      "sin2_theta12": 0.3036,
+      "delta_m21_sq_ev2": 7.388e-05
+    },
+    "one_sigma_errors": {
+      "sin2_theta12": 0.0064,
+      "delta_m21_sq_ev2": 7.8e-07
+    },
+    "source": "JUNO Collaboration, 207.2 live days, arXiv:2609.37895 (2026-09-29)",
+    "url": "https://arxiv.org/abs/2609.37895"
+  },
+  "juno_forecast_6y": {
+    "central_values": {
+      "sin2_theta12": 0.3036,
+      "delta_m21_sq_ev2": 7.388e-05
+    },
+    "one_sigma_errors": {
+      "sin2_theta12": 0.0016,
+      "delta_m21_sq_ev2": 2.4e-07
+    },
+    "source": "JUNO six-year forecast, CPC 46 (2022) 123001, Table 6; centered on JUNO 2026 measured values (illustrative)",
+    "url": "https://doi.org/10.1088/1674-1137/ac8bc9"
+  },
+  "juno_plot_mode": "measured",
+  "experimental_oval_definition": "2D independent-error Gaussian approximations: NuFIT 6.1 (NO) 68.27% / 99.73% (Delta chi2=2.30 / 11.83), JUNO 2026 measured solar 68.27% ellipse or optional six-year projection. NO covariance measurements supplied; NOT official joint contours.",
+  "model_oval_definition": "default: 2x sample covariance standard-deviation radius about gamma=1 for all off-centre T1/T2/T3 points; descriptive, NOT a statistical confidence region; near-rank-one ovals not enlarged",
+  "physics_scope": "saved conditional general-Lagrangian candidate UV/EFT1 + one-scale C5, NOT certified all-fermions-first then all-scalars sequential EFT matching",
+  "plots_use_saved_points_only": true,
+  "zee_fig9_inspired_dual_view_gaussian_ovals": true,
+  "baseline_star_drawn": false,
+  "arrows_drawn": false,
+  "grid_footer_text_drawn": false,
+  "trajectory_marker_size_pt": 4.9,
+  "detail_coordinates": "(observable(gamma)-observable(gamma=1))/10**power; power chosen separately for each panel and observable; experimental overview remains in absolute coordinates",
+  "grid_views": [
+    "zoom_out",
+    "zoom_in"
+  ],
+  "model_response_oval_drawn": true,
+  "grid_drawn": true,
+  "individual_close_up_drawn": true,
+  "per_model_figures_drawn": true,
+  "juno_solar_chi2_definition": "two marginal Gaussian residuals, diagonal; NOT official JUNO likelihood or combined global chi2",
+  "local_slope_definition": "central difference dO/dln(gamma) using nearest gamma pair straddling 1; 1% change approximated linearly"
+}

@@ -1,0 +1,53 @@
+{
+  "schema": "t3-original16-thesis-dataset-lock-v1",
+  "scientific_status": "original_exploratory_conditional_not_physical_matching_certification",
+  "source": "original_16_model_representation_running",
+  "producer": "unidentified_upstream_driver; plotting-only script verified",
+  "canonical_dataset_root": "Reports/output/thesis_qualitative/representation_running",
+  "full_running_case": "1111",
+  "stage_off": {
+    "UV": "0111",
+    "EFT1": "1011",
+    "SMEFT": "1110",
+    "Wilson_conditional": "1101"
+  },
+  "wilson_comparison_kind": "conditional_wilson_log_reconstruction",
+  "relative_percent_definition": "100*(O_full-O_stage_off)/O_stage_off",
+  "models": [
+    "A_-4",
+    "A_-2",
+    "A_+0",
+    "B_-3",
+    "B_-1",
+    "B_+1",
+    "C_-3",
+    "C_-1",
+    "C_+1",
+    "D_-2",
+    "D_+0",
+    "D_+2",
+    "E_-4",
+    "E_-2",
+    "E_+0",
+    "E_+2"
+  ],
+  "detail_rows": 512,
+  "verified_stage_rows": {
+    "EFT1": 128,
+    "SMEFT": 128,
+    "UV": 128,
+    "Wilson_conditional": 128
+  },
+  "unavailable_conditional_wilson_rows": 1,
+  "file_sha256": {
+    "Reports/output/thesis_qualitative/representation_running/csv/frozen_stage_observable_changes.csv": "cc1374eb1e477aa9f8bca851131fd44cc9f39fc39daa7c5f30050fe05859f758",
+    "Reports/output/thesis_qualitative/representation_running/csv/oscillation_heatmap_masssq_table.csv": "c3203811d33f446d9721bea5500dc5c36fb6f5328caf1b2b3c69129052766c28",
+    "Reports/output/thesis_qualitative/representation_running/csv/oscillation_heatmap_mixing_table.csv": "606fd1d4d95dea4c3446ddcf265f844fea0352b9e5b41d9b76597b1524579c90"
+  },
+  "do_not_mix_with": [
+    "scripts/RunT3ThesisTwoModelPilot.py",
+    "scripts/RunT3GeneralisedRunningComparisons.py",
+    "output/parallel_t3/thesis_original_style_figures_v2",
+    "output/parallel_t3/thesis_original_style_figures_v3"
+  ]
+}

@@ -1,0 +1,40 @@
+T3 cleanup round 2 -- historical scripts
+
+Project paths in this archive:
+  scripts/PruneDevelopmentScripts.ps1
+  scripts/PruneDevelopmentScripts.README.txt
+
+Inspected repository contents directly on GitHub's default branch, without
+querying HEAD, commits or commit history, and without changing remote files.
+
+The exact candidate set contains 151 historical/development-facing files at the
+root of scripts/ (not recursively). Classes: Worker/Workstream, .experimental.
+files, Audit*, old Batch* runners, archive/retire/rename/consolidate utilities,
+and one .before_v2 backup.
+
+This script intentionally DOES NOT delete all 151. It first protects anything
+explicitly referenced by other retained source/configuration files, selected
+permanent scientific docs or protected candidate dependencies. It prints each
+protected file and its reference source and only removes unreferenced candidates.
+
+POWERHELL FROM REPO ROOT:
+  .\scripts\PruneDevelopmentScripts.ps1             # preview, no changes
+  .\scripts\PruneDevelopmentScripts.ps1 -Apply      # backup + remove
+
+The -Apply command refuses to act if the exact 151-candidate inventory from
+inspection differs, or if any candidate marked for deletion has local git changes.
+It copies every removed file to a timestamped directory alongside the repository,
+verifies SHA-256 for each copy, saves removal/protection manifests, and deletes
+only after backups are complete.
+
+AFTER APPLY:
+  .\scripts\RunCoreTests.ps1
+  python -X utf8 -m pytest -q --tb=short
+  python -X utf8 pipeline.py --help
+  python -X utf8 full16_symbolic.py --help
+  git status --short
+
+No physics code or numerical outputs are edited by this package. Passing
+regression tests does not prove all historical results remain reproducible.
+A later pass should review referenced development scripts and update obsolete
+documentation. Delete this temporary script and README after verification.

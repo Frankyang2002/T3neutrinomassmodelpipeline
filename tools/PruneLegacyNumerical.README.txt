@@ -1,0 +1,42 @@
+ROUND 4: legacy / provisional numerical implementation cleanup
+
+Project root: C:\thesistemp\T3neutrinomassmodelpipeline
+
+Purpose:
+- Identify and retire numerical experiments that were not part of the completed
+  thesis' sequential UV -> heavy-fermion matching -> scalar EFT -> heavy-scalar
+  matching -> SMEFT computation.
+- Target the provisional direct-UV one-loop implementation and its associated
+  source-gated machinery; source-conditional LO pattern analyses; unrelated
+  general-T3 experimental Python modules; a historical worker diagnostic.
+- Preserve candidates referenced by retained executable/configuration sources,
+  and transitive dependencies among protected candidates.
+- Do not touch accepted fitted matrices, thesis CSV/JSON outputs, Reports, figures,
+  configs, main RGE/running/matching modules, or physical model definitions.
+
+Usage in Windows PowerShell (after earlier cleanup rounds, if used):
+  cd C:\thesistemp\T3neutrinomassmodelpipeline
+  python -X utf8 tools/PruneLegacyNumerical.py
+  python -X utf8 tools/PruneLegacyNumerical.py --apply
+
+The preview may remove fewer than the maximum candidates. It scans actual local
+files, so previous cleanup rounds and dependencies affect the outcome. Existing nested directories (notably Python __pycache__ folders) are preserved
+and ignored when checking the reviewed immediate-file inventory. They are never
+selected for deletion. Existing symlinks or unexpected top-level files still
+cause a safe abort; the error now identifies the affected entry.
+There is no GitHub, HEAD, commit, branch, clone, fetch or pull operation.
+
+To verify after applying:
+  .\scripts\RunCoreTests.ps1
+  python -X utf8 -m pytest -q --tb=short
+  python -X utf8 pipeline.py --help
+  python -X utf8 full16_symbolic.py --help
+  git status --short
+
+IMPORTANT: full pytest may fail if earlier rounds deleted tests but original
+scripts or references are still required. Re-run verification before the next
+cleanup, and restore any needed files from the external SHA-256 backup.
+
+One-time cleanup utility; after successful verification, delete:
+  tools/PruneLegacyNumerical.py
+  tools/PruneLegacyNumerical.README.txt

@@ -1,16 +1,19 @@
-"""Offline routing tests: no Matchete, RGBeta, or physics assertions."""
+"""Offline pipeline routing tests; no Matchete, RGBeta or physical matching."""
+from __future__ import annotations
+
 import argparse
 import ast
 from pathlib import Path
-from types import SimpleNamespace
+from types import SimpleNamespace, ModuleType
+import sys
 
 SOURCE = Path(__file__).resolve().parents[2] / 'pipeline.py'
 
 
 def funcs():
     tree = ast.parse(SOURCE.read_text(encoding='utf8'))
-    chosen = [n for n in tree.body if isinstance(n, ast.FunctionDef)
-              and n.name in {'_use_general_symbolic', '_run_general_symbolic'}]
+    chosen = [node for node in tree.body if isinstance(node, ast.FunctionDef)
+              and node.name in {'_use_general_symbolic', '_run_general_symbolic'}]
     code = compile(ast.Module(body=chosen, type_ignores=[]), str(SOURCE), 'exec')
     ns = {'argparse': argparse}
     exec(code, ns)
@@ -18,11 +21,13 @@ def funcs():
 
 
 def args(**updates):
-    values = dict(general_symbolic=False, restricted_production=False,
-                  reports_only=False, hypercharge_comparison=True,
-                  numerical=None, full=False, dims=None, force=False,
-                  reset_numerical_configs=False, study=None,
-                  threshold=None, threshold_scale=None, debug_reports=False)
+    values = dict(
+        general_symbolic=False, restricted_production=False,
+        reports_only=False, hypercharge_comparison=True,
+        numerical=None, full=False, dims=None, force=False,
+        reset_numerical_configs=False, study=None,
+        threshold=None, threshold_scale=None, debug_reports=False,
+    )
     values.update(updates)
     return argparse.Namespace(**values)
 
@@ -58,13 +63,21 @@ def test_bad_combination_fails():
 
 
 def test_delegation_uses_same_study_name(monkeypatch):
-    import sys
-    import types
-    fake = types.ModuleType('scripts.RunT3GeneralSymbolicStudy')
+    # The real pipeline delegates to both symbolic generation and PDF rendering.
+    # Mock BOTH dependencies: the old test intercepted only the symbolic stage
+    # and incorrectly invoked a real adapter with an incomplete fake module.
+    symbolic = ModuleType('scripts.RunT3GeneralSymbolicStudy')
+    reports = ModuleType('Reports.GeneralSymbolicAdapter')
     calls = []
-    fake.main = lambda argv: calls.append(argv) or 0
-    monkeypatch.setitem(sys.modules, 'scripts.RunT3GeneralSymbolicStudy', fake)
+    symbolic.main = lambda argv: calls.append(('symbolic', argv)) or 0
+    reports.render = lambda *, study: calls.append(('render', study)) or []
+    monkeypatch.setitem(sys.modules, symbolic.__name__, symbolic)
+    monkeypatch.setitem(sys.modules, reports.__name__, reports)
     ns = funcs()
     ns['_run_general_symbolic'].__globals__['__builtins__'] = __builtins__
-    assert ns['_run_general_symbolic'](args(study='my_study', reports_only=True)) == 0
-    assert calls == [['--study', 'my_study', '--reports-only']]
+    assert ns['_run_general_symbolic'](
+        args(study='my_study', reports_only=True)) == 0
+    assert calls == [
+        ('symbolic', ['--study', 'my_study', '--reports-only']),
+        ('render', 'my_study'),
+    ]
